@@ -43,7 +43,7 @@ const MonkeyIcon = ({ className }: { className?: string }) => (
     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
     <div className="absolute -top-1 -left-1 w-2 h-2 bg-green-400 rounded-full animate-bounce" />
     <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300 relative z-10">
-      🐵
+      ��
     </div>
   </motion.div>
 );
@@ -582,8 +582,14 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
           transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
         />
-        <motion.div 
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white/5 rounded-full"
+        <motion.div
+          className="absolute w-4 h-4 bg-white/5 rounded-full"
+          style={{
+            top: "50%",
+            left: "50%",
+            marginLeft: "-8px",
+            marginTop: "-8px"
+          }}
           animate={{ scale: [1, 1.5, 1], rotate: [0, 180, 360] }}
           transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
         />
