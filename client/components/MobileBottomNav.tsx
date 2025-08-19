@@ -178,17 +178,29 @@ export function MobileBottomNav({
           <div className="absolute bottom-16 left-2 right-2 bg-gradient-to-br from-white via-jungle-light/30 to-sunshine-yellow/40 backdrop-blur-md rounded-3xl shadow-2xl p-5 border-4 border-jungle/60 max-h-[75vh] overflow-y-auto animate-kid-pulse-glow relative">
             {/* Jungle background elements */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-2 left-4 text-2xl animate-gentle-float animation-delay-100">🌿</div>
-              <div className="absolute top-6 right-6 text-xl animate-gentle-bounce animation-delay-200">🦋</div>
-              <div className="absolute bottom-4 left-2 text-lg animate-gentle-float animation-delay-300">🌺</div>
-              <div className="absolute bottom-8 right-4 text-xl animate-gentle-bounce animation-delay-400">🐸</div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl opacity-10 animate-gentle-float animation-delay-500">🌳</div>
+              <div className="absolute top-2 left-4 text-2xl animate-gentle-float animation-delay-100">
+                🌿
+              </div>
+              <div className="absolute top-6 right-6 text-xl animate-gentle-bounce animation-delay-200">
+                🦋
+              </div>
+              <div className="absolute bottom-4 left-2 text-lg animate-gentle-float animation-delay-300">
+                🌺
+              </div>
+              <div className="absolute bottom-8 right-4 text-xl animate-gentle-bounce animation-delay-400">
+                🐸
+              </div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl opacity-10 animate-gentle-float animation-delay-500">
+                🌳
+              </div>
             </div>
 
             <div className="text-center mb-4 relative z-10">
               <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce relative">
                 🌟
-                <span className="absolute -top-1 -right-1 text-lg animate-sparkle">✨</span>
+                <span className="absolute -top-1 -right-1 text-lg animate-sparkle">
+                  ✨
+                </span>
               </div>
               <h3 className="text-xl font-kid-friendly font-bold text-jungle-dark text-shadow-jungle mb-2 bg-white/80 px-4 py-2 rounded-2xl border-2 border-jungle-light/50">
                 🌿 Jungle Adventure Menu! ✨🦋
@@ -210,8 +222,12 @@ export function MobileBottomNav({
                 >
                   {/* Jungle-themed background pattern */}
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <div className="absolute top-1 left-1 text-green-600">🌿</div>
-                    <div className="absolute bottom-1 right-1 text-yellow-600">🌺</div>
+                    <div className="absolute top-1 left-1 text-green-600">
+                      🌿
+                    </div>
+                    <div className="absolute bottom-1 right-1 text-yellow-600">
+                      🌺
+                    </div>
                   </div>
 
                   <div className="text-2xl sm:text-3xl animate-gentle-float relative z-10 group-hover:animate-mascot-bounce transition-all">
@@ -228,7 +244,7 @@ export function MobileBottomNav({
 
                   {/* Jungle adventure trail effect */}
                   <div className="absolute -top-1 -right-1 text-xs animate-gentle-bounce text-jungle opacity-60 group-hover:opacity-100 transition-opacity">
-                    {index % 2 === 0 ? '🍃' : '🦋'}
+                    {index % 2 === 0 ? "🍃" : "🦋"}
                   </div>
                 </button>
               ))}
