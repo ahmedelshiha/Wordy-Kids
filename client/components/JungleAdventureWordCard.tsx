@@ -631,7 +631,9 @@ export const JungleAdventureWordCard: React.FC<
                             <Mountain className="w-3 h-3" />
                             <span className="text-sm animate-bounce">💡</span>
                           </div>
-                          <span className="text-xs font-bold truncate">Hint</span>
+                          <span className="text-xs font-bold truncate">
+                            Hint
+                          </span>
                         </Button>
                       </div>
 
@@ -661,7 +663,9 @@ export const JungleAdventureWordCard: React.FC<
                               🤔
                             </span>
                           </div>
-                          <span className="text-xs font-bold truncate">Okay</span>
+                          <span className="text-xs font-bold truncate">
+                            Okay
+                          </span>
                         </Button>
                       </div>
 
@@ -691,7 +695,9 @@ export const JungleAdventureWordCard: React.FC<
                               ✅
                             </span>
                           </div>
-                          <span className="text-xs font-bold truncate">Got it!</span>
+                          <span className="text-xs font-bold truncate">
+                            Got it!
+                          </span>
                         </Button>
                       </div>
                     </div>
