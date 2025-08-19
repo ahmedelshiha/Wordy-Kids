@@ -29,6 +29,7 @@ import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
+import { EnhancedJungleQuizAdventure } from "@/components/games/EnhancedJungleQuizAdventure";
 import { VowelRescue } from "@/components/games/VowelRescue";
 import ListenAndGuessGame from "@/components/games/ListenAndGuessGame";
 import WordGarden from "@/components/games/WordGarden";
@@ -1009,7 +1010,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "category-explorer",
         name: "Category Explorer",
-        icon: "🗺️",
+        icon: "���️",
         earned: rememberedWords.size >= 10,
         description: "Explored 5+ categories",
       },
