@@ -331,7 +331,15 @@ export class AudioService {
     // Check if speech synthesis is supported and available
     if (!this.isSupported || !this.speechSynthesis) {
       console.warn("Speech synthesis not supported or available");
-      options.onError?.();
+      const supportError = {
+        type: 'unsupported_browser',
+        word: word,
+        isSupported: this.isSupported,
+        hasSpeechSynthesis: !!this.speechSynthesis,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString()
+      };
+      options.onError?.(supportError);
       return;
     }
 
@@ -462,7 +470,17 @@ export class AudioService {
       }
     } catch (error) {
       console.error("Error in pronounceWord:", error);
-      options.onError?.();
+      const generalError = {
+        type: 'general_error',
+        word: word,
+        originalError: error instanceof Error ? {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        } : error,
+        timestamp: new Date().toISOString()
+      };
+      options.onError?.(generalError);
     }
   }
 
