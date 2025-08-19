@@ -171,7 +171,7 @@ const PLANT_TYPES = [
   ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
-  ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
+  ["🌱", "���", "🌷"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
@@ -834,42 +834,185 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30">
-        {/* Jungle Background Effects */}
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30 overflow-hidden">
+        {/* Enhanced Immersive Jungle Background Environment */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-          {/* Animated jungle leaves */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            {Array.from({ length: 8 }, (_, i) => (
+          {/* Multiple Layer Jungle Canopy Background */}
+          <div className="absolute inset-0">
+            {/* Deep jungle canopy backdrop */}
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/40 via-jungle-dark/60 to-jungle-DEFAULT/80" />
+
+            {/* Animated jungle canopy layers */}
+            <div
+              className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-emerald-800/50 to-transparent animate-jungle-sway"
+              style={{
+                backgroundImage: `
+                     radial-gradient(circle at 20% 30%, rgba(34, 197, 94, 0.3) 0%, transparent 50%),
+                     radial-gradient(circle at 80% 20%, rgba(139, 195, 74, 0.25) 0%, transparent 40%),
+                     radial-gradient(circle at 60% 60%, rgba(76, 175, 80, 0.2) 0%, transparent 35%)
+                   `,
+              }}
+            />
+
+            {/* Jungle vines hanging from top */}
+            {Array.from({ length: 6 }, (_, i) => (
               <div
-                key={`leaf-${i}`}
-                className="absolute text-jungle-light opacity-20"
+                key={`vine-${i}`}
+                className="absolute top-0 w-1 bg-gradient-to-b from-jungle-light/40 to-transparent animate-jungle-sway"
+                style={{
+                  left: `${15 + i * 15}%`,
+                  height: `${40 + Math.random() * 30}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: `${3 + Math.random() * 2}s`,
+                }}
+              >
+                <div className="absolute top-0 text-jungle-light/60 text-xs animate-jungle-float">
+                  🌿
+                </div>
+              </div>
+            ))}
+
+            {/* Floating jungle particles and fireflies */}
+            {Array.from({ length: 15 }, (_, i) => (
+              <div
+                key={`particle-${i}`}
+                className="absolute"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  fontSize: `${0.8 + Math.random() * 0.4}rem`,
-                  animationDelay: `${Math.random() * 3}s`,
+                  animationDelay: `${Math.random() * 5}s`,
                 }}
               >
-                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway" />
+                <span
+                  className={`text-xs opacity-60 animate-jungle-float ${
+                    i % 4 === 0
+                      ? "text-sunshine-light"
+                      : i % 4 === 1
+                        ? "text-jungle-light"
+                        : i % 4 === 2
+                          ? "text-emerald-300"
+                          : "text-lime-300"
+                  }`}
+                  style={{
+                    animationDuration: `${4 + Math.random() * 3}s`,
+                    animationDelay: `${Math.random() * 2}s`,
+                  }}
+                >
+                  {i % 5 === 0
+                    ? "🦋"
+                    : i % 5 === 1
+                      ? "🌺"
+                      : i % 5 === 2
+                        ? "🍃"
+                        : i % 5 === 3
+                          ? "✨"
+                          : "🌿"}
+                </span>
               </div>
             ))}
+
+            {/* Animated jungle ground foliage */}
+            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-jungle-dark/60 to-transparent">
+              {Array.from({ length: 8 }, (_, i) => (
+                <div
+                  key={`foliage-${i}`}
+                  className="absolute bottom-0 text-jungle-light/50 animate-jungle-sway"
+                  style={{
+                    left: `${i * 12.5}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    animationDuration: `${2 + Math.random()}s`,
+                  }}
+                >
+                  <span className="text-lg animate-jungle-depth">
+                    {i % 3 === 0 ? "🌱" : i % 3 === 1 ? "🌿" : "🍀"}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Mystical jungle glow effects */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 4 }, (_, i) => (
+                <div
+                  key={`glow-${i}`}
+                  className="absolute rounded-full animate-jungle-mystical"
+                  style={{
+                    left: `${20 + i * 20}%`,
+                    top: `${30 + Math.sin(i) * 20}%`,
+                    width: `${60 + Math.random() * 40}px`,
+                    height: `${60 + Math.random() * 40}px`,
+                    background: `radial-gradient(circle, rgba(139, 195, 74, 0.15) 0%, transparent 70%)`,
+                    animationDelay: `${i * 0.8}s`,
+                    animationDuration: `${4 + Math.random() * 2}s`,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Jungle depth shadows */}
+            <div className="absolute inset-0">
+              <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-jungle-dark/40 to-transparent" />
+              <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-jungle-dark/40 to-transparent" />
+              <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-jungle-dark/30 to-transparent" />
+            </div>
+
+            {/* Adventure path indicators */}
+            <div className="absolute bottom-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-sunshine-DEFAULT/30 to-transparent rounded-full animate-jungle-mystical" />
           </div>
 
-          {/* Jungle atmosphere sparkles */}
+          {/* Enhanced jungle creatures and ambient life */}
           <div className="absolute inset-0">
-            {Array.from({ length: 12 }, (_, i) => (
+            {/* Jungle monkeys in trees */}
+            <div
+              className="absolute top-4 right-8 animate-jungle-creature"
+              style={{ animationDelay: "0s" }}
+            >
+              <span className="text-2xl drop-shadow-lg">🐒</span>
+            </div>
+            <div
+              className="absolute top-12 left-12 animate-jungle-creature"
+              style={{ animationDelay: "2s" }}
+            >
+              <span className="text-lg opacity-70 drop-shadow-lg">🦜</span>
+            </div>
+
+            {/* Butterflies floating around */}
+            {Array.from({ length: 3 }, (_, i) => (
               <div
-                key={`sparkle-${i}`}
-                className="absolute text-sunshine-light opacity-30"
+                key={`butterfly-${i}`}
+                className="absolute animate-jungle-firefly"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 4}s`,
+                  left: `${30 + i * 25}%`,
+                  top: `${20 + Math.sin(i) * 15}%`,
+                  animationDelay: `${i * 1.5}s`,
+                  animationDuration: `${6 + Math.random() * 2}s`,
                 }}
               >
-                <span className="text-xs animate-jungle-sparkle">✨</span>
+                <span className="text-lg drop-shadow-lg opacity-80">🦋</span>
               </div>
             ))}
+
+            {/* Jungle flowers blooming */}
+            <div className="absolute top-1/3 left-8 animate-jungle-depth">
+              <span className="text-xl drop-shadow-lg">🌺</span>
+            </div>
+            <div
+              className="absolute bottom-1/4 right-12 animate-jungle-depth"
+              style={{ animationDelay: "1s" }}
+            >
+              <span className="text-lg drop-shadow-lg">🌸</span>
+            </div>
+
+            {/* Jungle treasure chests hidden in foliage */}
+            <div className="absolute bottom-8 left-8 animate-jungle-treasure opacity-60">
+              <span className="text-sm drop-shadow-lg">📦</span>
+            </div>
+            <div
+              className="absolute top-1/2 right-4 animate-jungle-treasure opacity-60"
+              style={{ animationDelay: "2s" }}
+            >
+              <span className="text-sm drop-shadow-lg">🗝️</span>
+            </div>
           </div>
         </div>
 
@@ -1312,23 +1455,120 @@ export default function WordGarden({
         </div>
       </div>
 
-      {/* Enhanced styles for confetti, sparkles, and animations */}
+      {/* Enhanced styles for confetti, sparkles, and jungle background animations */}
       <style>{`
         .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
-        
+
         /* Jungle Adventure Shadow Effects */
         .shadow-jungle-success {
           box-shadow: 0 0 20px rgba(76, 175, 80, 0.5), 0 0 40px rgba(139, 195, 74, 0.3);
         }
-        
+
         .shadow-jungle-error {
           box-shadow: 0 0 20px rgba(255, 87, 34, 0.5), 0 0 40px rgba(255, 152, 0, 0.3);
         }
-        
+
         .shadow-jungle-hover {
           box-shadow: 0 0 15px rgba(255, 193, 7, 0.4), 0 0 30px rgba(255, 235, 59, 0.2);
         }
 
+        /* Enhanced Jungle Background Animations */
+        @keyframes jungle-canopy-sway {
+          0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+          25% { transform: translateX(-2px) translateY(-1px) scale(1.02); }
+          50% { transform: translateX(1px) translateY(1px) scale(0.98); }
+          75% { transform: translateX(2px) translateY(-0.5px) scale(1.01); }
+        }
+
+        @keyframes jungle-depth-float {
+          0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+          33% { transform: translateY(-8px) rotate(2deg) scale(1.1); opacity: 0.8; }
+          66% { transform: translateY(4px) rotate(-1deg) scale(0.95); opacity: 0.7; }
+        }
+
+        @keyframes jungle-mystical-glow {
+          0%, 100% {
+            opacity: 0.1;
+            transform: scale(1) rotate(0deg);
+            filter: blur(0px);
+          }
+          25% {
+            opacity: 0.3;
+            transform: scale(1.2) rotate(90deg);
+            filter: blur(1px);
+          }
+          50% {
+            opacity: 0.2;
+            transform: scale(0.8) rotate(180deg);
+            filter: blur(2px);
+          }
+          75% {
+            opacity: 0.4;
+            transform: scale(1.1) rotate(270deg);
+            filter: blur(0.5px);
+          }
+        }
+
+        @keyframes jungle-creature-patrol {
+          0%, 100% { transform: translateX(0) scale(1); }
+          25% { transform: translateX(-5px) scale(1.05); }
+          50% { transform: translateX(3px) scale(0.95); }
+          75% { transform: translateX(-2px) scale(1.02); }
+        }
+
+        @keyframes jungle-firefly-dance {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.4;
+            filter: brightness(1);
+          }
+          25% {
+            transform: translate(10px, -15px) scale(1.3);
+            opacity: 0.8;
+            filter: brightness(1.5);
+          }
+          50% {
+            transform: translate(-8px, -8px) scale(0.8);
+            opacity: 0.6;
+            filter: brightness(1.2);
+          }
+          75% {
+            transform: translate(5px, 5px) scale(1.1);
+            opacity: 0.9;
+            filter: brightness(1.3);
+          }
+        }
+
+        @keyframes jungle-vine-swing {
+          0%, 100% { transform: rotate(0deg) scaleY(1); }
+          25% { transform: rotate(3deg) scaleY(1.05); }
+          50% { transform: rotate(0deg) scaleY(0.95); }
+          75% { transform: rotate(-2deg) scaleY(1.02); }
+        }
+
+        @keyframes jungle-treasure-pulse {
+          0%, 100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.6;
+            filter: drop-shadow(0 0 0px rgba(255, 193, 7, 0));
+          }
+          50% {
+            transform: scale(1.15) rotate(5deg);
+            opacity: 0.9;
+            filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.6));
+          }
+        }
+
+        /* Apply jungle animations */
+        .animate-jungle-canopy { animation: jungle-canopy-sway 8s ease-in-out infinite; }
+        .animate-jungle-depth { animation: jungle-depth-float 12s ease-in-out infinite; }
+        .animate-jungle-mystical { animation: jungle-mystical-glow 10s ease-in-out infinite; }
+        .animate-jungle-creature { animation: jungle-creature-patrol 6s ease-in-out infinite; }
+        .animate-jungle-firefly { animation: jungle-firefly-dance 8s ease-in-out infinite; }
+        .animate-jungle-vine { animation: jungle-vine-swing 5s ease-in-out infinite; }
+        .animate-jungle-treasure { animation: jungle-treasure-pulse 4s ease-in-out infinite; }
+
+        /* Original animations */
         @keyframes celebrationPulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.05); }
@@ -1359,6 +1599,14 @@ export default function WordGarden({
 
         .sparkle-rotate {
           animation: sparkleRotate 2s ease-in-out infinite;
+        }
+
+        /* Mobile optimization for jungle background */
+        @media (max-width: 768px) {
+          .animate-jungle-canopy { animation-duration: 10s; }
+          .animate-jungle-depth { animation-duration: 15s; }
+          .animate-jungle-mystical { animation-duration: 12s; }
+          .animate-jungle-firefly { animation-duration: 10s; }
         }
       `}</style>
 
