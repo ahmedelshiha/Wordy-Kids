@@ -1166,7 +1166,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
     setFeedback({
       type: "celebration",
-      title: "Quiz Complete! 🎉",
+      title: "Quiz Complete! ����",
       message: `You scored ${score}/${total} (${percentage}%)`,
       points: score * 10,
       onContinue: () => {
@@ -1494,7 +1494,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! 📚✨";
+        achievementTitle = "Category Scholar! ����✨";
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n��� Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
@@ -3051,140 +3051,115 @@ export default function Index({ initialProfile }: IndexProps) {
                                     </div>
                                   </div>
 
-                                  {/* Compact Quiz Cards */}
-                                  <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 max-w-5xl mx-auto px-1">
-                                    {/* Word Garden - Listen & Pick (FIRST GAME) */}
-                                    <Card className="cursor-pointer hover:shadow-md transition-all duration-200 hover:scale-102 border border-emerald-400/30">
-                                      <CardContent className="p-2 md:p-3 text-center">
-                                        <div className="text-2xl md:text-3xl mb-1 animate-gentle-bounce">
-                                          🌱
-                                        </div>
-                                        <h3 className="text-xs md:text-sm font-bold text-emerald-600 mb-1">
-                                          Word Garden
+                                  {/* Jungle Adventure Quiz Expeditions */}
+                                  <div className="jungle-quiz-cards-container">
+                                    <div className="jungle-quiz-cards-grid">
+                                      {/* Enchanted Garden Expedition */}
+                                      <div className="jungle-quiz-card jungle-quiz-card-forest jungle-hover-effect">
+                                        <div className="jungle-quiz-card-icon animate-jungle-sway">🌺</div>
+                                        <h3 className="jungle-quiz-card-title text-jungle-green">
+                                          🌱 Enchanted Garden
                                         </h3>
-                                        <p className="text-xs text-gray-600 mb-1 hidden lg:block">
-                                          Listen & grow! 🌸
+                                        <p className="jungle-quiz-card-description">
+                                          Journey through magical gardens where words bloom into beautiful flowers!
+                                          Listen to nature's whispers and watch your vocabulary grow! 🌸✨
                                         </p>
-                                        <div className="flex justify-center gap-1 mb-2">
-                                          <span className="bg-emerald-400/20 text-emerald-600 px-1 py-0.5 rounded-full text-xs">
-                                            🎯 3-5
-                                          </span>
+                                        <div className="jungle-quiz-card-badges">
+                                          <span className="jungle-quiz-badge">🎯 Ages 3-5</span>
+                                          <span className="jungle-quiz-badge-audio">🎵 Audio Magic</span>
                                         </div>
-                                        <Button
+                                        <button
                                           onClick={() => {
                                             setGameMode("word-garden");
                                           }}
-                                          className="w-full bg-emerald-500 text-white hover:bg-emerald-600 py-1 text-xs rounded-lg"
-                                          size="sm"
+                                          className="jungle-quiz-button"
                                         >
-                                          <Play className="w-3 h-3 mr-1" />
-                                          Play! 🌱
-                                        </Button>
-                                      </CardContent>
-                                    </Card>
+                                          <Play className="w-5 h-5 mr-2" />
+                                          Begin Garden Quest! 🌱
+                                        </button>
+                                      </div>
 
-                                    {/* Listen & Guess Quiz */}
-                                    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-pink/30 animate-kid-float">
-                                      <CardContent className="p-3 md:p-4 text-center">
-                                        <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-gentle-bounce">
-                                          🎧
-                                        </div>
-                                        <h3 className="text-sm md:text-lg font-bold text-educational-pink mb-1 md:mb-2">
-                                          Listen & Guess
+                                      {/* Mystic Sound Safari */}
+                                      <div className="jungle-quiz-card jungle-quiz-card-river jungle-hover-effect">
+                                        <div className="jungle-quiz-card-icon animate-jungle-pulse">🎧</div>
+                                        <h3 className="jungle-quiz-card-title text-sky-blue">
+                                          🌊 Mystic Sound Safari
                                         </h3>
-                                        <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                          Listen and pick the right picture! 🎵
+                                        <p className="jungle-quiz-card-description">
+                                          Follow ancient jungle sounds to hidden treasures! Listen carefully to
+                                          nature's magical symphony and discover secret word treasures! 🎵🗺️
                                         </p>
-                                        <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                          <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                            🎵🔊 Audio!
-                                          </span>
+                                        <div className="jungle-quiz-card-badges">
+                                          <span className="jungle-quiz-badge">🎵 Audio Quest</span>
+                                          <span className="jungle-quiz-badge-difficulty">🏆 Challenge</span>
                                         </div>
-                                        <Button
+                                        <button
                                           onClick={() => {
                                             setSelectedQuizType("listen-guess");
                                             setShowQuiz(true);
                                           }}
-                                          className="w-full bg-educational-pink text-white hover:bg-educational-pink/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
-                                          size="sm"
+                                          className="jungle-quiz-button" style={{background: 'linear-gradient(135deg, #2196f3, #00bcd4)'}}
                                         >
-                                          <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Listen! 👂
-                                        </Button>
-                                      </CardContent>
-                                    </Card>
+                                          <Play className="w-5 h-5 mr-2" />
+                                          Start Sound Safari! 🎧
+                                        </button>
+                                      </div>
 
-                                    {/* Picture Quiz - Kid-Friendly */}
-                                    <Card className="cursor-pointer hover:shadow-lg active:shadow-xl transition-all duration-200 active:scale-95 border-2 border-educational-orange/30">
-                                      <CardContent className="p-3 md:p-4 text-center">
-                                        <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
-                                          🖼️
-                                        </div>
-                                        <h3 className="text-sm md:text-lg font-bold text-educational-orange mb-1 md:mb-2">
-                                          Picture Fun!
+                                      {/* Picture Treasure Hunt */}
+                                      <div className="jungle-quiz-card jungle-quiz-card-sunset jungle-hover-effect">
+                                        <div className="jungle-quiz-card-icon animate-jungle-sparkle">📸</div>
+                                        <h3 className="jungle-quiz-card-title text-bright-orange">
+                                          🌅 Picture Treasure Hunt
                                         </h3>
-                                        <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                          Look at pictures and guess the words!
-                                          📸
+                                        <p className="jungle-quiz-card-description">
+                                          Explore ancient jungle temples and decode mysterious picture scrolls!
+                                          Each image holds the key to incredible word treasures! 🏛️💎
                                         </p>
-                                        <div className="flex justify-center gap-1 mb-2 md:mb-3">
-                                          <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                            🎯 Fun!
-                                          </span>
+                                        <div className="jungle-quiz-card-badges">
+                                          <span className="jungle-quiz-badge">🎯 Visual Quest</span>
+                                          <span className="jungle-quiz-badge-difficulty">⚡ Fast Fun</span>
                                         </div>
-                                        <Button
+                                        <button
                                           onClick={() => {
                                             setSelectedQuizType("picture");
                                             setShowQuiz(true);
                                           }}
-                                          className="w-full bg-educational-orange text-white hover:bg-educational-orange/90 active:bg-educational-orange/80 py-2 text-xs sm:text-sm rounded-xl min-h-[44px]"
-                                          size="sm"
+                                          className="jungle-quiz-button" style={{background: 'linear-gradient(135deg, #ff9800, #ffc107)'}}
                                         >
-                                          <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Play! 🎮
-                                        </Button>
-                                      </CardContent>
-                                    </Card>
+                                          <Play className="w-5 h-5 mr-2" />
+                                          Begin Treasure Hunt! 📸
+                                        </button>
+                                      </div>
 
-                                    {/* Unified Vowel Adventure */}
-                                    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 border-2 border-educational-blue/30 animate-kid-float md:col-span-2 lg:col-span-1">
-                                      <CardContent className="p-3 md:p-4 text-center">
-                                        <div className="text-3xl md:text-5xl mb-2 md:mb-3 animate-bounce">
-                                          🔤
-                                        </div>
-                                        <h3 className="text-sm md:text-lg font-bold text-educational-blue mb-1 md:mb-2">
-                                          Vowel Adventure!
+                                      {/* Vowel Crystal Expedition */}
+                                      <div className="jungle-quiz-card jungle-quiz-card-mystical jungle-hover-effect">
+                                        <div className="jungle-quiz-card-icon animate-jungle-glow">💎</div>
+                                        <h3 className="jungle-quiz-card-title text-playful-purple">
+                                          🔮 Vowel Crystal Expedition
                                         </h3>
-                                        <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 hidden md:block">
-                                          Choose your difficulty and rescue
-                                          vowels! 🌟
+                                        <p className="jungle-quiz-card-description">
+                                          Deep in the mystical jungle lie powerful vowel crystals! Choose your
+                                          adventure difficulty and unlock the ancient secrets of A, E, I, O, U! ✨🔮
                                         </p>
-                                        <div className="flex justify-center gap-1 mb-2 md:mb-3 flex-wrap">
-                                          <span className="bg-educational-green/20 text-educational-green px-1.5 py-0.5 rounded-full text-xs">
-                                            Easy
-                                          </span>
-                                          <span className="bg-educational-purple/20 text-educational-purple px-1.5 py-0.5 rounded-full text-xs">
-                                            Medium
-                                          </span>
-                                          <span className="bg-educational-orange/20 text-educational-orange px-1.5 py-0.5 rounded-full text-xs">
-                                            Timed
-                                          </span>
+                                        <div className="jungle-quiz-card-badges">
+                                          <span className="jungle-quiz-badge" style={{background: 'rgba(76, 175, 80, 0.2)', color: '#2e7d32'}}>🌱 Easy</span>
+                                          <span className="jungle-quiz-badge" style={{background: 'rgba(156, 39, 176, 0.2)', color: '#6a1b9a'}}>⚡ Medium</span>
+                                          <span className="jungle-quiz-badge-difficulty">🏃 Timed Rush</span>
                                         </div>
-                                        <Button
+                                        <button
                                           onClick={() => {
                                             setSelectedQuizType(
                                               "unified-vowel",
                                             );
                                             setShowQuiz(true);
                                           }}
-                                          className="w-full bg-educational-blue text-white hover:bg-educational-blue/90 py-1.5 md:py-2 text-xs md:text-sm rounded-xl animate-wiggle"
-                                          size="sm"
+                                          className="jungle-quiz-button" style={{background: 'linear-gradient(135deg, #9c27b0, #6366f1)'}}
                                         >
-                                          <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Start Adventure! 🚀
-                                        </Button>
-                                      </CardContent>
-                                    </Card>
+                                          <Play className="w-5 h-5 mr-2" />
+                                          Crystal Quest Awaits! 💎
+                                        </button>
+                                      </div>
+                                    </div>
                                   </div>
 
                                   {/* Recent Scores */}
