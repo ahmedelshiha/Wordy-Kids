@@ -33,7 +33,7 @@ import {
   RefreshCw,
   Brain,
 } from "lucide-react";
-import { EnhancedWordCard } from "./EnhancedWordCard";
+import { JungleAdventureWordCard } from "./JungleAdventureWordCard";
 import { EnhancedCategorySelector } from "./EnhancedCategorySelector";
 import { EnhancedVocabularyBuilder } from "./EnhancedVocabularyBuilder";
 import { CategoryCompletionPopup } from "./CategoryCompletionPopup";
