@@ -634,9 +634,13 @@ export default function LoginForm() {
                   aria-label="Reset your password - we'll help you get back into your jungle adventure!"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-lg group-hover:animate-bounce">🌿</span>
+                    <span className="text-lg group-hover:animate-bounce">
+                      🌿
+                    </span>
                     <span>Forgot password?</span>
-                    <span className="text-sm group-hover:animate-pulse">🔑</span>
+                    <span className="text-sm group-hover:animate-pulse">
+                      🔑
+                    </span>
                   </div>
                 </Button>
                 <p className="text-xs text-jungle/70 mt-1 font-medium">

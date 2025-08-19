@@ -341,12 +341,17 @@ export default function SignUp() {
             <CardHeader className="pb-1 md:pb-4 pt-3 md:pt-6 px-3 md:px-6 bg-gradient-to-r from-jungle/10 to-sunshine/10">
               <CardTitle className="text-center text-base md:text-xl text-navy font-['Baloo_2'] font-bold flex items-center justify-center gap-1 md:gap-2">
                 <span className="text-lg md:text-2xl">🌍</span>
-                <span className="text-sm md:text-base">Create Explorer Profile</span>
+                <span className="text-sm md:text-base">
+                  Create Explorer Profile
+                </span>
                 <span className="text-lg md:text-2xl">🎒</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-3 md:pt-6 px-3 md:px-6 pb-4 md:pb-6">
-              <form onSubmit={handleSignUp} className="space-y-2.5 md:space-y-4">
+              <form
+                onSubmit={handleSignUp}
+                className="space-y-2.5 md:space-y-4"
+              >
                 {/* Child Name Field */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -581,12 +586,16 @@ export default function SignUp() {
                       <div className="flex items-center gap-2 md:gap-3">
                         <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                         <span className="text-base md:text-lg">🌟</span>
-                        <span className="text-sm md:text-base">Creating Adventure Profile...</span>
+                        <span className="text-sm md:text-base">
+                          Creating Adventure Profile...
+                        </span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center gap-2 md:gap-3">
                         <span className="text-lg md:text-2xl">🎯</span>
-                        <span className="text-sm md:text-base">Start Jungle Adventure!</span>
+                        <span className="text-sm md:text-base">
+                          Start Jungle Adventure!
+                        </span>
                         <span className="text-lg md:text-2xl">🌟</span>
                       </div>
                     )}
