@@ -172,7 +172,7 @@ const PLANT_TYPES = [
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
-  ["��", "🌳", "🌸"], // cherry tree - tree to cherry blossom
+  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
@@ -1428,23 +1428,120 @@ export default function WordGarden({
         </div>
       </div>
 
-      {/* Enhanced styles for confetti, sparkles, and animations */}
+      {/* Enhanced styles for confetti, sparkles, and jungle background animations */}
       <style>{`
         .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
-        
+
         /* Jungle Adventure Shadow Effects */
         .shadow-jungle-success {
           box-shadow: 0 0 20px rgba(76, 175, 80, 0.5), 0 0 40px rgba(139, 195, 74, 0.3);
         }
-        
+
         .shadow-jungle-error {
           box-shadow: 0 0 20px rgba(255, 87, 34, 0.5), 0 0 40px rgba(255, 152, 0, 0.3);
         }
-        
+
         .shadow-jungle-hover {
           box-shadow: 0 0 15px rgba(255, 193, 7, 0.4), 0 0 30px rgba(255, 235, 59, 0.2);
         }
 
+        /* Enhanced Jungle Background Animations */
+        @keyframes jungle-canopy-sway {
+          0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+          25% { transform: translateX(-2px) translateY(-1px) scale(1.02); }
+          50% { transform: translateX(1px) translateY(1px) scale(0.98); }
+          75% { transform: translateX(2px) translateY(-0.5px) scale(1.01); }
+        }
+
+        @keyframes jungle-depth-float {
+          0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+          33% { transform: translateY(-8px) rotate(2deg) scale(1.1); opacity: 0.8; }
+          66% { transform: translateY(4px) rotate(-1deg) scale(0.95); opacity: 0.7; }
+        }
+
+        @keyframes jungle-mystical-glow {
+          0%, 100% {
+            opacity: 0.1;
+            transform: scale(1) rotate(0deg);
+            filter: blur(0px);
+          }
+          25% {
+            opacity: 0.3;
+            transform: scale(1.2) rotate(90deg);
+            filter: blur(1px);
+          }
+          50% {
+            opacity: 0.2;
+            transform: scale(0.8) rotate(180deg);
+            filter: blur(2px);
+          }
+          75% {
+            opacity: 0.4;
+            transform: scale(1.1) rotate(270deg);
+            filter: blur(0.5px);
+          }
+        }
+
+        @keyframes jungle-creature-patrol {
+          0%, 100% { transform: translateX(0) scale(1); }
+          25% { transform: translateX(-5px) scale(1.05); }
+          50% { transform: translateX(3px) scale(0.95); }
+          75% { transform: translateX(-2px) scale(1.02); }
+        }
+
+        @keyframes jungle-firefly-dance {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.4;
+            filter: brightness(1);
+          }
+          25% {
+            transform: translate(10px, -15px) scale(1.3);
+            opacity: 0.8;
+            filter: brightness(1.5);
+          }
+          50% {
+            transform: translate(-8px, -8px) scale(0.8);
+            opacity: 0.6;
+            filter: brightness(1.2);
+          }
+          75% {
+            transform: translate(5px, 5px) scale(1.1);
+            opacity: 0.9;
+            filter: brightness(1.3);
+          }
+        }
+
+        @keyframes jungle-vine-swing {
+          0%, 100% { transform: rotate(0deg) scaleY(1); }
+          25% { transform: rotate(3deg) scaleY(1.05); }
+          50% { transform: rotate(0deg) scaleY(0.95); }
+          75% { transform: rotate(-2deg) scaleY(1.02); }
+        }
+
+        @keyframes jungle-treasure-pulse {
+          0%, 100% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.6;
+            filter: drop-shadow(0 0 0px rgba(255, 193, 7, 0));
+          }
+          50% {
+            transform: scale(1.15) rotate(5deg);
+            opacity: 0.9;
+            filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.6));
+          }
+        }
+
+        /* Apply jungle animations */
+        .animate-jungle-canopy { animation: jungle-canopy-sway 8s ease-in-out infinite; }
+        .animate-jungle-depth { animation: jungle-depth-float 12s ease-in-out infinite; }
+        .animate-jungle-mystical { animation: jungle-mystical-glow 10s ease-in-out infinite; }
+        .animate-jungle-creature { animation: jungle-creature-patrol 6s ease-in-out infinite; }
+        .animate-jungle-firefly { animation: jungle-firefly-dance 8s ease-in-out infinite; }
+        .animate-jungle-vine { animation: jungle-vine-swing 5s ease-in-out infinite; }
+        .animate-jungle-treasure { animation: jungle-treasure-pulse 4s ease-in-out infinite; }
+
+        /* Original animations */
         @keyframes celebrationPulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.05); }
@@ -1475,6 +1572,14 @@ export default function WordGarden({
 
         .sparkle-rotate {
           animation: sparkleRotate 2s ease-in-out infinite;
+        }
+
+        /* Mobile optimization for jungle background */
+        @media (max-width: 768px) {
+          .animate-jungle-canopy { animation-duration: 10s; }
+          .animate-jungle-depth { animation-duration: 15s; }
+          .animate-jungle-mystical { animation-duration: 12s; }
+          .animate-jungle-firefly { animation-duration: 10s; }
         }
       `}</style>
 
