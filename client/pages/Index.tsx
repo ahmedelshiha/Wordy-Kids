@@ -1166,7 +1166,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
     setFeedback({
       type: "celebration",
-      title: "Quiz Complete! ����",
+      title: "Quiz Complete! 🎉",
       message: `You scored ${score}/${total} (${percentage}%)`,
       points: score * 10,
       onContinue: () => {
