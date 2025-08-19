@@ -105,7 +105,7 @@ export const JungleAdventureWordCard: React.FC<
 
     setIsPlaying(true);
     setShowMagicalSparkles(true);
-    setShowJungleParticles(true);
+    // Removed jungle particles for pronunciation to be lighter
 
     try {
       // Jungle adventure pronunciation
