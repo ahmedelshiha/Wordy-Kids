@@ -385,7 +385,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`min-h-screen w-full transition-all duration-300 optimize-for-small-screen ${
+      className={`min-h-screen w-full transition-all duration-300 optimize-for-small-screen jungle-mobile-optimized jungle-pattern-bg ${
         highContrastMode ? "bg-black text-white" : "bg-responsive-dashboard"
       }`}
       style={{
@@ -530,7 +530,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Accessibility Panel */}
       {accessibilityMode && (
         <Card
-          className={`m-4 ${highContrastMode ? "bg-gray-900 text-white border-white" : ""}`}
+          className={`m-4 jungle-card ${highContrastMode ? "bg-gray-900 text-white border-white" : ""}`}
         >
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -587,7 +587,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Search and Filters */}
       {(showFilters || !isMobile) && viewMode === "words" && (
         <Card
-          className={`m-4 ${highContrastMode ? "bg-gray-900 text-white border-white" : "bg-gradient-to-r from-jungle/5 to-sunshine/5 border-jungle/20 shadow-lg"}`}
+          className={`m-4 jungle-card ${highContrastMode ? "bg-gray-900 text-white border-white" : "bg-gradient-to-r from-jungle/5 to-sunshine/5 border-jungle/20 shadow-lg"}`}
         >
           <CardContent className="p-4 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -639,7 +639,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     size="sm"
                     variant="outline"
                     onClick={handleVocabularyBuilder}
-                    className="flex items-center gap-2 hover:bg-jungle/10 hover:text-jungle border-jungle/30"
+                    className="flex items-center gap-2 jungle-hover-effect hover:bg-jungle/10 hover:text-jungle border-jungle/30 jungle-focus"
                   >
                     <Brain className="w-4 h-4" />
                     🌿 Practice Mode
@@ -653,7 +653,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                         Math.floor(Math.random() * filteredWords.length),
                       )
                     }
-                    className="flex items-center gap-2 hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30"
+                    className="flex items-center gap-2 jungle-hover-effect hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30 jungle-focus"
                   >
                     <Shuffle className="w-4 h-4" />
                     🦋 Random
@@ -957,7 +957,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   size="sm"
                   variant="outline"
                   onClick={() => setViewMode("categories")}
-                  className="min-h-[44px] px-4 hover:bg-jungle/10 hover:text-jungle border-jungle/30"
+                  className="min-h-[44px] px-4 jungle-hover-effect hover:bg-jungle/10 hover:text-jungle border-jungle/30 jungle-focus"
                 >
                   <Grid3X3 className="w-4 h-4 mr-2" />
                   🌳 Categories
@@ -967,7 +967,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   size="sm"
                   variant="outline"
                   onClick={handleVocabularyBuilder}
-                  className="min-h-[44px] px-4 hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30"
+                  className="min-h-[44px] px-4 jungle-hover-effect hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30 jungle-focus"
                 >
                   <Brain className="w-4 h-4 mr-2" />
                   🌿 Practice
@@ -1000,7 +1000,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     : "grid",
               )
             }
-            className="w-14 h-14 rounded-full bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-xl"
+            className="w-14 h-14 rounded-full jungle-button bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-xl animate-jungle-glow"
             aria-label="Change view mode"
           >
             {wordViewMode === "grid"
