@@ -590,7 +590,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
       if (isExplicitUserAction) {
         enhancedAudioService.playSuccessSound();
       }
-      setTimeout(() => setCelebrationEffect(false), 2000);
+      setTimeout(() => setCelebrationEffect(false), 1000);
     } else if (status === "needs_practice") {
       // Only play encouragement for explicit user actions, not auto-progression
       if (isExplicitUserAction) {
