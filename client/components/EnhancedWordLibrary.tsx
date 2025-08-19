@@ -592,13 +592,13 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
           <CardContent className="p-4 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-jungle" />
                 <Input
-                  placeholder="Search words..."
+                  placeholder="🌿 Search jungle words..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={`pl-10 ${
-                    highContrastMode ? "bg-black text-white border-white" : ""
+                    highContrastMode ? "bg-black text-white border-white" : "border-jungle/30 focus:border-jungle"
                   }`}
                 />
               </div>
