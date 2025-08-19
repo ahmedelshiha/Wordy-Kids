@@ -548,28 +548,28 @@ export function ChildFriendlyCategorySelector({
             <div className="relative">
               <Input
                 type="text"
-                placeholder="🔍 Search categories..."
+                placeholder="🌿 Explore jungle categories..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-educational-blue/20 focus:border-educational-blue focus:outline-none bg-white/80 backdrop-blur-sm"
+                className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-jungle/30 focus:border-jungle focus:outline-none bg-white/90 backdrop-blur-sm shadow-lg"
               />
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-educational-blue">
-                🔍
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jungle">
+                🌿
               </div>
               {searchTerm && (
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => setSearchTerm("")}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-educational-blue/10"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-jungle/10"
                 >
                   ✕
                 </Button>
               )}
             </div>
             {searchTerm && (
-              <div className="mt-2 text-sm text-slate-600 text-center">
-                Found {categories.length} categories matching "{searchTerm}"
+              <div className="mt-2 text-sm text-jungle-dark text-center font-medium">
+                🌳 Found {categories.length} jungle paths matching "{searchTerm}" 🦋
               </div>
             )}
           </div>
@@ -579,11 +579,11 @@ export function ChildFriendlyCategorySelector({
       {/* Encouragement Popup */}
       {showEncouragement && (
         <div className="fixed top-20 right-4 z-50 animate-bounce">
-          <Card className="bg-gradient-to-r from-educational-pink to-educational-purple text-white shadow-2xl">
+          <Card className="bg-gradient-to-r from-jungle to-sunshine text-white shadow-2xl">
             <CardContent className="p-4 text-center">
               <Heart className="w-6 h-6 mx-auto mb-2 fill-current" />
               <p className="text-sm font-semibold">
-                You're doing great! Keep exploring! 🌟
+                Amazing jungle explorer! Keep discovering! 🌿🦋
               </p>
             </CardContent>
           </Card>
@@ -595,8 +595,8 @@ export function ChildFriendlyCategorySelector({
         {/* Quick Categories Bar - All Categories */}
         {!searchTerm && (
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
-              🚀 Quick Select - All Categories
+            <h3 className="text-sm font-semibold text-jungle-dark mb-3">
+              🌿 Quick Jungle Paths - All Adventures 🦎
             </h3>
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
               {enrichedCategories.map((category) => (
