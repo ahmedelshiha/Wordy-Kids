@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { kidFriendlyEffects, SOUNDS } from "@/lib/kidFriendlyEffects";
 
 interface JungleAdventureSidebarProps {
-  profile: any;
-  stats?: any;
   className?: string;
 }
 
