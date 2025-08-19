@@ -445,6 +445,27 @@
   }
 }
 
+/* Jungle float animation for gentle movement */
+@keyframes jungle-float {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  25% {
+    transform: translateY(-3px) scale(1.02);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.05);
+  }
+  75% {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+.animate-jungle-float {
+  animation: jungle-float 3s ease-in-out infinite;
+}
+
 /* Light jungle sparkle effects */
 @keyframes jungle-sparkle {
   0%,
@@ -464,6 +485,10 @@
     opacity: 0.4;
     transform: scale(0.3) rotate(270deg);
   }
+}
+
+.animate-jungle-sparkle {
+  animation: jungle-sparkle 2s ease-in-out infinite;
 }
 
 .jungle-sparkle {
