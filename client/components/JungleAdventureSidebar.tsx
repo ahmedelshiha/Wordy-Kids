@@ -148,33 +148,29 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       {/* Enhanced User Profile Section */}
       <motion.div
         variants={itemVariants}
-        className="bg-profile-purple rounded-[24px] p-6 shadow-lg relative overflow-hidden"
+        className="bg-profile-purple rounded-[20px] p-4 shadow-lg relative overflow-hidden flex-shrink-0"
       >
         {/* Profile Avatar with enhanced styling */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-3">
           <motion.div
-            className="w-16 h-16 rounded-full border-3 border-white flex items-center justify-center bg-white/10 shadow-lg"
+            className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center bg-white/10 shadow-lg"
             whileHover={{ scale: 1.05, rotate: 5 }}
             transition={{ duration: 0.3 }}
           >
-            {profile?.avatar?.emoji ? (
-              <span className="text-2xl">{profile.avatar.emoji}</span>
-            ) : (
-              <span className="text-2xl">🎯</span>
-            )}
+            <span className="text-xl">{userData.avatar?.emoji || "🎯"}</span>
           </motion.div>
         </div>
 
         {/* Enhanced User Info with proper typography */}
         <div className="text-center">
-          <h2 className="text-white font-['Baloo_2'] text-[22px] font-bold leading-tight mb-2">
-            {profile?.name || "Guest Explorer"}
+          <h2 className="text-white font-['Baloo_2'] text-[18px] font-bold leading-tight mb-1 truncate">
+            {userData.name}
           </h2>
-          <p className="text-white/90 font-['Baloo_2'] text-[18px] font-semibold mb-3">
-            Level {profile?.level || 1}
+          <p className="text-white/90 font-['Baloo_2'] text-[14px] font-semibold mb-2">
+            Level {userData.level}
           </p>
-          <p className="text-white/90 font-['Baloo_2'] text-[16px] font-medium">
-            🔥 {profile?.streak || 0} days
+          <p className="text-white/90 font-['Baloo_2'] text-[13px] font-medium">
+            🔥 {userData.streak} days
           </p>
         </div>
       </motion.div>
