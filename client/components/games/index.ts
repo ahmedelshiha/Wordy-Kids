@@ -4,6 +4,7 @@
 
 // Core Components
 export { EnhancedJungleQuizAdventure } from "./EnhancedJungleQuizAdventure";
+export { EnhancedJungleQuizAdventureDesktop } from "./EnhancedJungleQuizAdventureDesktop";
 export { EnhancedGameHub } from "./EnhancedGameHub";
 
 // Existing Components (Enhanced)
