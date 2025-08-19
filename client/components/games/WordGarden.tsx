@@ -455,7 +455,8 @@ function JungleGameCompletionDialog({
                   top: `-5%`,
                   width: "1px",
                   height: "110%",
-                  background: "linear-gradient(to bottom, rgba(255, 215, 0, 0.8), rgba(255, 235, 59, 0.4), transparent)",
+                  background:
+                    "linear-gradient(to bottom, rgba(255, 215, 0, 0.8), rgba(255, 235, 59, 0.4), transparent)",
                   transform: `rotate(${-15 + i * 3}deg)`,
                   animationName: "sunlight-shimmer",
                   animationDuration: `${3 + Math.random() * 1.5}s`,
@@ -482,7 +483,11 @@ function JungleGameCompletionDialog({
                 }}
               >
                 <span className="animate-jungle-sway drop-shadow-lg">
-                  {["🌿", "🍃", "🌱", "🌾", "🪴"][Math.floor(Math.random() * 5)]}
+                  {
+                    ["🌿", "🍃", "🌱", "🌾", "🪴"][
+                      Math.floor(Math.random() * 5)
+                    ]
+                  }
                 </span>
               </div>
             ))}
@@ -499,7 +504,8 @@ function JungleGameCompletionDialog({
                   top: "0%",
                   width: "2px",
                   height: "100%",
-                  background: "linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.9), rgba(0, 60, 30, 0.7))",
+                  background:
+                    "linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.9), rgba(0, 60, 30, 0.7))",
                   animationName: "vine-sway",
                   animationDuration: `${2.5 + Math.random() * 1.5}s`,
                   animationTimingFunction: "ease-in-out",
@@ -519,7 +525,8 @@ function JungleGameCompletionDialog({
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  background: "radial-gradient(circle, rgba(255, 255, 0, 1), rgba(255, 215, 0, 0.5))",
+                  background:
+                    "radial-gradient(circle, rgba(255, 255, 0, 1), rgba(255, 215, 0, 0.5))",
                   boxShadow: "0 0 6px rgba(255, 255, 0, 0.8)",
                   animationName: "firefly-celebration",
                   animationDuration: `${3 + Math.random() * 2}s`,
@@ -560,11 +567,15 @@ function JungleGameCompletionDialog({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(34,197,94,0.2),transparent_60%)]" />
         </div>
         <DialogHeader className="text-center pb-2 relative z-10">
-          <div className="text-6xl mb-3 animate-jungle-celebration drop-shadow-2xl">🏆</div>
+          <div className="text-6xl mb-3 animate-jungle-celebration drop-shadow-2xl">
+            🏆
+          </div>
           <DialogTitle className="text-xl font-bold text-white drop-shadow-2xl bg-emerald-900/70 backdrop-blur-md rounded-lg px-4 py-2 border-2 border-yellow-400/60 shadow-2xl relative">
             {/* Magical glow effect behind text */}
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-yellow-300/30 to-yellow-400/20 rounded-lg blur-sm" />
-            <span className="relative z-10">🏆 🎉 Jungle Quest Complete! 🐒</span>
+            <span className="relative z-10">
+              🏆 🎉 Jungle Quest Complete! 🐒
+            </span>
           </DialogTitle>
           <DialogDescription className="text-emerald-100 text-sm drop-shadow-lg">
             Outstanding adventure! The monkey is so proud! 🍌
