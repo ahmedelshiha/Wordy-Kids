@@ -1369,7 +1369,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Adventure XP + Streak */}
-        <div className="mt-3 md:mt-6 relative z-10 mb-2 md:mb-4">
+        <div className="mt-3 md:mt-6 relative z-10 mb-1 md:mb-2">
           <div className="text-sm flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-yellow-300">
               <Mountain className="w-4 h-4" />
