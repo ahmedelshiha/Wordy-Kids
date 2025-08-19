@@ -2319,7 +2319,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   🌿
                                                 </div>
                                                 <div className="absolute -top-0.5 right-1 text-sm animate-gentle-bounce animation-delay-300">
-                                                  🦋
+                                                  ���
                                                 </div>
 
                                                 {/* Category Title */}
@@ -2996,9 +2996,9 @@ export default function Index({ initialProfile }: IndexProps) {
 
                             <TabsContent value="quiz">
                               {!showQuiz && !gameMode && !showMatchingGame ? (
-                                <div className="space-y-8">
+                                <div className="space-y-8 desktop-quiz-container">
                                   {/* Jungle Adventure Quiz Hero Section */}
-                                  <div className="jungle-quiz-hero">
+                                  <div className="jungle-quiz-hero desktop-optimized">
                                     {/* Jungle Vines Decoration */}
                                     <div className="jungle-vines"></div>
 
@@ -3071,7 +3071,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                   </div>
 
                                   {/* Jungle Adventure Quiz Expeditions */}
-                                  <div className="jungle-quiz-cards-container">
+                                  <div className="jungle-quiz-cards-container desktop-quiz-optimized">
                                     <div className="jungle-quiz-cards-grid">
                                       {/* Enchanted Garden Expedition */}
                                       <div className="jungle-quiz-card jungle-quiz-card-forest jungle-hover-effect">
@@ -3257,7 +3257,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                       </div>
 
-                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 jungle-achievements-grid">
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">

@@ -1,0 +1,336 @@
+/* Desktop Quiz Optimization Styles */
+
+/* ========== DESKTOP QUIZ OPTIMIZATION ========== */
+.desktop-optimized {
+  transition: all 0.3s ease;
+}
+
+.desktop-quiz-optimized {
+  margin-bottom: 1.5rem;
+}
+
+/* Overall quiz section spacing optimization */
+.desktop-quiz-container .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1.5rem;
+}
+@media (min-width: 1024px) {
+  /* Optimize hero section for desktop */
+  .jungle-quiz-hero {
+    padding: 2rem 2rem;
+    margin-bottom: 1.5rem;
+    max-height: 400px;
+  }
+
+  .jungle-quiz-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .jungle-quiz-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .jungle-quiz-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Brain icon optimization for desktop */
+  .jungle-quiz-hero-content .bg-gradient-to-r {
+    padding: 1rem 1.5rem;
+  }
+
+  .jungle-quiz-hero-content .w-12,
+  .jungle-quiz-hero-content .h-12 {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .jungle-quiz-hero-content .md\\:w-16,
+  .jungle-quiz-hero-content .md\\:h-16 {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  /* Compact AI Enhancement Notice */
+  .jungle-progress-container {
+    padding: 1rem 1.5rem;
+    margin: 1.5rem auto;
+    max-width: 600px;
+  }
+
+  /* Optimize quiz cards grid for desktop */
+  .jungle-quiz-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Compact quiz cards for desktop */
+  .jungle-quiz-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+    min-height: 320px;
+    max-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  /* Content area organization */
+  .jungle-quiz-card .jungle-quiz-card-icon + h3 + p {
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .jungle-quiz-card-icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .jungle-quiz-card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .jungle-quiz-card-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    flex-grow: 1;
+  }
+
+  .jungle-quiz-card-badges {
+    margin-bottom: 1rem;
+    gap: 0.4rem;
+  }
+
+  .jungle-quiz-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .jungle-quiz-button {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .jungle-quiz-button .w-5 {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Reduce hover effects for desktop precision */
+  .jungle-quiz-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  /* Compact creatures for desktop */
+  .jungle-creature {
+    font-size: 2rem;
+  }
+
+  /* Reduce floating leaves on desktop for cleaner look */
+  .jungle-leaves-float {
+    font-size: 1.2rem;
+    opacity: 0.4;
+  }
+
+  /* Compact achievements section */
+  .jungle-achievement-item {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .jungle-achievement-icon {
+    font-size: 1.5rem;
+  }
+
+  /* Progress section optimization */
+  .jungle-progress-container h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .jungle-progress-container p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Grid layout for achievements in desktop */
+  .jungle-achievements-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* ========== LARGE DESKTOP OPTIMIZATION ========== */
+@media (min-width: 1280px) {
+  /* Further optimize for large screens */
+  .jungle-quiz-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1200px;
+    gap: 1rem;
+  }
+
+  .jungle-quiz-card {
+    min-height: 300px;
+    padding: 1rem;
+  }
+
+  .jungle-quiz-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .jungle-quiz-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .jungle-quiz-card-description {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .jungle-quiz-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Ultra compact hero for large screens */
+  .jungle-quiz-hero {
+    padding: 1.5rem 2rem;
+    max-height: 350px;
+  }
+
+  .jungle-quiz-title {
+    font-size: 2.2rem;
+  }
+
+  .jungle-quiz-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* ========== DESKTOP HOVER OPTIMIZATIONS ========== */
+@media (min-width: 1024px) and (hover: hover) {
+  /* Enhanced hover states for mouse users */
+  .jungle-quiz-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .jungle-quiz-card:hover {
+    cursor: pointer;
+    box-shadow:
+      0 12px 40px rgba(76, 175, 80, 0.2),
+      0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .jungle-quiz-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+  }
+
+  /* Subtle hover effects for achievement items */
+  .jungle-achievement-item:hover {
+    transform: translateX(3px);
+    box-shadow: 0 2px 12px rgba(76, 175, 80, 0.1);
+  }
+}
+
+/* ========== DESKTOP PERFORMANCE OPTIMIZATIONS ========== */
+@media (min-width: 1024px) {
+  /* Optimize animations for desktop */
+  .jungle-creature {
+    animation-duration: 8s;
+    opacity: 0.6;
+  }
+
+  .jungle-leaves-float {
+    animation-duration: 12s;
+    opacity: 0.3;
+  }
+
+  /* Reduce motion for better performance on large screens */
+  .jungle-quiz-card::before {
+    transition: left 0.3s ease;
+  }
+
+  .jungle-quiz-button::before {
+    transition: left 0.3s ease;
+  }
+
+  /* Subtle icon animations */
+  .jungle-quiz-card-icon {
+    animation-duration: 4s;
+  }
+
+  /* Optimize glow effects */
+  .animate-jungle-glow {
+    animation-duration: 4s;
+  }
+}
+
+/* ========== DESKTOP ACCESSIBILITY ========== */
+@media (min-width: 1024px) {
+  /* Enhanced focus states for keyboard navigation */
+  .jungle-quiz-card:focus-within {
+    outline: 3px solid #4caf50;
+    outline-offset: 2px;
+  }
+
+  .jungle-quiz-button:focus {
+    outline: 2px solid #388e3c;
+    outline-offset: 2px;
+  }
+
+  /* Better text readability on larger screens */
+  .jungle-quiz-card-description {
+    line-height: 1.5;
+  }
+
+  /* Improved spacing for better reading */
+  .jungle-quiz-card-badges {
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  /* Typography optimizations for desktop */
+  .jungle-quiz-hero h2 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .jungle-quiz-hero p {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Compact spacing for achievement text */
+  .jungle-achievement-item .font-bold {
+    font-size: 0.95rem;
+  }
+
+  .jungle-achievement-item .text-sm {
+    font-size: 0.8rem;
+  }
+}
