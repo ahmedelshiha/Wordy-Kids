@@ -329,11 +329,11 @@ export function AvatarCustomization({
                   ))}
                 </div>
 
-                <div className="text-center bg-educational-blue/10 rounded-lg p-4">
-                  <p className="font-semibold text-educational-blue">
-                    Selected: {selectedAvatar.name} {selectedAvatar.emoji}
+                <div className="text-center bg-jungle/10 rounded-lg p-4 border-2 border-jungle/20">
+                  <p className="font-bold text-jungle font-['Baloo_2']">
+                    🎯 Selected: {selectedAvatar.name} {selectedAvatar.emoji}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-navy/70 font-['Baloo_2']">
                     {selectedAvatar.personality}
                   </p>
                 </div>
@@ -394,7 +394,7 @@ export function AvatarCustomization({
             {step === 4 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">❤️</div>
+                  <div className="text-6xl mb-4">��️</div>
                   <h2 className="text-2xl font-bold text-gray-800">
                     What do you love learning about?
                   </h2>
