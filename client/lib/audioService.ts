@@ -466,7 +466,17 @@ export class AudioService {
         this.speechSynthesis.speak(utterance);
       } catch (speakError) {
         console.error("Error calling speak:", speakError);
-        onError?.();
+        const speakCallError = {
+          type: 'speak_call_error',
+          word: word,
+          originalError: speakError instanceof Error ? {
+            name: speakError.name,
+            message: speakError.message,
+            stack: speakError.stack
+          } : speakError,
+          timestamp: new Date().toISOString()
+        };
+        onError?.(speakCallError);
       }
     } catch (error) {
       console.error("Error in pronounceWord:", error);
