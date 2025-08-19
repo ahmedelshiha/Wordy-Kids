@@ -165,7 +165,9 @@ export function EnhancedMagicalAdventureMenu({
         }
         setShowMoreMenu(false);
       },
-      gradient: isGuest ? "from-green-500 to-emerald-600" : "from-orange-500 to-red-600",
+      gradient: isGuest
+        ? "from-green-500 to-emerald-600"
+        : "from-orange-500 to-red-600",
       description: isGuest ? "Join the adventure" : "See you soon",
       category: "account",
     },
@@ -201,7 +203,7 @@ export function EnhancedMagicalAdventureMenu({
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20 backdrop-blur-sm"
               onClick={toggleMoreMenu}
             />
-            
+
             {/* Bottom-positioned menu */}
             <motion.div
               initial={{ y: "100%", opacity: 0 }}
@@ -224,33 +226,45 @@ export function EnhancedMagicalAdventureMenu({
                 {/* Magical background elements */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
                   <motion.div
-                    animate={{ 
-                      x: [0, 10, 0], 
+                    animate={{
+                      x: [0, 10, 0],
                       y: [0, -5, 0],
-                      rotate: [0, 5, 0]
+                      rotate: [0, 5, 0],
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     className="absolute top-2 left-4 text-2xl"
                   >
                     🌿
                   </motion.div>
                   <motion.div
-                    animate={{ 
-                      x: [0, -8, 0], 
+                    animate={{
+                      x: [0, -8, 0],
                       y: [0, 8, 0],
-                      rotate: [0, -3, 0]
+                      rotate: [0, -3, 0],
                     }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     className="absolute top-6 right-6 text-xl"
                   >
                     🦋
                   </motion.div>
                   <motion.div
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.1, 1],
-                      rotate: [0, 10, 0]
+                      rotate: [0, 10, 0],
                     }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     className="absolute bottom-2 left-8 text-lg"
                   >
                     🌺
@@ -259,20 +273,24 @@ export function EnhancedMagicalAdventureMenu({
 
                 <div className="text-center relative z-10">
                   <motion.div
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.2, 1],
-                      rotate: [0, 360, 0]
+                      rotate: [0, 360, 0],
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     className="inline-block text-3xl mb-3"
                   >
                     🌟
                   </motion.div>
-                  
+
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-2">
                     ✨ Magical Adventure Menu ✨
                   </h3>
-                  
+
                   <p className="text-sm text-purple-600 bg-white/80 px-4 py-2 rounded-full border-2 border-purple-200 inline-block">
                     🗺️ Choose your next adventure! 🌈
                   </p>
@@ -287,7 +305,11 @@ export function EnhancedMagicalAdventureMenu({
                       key={item.id}
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.1, type: "spring", stiffness: 300 }}
+                      transition={{
+                        delay: index * 0.1,
+                        type: "spring",
+                        stiffness: 300,
+                      }}
                     >
                       <Button
                         onClick={() => {
@@ -297,12 +319,12 @@ export function EnhancedMagicalAdventureMenu({
                         className={cn(
                           "group relative w-full h-24 bg-gradient-to-br",
                           item.gradient,
-                          "text-white border-0 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
+                          "text-white border-0 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden",
                         )}
                       >
                         {/* Shimmer effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                        
+
                         {/* Content */}
                         <div className="relative z-10 flex flex-col items-center justify-center gap-1">
                           <motion.div
@@ -312,30 +334,34 @@ export function EnhancedMagicalAdventureMenu({
                           >
                             {item.emoji}
                           </motion.div>
-                          
+
                           <span className="text-xs font-bold leading-tight text-center">
                             {item.label}
                           </span>
-                          
+
                           <span className="text-xs opacity-80 leading-tight text-center">
                             {item.description}
                           </span>
-                          
+
                           {item.badge && (
                             <Badge className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-xs min-w-[20px] h-5">
                               {item.badge}
                             </Badge>
                           )}
                         </div>
-                        
+
                         {/* Floating gradient emoji */}
                         <motion.div
                           className="absolute top-1 right-1 text-sm opacity-60"
-                          animate={{ 
+                          animate={{
                             y: [0, -3, 0],
-                            rotate: [0, 5, 0]
+                            rotate: [0, 5, 0],
                           }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
                         >
                           {item.gradientEmoji}
                         </motion.div>
@@ -351,21 +377,27 @@ export function EnhancedMagicalAdventureMenu({
                   onClick={toggleMoreMenu}
                   className="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold transition-all transform hover:scale-105 shadow-lg relative overflow-hidden group"
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-                  />
-                  
+                  <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <motion.span
                       animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     >
                       ✨
                     </motion.span>
                     Close Adventure Menu
                     <motion.span
                       animate={{ scale: [1, 1.2, 1] }}
-                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     >
                       🦋
                     </motion.span>
@@ -390,49 +422,61 @@ export function EnhancedMagicalAdventureMenu({
                   "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-300 relative min-w-0 flex-1 mx-1 group",
                   activeTab === tab.id
                     ? "bg-white/90 shadow-lg transform scale-105"
-                    : "hover:bg-white/30"
+                    : "hover:bg-white/30",
                 )}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {/* Enhanced emoji with gradient background */}
-                <div className={cn(
-                  "relative w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br",
-                  tab.gradient,
-                  tab.shadowColor,
-                  "shadow-lg group-hover:shadow-xl transition-all duration-300"
-                )}>
+                <div
+                  className={cn(
+                    "relative w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br",
+                    tab.gradient,
+                    tab.shadowColor,
+                    "shadow-lg group-hover:shadow-xl transition-all duration-300",
+                  )}
+                >
                   <motion.div
                     className="text-2xl"
-                    animate={selectedIcon === tab.id ? { 
-                      scale: [1, 1.3, 1],
-                      rotate: [0, 10, 0]
-                    } : {}}
+                    animate={
+                      selectedIcon === tab.id
+                        ? {
+                            scale: [1, 1.3, 1],
+                            rotate: [0, 10, 0],
+                          }
+                        : {}
+                    }
                     transition={{ duration: 0.3 }}
                   >
                     {tab.emoji}
                   </motion.div>
-                  
+
                   {/* Gradient emoji overlay */}
                   <motion.div
                     className="absolute -top-1 -right-1 text-xs"
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.2, 1],
-                      rotate: [0, 360, 0]
+                      rotate: [0, 360, 0],
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   >
                     {tab.gradientEmoji}
                   </motion.div>
                 </div>
 
                 {/* Enhanced label */}
-                <span className={cn(
-                  "text-xs font-bold leading-none text-center whitespace-nowrap transition-colors duration-300",
-                  activeTab === tab.id 
-                    ? "text-purple-700" 
-                    : "text-purple-600 group-hover:text-purple-700"
-                )}>
+                <span
+                  className={cn(
+                    "text-xs font-bold leading-none text-center whitespace-nowrap transition-colors duration-300",
+                    activeTab === tab.id
+                      ? "text-purple-700"
+                      : "text-purple-600 group-hover:text-purple-700",
+                  )}
+                >
                   {tab.label}
                 </span>
 
@@ -457,7 +501,7 @@ export function EnhancedMagicalAdventureMenu({
                 "flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-300 relative min-w-0 flex-1 mx-1 group",
                 showMoreMenu
                   ? "bg-white/90 shadow-lg transform scale-105"
-                  : "hover:bg-white/30"
+                  : "hover:bg-white/30",
               )}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -465,33 +509,43 @@ export function EnhancedMagicalAdventureMenu({
               <div className="relative w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-lg group-hover:shadow-xl transition-all duration-300">
                 <motion.div
                   className="text-2xl"
-                  animate={showMoreMenu ? { 
-                    rotate: [0, 180, 360],
-                    scale: [1, 1.2, 1]
-                  } : {}}
+                  animate={
+                    showMoreMenu
+                      ? {
+                          rotate: [0, 180, 360],
+                          scale: [1, 1.2, 1],
+                        }
+                      : {}
+                  }
                   transition={{ duration: 0.5 }}
                 >
                   🎪
                 </motion.div>
-                
+
                 <motion.div
                   className="absolute -top-1 -right-1 text-xs"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.3, 1],
-                    rotate: [0, -360, 0]
+                    rotate: [0, -360, 0],
                   }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 >
                   ✨
                 </motion.div>
               </div>
 
-              <span className={cn(
-                "text-xs font-bold leading-none text-center whitespace-nowrap transition-colors duration-300",
-                showMoreMenu 
-                  ? "text-purple-700" 
-                  : "text-purple-600 group-hover:text-purple-700"
-              )}>
+              <span
+                className={cn(
+                  "text-xs font-bold leading-none text-center whitespace-nowrap transition-colors duration-300",
+                  showMoreMenu
+                    ? "text-purple-700"
+                    : "text-purple-600 group-hover:text-purple-700",
+                )}
+              >
                 More
               </span>
 
