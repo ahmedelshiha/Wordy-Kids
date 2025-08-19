@@ -854,9 +854,10 @@ export default function WordGarden({
                 style={{
                   left: `${10 + i * 12}%`,
                   top: `-10%`,
-                  width: '2px',
-                  height: '120%',
-                  background: 'linear-gradient(to bottom, rgba(255, 215, 0, 0.6), rgba(255, 235, 59, 0.3), transparent)',
+                  width: "2px",
+                  height: "120%",
+                  background:
+                    "linear-gradient(to bottom, rgba(255, 215, 0, 0.6), rgba(255, 235, 59, 0.3), transparent)",
                   transform: `rotate(${-20 + i * 5}deg)`,
                   animation: `sunlight-shimmer ${4 + Math.random() * 2}s ease-in-out infinite`,
                   animationDelay: `${i * 0.5}s`,
@@ -880,7 +881,7 @@ export default function WordGarden({
                 }}
               >
                 <span className="animate-jungle-sway drop-shadow-lg">
-                  {['🌿', '🍃', '🌱', '🌾'][Math.floor(Math.random() * 4)]}
+                  {["🌿", "🍃", "🌱", "🌾"][Math.floor(Math.random() * 4)]}
                 </span>
               </div>
             ))}
@@ -894,10 +895,11 @@ export default function WordGarden({
                 className="absolute opacity-40"
                 style={{
                   left: `${i * 12.5}%`,
-                  top: '0%',
-                  width: '3px',
-                  height: '100%',
-                  background: 'linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.8), rgba(0, 60, 30, 0.6))',
+                  top: "0%",
+                  width: "3px",
+                  height: "100%",
+                  background:
+                    "linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.8), rgba(0, 60, 30, 0.6))",
                   animation: `vine-sway ${3 + Math.random() * 2}s ease-in-out infinite`,
                   animationDelay: `${i * 0.3}s`,
                 }}
@@ -914,8 +916,9 @@ export default function WordGarden({
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  background: 'radial-gradient(circle, rgba(255, 255, 0, 0.9), rgba(255, 215, 0, 0.4))',
-                  boxShadow: '0 0 8px rgba(255, 255, 0, 0.6)',
+                  background:
+                    "radial-gradient(circle, rgba(255, 255, 0, 0.9), rgba(255, 215, 0, 0.4))",
+                  boxShadow: "0 0 8px rgba(255, 255, 0, 0.6)",
                   animation: `firefly-dance ${4 + Math.random() * 3}s ease-in-out infinite`,
                   animationDelay: `${Math.random() * 4}s`,
                 }}
@@ -938,7 +941,7 @@ export default function WordGarden({
                 }}
               >
                 <span className="drop-shadow-md">
-                  {['🍃', '🌿', '🍂'][Math.floor(Math.random() * 3)]}
+                  {["🍃", "🌿", "🍂"][Math.floor(Math.random() * 3)]}
                 </span>
               </div>
             ))}
@@ -1276,7 +1279,9 @@ export default function WordGarden({
                 }`}
               >
                 <span className="text-xl drop-shadow-lg">🌿</span>
-                <span className="text-xs font-bold drop-shadow-md">Explorer</span>
+                <span className="text-xs font-bold drop-shadow-md">
+                  Explorer
+                </span>
                 {xpPct >= 50 && (
                   <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
                 )}
@@ -1406,23 +1411,33 @@ export default function WordGarden({
         <div className="flex justify-between mt-6 px-3 gap-1">
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-lg mb-1 drop-shadow-lg">🚀</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">Start</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Start
+            </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-lg mb-1 drop-shadow-lg">🌿</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">Jungle</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Jungle
+            </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-lg mb-1 drop-shadow-lg">🏔️</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">Peak</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Peak
+            </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-lg mb-1 drop-shadow-lg">🏆</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">Victory</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Victory
+            </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-lg mb-1 drop-shadow-lg">👑</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">Legend</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Legend
+            </span>
           </div>
         </div>
       </div>
