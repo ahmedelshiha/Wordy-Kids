@@ -463,7 +463,7 @@ function JungleGameCompletionDialog({
             </div>
             <div className="flex-1">
               <div className="text-3xl">
-                {accuracy >= 90 ? "👑" : accuracy >= 75 ? "🏖️" : "🌟"}
+                {accuracy >= 90 ? "��" : accuracy >= 75 ? "🏖️" : "🌟"}
               </div>
               <div className="text-lg font-bold text-white">{accuracy}%</div>
               <div className="text-xs text-jungle-light">Adventure Score</div>
@@ -796,12 +796,12 @@ export default function WordGarden({
   if (loading)
     return (
       <Wrapper className={className}>
-        <div className="rounded-3xl bg-gradient-to-br from-jungle-light to-jungle-DEFAULT p-8 shadow-xl text-center border-2 border-jungle-light/30">
-          <div className="text-6xl mb-4 animate-jungle-float">🐒</div>
-          <div className="font-bold text-white text-lg drop-shadow-lg">
+        <div className="rounded-3xl bg-gradient-to-br from-jungle-light to-jungle-DEFAULT p-4 md:p-8 shadow-xl text-center border-2 border-jungle-light/30">
+          <div className="text-4xl md:text-6xl mb-2 md:mb-4 animate-jungle-float">🐒</div>
+          <div className="font-bold text-white text-base md:text-lg drop-shadow-lg">
             Growing your jungle words…
           </div>
-          <div className="text-sm text-jungle-light mt-2">
+          <div className="text-xs md:text-sm text-jungle-light mt-1 md:mt-2">
             The monkey is preparing your adventure!
           </div>
         </div>
