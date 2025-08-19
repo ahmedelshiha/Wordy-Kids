@@ -172,7 +172,7 @@ export function MobileBottomNav({
       {showMoreMenu && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={onMoreToggle}
           />
           <div className="absolute bottom-16 left-2 right-2 bg-gradient-to-br from-white via-jungle-light/90 to-sunshine-yellow/95 backdrop-blur-sm rounded-3xl shadow-2xl p-5 border-4 border-jungle max-h-[75vh] overflow-y-auto animate-kid-pulse-glow relative">
