@@ -2070,21 +2070,11 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <div className="sticky top-6">
-                            <Card className="bg-card text-card-foreground shadow-sm backdrop-blur-sm ring-1 ring-black/5">
-                              <ChildProfileSidebar
-                                profile={currentProfile}
-                                stats={enhancedChildStats}
-                                isCollapsed={isSidebarCollapsed}
-                                onToggleCollapse={handleSidebarToggle}
-                                onProfileEdit={handleProfileEdit}
-                                onQuickAction={handleQuickAction}
-                                onLogout={handleSidebarLogout}
-                                showTimeOfDay={true}
-                                showWeeklyProgress={true}
-                                position="left"
-                                className="border-none shadow-none bg-transparent"
-                              />
-                            </Card>
+                            <JungleAdventureSidebar
+                              profile={currentProfile}
+                              stats={enhancedChildStats}
+                              className="border-none shadow-none"
+                            />
                           </div>
                         </div>
 
@@ -2992,7 +2982,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                           <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                            🎵🔊 Audio!
+                                            ����🔊 Audio!
                                           </span>
                                         </div>
                                         <Button
@@ -3505,7 +3495,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["���", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["���", "���", "⭐", "💫", "🔮", "���", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
