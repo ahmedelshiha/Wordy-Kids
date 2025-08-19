@@ -26,6 +26,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Jungle Adventure Word Card Styles */
+@import './styles/jungle-adventure-word-card.css';
+
 @layer utilities {
   /* Custom scrollbar styles */
   .scrollbar-thin {
