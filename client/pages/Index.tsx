@@ -2569,7 +2569,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                             <>
                                               {displayWords.length > 0 && (
                                                 <>
-
                                                   <div
                                                     className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
                                                       celebrationEffect &&
