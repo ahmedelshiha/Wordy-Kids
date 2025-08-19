@@ -19,6 +19,7 @@ import {
   Info,
 } from "lucide-react";
 import { EnhancedJungleQuizAdventure } from "./EnhancedJungleQuizAdventure";
+import { EnhancedJungleQuizAdventureDesktop } from "./EnhancedJungleQuizAdventureDesktop";
 import { AdventureGames } from "./AdventureGames";
 import { QuizGames } from "./QuizGames";
 import { WordGarden } from "./WordGarden";
