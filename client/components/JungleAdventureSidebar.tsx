@@ -391,7 +391,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         </motion.div>
 
         {/* Scrollable Progress Section - Takes available space but allows scrolling */}
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1">
+        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1 mt-3">
           <div className="space-y-3">
             {/* Learned Words Card - Compact version */}
             <motion.div
