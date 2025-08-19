@@ -3025,7 +3025,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Play! ���
+                                          Let's Play! ����
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3364,20 +3364,6 @@ export default function Index({ initialProfile }: IndexProps) {
                           </Tabs>
                         </div>
 
-                        {/* Streak Side Card - Desktop Only */}
-                        <div className="hidden lg:block w-80 flex-shrink-0">
-                          <StreakSideCard
-                            progressData={{
-                              wordsLearned: rememberedWords.size,
-                              currentStreak: learningStats?.currentStreak || 0,
-                              totalPoints: learningStats?.totalPoints || 0,
-                              level: learningStats?.level || 1,
-                            }}
-                            onDismiss={() => {
-                              console.log("Side card dismissed");
-                            }}
-                          />
-                        </div>
                       </div>
                     </div>
                   </div>
