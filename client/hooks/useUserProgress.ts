@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { GoalProgressTracker } from "@/lib/goalProgressTracker";
+import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { AnalyticsDataService } from "@/lib/analyticsDataService";
 
