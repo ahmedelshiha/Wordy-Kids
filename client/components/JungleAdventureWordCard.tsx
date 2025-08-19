@@ -618,7 +618,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "hard" &&
                               "ring-3 ring-red-300 scale-105 border-red-300",
                             showCelebration &&
@@ -649,7 +649,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "medium" &&
                               "ring-3 ring-yellow-300 scale-105 border-yellow-300",
                             showCelebration &&
@@ -682,7 +682,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "easy" &&
                               "ring-3 ring-green-300 scale-105 border-green-300",
                             showCelebration &&
