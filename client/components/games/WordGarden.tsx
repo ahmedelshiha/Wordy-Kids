@@ -58,7 +58,7 @@ export type FetchParams = {
   optionsPerRound: number;
 };
 
-export type WordGardenGameProps = {
+export type WordGardenProps = {
   // CONTENT
   rounds?: number; // default 8
   optionsPerRound?: 3 | 4; // default 3 for ages 3–5
@@ -171,7 +171,7 @@ const PLANT_TYPES = [
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
-  ["🌱", "���", "🌻"], // wheat sunflower - grain field to sunflower
+  ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
   ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
@@ -506,7 +506,7 @@ function JungleGameCompletionDialog({
 }
 
 // ---------- Main Jungle Adventure Component ----------
-export default function JungleWordGardenGame({
+export default function WordGarden({
   rounds = 10,
   optionsPerRound = 3,
   difficulty = "easy",
@@ -516,7 +516,7 @@ export default function JungleWordGardenGame({
   onExit,
   showExitDialog = false,
   onCloseExitDialog,
-}: WordGardenGameProps) {
+}: WordGardenProps) {
   const sessionId = useMemo(() => uuid(), []);
 
   const [loading, setLoading] = useState(true);
