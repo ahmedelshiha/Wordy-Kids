@@ -395,10 +395,10 @@ export function AvatarCustomization({
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-6xl mb-4">❤️</div>
-                  <h2 className="text-2xl font-bold text-gray-800">
+                  <h2 className="text-2xl font-bold text-navy font-['Baloo_2']">
                     What do you love learning about?
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-navy/70 font-['Baloo_2']">
                     Pick your favorite topics! (Choose as many as you like)
                   </p>
                 </div>
@@ -409,14 +409,14 @@ export function AvatarCustomization({
                       key={interest.id}
                       className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
                         selectedInterests.includes(interest.id)
-                          ? "ring-4 ring-educational-green bg-gradient-to-br from-green-50 to-blue-50"
+                          ? "ring-4 ring-jungle bg-gradient-to-br from-jungle-light/30 to-sunshine-light/30"
                           : "hover:shadow-lg"
                       }`}
                       onClick={() => handleInterestToggle(interest.id)}
                     >
                       <CardContent className="p-3 text-center">
                         <div className="text-3xl mb-1">{interest.emoji}</div>
-                        <div className="text-sm font-semibold text-gray-800">
+                        <div className="text-sm font-semibold text-navy font-['Baloo_2']">
                           {interest.name}
                         </div>
                       </CardContent>
@@ -425,9 +425,9 @@ export function AvatarCustomization({
                 </div>
 
                 {selectedInterests.length > 0 && (
-                  <div className="text-center bg-educational-green/10 rounded-lg p-4">
-                    <p className="font-semibold text-educational-green mb-2">
-                      Great choices! You'll love learning about:
+                  <div className="text-center bg-jungle/10 rounded-lg p-4 border-2 border-jungle/20">
+                    <p className="font-bold text-jungle mb-2 font-['Baloo_2']">
+                      🎆 Great choices! You'll love learning about:
                     </p>
                     <div className="flex flex-wrap justify-center gap-2">
                       {selectedInterests.map((interestId) => {
@@ -438,7 +438,7 @@ export function AvatarCustomization({
                           <Badge
                             key={interestId}
                             variant="secondary"
-                            className="bg-educational-green/20 text-educational-green"
+                            className="bg-jungle/20 text-jungle font-['Baloo_2'] font-semibold"
                           >
                             {interest?.emoji} {interest?.name}
                           </Badge>
