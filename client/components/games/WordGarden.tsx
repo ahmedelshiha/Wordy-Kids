@@ -172,7 +172,7 @@ const PLANT_TYPES = [
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
-  ["🌱", "🌳", "���"], // cherry tree - tree to cherry blossom
+  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
@@ -1147,7 +1147,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Adventure XP + Streak */}
-        <div className="mt-6 relative z-10">
+        <div className="mt-6 relative z-10 mb-8">
           <div className="text-sm flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-sunshine-dark">
               <Mountain className="w-4 h-4" />
@@ -1159,7 +1159,7 @@ export default function WordGarden({
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative mb-6">
             <div className="h-4 rounded-full bg-gray-200 overflow-hidden border border-gray-300">
               <div
                 className="h-4 rounded-full bg-gradient-to-r from-jungle-DEFAULT via-jungle-light to-sunshine-DEFAULT transition-all duration-700 ease-out relative overflow-hidden"
@@ -1177,27 +1177,31 @@ export default function WordGarden({
               </div>
             </div>
 
-            {/* Jungle adventure level indicators */}
-            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-gray-600">
+            {/* Jungle adventure level indicators - repositioned to avoid overflow */}
+            <div className="flex justify-between text-xs text-gray-600 mt-3 px-1">
               <span
-                className={`flex items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                🌱 Sprout
+                <span className="text-base">🌱</span>
+                <span className="text-xs">Sprout</span>
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                🌿 Explorer
+                <span className="text-base">🌿</span>
+                <span className="text-xs">Explorer</span>
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                🌳 Ranger
+                <span className="text-base">🌳</span>
+                <span className="text-xs">Ranger</span>
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
               >
-                👑 Legend
+                <span className="text-base">👑</span>
+                <span className="text-xs">Legend</span>
               </span>
             </div>
           </div>
