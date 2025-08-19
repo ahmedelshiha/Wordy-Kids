@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
 import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
+import { EnhancedMagicalMenuDemo } from "./components/EnhancedMagicalMenuDemo";
 import {
   WordDatabaseNotifications,
   CompactWordDatabaseNotifications,
@@ -111,6 +112,10 @@ const App = () => {
                   element={<AIWordRecommendationDemo />}
                 />
                 <Route path="/ai-system-test" element={<AISystemTest />} />
+                <Route
+                  path="/enhanced-magical-menu-demo"
+                  element={<EnhancedMagicalMenuDemo />}
+                />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

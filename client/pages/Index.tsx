@@ -69,7 +69,7 @@ import { ParentDashboard } from "@/components/ParentDashboard";
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { DesktopKidNav } from "@/components/DesktopKidNav";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
@@ -3405,31 +3405,25 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Mobile Bottom Navigation - Show for both child and parent modes */}
+          {/* Enhanced Magical Adventure Menu - Show for both child and parent modes */}
           {showBottomNav && (
-            <MobileBottomNav
+            <EnhancedMagicalAdventureMenu
               activeTab={userRole === "parent" ? "" : activeTab}
               onTabChange={(tab) => {
                 setUserRole("child");
                 setActiveTab(tab);
-                setShowMobileMoreMenu(false);
               }}
               onSettingsClick={() => {
                 setShowSettings(true);
-                setShowMobileMoreMenu(false);
               }}
               onParentClick={() => {
                 setUserRole("parent");
-                setShowMobileMoreMenu(false);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               onAdminClick={() => {
                 navigate("/admin");
-                setShowMobileMoreMenu(false);
               }}
-              showMoreMenu={showMobileMoreMenu}
               userRole={userRole}
-              onMoreToggle={() => setShowMobileMoreMenu(!showMobileMoreMenu)}
               achievementCount={
                 learningStats.badges.filter((b) => b.earned).length
               }
