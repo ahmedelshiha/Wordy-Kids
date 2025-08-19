@@ -437,7 +437,7 @@ function JungleGameCompletionDialog({
         <DialogHeader className="text-center pb-2">
           <div className="text-6xl mb-3 animate-jungle-celebration">🏆</div>
           <DialogTitle className="text-xl font-bold text-white drop-shadow-lg">
-            🎉 Jungle Quest Complete! 🐒
+            🎉 Jungle Quest Complete! ����
           </DialogTitle>
           <DialogDescription className="text-jungle-light text-sm">
             Outstanding adventure! The monkey is so proud! 🍌
@@ -876,15 +876,15 @@ export default function WordGarden({
         {/* Jungle Adventure Top Bar */}
         <div className="mb-4 relative z-10">
           <div className="flex items-center justify-between text-sm mb-2">
-            <div className="flex items-center gap-2 bg-jungle-dark/40 rounded-full px-3 py-1 backdrop-blur-sm border border-jungle-light/20">
-              <TreePine className="w-4 h-4 text-jungle-light" />
-              <span className="text-sunshine-light font-semibold">
+            <div className="flex items-center gap-2 bg-jungle-DEFAULT/10 rounded-full px-3 py-1 border border-jungle-DEFAULT/20">
+              <TreePine className="w-4 h-4 text-jungle-DEFAULT" />
+              <span className="text-jungle-dark font-semibold">
                 Seed {roundIdx + 1} / {pool.length}
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-sunshine-dark/40 rounded-full px-3 py-1 backdrop-blur-sm border border-sunshine-light/20">
-              <Zap className="w-4 h-4 text-sunshine-light" />
-              <span className="text-sunshine-light font-semibold">
+            <div className="flex items-center gap-2 bg-sunshine-DEFAULT/10 rounded-full px-3 py-1 border border-sunshine-DEFAULT/20">
+              <Zap className="w-4 h-4 text-sunshine-dark" />
+              <span className="text-sunshine-dark font-semibold">
                 Streak: {bestStreak}
               </span>
             </div>
