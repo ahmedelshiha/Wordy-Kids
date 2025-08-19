@@ -82,7 +82,7 @@ export function EnhancedMagicalAdventureMenu({
       description: "Test your knowledge",
     },
     {
-      id: "achievements",
+      id: "progress",
       emoji: "🏆",
       gradientEmoji: "🌟",
       label: "Trophies",
