@@ -647,88 +647,58 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         )}
       </motion.div>
 
-      {/* Mobile responsive layout - show as bottom sheet style */}
-      <div className="lg:hidden w-full bg-gradient-to-r from-green-50/95 to-emerald-50/95 backdrop-blur-sm rounded-[16px] shadow-lg border border-jungle/10 p-3">
+      {/* MOBILE LAYOUT - Only visible on small screens */}
+      <div className="lg:hidden w-full max-w-full bg-gradient-to-r from-green-50/95 to-emerald-50/95 backdrop-blur-sm rounded-[12px] shadow-lg border border-jungle/10 p-2 overflow-hidden">
 
-        {/* Mobile profile header - compact horizontal layout */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full border-2 border-profile-purple/30 flex items-center justify-center bg-profile-purple/10">
-              <span className="text-lg">{userData.avatar?.emoji || "🎯"}</span>
+        {/* Mobile profile header - ultra compact */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center space-x-2 min-w-0 flex-1">
+            <div className="w-8 h-8 rounded-full border border-profile-purple/30 flex items-center justify-center bg-profile-purple/10 flex-shrink-0">
+              <span className="text-sm">{userData.avatar?.emoji || "🎯"}</span>
             </div>
-            <div>
-              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate max-w-[120px]">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-navy font-['Baloo_2'] text-[12px] font-bold truncate">
                 {userData.name}
               </h3>
-              <p className="text-navy/70 font-['Baloo_2'] text-[11px]">
-                Level {userData.level} • {userData.streak}🔥
+              <p className="text-navy/70 font-['Baloo_2'] text-[9px] truncate">
+                Lv.{userData.level} • {userData.streak}🔥 • {userData.stats.wordsLearned} words
               </p>
             </div>
           </div>
 
-          {/* Mobile quick stats */}
-          <div className="flex space-x-2">
-            <div className="bg-jungle/10 rounded-lg px-2 py-1 text-center">
-              <p className="text-jungle font-['Baloo_2'] text-[10px] font-bold">{userData.stats.wordsLearned}</p>
-              <p className="text-jungle/70 font-['Baloo_2'] text-[8px]">Words</p>
-            </div>
-            <div className="bg-bright-orange/10 rounded-lg px-2 py-1 text-center">
-              <p className="text-bright-orange font-['Baloo_2'] text-[10px] font-bold">{userData.stats.animalsLearned}</p>
-              <p className="text-bright-orange/70 font-['Baloo_2'] text-[8px]">Animals</p>
-            </div>
+          {/* Mobile action button - always visible */}
+          <div className="flex-shrink-0 ml-2">
+            {isGuest ? (
+              <Button
+                onClick={handleRegistration}
+                className="bg-jungle hover:bg-jungle-dark text-white font-['Baloo_2'] text-[10px] font-bold px-2 py-1 rounded-[10px] shadow-sm transition-all duration-200 whitespace-nowrap"
+              >
+                Join
+              </Button>
+            ) : (
+              <Button
+                onClick={handleLogout}
+                className="bg-slate-500 hover:bg-slate-600 text-white font-['Baloo_2'] text-[10px] font-bold px-2 py-1 rounded-[10px] shadow-sm transition-all duration-200"
+              >
+                Exit
+              </Button>
+            )}
           </div>
         </div>
 
-        {/* Mobile Registration CTA - Compact version */}
+        {/* Mobile mini benefits - only for guests, ultra compact */}
         {isGuest && (
-          <div className="bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[12px] p-3 relative overflow-hidden">
+          <div className="bg-sunshine/20 rounded-[8px] p-1.5 mt-1">
             <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0">
-                <h4 className="text-navy font-['Baloo_2'] text-[13px] font-bold mb-1">
-                  🌟 Join the Adventure!
-                </h4>
-                <p className="text-navy/80 font-['Baloo_2'] text-[10px] truncate">
-                  💾 Save progress • 🏆 Earn badges
-                </p>
-              </div>
-              <div className="flex-shrink-0 ml-3">
-                <Button
-                  onClick={handleRegistration}
-                  className="bg-jungle hover:bg-jungle-dark text-white font-['Baloo_2'] text-[11px] font-bold px-3 py-1.5 rounded-[16px] shadow-md transition-all duration-200"
-                >
-                  Sign Up
-                </Button>
-              </div>
-            </div>
-
-            {/* Mobile continue as guest - smaller */}
-            <button
-              onClick={handleContinueAsGuest}
-              className="text-navy/70 font-['Baloo_2'] text-[9px] mt-1 underline hover:no-underline transition-all duration-200"
-            >
-              Continue as Guest
-            </button>
-          </div>
-        )}
-
-        {/* Non-guest mobile version */}
-        {!isGuest && (
-          <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-[12px] p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="text-navy font-['Baloo_2'] text-[13px] font-bold">
-                  🎉 Great to see you!
-                </h4>
-                <p className="text-navy/70 font-['Baloo_2'] text-[10px]">
-                  Keep learning and exploring!
-                </p>
-              </div>
-              <Button
-                onClick={handleLogout}
-                className="bg-slate-500 hover:bg-slate-600 text-white font-['Baloo_2'] text-[11px] font-bold px-3 py-1.5 rounded-[16px] shadow-md transition-all duration-200"
+              <p className="text-navy/80 font-['Baloo_2'] text-[8px] font-medium truncate flex-1">
+                💾 Save • 🏆 Badges • 🔥 Streaks
+              </p>
+              <button
+                onClick={handleContinueAsGuest}
+                className="text-navy/60 font-['Baloo_2'] text-[8px] ml-2 underline hover:no-underline transition-all duration-200 flex-shrink-0"
               >
-                Logout
-              </Button>
+                Skip
+              </button>
             </div>
           </div>
         )}
