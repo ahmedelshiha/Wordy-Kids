@@ -129,7 +129,8 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       className={cn(
         "w-[280px] h-[calc(100vh-80px)] flex flex-col",
         "bg-light-background/95 backdrop-blur-sm relative rounded-[24px] shadow-xl",
-        "p-5 space-y-5 overflow-hidden",
+        "p-4 space-y-3 overflow-y-auto overflow-x-hidden",
+        "scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent",
         className,
       )}
     >
