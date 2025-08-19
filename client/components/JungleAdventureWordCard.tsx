@@ -475,11 +475,11 @@ export const JungleAdventureWordCard: React.FC<
 
             {/* Jungle Adventure Flip Hint */}
             <div className="mt-1 sm:mt-2 text-center px-2 sm:px-4">
-              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border border-white/30 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mx-auto max-w-[95%] sm:max-w-none animate-gentle-bounce shadow-lg">
-                <p className="text-xs sm:text-sm opacity-95 leading-tight font-bold jungle-adventure-hint text-center flex items-center justify-center gap-1">
+              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border border-white/30 rounded-full px-2 py-1 sm:px-4 sm:py-2 mx-auto max-w-[280px] sm:max-w-[320px] md:max-w-none animate-gentle-bounce shadow-lg">
+                <p className="text-xs sm:text-sm opacity-95 leading-tight font-bold jungle-adventure-hint text-center flex items-center justify-center gap-1 overflow-hidden">
                   <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin-slow flex-shrink-0" />
-                  <span className="truncate">
-                    Explore the jungle secrets! 🌿✨
+                  <span className="truncate max-w-[180px] sm:max-w-[220px] md:max-w-none">
+                    Explore jungle secrets! 🌿✨
                   </span>
                 </p>
               </div>
@@ -606,9 +606,9 @@ export const JungleAdventureWordCard: React.FC<
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                       {/* Jungle Challenging */}
-                      <div className="flex flex-col items-center space-y-2">
+                      <div className="flex flex-col items-center space-y-1">
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -618,28 +618,25 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-10 sm:h-12 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-2 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "hard" &&
-                              "ring-3 ring-red-300 scale-105 border-red-300",
+                              "ring-2 ring-red-300 scale-105 border-red-300",
                             showCelebration &&
                               ratedAs === "hard" &&
                               "jungle-celebration-glow",
                           )}
-                          aria-label="Jungle was challenging - need more exploration"
+                          aria-label="Get hint"
                         >
-                          <div className="flex items-center gap-1">
-                            <Mountain className="w-4 h-4" />
-                            <span className="text-xl animate-bounce">😰</span>
+                          <div className="flex items-center gap-0.5">
+                            <Mountain className="w-3 h-3" />
+                            <span className="text-sm animate-bounce">💡</span>
                           </div>
-                          <span className="text-xs font-bold">Tough Trek</span>
+                          <span className="text-xs font-bold truncate">Hint</span>
                         </Button>
-                        <p className="text-xs text-white/80 text-center leading-tight hidden sm:block">
-                          Need more exploring!
-                        </p>
                       </div>
 
                       {/* Jungle Good */}
-                      <div className="flex flex-col items-center space-y-2">
+                      <div className="flex flex-col items-center space-y-1">
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -649,30 +646,27 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-10 sm:h-12 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-2 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "medium" &&
-                              "ring-3 ring-yellow-300 scale-105 border-yellow-300",
+                              "ring-2 ring-yellow-300 scale-105 border-yellow-300",
                             showCelebration &&
                               ratedAs === "medium" &&
                               "jungle-celebration-glow",
                           )}
                           aria-label="Good jungle exploration - getting there"
                         >
-                          <div className="flex items-center gap-1">
-                            <Sun className="w-4 h-4 animate-pulse" />
-                            <span className="text-xl animate-gentle-bounce">
+                          <div className="flex items-center gap-0.5">
+                            <Sun className="w-3 h-3 animate-pulse" />
+                            <span className="text-sm animate-gentle-bounce">
                               🤔
                             </span>
                           </div>
-                          <span className="text-xs font-bold">Good Path</span>
+                          <span className="text-xs font-bold truncate">Okay</span>
                         </Button>
-                        <p className="text-xs text-white/80 text-center leading-tight hidden sm:block">
-                          On the right trail!
-                        </p>
                       </div>
 
                       {/* Jungle Master */}
-                      <div className="flex flex-col items-center space-y-2">
+                      <div className="flex flex-col items-center space-y-1">
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -682,26 +676,23 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-10 sm:h-12 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-2 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "easy" &&
-                              "ring-3 ring-green-300 scale-105 border-green-300",
+                              "ring-2 ring-green-300 scale-105 border-green-300",
                             showCelebration &&
                               ratedAs === "easy" &&
                               "ring-2 ring-green-300/50 animate-pulse",
                           )}
-                          aria-label="Mastered jungle word - expert explorer"
+                          aria-label="I remember this word"
                         >
-                          <div className="flex items-center gap-1">
-                            <Crown className="w-4 h-4 animate-sparkle" />
-                            <span className="text-xl animate-celebration-sparkles">
-                              🎉
+                          <div className="flex items-center gap-0.5">
+                            <Crown className="w-3 h-3 animate-sparkle" />
+                            <span className="text-sm animate-celebration-sparkles">
+                              ✅
                             </span>
                           </div>
-                          <span className="text-xs font-bold">Explorer!</span>
+                          <span className="text-xs font-bold truncate">Got it!</span>
                         </Button>
-                        <p className="text-xs text-white/80 text-center leading-tight hidden sm:block">
-                          Jungle Master!
-                        </p>
                       </div>
                     </div>
 
