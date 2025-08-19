@@ -2381,7 +2381,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                         {/* Desktop/Tablet: Compact Jungle Adventure Layout */}
                                         <div className="hidden sm:block">
-                                          <div className="flex items-center justify-center w-full mb-3">
+                                          <div className="flex items-center justify-center w-full mb-1">
                                             {/* Compact Centered Jungle Adventure Header */}
                                             <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle-dark rounded-2xl px-6 py-3 shadow-xl border-2 border-sunshine/40 backdrop-blur-lg max-w-4xl w-full mx-auto">
                                               {/* Subtle Jungle Decorations */}
@@ -2520,7 +2520,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           </div>
 
                                           {/* Desktop Action Buttons Row */}
-                                          <div className="flex items-center justify-center gap-4 mb-2">
+                                          <div className="flex items-center justify-center gap-3 mb-1">
                                             <div className="flex-shrink-0 flex gap-2">
                                               <Button
                                                 onClick={() => {
@@ -2807,7 +2807,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                             }
                                                           }
                                                         }}
-                                                        className="flex-1 bg-sunshine hover:bg-sunshine-dark text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
+                                                        className="flex-1 bg-sunshine hover:bg-sunshine-dark text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-2 sm:py-3 px-3 sm:px-5 min-h-[48px] sm:min-h-[52px] relative overflow-hidden text-sm sm:text-base"
                                                         disabled={
                                                           isLoadingProgress
                                                         }
@@ -2961,7 +2961,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                             }
                                                           }
                                                         }}
-                                                        className="flex-1 bg-jungle hover:bg-jungle-dark text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-3 sm:py-4 px-3 sm:px-6 min-h-[56px] sm:min-h-[60px] relative overflow-hidden text-sm sm:text-base"
+                                                        className="flex-1 bg-jungle hover:bg-jungle-dark text-white font-bold border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 py-2 sm:py-3 px-3 sm:px-5 min-h-[48px] sm:min-h-[52px] relative overflow-hidden text-sm sm:text-base"
                                                         disabled={
                                                           isLoadingProgress
                                                         }
