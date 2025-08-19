@@ -942,16 +942,16 @@ export default function WordGarden({
             </div>
 
             {/* Adventure path indicators */}
-            <div className="absolute bottom-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-sunshine-DEFAULT/30 to-transparent rounded-full animate-jungle-glow" />
+            <div className="absolute bottom-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-sunshine-DEFAULT/30 to-transparent rounded-full animate-jungle-mystical" />
           </div>
 
           {/* Enhanced jungle creatures and ambient life */}
           <div className="absolute inset-0">
             {/* Jungle monkeys in trees */}
-            <div className="absolute top-4 right-8 animate-jungle-float" style={{ animationDelay: '0s' }}>
+            <div className="absolute top-4 right-8 animate-jungle-creature" style={{ animationDelay: '0s' }}>
               <span className="text-2xl drop-shadow-lg">🐒</span>
             </div>
-            <div className="absolute top-12 left-12 animate-jungle-float" style={{ animationDelay: '2s' }}>
+            <div className="absolute top-12 left-12 animate-jungle-creature" style={{ animationDelay: '2s' }}>
               <span className="text-lg opacity-70 drop-shadow-lg">🦜</span>
             </div>
 
@@ -959,7 +959,7 @@ export default function WordGarden({
             {Array.from({ length: 3 }, (_, i) => (
               <div
                 key={`butterfly-${i}`}
-                className="absolute animate-jungle-float"
+                className="absolute animate-jungle-firefly"
                 style={{
                   left: `${30 + i * 25}%`,
                   top: `${20 + Math.sin(i) * 15}%`,
