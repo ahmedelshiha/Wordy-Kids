@@ -414,16 +414,30 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", event);
-        console.error("Error details:", {
+        console.error("Speech synthesis error:", {
           error: event.error,
           message: event.message,
+          eventType: event.type,
           word: word,
           voice: voice?.name,
+          voiceURI: voice?.voiceURI,
           rate,
           pitch,
           volume,
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent.substring(0, 100),
+          speechState: {
+            speaking: this.speechSynthesis.speaking,
+            pending: this.speechSynthesis.pending,
+            paused: this.speechSynthesis.paused,
+          },
+          voiceInfo: {
+            voicesCount: this.voices.length,
+            voicesLoaded: this.voicesLoaded,
+            selectedVoiceType: this.selectedVoiceType,
+          },
         });
+
         try {
           onError?.();
         } catch (error) {
