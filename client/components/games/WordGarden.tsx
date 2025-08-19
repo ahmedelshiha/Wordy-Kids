@@ -835,14 +835,17 @@ export default function WordGarden({
       />
 
       <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/20 via-light-background to-sunshine-light/15 text-gray-800 border-2 border-jungle-light/40 backdrop-blur-sm">
-        {/* Jungle Background Effects */}
+        {/* Enhanced Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+          {/* Background jungle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-jungle-DEFAULT/8 via-transparent to-sunshine-DEFAULT/8 rounded-3xl" />
+
           {/* Animated jungle leaves */}
           <div className="absolute top-0 left-0 w-full h-full">
             {Array.from({ length: 8 }, (_, i) => (
               <div
                 key={`leaf-${i}`}
-                className="absolute text-jungle-light opacity-20"
+                className="absolute text-jungle-DEFAULT opacity-25"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -850,7 +853,7 @@ export default function WordGarden({
                   animationDelay: `${Math.random() * 3}s`,
                 }}
               >
-                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway" />
+                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway drop-shadow-sm" />
               </div>
             ))}
           </div>
@@ -860,14 +863,14 @@ export default function WordGarden({
             {Array.from({ length: 12 }, (_, i) => (
               <div
                 key={`sparkle-${i}`}
-                className="absolute text-sunshine-light opacity-30"
+                className="absolute text-sunshine-DEFAULT opacity-40"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
                   animationDelay: `${Math.random() * 4}s`,
                 }}
               >
-                <span className="text-xs animate-jungle-sparkle">✨</span>
+                <span className="text-xs animate-jungle-sparkle drop-shadow-sm">✨</span>
               </div>
             ))}
           </div>
