@@ -2569,65 +2569,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                             <>
                                               {displayWords.length > 0 && (
                                                 <>
-                                                  {/* Progress indicator with status */}
-                                                  <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-1">
-                                                    <div className="flex items-center gap-2">
-                                                      <div className="flex-1 bg-slate-200 rounded-full h-1">
-                                                        <div
-                                                          className="bg-blue-500 h-1 rounded-full transition-all duration-300 ease-out"
-                                                          style={{
-                                                            width: `${((currentWordIndex + 1) / displayWords.length) * 100}%`,
-                                                          }}
-                                                        ></div>
-                                                      </div>
-                                                      {(() => {
-                                                        const currentWord =
-                                                          displayWords[
-                                                            currentWordIndex
-                                                          ];
-                                                        if (!currentWord)
-                                                          return null;
-
-                                                        if (
-                                                          rememberedWords.has(
-                                                            currentWord.id,
-                                                          )
-                                                        ) {
-                                                          return (
-                                                            <div className="text-xs text-green-600 font-medium flex items-center gap-1">
-                                                              <span>✅</span>
-                                                              <span className="hidden sm:inline">
-                                                                Learned
-                                                              </span>
-                                                            </div>
-                                                          );
-                                                        } else if (
-                                                          forgottenWords.has(
-                                                            currentWord.id,
-                                                          )
-                                                        ) {
-                                                          return (
-                                                            <div className="text-xs text-orange-600 font-medium flex items-center gap-1">
-                                                              <span>🤔</span>
-                                                              <span className="hidden sm:inline">
-                                                                Review
-                                                              </span>
-                                                            </div>
-                                                          );
-                                                        } else {
-                                                          return (
-                                                            <div className="text-xs text-blue-600 font-medium flex items-center gap-1">
-                                                              <span>✨</span>
-                                                              <span className="hidden sm:inline">
-                                                                New
-                                                              </span>
-                                                            </div>
-                                                          );
-                                                        }
-                                                      })()}
-                                                    </div>
-                                                  </div>
-
                                                   <div
                                                     className={`max-w-xs sm:max-w-sm md:max-w-md mx-auto px-1 sm:px-2 md:px-0 relative ${
                                                       celebrationEffect &&
