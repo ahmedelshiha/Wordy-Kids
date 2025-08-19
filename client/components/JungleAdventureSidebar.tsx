@@ -282,7 +282,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           // Desktop layout - completely hidden on mobile/tablet
           "hidden lg:flex w-[300px] xl:w-[320px] h-[calc(100vh-80px)] flex-col",
           "bg-gradient-to-b from-green-50/95 to-emerald-50/95 backdrop-blur-sm relative rounded-[28px] shadow-2xl border border-jungle/10",
-          "p-5 space-y-4 overflow-y-auto overflow-x-hidden",
+          "p-5 space-y-4 overflow-hidden",
           "scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent",
           className,
         )}
@@ -391,7 +391,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         </motion.div>
 
         {/* Scrollable Progress Section - Takes available space but allows scrolling */}
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1">
+        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1 pb-2">
           <div className="space-y-3">
             {/* Learned Words Card - Compact version */}
             <motion.div
@@ -470,10 +470,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           </div>
         </div>
 
-        {/* FIXED BOTTOM Registration Section - Desktop Only - Ultra Compact */}
+        {/* Registration Section - Desktop Only - Ultra Compact with improved positioning */}
         <motion.div
           variants={itemVariants}
-          className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 mt-auto"
+          className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 mt-3 mb-2"
         >
           <div className="relative z-10">
             {isGuest ? (
