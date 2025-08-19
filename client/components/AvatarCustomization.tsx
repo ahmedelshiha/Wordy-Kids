@@ -297,11 +297,11 @@ export function AvatarCustomization({
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🎭</div>
-                  <h2 className="text-2xl font-bold text-gray-800">
+                  <h2 className="text-2xl font-bold text-navy font-['Baloo_2']">
                     Choose your learning buddy!
                   </h2>
-                  <p className="text-gray-600">
-                    Pick an animal friend to join you on your learning journey!
+                  <p className="text-navy/70 font-['Baloo_2']">
+                    Pick an animal friend to join you on your jungle adventure!
                   </p>
                 </div>
 
