@@ -336,10 +336,9 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         <div className="flex justify-center mb-4">
           <motion.div
             className="w-16 h-16 rounded-full border-3 border-white/30 flex items-center justify-center bg-white/10 shadow-2xl backdrop-blur-sm relative"
-            whileHover={{ 
-              scale: 1.1, 
-              rotate: 5,
-              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)"
+            whileHover={{
+              scale: 1.1,
+              rotate: 5
             }}
             transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
           >
