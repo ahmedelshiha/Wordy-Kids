@@ -2070,8 +2070,6 @@ export default function Index({ initialProfile }: IndexProps) {
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <div className="sticky top-6">
                             <JungleAdventureSidebar
-                              profile={currentProfile}
-                              stats={enhancedChildStats}
                               className="border-none shadow-none"
                             />
                           </div>
