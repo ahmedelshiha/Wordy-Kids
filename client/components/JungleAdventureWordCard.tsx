@@ -329,7 +329,7 @@ export const JungleAdventureWordCard: React.FC<
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[420px] xs:h-[440px] sm:h-[420px] md:h-[460px] lg:h-[480px]",
+          "h-[420px] xs:h-[440px] sm:h-[400px] md:h-[420px] lg:h-[440px]",
           "jungle-adventure-touch-target",
           "hover:scale-[1.02] transition-transform",
           "jungle-adventure-card-flip",
@@ -367,7 +367,7 @@ export const JungleAdventureWordCard: React.FC<
         >
           <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
             {/* Jungle Adventure Header */}
-            <div className="flex items-start justify-between mb-2 sm:mb-3">
+            <div className="flex items-start justify-between mb-1 sm:mb-2">
               <div className="flex flex-wrap gap-1.5">
                 <Badge
                   className={cn(
@@ -399,7 +399,7 @@ export const JungleAdventureWordCard: React.FC<
 
             {/* Jungle Adventure Emoji Circle */}
             <div className="flex-1 flex flex-col items-center justify-center">
-              <div className="relative mb-4 sm:mb-5">
+              <div className="relative mb-3 sm:mb-4">
                 <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container">
                   {/* Jungle Decorative Elements */}
                   <div className="absolute top-3 left-3 w-3 h-3 bg-yellow-300/30 rounded-full animate-sparkle opacity-60"></div>
@@ -442,7 +442,7 @@ export const JungleAdventureWordCard: React.FC<
               </div>
 
               {/* Jungle Adventure Word Display */}
-              <div className="text-center space-y-3 sm:space-y-4">
+              <div className="text-center space-y-2 sm:space-y-3">
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
                     {word.word}
@@ -478,7 +478,7 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Jungle Adventure Flip Hint */}
-            <div className="mt-3 sm:mt-4 text-center">
+            <div className="mt-2 sm:mt-3 text-center">
               <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-4 py-3 mx-auto w-fit animate-gentle-bounce shadow-lg">
                 <p className="text-sm sm:text-base opacity-95 leading-tight font-bold jungle-adventure-hint">
                   <RotateCcw className="w-4 h-4 inline mr-2 animate-spin-slow" />
