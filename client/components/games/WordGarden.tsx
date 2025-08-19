@@ -1457,7 +1457,7 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 ${className}`}>
+    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-jungle-light/10 via-light-background/95 to-sunshine-light/10 rounded-2xl ${className}`}>
       {children}
     </div>
   );
