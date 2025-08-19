@@ -967,13 +967,13 @@ export default function WordGarden({
         {/* Jungle Adventure Top Bar */}
         <div className="mb-4 relative z-10">
           <div className="flex items-center justify-between text-sm mb-2">
-            <div className="flex items-center gap-2 bg-jungle-DEFAULT/10 rounded-full px-3 py-1 border border-jungle-DEFAULT/20">
+            <div className="flex items-center gap-2 bg-emerald-800/30 rounded-full px-3 py-1 border border-emerald-500/40 backdrop-blur-sm shadow-lg">
               <TreePine className="w-4 h-4 text-emerald-200" />
               <span className="text-emerald-100 font-semibold drop-shadow-lg">
                 Seed {roundIdx + 1} / {pool.length}
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-sunshine-DEFAULT/10 rounded-full px-3 py-1 border border-sunshine-DEFAULT/20">
+            <div className="flex items-center gap-2 bg-yellow-800/30 rounded-full px-3 py-1 border border-yellow-500/40 backdrop-blur-sm shadow-lg">
               <Zap className="w-4 h-4 text-yellow-200" />
               <span className="text-yellow-100 font-semibold drop-shadow-lg">
                 Streak: {bestStreak}
