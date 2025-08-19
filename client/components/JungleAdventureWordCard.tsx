@@ -628,8 +628,8 @@ export const JungleAdventureWordCard: React.FC<
                           aria-label="Jungle was challenging - need more exploration"
                         >
                           <div className="flex items-center gap-1">
-                            <Mountain className="w-4 h-4" />
-                            <span className="text-xl animate-bounce">😰</span>
+                            <Mountain className="w-3 h-3 md:w-4 md:h-4" />
+                            <span className="text-lg md:text-xl animate-bounce">😰</span>
                           </div>
                           <span className="text-xs font-bold">Tough Trek</span>
                         </Button>
@@ -659,8 +659,8 @@ export const JungleAdventureWordCard: React.FC<
                           aria-label="Good jungle exploration - getting there"
                         >
                           <div className="flex items-center gap-1">
-                            <Sun className="w-4 h-4 animate-pulse" />
-                            <span className="text-xl animate-gentle-bounce">
+                            <Sun className="w-3 h-3 md:w-4 md:h-4 animate-pulse" />
+                            <span className="text-lg md:text-xl animate-gentle-bounce">
                               🤔
                             </span>
                           </div>
@@ -692,8 +692,8 @@ export const JungleAdventureWordCard: React.FC<
                           aria-label="Mastered jungle word - expert explorer"
                         >
                           <div className="flex items-center gap-1">
-                            <Crown className="w-4 h-4 animate-sparkle" />
-                            <span className="text-xl animate-celebration-sparkles">
+                            <Crown className="w-3 h-3 md:w-4 md:h-4 animate-sparkle" />
+                            <span className="text-lg md:text-xl animate-celebration-sparkles">
                               🎉
                             </span>
                           </div>
