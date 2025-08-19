@@ -160,7 +160,7 @@ export const StickerBadge: React.FC<StickerBadgeProps> = ({
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12"
         animate={{
-          x: ["-100%", "100%"],
+          x: ["-100%", "200%"],
         }}
         transition={{
           duration: 3,

@@ -559,14 +559,18 @@ export function EnhancedAchievementPopup({
                           (tap to pause)
                         </div>
                       </div>
-                      <div className="w-full bg-white/20 rounded-full h-1 mx-auto">
+                      <div className="w-full bg-white/20 rounded-full h-1 mx-auto overflow-hidden">
                         <motion.div
-                          className="bg-white/60 h-1 rounded-full"
-                          initial={{ width: "100%" }}
+                          className="bg-white/60 h-1 rounded-full w-full"
+                          initial={{ scaleX: 1 }}
                           animate={{
-                            width: `${(timeRemaining / autoCloseDelay) * 100}%`,
+                            scaleX:
+                              autoCloseDelay > 0
+                                ? timeRemaining / autoCloseDelay
+                                : 0,
                           }}
                           transition={{ duration: 0.1, ease: "linear" }}
+                          style={{ transformOrigin: "left" }}
                         />
                       </div>
                     </div>

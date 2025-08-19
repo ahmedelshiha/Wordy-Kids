@@ -282,7 +282,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           // Desktop layout - completely hidden on mobile/tablet
           "hidden lg:flex w-[300px] xl:w-[320px] h-[calc(100vh-80px)] flex-col",
           "bg-gradient-to-b from-green-50/95 to-emerald-50/95 backdrop-blur-sm relative rounded-[28px] shadow-2xl border border-jungle/10",
-          "p-5 space-y-4 overflow-y-auto overflow-x-hidden",
+          "p-5 overflow-hidden",
           "scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent",
           className,
         )}
@@ -391,7 +391,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         </motion.div>
 
         {/* Scrollable Progress Section - Takes available space but allows scrolling */}
-        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1">
+        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1 mt-3">
           <div className="space-y-3">
             {/* Learned Words Card - Compact version */}
             <motion.div
@@ -413,6 +413,31 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
                   </p>
                   <span className="text-jungle font-['Baloo_2'] text-[12px] font-bold">
                     {userData.stats.wordsLearned}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Learning Streak Card - Compact */}
+            <motion.div
+              variants={itemVariants}
+              initial="initial"
+              className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-red-400/20 transition-all duration-300"
+              whileHover={cardHoverVariants.hover}
+              onMouseEnter={() => setHoveredCard("streak")}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <StreakIcon className="w-10 h-10" />
+              <div className="flex-1 ml-3 min-w-0">
+                <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                  Learning Streak
+                </h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                    {userData.streak} days
+                  </p>
+                  <span className="text-red-500 font-['Baloo_2'] text-[12px] font-bold">
+                    {userData.streak}🔥
                   </span>
                 </div>
               </div>
@@ -443,87 +468,63 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               </div>
             </motion.div>
 
-            {/* Streak Card - Compact */}
+            {/* Registration Section - Inside scrollable area like other cards */}
             <motion.div
               variants={itemVariants}
               initial="initial"
-              className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-red-400/20 transition-all duration-300"
-              whileHover={cardHoverVariants.hover}
-              onMouseEnter={() => setHoveredCard("streak")}
-              onMouseLeave={() => setHoveredCard(null)}
+              className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden border border-yellow-400/30"
             >
-              <StreakIcon className="w-10 h-10" />
-              <div className="flex-1 ml-3 min-w-0">
-                <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
-                  Learning Streak
-                </h3>
-                <div className="flex items-center justify-between">
-                  <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
-                    {userData.streak} days
-                  </p>
-                  <span className="text-red-500 font-['Baloo_2'] text-[12px] font-bold">
-                    {userData.streak}🔥
-                  </span>
-                </div>
+              <div className="relative z-10">
+                {isGuest ? (
+                  <>
+                    <div className="text-center mb-2">
+                      <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
+                        🌟 Join Adventure!
+                      </h3>
+                      <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
+                        💾 Save • 🏆 Badges • 🔥 Streaks
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Button
+                        onClick={handleRegistration}
+                        className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
+                      >
+                        🚀 Sign Up
+                      </Button>
+
+                      <button
+                        onClick={handleContinueAsGuest}
+                        className="w-full text-center text-navy/70 font-['Baloo_2'] text-[10px] font-medium underline hover:no-underline transition-all duration-200"
+                      >
+                        Continue as Guest
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-center mb-2">
+                      <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
+                        🎉 Welcome Back!
+                      </h3>
+                      <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
+                        Keep exploring and learning!
+                      </p>
+                    </div>
+
+                    <Button
+                      onClick={handleLogout}
+                      className="w-full bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
+                    >
+                      👋 Logout
+                    </Button>
+                  </>
+                )}
               </div>
             </motion.div>
           </div>
         </div>
-
-        {/* FIXED BOTTOM Registration Section - Desktop Only - Ultra Compact */}
-        <motion.div
-          variants={itemVariants}
-          className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 mt-auto"
-        >
-          <div className="relative z-10">
-            {isGuest ? (
-              <>
-                <div className="text-center mb-2">
-                  <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
-                    🌟 Join Adventure!
-                  </h3>
-                  <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
-                    💾 Save • 🏆 Badges • 🔥 Streaks
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Button
-                    onClick={handleRegistration}
-                    className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
-                  >
-                    🚀 Sign Up
-                  </Button>
-
-                  <button
-                    onClick={handleContinueAsGuest}
-                    className="w-full text-center text-navy/70 font-['Baloo_2'] text-[10px] font-medium underline hover:no-underline transition-all duration-200"
-                  >
-                    Continue as Guest
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="text-center mb-2">
-                  <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
-                    🎉 Welcome Back!
-                  </h3>
-                  <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
-                    Keep exploring and learning!
-                  </p>
-                </div>
-
-                <Button
-                  onClick={handleLogout}
-                  className="w-full bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
-                >
-                  👋 Logout
-                </Button>
-              </>
-            )}
-          </div>
-        </motion.div>
 
         {/* MOBILE LAYOUT - Only visible on small screens */}
         <div className="lg:hidden w-full max-w-full bg-gradient-to-r from-green-50/95 to-emerald-50/95 backdrop-blur-sm rounded-[12px] shadow-lg border border-jungle/10 p-2 overflow-hidden">
