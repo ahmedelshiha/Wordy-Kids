@@ -629,9 +629,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
             {filteredWords.length > 0 && (
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-sm ${highContrastMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-sm ${highContrastMode ? "text-gray-300" : "text-jungle-dark font-medium"}`}
                 >
-                  {filteredWords.length} words found
+                  🌳 {filteredWords.length} jungle words found
                 </span>
 
                 <div className="flex gap-2">
@@ -639,10 +639,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     size="sm"
                     variant="outline"
                     onClick={handleVocabularyBuilder}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 hover:bg-jungle/10 hover:text-jungle border-jungle/30"
                   >
                     <Brain className="w-4 h-4" />
-                    Practice Mode
+                    🌿 Practice Mode
                   </Button>
 
                   <Button
@@ -653,10 +653,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                         Math.floor(Math.random() * filteredWords.length),
                       )
                     }
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30"
                   >
                     <Shuffle className="w-4 h-4" />
-                    Random
+                    🦋 Random
                   </Button>
                 </div>
               </div>
