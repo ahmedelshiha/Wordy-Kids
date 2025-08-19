@@ -183,7 +183,7 @@ const PLANT_TYPES = [
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
   ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
-  ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
+  ["🌱", "��", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
   ["🌱", "🌴", "🥥"], // palm coconut - palm tree to coconut
   ["🌱", "🌵", "🌵"], // growing cactus - small to big cactus
@@ -1041,11 +1041,11 @@ export default function WordGarden({
 
           <button
             onClick={handlePlay}
-            className="relative rounded-full px-4 py-4 md:px-6 md:py-4 bg-gradient-to-br from-sunshine-DEFAULT to-sunshine-dark text-navy font-bold active:scale-95 transition-all duration-200 min-w-[64px] min-h-[64px] shadow-lg border-2 border-sunshine-light hover:shadow-xl hover:scale-105 group"
+            className="relative rounded-full px-3 py-3 md:px-6 md:py-4 bg-gradient-to-br from-sunshine-DEFAULT to-sunshine-dark text-navy font-bold active:scale-95 transition-all duration-200 min-w-[56px] min-h-[56px] md:min-w-[64px] md:min-h-[64px] shadow-lg border-2 border-sunshine-light hover:shadow-xl hover:scale-105 group"
             aria-label="Play jungle sound"
           >
             <div className="flex items-center gap-2">
-              <span className="text-2xl group-hover:animate-pulse">🔊</span>
+              <span className="text-xl md:text-2xl group-hover:animate-pulse">🔊</span>
               <span className="hidden md:inline text-sm font-bold">Play</span>
             </div>
 
@@ -1086,7 +1086,7 @@ export default function WordGarden({
 
         {/* Jungle Treasure Options Grid */}
         <div
-          className={`grid gap-3 md:gap-4 relative z-10 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
+          className={`grid gap-2 md:gap-4 relative z-10 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
           {options.map((img, i) => {
             const isCorrect = img === current.imageUrl;
@@ -1169,9 +1169,9 @@ export default function WordGarden({
                       </div>
 
                       <span className="text-6xl animate-jungle-celebration drop-shadow-lg">
-                        🏆
+                        ���
                       </span>
-                      <div className="text-white font-bold text-base mt-2 drop-shadow-lg bg-jungle-dark/50 rounded-full px-3 py-1">
+                      <div className="text-white font-bold text-sm md:text-base mt-1 md:mt-2 drop-shadow-lg bg-jungle-dark/50 rounded-full px-2 md:px-3 py-1">
                         <span className="mr-2">🐒</span>Treasure found!
                       </div>
                     </div>
@@ -1183,7 +1183,7 @@ export default function WordGarden({
                       <span className="text-5xl animate-wiggle drop-shadow-lg">
                         🔍
                       </span>
-                      <div className="text-white font-bold text-sm mt-2 drop-shadow-lg bg-coral-red/50 rounded-full px-3 py-1">
+                      <div className="text-white font-bold text-xs md:text-sm mt-1 md:mt-2 drop-shadow-lg bg-coral-red/50 rounded-full px-2 md:px-3 py-1">
                         <span className="mr-2">🗺️</span>Keep exploring!
                       </div>
                     </div>
