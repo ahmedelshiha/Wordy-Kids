@@ -467,62 +467,64 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
                 </div>
               </div>
             </motion.div>
+
+            {/* Registration Section - Inside scrollable area like other cards */}
+            <motion.div
+              variants={itemVariants}
+              initial="initial"
+              className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden border border-yellow-400/30"
+            >
+              <div className="relative z-10">
+                {isGuest ? (
+                  <>
+                    <div className="text-center mb-2">
+                      <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
+                        🌟 Join Adventure!
+                      </h3>
+                      <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
+                        💾 Save • 🏆 Badges • 🔥 Streaks
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Button
+                        onClick={handleRegistration}
+                        className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
+                      >
+                        🚀 Sign Up
+                      </Button>
+
+                      <button
+                        onClick={handleContinueAsGuest}
+                        className="w-full text-center text-navy/70 font-['Baloo_2'] text-[10px] font-medium underline hover:no-underline transition-all duration-200"
+                      >
+                        Continue as Guest
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-center mb-2">
+                      <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
+                        🎉 Welcome Back!
+                      </h3>
+                      <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
+                        Keep exploring and learning!
+                      </p>
+                    </div>
+
+                    <Button
+                      onClick={handleLogout}
+                      className="w-full bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
+                    >
+                      👋 Logout
+                    </Button>
+                  </>
+                )}
+              </div>
+            </motion.div>
           </div>
         </div>
-        {/* Registration Section - Desktop Only - Ultra Compact directly under achievements */}
-        <motion.div
-          variants={itemVariants}
-          className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 -mt-1 mb-2"
-        >
-          <div className="relative z-10">
-            {isGuest ? (
-              <>
-                <div className="text-center mb-2">
-                  <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
-                    🌟 Join Adventure!
-                  </h3>
-                  <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
-                    💾 Save • 🏆 Badges • 🔥 Streaks
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Button
-                    onClick={handleRegistration}
-                    className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
-                  >
-                    🚀 Sign Up
-                  </Button>
-
-                  <button
-                    onClick={handleContinueAsGuest}
-                    className="w-full text-center text-navy/70 font-['Baloo_2'] text-[10px] font-medium underline hover:no-underline transition-all duration-200"
-                  >
-                    Continue as Guest
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="text-center mb-2">
-                  <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
-                    🎉 Welcome Back!
-                  </h3>
-                  <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
-                    Keep exploring and learning!
-                  </p>
-                </div>
-
-                <Button
-                  onClick={handleLogout}
-                  className="w-full bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
-                >
-                  👋 Logout
-                </Button>
-              </>
-            )}
-          </div>
-        </motion.div>
 
         {/* MOBILE LAYOUT - Only visible on small screens */}
         <div className="lg:hidden w-full max-w-full bg-gradient-to-r from-green-50/95 to-emerald-50/95 backdrop-blur-sm rounded-[12px] shadow-lg border border-jungle/10 p-2 overflow-hidden">
