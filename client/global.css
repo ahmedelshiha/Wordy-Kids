@@ -22,12 +22,12 @@
 /* Import jungle mobile optimizations */
 @import "./styles/jungle-mobile-optimizations.css";
 
+/* Import Jungle Adventure Word Card Styles */
+@import './styles/jungle-adventure-word-card.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Jungle Adventure Word Card Styles */
-@import './styles/jungle-adventure-word-card.css';
 
 @layer utilities {
   /* Custom scrollbar styles */
