@@ -171,7 +171,7 @@ const PLANT_TYPES = [
   ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
-  ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
+  ["🌱", "💚", "����"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
@@ -1178,24 +1178,24 @@ export default function WordGarden({
             </div>
 
             {/* Jungle adventure level indicators */}
-            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-jungle-light">
+            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-gray-600">
               <span
-                className={`flex items-center gap-1 ${xpPct >= 25 ? "text-sunshine-DEFAULT" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
               >
                 🌱 Sprout
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 50 ? "text-sunshine-DEFAULT" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
               >
                 🌿 Explorer
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 75 ? "text-sunshine-DEFAULT" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
               >
                 🌳 Ranger
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 100 ? "text-sunshine-DEFAULT animate-pulse" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
               >
                 👑 Legend
               </span>
