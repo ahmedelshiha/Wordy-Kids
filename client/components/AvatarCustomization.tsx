@@ -126,8 +126,71 @@ export function AvatarCustomization({
   const canProceed = step === 1 ? isValidName : true;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-jungle-light via-sunshine-light to-light-background p-4 relative overflow-hidden">
+      {/* Jungle Background Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        {/* Large Background Elements */}
+        <motion.div
+          className="absolute top-10 left-10 text-4xl md:text-6xl"
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🌳
+        </motion.div>
+        <motion.div
+          className="absolute top-20 right-20 text-3xl md:text-5xl"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🦜
+        </motion.div>
+        <motion.div
+          className="absolute bottom-20 left-20 text-3xl md:text-5xl"
+          animate={{ rotate: [0, -15, 15, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🐵
+        </motion.div>
+        <motion.div
+          className="absolute bottom-10 right-10 text-4xl md:text-6xl"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🌿
+        </motion.div>
+
+        {/* Additional jungle elements */}
+        <motion.div
+          className="absolute top-1/3 left-5 text-2xl md:text-4xl"
+          animate={{ x: [0, 5, -5, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🦋
+        </motion.div>
+        <motion.div
+          className="absolute top-1/2 right-5 text-2xl md:text-4xl"
+          animate={{ rotate: [0, 20, -20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🐆
+        </motion.div>
+        <motion.div
+          className="absolute bottom-1/3 left-1/4 text-2xl md:text-3xl"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🌺
+        </motion.div>
+        <motion.div
+          className="absolute top-1/4 right-1/3 text-2xl md:text-3xl"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🦅
+        </motion.div>
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Button
@@ -175,7 +238,7 @@ export function AvatarCustomization({
             {/* Step 1: Name */}
             {step === 1 && (
               <div className="text-center space-y-6">
-                <div className="text-6xl mb-4">👋</div>
+                <div className="text-6xl mb-4">����</div>
                 <h2 className="text-2xl font-bold text-gray-800">
                   What's your name, young adventurer?
                 </h2>
