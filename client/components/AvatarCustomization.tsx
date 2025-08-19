@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Sparkles, Heart, Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 const avatars = [
   {
