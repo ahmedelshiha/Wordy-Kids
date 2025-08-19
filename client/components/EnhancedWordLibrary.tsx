@@ -614,10 +614,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     onClick={() => setDifficultyFilter(difficulty)}
                     className={`capitalize ${
                       difficultyFilter === difficulty
-                        ? "bg-educational-blue text-white"
+                        ? "bg-gradient-to-r from-jungle to-jungle-light text-white shadow-lg"
                         : highContrastMode
                           ? "border-white text-white hover:bg-white hover:text-black"
-                          : ""
+                          : "hover:bg-jungle/10 hover:text-jungle border-jungle/30"
                     }`}
                   >
                     {difficulty}
