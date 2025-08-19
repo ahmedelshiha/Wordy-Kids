@@ -1494,7 +1494,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🎓⭐";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! ��✨";
+        achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n��� Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
@@ -2997,36 +2997,58 @@ export default function Index({ initialProfile }: IndexProps) {
                             <TabsContent value="quiz">
                               {!showQuiz && !gameMode && !showMatchingGame ? (
                                 <div className="space-y-8">
-                                  {/* Quiz Header - Kid-Friendly & Mobile Optimized */}
-                                  <div className="text-center">
-                                    <div className="flex justify-center mb-4">
-                                      <div className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink p-3 md:p-4 rounded-full shadow-lg animate-gentle-bounce">
-                                        <Brain className="w-8 h-8 md:w-12 md:h-12 text-white" />
-                                      </div>
-                                    </div>
-                                    <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4">
-                                      🧠 Quiz Time!
-                                    </h2>
-                                    <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-6 px-4">
-                                      Test your vocabulary with super fun
-                                      quizzes! 🌟
-                                    </p>
+                                  {/* Jungle Adventure Quiz Hero Section */}
+                                  <div className="jungle-quiz-hero">
+                                    {/* Jungle Vines Decoration */}
+                                    <div className="jungle-vines"></div>
 
-                                    {/* AI Quiz Enhancement Notice */}
-                                    {isAIEnabled() && (
-                                      <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-3 mb-4 mx-4">
-                                        <div className="flex items-center justify-center gap-2">
-                                          <Zap className="w-4 h-4 text-green-600" />
-                                          <span className="text-sm font-semibold text-green-800">
-                                            🤖 AI-Powered Questions
-                                          </span>
+                                    {/* Animated Jungle Creatures */}
+                                    <div className="jungle-creature jungle-creature-monkey">🐵</div>
+                                    <div className="jungle-creature jungle-creature-bird">🦜</div>
+                                    <div className="jungle-creature jungle-creature-butterfly">🦋</div>
+                                    <div className="jungle-creature jungle-creature-frog">🐸</div>
+
+                                    {/* Floating Jungle Leaves */}
+                                    <div className="jungle-leaves-float">🍃</div>
+                                    <div className="jungle-leaves-float">🌿</div>
+                                    <div className="jungle-leaves-float">🍃</div>
+                                    <div className="jungle-leaves-float">🌿</div>
+
+                                    {/* Hero Content */}
+                                    <div className="jungle-quiz-hero-content">
+                                      <div className="flex justify-center mb-6">
+                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-4 md:p-6 rounded-full shadow-2xl animate-jungle-glow border-4 border-white/30">
+                                          <Brain className="w-12 h-12 md:w-16 md:h-16 text-white drop-shadow-lg" />
                                         </div>
-                                        <p className="text-xs text-green-700 mt-1">
-                                          Questions are personalized based on
-                                          your learning progress!
-                                        </p>
                                       </div>
-                                    )}
+                                      <h2 className="jungle-quiz-title">
+                                        🌟 Jungle Quiz Adventure! 🌟
+                                      </h2>
+                                      <p className="jungle-quiz-subtitle">
+                                        Embark on an epic word journey through the mystical jungle!
+                                        Discover treasures, meet friendly creatures, and test your vocabulary skills! 🏆✨
+                                      </p>
+
+                                      {/* AI Quiz Enhancement Notice - Jungle Themed */}
+                                      {isAIEnabled() && (
+                                        <div className="jungle-progress-container max-w-md mx-auto">
+                                          <div className="flex items-center justify-center gap-3">
+                                            <div className="jungle-sound-indicator">
+                                              <Zap className="w-5 h-5 text-white" />
+                                            </div>
+                                            <div>
+                                              <span className="text-lg font-bold text-jungle-green">
+                                                🤖 Magical AI Guide
+                                              </span>
+                                              <p className="text-sm text-jungle-dark mt-1">
+                                                Your personal jungle companion creates
+                                                adventures just for you! 🧙‍♂️✨
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
 
                                   {/* Compact Quiz Cards */}
