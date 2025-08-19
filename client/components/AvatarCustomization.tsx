@@ -218,32 +218,44 @@ export function AvatarCustomization({
         </motion.div>
 
         {/* Progress Indicator */}
-        <div className="flex justify-center mb-8">
+        <motion.div
+          className="flex justify-center mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           <div className="flex gap-4">
             {[1, 2, 3, 4].map((stepNum) => (
               <div key={stepNum} className="flex items-center">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                <motion.div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm font-['Baloo_2'] shadow-lg border-2 ${
                     step >= stepNum
-                      ? "bg-educational-blue text-white"
-                      : "bg-gray-200 text-gray-500"
+                      ? "bg-gradient-to-r from-jungle to-bright-orange text-white border-white/30"
+                      : "bg-white/90 text-navy border-jungle/20"
                   }`}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {stepNum}
-                </div>
+                </motion.div>
                 {stepNum < 4 && (
                   <div
-                    className={`w-8 h-1 mx-2 ${
-                      step > stepNum ? "bg-educational-blue" : "bg-gray-200"
+                    className={`w-8 h-2 mx-2 rounded-full ${
+                      step > stepNum ? "bg-gradient-to-r from-jungle to-bright-orange" : "bg-white/50"
                     }`}
                   ></div>
                 )}
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-2 border-white/50">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-jungle/20 rounded-[24px] overflow-hidden">
           <CardContent className="p-8">
             {/* Step 1: Name */}
             {step === 1 && (
@@ -491,6 +503,7 @@ export function AvatarCustomization({
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </div>
     </div>
   );
