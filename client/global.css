@@ -2445,6 +2445,52 @@
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Jungle Adventure Theme Utilities */
+.text-shadow-jungle {
+  text-shadow: 2px 2px 4px rgba(76, 175, 80, 0.3), 0 0 10px rgba(76, 175, 80, 0.2);
+}
+
+.border-jungle {
+  border: 2px solid hsl(var(--jungle-green));
+}
+
+.border-jungle-light {
+  border: 1px solid hsl(var(--jungle-green-light));
+}
+
+.shadow-jungle {
+  box-shadow: var(--jungle-shadow);
+}
+
+.glow-jungle {
+  box-shadow: var(--jungle-glow);
+}
+
+.border-rainbow-jungle {
+  border-image: var(--jungle-border) 1;
+}
+
+/* Animation delays for staggered effects */
+.animation-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-500 {
+  animation-delay: 0.5s;
+}
+
 /* Celebration and reward effects */
 .celebration-burst {
   position: relative;
