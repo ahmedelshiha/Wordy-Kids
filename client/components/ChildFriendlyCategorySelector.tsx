@@ -39,8 +39,8 @@ const enrichedCategories: Category[] = [
     id: "animals",
     name: "Animals",
     icon: "🦋",
-    color: "bg-educational-blue",
-    gradient: "from-blue-400 to-blue-600",
+    color: "bg-jungle",
+    gradient: "from-jungle to-jungle-light",
     wordCount: getWordsByCategory("animals").length,
     description: "Meet amazing creatures from around the world!",
     funFact: "Some animals can taste with their feet!",
@@ -58,8 +58,8 @@ const enrichedCategories: Category[] = [
     id: "nature",
     name: "Nature",
     icon: "🌳",
-    color: "bg-educational-green",
-    gradient: "from-green-400 to-green-600",
+    color: "bg-jungle-light",
+    gradient: "from-jungle-light to-jungle",
     wordCount: getWordsByCategory("nature").length,
     description: "Explore the magical wonders of our natural world!",
     funFact: "Trees can live for thousands of years!",
@@ -77,8 +77,8 @@ const enrichedCategories: Category[] = [
     id: "science",
     name: "Science",
     icon: "🔬",
-    color: "bg-educational-purple",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-profile-purple",
+    gradient: "from-profile-purple to-playful-purple",
     wordCount: getWordsByCategory("science").length,
     description: "Discover amazing scientific wonders and cool experiments!",
     funFact: "Scientists discover new things every day!",
@@ -96,8 +96,8 @@ const enrichedCategories: Category[] = [
     id: "food",
     name: "Food",
     icon: "🍎",
-    color: "bg-educational-orange",
-    gradient: "from-orange-400 to-orange-600",
+    color: "bg-bright-orange",
+    gradient: "from-bright-orange to-sunshine",
     wordCount: getWordsByCategory("food").length,
     description: "Discover delicious treats and healthy foods!",
     funFact: "Some fruits change color as they ripen!",
@@ -115,8 +115,8 @@ const enrichedCategories: Category[] = [
     id: "space",
     name: "Space",
     icon: "⭐",
-    color: "bg-indigo-600",
-    gradient: "from-indigo-500 to-indigo-700",
+    color: "bg-navy",
+    gradient: "from-navy to-sky",
     wordCount: getWordsByCategory("space").length,
     description: "Blast off and explore the mysteries of the cosmos!",
     funFact: "There are more stars than grains of sand on Earth!",
@@ -134,8 +134,8 @@ const enrichedCategories: Category[] = [
     id: "sports",
     name: "Sports",
     icon: "⚽",
-    color: "bg-green-500",
-    gradient: "from-green-400 to-green-600",
+    color: "bg-jungle",
+    gradient: "from-jungle to-jungle-dark",
     wordCount: getWordsByCategory("sports").length,
     description: "Get active with games, sports, and fun activities!",
     funFact: "Playing sports helps your brain grow stronger!",
@@ -153,8 +153,8 @@ const enrichedCategories: Category[] = [
     id: "music",
     name: "Music",
     icon: "🎵",
-    color: "bg-purple-500",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-playful-purple",
+    gradient: "from-playful-purple to-profile-purple",
     wordCount: getWordsByCategory("music").length,
     description: "Make beautiful sounds with instruments and melodies!",
     funFact: "Music can make you feel happy and excited!",
@@ -172,8 +172,8 @@ const enrichedCategories: Category[] = [
     id: "body",
     name: "Body Parts",
     icon: "👤",
-    color: "bg-educational-pink",
-    gradient: "from-pink-400 to-pink-600",
+    color: "bg-coral-red",
+    gradient: "from-coral-red to-bright-orange",
     wordCount: getWordsByCategory("body").length,
     description: "Learn about your amazing body and all its parts!",
     funFact: "Your body has 206 bones when you're an adult!",
@@ -191,8 +191,8 @@ const enrichedCategories: Category[] = [
     id: "clothes",
     name: "Clothes",
     icon: "👕",
-    color: "bg-blue-500",
-    gradient: "from-blue-400 to-blue-600",
+    color: "bg-sky",
+    gradient: "from-sky to-sky-dark",
     wordCount: getWordsByCategory("clothes").length,
     description: "Discover different types of clothing and fashion!",
     funFact: "The first clothing was made from animal skins!",
@@ -210,8 +210,8 @@ const enrichedCategories: Category[] = [
     id: "family",
     name: "Family",
     icon: "👪",
-    color: "bg-educational-yellow",
-    gradient: "from-yellow-400 to-yellow-600",
+    color: "bg-sunshine",
+    gradient: "from-sunshine to-sunshine-dark",
     wordCount: getWordsByCategory("family").length,
     description: "Learn about family members who love and care for you!",
     funFact: "Family is the most important thing in life!",
@@ -229,8 +229,8 @@ const enrichedCategories: Category[] = [
     id: "feelings",
     name: "Feelings",
     icon: "😊",
-    color: "bg-educational-purple",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-playful-purple",
+    gradient: "from-playful-purple to-profile-purple",
     wordCount: getWordsByCategory("feelings").length,
     description: "Understand different emotions and how you feel!",
     funFact: "It's healthy to talk about your feelings!",
@@ -250,8 +250,8 @@ const enrichedCategories: Category[] = [
     id: "greetings",
     name: "Greetings",
     icon: "👋",
-    color: "bg-yellow-500",
-    gradient: "from-yellow-400 to-yellow-600",
+    color: "bg-sunshine",
+    gradient: "from-sunshine-light to-sunshine",
     wordCount: getWordsByCategory("greetings").length,
     description: "Learn friendly ways to say hello and goodbye!",
     funFact: "Greeting people politely makes them smile!",
@@ -271,8 +271,8 @@ const enrichedCategories: Category[] = [
     id: "technology",
     name: "Technology",
     icon: "🤖",
-    color: "bg-slate-600",
-    gradient: "from-slate-500 to-slate-700",
+    color: "bg-navy",
+    gradient: "from-navy to-profile-purple",
     wordCount: getWordsByCategory("technology").length,
     description: "Discover amazing gadgets and modern inventions!",
     funFact: "Technology makes our lives easier and more fun!",
@@ -292,8 +292,8 @@ const enrichedCategories: Category[] = [
     id: "transportation",
     name: "Transportation",
     icon: "🚗",
-    color: "bg-red-500",
-    gradient: "from-red-400 to-red-600",
+    color: "bg-coral-red",
+    gradient: "from-coral-red to-bright-orange",
     wordCount: getWordsByCategory("transportation").length,
     description: "Explore different ways to travel and move around!",
     funFact: "Transportation helps us go to amazing places!",
@@ -313,8 +313,8 @@ const enrichedCategories: Category[] = [
     id: "weather",
     name: "Weather",
     icon: "🌤️",
-    color: "bg-cyan-500",
-    gradient: "from-cyan-400 to-cyan-600",
+    color: "bg-sky",
+    gradient: "from-sky-light to-sky",
     wordCount: getWordsByCategory("weather").length,
     description: "Learn about different weather and sky conditions!",
     funFact: "Weather affects how we feel and what we do!",
@@ -333,7 +333,7 @@ const enrichedCategories: Category[] = [
     name: "Colors",
     icon: "🌈",
     color: "bg-rainbow",
-    gradient: "from-red-400 via-yellow-400 to-blue-400",
+    gradient: "from-coral-red via-sunshine to-jungle",
     wordCount: getWordsByCategory("colors").length,
     description: "Discover beautiful colors that make the world bright!",
     funFact: "Colors can change how we feel and think!",
@@ -351,8 +351,8 @@ const enrichedCategories: Category[] = [
     id: "numbers",
     name: "Numbers",
     icon: "🔢",
-    color: "bg-educational-blue",
-    gradient: "from-blue-500 to-indigo-600",
+    color: "bg-sky",
+    gradient: "from-sky to-navy",
     wordCount: getWordsByCategory("numbers").length,
     description: "Learn to count and explore the magic of numbers!",
     funFact: "Numbers help us understand the world around us!",
@@ -370,8 +370,8 @@ const enrichedCategories: Category[] = [
     id: "objects",
     name: "Objects",
     icon: "🧸",
-    color: "bg-educational-purple",
-    gradient: "from-purple-400 to-purple-600",
+    color: "bg-profile-purple",
+    gradient: "from-profile-purple to-playful-purple",
     wordCount: getWordsByCategory("objects").length,
     description: "Explore everyday objects and fun things around you!",
     funFact: "Objects tell stories about how people live!",
@@ -444,7 +444,7 @@ export function ChildFriendlyCategorySelector({
     );
 
     if (matchingCategories.length > 0) {
-      return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! 🌟`;
+      return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! ��`;
     }
 
     return "I've picked some special categories just for you! 💝";
@@ -479,7 +479,7 @@ export function ChildFriendlyCategorySelector({
     : getRecommendedCategories();
 
   return (
-    <div className="space-y-8 relative">
+    <div className="space-y-8 relative jungle-pattern-bg jungle-mobile-optimized">
       {/* Floating Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {floatingElements.map((element) => (
@@ -501,43 +501,43 @@ export function ChildFriendlyCategorySelector({
       {/* Enhanced Mobile Header */}
       <div className="text-center relative mt-2 md:mt-4 px-2 md:px-0">
         <div className="md:hidden mb-4">
-          <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-xl p-3 border border-educational-blue/20">
+          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg jungle-mobile-card animate-jungle-entrance">
             <div className="flex items-center justify-between mb-1">
-              <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
-                🌟 Pick a Topic!
+              <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent">
+                🌿 Jungle Adventure Library! 🦎
               </h2>
               <div className="flex gap-1">
-                <Badge className="bg-educational-green text-white px-2 py-0.5 text-xs">
+                <Badge className="bg-jungle text-white px-2 py-0.5 text-xs">
                   📚 {wordsDatabase.length}
                 </Badge>
-                <Badge className="bg-educational-blue text-white px-2 py-0.5 text-xs">
+                <Badge className="bg-sunshine text-navy px-2 py-0.5 text-xs">
                   🎯 {categories.length}
                 </Badge>
               </div>
             </div>
-            <p className="text-xs text-slate-600 leading-tight">
+            <p className="text-xs text-jungle-dark leading-tight">
               {getPersonalizedMessage()}
             </p>
           </div>
         </div>
 
         {/* Desktop Header */}
-        <div className="hidden md:block">
-          <h2 className="text-2xl font-bold text-slate-800 mb-2 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent">
-            🌟 Choose Your Learning Adventure! 🌟
+        <div className="hidden md:block animate-jungle-entrance">
+          <h2 className="text-3xl font-bold text-slate-800 mb-3 bg-gradient-to-r from-jungle via-sunshine to-jungle-light bg-clip-text text-transparent">
+            🌿 Welcome to the Jungle Adventure Library! 🦋
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-2">
+          <p className="text-lg text-jungle-dark max-w-3xl mx-auto mb-3">
             {getPersonalizedMessage()}
           </p>
-          <div className="flex justify-center gap-2 mb-4 flex-wrap">
-            <Badge className="bg-educational-green text-white px-3 py-1 text-sm animate-pulse">
-              📚 {wordsDatabase.length} Amazing Words
+          <div className="flex justify-center gap-3 mb-6 flex-wrap">
+            <Badge className="bg-gradient-to-r from-jungle to-jungle-light text-white px-4 py-2 text-sm animate-jungle-bounce shadow-lg jungle-sparkle">
+              🌳 {wordsDatabase.length} Adventure Words
             </Badge>
-            <Badge className="bg-educational-blue text-white px-3 py-1 text-sm animate-pulse delay-100">
-              🎯 {categories.length} Fun Categories
+            <Badge className="bg-gradient-to-r from-sunshine to-sunshine-dark text-navy px-4 py-2 text-sm animate-jungle-bounce delay-100 shadow-lg jungle-sparkle">
+              🎯 {categories.length} Jungle Paths
             </Badge>
-            <Badge className="bg-educational-purple text-white px-3 py-1 text-sm animate-pulse delay-200">
-              ⭐ 3 Difficulty Levels
+            <Badge className="bg-gradient-to-r from-bright-orange to-coral-red text-white px-4 py-2 text-sm animate-jungle-bounce delay-200 shadow-lg jungle-sparkle">
+              ⭐ 3 Adventure Levels
             </Badge>
           </div>
         </div>
@@ -548,28 +548,29 @@ export function ChildFriendlyCategorySelector({
             <div className="relative">
               <Input
                 type="text"
-                placeholder="🔍 Search categories..."
+                placeholder="🌿 Explore jungle categories..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-educational-blue/20 focus:border-educational-blue focus:outline-none bg-white/80 backdrop-blur-sm"
+                className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-jungle/30 focus:border-jungle focus:outline-none bg-white/90 backdrop-blur-sm shadow-lg"
               />
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-educational-blue">
-                🔍
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jungle">
+                🌿
               </div>
               {searchTerm && (
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => setSearchTerm("")}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-educational-blue/10"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-jungle/10"
                 >
                   ✕
                 </Button>
               )}
             </div>
             {searchTerm && (
-              <div className="mt-2 text-sm text-slate-600 text-center">
-                Found {categories.length} categories matching "{searchTerm}"
+              <div className="mt-2 text-sm text-jungle-dark text-center font-medium">
+                🌳 Found {categories.length} jungle paths matching "{searchTerm}
+                " 🦋
               </div>
             )}
           </div>
@@ -579,11 +580,11 @@ export function ChildFriendlyCategorySelector({
       {/* Encouragement Popup */}
       {showEncouragement && (
         <div className="fixed top-20 right-4 z-50 animate-bounce">
-          <Card className="bg-gradient-to-r from-educational-pink to-educational-purple text-white shadow-2xl">
+          <Card className="bg-gradient-to-r from-jungle to-sunshine text-white shadow-2xl">
             <CardContent className="p-4 text-center">
               <Heart className="w-6 h-6 mx-auto mb-2 fill-current" />
               <p className="text-sm font-semibold">
-                You're doing great! Keep exploring! 🌟
+                Amazing jungle explorer! Keep discovering! 🌿🦋
               </p>
             </CardContent>
           </Card>
@@ -595,8 +596,8 @@ export function ChildFriendlyCategorySelector({
         {/* Quick Categories Bar - All Categories */}
         {!searchTerm && (
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">
-              🚀 Quick Select - All Categories
+            <h3 className="text-sm font-semibold text-jungle-dark mb-3">
+              🌿 Quick Jungle Paths - All Adventures 🦎
             </h3>
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
               {enrichedCategories.map((category) => (
@@ -607,10 +608,10 @@ export function ChildFriendlyCategorySelector({
                   }
                   size="sm"
                   onClick={() => handleCategoryClick(category.id)}
-                  className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
+                  className={`flex-shrink-0 h-16 w-16 flex-col gap-1 jungle-mobile-button ${
                     selectedCategory === category.id
-                      ? "bg-educational-blue hover:bg-educational-blue/90 text-white border-2 border-educational-blue"
-                      : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
+                      ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg"
+                      : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md"
                   }`}
                 >
                   <span className="text-lg">{category.icon}</span>
@@ -620,8 +621,9 @@ export function ChildFriendlyCategorySelector({
                 </Button>
               ))}
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              📱 Scroll right to see all {enrichedCategories.length} categories
+            <p className="text-xs text-jungle-dark/70 mt-1">
+              🌳 Scroll right to explore all {enrichedCategories.length} jungle
+              adventures
             </p>
           </div>
         )}
@@ -639,9 +641,9 @@ export function ChildFriendlyCategorySelector({
           return (
             <Card
               key={category.id}
-              className={`cursor-pointer transition-all duration-300 overflow-hidden ${
+              className={`cursor-pointer jungle-card-hover overflow-hidden ${
                 selectedCategory === category.id
-                  ? "ring-3 ring-educational-blue shadow-xl bg-gradient-to-br from-blue-50 to-purple-50 scale-[1.02] md:scale-105"
+                  ? "ring-3 ring-jungle shadow-xl bg-gradient-to-br from-jungle/5 to-sunshine/10 scale-[1.02] md:scale-105"
                   : "hover:shadow-lg hover:scale-[1.01] md:hover:scale-110 md:hover:-translate-y-1"
               }`}
               style={{
@@ -660,8 +662,8 @@ export function ChildFriendlyCategorySelector({
                   {/* Mobile Recommended Badge */}
                   {isRecommended && (
                     <div className="absolute top-1 left-1 md:top-2 md:left-2">
-                      <Badge className="bg-yellow-400 text-yellow-900 text-xs px-1.5 py-0.5 md:px-2 md:py-1 animate-pulse">
-                        ⭐ For You
+                      <Badge className="bg-gradient-to-r from-sunshine to-bright-orange text-navy text-xs px-1.5 py-0.5 md:px-2 md:py-1 animate-pulse shadow-lg">
+                        🌟 For You
                       </Badge>
                     </div>
                   )}
@@ -677,10 +679,10 @@ export function ChildFriendlyCategorySelector({
                   )}
 
                   <div
-                    className={`text-3xl md:text-6xl mb-2 md:mb-3 transition-transform duration-300 ${
+                    className={`text-3xl md:text-6xl mb-2 md:mb-3 transition-transform duration-300 animate-jungle-sway ${
                       hoveredCategory === category.id ||
                       selectedCategory === category.id
-                        ? "animate-gentle-bounce scale-110"
+                        ? "animate-jungle-bounce scale-110"
                         : ""
                     }`}
                   >
@@ -689,7 +691,7 @@ export function ChildFriendlyCategorySelector({
                   <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2">
                     {category.name}
                   </h3>
-                  <Badge className="bg-white/20 border-white/30 text-white text-xs">
+                  <Badge className="bg-white/30 border-white/40 text-white text-xs shadow-lg backdrop-blur-sm">
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words
                   </Badge>
@@ -709,7 +711,7 @@ export function ChildFriendlyCategorySelector({
                   <p
                     className={`text-xs md:text-sm leading-relaxed transition-colors duration-300 ${
                       selectedCategory === category.id
-                        ? "text-educational-blue font-semibold"
+                        ? "text-jungle font-semibold"
                         : "text-slate-600"
                     }`}
                   >
@@ -719,9 +721,9 @@ export function ChildFriendlyCategorySelector({
                   {/* Mobile Fun Fact - Show for selected */}
                   {(hoveredCategory === category.id ||
                     selectedCategory === category.id) && (
-                    <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-lg p-2 md:p-3 animate-fade-in">
-                      <p className="text-xs md:text-sm text-educational-purple font-semibold">
-                        💡 {category.funFact}
+                    <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-lg p-2 md:p-3 animate-fade-in border border-jungle/20">
+                      <p className="text-xs md:text-sm text-jungle-dark font-semibold">
+                        🌿 {category.funFact}
                       </p>
                     </div>
                   )}
@@ -788,7 +790,7 @@ export function ChildFriendlyCategorySelector({
                   {/* Enhanced Mobile Selection Indicator */}
                   {selectedCategory === category.id && (
                     <div className="flex items-center justify-center">
-                      <Badge className="bg-gradient-to-r from-educational-green to-educational-blue text-white animate-pulse px-3 py-1.5 md:px-4 md:py-2">
+                      <Badge className="bg-gradient-to-r from-jungle to-sunshine text-white animate-pulse px-3 py-1.5 md:px-4 md:py-2 shadow-lg">
                         <Star className="w-3 h-3 md:w-4 md:h-4 mr-1 animate-spin" />
                         <span className="text-xs md:text-sm">✓ Selected!</span>
                         <Sparkles className="w-3 h-3 md:w-4 md:h-4 ml-1 animate-bounce" />
@@ -800,8 +802,8 @@ export function ChildFriendlyCategorySelector({
                   {hoveredCategory === category.id &&
                     selectedCategory !== category.id && (
                       <div className="flex items-center justify-center">
-                        <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse text-xs px-2 py-1">
-                          🎯 Tap to explore!
+                        <Badge className="bg-jungle/10 text-jungle border border-jungle/30 animate-pulse text-xs px-2 py-1 shadow-md">
+                          🌿 Tap to explore!
                         </Badge>
                       </div>
                     )}
@@ -907,15 +909,15 @@ export function ChildFriendlyCategorySelector({
             onSelectCategory(selectedCategory);
           }}
           disabled={!selectedCategory || selectedCategory === ""}
-          className="bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink text-white hover:from-educational-blue/90 hover:via-educational-purple/90 hover:to-educational-pink/90 text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto"
+          className="jungle-button bg-gradient-to-r from-jungle via-sunshine to-bright-orange text-white hover:from-jungle-dark hover:via-sunshine-dark hover:to-coral-red text-lg md:text-xl px-8 md:px-12 py-3 md:py-4 rounded-full font-bold transform md:hover:scale-110 transition-all duration-300 shadow-2xl relative overflow-hidden w-full md:w-auto animate-jungle-pulse"
         >
           <span className="relative z-10 flex items-center gap-2">
             <Sparkles className="w-6 h-6 animate-spin" />
-            🚀{" "}
+            🌿{" "}
             {selectedCategory
-              ? `Start Learning ${categories.find((c) => c.id === selectedCategory)?.name}!`
-              : "Select a Category First!"}{" "}
-            🚀
+              ? `Start Jungle Adventure: ${categories.find((c) => c.id === selectedCategory)?.name}!`
+              : "Choose Your Jungle Path First!"}{" "}
+            🦋
             <Star className="w-6 h-6 animate-pulse" />
           </span>
 
@@ -923,8 +925,8 @@ export function ChildFriendlyCategorySelector({
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer"></div>
         </Button>
 
-        <p className="text-xs md:text-sm text-slate-500 mt-4 animate-pulse">
-          ✨ Choose a category above to begin your vocabulary journey! ✨
+        <p className="text-xs md:text-sm text-jungle-dark/70 mt-4 animate-pulse">
+          🌳 Choose a jungle path above to begin your adventure! 🦋
         </p>
       </div>
 
@@ -941,11 +943,11 @@ export function ChildFriendlyCategorySelector({
                   audioService.playCheerSound();
                 }
               }}
-              className="w-14 h-14 rounded-full bg-gradient-to-r from-educational-green to-educational-blue hover:from-educational-green/90 hover:to-educational-blue/90 shadow-lg"
+              className="w-14 h-14 rounded-full bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-lg"
             >
               <span className="text-2xl">
                 {categories.find((c) => c.id === selectedCategory)?.icon ||
-                  "🚀"}
+                  "🌿"}
               </span>
             </Button>
             <div className="text-xs text-center text-white bg-black/70 rounded px-2 py-1">
@@ -967,9 +969,9 @@ export function ChildFriendlyCategorySelector({
             ) as HTMLElement;
             allButton?.scrollIntoView({ behavior: "smooth", block: "center" });
           }}
-          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg border-2 border-educational-blue/20 hover:bg-educational-blue/10"
+          className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-lg border-2 border-jungle/20 hover:bg-jungle/10"
         >
-          <span className="text-lg">🎯</span>
+          <span className="text-lg">🌳</span>
         </Button>
       </div>
     </div>

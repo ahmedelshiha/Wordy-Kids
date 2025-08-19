@@ -385,7 +385,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`min-h-screen w-full transition-all duration-300 optimize-for-small-screen ${
+      className={`min-h-screen w-full transition-all duration-300 optimize-for-small-screen jungle-mobile-optimized jungle-pattern-bg ${
         highContrastMode ? "bg-black text-white" : "bg-responsive-dashboard"
       }`}
       style={{
@@ -419,15 +419,15 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
               <h1
                 className={`font-bold ${
                   largeTextMode ? "text-xl" : "text-lg"
-                } ${highContrastMode ? "text-white" : "text-slate-800"}`}
+                } ${highContrastMode ? "text-white" : "bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent"}`}
               >
                 {viewMode === "categories"
-                  ? "Word Library"
+                  ? "🌿 Jungle Word Library 🦋"
                   : viewMode === "vocabulary"
-                    ? "Vocabulary Builder"
+                    ? "🎧 Jungle Vocabulary Builder 🌳"
                     : selectedCategory === "all"
-                      ? "All Words"
-                      : selectedCategory}
+                      ? "🌳 All Jungle Words 🦋"
+                      : `🌿 ${selectedCategory} Adventure`}
               </h1>
             </div>
 
@@ -530,7 +530,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Accessibility Panel */}
       {accessibilityMode && (
         <Card
-          className={`m-4 ${highContrastMode ? "bg-gray-900 text-white border-white" : ""}`}
+          className={`m-4 jungle-card ${highContrastMode ? "bg-gray-900 text-white border-white" : ""}`}
         >
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -587,18 +587,20 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Search and Filters */}
       {(showFilters || !isMobile) && viewMode === "words" && (
         <Card
-          className={`m-4 ${highContrastMode ? "bg-gray-900 text-white border-white" : ""}`}
+          className={`m-4 jungle-card ${highContrastMode ? "bg-gray-900 text-white border-white" : "bg-gradient-to-r from-jungle/5 to-sunshine/5 border-jungle/20 shadow-lg"}`}
         >
           <CardContent className="p-4 space-y-4">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-jungle" />
                 <Input
-                  placeholder="Search words..."
+                  placeholder="🌿 Search jungle words..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={`pl-10 ${
-                    highContrastMode ? "bg-black text-white border-white" : ""
+                    highContrastMode
+                      ? "bg-black text-white border-white"
+                      : "border-jungle/30 focus:border-jungle"
                   }`}
                 />
               </div>
@@ -614,10 +616,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     onClick={() => setDifficultyFilter(difficulty)}
                     className={`capitalize ${
                       difficultyFilter === difficulty
-                        ? "bg-educational-blue text-white"
+                        ? "bg-gradient-to-r from-jungle to-jungle-light text-white shadow-lg"
                         : highContrastMode
                           ? "border-white text-white hover:bg-white hover:text-black"
-                          : ""
+                          : "hover:bg-jungle/10 hover:text-jungle border-jungle/30"
                     }`}
                   >
                     {difficulty}
@@ -629,9 +631,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
             {filteredWords.length > 0 && (
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-sm ${highContrastMode ? "text-gray-300" : "text-gray-600"}`}
+                  className={`text-sm ${highContrastMode ? "text-gray-300" : "text-jungle-dark font-medium"}`}
                 >
-                  {filteredWords.length} words found
+                  🌳 {filteredWords.length} jungle words found
                 </span>
 
                 <div className="flex gap-2">
@@ -639,10 +641,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     size="sm"
                     variant="outline"
                     onClick={handleVocabularyBuilder}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 jungle-hover-effect hover:bg-jungle/10 hover:text-jungle border-jungle/30 jungle-focus"
                   >
                     <Brain className="w-4 h-4" />
-                    Practice Mode
+                    🌿 Practice Mode
                   </Button>
 
                   <Button
@@ -653,10 +655,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                         Math.floor(Math.random() * filteredWords.length),
                       )
                     }
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 jungle-hover-effect hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30 jungle-focus"
                   >
                     <Shuffle className="w-4 h-4" />
-                    Random
+                    🦋 Random
                   </Button>
                 </div>
               </div>
@@ -957,20 +959,20 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   size="sm"
                   variant="outline"
                   onClick={() => setViewMode("categories")}
-                  className="min-h-[44px] px-4"
+                  className="min-h-[44px] px-4 jungle-hover-effect hover:bg-jungle/10 hover:text-jungle border-jungle/30 jungle-focus"
                 >
                   <Grid3X3 className="w-4 h-4 mr-2" />
-                  Categories
+                  🌳 Categories
                 </Button>
 
                 <Button
                   size="sm"
                   variant="outline"
                   onClick={handleVocabularyBuilder}
-                  className="min-h-[44px] px-4"
+                  className="min-h-[44px] px-4 jungle-hover-effect hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30 jungle-focus"
                 >
                   <Brain className="w-4 h-4 mr-2" />
-                  Practice
+                  🌿 Practice
                 </Button>
               </div>
 
@@ -1000,7 +1002,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     : "grid",
               )
             }
-            className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+            className="w-14 h-14 rounded-full jungle-button bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-xl animate-jungle-glow"
             aria-label="Change view mode"
           >
             {wordViewMode === "grid"
@@ -1015,7 +1017,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Skip Link for Screen Readers */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-educational-blue text-white px-4 py-2 rounded-md z-50"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gradient-to-r from-jungle to-sunshine text-white px-4 py-2 rounded-md z-50"
       >
         Skip to main content
       </a>

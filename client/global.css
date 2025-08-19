@@ -16,6 +16,12 @@
 /* Import enhanced magical menu styles */
 @import "./styles/enhanced-magical-menu.css";
 
+/* Import jungle adventure enhancements */
+@import "./styles/jungle-adventure-enhancements.css";
+
+/* Import jungle mobile optimizations */
+@import "./styles/jungle-mobile-optimizations.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

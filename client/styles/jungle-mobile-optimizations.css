@@ -1,0 +1,474 @@
+/* Jungle Adventure Mobile Optimizations */
+
+/* Enhanced mobile touch targets */
+@media (max-width: 768px) {
+  .jungle-mobile-card {
+    min-height: 44px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(76, 175, 80, 0.15);
+    box-shadow:
+      0 4px 20px rgba(76, 175, 80, 0.1),
+      0 0 0 1px rgba(76, 175, 80, 0.05);
+    transition: all 0.2s ease;
+  }
+
+  .jungle-mobile-card:active {
+    transform: scale(0.98);
+    background: rgba(76, 175, 80, 0.05);
+  }
+
+  /* Enhanced mobile buttons */
+  .jungle-mobile-button {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #4caf50, #8bc34a);
+    color: white;
+    border: none;
+    box-shadow:
+      0 4px 15px rgba(76, 175, 80, 0.2),
+      0 0 0 1px rgba(76, 175, 80, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .jungle-mobile-button:active {
+    transform: scale(0.95);
+    box-shadow:
+      0 2px 8px rgba(76, 175, 80, 0.3),
+      0 0 0 1px rgba(76, 175, 80, 0.2);
+  }
+
+  .jungle-mobile-button:disabled {
+    opacity: 0.5;
+    transform: none;
+  }
+
+  /* Mobile-specific category cards */
+  .jungle-mobile-category-card {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 8px 4px;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+    box-shadow:
+      0 6px 25px rgba(76, 175, 80, 0.08),
+      0 0 0 1px rgba(76, 175, 80, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .jungle-mobile-category-card:active {
+    transform: scale(0.98) translateY(1px);
+    box-shadow:
+      0 4px 15px rgba(76, 175, 80, 0.15),
+      0 0 0 1px rgba(76, 175, 80, 0.1);
+  }
+
+  .jungle-mobile-category-card.selected {
+    background: linear-gradient(
+      135deg,
+      rgba(76, 175, 80, 0.1),
+      rgba(255, 193, 7, 0.05)
+    );
+    border-color: rgba(76, 175, 80, 0.3);
+    transform: scale(1.02);
+    box-shadow:
+      0 8px 30px rgba(76, 175, 80, 0.15),
+      0 0 0 2px rgba(76, 175, 80, 0.2);
+  }
+
+  /* Mobile search optimizations */
+  .jungle-mobile-search {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(76, 175, 80, 0.2);
+    border-radius: 16px;
+    padding: 14px 20px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    transition: all 0.2s ease;
+  }
+
+  .jungle-mobile-search:focus {
+    outline: none;
+    border-color: rgba(76, 175, 80, 0.5);
+    background: rgba(255, 255, 255, 1);
+    box-shadow:
+      0 0 0 4px rgba(76, 175, 80, 0.1),
+      0 4px 20px rgba(76, 175, 80, 0.1);
+  }
+
+  /* Mobile navigation enhancements */
+  .jungle-mobile-nav {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(76, 175, 80, 0.1);
+    box-shadow:
+      0 -4px 20px rgba(76, 175, 80, 0.1),
+      0 0 0 1px rgba(76, 175, 80, 0.05);
+  }
+
+  .jungle-mobile-nav-item {
+    min-height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .jungle-mobile-nav-item:active {
+    transform: scale(0.95);
+    background: rgba(76, 175, 80, 0.1);
+  }
+
+  /* Mobile floating action button */
+  .jungle-mobile-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #4caf50, #8bc34a);
+    box-shadow:
+      0 8px 25px rgba(76, 175, 80, 0.3),
+      0 0 0 1px rgba(76, 175, 80, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .jungle-mobile-fab:active {
+    transform: scale(0.9);
+    box-shadow:
+      0 4px 15px rgba(76, 175, 80, 0.4),
+      0 0 0 1px rgba(76, 175, 80, 0.2);
+  }
+
+  /* Mobile-specific text sizes */
+  .jungle-mobile-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #4caf50, #ffc107);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .jungle-mobile-subtitle {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(76, 175, 80, 0.8);
+    line-height: 1.4;
+  }
+
+  .jungle-mobile-body-text {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* Mobile scroll indicators */
+  .jungle-mobile-scroll-indicator {
+    position: relative;
+  }
+
+  .jungle-mobile-scroll-indicator::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
+  }
+
+  /* Mobile swipe indicators */
+  .jungle-mobile-swipe-hint {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .jungle-mobile-swipe-hint::before {
+    content: "👆 Swipe to explore";
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: jungle-swipe-hint 3s ease-in-out infinite;
+  }
+
+  @keyframes jungle-swipe-hint {
+    0%,
+    70%,
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    10%,
+    60% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile loading states */
+  .jungle-mobile-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .jungle-mobile-loading-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .jungle-mobile-loading-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4caf50;
+    animation: jungle-mobile-loading 1.4s ease-in-out infinite;
+  }
+
+  .jungle-mobile-loading-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .jungle-mobile-loading-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes jungle-mobile-loading {
+    0%,
+    40%,
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    20% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  /* Mobile error states */
+  .jungle-mobile-error {
+    background: rgba(255, 87, 34, 0.1);
+    border: 1px solid rgba(255, 87, 34, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 8px;
+    text-align: center;
+  }
+
+  .jungle-mobile-error-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .jungle-mobile-error-text {
+    color: rgba(255, 87, 34, 0.8);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  /* Mobile success states */
+  .jungle-mobile-success {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 8px;
+    text-align: center;
+    animation: jungle-mobile-success 0.5s ease-out;
+  }
+
+  @keyframes jungle-mobile-success {
+    0% {
+      opacity: 0;
+      transform: scale(0.9) translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .jungle-mobile-success-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    animation: jungle-mobile-success-icon 0.6s ease-out;
+  }
+
+  @keyframes jungle-mobile-success-icon {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Mobile accessibility enhancements */
+  .jungle-mobile-focus:focus {
+    outline: 3px solid rgba(76, 175, 80, 0.5);
+    outline-offset: 2px;
+  }
+
+  .jungle-mobile-large-text {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .jungle-mobile-high-contrast {
+    background: #000;
+    color: #fff;
+    border: 2px solid #4caf50;
+  }
+
+  /* Mobile reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .jungle-mobile-optimized * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .jungle-mobile-swipe-hint::before {
+      animation: none;
+      opacity: 0.7;
+    }
+  }
+
+  /* Mobile orientation adjustments */
+  @media (orientation: landscape) {
+    .jungle-mobile-category-card {
+      padding: 12px;
+      margin: 6px 3px;
+    }
+
+    .jungle-mobile-title {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* iPhone specific optimizations */
+  @supports (-webkit-touch-callout: none) {
+    .jungle-mobile-card {
+      -webkit-tap-highlight-color: rgba(76, 175, 80, 0.1);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .jungle-mobile-button {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .jungle-mobile-search {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  }
+
+  /* Android specific optimizations */
+  @media (pointer: coarse) {
+    .jungle-mobile-button {
+      min-height: 52px;
+      min-width: 52px;
+    }
+
+    .jungle-mobile-nav-item {
+      min-height: 52px;
+      min-width: 52px;
+    }
+  }
+}
+
+/* Tablet specific optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .jungle-tablet-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+    box-shadow:
+      0 8px 30px rgba(76, 175, 80, 0.1),
+      0 0 0 1px rgba(76, 175, 80, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .jungle-tablet-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 40px rgba(76, 175, 80, 0.15),
+      0 0 0 1px rgba(76, 175, 80, 0.1);
+  }
+
+  .jungle-tablet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Ultra-wide mobile screens */
+@media (max-width: 768px) and (min-aspect-ratio: 2/1) {
+  .jungle-mobile-category-card {
+    padding: 10px 16px;
+  }
+
+  .jungle-mobile-title {
+    font-size: 1rem;
+  }
+
+  .jungle-mobile-fab {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 375px) {
+  .jungle-mobile-card {
+    margin: 6px 2px;
+    padding: 10px 12px;
+  }
+
+  .jungle-mobile-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 14px;
+  }
+
+  .jungle-mobile-title {
+    font-size: 1.125rem;
+  }
+
+  .jungle-mobile-category-card {
+    padding: 14px;
+    margin: 6px 2px;
+  }
+}
