@@ -1023,7 +1023,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "quiz-master",
         name: "Quiz Master",
-        icon: "🏆",
+        icon: "���",
         earned: false,
         description: "Score 100% on 5 quizzes",
       },
@@ -2998,7 +2998,7 @@ export default function Index({ initialProfile }: IndexProps) {
                               {!showQuiz && !gameMode && !showMatchingGame ? (
                                 <div className="space-y-8">
                                   {/* Jungle Adventure Quiz Hero Section */}
-                                  <div className="jungle-quiz-hero">
+                                  <div className="jungle-quiz-hero desktop-optimized">
                                     {/* Jungle Vines Decoration */}
                                     <div className="jungle-vines"></div>
 
