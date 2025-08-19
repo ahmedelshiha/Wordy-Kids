@@ -361,7 +361,7 @@ export class EnhancedAudioService {
       voiceType?: VoiceType;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     if (!this.isEnabled) {
