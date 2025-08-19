@@ -1149,11 +1149,11 @@ export default function WordGarden({
         {/* Jungle Adventure XP + Streak */}
         <div className="mt-6 relative z-10">
           <div className="text-sm flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2 text-sunshine-light">
+            <div className="flex items-center gap-2 text-sunshine-dark">
               <Mountain className="w-4 h-4" />
               <span className="font-semibold">Jungle XP</span>
             </div>
-            <div className="flex items-center gap-2 text-jungle-light">
+            <div className="flex items-center gap-2 text-gray-600">
               <span className="animate-pulse">🔥</span>
               <span className="font-semibold">Adventure Streak: {streak}</span>
             </div>
