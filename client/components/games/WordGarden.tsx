@@ -178,7 +178,7 @@ const PLANT_TYPES = [
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
   ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
-  ["🌱", "🎍", "���"], // bamboo cherry - bamboo decoration to blossom
+  ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
   ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
@@ -1157,7 +1157,7 @@ export default function WordGarden({
                         🏆
                       </span>
                       <div className="text-white font-bold text-base mt-2 drop-shadow-lg bg-jungle-dark/50 rounded-full px-3 py-1">
-                        <span className="mr-2">���</span>Treasure found!
+                        <span className="mr-2">🐒</span>Treasure found!
                       </div>
                     </div>
                   </div>
@@ -1253,32 +1253,63 @@ export default function WordGarden({
               </div>
             </div>
 
-            {/* Jungle adventure level indicators - repositioned to avoid overflow */}
-            <div className="flex justify-between text-xs text-emerald-200 mt-3 px-1">
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 25 ? "text-yellow-300 font-semibold" : ""}`}
+            {/* Enhanced Jungle adventure level indicators with better visibility */}
+            <div className="flex justify-between mt-4 px-2 gap-1">
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                  xpPct >= 25
+                    ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">🌱</span>
-                <span className="text-xs">Sprout</span>
-              </span>
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-yellow-300 font-semibold" : ""}`}
+                <span className="text-xl drop-shadow-lg">🌱</span>
+                <span className="text-xs font-bold drop-shadow-md">Sprout</span>
+                {xpPct >= 25 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                )}
+              </div>
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                  xpPct >= 50
+                    ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">🌿</span>
-                <span className="text-xs">Explorer</span>
-              </span>
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 75 ? "text-yellow-300 font-semibold" : ""}`}
+                <span className="text-xl drop-shadow-lg">🌿</span>
+                <span className="text-xs font-bold drop-shadow-md">Explorer</span>
+                {xpPct >= 50 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                )}
+              </div>
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                  xpPct >= 75
+                    ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">🌳</span>
-                <span className="text-xs">Ranger</span>
-              </span>
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 100 ? "text-yellow-300 font-semibold animate-pulse" : ""}`}
+                <span className="text-xl drop-shadow-lg">🌳</span>
+                <span className="text-xs font-bold drop-shadow-md">Ranger</span>
+                {xpPct >= 75 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                )}
+              </div>
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 relative ${
+                  xpPct >= 100
+                    ? "bg-gradient-to-b from-yellow-400/30 to-yellow-500/40 border-yellow-300/80 text-yellow-100 shadow-xl transform scale-110 animate-pulse"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">👑</span>
-                <span className="text-xs">Legend</span>
-              </span>
+                <span className="text-xl drop-shadow-lg">👑</span>
+                <span className="text-xs font-bold drop-shadow-md">Legend</span>
+                {xpPct >= 100 && (
+                  <>
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 via-transparent to-yellow-600/20 rounded-xl animate-pulse"></div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
