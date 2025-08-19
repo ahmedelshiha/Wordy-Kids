@@ -36,7 +36,7 @@ export default function SignUp() {
     // Format birth date as dd/mm/yyyy
     if (e.target.name === "birthDate") {
       // Remove all non-digit characters
-      const digits = value.replace(/\\D/g, "");
+      const digits = value.replace(/\D/g, "");
 
       // Format as dd/mm/yyyy
       if (digits.length >= 1) {
