@@ -2312,7 +2312,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                             {/* Jungle Adventure Center: Category and Progress */}
                                             <div className="flex-1 text-center">
-                                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-2xl px-4 py-3 mx-2 border-2 border-jungle-light/40 shadow-lg">
+                                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-xl px-3 py-2 mx-1 border border-jungle-light/40 shadow-md">
                                                 {/* Jungle Decorative Elements */}
                                                 <div className="absolute -top-1 left-2 text-lg animate-gentle-bounce">
                                                   🌿
