@@ -140,6 +140,13 @@ export default {
           "mini-game-appear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
         "letter-highlight": "letter-highlight 1s ease-in-out infinite",
         "puzzle-piece-place": "puzzle-piece-place 0.3s ease-out",
+        // Jungle Adventure Animations
+        "jungle-glow": "jungle-glow 3s linear infinite",
+        "jungle-float": "jungle-float 4s ease-in-out infinite",
+        "jungle-sway": "jungle-sway 2s ease-in-out infinite",
+        "jungle-sparkle": "jungle-sparkle 1.5s ease-in-out infinite",
+        "jungle-celebration": "jungle-celebration 2s ease-in-out",
+        "jungle-level-up": "jungle-level-up 3s ease-out",
       },
       transform: {
         "preserve-3d": "preserve-3d",

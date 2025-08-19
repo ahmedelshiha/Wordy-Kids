@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { WordCard } from "@/components/WordCard";
+import { JungleAdventureWordCard } from "@/components/JungleAdventureWordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
 import {
@@ -2487,7 +2487,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     {celebrationEffect && (
                                                       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">
                                                         <div className="absolute top-4 left-4 text-2xl animate-bounce">
-                                                          ✨
+                                                          ���
                                                         </div>
                                                         <div className="absolute top-6 right-6 text-3xl animate-spin">
                                                           ✨
@@ -2500,7 +2500,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         </div>
                                                       </div>
                                                     )}
-                                                    <WordCard
+                                                    <JungleAdventureWordCard
                                                       word={{
                                                         ...(displayWords[
                                                           currentWordIndex
@@ -2534,18 +2534,23 @@ export default function Index({ initialProfile }: IndexProps) {
                                                           word.word,
                                                         )
                                                       }
-                                                      onFavorite={(word) =>
-                                                        console.log(
-                                                          "Favorited:",
-                                                          word.word,
-                                                        )
-                                                      }
                                                       onWordMastered={
                                                         handleWordMastered
                                                       }
                                                       showVocabularyBuilder={
                                                         true
                                                       }
+                                                      adventureLevel={
+                                                        Math.floor(
+                                                          Math.random() * 15,
+                                                        ) + 1
+                                                      }
+                                                      explorerBadges={[
+                                                        "jungle-master",
+                                                        "word-explorer",
+                                                        "pronunciation-pro",
+                                                      ]}
+                                                      isJungleQuest={true}
                                                     />
                                                   </div>
 
