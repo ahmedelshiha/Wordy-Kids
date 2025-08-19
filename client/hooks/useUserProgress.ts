@@ -69,10 +69,9 @@ export const useUserProgress = (): UserStatsData => {
         
         // Get journey progress for additional stats
         const journeyProgress = AchievementTracker.getJourneyProgress();
-        
-        // Get time spent from analytics
-        const analyticsData = await AnalyticsDataService.getInstance().getAnalyticsData();
-        const timeSpent = analyticsData.totalLearningTime || 0;
+
+        // Use time from journey progress (more reliable than analytics)
+        const timeSpent = journeyProgress.timeSpentLearning || 0;
 
         const updatedProgress: UserProgressData = {
           wordsLearned: systematicProgress.totalWordsLearned || journeyProgress.wordsLearned || 0,
