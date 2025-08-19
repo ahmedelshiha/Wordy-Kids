@@ -260,7 +260,9 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
   if (!isVisible) return null;
 
   return (
-    <motion.aside
+    <div className="w-full h-full">
+      {/* DESKTOP SIDEBAR - Only visible on lg+ screens */}
+      <motion.aside
       variants={sidebarVariants}
       initial="hidden"
       animate="visible"
@@ -703,7 +705,8 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           </div>
         )}
       </div>
-    </motion.aside>
+      </motion.aside>
+    </div>
   );
 };
 
