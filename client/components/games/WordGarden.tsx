@@ -887,7 +887,9 @@ export default function WordGarden({
                   animationDelay: `${Math.random() * 4}s`,
                 }}
               >
-                <span className="text-sm animate-jungle-sparkle drop-shadow-md">✨</span>
+                <span className="text-sm animate-jungle-sparkle drop-shadow-md">
+                  ✨
+                </span>
               </div>
             ))}
             {/* Jungle creatures */}
@@ -902,7 +904,7 @@ export default function WordGarden({
                 }}
               >
                 <span className="text-lg animate-jungle-float">
-                  {['🦋', '🐛', '🦜', '🐸'][i]}
+                  {["🦋", "🐛", "🦜", "🐸"][i]}
                 </span>
               </div>
             ))}
@@ -1450,7 +1452,9 @@ export default function WordGarden({
               <div className="text-emerald-700">
                 <div className="text-base sm:text-lg">🏆</div>
                 <div className="font-medium">{correctCount}</div>
-                <div className="text-[10px] sm:text-xs opacity-80">treasures</div>
+                <div className="text-[10px] sm:text-xs opacity-80">
+                  treasures
+                </div>
               </div>
               <div className="text-emerald-600">
                 <div className="text-base sm:text-lg">🔥</div>
@@ -1459,8 +1463,12 @@ export default function WordGarden({
               </div>
               <div className="text-emerald-600">
                 <div className="text-base sm:text-lg">🗺️</div>
-                <div className="font-medium">{roundIdx + 1}/{pool.length}</div>
-                <div className="text-[10px] sm:text-xs opacity-80">progress</div>
+                <div className="font-medium">
+                  {roundIdx + 1}/{pool.length}
+                </div>
+                <div className="text-[10px] sm:text-xs opacity-80">
+                  progress
+                </div>
               </div>
             </div>
           </div>
@@ -1500,7 +1508,9 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-emerald-100 via-green-50 to-lime-100 rounded-2xl border-2 border-emerald-300 shadow-2xl ${className}`}>
+    <div
+      className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-emerald-100 via-green-50 to-lime-100 rounded-2xl border-2 border-emerald-300 shadow-2xl ${className}`}
+    >
       {children}
     </div>
   );
