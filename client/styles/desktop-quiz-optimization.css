@@ -73,10 +73,10 @@
 
   /* Compact quiz cards for desktop */
   .jungle-quiz-card {
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 16px;
-    min-height: 320px;
-    max-height: 380px;
+    min-height: 280px;
+    max-height: 340px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -104,8 +104,8 @@
   }
 
   .jungle-quiz-card-description {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    margin-bottom: 0.75rem;
     line-height: 1.4;
     flex-grow: 1;
   }
