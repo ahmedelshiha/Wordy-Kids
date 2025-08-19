@@ -314,7 +314,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           <Button
             onClick={isGuest ? handleRegistration : handleLogout}
             className={cn(
-              "w-full rounded-[25px] px-6 py-[14px] font-['Baloo_2'] text-[16px] font-bold text-white",
+              "w-full rounded-[20px] px-4 py-2 font-['Baloo_2'] text-[13px] font-bold text-white",
               "transition-all duration-300 shadow-lg hover:shadow-xl",
               isGuest
                 ? "bg-jungle hover:bg-jungle-dark"
@@ -327,7 +327,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
 
         {isGuest && (
           <motion.p
-            className="text-center text-navy font-['Baloo_2'] text-[14px] font-medium mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
+            className="text-center text-navy font-['Baloo_2'] text-[11px] font-medium mt-2 underline cursor-pointer hover:no-underline transition-all duration-200"
             onClick={handleContinueAsGuest}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
