@@ -476,11 +476,11 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Jungle Adventure Flip Hint */}
-            <div className="mt-2 sm:mt-3 text-center">
-              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-4 py-3 mx-auto w-fit animate-gentle-bounce shadow-lg">
-                <p className="text-sm sm:text-base opacity-95 leading-tight font-bold jungle-adventure-hint">
-                  <RotateCcw className="w-4 h-4 inline mr-2 animate-spin-slow" />
-                  Explore the jungle secrets! 🌿✨
+            <div className="mt-1 sm:mt-2 text-center px-2">
+              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-3 py-2 sm:px-4 sm:py-3 mx-auto max-w-[280px] sm:max-w-none animate-gentle-bounce shadow-lg">
+                <p className="text-xs sm:text-sm md:text-base opacity-95 leading-tight font-bold jungle-adventure-hint break-words">
+                  <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2 animate-spin-slow" />
+                  <span className="inline-block">Explore the jungle secrets! 🌿✨</span>
                 </p>
               </div>
             </div>
