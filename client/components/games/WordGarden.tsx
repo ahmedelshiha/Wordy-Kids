@@ -18,18 +18,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Star, Crown, Zap } from "lucide-react";
+import { Sparkles, Star, Crown, Zap, Leaf, TreePine, Compass, Mountain, Home } from "lucide-react";
 
 /**
- * Word Garden — Listen & Pick Game for Ages 3–5
- * -------------------------------------------------
- * 🌟 Pulls words from your website DB using existing word service
- * • Kids listen to pronunciation then pick the matching picture
- * • Every correct answer grows a plant in the garden (visual progress)
- * • Integrates with achievements + sparkle celebration hooks
- * • Mobile-first UI with large tap targets and simple visuals
+ * Jungle Adventure Word Garden — Immersive Listen & Pick Game for Ages 3–5
+ * --------------------------------------------------------------------------
+ * 🌟 Comprehensive jungle adventure theme with enhanced visuals and interactions
+ * • Kids listen to pronunciation then pick the matching jungle treasure picture
+ * • Every correct answer grows a plant in the jungle adventure garden (visual progress)
+ * • Integrates with achievements + jungle celebration hooks
+ * • Mobile-first UI with large tap targets and immersive jungle visuals
+ * • Perfect optimization for both desktop and mobile devices
  *
- * Minimal deps: React + Tailwind classes (no external UI lib required)
+ * Enhanced jungle features: animated jungle elements, treasure hunting theme,
+ * monkey guide, adventure progress tracking, jungle sound effects
  */
 
 // ---------- Types ----------
@@ -169,7 +171,7 @@ const PLANT_TYPES = [
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
-  ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
+  ["🌱", "���", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
   ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
@@ -259,8 +261,8 @@ const fetchWords = async (
   );
 };
 
-// Green-themed Garden Achievement Component
-interface GardenAchievementProps {
+// Jungle Adventure Achievement Component
+interface JungleAchievementProps {
   show: boolean;
   title: string;
   description: string;
@@ -268,13 +270,13 @@ interface GardenAchievementProps {
   plantEmoji?: string;
 }
 
-function GardenAchievementPopup({
+function JungleAchievementPopup({
   show,
   title,
   description,
   onClose,
   plantEmoji = "🌱",
-}: GardenAchievementProps) {
+}: JungleAchievementProps) {
   useEffect(() => {
     if (show) {
       const timer = setTimeout(onClose, 2000);
@@ -296,14 +298,14 @@ function GardenAchievementPopup({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: -20 }}
             transition={{ type: "spring", duration: 0.5, damping: 15 }}
-            className="bg-gradient-to-br from-green-400 via-green-500 to-emerald-600 text-white rounded-3xl p-6 max-w-sm mx-4 text-center shadow-2xl border-4 border-green-300"
+            className="bg-gradient-to-br from-jungle-DEFAULT via-jungle-light to-emerald-600 text-white rounded-3xl p-6 max-w-sm mx-4 text-center shadow-2xl border-4 border-jungle-light/50"
           >
-            {/* Floating sparkles */}
+            {/* Floating jungle sparkles */}
             <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
               {Array.from({ length: 8 }, (_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute text-yellow-300 text-lg"
+                  className="absolute text-sunshine-DEFAULT text-lg"
                   initial={{ scale: 0, rotate: 0 }}
                   animate={{
                     scale: [0, 1, 0],
@@ -348,50 +350,50 @@ function GardenAchievementPopup({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <h3 className="text-2xl font-bold mb-2 text-yellow-100 drop-shadow-lg">
+              <h3 className="text-2xl font-bold mb-2 text-sunshine-light drop-shadow-lg">
                 🌟 {title} 🌟
               </h3>
-              <p className="text-lg text-green-100 mb-4 leading-relaxed drop-shadow">
+              <p className="text-lg text-jungle-light mb-4 leading-relaxed drop-shadow">
                 {description}
               </p>
             </motion.div>
 
-            {/* Garden celebration icons */}
+            {/* Jungle celebration icons */}
             <motion.div
               className="flex justify-center gap-3 text-2xl"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <span className="animate-bounce">🌻</span>
+              <span className="animate-bounce">🐒</span>
               <span
                 className="animate-bounce"
                 style={{ animationDelay: "0.1s" }}
-              >
-                🌸
-              </span>
-              <span
-                className="animate-bounce"
-                style={{ animationDelay: "0.2s" }}
               >
                 🌺
               </span>
               <span
                 className="animate-bounce"
+                style={{ animationDelay: "0.2s" }}
+              >
+                🦋
+              </span>
+              <span
+                className="animate-bounce"
                 style={{ animationDelay: "0.3s" }}
               >
-                🌷
+                🌴
               </span>
             </motion.div>
 
             {/* Auto-close indicator */}
             <motion.div
-              className="mt-4 text-sm text-green-200"
+              className="mt-4 text-sm text-jungle-light"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              Your garden is growing! 🌱✨
+              Your jungle adventure continues! 🐒✨
             </motion.div>
           </motion.div>
         </motion.div>
@@ -400,20 +402,20 @@ function GardenAchievementPopup({
   );
 }
 
-// Game completion dialog
-interface GameCompletionDialogProps {
+// Jungle Adventure Game completion dialog
+interface JungleGameCompletionDialogProps {
   show: boolean;
   stats: GameFinishStats;
   onContinue: () => void;
   onExit: () => void;
 }
 
-function GameCompletionDialog({
+function JungleGameCompletionDialog({
   show,
   stats,
   onContinue,
   onExit,
-}: GameCompletionDialogProps) {
+}: JungleGameCompletionDialogProps) {
   const accuracy =
     stats.totalRounds > 0
       ? Math.round((stats.correct / stats.totalRounds) * 100)
@@ -421,77 +423,81 @@ function GameCompletionDialog({
 
   return (
     <Dialog open={show} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 bg-gradient-to-br from-green-400 via-green-500 to-emerald-600 border-green-300 border-4">
+      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 bg-gradient-to-br from-jungle-DEFAULT via-jungle-light to-emerald-600 border-jungle-light border-4">
         <DialogHeader className="text-center pb-2">
-          <div className="text-5xl mb-2 animate-bounce">🌻</div>
-          <DialogTitle className="text-lg font-bold text-white drop-shadow-lg">
-            🎉 Garden Done! 🌸
+          <div className="text-6xl mb-3 animate-jungle-celebration">🏆</div>
+          <DialogTitle className="text-xl font-bold text-white drop-shadow-lg">
+            🎉 Jungle Quest Complete! 🐒
           </DialogTitle>
-          <DialogDescription className="text-green-100 text-sm">
-            Amazing job growing your garden!
+          <DialogDescription className="text-jungle-light text-sm">
+            Outstanding adventure! The monkey is so proud! 🍌
           </DialogDescription>
         </DialogHeader>
 
-        {/* Compact Stats */}
-        <div className="bg-white/20 rounded-lg p-2 border border-green-300/50 backdrop-blur-sm">
+        {/* Compact Jungle Stats */}
+        <div className="bg-gradient-to-r from-jungle-dark/30 via-jungle-DEFAULT/20 to-jungle-dark/30 rounded-lg p-3 border border-jungle-light/50 backdrop-blur-sm">
           <div className="flex justify-between items-center text-center">
             <div className="flex-1">
-              <div className="text-2xl">🌱</div>
+              <div className="text-3xl animate-pulse">🏆</div>
               <div className="text-lg font-bold text-white">
                 {stats.correct}
               </div>
-              <div className="text-xs text-green-100">Plants</div>
+              <div className="text-xs text-jungle-light">Treasures</div>
             </div>
             <div className="flex-1">
-              <div className="text-2xl">⭐</div>
+              <div className="text-3xl animate-bounce">🔥</div>
               <div className="text-lg font-bold text-white">
                 {stats.bestStreak}
               </div>
-              <div className="text-xs text-green-100">Streak</div>
+              <div className="text-xs text-jungle-light">Best Streak</div>
             </div>
             <div className="flex-1">
-              <div className="text-2xl">
-                {accuracy >= 90 ? "🏆" : accuracy >= 75 ? "🎓" : "👍"}
+              <div className="text-3xl">
+                {accuracy >= 90 ? "👑" : accuracy >= 75 ? "🏖️" : "🌟"}
               </div>
               <div className="text-lg font-bold text-white">{accuracy}%</div>
-              <div className="text-xs text-green-100">Score</div>
+              <div className="text-xs text-jungle-light">Adventure Score</div>
             </div>
           </div>
         </div>
 
-        {/* Compact Garden Preview - Show only first 5 plants */}
-        <div className="flex justify-center gap-1 text-xl my-3">
+        {/* Jungle Treasure Collection Preview */}
+        <div className="flex justify-center gap-2 text-2xl my-4 p-2 bg-jungle-dark/20 rounded-lg border border-jungle-light/30">
           {Array.from({ length: Math.min(stats.correct, 5) }, (_, i) => (
-            <span
+            <div
               key={i}
-              className="animate-gentle-float"
-              style={{ animationDelay: `${i * 0.1}s` }}
+              className="relative animate-jungle-float"
+              style={{ animationDelay: `${i * 0.15}s` }}
             >
-              {PLANT_TYPES[i % PLANT_TYPES.length][2]}
-            </span>
+              <span className="drop-shadow-lg">{PLANT_TYPES[i % PLANT_TYPES.length][2]}</span>
+              <div className="absolute -top-1 -right-1 text-xs animate-sparkle">
+                <span>✨</span>
+              </div>
+            </div>
           ))}
           {stats.correct > 5 && (
-            <span className="text-green-200 animate-gentle-float">
-              +{stats.correct - 5} more!
-            </span>
+            <div className="text-jungle-light animate-jungle-float flex items-center gap-1">
+              <span className="text-lg">🎒</span>
+              <span className="text-sm font-semibold">+{stats.correct - 5} more!</span>
+            </div>
           )}
         </div>
 
         <DialogFooter className="flex gap-2 pt-2">
           <Button
             onClick={onContinue}
-            className="flex-1 bg-white/20 hover:bg-white/30 text-white text-sm py-2 px-3 rounded-lg shadow-lg border border-white/30"
+            className="flex-1 bg-gradient-to-r from-jungle-DEFAULT to-jungle-light hover:from-jungle-light hover:to-jungle-DEFAULT text-white text-sm py-3 px-4 rounded-lg shadow-lg border border-jungle-light/50 transition-all duration-300 hover:scale-105"
           >
-            <span className="mr-1">🌱</span>
-            Play Again!
+            <span className="mr-2">🐒</span>
+            New Adventure!
           </Button>
           <Button
             onClick={onExit}
             variant="outline"
-            className="flex-1 bg-white/10 hover:bg-white/20 text-white border-white/30 text-sm py-2 px-3 rounded-lg"
+            className="flex-1 bg-sunshine-DEFAULT/20 hover:bg-sunshine-DEFAULT/30 text-navy border-sunshine-DEFAULT/50 text-sm py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105"
           >
-            <span className="mr-1">🏠</span>
-            Home
+            <Home className="w-4 h-4 mr-1" />
+            <span>Home Base</span>
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -499,8 +505,8 @@ function GameCompletionDialog({
   );
 }
 
-// ---------- Component ----------
-export default function WordGardenGame({
+// ---------- Main Jungle Adventure Component ----------
+export default function JungleWordGardenGame({
   rounds = 10,
   optionsPerRound = 3,
   difficulty = "easy",
@@ -626,7 +632,7 @@ export default function WordGardenGame({
 
   const checkAchievements = useCallback(
     (nextCorrectTotal: number, nextStreak: number) => {
-      // Track achievements and show green garden-themed popup
+      // Track achievements and show jungle-themed popup
       EnhancedAchievementTracker.trackActivity({
         type: "wordLearning",
         wordsLearned: 1,
@@ -635,35 +641,8 @@ export default function WordGardenGame({
         category: category,
       });
 
-      // Show garden-specific achievements - ALL DISABLED
-      // Disabled: Growing Streak popup at 3 correct answers
-      // if (nextStreak === 3) {
-      //   setAchievementData({
-      //     title: "Growing Streak!",
-      //     description:
-      //       "3 plants in a row! Your garden is blooming beautifully! 🌸",
-      //     plantEmoji: "🌸",
-      //   });
-      //   setShowAchievement(true);
-      // } else
-      // Disabled: Garden Master popup at 5 streak
-      // if (nextStreak === 5) {
-      //   setAchievementData({
-      //     title: "Garden Master!",
-      //     description: "5 perfect plants! You're a true gardener! 🏆",
-      //     plantEmoji: "🌻",
-      //   });
-      //   setShowAchievement(true);
-      // } else
-      // Disabled: First Sprout popup at 1 correct
-      // if (nextCorrectTotal === 1) {
-      //   setAchievementData({
-      //     title: "First Sprout!",
-      //     description: "Your first plant has sprouted! Keep growing! 🌱",
-      //     plantEmoji: "🌱",
-      //   });
-      //   setShowAchievement(true);
-      // }
+      // Show jungle-specific achievements - ALL DISABLED for cleaner experience
+      // Users will see achievements through the main achievement system
     },
     [difficulty, category],
   );
@@ -803,10 +782,10 @@ export default function WordGardenGame({
   if (loading)
     return (
       <Wrapper className={className}>
-        <div className="rounded-3xl bg-gradient-to-b from-emerald-200 to-emerald-100 p-8 shadow-xl text-center">
-          <div className="text-6xl mb-2 animate-bounce">🌱</div>
-          <div className="font-bold">Growing your words…</div>
-          <div className="text-sm opacity-70">Fetching kid‑friendly words</div>
+        <div className="rounded-3xl bg-gradient-to-br from-jungle-light to-jungle-DEFAULT p-8 shadow-xl text-center border-2 border-jungle-light/30">
+          <div className="text-6xl mb-4 animate-jungle-float">🐒</div>
+          <div className="font-bold text-white text-lg drop-shadow-lg">Growing your jungle words…</div>
+          <div className="text-sm text-jungle-light mt-2">The monkey is preparing your adventure!</div>
         </div>
       </Wrapper>
     );
@@ -814,10 +793,10 @@ export default function WordGardenGame({
   if (error || !current)
     return (
       <Wrapper className={className}>
-        <div className="rounded-3xl bg-gradient-to-b from-rose-100 to-rose-50 p-8 shadow-xl text-center">
-          <div className="text-6xl mb-2">🪴</div>
-          <div className="font-bold">No words to play</div>
-          <div className="text-sm opacity-70">
+        <div className="rounded-3xl bg-gradient-to-br from-coral-red/20 to-orange-500/20 p-8 shadow-xl text-center border-2 border-coral-red/30">
+          <div className="text-6xl mb-4">🐒</div>
+          <div className="font-bold text-jungle-dark text-lg">No jungle words to explore</div>
+          <div className="text-sm text-jungle-DEFAULT mt-2">
             Please add new words or try again later.
           </div>
         </div>
@@ -835,40 +814,132 @@ export default function WordGardenGame({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-xl p-4 md:p-6 bg-gradient-to-b from-green-600 to-emerald-700 text-white">
-        {/* Top bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between text-sm opacity-90">
-            <span>
-              Plant {roundIdx + 1} / {pool.length}
-            </span>
-            <span>Best Streak: {bestStreak}</span>
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30">        
+        {/* Jungle Background Effects */}
+        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+          {/* Animated jungle leaves */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            {Array.from({ length: 8 }, (_, i) => (
+              <div
+                key={`leaf-${i}`}
+                className="absolute text-jungle-light opacity-20"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  fontSize: `${0.8 + Math.random() * 0.4}rem`,
+                  animationDelay: `${Math.random() * 3}s`,
+                }}
+              >
+                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway" />
+              </div>
+            ))}
           </div>
-          <div className="mt-2 h-3 rounded-full bg-white/20 overflow-hidden">
-            <div
-              className="h-3 rounded-full bg-white/90"
-              style={{ width: `${progressPct}%` }}
-            />
+          
+          {/* Jungle atmosphere sparkles */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 12 }, (_, i) => (
+              <div
+                key={`sparkle-${i}`}
+                className="absolute text-sunshine-light opacity-30"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 4}s`,
+                }}
+              >
+                <span className="text-xs animate-jungle-sparkle">✨</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Mascot + Play */}
-        <div className="flex items-center justify-between gap-3 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="text-4xl">🦋</span>
-            <div className="leading-tight">
-              <div className="text-xs uppercase tracking-wide opacity-90">
-                Word Garden
-              </div>
-              <div className="font-bold">Listen & pick the seed!</div>
+        {/* Jungle Adventure Top Bar */}
+        <div className="mb-4 relative z-10">
+          <div className="flex items-center justify-between text-sm mb-2">
+            <div className="flex items-center gap-2 bg-jungle-dark/40 rounded-full px-3 py-1 backdrop-blur-sm border border-jungle-light/20">
+              <TreePine className="w-4 h-4 text-jungle-light" />
+              <span className="text-sunshine-light font-semibold">
+                Seed {roundIdx + 1} / {pool.length}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 bg-sunshine-dark/40 rounded-full px-3 py-1 backdrop-blur-sm border border-sunshine-light/20">
+              <Zap className="w-4 h-4 text-sunshine-light" />
+              <span className="text-sunshine-light font-semibold">Streak: {bestStreak}</span>
             </div>
           </div>
+          
+          {/* Jungle Path Progress Bar */}
+          <div className="relative">
+            <div className="h-4 rounded-full bg-jungle-dark/30 overflow-hidden border border-jungle-light/20 backdrop-blur-sm">
+              <div
+                className="h-4 rounded-full bg-gradient-to-r from-sunshine-DEFAULT to-sunshine-light transition-all duration-500 ease-out relative overflow-hidden"
+                style={{ width: `${progressPct}%` }}
+              >
+                {/* Animated progress sparkles */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-jungle-glow" />
+              </div>
+            </div>
+            
+            {/* Jungle milestone markers */}
+            <div className="absolute top-0 w-full h-4 flex justify-between px-1">
+              {Array.from({ length: Math.min(5, pool.length) }, (_, i) => {
+                const position = ((i + 1) / Math.min(5, pool.length)) * 100;
+                const reached = progressPct >= position;
+                return (
+                  <div
+                    key={i}
+                    className={`w-3 h-3 rounded-full border-2 transition-all duration-300 ${reached ? 'bg-sunshine-light border-white scale-110' : 'bg-jungle-dark/50 border-jungle-light/40'}`}
+                    style={{ marginLeft: i === 0 ? '0' : '-6px' }}
+                  >
+                    {reached && <span className="text-[8px] leading-none">🌟</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Jungle Guide + Play */}
+        <div className="flex items-center justify-between gap-3 mb-5 relative z-10">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <span className="text-5xl md:text-6xl animate-jungle-float">🐒</span>
+              <div className="absolute -top-1 -right-1 text-lg animate-bounce">
+                <span>🍌</span>
+              </div>
+            </div>
+            <div className="leading-tight">
+              <div className="text-xs uppercase tracking-wider text-sunshine-light font-bold mb-1 flex items-center gap-1">
+                <Compass className="w-3 h-3" />
+                Jungle Word Quest
+              </div>
+              <div className="font-bold text-lg md:text-xl text-white drop-shadow-lg">
+                Listen & find the treasure! 🗺️
+              </div>
+              <div className="text-xs text-jungle-light mt-1 opacity-90">
+                Help the monkey collect jungle words
+              </div>
+            </div>
+          </div>
+          
           <button
             onClick={handlePlay}
-            className="rounded-full px-5 py-3 bg-white text-emerald-700 font-bold active:scale-95 transition-transform min-w-[56px] min-h-[56px]"
-            aria-label="Play sound"
+            className="relative rounded-full px-4 py-4 md:px-6 md:py-4 bg-gradient-to-br from-sunshine-DEFAULT to-sunshine-dark text-navy font-bold active:scale-95 transition-all duration-200 min-w-[64px] min-h-[64px] shadow-lg border-2 border-sunshine-light hover:shadow-xl hover:scale-105 group"
+            aria-label="Play jungle sound"
           >
-            🔊 Play
+            <div className="flex items-center gap-2">
+              <span className="text-2xl group-hover:animate-pulse">🔊</span>
+              <span className="hidden md:inline text-sm font-bold">Play</span>
+            </div>
+            
+            {/* Sound wave animation */}
+            <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex gap-1">
+                <div className="w-1 h-1 bg-sunshine-light rounded-full animate-ping" />
+                <div className="w-1 h-1 bg-sunshine-light rounded-full animate-ping" style={{ animationDelay: '0.1s' }} />
+                <div className="w-1 h-1 bg-sunshine-light rounded-full animate-ping" style={{ animationDelay: '0.2s' }} />
+              </div>
+            </div>
           </button>
         </div>
 
@@ -876,7 +947,7 @@ export default function WordGardenGame({
         {showSparkleExplosion && (
           <div className="absolute inset-0 pointer-events-none z-30">
             <div className="absolute top-1/4 left-1/4 animate-ping">
-              <Sparkles className="w-8 h-8 text-yellow-300" />
+              <Sparkles className="w-8 h-8 text-sunshine-DEFAULT" />
             </div>
             <div className="absolute top-1/3 right-1/4 animate-pulse animation-delay-200">
               <Star className="w-6 h-6 text-pink-300" />
@@ -890,9 +961,9 @@ export default function WordGardenGame({
           </div>
         )}
 
-        {/* Options grid */}
+        {/* Jungle Treasure Options Grid */}
         <div
-          className={`grid gap-4 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
+          className={`grid gap-3 md:gap-4 relative z-10 ${optionsPerRound === 4 ? "grid-cols-2" : "grid-cols-3"}`}
         >
           {options.map((img, i) => {
             const isCorrect = img === current.imageUrl;
@@ -904,127 +975,292 @@ export default function WordGardenGame({
                 key={i}
                 onClick={() => choose(img)}
                 disabled={locked}
-                className={`relative aspect-square rounded-3xl bg-white/95 hover:bg-white active:scale-95 transition-all duration-300 shadow-mobile-lg overflow-hidden border-4 focus:outline-none focus:ring-4 focus:ring-yellow-300 touch-target mobile-optimized ${
+                className={`relative aspect-square rounded-3xl bg-gradient-to-br from-white via-light-background to-white/95 hover:from-sunshine-light/20 hover:via-light-background hover:to-white active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl overflow-hidden border-4 focus:outline-none focus:ring-4 focus:ring-sunshine-DEFAULT touch-target mobile-optimized backdrop-blur-sm ${
                   shouldHighlight
                     ? isCorrect
-                      ? "border-green-400 ring-4 ring-green-300 animate-gentle-bounce border-rainbow"
-                      : "border-red-400 ring-4 ring-red-300 animate-wiggle"
-                    : "border-transparent hover:border-yellow-300 animate-fade-in"
+                      ? "border-jungle-DEFAULT ring-4 ring-jungle-light animate-jungle-celebration shadow-jungle-success"
+                      : "border-coral-red ring-4 ring-coral-red/50 animate-wiggle shadow-jungle-error"
+                    : "border-transparent hover:border-sunshine-DEFAULT hover:shadow-jungle-hover animate-fade-in"
                 } ${locked ? "cursor-not-allowed" : "cursor-pointer hover:shadow-xl hover:scale-105"}`}
                 style={{
                   animationDelay: `${i * 100}ms`,
                 }}
               >
-                <div className="w-full h-full flex items-center justify-center p-2">
-                  <img
-                    src={img}
-                    alt="option"
-                    className="w-full h-full object-contain rounded-2xl"
-                  />
-                </div>
-                {/* Enhanced fun corner badge with dynamic sparkles */}
-                <div className="absolute top-2 left-2">
-                  <span className="text-lg animate-sparkle">✨</span>
-                  {sparkleCount > 3 && (
-                    <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-yellow-400 animate-spin" />
-                  )}
+                {/* Jungle treasure frame */}
+                <div className="absolute inset-2 rounded-2xl bg-gradient-to-br from-jungle-light/10 to-transparent border border-jungle-light/20" />
+                
+                <div className="w-full h-full flex items-center justify-center p-3 relative z-10">
+                  <div className="relative w-full h-full">
+                    <img
+                      src={img}
+                      alt="jungle treasure option"
+                      className="w-full h-full object-contain rounded-2xl drop-shadow-md"
+                    />
+                    
+                    {/* Jungle treasure glow effect */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-sunshine-DEFAULT/0 via-sunshine-light/5 to-sunshine-DEFAULT/0 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                  </div>
                 </div>
 
-                {/* Answer feedback with enhanced animations */}
+                {/* Jungle adventure corner badge */}
+                <div className="absolute top-2 left-2 z-20">
+                  <div className="relative">
+                    <span className="text-lg animate-jungle-sparkle drop-shadow-lg">🌟</span>
+                    {sparkleCount > 3 && (
+                      <div className="absolute -top-1 -right-1">
+                        <Sparkles className="w-4 h-4 text-sunshine-DEFAULT animate-spin" />
+                        <span className="absolute inset-0 text-xs animate-pulse">🎋</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Jungle vine decoration */}
+                  <div className="absolute -top-1 -left-1 text-jungle-light opacity-50">
+                    <span className="text-xs animate-jungle-sway">🌿</span>
+                  </div>
+                </div>
+
+                {/* Jungle success/failure feedback */}
                 {showAnswer && isCorrect && (
-                  <div className="absolute inset-0 bg-green-500/30 flex items-center justify-center backdrop-blur-sm">
-                    <div className="text-center">
-                      <span className="text-5xl animate-gentle-bounce">✅</span>
-                      <div className="text-white font-bold text-sm mt-1 text-shadow">
-                        Correct!
+                  <div className="absolute inset-0 bg-gradient-to-br from-jungle-DEFAULT/40 via-jungle-light/30 to-sunshine-DEFAULT/20 flex items-center justify-center backdrop-blur-sm rounded-3xl border-2 border-jungle-light/50">
+                    <div className="text-center relative">
+                      {/* Success explosion effect */}
+                      <div className="absolute inset-0 -m-8">
+                        {Array.from({ length: 6 }, (_, i) => (
+                          <div
+                            key={i}
+                            className="absolute text-sunshine-DEFAULT animate-jungle-celebration"
+                            style={{
+                              left: `${50 + Math.cos((i * Math.PI * 2) / 6) * 30}%`,
+                              top: `${50 + Math.sin((i * Math.PI * 2) / 6) * 30}%`,
+                              animationDelay: `${i * 0.1}s`,
+                            }}
+                          >
+                            <span className="text-2xl">🎉</span>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <span className="text-6xl animate-jungle-celebration drop-shadow-lg">🏆</span>
+                      <div className="text-white font-bold text-base mt-2 drop-shadow-lg bg-jungle-dark/50 rounded-full px-3 py-1">
+                        <span className="mr-2">🐒</span>Treasure found!
                       </div>
                     </div>
                   </div>
                 )}
                 {showAnswer && isSelected && !isCorrect && (
-                  <div className="absolute inset-0 bg-red-500/30 flex items-center justify-center backdrop-blur-sm">
-                    <div className="text-center">
-                      <span className="text-5xl animate-wiggle">❌</span>
-                      <div className="text-white font-bold text-sm mt-1 text-shadow">
-                        Try again!
+                  <div className="absolute inset-0 bg-gradient-to-br from-coral-red/40 via-coral-red/30 to-orange-500/20 flex items-center justify-center backdrop-blur-sm rounded-3xl border-2 border-coral-red/50">
+                    <div className="text-center relative">
+                      <span className="text-5xl animate-wiggle drop-shadow-lg">🔍</span>
+                      <div className="text-white font-bold text-sm mt-2 drop-shadow-lg bg-coral-red/50 rounded-full px-3 py-1">
+                        <span className="mr-2">🗺️</span>Keep exploring!
                       </div>
                     </div>
                   </div>
                 )}
 
-                {/* Enhanced sparkle effects for hover and interaction */}
-                <div className="absolute top-1 right-1 opacity-0 hover:opacity-100 transition-opacity">
-                  <span className="text-xs animate-mobile-sparkle">⭐</span>
-                  {showSparkleExplosion && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Sparkles className="w-6 h-6 text-yellow-300 animate-ping" />
-                    </div>
-                  )}
+                {/* Jungle discovery effects */}
+                <div className="absolute top-2 right-2 opacity-0 hover:opacity-100 transition-all duration-300 group-hover:scale-110 z-20">
+                  <div className="relative">
+                    <span className="text-sm animate-jungle-sparkle drop-shadow-md">🌺</span>
+                    {showSparkleExplosion && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative">
+                          <Sparkles className="w-6 h-6 text-sunshine-DEFAULT animate-ping" />
+                          <span className="absolute inset-0 flex items-center justify-center text-xs animate-jungle-glow">🎋</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Jungle hover trail effect */}
+                <div className="absolute bottom-2 left-2 opacity-0 hover:opacity-60 transition-opacity z-10">
+                  <div className="flex gap-1">
+                    <span className="text-xs animate-jungle-float" style={{ animationDelay: '0s' }}>🍃</span>
+                    <span className="text-xs animate-jungle-float" style={{ animationDelay: '0.2s' }}>🌿</span>
+                    <span className="text-xs animate-jungle-float" style={{ animationDelay: '0.4s' }}>🦋</span>
+                  </div>
                 </div>
               </button>
             );
           })}
         </div>
 
-        {/* Bottom: XP + streak */}
-        <div className="mt-5">
-          <div className="text-sm flex items-center justify-between">
-            <span>Garden XP</span>
-            <span>Streak: {streak}</span>
+        {/* Jungle Adventure XP + Streak */}
+        <div className="mt-6 relative z-10">
+          <div className="text-sm flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2 text-sunshine-light">
+              <Mountain className="w-4 h-4" />
+              <span className="font-semibold">Jungle XP</span>
+            </div>
+            <div className="flex items-center gap-2 text-jungle-light">
+              <span className="animate-pulse">🔥</span>
+              <span className="font-semibold">Adventure Streak: {streak}</span>
+            </div>
           </div>
-          <div className="mt-2 h-3 rounded-full bg-white/20 overflow-hidden">
-            <div
-              className="h-3 rounded-full bg-lime-300"
-              style={{ width: `${xpPct}%` }}
-            />
+          
+          <div className="relative">
+            <div className="h-4 rounded-full bg-jungle-dark/30 overflow-hidden border border-jungle-light/20 backdrop-blur-sm">
+              <div
+                className="h-4 rounded-full bg-gradient-to-r from-jungle-DEFAULT via-jungle-light to-sunshine-DEFAULT transition-all duration-700 ease-out relative overflow-hidden"
+                style={{ width: `${xpPct}%` }}
+              >
+                {/* XP progress sparkle trail */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-jungle-glow" />
+                
+                {/* XP milestone celebration */}
+                {xpPct > 75 && (
+                  <div className="absolute top-0 right-0 -mr-2 -mt-1">
+                    <span className="text-xs animate-bounce">🎊</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Jungle adventure level indicators */}
+            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-jungle-light">
+              <span className={`flex items-center gap-1 ${xpPct >= 25 ? 'text-sunshine-DEFAULT' : ''}`}>
+                🌱 Sprout
+              </span>
+              <span className={`flex items-center gap-1 ${xpPct >= 50 ? 'text-sunshine-DEFAULT' : ''}`}>
+                🌿 Explorer
+              </span>
+              <span className={`flex items-center gap-1 ${xpPct >= 75 ? 'text-sunshine-DEFAULT' : ''}`}>
+                🌳 Ranger
+              </span>
+              <span className={`flex items-center gap-1 ${xpPct >= 100 ? 'text-sunshine-DEFAULT animate-pulse' : ''}`}>
+                👑 Legend
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Garden row (visual progress) */}
-      <div className="mt-4 grid grid-cols-5 gap-2">
-        {gardenStages.map((stage, idx) => {
-          const isActive = idx === roundIdx;
-          const isCompleted = idx < roundIdx;
-          const hasGrown = stage > 0;
-          const justGrew = recentlyGrown === idx;
-          const plantTypeIndex = plantTypes[idx];
-          const plantStages = PLANT_TYPES[plantTypeIndex];
+      {/* Jungle Adventure Progress Trail */}
+      <div className="mt-8 relative">
+        {/* Jungle path background */}
+        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-jungle-dark/20 via-jungle-DEFAULT/10 to-jungle-dark/20 rounded-2xl border border-jungle-light/20 backdrop-blur-sm" />
+        
+        <div className="relative grid grid-cols-5 gap-2 p-2">
+          {gardenStages.map((stage, idx) => {
+            const isActive = idx === roundIdx;
+            const isCompleted = idx < roundIdx;
+            const hasGrown = stage > 0;
+            const justGrew = recentlyGrown === idx;
+            const plantTypeIndex = plantTypes[idx];
+            const plantStages = PLANT_TYPES[plantTypeIndex];
 
-          return (
-            <div
-              key={idx}
-              className={`rounded-3xl h-20 flex items-center justify-center transition-all duration-300 ${
-                justGrew
-                  ? "bg-yellow-200 ring-4 ring-yellow-400 shadow-lg"
-                  : isActive
-                    ? "bg-emerald-200 ring-2 ring-emerald-400"
-                    : isCompleted && hasGrown
-                      ? "bg-emerald-100"
-                      : "bg-emerald-50"
-              }`}
-            >
-              <span
-                className={`text-4xl transition-all duration-500 ${
+            return (
+              <div
+                key={idx}
+                className={`relative rounded-3xl h-20 flex items-center justify-center transition-all duration-500 overflow-hidden ${
                   justGrew
-                    ? "animate-bounce scale-125 drop-shadow-lg"
+                    ? "bg-gradient-to-br from-sunshine-light via-sunshine-DEFAULT to-sunshine-dark ring-4 ring-sunshine-light shadow-2xl scale-110"
                     : isActive
-                      ? "animate-bounce scale-110"
-                      : hasGrown
-                        ? "scale-105"
-                        : ""
+                      ? "bg-gradient-to-br from-jungle-light via-jungle-DEFAULT to-jungle-dark ring-3 ring-jungle-light shadow-xl animate-jungle-glow"
+                      : isCompleted && hasGrown
+                        ? "bg-gradient-to-br from-jungle-light/30 via-jungle-DEFAULT/20 to-jungle-dark/30 shadow-lg"
+                        : "bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 border-2 border-dashed border-gray-300"
                 }`}
               >
-                {plantStages[stage]}
-              </span>
-            </div>
-          );
-        })}
+                {/* Jungle station background effects */}
+                {(isActive || justGrew) && (
+                  <div className="absolute inset-0">
+                    {/* Animated jungle particles */}
+                    {Array.from({ length: 4 }, (_, i) => (
+                      <div
+                        key={i}
+                        className="absolute text-jungle-light/40"
+                        style={{
+                          left: `${25 + (i * 25)}%`,
+                          top: `${20 + Math.sin(i) * 20}%`,
+                          animationDelay: `${i * 0.3}s`,
+                        }}
+                      >
+                        <span className="text-xs animate-jungle-float">🌿</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Adventure station marker */}
+                <div className="relative z-10 text-center">
+                  <span
+                    className={`text-4xl transition-all duration-700 drop-shadow-lg ${
+                      justGrew
+                        ? "animate-jungle-celebration scale-125 filter brightness-125"
+                        : isActive
+                          ? "animate-jungle-float scale-110"
+                          : hasGrown
+                            ? "scale-105 hover:scale-110 transition-transform"
+                            : "opacity-50 scale-90"
+                    }`}
+                  >
+                    {plantStages[stage]}
+                  </span>
+                  
+                  {/* Adventure station number */}
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-jungle-dark text-white text-xs rounded-full flex items-center justify-center font-bold border border-jungle-light">
+                    {idx + 1}
+                  </div>
+                  
+                  {/* Completion sparkle */}
+                  {isCompleted && hasGrown && (
+                    <div className="absolute -top-2 -right-2 text-sunshine-DEFAULT animate-pulse">
+                      <span className="text-lg">✨</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Jungle path connecting trail */}
+        <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-jungle-dark/40 via-jungle-DEFAULT/60 to-jungle-dark/40 rounded-full -translate-y-1/2 -z-10" />
+        
+        {/* Adventure progress indicators */}
+        <div className="absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-jungle-DEFAULT">
+          <div className="text-center">
+            <span className="block">🗺️</span>
+            <span>Start</span>
+          </div>
+          <div className="text-center">
+            <span className="block">🌿</span>
+            <span>Jungle</span>
+          </div>
+          <div className="text-center">
+            <span className="block">🏔️</span>
+            <span>Peak</span>
+          </div>
+          <div className="text-center">
+            <span className="block">🏆</span>
+            <span>Victory</span>
+          </div>
+          <div className="text-center">
+            <span className="block">👑</span>
+            <span>Legend</span>
+          </div>
+        </div>
       </div>
 
       {/* Enhanced styles for confetti, sparkles, and animations */}
       <style>{`
         .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
+        
+        /* Jungle Adventure Shadow Effects */
+        .shadow-jungle-success {
+          box-shadow: 0 0 20px rgba(76, 175, 80, 0.5), 0 0 40px rgba(139, 195, 74, 0.3);
+        }
+        
+        .shadow-jungle-error {
+          box-shadow: 0 0 20px rgba(255, 87, 34, 0.5), 0 0 40px rgba(255, 152, 0, 0.3);
+        }
+        
+        .shadow-jungle-hover {
+          box-shadow: 0 0 15px rgba(255, 193, 7, 0.4), 0 0 30px rgba(255, 235, 59, 0.2);
+        }
 
         @keyframes celebrationPulse {
           0%, 100% { transform: scale(1); }
@@ -1059,8 +1295,8 @@ export default function WordGardenGame({
         }
       `}</style>
 
-      {/* Green Garden Achievement Popup */}
-      <GardenAchievementPopup
+      {/* Jungle Adventure Achievement Popup */}
+      <JungleAchievementPopup
         show={showAchievement}
         title={achievementData.title}
         description={achievementData.description}
@@ -1068,8 +1304,8 @@ export default function WordGardenGame({
         onClose={() => setShowAchievement(false)}
       />
 
-      {/* Game Completion Dialog */}
-      <GameCompletionDialog
+      {/* Jungle Game Completion Dialog */}
+      <JungleGameCompletionDialog
         show={gameComplete}
         stats={{
           totalRounds: pool.length,
@@ -1084,32 +1320,32 @@ export default function WordGardenGame({
         }}
       />
 
-      {/* Enhanced Exit Confirmation Dialog - Mobile Optimized */}
+      {/* Enhanced Jungle Exit Confirmation Dialog - Mobile Optimized */}
       <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
         <DialogContent className="sm:max-w-xs max-w-[90vw] p-4">
           <DialogHeader className="text-center pb-2">
-            <div className="text-4xl mb-1">🌱</div>
-            <DialogTitle className="text-lg font-bold text-gray-800">
-              Leave garden?
+            <div className="text-4xl mb-1">🐒</div>
+            <DialogTitle className="text-lg font-bold text-jungle-dark">
+              Leave jungle adventure?
             </DialogTitle>
-            <DialogDescription className="text-sm text-gray-600">
-              Your plants are waiting!
+            <DialogDescription className="text-sm text-jungle-DEFAULT">
+              The monkey needs your help to find more treasures!
             </DialogDescription>
           </DialogHeader>
 
-          {/* Compact Garden Progress Summary */}
-          <div className="bg-green-50 rounded-lg p-2 border border-green-200 my-3">
+          {/* Compact Jungle Progress Summary */}
+          <div className="bg-gradient-to-r from-jungle-light/20 via-jungle-DEFAULT/10 to-jungle-light/20 rounded-lg p-3 border border-jungle-light/30 my-3 backdrop-blur-sm">
             <div className="flex items-center justify-between text-sm">
-              <div className="text-green-800">
-                <span className="font-medium">🌱 {correctCount}</span>
-                <span className="text-xs ml-1">grown</span>
+              <div className="text-jungle-dark">
+                <span className="font-medium">🏆 {correctCount}</span>
+                <span className="text-xs ml-1">treasures</span>
               </div>
-              <div className="text-green-700">
-                <span className="font-medium">⭐ {bestStreak}</span>
+              <div className="text-jungle-DEFAULT">
+                <span className="font-medium">🔥 {bestStreak}</span>
                 <span className="text-xs ml-1">streak</span>
               </div>
-              <div className="text-green-600 text-xs">
-                {roundIdx + 1}/{pool.length}
+              <div className="text-jungle-DEFAULT text-xs">
+                🗺️ {roundIdx + 1}/{pool.length}
               </div>
             </div>
           </div>
@@ -1118,9 +1354,9 @@ export default function WordGardenGame({
             <Button
               variant="outline"
               onClick={() => onCloseExitDialog?.()}
-              className="flex-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-300 text-sm py-2"
+              className="flex-1 bg-jungle-light/20 hover:bg-jungle-light/30 text-jungle-dark border-jungle-light/50 text-sm py-2 backdrop-blur-sm"
             >
-              🌱 Stay
+              🐒 Continue Adventure
             </Button>
             <Button
               variant="destructive"
@@ -1128,9 +1364,9 @@ export default function WordGardenGame({
                 onCloseExitDialog?.();
                 onExit?.();
               }}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-sm py-2"
+              className="flex-1 bg-coral-red hover:bg-coral-red/90 text-white text-sm py-2"
             >
-              🚪 Exit
+              <Home className="w-4 h-4 mr-1" /> Exit Jungle
             </Button>
           </DialogFooter>
         </DialogContent>
