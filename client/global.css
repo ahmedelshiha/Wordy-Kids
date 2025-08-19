@@ -274,6 +274,13 @@
     /* Dark Navy for Text */
     --dark-navy: 231 48% 12%; /* #1A237E converted to HSL */
 
+    /* New Jungle Adventure Color Palette */
+    --profile-purple: 246 52% 64%; /* #6366F1 converted to HSL */
+    --bright-orange: 30 100% 55%; /* #FF9800 converted to HSL */
+    --playful-purple: 291 64% 42%; /* #9C27B0 converted to HSL */
+    --coral-red: 14 100% 57%; /* #FF5722 converted to HSL */
+    --light-background: 210 17% 98%; /* #F8F9FA converted to HSL */
+
     /* Kid Mode Desktop Navigation */
     --kid-nav-shadow:
       0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
