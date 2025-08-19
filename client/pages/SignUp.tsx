@@ -549,17 +549,17 @@ export default function SignUp() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`text-center p-4 rounded-xl border-2 ${
+                    className={`text-center p-3 md:p-4 rounded-lg md:rounded-xl border-2 ${
                       message.type === "success"
                         ? "bg-jungle/10 text-jungle-dark border-jungle/30"
                         : "bg-coral-red/10 text-coral-red border-coral-red/30"
                     }`}
                   >
-                    <div className="flex items-center justify-center gap-2 font-['Baloo_2'] font-medium">
+                    <div className="flex items-center justify-center gap-2 font-['Baloo_2'] font-medium text-xs md:text-sm">
                       {message.type === "success" ? (
-                        <CheckCircle className="w-5 h-5" />
+                        <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <AlertCircle className="w-5 h-5" />
+                        <AlertCircle className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                       {message.text}
                     </div>
@@ -575,19 +575,19 @@ export default function SignUp() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-4 bg-gradient-to-r from-jungle to-bright-orange text-white hover:from-jungle-dark hover:to-orange-600 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none rounded-xl font-['Baloo_2'] border-2 border-white/20"
+                    className="w-full py-3 md:py-4 bg-gradient-to-r from-jungle to-bright-orange text-white hover:from-jungle-dark hover:to-orange-600 font-bold text-base md:text-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none rounded-lg md:rounded-xl font-['Baloo_2'] border-2 border-white/20"
                   >
                     {isLoading ? (
-                      <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span className="text-lg">🌟</span>
-                        Creating Adventure Profile...
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-base md:text-lg">🌟</span>
+                        <span className="text-sm md:text-base">Creating Adventure Profile...</span>
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center gap-3">
-                        <span className="text-2xl">🎯</span>
-                        Start Jungle Adventure!
-                        <span className="text-2xl">🌟</span>
+                      <div className="flex items-center justify-center gap-2 md:gap-3">
+                        <span className="text-lg md:text-2xl">🎯</span>
+                        <span className="text-sm md:text-base">Start Jungle Adventure!</span>
+                        <span className="text-lg md:text-2xl">🌟</span>
                       </div>
                     )}
                   </Button>
