@@ -274,7 +274,7 @@ export const JungleAdventureWordCard: React.FC<
         return {
           bg: "bg-gradient-to-r from-jungle to-jungle-dark",
           icon: <TreePine className="w-4 h-4" />,
-          text: "�� Explorer",
+          text: "🌿 Explorer",
           color: "text-white",
           border: "border-jungle",
         };
@@ -367,7 +367,7 @@ export const JungleAdventureWordCard: React.FC<
         >
           <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
             {/* Jungle Adventure Header */}
-            <div className="flex items-start justify-between mb-2 sm:mb-3">
+            <div className="flex items-start justify-between mb-1 sm:mb-2">
               <div className="flex flex-wrap gap-1.5">
                 <Badge
                   className={cn(
