@@ -48,29 +48,6 @@
     }
   }
 
-  /* Ensure responsive backgrounds scale properly on different content heights */
-  .bg-responsive-dashboard {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll; /* Use scroll instead of fixed for better content responsiveness */
-  }
-
-  /* For viewport-based responsive scaling */
-  @media (max-aspect-ratio: 1/1) {
-    .bg-responsive-dashboard {
-      background-size: auto 100vh;
-      background-position: center top;
-    }
-  }
-
-  @media (min-aspect-ratio: 16/9) {
-    .bg-responsive-dashboard {
-      background-size: 100vw auto;
-      background-position: center center;
-    }
-  }
-
   /* Kid-friendly styles */
   .border-rainbow-200 {
     border-image: linear-gradient(
