@@ -487,6 +487,10 @@
   }
 }
 
+.animate-jungle-sparkle {
+  animation: jungle-sparkle 2s ease-in-out infinite;
+}
+
 .jungle-sparkle {
   position: relative;
 }
