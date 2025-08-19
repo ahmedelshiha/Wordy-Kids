@@ -2311,46 +2311,53 @@ export default function Index({ initialProfile }: IndexProps) {
                                             </Button>
 
                                             {/* Jungle Adventure Center: Category and Progress */}
-                            <div className="flex-1 text-center">
-                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-2xl px-4 py-3 mx-2 border-2 border-jungle-light/40 shadow-lg">
-                                {/* Jungle Decorative Elements */}
-                                <div className="absolute -top-1 left-2 text-lg animate-gentle-bounce">🌿</div>
-                                <div className="absolute -top-1 right-2 text-lg animate-gentle-bounce animation-delay-300">🦋</div>
+                                            <div className="flex-1 text-center">
+                                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-2xl px-4 py-3 mx-2 border-2 border-jungle-light/40 shadow-lg">
+                                                {/* Jungle Decorative Elements */}
+                                                <div className="absolute -top-1 left-2 text-lg animate-gentle-bounce">
+                                                  🌿
+                                                </div>
+                                                <div className="absolute -top-1 right-2 text-lg animate-gentle-bounce animation-delay-300">
+                                                  🦋
+                                                </div>
 
-                                {/* Category Title */}
-                                <div className="text-sm font-bold text-white drop-shadow-lg truncate">
-                                  <span className="inline-flex items-center gap-1">
-                                    🌳
-                                    {selectedCategory
-                                      ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Quest`
-                                      : "Jungle Quest"}
-                                  </span>
-                                </div>
+                                                {/* Category Title */}
+                                                <div className="text-sm font-bold text-white drop-shadow-lg truncate">
+                                                  <span className="inline-flex items-center gap-1">
+                                                    🌳
+                                                    {selectedCategory
+                                                      ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Quest`
+                                                      : "Jungle Quest"}
+                                                  </span>
+                                                </div>
 
-                                {/* Progress Stats */}
-                                <div className="flex items-center justify-center gap-3 text-xs text-white/90 font-semibold mt-1">
-                                  <span className="inline-flex items-center gap-1 bg-white/20 rounded-full px-2 py-1">
-                                    📍 {currentWordIndex + 1}/{displayWords.length}
-                                  </span>
-                                  <span className="inline-flex items-center gap-1 bg-sunshine/20 rounded-full px-2 py-1">
-                                    🏆 {rememberedWords.size}
-                                  </span>
-                                  {forgottenWords.size > 0 && (
-                                    <span className="inline-flex items-center gap-1 bg-coral-red/20 rounded-full px-2 py-1">
-                                      🔄 {forgottenWords.size}
-                                    </span>
-                                  )}
-                                </div>
+                                                {/* Progress Stats */}
+                                                <div className="flex items-center justify-center gap-3 text-xs text-white/90 font-semibold mt-1">
+                                                  <span className="inline-flex items-center gap-1 bg-white/20 rounded-full px-2 py-1">
+                                                    📍 {currentWordIndex + 1}/
+                                                    {displayWords.length}
+                                                  </span>
+                                                  <span className="inline-flex items-center gap-1 bg-sunshine/20 rounded-full px-2 py-1">
+                                                    🏆 {rememberedWords.size}
+                                                  </span>
+                                                  {forgottenWords.size > 0 && (
+                                                    <span className="inline-flex items-center gap-1 bg-coral-red/20 rounded-full px-2 py-1">
+                                                      🔄 {forgottenWords.size}
+                                                    </span>
+                                                  )}
+                                                </div>
 
-                                {/* Animated Progress Bar */}
-                                <div className="mt-2 bg-white/20 rounded-full h-2 overflow-hidden">
-                                  <div
-                                    className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
-                                    style={{width: `${displayWords.length > 0 ? ((currentWordIndex + 1) / displayWords.length) * 100 : 0}%`}}
-                                  ></div>
-                                </div>
-                              </div>
-                            </div>
+                                                {/* Animated Progress Bar */}
+                                                <div className="mt-2 bg-white/20 rounded-full h-2 overflow-hidden">
+                                                  <div
+                                                    className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
+                                                    style={{
+                                                      width: `${displayWords.length > 0 ? ((currentWordIndex + 1) / displayWords.length) * 100 : 0}%`,
+                                                    }}
+                                                  ></div>
+                                                </div>
+                                              </div>
+                                            </div>
 
                                             {/* Right: Switch Button */}
                                             <Button
@@ -2373,110 +2380,155 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
 
                                         {/* Desktop/Tablet: Compact Jungle Adventure Layout */}
-                        <div className="hidden sm:block">
-                          <div className="flex items-center justify-center w-full mb-3">
-                            {/* Compact Centered Jungle Adventure Header */}
-                            <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle-dark rounded-2xl px-6 py-3 shadow-xl border-2 border-sunshine/40 backdrop-blur-lg max-w-4xl w-full mx-auto">
-                              {/* Subtle Jungle Decorations */}
-                              <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                                <div className="absolute top-1 left-3 text-lg animate-sway opacity-30">🌿</div>
-                                <div className="absolute top-1 right-3 text-lg animate-gentle-bounce animation-delay-300 opacity-30">🦋</div>
-                              </div>
+                                        <div className="hidden sm:block">
+                                          <div className="flex items-center justify-center w-full mb-3">
+                                            {/* Compact Centered Jungle Adventure Header */}
+                                            <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle-dark rounded-2xl px-6 py-3 shadow-xl border-2 border-sunshine/40 backdrop-blur-lg max-w-4xl w-full mx-auto">
+                                              {/* Subtle Jungle Decorations */}
+                                              <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                                                <div className="absolute top-1 left-3 text-lg animate-sway opacity-30">
+                                                  🌿
+                                                </div>
+                                                <div className="absolute top-1 right-3 text-lg animate-gentle-bounce animation-delay-300 opacity-30">
+                                                  🦋
+                                                </div>
+                                              </div>
 
-                              {/* Horizontal Layout */}
-                              <div className="relative z-10 flex items-center justify-between gap-6">
-                                {/* Left: Title */}
-                                <div className="flex items-center gap-2">
-                                  <span className="text-lg animate-gentle-bounce">🌳</span>
-                                  <div>
-                                    <h2 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">
-                                      {selectedCategory
-                                        ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure`
-                                        : "Jungle Quest"}
-                                    </h2>
-                                    <p className="text-white/70 text-xs font-medium">
-                                      Your jungle learning journey
-                                    </p>
-                                  </div>
-                                </div>
+                                              {/* Horizontal Layout */}
+                                              <div className="relative z-10 flex items-center justify-between gap-6">
+                                                {/* Left: Title */}
+                                                <div className="flex items-center gap-2">
+                                                  <span className="text-lg animate-gentle-bounce">
+                                                    🌳
+                                                  </span>
+                                                  <div>
+                                                    <h2 className="text-lg md:text-xl font-bold text-white drop-shadow-lg">
+                                                      {selectedCategory
+                                                        ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure`
+                                                        : "Jungle Quest"}
+                                                    </h2>
+                                                    <p className="text-white/70 text-xs font-medium">
+                                                      Your jungle learning
+                                                      journey
+                                                    </p>
+                                                  </div>
+                                                </div>
 
-                                {/* Center: Inline Progress Stats */}
-                                <div className="flex items-center gap-4">
-                                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-lg px-3 py-2 border border-white/30">
-                                    <span className="text-sm">📍</span>
-                                    <div className="text-center">
-                                      <div className="text-white font-bold text-sm">
-                                        {currentWordIndex + 1}/{displayWords.length}
-                                      </div>
-                                      <div className="text-white/70 text-xs">Position</div>
-                                    </div>
-                                  </div>
+                                                {/* Center: Inline Progress Stats */}
+                                                <div className="flex items-center gap-4">
+                                                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-lg px-3 py-2 border border-white/30">
+                                                    <span className="text-sm">
+                                                      📍
+                                                    </span>
+                                                    <div className="text-center">
+                                                      <div className="text-white font-bold text-sm">
+                                                        {currentWordIndex + 1}/
+                                                        {displayWords.length}
+                                                      </div>
+                                                      <div className="text-white/70 text-xs">
+                                                        Position
+                                                      </div>
+                                                    </div>
+                                                  </div>
 
-                                  <div className="flex items-center gap-2 bg-sunshine/20 backdrop-blur-md rounded-lg px-3 py-2 border border-sunshine/40">
-                                    <span className="text-sm">🏆</span>
-                                    <div className="text-center">
-                                      <div className="text-white font-bold text-sm">
-                                        {rememberedWords.size}
-                                      </div>
-                                      <div className="text-white/70 text-xs">Mastered</div>
-                                    </div>
-                                  </div>
+                                                  <div className="flex items-center gap-2 bg-sunshine/20 backdrop-blur-md rounded-lg px-3 py-2 border border-sunshine/40">
+                                                    <span className="text-sm">
+                                                      🏆
+                                                    </span>
+                                                    <div className="text-center">
+                                                      <div className="text-white font-bold text-sm">
+                                                        {rememberedWords.size}
+                                                      </div>
+                                                      <div className="text-white/70 text-xs">
+                                                        Mastered
+                                                      </div>
+                                                    </div>
+                                                  </div>
 
-                                  {forgottenWords.size > 0 && (
-                                    <div className="flex items-center gap-2 bg-coral-red/20 backdrop-blur-md rounded-lg px-3 py-2 border border-coral-red/40">
-                                      <span className="text-sm">🔄</span>
-                                      <div className="text-center">
-                                        <div className="text-white font-bold text-sm">
-                                          {forgottenWords.size}
-                                        </div>
-                                        <div className="text-white/70 text-xs">Review</div>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
+                                                  {forgottenWords.size > 0 && (
+                                                    <div className="flex items-center gap-2 bg-coral-red/20 backdrop-blur-md rounded-lg px-3 py-2 border border-coral-red/40">
+                                                      <span className="text-sm">
+                                                        🔄
+                                                      </span>
+                                                      <div className="text-center">
+                                                        <div className="text-white font-bold text-sm">
+                                                          {forgottenWords.size}
+                                                        </div>
+                                                        <div className="text-white/70 text-xs">
+                                                          Review
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  )}
+                                                </div>
 
-                                {/* Right: Compact Progress Bar */}
-                                <div className="flex items-center gap-3">
-                                  <div className="bg-white/20 backdrop-blur-md rounded-full px-3 py-2 min-w-[120px]">
-                                    <div className="flex items-center justify-between mb-1">
-                                      <span className="text-white/70 text-xs font-medium">Progress</span>
-                                      <span className="text-white text-xs font-bold">
-                                        {displayWords.length > 0 ? Math.round(((currentWordIndex + 1) / displayWords.length) * 100) : 0}%
-                                      </span>
-                                    </div>
-                                    <div className="bg-white/30 rounded-full h-2 overflow-hidden">
-                                      <div
-                                        className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
-                                        style={{width: `${displayWords.length > 0 ? ((currentWordIndex + 1) / displayWords.length) * 100 : 0}%`}}
-                                      ></div>
-                                    </div>
-                                  </div>
+                                                {/* Right: Compact Progress Bar */}
+                                                <div className="flex items-center gap-3">
+                                                  <div className="bg-white/20 backdrop-blur-md rounded-full px-3 py-2 min-w-[120px]">
+                                                    <div className="flex items-center justify-between mb-1">
+                                                      <span className="text-white/70 text-xs font-medium">
+                                                        Progress
+                                                      </span>
+                                                      <span className="text-white text-xs font-bold">
+                                                        {displayWords.length > 0
+                                                          ? Math.round(
+                                                              ((currentWordIndex +
+                                                                1) /
+                                                                displayWords.length) *
+                                                                100,
+                                                            )
+                                                          : 0}
+                                                        %
+                                                      </span>
+                                                    </div>
+                                                    <div className="bg-white/30 rounded-full h-2 overflow-hidden">
+                                                      <div
+                                                        className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
+                                                        style={{
+                                                          width: `${displayWords.length > 0 ? ((currentWordIndex + 1) / displayWords.length) * 100 : 0}%`,
+                                                        }}
+                                                      ></div>
+                                                    </div>
+                                                  </div>
 
-                                  {/* Achievement Badge */}
-                                  {rememberedWords.size > 0 && (
-                                    <div className="bg-white/20 backdrop-blur-md rounded-full px-3 py-1 border border-white/30">
-                                      <span className="text-white text-xs font-bold flex items-center gap-1">
-                                        {rememberedWords.size >= 5 && <span className="animate-sparkle">🌟</span>}
-                                        {rememberedWords.size >= 15 ? "Master!" : rememberedWords.size >= 10 ? "Expert!" : rememberedWords.size >= 5 ? "Great!" : "Good!"}
-                                      </span>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                                                  {/* Achievement Badge */}
+                                                  {rememberedWords.size > 0 && (
+                                                    <div className="bg-white/20 backdrop-blur-md rounded-full px-3 py-1 border border-white/30">
+                                                      <span className="text-white text-xs font-bold flex items-center gap-1">
+                                                        {rememberedWords.size >=
+                                                          5 && (
+                                                          <span className="animate-sparkle">
+                                                            🌟
+                                                          </span>
+                                                        )}
+                                                        {rememberedWords.size >=
+                                                        15
+                                                          ? "Master!"
+                                                          : rememberedWords.size >=
+                                                              10
+                                                            ? "Expert!"
+                                                            : rememberedWords.size >=
+                                                                5
+                                                              ? "Great!"
+                                                              : "Good!"}
+                                                      </span>
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
 
-                          {/* Desktop Action Buttons Row */}
-                          <div className="flex items-center justify-center gap-4 mb-2">
-
+                                          {/* Desktop Action Buttons Row */}
+                                          <div className="flex items-center justify-center gap-4 mb-2">
                                             <div className="flex-shrink-0 flex gap-2">
-                              <Button
-                                onClick={() => {
-                                  if (navigator.vibrate) {
-                                    navigator.vibrate(25);
-                                  }
-                                  audioService.playClickSound();
-                                  setSelectedCategory("");
+                                              <Button
+                                                onClick={() => {
+                                                  if (navigator.vibrate) {
+                                                    navigator.vibrate(25);
+                                                  }
+                                                  audioService.playClickSound();
+                                                  setSelectedCategory("");
                                                   setLearningMode("selector");
                                                   setCurrentWordIndex(0);
                                                 }}

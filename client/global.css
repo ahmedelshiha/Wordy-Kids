@@ -177,7 +177,8 @@
 
   /* Gentle bounce animation for jungle elements */
   @keyframes gentle-bounce {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0);
     }
     50% {
@@ -191,7 +192,8 @@
 
   /* Sway animation for jungle leaves */
   @keyframes sway {
-    0%, 100% {
+    0%,
+    100% {
       transform: rotate(-3deg);
     }
     50% {
