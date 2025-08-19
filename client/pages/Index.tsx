@@ -2943,7 +2943,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         </div>
                                                         <div className="flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            ����
+                                                            💪
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
@@ -3260,20 +3260,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="jungle-achievement-icon">
                                             🌺
                                           </div>
-                                          <div className="flex-1">
-                                            <div className="font-bold text-jungle-green">
+                                          <div className="achievement-content">
+                                            <div className="font-bold text-jungle-green text-sm">
                                               Garden Explorer
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
-                                              Latest enchanted garden quest
-                                              completed!
+                                            <div className="text-xs text-jungle-dark mb-2">
+                                              Latest quest completed!
                                             </div>
-                                          </div>
-                                          <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">
+                                            <div className="font-bold text-sunshine-yellow text-lg">
                                               8/10
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
+                                            <div className="text-xs text-jungle-dark">
                                               Amazing!
                                             </div>
                                           </div>
@@ -3283,20 +3280,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="jungle-achievement-icon">
                                             🎧
                                           </div>
-                                          <div className="flex-1">
-                                            <div className="font-bold text-sky-blue">
+                                          <div className="achievement-content">
+                                            <div className="font-bold text-sky-blue text-sm">
                                               Sound Safari Master
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
-                                              Mystical audio adventure
-                                              completed!
+                                            <div className="text-xs text-jungle-dark mb-2">
+                                              Audio adventure done!
                                             </div>
-                                          </div>
-                                          <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">
+                                            <div className="font-bold text-sunshine-yellow text-lg">
                                               5/5
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
+                                            <div className="text-xs text-jungle-dark">
                                               Perfect!
                                             </div>
                                           </div>
@@ -3306,19 +3300,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="jungle-achievement-icon">
                                             📸
                                           </div>
-                                          <div className="flex-1">
-                                            <div className="font-bold text-bright-orange">
+                                          <div className="achievement-content">
+                                            <div className="font-bold text-bright-orange text-sm">
                                               Treasure Hunter
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
-                                              Picture quest adventure awaits!
+                                            <div className="text-xs text-jungle-dark mb-2">
+                                              Picture quest awaits!
                                             </div>
-                                          </div>
-                                          <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">
+                                            <div className="font-bold text-sunshine-yellow text-lg">
                                               12/15
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
+                                            <div className="text-xs text-jungle-dark">
                                               Great job!
                                             </div>
                                           </div>
@@ -3328,19 +3320,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="jungle-achievement-icon">
                                             💎
                                           </div>
-                                          <div className="flex-1">
-                                            <div className="font-bold text-playful-purple">
+                                          <div className="achievement-content">
+                                            <div className="font-bold text-playful-purple text-sm">
                                               Crystal Guardian
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
-                                              Vowel crystal expedition mastery!
+                                            <div className="text-xs text-jungle-dark mb-2">
+                                              Crystal expedition!
                                             </div>
-                                          </div>
-                                          <div className="text-right">
-                                            <div className="font-bold text-sunshine-yellow">
+                                            <div className="font-bold text-sunshine-yellow text-lg">
                                               Ready!
                                             </div>
-                                            <div className="text-sm text-jungle-dark">
+                                            <div className="text-xs text-jungle-dark">
                                               Let's go!
                                             </div>
                                           </div>
