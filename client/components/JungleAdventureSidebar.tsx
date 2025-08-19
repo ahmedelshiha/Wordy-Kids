@@ -60,13 +60,12 @@ const JungleLeaf = ({ className }: { className?: string }) => (
 );
 
 export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
-  profile,
-  stats,
   className,
 }) => {
   const { isGuest, logout } = useAuth();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
+  const userData = useUserProgress();
 
   // Enhanced sidebar entrance animation variants
   const sidebarVariants = {
