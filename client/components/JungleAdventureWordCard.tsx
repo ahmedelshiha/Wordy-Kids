@@ -478,7 +478,7 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Jungle Adventure Flip Hint */}
-            <div className="mt-3 sm:mt-4 text-center">
+            <div className="mt-2 sm:mt-3 text-center">
               <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-4 py-3 mx-auto w-fit animate-gentle-bounce shadow-lg">
                 <p className="text-sm sm:text-base opacity-95 leading-tight font-bold jungle-adventure-hint">
                   <RotateCcw className="w-4 h-4 inline mr-2 animate-spin-slow" />
