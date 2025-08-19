@@ -338,11 +338,39 @@ export function InteractiveDashboardWordCard({
     if (currentWord && !isPlaying) {
       triggerHapticFeedback("light"); // Light feedback for audio action
       setIsPlaying(true);
-      enhancedAudioService.pronounceWord(currentWord.word, {
-        onStart: () => setIsPlaying(true),
-        onEnd: () => setIsPlaying(false),
-        onError: () => setIsPlaying(false),
-      });
+
+      // Play jungle adventure sound effect before pronunciation
+      try {
+        // Create jungle ambient sound based on difficulty
+        const difficulty = currentWord.difficulty || 'medium';
+        let jungleSound;
+
+        switch (difficulty) {
+          case 'easy':
+            // Gentle jungle sounds for easy words
+            audioService.playSound('gentle-chime'); // Replaced with available sound
+            break;
+          case 'medium':
+            // Adventure jungle sounds for medium words
+            audioService.playSound('adventure-chime'); // Replaced with available sound
+            break;
+          case 'hard':
+            // Epic jungle sounds for hard words
+            audioService.playSound('epic-chime'); // Replaced with available sound
+            break;
+        }
+      } catch (error) {
+        console.log('Jungle sound effect not available, proceeding with pronunciation');
+      }
+
+      // Slight delay to let jungle sound play, then pronounce word
+      setTimeout(() => {
+        enhancedAudioService.pronounceWord(currentWord.word, {
+          onStart: () => setIsPlaying(true),
+          onEnd: () => setIsPlaying(false),
+          onError: () => setIsPlaying(false),
+        });
+      }, 300);
     }
   };
 
@@ -478,13 +506,44 @@ export function InteractiveDashboardWordCard({
       setFeedbackType(status);
     }
 
-    // Show celebration effect for successful interactions
+    // Show celebration effect for successful interactions with jungle adventure audio
     if (status === "remembered") {
       setCelebrationEffect(true);
-      enhancedAudioService.playSuccessSound();
+
+      // Play jungle celebration sound based on difficulty
+      try {
+        const difficulty = currentWord.difficulty || 'medium';
+        switch (difficulty) {
+          case 'easy':
+            // Gentle jungle celebration
+            enhancedAudioService.playSuccessSound();
+            audioService.playSound('gentle-success'); // Additional jungle chime
+            break;
+          case 'medium':
+            // Adventure jungle celebration
+            enhancedAudioService.playSuccessSound();
+            audioService.playSound('adventure-success'); // Additional triumph sound
+            break;
+          case 'hard':
+            // Epic jungle victory
+            enhancedAudioService.playSuccessSound();
+            audioService.playSound('epic-victory'); // Additional victory fanfare
+            break;
+        }
+      } catch (error) {
+        // Fallback to standard success sound
+        enhancedAudioService.playSuccessSound();
+      }
+
       setTimeout(() => setCelebrationEffect(false), 1000);
     } else if (status === "needs_practice") {
-      enhancedAudioService.playEncouragementSound();
+      // Play encouraging jungle sound
+      try {
+        enhancedAudioService.playEncouragementSound();
+        audioService.playSound('gentle-encouragement'); // Additional jungle encouragement
+      } catch (error) {
+        enhancedAudioService.playEncouragementSound();
+      }
     }
 
     try {
@@ -1661,38 +1720,117 @@ export function InteractiveDashboardWordCard({
             {/* Category and Progress Header */}
             <div className="text-center mb-4 sm:mb-6 md:mb-8">
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4">
-                {/* Difficulty classification badge */}
+                {/* Jungle Adventure Difficulty Badge */}
                 <Badge
                   className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
+                    "text-xs sm:text-sm px-2 sm:px-3 py-1 font-bold jungle-adventure-badge relative overflow-hidden",
                     currentWord.difficulty === "easy"
-                      ? "bg-green-100 text-green-700 border-green-300"
+                      ? "bg-gradient-to-r from-jungle-light to-jungle text-white border-jungle shadow-lg"
                       : currentWord.difficulty === "medium"
-                        ? "bg-yellow-100 text-yellow-700 border-yellow-300"
+                        ? "bg-gradient-to-r from-sunshine to-sunshine-dark text-white border-sunshine-dark shadow-lg"
                         : currentWord.difficulty === "hard"
-                          ? "bg-red-100 text-red-700 border-red-300"
-                          : "bg-gray-100 text-gray-700 border-gray-300",
+                          ? "bg-gradient-to-r from-red-500 to-red-700 text-white border-red-600 shadow-lg"
+                          : "bg-gradient-to-r from-gray-400 to-gray-600 text-white border-gray-500 shadow-lg",
                   )}
+                  style={{
+                    textShadow: "0 1px 2px rgba(0, 0, 0, 0.5)",
+                    boxShadow: currentWord.difficulty === "easy"
+                      ? "0 0 15px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                      : currentWord.difficulty === "medium"
+                        ? "0 0 15px rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                        : currentWord.difficulty === "hard"
+                          ? "0 0 15px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                          : "0 0 10px rgba(107, 114, 128, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                  }}
                 >
-                  {currentWord.difficulty
-                    ? currentWord.difficulty.charAt(0).toUpperCase() +
-                      currentWord.difficulty.slice(1)
-                    : "Medium"}
+                  {(() => {
+                    const difficulty = currentWord.difficulty || 'medium';
+                    const difficultyEmojis = {
+                      easy: '🌱',
+                      medium: '⚡',
+                      hard: '🔥'
+                    };
+                    const difficultyNames = {
+                      easy: 'Explorer',
+                      medium: 'Adventurer',
+                      hard: 'Legend'
+                    };
+
+                    return `${difficultyEmojis[difficulty]} ${difficultyNames[difficulty]}`;
+                  })()}
                 </Badge>
+                {/* Jungle Adventure Category Badge */}
                 <Badge
                   className={cn(
-                    "text-xs sm:text-sm px-2 sm:px-3 py-1",
-                    getDifficultyColor(currentWord.difficulty),
+                    "text-xs sm:text-sm px-2 sm:px-3 py-1 font-semibold relative overflow-hidden",
+                    "bg-gradient-to-r from-jungle/80 to-jungle-dark/90 text-white border-jungle-light shadow-md"
                   )}
+                  style={{
+                    textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)",
+                    boxShadow: "0 0 10px rgba(76, 175, 80, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
+                  }}
                 >
-                  {currentWord.category}
+                  {(() => {
+                    const category = currentWord.category;
+                    const categoryEmojis = {
+                      'Animals': '🐵',
+                      'Nature': '🌿',
+                      'Food': '🍌',
+                      'Objects': '🔍',
+                      'Colors': '🌈',
+                      'Body': '👤',
+                      'Family': '👨‍👩‍👧‍👦',
+                      'Home': '🏠',
+                      'Transportation': '🚗',
+                      'Clothes': '👕'
+                    };
+
+                    const emoji = categoryEmojis[category] || '🌟';
+                    return `${emoji} ${category}`;
+                  })()}
                 </Badge>
-                {/* Hidden: Word progress and Session progress badges */}
+                {/* Jungle Adventure Progress Badge */}
                 <Badge
                   variant="outline"
-                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-purple-50 text-purple-700 border-purple-300"
+                  className={cn(
+                    "text-xs sm:text-sm px-2 sm:px-3 py-1 font-bold relative overflow-hidden",
+                    sessionStats.accuracy >= 90
+                      ? "bg-gradient-to-r from-yellow-400 to-yellow-600 text-white border-yellow-500"
+                      : sessionStats.accuracy >= 75
+                        ? "bg-gradient-to-r from-jungle-light to-jungle text-white border-jungle"
+                        : sessionStats.accuracy >= 50
+                          ? "bg-gradient-to-r from-blue-400 to-blue-600 text-white border-blue-500"
+                          : "bg-gradient-to-r from-gray-400 to-gray-600 text-white border-gray-500"
+                  )}
+                  style={{
+                    textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)",
+                    boxShadow: sessionStats.accuracy >= 90
+                      ? "0 0 12px rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                      : sessionStats.accuracy >= 75
+                        ? "0 0 12px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                        : "0 0 8px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                  }}
                 >
-                  {sessionStats.accuracy}% Accuracy
+                  {(() => {
+                    const accuracy = sessionStats.accuracy;
+                    let emoji, title;
+
+                    if (accuracy >= 90) {
+                      emoji = '👑';
+                      title = 'Jungle Master';
+                    } else if (accuracy >= 75) {
+                      emoji = '🏆';
+                      title = 'Jungle Hero';
+                    } else if (accuracy >= 50) {
+                      emoji = '🌟';
+                      title = 'Explorer';
+                    } else {
+                      emoji = '🌱';
+                      title = 'Rookie';
+                    }
+
+                    return `${emoji} ${accuracy}% ${title}`;
+                  })()}
                 </Badge>
               </div>
             </div>
