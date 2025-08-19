@@ -444,7 +444,7 @@ export function ChildFriendlyCategorySelector({
     );
 
     if (matchingCategories.length > 0) {
-      return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! 🌟`;
+      return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! ��`;
     }
 
     return "I've picked some special categories just for you! 💝";
@@ -607,7 +607,7 @@ export function ChildFriendlyCategorySelector({
                   }
                   size="sm"
                   onClick={() => handleCategoryClick(category.id)}
-                  className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
+                  className={`flex-shrink-0 h-16 w-16 flex-col gap-1 jungle-mobile-button ${
                     selectedCategory === category.id
                       ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg"
                       : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md"
