@@ -265,10 +265,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       initial="hidden"
       animate="visible"
       className={cn(
-        // Desktop layout
-        "hidden lg:flex lg:w-[300px] xl:w-[320px] h-[calc(100vh-80px)] flex-col",
+        // Desktop layout - completely hidden on mobile/tablet
+        "hidden lg:flex w-[300px] xl:w-[320px] h-[calc(100vh-80px)] flex-col",
         "bg-gradient-to-b from-green-50/95 to-emerald-50/95 backdrop-blur-sm relative rounded-[28px] shadow-2xl border border-jungle/10",
-        "p-4 lg:p-5 space-y-3 lg:space-y-4 overflow-y-auto overflow-x-hidden",
+        "p-5 space-y-4 overflow-y-auto overflow-x-hidden",
         "scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent",
         className,
       )}
