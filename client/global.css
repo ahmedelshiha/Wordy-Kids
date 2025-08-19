@@ -19,6 +19,9 @@
 /* Import jungle adventure enhancements */
 @import "./styles/jungle-adventure-enhancements.css";
 
+/* Import jungle mobile optimizations */
+@import "./styles/jungle-mobile-optimizations.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
