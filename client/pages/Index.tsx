@@ -3030,21 +3030,18 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🌿
                                     </div>
 
-                                    {/* Hero Content */}
+                                    {/* Hero Content - Compact */}
                                     <div className="jungle-quiz-hero-content">
-                                      <div className="flex justify-center mb-6">
-                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-4 md:p-6 rounded-full shadow-2xl animate-jungle-glow border-4 border-white/30">
-                                          <Brain className="w-12 h-12 md:w-16 md:h-16 text-white drop-shadow-lg" />
+                                      <div className="flex justify-center mb-2">
+                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-1.5 md:p-2 rounded-full shadow-xl animate-jungle-glow border-2 border-white/30">
+                                          <Brain className="w-6 h-6 md:w-8 md:h-8 text-white drop-shadow-lg" />
                                         </div>
                                       </div>
-                                      <h2 className="jungle-quiz-title">
+                                      <h2 className="jungle-quiz-title text-lg md:text-xl mb-1">
                                         🌟 Jungle Quiz Adventure! 🌟
                                       </h2>
-                                      <p className="jungle-quiz-subtitle">
-                                        Embark on an epic word journey through
-                                        the mystical jungle! Discover treasures,
-                                        meet friendly creatures, and test your
-                                        vocabulary skills! 🏆✨
+                                      <p className="jungle-quiz-subtitle text-xs md:text-sm">
+                                        Test your vocabulary in the jungle! 🏆✨
                                       </p>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
