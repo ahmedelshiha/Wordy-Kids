@@ -437,7 +437,7 @@ function JungleGameCompletionDialog({
         <DialogHeader className="text-center pb-2">
           <div className="text-6xl mb-3 animate-jungle-celebration">🏆</div>
           <DialogTitle className="text-xl font-bold text-white drop-shadow-lg">
-            🎉 Jungle Quest Complete! ������
+            🎉 Jungle Quest Complete! 🐒
           </DialogTitle>
           <DialogDescription className="text-jungle-light text-sm">
             Outstanding adventure! The monkey is so proud! 🍌
