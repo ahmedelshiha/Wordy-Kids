@@ -2332,16 +2332,16 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 </div>
 
                                                 {/* Progress Stats */}
-                                                <div className="flex items-center justify-center gap-3 text-xs text-white/90 font-semibold mt-1">
-                                                  <span className="inline-flex items-center gap-1 bg-white/20 rounded-full px-2 py-1">
+                                                <div className="flex items-center justify-center gap-2 text-xs text-white/90 font-semibold mt-0.5">
+                                                  <span className="inline-flex items-center gap-0.5 bg-white/20 rounded-full px-1.5 py-0.5 text-xs">
                                                     📍 {currentWordIndex + 1}/
                                                     {displayWords.length}
                                                   </span>
-                                                  <span className="inline-flex items-center gap-1 bg-sunshine/20 rounded-full px-2 py-1">
+                                                  <span className="inline-flex items-center gap-0.5 bg-sunshine/20 rounded-full px-1.5 py-0.5 text-xs">
                                                     🏆 {rememberedWords.size}
                                                   </span>
                                                   {forgottenWords.size > 0 && (
-                                                    <span className="inline-flex items-center gap-1 bg-coral-red/20 rounded-full px-2 py-1">
+                                                    <span className="inline-flex items-center gap-0.5 bg-coral-red/20 rounded-full px-1.5 py-0.5 text-xs">
                                                       🔄 {forgottenWords.size}
                                                     </span>
                                                   )}
