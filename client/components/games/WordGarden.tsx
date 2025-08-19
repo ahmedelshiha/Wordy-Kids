@@ -935,14 +935,14 @@ export default function WordGarden({
               </div>
             </div>
             <div className="leading-tight">
-              <div className="text-xs uppercase tracking-wider text-sunshine-light font-bold mb-1 flex items-center gap-1">
+              <div className="text-xs uppercase tracking-wider text-sunshine-dark font-bold mb-1 flex items-center gap-1">
                 <Compass className="w-3 h-3" />
                 Jungle Word Quest
               </div>
-              <div className="font-bold text-lg md:text-xl text-white drop-shadow-lg">
+              <div className="font-bold text-lg md:text-xl text-gray-800">
                 Listen & find the treasure! 🗺️
               </div>
-              <div className="text-xs text-jungle-light mt-1 opacity-90">
+              <div className="text-xs text-gray-600 mt-1 opacity-90">
                 Help the monkey collect jungle words
               </div>
             </div>
