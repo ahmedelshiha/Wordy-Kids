@@ -144,6 +144,7 @@ import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader"
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
 import "@/styles/jungle-quiz-adventure.css";
+import "@/styles/enhanced-jungle-quiz-adventure.css";
 
 interface IndexProps {
   initialProfile?: any;
@@ -2919,7 +2920,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               I Remember!
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Awesome! ⭐
+                                                              Awesome! ���
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3022,7 +3023,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🌟
+                                      ���
                                     </div>
                                     <div className="jungle-leaves-float">
                                       🍃
