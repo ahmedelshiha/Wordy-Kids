@@ -289,69 +289,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-jungle-light via-sunshine-light to-light-background flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
-      {/* Jungle Background Pattern */}
-      <div className="absolute inset-0 opacity-20">
-        {/* Large Background Elements */}
-        <motion.div
-          className="absolute top-10 left-10 text-4xl md:text-6xl"
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🌳
-        </motion.div>
-        <motion.div
-          className="absolute top-20 right-20 text-3xl md:text-5xl"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🦜
-        </motion.div>
-        <motion.div
-          className="absolute bottom-20 left-20 text-3xl md:text-5xl"
-          animate={{ rotate: [0, -15, 15, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🐵
-        </motion.div>
-        <motion.div
-          className="absolute bottom-10 right-10 text-4xl md:text-6xl"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🌿
-        </motion.div>
-
-        {/* Additional jungle elements */}
-        <motion.div
-          className="absolute top-1/3 left-5 text-2xl md:text-4xl"
-          animate={{ x: [0, 5, -5, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🦋
-        </motion.div>
-        <motion.div
-          className="absolute top-1/2 right-5 text-2xl md:text-4xl"
-          animate={{ rotate: [0, 20, -20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🐆
-        </motion.div>
-        <motion.div
-          className="absolute bottom-1/3 left-1/4 text-2xl md:text-3xl"
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🌺
-        </motion.div>
-        <motion.div
-          className="absolute top-1/4 right-1/3 text-2xl md:text-3xl"
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          🦅
-        </motion.div>
-      </div>
+    <div className="min-h-screen login-background flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
 
       {/* Main Content */}
       <motion.div
