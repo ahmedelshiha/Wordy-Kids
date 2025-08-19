@@ -181,7 +181,7 @@ const PLANT_TYPES = [
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
-  ["🌱", "���", "🌻"], // wheat sunflower - grain field to sunflower
+  ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
   ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
@@ -1327,8 +1327,9 @@ export default function WordGarden({
           })}
         </div>
 
-        {/* Jungle path connecting trail */}
-        <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-jungle-dark/40 via-jungle-DEFAULT/60 to-jungle-dark/40 rounded-full -translate-y-1/2 -z-10" />
+        {/* Enhanced jungle path connecting trail */}
+        <div className="absolute top-1/2 left-2 right-2 h-2 bg-gradient-to-r from-emerald-600/70 via-green-500/80 to-lime-600/70 rounded-full -translate-y-1/2 -z-10 shadow-md" />
+        <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400 rounded-full -translate-y-1/2 -z-10" />
 
         {/* Adventure progress indicators - repositioned to be visible */}
         <div className="flex justify-between text-xs text-gray-600 mt-4 px-2">
