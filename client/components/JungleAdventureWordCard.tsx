@@ -276,7 +276,7 @@ export const JungleAdventureWordCard: React.FC<
         return {
           bg: "bg-gradient-to-r from-jungle to-jungle-dark",
           icon: <TreePine className="w-4 h-4" />,
-          text: "🌿 Explorer",
+          text: "��� Explorer",
           color: "text-white",
           border: "border-jungle",
         };
@@ -526,7 +526,7 @@ export const JungleAdventureWordCard: React.FC<
                 🌺
               </div>
               <div className="absolute bottom-0 right-0 text-6xl transform -rotate-45">
-                ����
+                🌟
               </div>
             </div>
 
