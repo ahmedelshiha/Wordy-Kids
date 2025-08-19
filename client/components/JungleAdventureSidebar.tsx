@@ -466,10 +466,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               {userData.stats.totalTime}min exploring
             </p>
             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <motion.div 
-                className="bg-gradient-to-r from-sunshine to-yellow-600 h-2 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${Math.min((userData.stats.totalTime / 100) * 100, 100)}%` }}
+              <motion.div
+                className="bg-gradient-to-r from-sunshine to-yellow-600 h-2 rounded-full origin-left"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: Math.min((userData.stats.totalTime / 100), 1) }}
                 transition={{ duration: 1, delay: 0.9 }}
               />
             </div>
