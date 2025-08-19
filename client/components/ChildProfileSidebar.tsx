@@ -187,7 +187,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-educational-green/20 to-educational-blue/20 rounded-xl p-3 border border-educational-green/30 shadow-lg backdrop-blur-sm kid-card">
+                <div className="bg-white rounded-2xl p-3 border border-gray-200 shadow-lg kid-card">
                   <h4 className="text-xs font-bold text-white mb-2 flex items-center kid-text-big text-shadow">
                     <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
                     🏆 This Week
@@ -197,7 +197,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         🎮 Learning Sessions
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-yellow to-educational-orange text-white border-educational-yellow shadow-md font-bold">
+                      <Badge className="text-xs bg-[#FFC107] text-white border-[#FFC107] shadow-md font-bold">
                         {stats.sessionsThisWeek || 0} ✨
                       </Badge>
                     </div>
@@ -205,7 +205,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         📚 Words Mastered
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-blue to-educational-purple text-white border-educational-blue shadow-md font-bold">
+                      <Badge className="text-xs bg-[#4CAF50] text-white border-[#4CAF50] shadow-md font-bold">
                         {stats.wordsThisWeek || 0} 🎆
                       </Badge>
                     </div>
@@ -213,7 +213,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                       <span className="text-xs font-medium text-gray-700 flex items-center">
                         ⏰ Adventure Time
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-purple to-educational-pink text-white border-educational-purple shadow-md font-bold">
+                      <Badge className="text-xs bg-[#9C27B0] text-white border-[#9C27B0] shadow-md font-bold">
                         {stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
                           : "0h"}{" "}
