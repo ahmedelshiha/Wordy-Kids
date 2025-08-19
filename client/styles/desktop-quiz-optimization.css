@@ -255,10 +255,12 @@
   /* Optimize animations for desktop */
   .jungle-creature {
     animation-duration: 8s;
+    opacity: 0.6;
   }
 
   .jungle-leaves-float {
     animation-duration: 12s;
+    opacity: 0.3;
   }
 
   /* Reduce motion for better performance on large screens */
@@ -268,6 +270,16 @@
 
   .jungle-quiz-button::before {
     transition: left 0.3s ease;
+  }
+
+  /* Subtle icon animations */
+  .jungle-quiz-card-icon {
+    animation-duration: 4s;
+  }
+
+  /* Optimize glow effects */
+  .animate-jungle-glow {
+    animation-duration: 4s;
   }
 }
 
