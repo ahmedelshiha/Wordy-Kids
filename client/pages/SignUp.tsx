@@ -290,7 +290,6 @@ export default function SignUp() {
 
   return (
     <div className="min-h-screen login-background flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
-
       {/* Main Content */}
       <motion.div
         className="relative z-10 w-full max-w-md mx-auto"
