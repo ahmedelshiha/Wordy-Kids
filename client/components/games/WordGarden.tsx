@@ -437,7 +437,7 @@ function JungleGameCompletionDialog({
         <DialogHeader className="text-center pb-2">
           <div className="text-6xl mb-3 animate-jungle-celebration">🏆</div>
           <DialogTitle className="text-xl font-bold text-white drop-shadow-lg">
-            🎉 Jungle Quest Complete! ����
+            🎉 Jungle Quest Complete! 🐒
           </DialogTitle>
           <DialogDescription className="text-jungle-light text-sm">
             Outstanding adventure! The monkey is so proud! 🍌
@@ -892,7 +892,7 @@ export default function WordGarden({
 
           {/* Jungle Path Progress Bar */}
           <div className="relative">
-            <div className="h-4 rounded-full bg-jungle-dark/30 overflow-hidden border border-jungle-light/20 backdrop-blur-sm">
+            <div className="h-4 rounded-full bg-gray-200 overflow-hidden border border-gray-300">
               <div
                 className="h-4 rounded-full bg-gradient-to-r from-sunshine-DEFAULT to-sunshine-light transition-all duration-500 ease-out relative overflow-hidden"
                 style={{ width: `${progressPct}%` }}
