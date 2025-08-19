@@ -401,55 +401,6 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
             </div>
           </motion.div>
 
-          {/* Animals Card - Compact */}
-          <motion.div
-            variants={itemVariants}
-            initial="initial"
-            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-bright-orange/20 transition-all duration-300"
-            whileHover={cardHoverVariants.hover}
-            onMouseEnter={() => setHoveredCard('animals')}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <MonkeyIcon className="w-10 h-10" />
-            <div className="flex-1 ml-3 min-w-0">
-              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
-                Animals
-              </h3>
-              <div className="flex items-center justify-between">
-                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
-                  {userData.stats.animalsLearned} found
-                </p>
-                <span className="text-bright-orange font-['Baloo_2'] text-[12px] font-bold">
-                  {userData.stats.animalsLearned}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Adventure Time Card - Compact */}
-          <motion.div
-            variants={itemVariants}
-            initial="initial"
-            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-sunshine/20 transition-all duration-300"
-            whileHover={cardHoverVariants.hover}
-            onMouseEnter={() => setHoveredCard('time')}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <CompassIcon className="w-10 h-10" />
-            <div className="flex-1 ml-3 min-w-0">
-              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
-                Adventure Time
-              </h3>
-              <div className="flex items-center justify-between">
-                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
-                  {userData.stats.totalTime}min exploring
-                </p>
-                <span className="text-sunshine font-['Baloo_2'] text-[12px] font-bold">
-                  {userData.stats.totalTime}m
-                </span>
-              </div>
-            </div>
-          </motion.div>
 
           {/* Achievements Card - Compact */}
           <motion.div
