@@ -337,16 +337,16 @@ export default function SignUp() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-jungle/20 rounded-[24px] overflow-hidden">
-            <CardHeader className="pb-2 md:pb-4 bg-gradient-to-r from-jungle/10 to-sunshine/10">
-              <CardTitle className="text-center text-lg md:text-xl text-navy font-['Baloo_2'] font-bold flex items-center justify-center gap-2">
-                <span className="text-2xl">🌍</span>
-                Create Explorer Profile
-                <span className="text-2xl">🎒</span>
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-jungle/20 rounded-[20px] md:rounded-[24px] overflow-hidden">
+            <CardHeader className="pb-1 md:pb-4 pt-3 md:pt-6 px-3 md:px-6 bg-gradient-to-r from-jungle/10 to-sunshine/10">
+              <CardTitle className="text-center text-base md:text-xl text-navy font-['Baloo_2'] font-bold flex items-center justify-center gap-1 md:gap-2">
+                <span className="text-lg md:text-2xl">🌍</span>
+                <span className="text-sm md:text-base">Create Explorer Profile</span>
+                <span className="text-lg md:text-2xl">🎒</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-4 md:pt-6 px-4 md:px-6">
-              <form onSubmit={handleSignUp} className="space-y-3 md:space-y-4">
+            <CardContent className="pt-3 md:pt-6 px-3 md:px-6 pb-4 md:pb-6">
+              <form onSubmit={handleSignUp} className="space-y-2.5 md:space-y-4">
                 {/* Child Name Field */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
