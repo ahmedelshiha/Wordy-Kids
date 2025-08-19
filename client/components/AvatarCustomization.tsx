@@ -345,10 +345,10 @@ export function AvatarCustomization({
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-6xl mb-4">🎨</div>
-                  <h2 className="text-2xl font-bold text-gray-800">
+                  <h2 className="text-2xl font-bold text-navy font-['Baloo_2']">
                     Pick your favorite colors!
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-navy/70 font-['Baloo_2']">
                     Choose a color theme that makes you happy!
                   </p>
                 </div>
@@ -359,7 +359,7 @@ export function AvatarCustomization({
                       key={theme.id}
                       className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
                         selectedTheme.id === theme.id
-                          ? "ring-4 ring-educational-blue"
+                          ? "ring-4 ring-jungle"
                           : "hover:shadow-lg"
                       }`}
                       onClick={() => setSelectedTheme(theme)}
@@ -376,8 +376,8 @@ export function AvatarCustomization({
                   ))}
                 </div>
 
-                <div className="text-center bg-white rounded-lg p-4 border-2">
-                  <p className="font-semibold text-gray-800 mb-2">Preview:</p>
+                <div className="text-center bg-white/90 rounded-lg p-4 border-2 border-jungle/20">
+                  <p className="font-bold text-navy mb-2 font-['Baloo_2']">🎨 Preview:</p>
                   <div
                     className={`w-20 h-20 mx-auto rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-4xl mb-2`}
                   >
@@ -394,7 +394,7 @@ export function AvatarCustomization({
             {step === 4 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">��️</div>
+                  <div className="text-6xl mb-4">❤️</div>
                   <h2 className="text-2xl font-bold text-gray-800">
                     What do you love learning about?
                   </h2>
