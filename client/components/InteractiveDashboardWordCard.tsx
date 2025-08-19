@@ -1354,7 +1354,7 @@ export function InteractiveDashboardWordCard({
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-yellow-900/10 rounded-2xl"
+              className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-yellow-900/10 rounded-3xl"
             />
           </div>
 
@@ -1460,10 +1460,10 @@ export function InteractiveDashboardWordCard({
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-2 bg-gradient-to-br from-yellow-400/20 via-transparent to-green-400/15 rounded-xl pointer-events-none"
+              className="absolute inset-2 bg-gradient-to-br from-yellow-400/20 via-transparent to-green-400/15 rounded-3xl pointer-events-none"
             />
             {/* Jungle Photo Texture Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-900/5 to-green-900/10 rounded-2xl pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-900/5 to-green-900/10 rounded-3xl pointer-events-none" />
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
