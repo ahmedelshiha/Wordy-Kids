@@ -834,81 +834,119 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-green-50/95 via-emerald-25/95 to-lime-50/95 text-gray-800 border-2 border-emerald-400/60 backdrop-blur-sm">
-        {/* Enhanced Jungle Background Effects */}
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 text-white border-2 border-emerald-500/40 backdrop-blur-sm overflow-hidden">
+        {/* Magical Jungle Background - Deep emerald-to-moss gradient */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-          {/* Background jungle gradient overlay */}
-          {/* Rich jungle atmosphere overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/30 via-green-100/20 to-lime-200/25 rounded-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.1),transparent_50%)] rounded-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(132,204,22,0.1),transparent_50%)] rounded-3xl" />
+          {/* Main jungle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-700 to-green-800 rounded-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-t from-green-900/80 via-emerald-800/40 to-blue-green-600/30 rounded-3xl" />
 
-          {/* Enhanced jungle foliage */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            {Array.from({ length: 12 }, (_, i) => (
+          {/* Misty blue-green horizon */}
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-teal-600/40 via-emerald-600/20 to-transparent rounded-t-3xl" />
+          <div className="absolute top-0 left-0 right-0 h-48 bg-[radial-gradient(ellipse_at_top,rgba(52,211,153,0.3),transparent_70%)] rounded-t-3xl" />
+
+          {/* Golden sunlight rays through leaves */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 8 }, (_, i) => (
               <div
-                key={`leaf-${i}`}
-                className="absolute text-emerald-600 opacity-30"
+                key={`sunray-${i}`}
+                className="absolute opacity-20"
+                style={{
+                  left: `${10 + i * 12}%`,
+                  top: `-10%`,
+                  width: '2px',
+                  height: '120%',
+                  background: 'linear-gradient(to bottom, rgba(255, 215, 0, 0.6), rgba(255, 235, 59, 0.3), transparent)',
+                  transform: `rotate(${-20 + i * 5}deg)`,
+                  animation: `sunlight-shimmer ${4 + Math.random() * 2}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Dark leafy silhouettes in foreground */}
+          <div className="absolute bottom-0 left-0 right-0 h-40">
+            {Array.from({ length: 15 }, (_, i) => (
+              <div
+                key={`silhouette-${i}`}
+                className="absolute text-black/60"
                 style={{
                   left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  fontSize: `${0.8 + Math.random() * 0.4}rem`,
+                  bottom: `${Math.random() * 30}%`,
+                  fontSize: `${1.5 + Math.random() * 1}rem`,
+                  transform: `rotate(${-30 + Math.random() * 60}deg)`,
                   animationDelay: `${Math.random() * 3}s`,
                 }}
               >
-                <Leaf className="w-5 h-5 md:w-7 md:h-7 animate-jungle-sway drop-shadow-md text-green-600" />
-              </div>
-            ))}
-            {/* Add some jungle vines */}
-            {Array.from({ length: 6 }, (_, i) => (
-              <div
-                key={`vine-${i}`}
-                className="absolute text-green-500 opacity-25"
-                style={{
-                  left: `${15 + i * 15}%`,
-                  top: `${Math.random() * 20}%`,
-                  animationDelay: `${i * 0.5}s`,
-                }}
-              >
-                <span className="text-xl animate-jungle-sway">🌿</span>
+                <span className="animate-jungle-sway drop-shadow-lg">
+                  {['🌿', '🍃', '🌱', '🌾'][Math.floor(Math.random() * 4)]}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Enhanced jungle atmosphere */}
+          {/* Jungle vines as dark silhouettes */}
           <div className="absolute inset-0">
-            {Array.from({ length: 15 }, (_, i) => (
+            {Array.from({ length: 8 }, (_, i) => (
               <div
-                key={`sparkle-${i}`}
-                className="absolute text-amber-400 opacity-60"
+                key={`vine-silhouette-${i}`}
+                className="absolute opacity-40"
+                style={{
+                  left: `${i * 12.5}%`,
+                  top: '0%',
+                  width: '3px',
+                  height: '100%',
+                  background: 'linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.8), rgba(0, 60, 30, 0.6))',
+                  animation: `vine-sway ${3 + Math.random() * 2}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.3}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Magical fireflies */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 12 }, (_, i) => (
+              <div
+                key={`firefly-${i}`}
+                className="absolute w-2 h-2 rounded-full opacity-80"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
+                  background: 'radial-gradient(circle, rgba(255, 255, 0, 0.9), rgba(255, 215, 0, 0.4))',
+                  boxShadow: '0 0 8px rgba(255, 255, 0, 0.6)',
+                  animation: `firefly-dance ${4 + Math.random() * 3}s ease-in-out infinite`,
                   animationDelay: `${Math.random() * 4}s`,
                 }}
-              >
-                <span className="text-sm animate-jungle-sparkle drop-shadow-md">
-                  ✨
-                </span>
-              </div>
+              />
             ))}
-            {/* Jungle creatures */}
-            {Array.from({ length: 4 }, (_, i) => (
+          </div>
+
+          {/* Drifting leaves with parallax */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 20 }, (_, i) => (
               <div
-                key={`creature-${i}`}
-                className="absolute opacity-20"
+                key={`drifting-leaf-${i}`}
+                className="absolute text-emerald-400/70"
                 style={{
-                  left: `${25 + i * 20}%`,
-                  top: `${80 + Math.sin(i) * 10}%`,
-                  animationDelay: `${i * 1.5}s`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  fontSize: `${0.6 + Math.random() * 0.8}rem`,
+                  animation: `leaf-drift ${8 + Math.random() * 4}s linear infinite`,
+                  animationDelay: `${Math.random() * 8}s`,
                 }}
               >
-                <span className="text-lg animate-jungle-float">
-                  {["🦋", "🐛", "🦜", "🐸"][i]}
+                <span className="drop-shadow-md">
+                  {['🍃', '🌿', '🍂'][Math.floor(Math.random() * 3)]}
                 </span>
               </div>
             ))}
           </div>
+
+          {/* Soft ambient glow overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-green-600/10 rounded-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_60%,rgba(34,197,94,0.15),transparent_60%)] rounded-3xl" />
         </div>
 
         {/* Jungle Adventure Top Bar */}
