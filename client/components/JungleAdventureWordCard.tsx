@@ -289,7 +289,7 @@ export const JungleAdventureWordCard: React.FC<
     <div
       className={cn(
         "relative w-full mx-auto",
-        "max-w-[380px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[420px] xl:max-w-[440px]",
+        "max-w-[380px] sm:max-w-[340px] md:max-w-[360px] lg:max-w-[380px] xl:max-w-[400px]",
         "px-2 sm:px-0",
         "jungle-adventure-card-container",
         className,
@@ -331,7 +331,7 @@ export const JungleAdventureWordCard: React.FC<
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[380px] xs:h-[400px] sm:h-[380px] md:h-[420px] lg:h-[440px] xl:h-[460px]",
+          "h-[360px] xs:h-[380px] sm:h-[360px] md:h-[380px] lg:h-[390px] xl:h-[400px]",
           "jungle-adventure-touch-target",
           "hover:scale-[1.02] transition-transform",
           "jungle-adventure-card-flip",
@@ -367,9 +367,9 @@ export const JungleAdventureWordCard: React.FC<
             "border-4 border-yellow-400/30",
           )}
         >
-          <CardContent className="p-2 sm:p-3 md:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
+          <CardContent className="p-2 sm:p-3 md:p-3 lg:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
             {/* Jungle Adventure Header */}
-            <div className="flex items-start justify-between mb-1 sm:mb-1.5">
+            <div className="flex items-start justify-between mb-1 sm:mb-1 md:mb-1.5">
               <div className="flex flex-wrap gap-1 sm:gap-1.5 flex-1 pr-2">
                 <Badge
                   className={cn(
@@ -402,7 +402,7 @@ export const JungleAdventureWordCard: React.FC<
             {/* Jungle Adventure Emoji Circle */}
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="relative mb-2 sm:mb-3">
-                <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-48 lg:h-48 xl:w-52 xl:h-52 rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container">
+                <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-42 lg:h-42 xl:w-44 xl:h-44 rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container">
                   {/* Jungle Decorative Elements */}
                   <div className="absolute top-3 left-3 w-3 h-3 bg-yellow-300/30 rounded-full animate-sparkle opacity-60"></div>
                   <div className="absolute bottom-4 right-4 w-2 h-2 bg-green-300/30 rounded-full animate-bounce delay-300 opacity-50"></div>
@@ -413,7 +413,7 @@ export const JungleAdventureWordCard: React.FC<
                   <div className="absolute inset-2 rounded-full border border-yellow-400/30 animate-pulse delay-500"></div>
 
                   {/* Main Emoji with Jungle Glow */}
-                  <span className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl relative z-10 drop-shadow-2xl jungle-adventure-emoji animate-gentle-bounce filter-glow">
+                  <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl relative z-10 drop-shadow-2xl jungle-adventure-emoji animate-gentle-bounce filter-glow">
                     {word.emoji || "🌿"}
                   </span>
 
@@ -442,7 +442,7 @@ export const JungleAdventureWordCard: React.FC<
               {/* Jungle Adventure Word Display */}
               <div className="text-center space-y-1 sm:space-y-2">
                 <div className="flex items-center justify-center gap-2 sm:gap-3">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
                     {word.word}
                   </h2>
                   <Button
@@ -476,10 +476,10 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Jungle Adventure Flip Hint */}
-            <div className="mt-1 sm:mt-2 text-center px-2 sm:px-4">
-              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border border-white/30 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 lg:px-6 lg:py-3 mx-auto max-w-[95%] sm:max-w-none lg:max-w-[90%] animate-gentle-bounce shadow-lg">
-                <p className="text-xs sm:text-sm lg:text-base opacity-95 leading-tight font-bold jungle-adventure-hint text-center flex items-center justify-center gap-1 sm:gap-2">
-                  <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin-slow flex-shrink-0" />
+            <div className="mt-1 text-center px-2 sm:px-3">
+              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border border-white/30 rounded-full px-3 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 mx-auto max-w-[95%] sm:max-w-none animate-gentle-bounce shadow-lg">
+                <p className="text-xs sm:text-sm lg:text-sm opacity-95 leading-tight font-bold jungle-adventure-hint text-center flex items-center justify-center gap-1">
+                  <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin-slow flex-shrink-0" />
                   <span className="whitespace-nowrap overflow-hidden text-ellipsis min-w-0 flex-1 lg:whitespace-normal lg:overflow-visible">
                     Explore the jungle secrets! 🌿✨
                   </span>
@@ -513,7 +513,7 @@ export const JungleAdventureWordCard: React.FC<
             isFlipped && "z-10",
           )}
         >
-          <CardContent className="p-2 sm:p-3 h-full flex flex-col text-white relative overflow-hidden jungle-adventure-back-surface">
+          <CardContent className="p-2 sm:p-3 md:p-3 lg:p-4 h-full flex flex-col text-white relative overflow-hidden jungle-adventure-back-surface">
             {/* Jungle Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 left-0 text-6xl transform rotate-12">
@@ -533,7 +533,7 @@ export const JungleAdventureWordCard: React.FC<
             {/* Scrollable Explorer Content */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden jungle-scrollbar scrollbar-thin scrollbar-thumb-green-600 scrollbar-track-transparent relative z-10">
               {/* Explorer Header */}
-              <div className="flex items-center justify-between gap-2 mb-3 px-2 py-2 bg-gradient-to-r from-green-600/20 to-emerald-600/20 backdrop-blur-md rounded-lg border border-green-400/30">
+              <div className="flex items-center justify-between gap-2 mb-2 px-2 py-1.5 bg-gradient-to-r from-green-600/20 to-emerald-600/20 backdrop-blur-md rounded-lg border border-green-400/30">
                 <div className="flex items-center gap-2 min-w-0 flex-1">
                   <span className="text-xl animate-gentle-bounce flex-shrink-0">
                     {word.emoji}
@@ -557,9 +557,9 @@ export const JungleAdventureWordCard: React.FC<
               </div>
 
               {/* Explorer Content Sections */}
-              <div className="space-y-3 px-2 pb-2">
+              <div className="space-y-2 px-2 pb-2">
                 {/* Definition Section */}
-                <div className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 backdrop-blur-md rounded-xl p-3 border-2 border-blue-400/30 jungle-content-section">
+                <div className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 backdrop-blur-md rounded-xl p-2.5 border-2 border-blue-400/30 jungle-content-section">
                   <h4 className="text-sm font-bold mb-2 text-cyan-300 flex items-center gap-2">
                     <Sparkles className="w-4 h-4 animate-sparkle" />
                     🧭 Discovery Meaning:
@@ -571,7 +571,7 @@ export const JungleAdventureWordCard: React.FC<
 
                 {/* Example Section */}
                 {word.example && (
-                  <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 backdrop-blur-md rounded-xl p-3 border-2 border-green-400/30 jungle-content-section">
+                  <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 backdrop-blur-md rounded-xl p-2.5 border-2 border-green-400/30 jungle-content-section">
                     <h4 className="text-sm font-bold mb-2 text-green-300 flex items-center gap-2">
                       <TreePine className="w-4 h-4 animate-sway" />
                       🌿 Jungle Example:
@@ -584,7 +584,7 @@ export const JungleAdventureWordCard: React.FC<
 
                 {/* Fun Fact Section */}
                 {word.funFact && (
-                  <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-xl p-3 border-2 border-purple-400/30 jungle-content-section">
+                  <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-xl p-2.5 border-2 border-purple-400/30 jungle-content-section">
                     <h4 className="text-sm font-bold mb-2 text-pink-300 flex items-center gap-2">
                       <Star className="w-4 h-4 animate-sparkle" />
                       🎈 Explorer Secret:
@@ -597,8 +597,8 @@ export const JungleAdventureWordCard: React.FC<
 
                 {/* Jungle Adventure Rating System */}
                 {showVocabularyBuilder && (
-                  <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 backdrop-blur-lg rounded-xl p-3 border-3 border-yellow-400/40 jungle-rating-section">
-                    <div className="text-center mb-4">
+                  <div className="bg-gradient-to-br from-yellow-600/20 to-orange-600/20 backdrop-blur-lg rounded-xl p-2.5 border-3 border-yellow-400/40 jungle-rating-section">
+                    <div className="text-center mb-3">
                       <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-500/30 to-orange-500/30 backdrop-blur-md rounded-full px-4 py-2 border-2 border-yellow-400/50">
                         <Crown className="w-5 h-5 text-yellow-300 animate-bounce" />
                         <h4 className="text-sm sm:text-base font-bold text-white">
@@ -608,7 +608,7 @@ export const JungleAdventureWordCard: React.FC<
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-3 gap-1.5">
                       {/* Jungle Challenging */}
                       <div className="flex flex-col items-center space-y-2">
                         <Button
@@ -620,7 +620,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-10 sm:h-12 md:h-10 lg:h-10 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "hard" &&
                               "ring-3 ring-red-300 scale-105 border-red-300",
                             showCelebration &&
@@ -653,7 +653,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-10 sm:h-12 md:h-10 lg:h-10 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "medium" &&
                               "ring-3 ring-yellow-300 scale-105 border-yellow-300",
                             showCelebration &&
@@ -686,7 +686,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-10 sm:h-12 md:h-10 lg:h-10 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-0.5 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "easy" &&
                               "ring-3 ring-green-300 scale-105 border-green-300",
                             showCelebration &&
