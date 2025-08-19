@@ -563,7 +563,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       {/* Enhanced Registration Call-to-Action Section */}
       <motion.div
         variants={itemVariants}
-        className="bg-gradient-to-br from-sunshine to-yellow-500 rounded-[20px] p-5 shadow-xl relative overflow-hidden flex-shrink-0 border border-yellow-400/20"
+        className="bg-gradient-to-br from-sunshine to-yellow-500 rounded-[20px] p-4 lg:p-5 shadow-xl relative overflow-hidden flex-shrink-0 border border-yellow-400/20"
         style={{
           backgroundImage: `
             radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
@@ -572,55 +572,44 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         }}
       >
         {/* Enhanced background decoration with animations */}
-        <motion.div 
-          className="absolute top-3 right-3 w-8 h-8 bg-white/10 rounded-full"
+        <motion.div
+          className="absolute top-3 right-3 w-6 h-6 lg:w-8 lg:h-8 bg-white/10 rounded-full"
           animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         />
-        <motion.div 
-          className="absolute bottom-3 left-3 w-6 h-6 bg-white/10 rounded-full"
+        <motion.div
+          className="absolute bottom-3 left-3 w-4 h-4 lg:w-6 lg:h-6 bg-white/10 rounded-full"
           animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
           transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
         />
-        <motion.div
-          className="absolute w-4 h-4 bg-white/5 rounded-full"
-          style={{
-            top: "50%",
-            left: "50%",
-            marginLeft: "-8px",
-            marginTop: "-8px"
-          }}
-          animate={{ scale: [1, 1.5, 1], rotate: [0, 180, 360] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-        />
 
-        <div className="text-center mb-4 relative z-10">
-          <motion.h3 
-            className="text-navy font-['Baloo_2'] text-[18px] font-bold mb-3"
+        <div className="text-center mb-3 lg:mb-4 relative z-10">
+          <motion.h3
+            className="text-navy font-['Baloo_2'] text-[16px] lg:text-[18px] font-bold mb-2 lg:mb-3"
             animate={hoveredCard ? { scale: 1.05 } : { scale: 1 }}
           >
-            {isGuest ? "🌟 Start Your Epic Journey!" : "🎉 Welcome Back, Explorer!"}
+            {isGuest ? "🌟 Start Your Journey!" : "🎉 Welcome Back!"}
           </motion.h3>
 
           {isGuest && (
-            <div className="space-y-2 mb-4 text-left">
+            <div className="space-y-1 lg:space-y-2 mb-3 lg:mb-4 text-left">
               {[
-                { icon: "💾", text: "Save your progress forever!" },
-                { icon: "🏆", text: "Earn special badges and rewards!" },
-                { icon: "🔥", text: "Track your learning streaks!" },
-                { icon: "📊", text: "Advanced analytics for parents!" },
+                { icon: "💾", text: "Save progress!" },
+                { icon: "🏆", text: "Earn badges!" },
+                { icon: "🔥", text: "Track streaks!" },
+                { icon: "📊", text: "Parent analytics!" },
               ].map((item, index) => (
                 <motion.p
                   key={index}
-                  className="text-navy font-['Baloo_2'] text-[12px] font-medium flex items-center gap-2"
+                  className="text-navy font-['Baloo_2'] text-[10px] lg:text-[12px] font-medium flex items-center gap-2"
                   whileHover={{ x: 2, scale: 1.02 }}
                   transition={{ duration: 0.2 }}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <span className="text-sm">{item.icon}</span>
-                  {item.text}
+                  <span className="text-xs lg:text-sm flex-shrink-0">{item.icon}</span>
+                  <span className="truncate">{item.text}</span>
                 </motion.p>
               ))}
             </div>
@@ -635,7 +624,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           <Button
             onClick={isGuest ? handleRegistration : handleLogout}
             className={cn(
-              "w-full rounded-[24px] px-6 py-3 font-['Baloo_2'] text-[14px] font-bold text-white",
+              "w-full rounded-[20px] lg:rounded-[24px] px-4 lg:px-6 py-2 lg:py-3 font-['Baloo_2'] text-[12px] lg:text-[14px] font-bold text-white",
               "transition-all duration-300 shadow-xl hover:shadow-2xl border border-white/20",
               "transform hover:-translate-y-0.5 active:translate-y-0",
               isGuest
@@ -643,13 +632,13 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
                 : "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700",
             )}
           >
-            {isGuest ? "🚀 Create My Account!" : "👋 See You Later!"}
+            {isGuest ? "🚀 Create Account!" : "👋 See You Later!"}
           </Button>
         </motion.div>
 
         {isGuest && (
           <motion.p
-            className="text-center text-navy font-['Baloo_2'] text-[12px] font-medium mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
+            className="text-center text-navy font-['Baloo_2'] text-[10px] lg:text-[12px] font-medium mt-2 lg:mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
             onClick={handleContinueAsGuest}
             whileHover={{ scale: 1.05, y: -1 }}
             whileTap={{ scale: 0.95 }}
