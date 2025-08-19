@@ -172,7 +172,7 @@ const PLANT_TYPES = [
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
-  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
+  ["��", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
@@ -834,42 +834,158 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30">
-        {/* Jungle Background Effects */}
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30 overflow-hidden">
+        {/* Enhanced Immersive Jungle Background Environment */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-          {/* Animated jungle leaves */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            {Array.from({ length: 8 }, (_, i) => (
+          {/* Multiple Layer Jungle Canopy Background */}
+          <div className="absolute inset-0">
+            {/* Deep jungle canopy backdrop */}
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/40 via-jungle-dark/60 to-jungle-DEFAULT/80" />
+
+            {/* Animated jungle canopy layers */}
+            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-emerald-800/50 to-transparent animate-jungle-sway"
+                 style={{
+                   backgroundImage: `
+                     radial-gradient(circle at 20% 30%, rgba(34, 197, 94, 0.3) 0%, transparent 50%),
+                     radial-gradient(circle at 80% 20%, rgba(139, 195, 74, 0.25) 0%, transparent 40%),
+                     radial-gradient(circle at 60% 60%, rgba(76, 175, 80, 0.2) 0%, transparent 35%)
+                   `
+                 }}
+            />
+
+            {/* Jungle vines hanging from top */}
+            {Array.from({ length: 6 }, (_, i) => (
               <div
-                key={`leaf-${i}`}
-                className="absolute text-jungle-light opacity-20"
+                key={`vine-${i}`}
+                className="absolute top-0 w-1 bg-gradient-to-b from-jungle-light/40 to-transparent animate-jungle-sway"
+                style={{
+                  left: `${15 + i * 15}%`,
+                  height: `${40 + Math.random() * 30}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: `${3 + Math.random() * 2}s`,
+                }}
+              >
+                <div className="absolute top-0 text-jungle-light/60 text-xs animate-jungle-float">
+                  🌿
+                </div>
+              </div>
+            ))}
+
+            {/* Floating jungle particles and fireflies */}
+            {Array.from({ length: 15 }, (_, i) => (
+              <div
+                key={`particle-${i}`}
+                className="absolute"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  fontSize: `${0.8 + Math.random() * 0.4}rem`,
-                  animationDelay: `${Math.random() * 3}s`,
+                  animationDelay: `${Math.random() * 5}s`,
                 }}
               >
-                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway" />
+                <span
+                  className={`text-xs opacity-60 animate-jungle-float ${
+                    i % 4 === 0 ? 'text-sunshine-light' :
+                    i % 4 === 1 ? 'text-jungle-light' :
+                    i % 4 === 2 ? 'text-emerald-300' : 'text-lime-300'
+                  }`}
+                  style={{
+                    animationDuration: `${4 + Math.random() * 3}s`,
+                    animationDelay: `${Math.random() * 2}s`,
+                  }}
+                >
+                  {i % 5 === 0 ? '🦋' : i % 5 === 1 ? '🌺' : i % 5 === 2 ? '🍃' : i % 5 === 3 ? '✨' : '🌿'}
+                </span>
               </div>
             ))}
+
+            {/* Animated jungle ground foliage */}
+            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-jungle-dark/60 to-transparent">
+              {Array.from({ length: 8 }, (_, i) => (
+                <div
+                  key={`foliage-${i}`}
+                  className="absolute bottom-0 text-jungle-light/50 animate-jungle-sway"
+                  style={{
+                    left: `${i * 12.5}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    animationDuration: `${2 + Math.random()}s`,
+                  }}
+                >
+                  <span className="text-lg">{i % 3 === 0 ? '🌱' : i % 3 === 1 ? '🌿' : '🍀'}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Mystical jungle glow effects */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 4 }, (_, i) => (
+                <div
+                  key={`glow-${i}`}
+                  className="absolute rounded-full animate-jungle-glow"
+                  style={{
+                    left: `${20 + i * 20}%`,
+                    top: `${30 + Math.sin(i) * 20}%`,
+                    width: `${60 + Math.random() * 40}px`,
+                    height: `${60 + Math.random() * 40}px`,
+                    background: `radial-gradient(circle, rgba(139, 195, 74, 0.15) 0%, transparent 70%)`,
+                    animationDelay: `${i * 0.8}s`,
+                    animationDuration: `${4 + Math.random() * 2}s`,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Jungle depth shadows */}
+            <div className="absolute inset-0">
+              <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-jungle-dark/40 to-transparent" />
+              <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-jungle-dark/40 to-transparent" />
+              <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-jungle-dark/30 to-transparent" />
+            </div>
+
+            {/* Adventure path indicators */}
+            <div className="absolute bottom-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-sunshine-DEFAULT/30 to-transparent rounded-full animate-jungle-glow" />
           </div>
 
-          {/* Jungle atmosphere sparkles */}
+          {/* Enhanced jungle creatures and ambient life */}
           <div className="absolute inset-0">
-            {Array.from({ length: 12 }, (_, i) => (
+            {/* Jungle monkeys in trees */}
+            <div className="absolute top-4 right-8 animate-jungle-float" style={{ animationDelay: '0s' }}>
+              <span className="text-2xl drop-shadow-lg">🐒</span>
+            </div>
+            <div className="absolute top-12 left-12 animate-jungle-float" style={{ animationDelay: '2s' }}>
+              <span className="text-lg opacity-70 drop-shadow-lg">🦜</span>
+            </div>
+
+            {/* Butterflies floating around */}
+            {Array.from({ length: 3 }, (_, i) => (
               <div
-                key={`sparkle-${i}`}
-                className="absolute text-sunshine-light opacity-30"
+                key={`butterfly-${i}`}
+                className="absolute animate-jungle-float"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 4}s`,
+                  left: `${30 + i * 25}%`,
+                  top: `${20 + Math.sin(i) * 15}%`,
+                  animationDelay: `${i * 1.5}s`,
+                  animationDuration: `${6 + Math.random() * 2}s`,
                 }}
               >
-                <span className="text-xs animate-jungle-sparkle">✨</span>
+                <span className="text-lg drop-shadow-lg opacity-80">🦋</span>
               </div>
             ))}
+
+            {/* Jungle flowers blooming */}
+            <div className="absolute top-1/3 left-8 animate-jungle-sparkle">
+              <span className="text-xl drop-shadow-lg">🌺</span>
+            </div>
+            <div className="absolute bottom-1/4 right-12 animate-jungle-sparkle" style={{ animationDelay: '1s' }}>
+              <span className="text-lg drop-shadow-lg">🌸</span>
+            </div>
+
+            {/* Jungle treasure chests hidden in foliage */}
+            <div className="absolute bottom-8 left-8 animate-jungle-glow opacity-60">
+              <span className="text-sm drop-shadow-lg">📦</span>
+            </div>
+            <div className="absolute top-1/2 right-4 animate-jungle-glow opacity-60" style={{ animationDelay: '2s' }}>
+              <span className="text-sm drop-shadow-lg">🗝️</span>
+            </div>
           </div>
         </div>
 
