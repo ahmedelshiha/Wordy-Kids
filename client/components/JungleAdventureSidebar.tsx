@@ -648,42 +648,91 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         )}
       </motion.div>
 
-      {/* Mobile responsive layout for smaller screens */}
-      <div className="lg:hidden flex flex-row w-full h-auto p-4 space-x-4 overflow-x-auto bg-gradient-to-r from-green-50/95 to-emerald-50/95 backdrop-blur-sm rounded-[20px] shadow-xl border border-jungle/10">
-        {/* Mobile version - horizontal layout */}
-        <div className="flex-shrink-0 w-60">
-          {/* Simplified mobile profile card */}
-          <div className="bg-gradient-to-br from-profile-purple to-purple-600 rounded-[16px] p-4 shadow-lg">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center bg-white/10">
-                <span className="text-xl">{userData.avatar?.emoji || "🎯"}</span>
-              </div>
-              <div>
-                <h3 className="text-white font-['Baloo_2'] text-[14px] font-bold truncate">
-                  {userData.name}
-                </h3>
-                <p className="text-white/90 font-['Baloo_2'] text-[12px]">
-                  Level {userData.level} • {userData.streak} days
-                </p>
-              </div>
+      {/* Mobile responsive layout - show as bottom sheet style */}
+      <div className="lg:hidden w-full bg-gradient-to-r from-green-50/95 to-emerald-50/95 backdrop-blur-sm rounded-[16px] shadow-lg border border-jungle/10 p-3">
+
+        {/* Mobile profile header - compact horizontal layout */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full border-2 border-profile-purple/30 flex items-center justify-center bg-profile-purple/10">
+              <span className="text-lg">{userData.avatar?.emoji || "🎯"}</span>
+            </div>
+            <div>
+              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate max-w-[120px]">
+                {userData.name}
+              </h3>
+              <p className="text-navy/70 font-['Baloo_2'] text-[11px]">
+                Level {userData.level} • {userData.streak}🔥
+              </p>
+            </div>
+          </div>
+
+          {/* Mobile quick stats */}
+          <div className="flex space-x-2">
+            <div className="bg-jungle/10 rounded-lg px-2 py-1 text-center">
+              <p className="text-jungle font-['Baloo_2'] text-[10px] font-bold">{userData.stats.wordsLearned}</p>
+              <p className="text-jungle/70 font-['Baloo_2'] text-[8px]">Words</p>
+            </div>
+            <div className="bg-bright-orange/10 rounded-lg px-2 py-1 text-center">
+              <p className="text-bright-orange font-['Baloo_2'] text-[10px] font-bold">{userData.stats.animalsLearned}</p>
+              <p className="text-bright-orange/70 font-['Baloo_2'] text-[8px]">Animals</p>
             </div>
           </div>
         </div>
 
-        {/* Mobile progress cards */}
-        <div className="flex space-x-3">
-          {[
-            { icon: <ParrotIcon className="w-8 h-8" />, title: "Words", value: userData.stats.wordsLearned },
-            { icon: <MonkeyIcon className="w-8 h-8" />, title: "Animals", value: userData.stats.animalsLearned },
-            { icon: <CompassIcon className="w-8 h-8" />, title: "Time", value: `${userData.stats.totalTime}m` },
-          ].map((item, index) => (
-            <div key={index} className="flex-shrink-0 w-28 bg-white/90 rounded-[12px] p-3 shadow-md text-center">
-              <div className="flex justify-center mb-2">{item.icon}</div>
-              <p className="text-navy font-['Baloo_2'] text-[11px] font-semibold">{item.title}</p>
-              <p className="text-navy/70 font-['Baloo_2'] text-[10px]">{item.value}</p>
+        {/* Mobile Registration CTA - Compact version */}
+        {isGuest && (
+          <div className="bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[12px] p-3 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <div className="flex-1 min-w-0">
+                <h4 className="text-navy font-['Baloo_2'] text-[13px] font-bold mb-1">
+                  🌟 Join the Adventure!
+                </h4>
+                <p className="text-navy/80 font-['Baloo_2'] text-[10px] truncate">
+                  💾 Save progress • 🏆 Earn badges
+                </p>
+              </div>
+              <div className="flex-shrink-0 ml-3">
+                <Button
+                  onClick={handleRegistration}
+                  className="bg-jungle hover:bg-jungle-dark text-white font-['Baloo_2'] text-[11px] font-bold px-3 py-1.5 rounded-[16px] shadow-md transition-all duration-200"
+                >
+                  Sign Up
+                </Button>
+              </div>
             </div>
-          ))}
-        </div>
+
+            {/* Mobile continue as guest - smaller */}
+            <button
+              onClick={handleContinueAsGuest}
+              className="text-navy/70 font-['Baloo_2'] text-[9px] mt-1 underline hover:no-underline transition-all duration-200"
+            >
+              Continue as Guest
+            </button>
+          </div>
+        )}
+
+        {/* Non-guest mobile version */}
+        {!isGuest && (
+          <div className="bg-gradient-to-r from-slate-100 to-slate-200 rounded-[12px] p-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="text-navy font-['Baloo_2'] text-[13px] font-bold">
+                  🎉 Great to see you!
+                </h4>
+                <p className="text-navy/70 font-['Baloo_2'] text-[10px]">
+                  Keep learning and exploring!
+                </p>
+              </div>
+              <Button
+                onClick={handleLogout}
+                className="bg-slate-500 hover:bg-slate-600 text-white font-['Baloo_2'] text-[11px] font-bold px-3 py-1.5 rounded-[16px] shadow-md transition-all duration-200"
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </motion.aside>
   );
