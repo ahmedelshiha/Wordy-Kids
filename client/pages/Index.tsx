@@ -3365,16 +3365,39 @@ export default function Index({ initialProfile }: IndexProps) {
                                         className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-jungle-dark via-jungle to-jungle-light bg-clip-text text-transparent relative"
                                       >
                                         <span className="relative inline-block">
-                                          <span className="animate-jungle-glow">🌿</span>
-                                          <span className="mx-3 animate-jungle-float">Word Garden</span>
-                                          <span className="animate-jungle-glow">🌿</span>
+                                          <span className="animate-jungle-glow">
+                                            🌿
+                                          </span>
+                                          <span className="mx-3 animate-jungle-float">
+                                            Word Garden
+                                          </span>
+                                          <span className="animate-jungle-glow">
+                                            🌿
+                                          </span>
                                         </span>
                                         {/* Magical particles */}
                                         <div className="absolute inset-0 -z-10">
-                                          <span className="absolute top-0 left-1/4 animate-jungle-sparkle text-sunshine text-lg">✨</span>
-                                          <span className="absolute top-2 right-1/4 animate-jungle-sparkle text-orange-400 text-sm" style={{animationDelay: '0.5s'}}>🌟</span>
-                                          <span className="absolute -top-1 left-1/3 animate-jungle-sparkle text-yellow-300 text-xs" style={{animationDelay: '1s'}}>⭐</span>
-                                          <span className="absolute top-1 right-1/3 animate-jungle-sparkle text-amber-400 text-sm" style={{animationDelay: '1.5s'}}>💫</span>
+                                          <span className="absolute top-0 left-1/4 animate-jungle-sparkle text-sunshine text-lg">
+                                            ✨
+                                          </span>
+                                          <span
+                                            className="absolute top-2 right-1/4 animate-jungle-sparkle text-orange-400 text-sm"
+                                            style={{ animationDelay: "0.5s" }}
+                                          >
+                                            🌟
+                                          </span>
+                                          <span
+                                            className="absolute -top-1 left-1/3 animate-jungle-sparkle text-yellow-300 text-xs"
+                                            style={{ animationDelay: "1s" }}
+                                          >
+                                            ⭐
+                                          </span>
+                                          <span
+                                            className="absolute top-1 right-1/3 animate-jungle-sparkle text-amber-400 text-sm"
+                                            style={{ animationDelay: "1.5s" }}
+                                          >
+                                            💫
+                                          </span>
                                         </div>
                                       </motion.h1>
                                       <motion.p
@@ -3383,7 +3406,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                         transition={{ delay: 0.3 }}
                                         className="text-lg text-jungle-dark/80 font-medium"
                                       >
-                                        🐵 Join the Jungle Adventure! Listen & Discover Treasures! 🏆
+                                        🐵 Join the Jungle Adventure! Listen &
+                                        Discover Treasures! 🏆
                                       </motion.p>
                                     </div>
 
@@ -3392,7 +3416,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                       className="absolute top-0 right-0"
                                       initial={{ scale: 0 }}
                                       animate={{ scale: 1 }}
-                                      transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                                      transition={{
+                                        delay: 0.5,
+                                        type: "spring",
+                                        stiffness: 200,
+                                      }}
                                     >
                                       <Button
                                         onClick={() => setShowExitDialog(true)}
@@ -3407,16 +3435,28 @@ export default function Index({ initialProfile }: IndexProps) {
                                         <div className="relative flex items-center space-x-2">
                                           <motion.span
                                             className="text-xl"
-                                            animate={{ rotate: [0, -10, 10, 0] }}
-                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                            animate={{
+                                              rotate: [0, -10, 10, 0],
+                                            }}
+                                            transition={{
+                                              duration: 2,
+                                              repeat: Infinity,
+                                              ease: "easeInOut",
+                                            }}
                                           >
                                             🚪
                                           </motion.span>
-                                          <span className="font-semibold">Exit Adventure</span>
+                                          <span className="font-semibold">
+                                            Exit Adventure
+                                          </span>
                                           <motion.span
                                             className="text-sm opacity-70"
                                             animate={{ y: [0, -2, 0] }}
-                                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                                            transition={{
+                                              duration: 1.5,
+                                              repeat: Infinity,
+                                              ease: "easeInOut",
+                                            }}
                                           >
                                             🌴
                                           </motion.span>
@@ -3424,8 +3464,15 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                         {/* Sparkle effects */}
                                         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                          <span className="absolute top-1 left-2 animate-ping text-yellow-400 text-xs">✨</span>
-                                          <span className="absolute bottom-1 right-2 animate-ping text-orange-400 text-xs" style={{animationDelay: '0.5s'}}>⭐</span>
+                                          <span className="absolute top-1 left-2 animate-ping text-yellow-400 text-xs">
+                                            ✨
+                                          </span>
+                                          <span
+                                            className="absolute bottom-1 right-2 animate-ping text-orange-400 text-xs"
+                                            style={{ animationDelay: "0.5s" }}
+                                          >
+                                            ⭐
+                                          </span>
                                         </div>
                                       </Button>
                                     </motion.div>
