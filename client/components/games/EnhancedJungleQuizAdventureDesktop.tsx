@@ -121,68 +121,78 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
   const [isAnswering, setIsAnswering] = useState(false);
 
   // Sample words data
-  const words = useMemo(() => [
-    {
-      id: 1,
-      word: "elephant",
-      pronunciation: "EL-uh-fuhnt",
-      definition: "A large gray mammal with a long trunk",
-      example: "The elephant sprayed water with its trunk",
-      funFact: "Elephants can remember things for many years!",
-      emoji: "🐘",
-      category: "animals",
-      difficulty: "easy" as const,
-    },
-    {
-      id: 2,
-      word: "butterfly", 
-      pronunciation: "BUHT-er-fly",
-      definition: "A colorful flying insect",
-      example: "The butterfly landed on the flower",
-      funFact: "Butterflies taste with their feet!",
-      emoji: "🦋",
-      category: "animals", 
-      difficulty: "easy" as const,
-    },
-    {
-      id: 3,
-      word: "tree",
-      pronunciation: "tree",
-      definition: "A tall plant with a trunk and branches",
-      example: "The monkey climbed the tall tree",
-      funFact: "Trees can live for hundreds of years!",
-      emoji: "🌳",
-      category: "nature",
-      difficulty: "easy" as const,
-    }
-  ], []);
+  const words = useMemo(
+    () => [
+      {
+        id: 1,
+        word: "elephant",
+        pronunciation: "EL-uh-fuhnt",
+        definition: "A large gray mammal with a long trunk",
+        example: "The elephant sprayed water with its trunk",
+        funFact: "Elephants can remember things for many years!",
+        emoji: "🐘",
+        category: "animals",
+        difficulty: "easy" as const,
+      },
+      {
+        id: 2,
+        word: "butterfly",
+        pronunciation: "BUHT-er-fly",
+        definition: "A colorful flying insect",
+        example: "The butterfly landed on the flower",
+        funFact: "Butterflies taste with their feet!",
+        emoji: "🦋",
+        category: "animals",
+        difficulty: "easy" as const,
+      },
+      {
+        id: 3,
+        word: "tree",
+        pronunciation: "tree",
+        definition: "A tall plant with a trunk and branches",
+        example: "The monkey climbed the tall tree",
+        funFact: "Trees can live for hundreds of years!",
+        emoji: "🌳",
+        category: "nature",
+        difficulty: "easy" as const,
+      },
+    ],
+    [],
+  );
 
   const currentWord = words[gameState.currentWordIndex] || words[0];
-  const options = useMemo(() => [currentWord, ...words.slice(1, 3)], [currentWord, words]);
+  const options = useMemo(
+    () => [currentWord, ...words.slice(1, 3)],
+    [currentWord, words],
+  );
 
-  const progressPercent = words.length > 0 ? (gameState.currentWordIndex / words.length) * 100 : 0;
+  const progressPercent =
+    words.length > 0 ? (gameState.currentWordIndex / words.length) * 100 : 0;
   const experiencePercent = gameState.experience % 100;
 
   const handleReplayAudio = useCallback(() => {
     console.log("Playing audio for:", currentWord?.word);
   }, [currentWord]);
 
-  const handleAnswerSelect = useCallback((optionId: number) => {
-    setSelectedOption(optionId.toString());
-    setIsAnswering(true);
-    setIsCorrect(optionId === currentWord.id);
-    setShowResult(true);
-    
-    setTimeout(() => {
-      setIsAnswering(false);
-    }, 1000);
-  }, [currentWord.id]);
+  const handleAnswerSelect = useCallback(
+    (optionId: number) => {
+      setSelectedOption(optionId.toString());
+      setIsAnswering(true);
+      setIsCorrect(optionId === currentWord.id);
+      setShowResult(true);
+
+      setTimeout(() => {
+        setIsAnswering(false);
+      }, 1000);
+    },
+    [currentWord.id],
+  );
 
   const handleNextQuestion = useCallback(() => {
     setShowResult(false);
     setSelectedOption(null);
     setIsCorrect(false);
-    setGameState(prev => ({
+    setGameState((prev) => ({
       ...prev,
       currentWordIndex: (prev.currentWordIndex + 1) % words.length,
       plantGrowthStage: prev.plantGrowthStage + (isCorrect ? 1 : 0),
@@ -234,14 +244,33 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                 </Badge>
               </div>
               <div className="flex items-center gap-2">
-                <Button variant="ghost" size="sm" onClick={handleReplayAudio} className="jungle-glass-button">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleReplayAudio}
+                  className="jungle-glass-button"
+                >
                   <Volume2 className="w-4 h-4" />
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => setIsMuted(!isMuted)} className="jungle-glass-button">
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="jungle-glass-button"
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-4 h-4" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
                 </Button>
                 {onExit && (
-                  <Button variant="ghost" size="sm" onClick={onExit} className="jungle-glass-button">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onExit}
+                    className="jungle-glass-button"
+                  >
                     ✕
                   </Button>
                 )}
@@ -251,14 +280,33 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
 
           {/* Desktop Controls Only */}
           <div className="hidden lg:flex lg:items-center lg:justify-end lg:p-4 lg:gap-2">
-            <Button variant="ghost" size="sm" onClick={handleReplayAudio} className="jungle-glass-button">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleReplayAudio}
+              className="jungle-glass-button"
+            >
               <Volume2 className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => setIsMuted(!isMuted)} className="jungle-glass-button">
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMuted(!isMuted)}
+              className="jungle-glass-button"
+            >
+              {isMuted ? (
+                <VolumeX className="w-4 h-4" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
             </Button>
             {onExit && (
-              <Button variant="ghost" size="sm" onClick={onExit} className="jungle-glass-button">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onExit}
+                className="jungle-glass-button"
+              >
                 ✕
               </Button>
             )}
@@ -266,7 +314,10 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
 
           {/* Progress Bar */}
           <div className="relative mb-4 px-4 lg:px-0">
-            <Progress value={progressPercent} className="h-3 jungle-progress-trail" />
+            <Progress
+              value={progressPercent}
+              className="h-3 jungle-progress-trail"
+            />
             <div className="absolute -top-1 left-4 lg:left-0 right-4 lg:right-0 h-5 flex items-center justify-between pointer-events-none">
               {[...Array(5)].map((_, i) => {
                 const stationProgress = (i / 4) * 100;
@@ -300,7 +351,9 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                   key={i}
                   className={cn(
                     "w-6 h-6 transition-all duration-300",
-                    i < gameState.lives ? "text-red-500 fill-red-500 animate-pulse" : "text-gray-400",
+                    i < gameState.lives
+                      ? "text-red-500 fill-red-500 animate-pulse"
+                      : "text-gray-400",
                   )}
                 />
               ))}
@@ -321,14 +374,20 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
 
           {/* Timer */}
           <div className="text-center mb-4 px-4 lg:px-0">
-            <div className={cn(
-              "inline-flex items-center gap-2 px-4 py-2 rounded-full jungle-glass-morphism",
-              timeLeft <= 5 ? "animate-pulse bg-red-500/20 text-red-700" : "text-green-700",
-            )}>
-              <div className={cn(
-                "w-4 h-4 rounded-full",
-                timeLeft <= 5 ? "bg-red-500 animate-ping" : "bg-green-500",
-              )} />
+            <div
+              className={cn(
+                "inline-flex items-center gap-2 px-4 py-2 rounded-full jungle-glass-morphism",
+                timeLeft <= 5
+                  ? "animate-pulse bg-red-500/20 text-red-700"
+                  : "text-green-700",
+              )}
+            >
+              <div
+                className={cn(
+                  "w-4 h-4 rounded-full",
+                  timeLeft <= 5 ? "bg-red-500 animate-ping" : "bg-green-500",
+                )}
+              />
               <span className="font-bold text-lg">{timeLeft}s</span>
             </div>
           </div>
@@ -337,10 +396,12 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
           <div className="relative z-20 px-4 lg:px-0 pb-8">
             {currentWord && (
               <div className="max-w-4xl mx-auto lg:max-w-none">
-                <Card className={cn(
-                  "jungle-treasure-card mb-6 relative overflow-hidden transition-all duration-500",
-                  showResult && isCorrect && "animate-treasureDiscovery",
-                )}>
+                <Card
+                  className={cn(
+                    "jungle-treasure-card mb-6 relative overflow-hidden transition-all duration-500",
+                    showResult && isCorrect && "animate-treasureDiscovery",
+                  )}
+                >
                   <CardHeader className="text-center relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-green-500/5 to-yellow-500/10" />
                     <CardTitle className="text-2xl font-bold text-emerald-800 relative z-10">
@@ -369,14 +430,18 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                     {/* Answer Options */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {options.map((option, index) => {
-                        const isSelected = selectedOption === option.id.toString();
+                        const isSelected =
+                          selectedOption === option.id.toString();
                         const isCorrectAnswer = option.id === currentWord.id;
 
                         let cardState = "default";
                         if (showResult) {
-                          if (isSelected && isCorrectAnswer) cardState = "correct";
-                          else if (isSelected && !isCorrectAnswer) cardState = "incorrect";
-                          else if (isCorrectAnswer) cardState = "reveal-correct";
+                          if (isSelected && isCorrectAnswer)
+                            cardState = "correct";
+                          else if (isSelected && !isCorrectAnswer)
+                            cardState = "incorrect";
+                          else if (isCorrectAnswer)
+                            cardState = "reveal-correct";
                         }
 
                         return (
@@ -386,9 +451,12 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                               "treasure-option-card cursor-pointer transition-all duration-300 relative overflow-hidden",
                               "hover:scale-105 hover:shadow-xl active:scale-98",
                               isSelected && "ring-4",
-                              cardState === "correct" && "ring-green-500 bg-green-50 animate-treasureDiscovery",
-                              cardState === "incorrect" && "ring-red-500 bg-red-50 animate-shake",
-                              cardState === "reveal-correct" && "ring-green-400 bg-green-25 animate-jungle-glow",
+                              cardState === "correct" &&
+                                "ring-green-500 bg-green-50 animate-treasureDiscovery",
+                              cardState === "incorrect" &&
+                                "ring-red-500 bg-red-50 animate-shake",
+                              cardState === "reveal-correct" &&
+                                "ring-green-400 bg-green-25 animate-jungle-glow",
                               isAnswering && "pointer-events-none",
                             )}
                             onClick={() => handleAnswerSelect(option.id)}
@@ -418,29 +486,45 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                         {isCorrect ? (
                           <div className="space-y-4">
                             <div className="text-6xl animate-bounce">🎉</div>
-                            <h3 className="text-2xl font-bold text-green-700">Treasure Found! 🏆</h3>
+                            <h3 className="text-2xl font-bold text-green-700">
+                              Treasure Found! 🏆
+                            </h3>
                             <p className="text-green-600">
-                              You discovered: <strong>{currentWord.word}</strong>
+                              You discovered:{" "}
+                              <strong>{currentWord.word}</strong>
                             </p>
-                            <p className="text-sm text-gray-600 max-w-md mx-auto">{currentWord.funFact}</p>
+                            <p className="text-sm text-gray-600 max-w-md mx-auto">
+                              {currentWord.funFact}
+                            </p>
                             {gameState.streak > 1 && (
                               <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 rounded-full border border-orange-300">
                                 <Zap className="w-5 h-5 text-orange-600" />
-                                <span className="font-bold text-orange-700">{gameState.streak} Streak! 🔥</span>
+                                <span className="font-bold text-orange-700">
+                                  {gameState.streak} Streak! 🔥
+                                </span>
                               </div>
                             )}
                           </div>
                         ) : (
                           <div className="space-y-4">
                             <div className="text-6xl">😅</div>
-                            <h3 className="text-2xl font-bold text-blue-700">Keep Exploring! 🗺️</h3>
+                            <h3 className="text-2xl font-bold text-blue-700">
+                              Keep Exploring! 🗺️
+                            </h3>
                             <p className="text-blue-600">
-                              The correct answer was: <strong>{currentWord.word}</strong>
+                              The correct answer was:{" "}
+                              <strong>{currentWord.word}</strong>
                             </p>
-                            <p className="text-sm text-gray-600 max-w-md mx-auto">{currentWord.definition}</p>
+                            <p className="text-sm text-gray-600 max-w-md mx-auto">
+                              {currentWord.definition}
+                            </p>
                           </div>
                         )}
-                        <Button onClick={handleNextQuestion} className="mt-6 jungle-continue-button group" size="lg">
+                        <Button
+                          onClick={handleNextQuestion}
+                          className="mt-6 jungle-continue-button group"
+                          size="lg"
+                        >
                           <span className="mr-2">Continue Adventure</span>
                           <Star className="w-5 h-5 group-hover:animate-spin" />
                         </Button>
@@ -475,7 +559,9 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                 <div className="flex items-center justify-between p-3 bg-orange-100 rounded-xl border border-orange-300 transition-all hover:scale-105">
                   <div className="flex items-center gap-2">
                     <Zap className="w-5 h-5 text-orange-600" />
-                    <span className="font-semibold text-orange-900">Streak</span>
+                    <span className="font-semibold text-orange-900">
+                      Streak
+                    </span>
                   </div>
                   <span className="font-bold text-orange-900 text-lg">
                     {gameState.streak}x
@@ -519,30 +605,42 @@ export const EnhancedJungleQuizAdventureDesktop: React.FC<
                 <div className="w-full h-3 bg-green-200 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-500 animate-jungle-glow"
-                    style={{ width: `${(Math.min(gameState.plantGrowthStage, 5) / 5) * 100}%` }}
+                    style={{
+                      width: `${(Math.min(gameState.plantGrowthStage, 5) / 5) * 100}%`,
+                    }}
                   />
                 </div>
                 <div className="text-xs text-green-700 mt-2 font-medium">
-                  {gameState.plantGrowthStage < 5 ? "Growing stronger!" : "Garden Complete! 🎉"}
+                  {gameState.plantGrowthStage < 5
+                    ? "Growing stronger!"
+                    : "Garden Complete! 🎉"}
                 </div>
               </div>
             </div>
 
             {/* Additional Stats */}
             <div className="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
-              <h4 className="font-semibold text-blue-800 mb-3 text-sm">Session Stats</h4>
+              <h4 className="font-semibold text-blue-800 mb-3 text-sm">
+                Session Stats
+              </h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-blue-700">Max Streak:</span>
-                  <span className="font-bold text-blue-900">{gameState.maxStreak}</span>
+                  <span className="font-bold text-blue-900">
+                    {gameState.maxStreak}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-blue-700">Treasures Found:</span>
-                  <span className="font-bold text-blue-900">{gameState.treasuresFound}</span>
+                  <span className="font-bold text-blue-900">
+                    {gameState.treasuresFound}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-blue-700">Level:</span>
-                  <span className="font-bold text-blue-900">{gameState.level}</span>
+                  <span className="font-bold text-blue-900">
+                    {gameState.level}
+                  </span>
                 </div>
               </div>
             </div>
