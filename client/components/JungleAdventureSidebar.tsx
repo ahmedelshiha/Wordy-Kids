@@ -176,7 +176,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       </motion.div>
 
       {/* Enhanced Progress Tracking Section */}
-      <div className="space-y-4 flex-1">
+      <div className="space-y-3 flex-1 min-h-0">
         {/* Learned Words Card with enhanced design */}
         <motion.div
           variants={itemVariants}
