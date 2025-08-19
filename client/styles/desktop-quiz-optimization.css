@@ -34,6 +34,23 @@
     margin-right: auto;
   }
 
+  /* Brain icon optimization for desktop */
+  .jungle-quiz-hero-content .bg-gradient-to-r {
+    padding: 1rem 1.5rem;
+  }
+
+  .jungle-quiz-hero-content .w-12,
+  .jungle-quiz-hero-content .h-12 {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .jungle-quiz-hero-content .md\\:w-16,
+  .jungle-quiz-hero-content .md\\:h-16 {
+    width: 3rem;
+    height: 3rem;
+  }
+
   /* Compact AI Enhancement Notice */
   .jungle-progress-container {
     padding: 1rem 1.5rem;
