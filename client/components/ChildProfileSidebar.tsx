@@ -195,7 +195,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
-                        🎮 Learning Sessions
+                        🗺️ Learning Sessions
                       </span>
                       <Badge className="text-xs bg-[#FFC107] text-white border-[#FFC107] shadow-md font-bold">
                         {stats.sessionsThisWeek || 0} ✨
@@ -203,7 +203,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
-                        📚 Words Mastered
+                        🦜 Words Mastered
                       </span>
                       <Badge className="text-xs bg-[#4CAF50] text-white border-[#4CAF50] shadow-md font-bold">
                         {stats.wordsThisWeek || 0} 🎆
@@ -211,7 +211,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
-                        ⏰ Adventure Time
+                        🌅 Adventure Time
                       </span>
                       <Badge className="text-xs bg-[#9C27B0] text-white border-[#9C27B0] shadow-md font-bold">
                         {stats.timeThisWeek
