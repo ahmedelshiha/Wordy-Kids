@@ -2314,10 +2314,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                             <div className="flex-1 text-center">
                                               <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-xl px-3 py-2 mx-1 border border-jungle-light/40 shadow-md">
                                                 {/* Jungle Decorative Elements */}
-                                                <div className="absolute -top-1 left-2 text-lg animate-gentle-bounce">
+                                                <div className="absolute -top-0.5 left-1 text-sm animate-gentle-bounce">
                                                   🌿
                                                 </div>
-                                                <div className="absolute -top-1 right-2 text-lg animate-gentle-bounce animation-delay-300">
+                                                <div className="absolute -top-0.5 right-1 text-sm animate-gentle-bounce animation-delay-300">
                                                   🦋
                                                 </div>
 
