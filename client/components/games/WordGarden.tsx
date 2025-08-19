@@ -178,7 +178,7 @@ const PLANT_TYPES = [
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
   ["🌱", "🪴", "🌻"], // potted sunflower - pot plant to big sunflower
   ["🌱", "🌿", "💐"], // bouquet garden - leaves to flower bouquet
-  ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
+  ["🌱", "🎍", "���"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
   ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
@@ -1157,7 +1157,7 @@ export default function WordGarden({
                         🏆
                       </span>
                       <div className="text-white font-bold text-base mt-2 drop-shadow-lg bg-jungle-dark/50 rounded-full px-3 py-1">
-                        <span className="mr-2">🐒</span>Treasure found!
+                        <span className="mr-2">���</span>Treasure found!
                       </div>
                     </div>
                   </div>
@@ -1372,7 +1372,7 @@ export default function WordGarden({
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400 rounded-full -translate-y-1/2 -z-10" />
 
         {/* Adventure progress indicators - repositioned to be visible */}
-        <div className="flex justify-between text-xs text-gray-600 mt-4 px-2">
+        <div className="flex justify-between text-xs text-emerald-200 mt-4 px-2">
           <div className="text-center flex flex-col items-center">
             <span className="block text-base mb-1">🚀</span>
             <span className="text-xs font-medium">Start</span>
