@@ -449,23 +449,23 @@ export function AvatarCustomization({
                 )}
 
                 {/* Profile Summary */}
-                <div className="bg-white rounded-lg p-6 border-2 border-educational-blue/20">
-                  <h3 className="text-lg font-bold text-center mb-4 text-gray-800">
-                    Your Adventure Profile 🎉
+                <div className="bg-gradient-to-br from-jungle-light/20 to-sunshine-light/20 rounded-lg p-6 border-2 border-jungle/30">
+                  <h3 className="text-lg font-bold text-center mb-4 text-navy font-['Baloo_2']">
+                    🎯 Your Adventure Profile! 🌟
                   </h3>
                   <div className="flex items-center justify-center gap-4 mb-4">
                     <div
-                      className={`w-16 h-16 rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-3xl`}
+                      className={`w-16 h-16 rounded-full bg-gradient-to-r ${selectedTheme.gradient} flex items-center justify-center text-3xl shadow-lg border-2 border-white/30`}
                     >
                       {selectedAvatar.emoji}
                     </div>
                     <div>
-                      <p className="font-bold text-gray-800">{childName}</p>
-                      <p className="text-sm text-gray-600">
-                        Learning with {selectedAvatar.name}
+                      <p className="font-bold text-navy font-['Baloo_2'] text-lg">{childName}</p>
+                      <p className="text-sm text-navy/70 font-['Baloo_2']">
+                        🤝 Learning with {selectedAvatar.name}
                       </p>
-                      <p className={`text-sm ${selectedTheme.accent}`}>
-                        {selectedTheme.name} Theme
+                      <p className={`text-sm ${selectedTheme.accent} font-['Baloo_2'] font-semibold`}>
+                        🎨 {selectedTheme.name} Theme
                       </p>
                     </div>
                   </div>
