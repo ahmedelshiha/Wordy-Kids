@@ -373,192 +373,134 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         </div>
       </motion.div>
 
-      {/* Enhanced Progress Tracking Section with improved visual hierarchy */}
-      <div className="space-y-3 flex-1 min-h-0">
-        {/* Learned Words Card with enhanced design and animations */}
-        <motion.div
-          variants={itemVariants}
-          initial="initial"
-          className="bg-white/90 backdrop-blur-sm rounded-[18px] p-4 shadow-lg flex items-center group cursor-pointer flex-shrink-0 border border-gray-100/50 hover:border-jungle/20 transition-all duration-300"
-          whileHover={cardHoverVariants.hover}
-          onMouseEnter={() => setHoveredCard('words')}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
-          <ParrotIcon />
-          <div className="flex-1 ml-4 min-w-0">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-bold truncate mb-1">
-              Learned Words
-            </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[13px] font-medium truncate">
-              {userData.stats.wordsLearned} words mastered
-            </p>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <motion.div
-                className="bg-gradient-to-r from-jungle to-jungle-dark h-2 rounded-full origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: Math.min((userData.stats.wordsLearned / 50), 1) }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
-            </div>
-          </div>
+      {/* Scrollable Progress Section - Takes available space but allows scrolling */}
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-jungle/20 scrollbar-track-transparent pr-1">
+        <div className="space-y-3">
+          {/* Learned Words Card - Compact version */}
           <motion.div
-            className="w-10 h-10 bg-gradient-to-br from-jungle to-jungle-dark rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ml-3"
-            whileHover={{ scale: 1.15, rotate: 10 }}
-            transition={{ duration: 0.2 }}
+            variants={itemVariants}
+            initial="initial"
+            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-jungle/20 transition-all duration-300"
+            whileHover={cardHoverVariants.hover}
+            onMouseEnter={() => setHoveredCard('words')}
+            onMouseLeave={() => setHoveredCard(null)}
           >
-            <span className="text-white font-['Baloo_2'] text-[13px] font-bold">
-              {userData.stats.wordsLearned}
-            </span>
+            <ParrotIcon className="w-10 h-10" />
+            <div className="flex-1 ml-3 min-w-0">
+              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                Words Learned
+              </h3>
+              <div className="flex items-center justify-between">
+                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                  {userData.stats.wordsLearned} words
+                </p>
+                <span className="text-jungle font-['Baloo_2'] text-[12px] font-bold">
+                  {userData.stats.wordsLearned}
+                </span>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
 
-        {/* Animals Category Card with enhanced design */}
-        <motion.div
-          variants={itemVariants}
-          initial="initial"
-          className="bg-white/90 backdrop-blur-sm rounded-[18px] p-4 shadow-lg flex items-center group cursor-pointer flex-shrink-0 border border-gray-100/50 hover:border-bright-orange/20 transition-all duration-300"
-          whileHover={cardHoverVariants.hover}
-          onMouseEnter={() => setHoveredCard('animals')}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
-          <MonkeyIcon />
-          <div className="flex-1 ml-4 min-w-0">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-bold truncate mb-1">
-              Animals
-            </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[13px] font-medium truncate">
-              {userData.stats.animalsLearned} animals discovered
-            </p>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <motion.div
-                className="bg-gradient-to-r from-bright-orange to-orange-600 h-2 rounded-full origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: Math.min((userData.stats.animalsLearned / 20), 1) }}
-                transition={{ duration: 1, delay: 0.7 }}
-              />
-            </div>
-          </div>
+          {/* Animals Card - Compact */}
           <motion.div
-            className="w-10 h-10 bg-gradient-to-br from-playful-purple to-purple-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ml-3"
-            whileHover={{ scale: 1.15, rotate: -10 }}
-            transition={{ duration: 0.2 }}
+            variants={itemVariants}
+            initial="initial"
+            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-bright-orange/20 transition-all duration-300"
+            whileHover={cardHoverVariants.hover}
+            onMouseEnter={() => setHoveredCard('animals')}
+            onMouseLeave={() => setHoveredCard(null)}
           >
-            <span className="text-white font-['Baloo_2'] text-[13px] font-bold">
-              {userData.stats.animalsLearned}
-            </span>
+            <MonkeyIcon className="w-10 h-10" />
+            <div className="flex-1 ml-3 min-w-0">
+              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                Animals
+              </h3>
+              <div className="flex items-center justify-between">
+                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                  {userData.stats.animalsLearned} found
+                </p>
+                <span className="text-bright-orange font-['Baloo_2'] text-[12px] font-bold">
+                  {userData.stats.animalsLearned}
+                </span>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
 
-        {/* Adventure Time Card with enhanced design */}
-        <motion.div
-          variants={itemVariants}
-          initial="initial"
-          className="bg-white/90 backdrop-blur-sm rounded-[18px] p-4 shadow-lg flex items-center group cursor-pointer flex-shrink-0 border border-gray-100/50 hover:border-sunshine/20 transition-all duration-300"
-          whileHover={cardHoverVariants.hover}
-          onMouseEnter={() => setHoveredCard('time')}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
-          <CompassIcon />
-          <div className="flex-1 ml-4 min-w-0">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-bold truncate mb-1">
-              Adventure Time
-            </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[13px] font-medium truncate">
-              {userData.stats.totalTime}min exploring
-            </p>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <motion.div
-                className="bg-gradient-to-r from-sunshine to-yellow-600 h-2 rounded-full origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: Math.min((userData.stats.totalTime / 100), 1) }}
-                transition={{ duration: 1, delay: 0.9 }}
-              />
-            </div>
-          </div>
+          {/* Adventure Time Card - Compact */}
           <motion.div
-            className="w-10 h-10 bg-gradient-to-br from-coral-red to-red-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ml-3"
-            whileHover={{ scale: 1.15 }}
-            transition={{ duration: 0.2 }}
+            variants={itemVariants}
+            initial="initial"
+            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-sunshine/20 transition-all duration-300"
+            whileHover={cardHoverVariants.hover}
+            onMouseEnter={() => setHoveredCard('time')}
+            onMouseLeave={() => setHoveredCard(null)}
           >
-            <span className="text-white font-['Baloo_2'] text-[13px] font-bold">
-              {userData.stats.totalTime}
-            </span>
+            <CompassIcon className="w-10 h-10" />
+            <div className="flex-1 ml-3 min-w-0">
+              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                Adventure Time
+              </h3>
+              <div className="flex items-center justify-between">
+                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                  {userData.stats.totalTime}min exploring
+                </p>
+                <span className="text-sunshine font-['Baloo_2'] text-[12px] font-bold">
+                  {userData.stats.totalTime}m
+                </span>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
 
-        {/* New Achievement Card */}
-        <motion.div
-          variants={itemVariants}
-          initial="initial"
-          className="bg-white/90 backdrop-blur-sm rounded-[18px] p-4 shadow-lg flex items-center group cursor-pointer flex-shrink-0 border border-gray-100/50 hover:border-yellow-400/20 transition-all duration-300"
-          whileHover={cardHoverVariants.hover}
-          onMouseEnter={() => setHoveredCard('achievements')}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
-          <TrophyIcon />
-          <div className="flex-1 ml-4 min-w-0">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-bold truncate mb-1">
-              Achievements
-            </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[13px] font-medium truncate">
-              {userData.stats.achievements || 5} badges earned
-            </p>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <motion.div
-                className="bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: Math.min(((userData.stats.achievements || 5) / 15), 1) }}
-                transition={{ duration: 1, delay: 1.1 }}
-              />
-            </div>
-          </div>
+          {/* Achievements Card - Compact */}
           <motion.div
-            className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ml-3"
-            whileHover={{ scale: 1.15, rotate: 15 }}
-            transition={{ duration: 0.2 }}
+            variants={itemVariants}
+            initial="initial"
+            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-yellow-400/20 transition-all duration-300"
+            whileHover={cardHoverVariants.hover}
+            onMouseEnter={() => setHoveredCard('achievements')}
+            onMouseLeave={() => setHoveredCard(null)}
           >
-            <span className="text-white font-['Baloo_2'] text-[13px] font-bold">
-              {userData.stats.achievements || 5}
-            </span>
+            <TrophyIcon className="w-10 h-10" />
+            <div className="flex-1 ml-3 min-w-0">
+              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                Achievements
+              </h3>
+              <div className="flex items-center justify-between">
+                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                  {userData.stats.achievements || 5} badges
+                </p>
+                <span className="text-yellow-500 font-['Baloo_2'] text-[12px] font-bold">
+                  {userData.stats.achievements || 5}
+                </span>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
 
-        {/* Streak Card */}
-        <motion.div
-          variants={itemVariants}
-          initial="initial"
-          className="bg-white/90 backdrop-blur-sm rounded-[18px] p-4 shadow-lg flex items-center group cursor-pointer flex-shrink-0 border border-gray-100/50 hover:border-red-400/20 transition-all duration-300"
-          whileHover={cardHoverVariants.hover}
-          onMouseEnter={() => setHoveredCard('streak')}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
-          <StreakIcon />
-          <div className="flex-1 ml-4 min-w-0">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-bold truncate mb-1">
-              Learning Streak
-            </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[13px] font-medium truncate">
-              {userData.streak} days in a row!
-            </p>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-              <motion.div
-                className="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: Math.min((userData.streak / 30), 1) }}
-                transition={{ duration: 1, delay: 1.3 }}
-              />
-            </div>
-          </div>
+          {/* Streak Card - Compact */}
           <motion.div
-            className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ml-3"
-            whileHover={{ scale: 1.15 }}
-            transition={{ duration: 0.2 }}
+            variants={itemVariants}
+            initial="initial"
+            className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-red-400/20 transition-all duration-300"
+            whileHover={cardHoverVariants.hover}
+            onMouseEnter={() => setHoveredCard('streak')}
+            onMouseLeave={() => setHoveredCard(null)}
           >
-            <span className="text-white font-['Baloo_2'] text-[13px] font-bold">
-              {userData.streak}
-            </span>
+            <StreakIcon className="w-10 h-10" />
+            <div className="flex-1 ml-3 min-w-0">
+              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                Learning Streak
+              </h3>
+              <div className="flex items-center justify-between">
+                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                  {userData.streak} days
+                </p>
+                <span className="text-red-500 font-['Baloo_2'] text-[12px] font-bold">
+                  {userData.streak}🔥
+                </span>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Enhanced Registration Call-to-Action Section - Desktop Only */}
