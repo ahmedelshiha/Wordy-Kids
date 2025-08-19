@@ -985,7 +985,39 @@ export function InteractiveDashboardWordCard({
                 ⭐
               </motion.div>
             </AnimatePresence>
+
+            {/* Jungle Adventure Glow Ring */}
+            <motion.div
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.6, 0.3],
+                rotate: [0, 180, 360]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute inset-0 rounded-full border-2 border-jungle/30"
+              style={{
+                boxShadow: "0 0 20px rgba(76, 175, 80, 0.3)"
+              }}
+            />
           </motion.div>
+
+          {/* Jungle Adventure Background Pattern */}
+          <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+            <div
+              className="w-full h-full rounded-2xl"
+              style={{
+                backgroundImage: `
+                  radial-gradient(circle at 25% 25%, rgba(76, 175, 80, 0.2) 0%, transparent 40%),
+                  radial-gradient(circle at 75% 75%, rgba(255, 193, 7, 0.15) 0%, transparent 40%),
+                  linear-gradient(45deg, transparent 30%, rgba(76, 175, 80, 0.05) 50%, transparent 70%)
+                `
+              }}
+            />
+          </div>
         </motion.div>
       );
     }
