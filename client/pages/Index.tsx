@@ -1957,7 +1957,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "��� My Journey",
+                      label: "🗺️ My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
