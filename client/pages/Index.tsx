@@ -3257,7 +3257,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                       </div>
 
-                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 jungle-achievements-grid">
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
