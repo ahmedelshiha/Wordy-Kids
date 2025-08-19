@@ -23,7 +23,7 @@
 @import "./styles/jungle-mobile-optimizations.css";
 
 /* Import Jungle Adventure Word Card Styles */
-@import './styles/jungle-adventure-word-card.css';
+@import "./styles/jungle-adventure-word-card.css";
 
 @tailwind base;
 @tailwind components;

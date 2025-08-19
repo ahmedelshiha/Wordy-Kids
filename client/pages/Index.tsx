@@ -2541,12 +2541,14 @@ export default function Index({ initialProfile }: IndexProps) {
                                                         true
                                                       }
                                                       adventureLevel={
-                                                        Math.floor(Math.random() * 15) + 1
+                                                        Math.floor(
+                                                          Math.random() * 15,
+                                                        ) + 1
                                                       }
                                                       explorerBadges={[
                                                         "jungle-master",
                                                         "word-explorer",
-                                                        "pronunciation-pro"
+                                                        "pronunciation-pro",
                                                       ]}
                                                       isJungleQuest={true}
                                                     />
