@@ -226,9 +226,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-gradient-to-r from-educational-pink/20 to-educational-purple/20 rounded-xl p-4 border border-educational-pink/30 shadow-lg backdrop-blur-sm kid-card">
-                  <h4 className="text-sm font-bold text-white mb-3 flex items-center kid-text-big text-shadow">
-                    <Activity className="w-5 h-5 mr-2 text-educational-yellow" />
+                <div className="bg-gradient-to-br from-sunshine-light/20 to-jungle-light/15 rounded-2xl p-4 border-2 border-sunshine/30 shadow-xl backdrop-blur-sm kid-card">
+                  <h4 className="text-sm font-bold text-navy mb-3 flex items-center kid-text-big text-shadow">
+                    <Activity className="w-5 h-5 mr-2 text-sunshine" />
                     🎉 Awesome Moments!
                   </h4>
                   <div className="space-y-2">
@@ -242,7 +242,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           <span className="text-xs font-medium text-gray-700 truncate">
                             ✨ {activity.description}
                           </span>
-                          <Badge className="text-xs ml-2 bg-gradient-to-r from-educational-orange to-educational-yellow text-white border-educational-orange shadow-md font-bold animate-pulse">
+                          <Badge className="text-xs ml-2 bg-gradient-to-r from-sunshine to-sunshine-light text-navy border-sunshine shadow-md font-bold animate-pulse">
                             +{activity.points} 🎆
                           </Badge>
                         </div>
@@ -262,9 +262,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md border-2 border-white",
-                  "bg-gradient-to-r transition-all duration-200",
-                  profile.avatar?.color || "from-blue-400 to-purple-400",
+                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-sunshine",
+                  "bg-gradient-to-br transition-all duration-200",
+                  profile.avatar?.color || "from-jungle to-jungle-dark",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -272,11 +272,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Collapsed Quick Stats */}
               <div className="flex flex-col items-center space-y-1">
-                <Badge className="text-xs bg-blue-500 text-white px-2 py-1 rounded-md">
+                <Badge className="text-xs bg-jungle text-white px-2 py-1 rounded-xl shadow-md">
                   L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
-                  <Badge className="text-xs bg-orange-500 text-white px-2 py-1 rounded-md">
+                  <Badge className="text-xs bg-sunshine text-navy px-2 py-1 rounded-xl shadow-md font-bold">
                     {profile.streak >= 7
                       ? "Legendary!"
                       : `${profile.streak} days`}
