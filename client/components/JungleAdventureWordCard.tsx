@@ -631,7 +631,9 @@ export const JungleAdventureWordCard: React.FC<
                         >
                           <div className="flex items-center gap-1">
                             <Mountain className="w-3 h-3 md:w-4 md:h-4" />
-                            <span className="text-lg md:text-xl animate-bounce">😰</span>
+                            <span className="text-lg md:text-xl animate-bounce">
+                              😰
+                            </span>
                           </div>
                           <span className="text-xs font-bold">Tough Trek</span>
                         </Button>
