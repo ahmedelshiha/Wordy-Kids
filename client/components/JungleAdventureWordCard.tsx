@@ -153,10 +153,9 @@ export const JungleAdventureWordCard: React.FC<
     }
 
     setIsPressed(true);
-    setShowJungleParticles(true);
+    // Removed jungle particles on flip to make it lighter
     setTimeout(() => {
       setIsPressed(false);
-      setShowJungleParticles(false);
     }, 300);
   };
 
@@ -164,7 +163,10 @@ export const JungleAdventureWordCard: React.FC<
   const handleRating = (rating: "easy" | "medium" | "hard") => {
     setRatedAs(rating);
     setShowCelebration(true);
-    setShowJungleParticles(true);
+    // Only show particles for "easy" rating (I Remember equivalent)
+    if (rating === "easy") {
+      setShowJungleParticles(true);
+    }
 
     // Calculate XP based on difficulty and rating
     let xpGained = 0;
@@ -209,7 +211,7 @@ export const JungleAdventureWordCard: React.FC<
     setTimeout(() => {
       setShowCelebration(false);
       setShowJungleParticles(false);
-    }, 1500);
+    }, 800); // Much shorter duration
   };
 
   // Touch handlers for mobile
