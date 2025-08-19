@@ -968,14 +968,14 @@ export default function WordGarden({
         <div className="mb-4 relative z-10">
           <div className="flex items-center justify-between text-sm mb-2">
             <div className="flex items-center gap-2 bg-jungle-DEFAULT/10 rounded-full px-3 py-1 border border-jungle-DEFAULT/20">
-              <TreePine className="w-4 h-4 text-jungle-DEFAULT" />
-              <span className="text-jungle-dark font-semibold">
+              <TreePine className="w-4 h-4 text-emerald-200" />
+              <span className="text-emerald-100 font-semibold drop-shadow-lg">
                 Seed {roundIdx + 1} / {pool.length}
               </span>
             </div>
             <div className="flex items-center gap-2 bg-sunshine-DEFAULT/10 rounded-full px-3 py-1 border border-sunshine-DEFAULT/20">
-              <Zap className="w-4 h-4 text-sunshine-dark" />
-              <span className="text-sunshine-dark font-semibold">
+              <Zap className="w-4 h-4 text-yellow-200" />
+              <span className="text-yellow-100 font-semibold drop-shadow-lg">
                 Streak: {bestStreak}
               </span>
             </div>
@@ -1629,10 +1629,10 @@ export default function WordGarden({
               </div>
               <div className="text-emerald-600">
                 <div className="text-base sm:text-lg">🗺️</div>
-                <div className="font-medium">
+                <div className="font-medium text-emerald-100 drop-shadow">
                   {roundIdx + 1}/{pool.length}
                 </div>
-                <div className="text-[10px] sm:text-xs opacity-80">
+                <div className="text-[10px] sm:text-xs text-emerald-200 opacity-90">
                   progress
                 </div>
               </div>
