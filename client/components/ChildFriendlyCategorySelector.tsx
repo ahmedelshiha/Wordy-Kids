@@ -444,7 +444,7 @@ export function ChildFriendlyCategorySelector({
     );
 
     if (matchingCategories.length > 0) {
-      return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! ��`;
+      return `I see you love ${matchingCategories[0].name.toLowerCase()}! That's awesome! 🌟`;
     }
 
     return "I've picked some special categories just for you! 💝";

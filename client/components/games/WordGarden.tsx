@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-white text-gray-800 border-2 border-gray-200">
         {/* Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Animated jungle leaves */}
@@ -876,15 +876,15 @@ export default function WordGarden({
         {/* Jungle Adventure Top Bar */}
         <div className="mb-4 relative z-10">
           <div className="flex items-center justify-between text-sm mb-2">
-            <div className="flex items-center gap-2 bg-jungle-dark/40 rounded-full px-3 py-1 backdrop-blur-sm border border-jungle-light/20">
-              <TreePine className="w-4 h-4 text-jungle-light" />
-              <span className="text-sunshine-light font-semibold">
+            <div className="flex items-center gap-2 bg-jungle-DEFAULT/10 rounded-full px-3 py-1 border border-jungle-DEFAULT/20">
+              <TreePine className="w-4 h-4 text-jungle-DEFAULT" />
+              <span className="text-jungle-dark font-semibold">
                 Seed {roundIdx + 1} / {pool.length}
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-sunshine-dark/40 rounded-full px-3 py-1 backdrop-blur-sm border border-sunshine-light/20">
-              <Zap className="w-4 h-4 text-sunshine-light" />
-              <span className="text-sunshine-light font-semibold">
+            <div className="flex items-center gap-2 bg-sunshine-DEFAULT/10 rounded-full px-3 py-1 border border-sunshine-DEFAULT/20">
+              <Zap className="w-4 h-4 text-sunshine-dark" />
+              <span className="text-sunshine-dark font-semibold">
                 Streak: {bestStreak}
               </span>
             </div>
@@ -892,7 +892,7 @@ export default function WordGarden({
 
           {/* Jungle Path Progress Bar */}
           <div className="relative">
-            <div className="h-4 rounded-full bg-jungle-dark/30 overflow-hidden border border-jungle-light/20 backdrop-blur-sm">
+            <div className="h-4 rounded-full bg-gray-200 overflow-hidden border border-gray-300">
               <div
                 className="h-4 rounded-full bg-gradient-to-r from-sunshine-DEFAULT to-sunshine-light transition-all duration-500 ease-out relative overflow-hidden"
                 style={{ width: `${progressPct}%` }}
@@ -935,14 +935,14 @@ export default function WordGarden({
               </div>
             </div>
             <div className="leading-tight">
-              <div className="text-xs uppercase tracking-wider text-sunshine-light font-bold mb-1 flex items-center gap-1">
+              <div className="text-xs uppercase tracking-wider text-sunshine-dark font-bold mb-1 flex items-center gap-1">
                 <Compass className="w-3 h-3" />
                 Jungle Word Quest
               </div>
-              <div className="font-bold text-lg md:text-xl text-white drop-shadow-lg">
+              <div className="font-bold text-lg md:text-xl text-gray-800">
                 Listen & find the treasure! 🗺️
               </div>
-              <div className="text-xs text-jungle-light mt-1 opacity-90">
+              <div className="text-xs text-gray-600 mt-1 opacity-90">
                 Help the monkey collect jungle words
               </div>
             </div>
@@ -1149,18 +1149,18 @@ export default function WordGarden({
         {/* Jungle Adventure XP + Streak */}
         <div className="mt-6 relative z-10">
           <div className="text-sm flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2 text-sunshine-light">
+            <div className="flex items-center gap-2 text-sunshine-dark">
               <Mountain className="w-4 h-4" />
               <span className="font-semibold">Jungle XP</span>
             </div>
-            <div className="flex items-center gap-2 text-jungle-light">
+            <div className="flex items-center gap-2 text-gray-600">
               <span className="animate-pulse">🔥</span>
               <span className="font-semibold">Adventure Streak: {streak}</span>
             </div>
           </div>
 
           <div className="relative">
-            <div className="h-4 rounded-full bg-jungle-dark/30 overflow-hidden border border-jungle-light/20 backdrop-blur-sm">
+            <div className="h-4 rounded-full bg-gray-200 overflow-hidden border border-gray-300">
               <div
                 className="h-4 rounded-full bg-gradient-to-r from-jungle-DEFAULT via-jungle-light to-sunshine-DEFAULT transition-all duration-700 ease-out relative overflow-hidden"
                 style={{ width: `${xpPct}%` }}
@@ -1178,24 +1178,24 @@ export default function WordGarden({
             </div>
 
             {/* Jungle adventure level indicators */}
-            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-jungle-light">
+            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-gray-600">
               <span
-                className={`flex items-center gap-1 ${xpPct >= 25 ? "text-sunshine-DEFAULT" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
               >
                 🌱 Sprout
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 50 ? "text-sunshine-DEFAULT" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
               >
                 🌿 Explorer
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 75 ? "text-sunshine-DEFAULT" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
               >
                 🌳 Ranger
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 100 ? "text-sunshine-DEFAULT animate-pulse" : ""}`}
+                className={`flex items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
               >
                 👑 Legend
               </span>
@@ -1207,7 +1207,7 @@ export default function WordGarden({
       {/* Jungle Adventure Progress Trail */}
       <div className="mt-8 relative">
         {/* Jungle path background */}
-        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-jungle-dark/20 via-jungle-DEFAULT/10 to-jungle-dark/20 rounded-2xl border border-jungle-light/20 backdrop-blur-sm" />
+        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 rounded-2xl border border-gray-200" />
 
         <div className="relative grid grid-cols-5 gap-2 p-2">
           {gardenStages.map((stage, idx) => {
@@ -1288,7 +1288,7 @@ export default function WordGarden({
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-jungle-dark/40 via-jungle-DEFAULT/60 to-jungle-dark/40 rounded-full -translate-y-1/2 -z-10" />
 
         {/* Adventure progress indicators */}
-        <div className="absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-jungle-DEFAULT">
+        <div className="absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-gray-600">
           <div className="text-center">
             <span className="block">🗺️</span>
             <span>Start</span>

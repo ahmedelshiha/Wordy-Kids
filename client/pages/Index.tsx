@@ -1023,7 +1023,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "quiz-master",
         name: "Quiz Master",
-        icon: "���",
+        icon: "🏆",
         earned: false,
         description: "Score 100% on 5 quizzes",
       },
@@ -1166,7 +1166,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
     setFeedback({
       type: "celebration",
-      title: "Quiz Complete! ����",
+      title: "Quiz Complete! 🎉",
       message: `You scored ${score}/${total} (${percentage}%)`,
       points: score * 10,
       onContinue: () => {
@@ -1491,12 +1491,12 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "🎓⭐";
+        achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! ����✨";
+        achievementTitle = "Category Scholar! 🌟✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n��� Scholar Bonus: 100 points!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
@@ -1957,7 +1957,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "��� My Journey",
+                      label: "🗺️ My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
@@ -2035,9 +2035,9 @@ export default function Index({ initialProfile }: IndexProps) {
                 {/* Enhanced Desktop Layout */}
                 <div className="flex min-h-screen">
                   {/* Enhanced Main Game Content Container */}
-                  <div className="flex-1 min-w-0 overflow-hidden relative">
+                  <div className="flex-1 min-w-0 relative">
                     {/* Game Content Background */}
-                    <div className="relative z-10 w-full min-h-screen p-1 sm:p-2 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                    <div className="relative z-10 w-full min-h-screen p-1 sm:p-2 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth scrollbar-thin">
                       {/* Logo Box Component */}
                       <div
                         className="w-full flex justify-center items-center relative"
@@ -2580,7 +2580,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                     {celebrationEffect && (
                                                       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 animate-pulse z-20 rounded-xl">
                                                         <div className="absolute top-4 left-4 text-2xl animate-bounce">
-                                                          ���
+                                                          🌟
                                                         </div>
                                                         <div className="absolute top-6 right-6 text-3xl animate-spin">
                                                           ✨
@@ -2727,7 +2727,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   "Category Review Complete! 📚",
-                                                                message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n�� Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪📚" : "Amazing work! 🎉"}`,
+                                                                message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪📚" : "Amazing work! 🎉"}`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                   10, // Fewer points since words were forgotten
@@ -3021,7 +3021,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🌿
+                                      🌟
                                     </div>
                                     <div className="jungle-leaves-float">
                                       🍃
