@@ -1155,7 +1155,7 @@ export function InteractiveDashboardWordCard({
                           if (wordsLearned >= goal * 2)
                             return "⭐ SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
-                            return "🚀 Beyond awesome! Keep going!";
+                            return "�� Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
@@ -1248,33 +1248,29 @@ export function InteractiveDashboardWordCard({
           className={cn(
             "w-[320px] h-[460px] sm:w-[380px] sm:h-[480px] md:w-[420px] md:h-[480px] lg:w-[460px] lg:h-[500px] xl:w-[480px] xl:h-[520px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
-            "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
+            "shadow-lg hover:shadow-xl border-0 rounded-3xl sm:rounded-[2rem]",
             "backdrop-blur-sm ring-1 ring-black/5",
             "bg-transparent",
             celebrationEffect &&
-              "jungle-celebration-glow animate-pulse shadow-2xl border-sunshine border-4",
+              "jungle-celebration-glow animate-pulse shadow-2xl",
           )}
           style={{
             background: `
               linear-gradient(
                 135deg,
-                rgba(76, 175, 80, 0.95) 0%,
-                rgba(56, 142, 60, 0.98) 25%,
-                rgba(27, 94, 32, 1) 50%,
-                rgba(56, 142, 60, 0.98) 75%,
-                rgba(76, 175, 80, 0.95) 100%
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(0, 0, 0, 0.3) 25%,
+                rgba(0, 0, 0, 0.5) 50%,
+                rgba(0, 0, 0, 0.3) 75%,
+                rgba(0, 0, 0, 0.4) 100%
               ),
-              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CAF50' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60c-16.569 0-30-13.431-30-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+              url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000&auto=format&fit=crop") center/cover
             `,
-            borderImage:
-              "linear-gradient(45deg, rgba(255, 215, 0, 0.6), rgba(76, 175, 80, 0.4), rgba(255, 215, 0, 0.6)) 1",
-            borderWidth: "3px",
-            borderStyle: "solid",
             boxShadow: `
-              0 20px 40px rgba(76, 175, 80, 0.3),
-              0 0 20px rgba(255, 215, 0, 0.2),
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1)
+              0 25px 50px rgba(0, 0, 0, 0.3),
+              0 0 30px rgba(255, 215, 0, 0.2),
+              0 0 60px rgba(34, 197, 94, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15)
             `,
           }}
         >
@@ -1351,14 +1347,14 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 scale: [1, 1.1, 1],
-                opacity: [0.1, 0.2, 0.1],
+                opacity: [0.2, 0.4, 0.2],
               }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-0 bg-gradient-to-t from-jungle/10 via-transparent to-jungle/5 rounded-2xl"
+              className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-yellow-900/10 rounded-3xl"
             />
           </div>
 
@@ -1456,7 +1452,7 @@ export function InteractiveDashboardWordCard({
             {/* Jungle Adventure Surface Glow */}
             <motion.div
               animate={{
-                opacity: [0.1, 0.3, 0.1],
+                opacity: [0.2, 0.4, 0.2],
                 scale: [1, 1.02, 1],
               }}
               transition={{
@@ -1464,8 +1460,10 @@ export function InteractiveDashboardWordCard({
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-2 bg-gradient-to-br from-sunshine/10 via-transparent to-jungle/10 rounded-xl pointer-events-none"
+              className="absolute inset-2 bg-gradient-to-br from-yellow-400/20 via-transparent to-green-400/15 rounded-3xl pointer-events-none"
             />
+            {/* Jungle Photo Texture Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-900/5 to-green-900/10 rounded-3xl pointer-events-none" />
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
@@ -1598,7 +1596,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "🦋 What creature lives in our jungle?",
+                          "���� What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
@@ -1635,7 +1633,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Food: {
                         easy: [
-                          "🍌 What jungle snack is this?",
+                          "�� What jungle snack is this?",
                           "🥥 Which jungle treat do you see?",
                           "🍯 Can you name this jungle delight?",
                           "🫐 What jungle berry is this?",
