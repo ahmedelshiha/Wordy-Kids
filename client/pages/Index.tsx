@@ -3476,7 +3476,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       Exit Adventure
                                     </Button>
                                   </div>
-                                  <EnhancedJungleQuizAdventure
+                                  <EnhancedJungleQuizAdventureDesktop
                                     selectedCategory={
                                       selectedCategory !== "all"
                                         ? selectedCategory
