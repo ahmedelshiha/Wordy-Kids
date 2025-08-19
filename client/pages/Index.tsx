@@ -2038,7 +2038,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   {/* Enhanced Main Game Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="relative z-10 w-full min-h-screen p-1 sm:p-2 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                    <div className="relative z-10 w-full min-h-screen p-1 sm:p-2 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
                       {/* Logo Box Component */}
                       <div
                         className="w-full flex justify-center items-center relative"
