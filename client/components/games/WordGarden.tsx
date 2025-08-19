@@ -183,7 +183,7 @@ const PLANT_TYPES = [
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
   ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
-  ["🌱", "��", "🌈"], // rainbow plant - leaves to rainbow
+  ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
   ["🌱", "🌴", "🥥"], // palm coconut - palm tree to coconut
   ["🌱", "🌵", "🌵"], // growing cactus - small to big cactus
@@ -1169,7 +1169,7 @@ export default function WordGarden({
                       </div>
 
                       <span className="text-6xl animate-jungle-celebration drop-shadow-lg">
-                        ���
+                        🏆
                       </span>
                       <div className="text-white font-bold text-sm md:text-base mt-1 md:mt-2 drop-shadow-lg bg-jungle-dark/50 rounded-full px-2 md:px-3 py-1">
                         <span className="mr-2">🐒</span>Treasure found!
@@ -1421,33 +1421,33 @@ export default function WordGarden({
 
         {/* Enhanced Adventure progress indicators with better visibility */}
         <div className="flex justify-between mt-3 md:mt-6 px-2 md:px-3 gap-1">
-          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-lg mb-1 drop-shadow-lg">🚀</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🚀</span>
+            <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Start
             </span>
           </div>
-          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-lg mb-1 drop-shadow-lg">🌿</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🌿</span>
+            <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Jungle
             </span>
           </div>
-          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-lg mb-1 drop-shadow-lg">🏔️</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🏔️</span>
+            <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Peak
             </span>
           </div>
-          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-lg mb-1 drop-shadow-lg">🏆</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🏆</span>
+            <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Victory
             </span>
           </div>
-          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-lg mb-1 drop-shadow-lg">👑</span>
-            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">👑</span>
+            <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Legend
             </span>
           </div>
