@@ -3354,7 +3354,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 </div>
                               ) : gameMode === "word-garden" ? (
                                 <div className="space-y-6">
-                                  <div className="flex items-center justify-between">
+                                  <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
                                       🌱 Word Garden
                                     </h2>
@@ -3362,7 +3362,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       onClick={() => setShowExitDialog(true)}
                                       variant="outline"
                                       size="sm"
-                                      className="bg-green-50 hover:bg-green-100 text-green-700 border-green-300 hover:border-green-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                                      className="bg-green-50 hover:bg-green-100 text-green-700 border-green-300 hover:border-green-400 transition-all duration-200 shadow-sm hover:shadow-md md:absolute md:right-0"
                                     >
                                       <span className="mr-2">🚪</span>
                                       Exit Garden

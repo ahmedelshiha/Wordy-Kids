@@ -834,15 +834,21 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/5 to-sunshine-light/5 text-gray-800 border-2 border-gray-200">
-        {/* Jungle Background Effects */}
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-green-50/95 via-emerald-25/95 to-lime-50/95 text-gray-800 border-2 border-emerald-400/60 backdrop-blur-sm">
+        {/* Enhanced Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-          {/* Animated jungle leaves */}
+          {/* Background jungle gradient overlay */}
+          {/* Rich jungle atmosphere overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/30 via-green-100/20 to-lime-200/25 rounded-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.1),transparent_50%)] rounded-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(132,204,22,0.1),transparent_50%)] rounded-3xl" />
+
+          {/* Enhanced jungle foliage */}
           <div className="absolute top-0 left-0 w-full h-full">
-            {Array.from({ length: 8 }, (_, i) => (
+            {Array.from({ length: 12 }, (_, i) => (
               <div
                 key={`leaf-${i}`}
-                className="absolute text-jungle-light opacity-20"
+                className="absolute text-emerald-600 opacity-30"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -850,24 +856,56 @@ export default function WordGarden({
                   animationDelay: `${Math.random() * 3}s`,
                 }}
               >
-                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway" />
+                <Leaf className="w-5 h-5 md:w-7 md:h-7 animate-jungle-sway drop-shadow-md text-green-600" />
+              </div>
+            ))}
+            {/* Add some jungle vines */}
+            {Array.from({ length: 6 }, (_, i) => (
+              <div
+                key={`vine-${i}`}
+                className="absolute text-green-500 opacity-25"
+                style={{
+                  left: `${15 + i * 15}%`,
+                  top: `${Math.random() * 20}%`,
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              >
+                <span className="text-xl animate-jungle-sway">🌿</span>
               </div>
             ))}
           </div>
 
-          {/* Jungle atmosphere sparkles */}
+          {/* Enhanced jungle atmosphere */}
           <div className="absolute inset-0">
-            {Array.from({ length: 12 }, (_, i) => (
+            {Array.from({ length: 15 }, (_, i) => (
               <div
                 key={`sparkle-${i}`}
-                className="absolute text-sunshine-light opacity-30"
+                className="absolute text-amber-400 opacity-60"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
                   animationDelay: `${Math.random() * 4}s`,
                 }}
               >
-                <span className="text-xs animate-jungle-sparkle">✨</span>
+                <span className="text-sm animate-jungle-sparkle drop-shadow-md">
+                  ✨
+                </span>
+              </div>
+            ))}
+            {/* Jungle creatures */}
+            {Array.from({ length: 4 }, (_, i) => (
+              <div
+                key={`creature-${i}`}
+                className="absolute opacity-20"
+                style={{
+                  left: `${25 + i * 20}%`,
+                  top: `${80 + Math.sin(i) * 10}%`,
+                  animationDelay: `${i * 1.5}s`,
+                }}
+              >
+                <span className="text-lg animate-jungle-float">
+                  {["🦋", "🐛", "🦜", "🐸"][i]}
+                </span>
               </div>
             ))}
           </div>
@@ -1208,10 +1246,13 @@ export default function WordGarden({
         </div>
       </div>
 
-      {/* Jungle Adventure Progress Trail */}
+      {/* Immersive Jungle Adventure Progress Trail */}
       <div className="mt-8 relative mb-12">
-        {/* Jungle path background */}
-        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 rounded-2xl border border-gray-200" />
+        {/* Rich jungle path background */}
+        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-emerald-200/80 via-green-100/90 to-lime-200/80 rounded-2xl border-2 border-emerald-300/60 shadow-lg" />
+        {/* Jungle path texture overlay */}
+        <div className="absolute inset-0 -mx-2 h-24 bg-[radial-gradient(circle_at_25%_50%,rgba(34,197,94,0.15),transparent_40%)] rounded-2xl" />
+        <div className="absolute inset-0 -mx-2 h-24 bg-[radial-gradient(circle_at_75%_50%,rgba(132,204,22,0.15),transparent_40%)] rounded-2xl" />
 
         <div className="relative grid grid-cols-5 gap-2 p-2">
           {gardenStages.map((stage, idx) => {
@@ -1288,8 +1329,9 @@ export default function WordGarden({
           })}
         </div>
 
-        {/* Jungle path connecting trail */}
-        <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-jungle-dark/40 via-jungle-DEFAULT/60 to-jungle-dark/40 rounded-full -translate-y-1/2 -z-10" />
+        {/* Enhanced jungle path connecting trail */}
+        <div className="absolute top-1/2 left-2 right-2 h-2 bg-gradient-to-r from-emerald-600/70 via-green-500/80 to-lime-600/70 rounded-full -translate-y-1/2 -z-10 shadow-md" />
+        <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400 rounded-full -translate-y-1/2 -z-10" />
 
         {/* Adventure progress indicators - repositioned to be visible */}
         <div className="flex justify-between text-xs text-gray-600 mt-4 px-2">
@@ -1391,43 +1433,54 @@ export default function WordGarden({
         }}
       />
 
-      {/* Enhanced Jungle Exit Confirmation Dialog - Mobile Optimized */}
+      {/* Enhanced Jungle Exit Confirmation Dialog - Overflow Prevention */}
       <Dialog open={showExitDialog} onOpenChange={onCloseExitDialog}>
-        <DialogContent className="sm:max-w-xs max-w-[90vw] p-4">
-          <DialogHeader className="text-center pb-2">
-            <div className="text-4xl mb-1">🐒</div>
-            <DialogTitle className="text-lg font-bold text-jungle-dark">
+        <DialogContent className="sm:max-w-sm max-w-[95vw] max-h-[90vh] overflow-y-auto p-3 sm:p-4 mx-2 my-4">
+          <DialogHeader className="text-center pb-2 space-y-2">
+            <div className="text-3xl sm:text-4xl mb-1 animate-bounce">🐒</div>
+            <DialogTitle className="text-base sm:text-lg font-bold text-jungle-dark leading-tight">
               Leave jungle adventure?
             </DialogTitle>
-            <DialogDescription className="text-sm text-jungle-DEFAULT">
+            <DialogDescription className="text-xs sm:text-sm text-jungle-DEFAULT leading-relaxed px-2">
               The monkey needs your help to find more treasures!
             </DialogDescription>
           </DialogHeader>
 
-          {/* Compact Jungle Progress Summary */}
-          <div className="bg-gradient-to-r from-jungle-light/20 via-jungle-DEFAULT/10 to-jungle-light/20 rounded-lg p-3 border border-jungle-light/30 my-3 backdrop-blur-sm">
-            <div className="flex items-center justify-between text-sm">
-              <div className="text-jungle-dark">
-                <span className="font-medium">🏆 {correctCount}</span>
-                <span className="text-xs ml-1">treasures</span>
+          {/* Responsive Jungle Progress Summary */}
+          <div className="bg-gradient-to-r from-emerald-100/80 via-green-50/90 to-lime-100/80 rounded-lg p-2 sm:p-3 border border-emerald-300/50 my-2 sm:my-3 backdrop-blur-sm">
+            <div className="grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
+              <div className="text-emerald-700">
+                <div className="text-base sm:text-lg">🏆</div>
+                <div className="font-medium">{correctCount}</div>
+                <div className="text-[10px] sm:text-xs opacity-80">
+                  treasures
+                </div>
               </div>
-              <div className="text-jungle-DEFAULT">
-                <span className="font-medium">🔥 {bestStreak}</span>
-                <span className="text-xs ml-1">streak</span>
+              <div className="text-emerald-600">
+                <div className="text-base sm:text-lg">🔥</div>
+                <div className="font-medium">{bestStreak}</div>
+                <div className="text-[10px] sm:text-xs opacity-80">streak</div>
               </div>
-              <div className="text-jungle-DEFAULT text-xs">
-                🗺️ {roundIdx + 1}/{pool.length}
+              <div className="text-emerald-600">
+                <div className="text-base sm:text-lg">🗺️</div>
+                <div className="font-medium">
+                  {roundIdx + 1}/{pool.length}
+                </div>
+                <div className="text-[10px] sm:text-xs opacity-80">
+                  progress
+                </div>
               </div>
             </div>
           </div>
 
-          <DialogFooter className="flex gap-2 pt-2">
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 pt-2 space-y-0">
             <Button
               variant="outline"
               onClick={() => onCloseExitDialog?.()}
-              className="flex-1 bg-jungle-light/20 hover:bg-jungle-light/30 text-jungle-dark border-jungle-light/50 text-sm py-2 backdrop-blur-sm"
+              className="flex-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-300 hover:border-emerald-400 text-xs sm:text-sm py-2.5 sm:py-2 transition-all duration-200 font-medium min-h-[40px]"
             >
-              🐒 Continue Adventure
+              <span className="mr-1.5">🐒</span>
+              Continue Adventure
             </Button>
             <Button
               variant="destructive"
@@ -1435,9 +1488,10 @@ export default function WordGarden({
                 onCloseExitDialog?.();
                 onExit?.();
               }}
-              className="flex-1 bg-coral-red hover:bg-coral-red/90 text-white text-sm py-2"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm py-2.5 sm:py-2 transition-all duration-200 font-medium min-h-[40px]"
             >
-              <Home className="w-4 h-4 mr-1" /> Exit Jungle
+              <Home className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+              Exit Jungle
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1454,7 +1508,9 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 ${className}`}>
+    <div
+      className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-emerald-100 via-green-50 to-lime-100 rounded-2xl border-2 border-emerald-300 shadow-2xl ${className}`}
+    >
       {children}
     </div>
   );
