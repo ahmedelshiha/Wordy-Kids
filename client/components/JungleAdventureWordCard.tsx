@@ -423,9 +423,7 @@ export const JungleAdventureWordCard: React.FC<
                           key={i}
                           className={cn(
                             "absolute w-2 h-2 text-yellow-300 animate-sparkle opacity-30",
-                            i % 2 === 0
-                              ? "text-green-300"
-                              : "text-yellow-300",
+                            i % 2 === 0 ? "text-green-300" : "text-yellow-300",
                           )}
                           style={{
                             top: `${Math.random() * 100}%`,
@@ -480,7 +478,9 @@ export const JungleAdventureWordCard: React.FC<
               <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-3 py-2 sm:px-4 sm:py-3 mx-auto max-w-[280px] sm:max-w-none animate-gentle-bounce shadow-lg">
                 <p className="text-xs sm:text-sm md:text-base opacity-95 leading-tight font-bold jungle-adventure-hint break-words">
                   <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2 animate-spin-slow" />
-                  <span className="inline-block">Explore the jungle secrets! 🌿✨</span>
+                  <span className="inline-block">
+                    Explore the jungle secrets! 🌿✨
+                  </span>
                 </p>
               </div>
             </div>
