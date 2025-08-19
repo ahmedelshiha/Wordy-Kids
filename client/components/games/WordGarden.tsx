@@ -1396,21 +1396,78 @@ export default function WordGarden({
         </div>
       </div>
 
-      {/* Enhanced styles for confetti, sparkles, and animations */}
+      {/* Enhanced styles for magical jungle effects */}
       <style>{`
         .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
-        
+
         /* Jungle Adventure Shadow Effects */
         .shadow-jungle-success {
           box-shadow: 0 0 20px rgba(76, 175, 80, 0.5), 0 0 40px rgba(139, 195, 74, 0.3);
         }
-        
+
         .shadow-jungle-error {
           box-shadow: 0 0 20px rgba(255, 87, 34, 0.5), 0 0 40px rgba(255, 152, 0, 0.3);
         }
-        
+
         .shadow-jungle-hover {
           box-shadow: 0 0 15px rgba(255, 193, 7, 0.4), 0 0 30px rgba(255, 235, 59, 0.2);
+        }
+
+        /* Magical Jungle Animations */
+        @keyframes sunlight-shimmer {
+          0%, 100% {
+            opacity: 0.2;
+            transform: translateY(0) rotate(var(--rotation));
+          }
+          50% {
+            opacity: 0.4;
+            transform: translateY(-10px) rotate(var(--rotation));
+          }
+        }
+
+        @keyframes firefly-dance {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.6;
+          }
+          25% {
+            transform: translate(20px, -15px) scale(1.2);
+            opacity: 1;
+          }
+          50% {
+            transform: translate(-10px, -25px) scale(0.8);
+            opacity: 0.8;
+          }
+          75% {
+            transform: translate(-20px, 10px) scale(1.1);
+            opacity: 0.9;
+          }
+        }
+
+        @keyframes leaf-drift {
+          0% {
+            transform: translateX(-20px) translateY(-20px) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.7;
+          }
+          90% {
+            opacity: 0.7;
+          }
+          100% {
+            transform: translateX(100vw) translateY(100vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes vine-sway {
+          0%, 100% {
+            transform: translateX(0) skewX(0deg);
+          }
+          50% {
+            transform: translateX(5px) skewX(2deg);
+          }
         }
 
         @keyframes celebrationPulse {
@@ -1443,6 +1500,19 @@ export default function WordGarden({
 
         .sparkle-rotate {
           animation: sparkleRotate 2s ease-in-out infinite;
+        }
+
+        /* Parallax effect for deeper immersion */
+        @keyframes parallax-float {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
+          }
+          33% {
+            transform: translateY(-8px) translateX(3px);
+          }
+          66% {
+            transform: translateY(5px) translateX(-2px);
+          }
         }
       `}</style>
 
