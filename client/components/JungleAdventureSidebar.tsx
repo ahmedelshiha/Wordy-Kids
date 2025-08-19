@@ -503,92 +503,59 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         </div>
       </div>
 
-      {/* Enhanced Registration Call-to-Action Section - Desktop Only */}
+      {/* FIXED BOTTOM Registration Section - Desktop Only - Ultra Compact */}
       <motion.div
         variants={itemVariants}
-        className="hidden lg:block bg-gradient-to-br from-sunshine to-yellow-500 rounded-[20px] p-5 shadow-xl relative overflow-hidden flex-shrink-0 border border-yellow-400/20"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)
-          `
-        }}
+        className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 mt-auto"
       >
-        {/* Enhanced background decoration with animations */}
-        <motion.div
-          className="absolute top-3 right-3 w-6 h-6 lg:w-8 lg:h-8 bg-white/10 rounded-full"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-3 left-3 w-4 h-4 lg:w-6 lg:h-6 bg-white/10 rounded-full"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
-          transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
-        />
+        <div className="relative z-10">
+          {isGuest ? (
+            <>
+              <div className="text-center mb-2">
+                <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
+                  🌟 Join Adventure!
+                </h3>
+                <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
+                  💾 Save • 🏆 Badges • 🔥 Streaks
+                </p>
+              </div>
 
-        <div className="text-center mb-3 lg:mb-4 relative z-10">
-          <motion.h3
-            className="text-navy font-['Baloo_2'] text-[16px] lg:text-[18px] font-bold mb-2 lg:mb-3"
-            animate={hoveredCard ? { scale: 1.05 } : { scale: 1 }}
-          >
-            {isGuest ? "🌟 Start Your Journey!" : "🎉 Welcome Back!"}
-          </motion.h3>
-
-          {isGuest && (
-            <div className="space-y-1 lg:space-y-2 mb-3 lg:mb-4 text-left">
-              {[
-                { icon: "💾", text: "Save progress!" },
-                { icon: "🏆", text: "Earn badges!" },
-                { icon: "🔥", text: "Track streaks!" },
-                { icon: "📊", text: "Parent analytics!" },
-              ].map((item, index) => (
-                <motion.p
-                  key={index}
-                  className="text-navy font-['Baloo_2'] text-[10px] lg:text-[12px] font-medium flex items-center gap-2"
-                  whileHover={{ x: 2, scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  style={{ animationDelay: `${index * 0.1}s` }}
+              <div className="space-y-2">
+                <Button
+                  onClick={handleRegistration}
+                  className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
                 >
-                  <span className="text-xs lg:text-sm flex-shrink-0">{item.icon}</span>
-                  <span className="truncate">{item.text}</span>
-                </motion.p>
-              ))}
-            </div>
+                  🚀 Sign Up
+                </Button>
+
+                <button
+                  onClick={handleContinueAsGuest}
+                  className="w-full text-center text-navy/70 font-['Baloo_2'] text-[10px] font-medium underline hover:no-underline transition-all duration-200"
+                >
+                  Continue as Guest
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-center mb-2">
+                <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold mb-1">
+                  🎉 Welcome Back!
+                </h3>
+                <p className="text-navy/80 font-['Baloo_2'] text-[10px] mb-2">
+                  Keep exploring and learning!
+                </p>
+              </div>
+
+              <Button
+                onClick={handleLogout}
+                className="w-full bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white font-['Baloo_2'] text-[12px] font-bold px-4 py-2 rounded-[14px] shadow-md transition-all duration-200"
+              >
+                👋 Logout
+              </Button>
+            </>
           )}
         </div>
-
-        <motion.div
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          transition={{ duration: 0.2, type: "spring", stiffness: 400 }}
-        >
-          <Button
-            onClick={isGuest ? handleRegistration : handleLogout}
-            className={cn(
-              "w-full rounded-[20px] lg:rounded-[24px] px-4 lg:px-6 py-2 lg:py-3 font-['Baloo_2'] text-[12px] lg:text-[14px] font-bold text-white",
-              "transition-all duration-300 shadow-xl hover:shadow-2xl border border-white/20",
-              "transform hover:-translate-y-0.5 active:translate-y-0",
-              isGuest
-                ? "bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle"
-                : "bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700",
-            )}
-          >
-            {isGuest ? "🚀 Create Account!" : "👋 See You Later!"}
-          </Button>
-        </motion.div>
-
-        {isGuest && (
-          <motion.p
-            className="text-center text-navy font-['Baloo_2'] text-[10px] lg:text-[12px] font-medium mt-2 lg:mt-3 underline cursor-pointer hover:no-underline transition-all duration-200"
-            onClick={handleContinueAsGuest}
-            whileHover={{ scale: 1.05, y: -1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Continue as Guest
-          </motion.p>
-        )}
       </motion.div>
 
       {/* MOBILE LAYOUT - Only visible on small screens */}
