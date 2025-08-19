@@ -211,26 +211,26 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           variants={itemVariants}
           initial="initial"
           whileHover="hover"
-          className="bg-white rounded-[16px] p-4 shadow-md flex items-center group cursor-pointer"
+          className="bg-white rounded-[14px] p-3 shadow-md flex items-center group cursor-pointer flex-shrink-0"
           style={cardHoverVariants.initial}
           whileHover={cardHoverVariants.hover}
         >
-          <MonkeyIcon />
-          <div className="flex-1 ml-3">
-            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-semibold">
+          <MonkeyIcon className="w-8 h-8" />
+          <div className="flex-1 ml-3 min-w-0">
+            <h3 className="text-navy font-['Baloo_2'] text-[14px] font-semibold truncate">
               Animals
             </h3>
-            <p className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium">
-              {stats?.animalsLearned || 8} animals discovered
+            <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium truncate">
+              {userData.stats.animalsLearned} animals discovered
             </p>
           </div>
           <motion.div
-            className="w-8 h-8 bg-playful-purple rounded-full flex items-center justify-center shadow-md"
+            className="w-7 h-7 bg-playful-purple rounded-full flex items-center justify-center shadow-md flex-shrink-0"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-white font-['Baloo_2'] text-[14px] font-bold">
-              {stats?.animalsLearned || 8}
+            <span className="text-white font-['Baloo_2'] text-[11px] font-bold">
+              {userData.stats.animalsLearned}
             </span>
           </motion.div>
         </motion.div>
