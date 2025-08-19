@@ -800,8 +800,8 @@ export function ChildFriendlyCategorySelector({
                   {hoveredCategory === category.id &&
                     selectedCategory !== category.id && (
                       <div className="flex items-center justify-center">
-                        <Badge className="bg-educational-purple/20 text-educational-purple border border-educational-purple/30 animate-pulse text-xs px-2 py-1">
-                          🎯 Tap to explore!
+                        <Badge className="bg-jungle/10 text-jungle border border-jungle/30 animate-pulse text-xs px-2 py-1 shadow-md">
+                          🌿 Tap to explore!
                         </Badge>
                       </div>
                     )}
