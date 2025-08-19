@@ -207,8 +207,8 @@ export function WordLearnedParticles({ trigger }: { trigger: boolean }) {
     <MagicalParticles
       trigger={trigger}
       type="sparkles"
-      intensity="medium"
-      duration={2000}
+      intensity="low"
+      duration={1200}
     />
   );
 }
