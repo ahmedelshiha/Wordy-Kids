@@ -65,18 +65,18 @@
 
   /* Optimize quiz cards grid for desktop */
   .jungle-quiz-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    max-width: 1000px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
   /* Compact quiz cards for desktop */
   .jungle-quiz-card {
-    padding: 1rem;
-    border-radius: 16px;
-    min-height: 280px;
-    max-height: 340px;
+    padding: 0.75rem;
+    border-radius: 12px;
+    min-height: 240px;
+    max-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -93,36 +93,36 @@
   }
 
   .jungle-quiz-card-icon {
-    font-size: 3rem;
-    margin-bottom: 0.75rem;
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
   }
 
   .jungle-quiz-card-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.6rem;
-    line-height: 1.3;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
   }
 
   .jungle-quiz-card-description {
-    font-size: 0.82rem;
-    margin-bottom: 0.75rem;
-    line-height: 1.4;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
     flex-grow: 1;
   }
 
   .jungle-quiz-card-badges {
-    margin-bottom: 1rem;
-    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+    gap: 0.3rem;
   }
 
   .jungle-quiz-badge {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.6rem;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
   }
 
   .jungle-quiz-button {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
     border-radius: 12px;
     display: flex;
     align-items: center;
