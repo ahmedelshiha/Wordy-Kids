@@ -834,81 +834,122 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-green-50/95 via-emerald-25/95 to-lime-50/95 text-gray-800 border-2 border-emerald-400/60 backdrop-blur-sm">
-        {/* Enhanced Jungle Background Effects */}
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 text-white border-2 border-emerald-500/40 backdrop-blur-sm overflow-hidden">
+        {/* Magical Jungle Background - Deep emerald-to-moss gradient */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-          {/* Background jungle gradient overlay */}
-          {/* Rich jungle atmosphere overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/30 via-green-100/20 to-lime-200/25 rounded-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.1),transparent_50%)] rounded-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(132,204,22,0.1),transparent_50%)] rounded-3xl" />
+          {/* Main jungle gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-700 to-green-800 rounded-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-t from-green-900/80 via-emerald-800/40 to-blue-green-600/30 rounded-3xl" />
 
-          {/* Enhanced jungle foliage */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            {Array.from({ length: 12 }, (_, i) => (
+          {/* Misty blue-green horizon */}
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-teal-600/40 via-emerald-600/20 to-transparent rounded-t-3xl" />
+          <div className="absolute top-0 left-0 right-0 h-48 bg-[radial-gradient(ellipse_at_top,rgba(52,211,153,0.3),transparent_70%)] rounded-t-3xl" />
+
+          {/* Golden sunlight rays through leaves */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 8 }, (_, i) => (
               <div
-                key={`leaf-${i}`}
-                className="absolute text-emerald-600 opacity-30"
+                key={`sunray-${i}`}
+                className="absolute opacity-20"
+                style={{
+                  left: `${10 + i * 12}%`,
+                  top: `-10%`,
+                  width: "2px",
+                  height: "120%",
+                  background:
+                    "linear-gradient(to bottom, rgba(255, 215, 0, 0.6), rgba(255, 235, 59, 0.3), transparent)",
+                  transform: `rotate(${-20 + i * 5}deg)`,
+                  animation: `sunlight-shimmer ${4 + Math.random() * 2}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Dark leafy silhouettes in foreground */}
+          <div className="absolute bottom-0 left-0 right-0 h-40">
+            {Array.from({ length: 15 }, (_, i) => (
+              <div
+                key={`silhouette-${i}`}
+                className="absolute text-black/60"
                 style={{
                   left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  fontSize: `${0.8 + Math.random() * 0.4}rem`,
+                  bottom: `${Math.random() * 30}%`,
+                  fontSize: `${1.5 + Math.random() * 1}rem`,
+                  transform: `rotate(${-30 + Math.random() * 60}deg)`,
                   animationDelay: `${Math.random() * 3}s`,
                 }}
               >
-                <Leaf className="w-5 h-5 md:w-7 md:h-7 animate-jungle-sway drop-shadow-md text-green-600" />
-              </div>
-            ))}
-            {/* Add some jungle vines */}
-            {Array.from({ length: 6 }, (_, i) => (
-              <div
-                key={`vine-${i}`}
-                className="absolute text-green-500 opacity-25"
-                style={{
-                  left: `${15 + i * 15}%`,
-                  top: `${Math.random() * 20}%`,
-                  animationDelay: `${i * 0.5}s`,
-                }}
-              >
-                <span className="text-xl animate-jungle-sway">🌿</span>
+                <span className="animate-jungle-sway drop-shadow-lg">
+                  {["🌿", "🍃", "🌱", "🌾"][Math.floor(Math.random() * 4)]}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Enhanced jungle atmosphere */}
+          {/* Jungle vines as dark silhouettes */}
           <div className="absolute inset-0">
-            {Array.from({ length: 15 }, (_, i) => (
+            {Array.from({ length: 8 }, (_, i) => (
               <div
-                key={`sparkle-${i}`}
-                className="absolute text-amber-400 opacity-60"
+                key={`vine-silhouette-${i}`}
+                className="absolute opacity-40"
+                style={{
+                  left: `${i * 12.5}%`,
+                  top: "0%",
+                  width: "3px",
+                  height: "100%",
+                  background:
+                    "linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.8), rgba(0, 60, 30, 0.6))",
+                  animation: `vine-sway ${3 + Math.random() * 2}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.3}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Magical fireflies */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 12 }, (_, i) => (
+              <div
+                key={`firefly-${i}`}
+                className="absolute w-2 h-2 rounded-full opacity-80"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
+                  background:
+                    "radial-gradient(circle, rgba(255, 255, 0, 0.9), rgba(255, 215, 0, 0.4))",
+                  boxShadow: "0 0 8px rgba(255, 255, 0, 0.6)",
+                  animation: `firefly-dance ${4 + Math.random() * 3}s ease-in-out infinite`,
                   animationDelay: `${Math.random() * 4}s`,
                 }}
-              >
-                <span className="text-sm animate-jungle-sparkle drop-shadow-md">
-                  ✨
-                </span>
-              </div>
+              />
             ))}
-            {/* Jungle creatures */}
-            {Array.from({ length: 4 }, (_, i) => (
+          </div>
+
+          {/* Drifting leaves with parallax */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 20 }, (_, i) => (
               <div
-                key={`creature-${i}`}
-                className="absolute opacity-20"
+                key={`drifting-leaf-${i}`}
+                className="absolute text-emerald-400/70"
                 style={{
-                  left: `${25 + i * 20}%`,
-                  top: `${80 + Math.sin(i) * 10}%`,
-                  animationDelay: `${i * 1.5}s`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  fontSize: `${0.6 + Math.random() * 0.8}rem`,
+                  animation: `leaf-drift ${8 + Math.random() * 4}s linear infinite`,
+                  animationDelay: `${Math.random() * 8}s`,
                 }}
               >
-                <span className="text-lg animate-jungle-float">
-                  {["🦋", "🐛", "🦜", "🐸"][i]}
+                <span className="drop-shadow-md">
+                  {["🍃", "🌿", "🍂"][Math.floor(Math.random() * 3)]}
                 </span>
               </div>
             ))}
           </div>
+
+          {/* Soft ambient glow overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-green-600/10 rounded-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_60%,rgba(34,197,94,0.15),transparent_60%)] rounded-3xl" />
         </div>
 
         {/* Jungle Adventure Top Bar */}
@@ -973,14 +1014,14 @@ export default function WordGarden({
               </div>
             </div>
             <div className="leading-tight">
-              <div className="text-xs uppercase tracking-wider text-sunshine-dark font-bold mb-1 flex items-center gap-1">
+              <div className="text-xs uppercase tracking-wider text-yellow-300 font-bold mb-1 flex items-center gap-1">
                 <Compass className="w-3 h-3" />
                 Jungle Word Quest
               </div>
-              <div className="font-bold text-lg md:text-xl text-gray-800">
+              <div className="font-bold text-lg md:text-xl text-white drop-shadow-md">
                 Listen & find the treasure! 🗺️
               </div>
-              <div className="text-xs text-gray-600 mt-1 opacity-90">
+              <div className="text-xs text-emerald-200 mt-1 opacity-90">
                 Help the monkey collect jungle words
               </div>
             </div>
@@ -1187,11 +1228,11 @@ export default function WordGarden({
         {/* Jungle Adventure XP + Streak */}
         <div className="mt-6 relative z-10 mb-8">
           <div className="text-sm flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2 text-sunshine-dark">
+            <div className="flex items-center gap-2 text-yellow-300">
               <Mountain className="w-4 h-4" />
               <span className="font-semibold">Jungle XP</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex items-center gap-2 text-emerald-200">
               <span className="animate-pulse">🔥</span>
               <span className="font-semibold">Adventure Streak: {streak}</span>
             </div>
@@ -1215,32 +1256,65 @@ export default function WordGarden({
               </div>
             </div>
 
-            {/* Jungle adventure level indicators - repositioned to avoid overflow */}
-            <div className="flex justify-between text-xs text-gray-600 mt-3 px-1">
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
+            {/* Enhanced Jungle adventure level indicators with better visibility */}
+            <div className="flex justify-between mt-4 px-2 gap-1">
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                  xpPct >= 25
+                    ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">🌱</span>
-                <span className="text-xs">Sprout</span>
-              </span>
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
+                <span className="text-xl drop-shadow-lg">🌱</span>
+                <span className="text-xs font-bold drop-shadow-md">Sprout</span>
+                {xpPct >= 25 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                )}
+              </div>
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                  xpPct >= 50
+                    ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">🌿</span>
-                <span className="text-xs">Explorer</span>
-              </span>
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
+                <span className="text-xl drop-shadow-lg">🌿</span>
+                <span className="text-xs font-bold drop-shadow-md">
+                  Explorer
+                </span>
+                {xpPct >= 50 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                )}
+              </div>
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                  xpPct >= 75
+                    ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">🌳</span>
-                <span className="text-xs">Ranger</span>
-              </span>
-              <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
+                <span className="text-xl drop-shadow-lg">🌳</span>
+                <span className="text-xs font-bold drop-shadow-md">Ranger</span>
+                {xpPct >= 75 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                )}
+              </div>
+              <div
+                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 relative ${
+                  xpPct >= 100
+                    ? "bg-gradient-to-b from-yellow-400/30 to-yellow-500/40 border-yellow-300/80 text-yellow-100 shadow-xl transform scale-110 animate-pulse"
+                    : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
+                }`}
               >
-                <span className="text-base">👑</span>
-                <span className="text-xs">Legend</span>
-              </span>
+                <span className="text-xl drop-shadow-lg">👑</span>
+                <span className="text-xs font-bold drop-shadow-md">Legend</span>
+                {xpPct >= 100 && (
+                  <>
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 via-transparent to-yellow-600/20 rounded-xl animate-pulse"></div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -1333,46 +1407,113 @@ export default function WordGarden({
         <div className="absolute top-1/2 left-2 right-2 h-2 bg-gradient-to-r from-emerald-600/70 via-green-500/80 to-lime-600/70 rounded-full -translate-y-1/2 -z-10 shadow-md" />
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400 rounded-full -translate-y-1/2 -z-10" />
 
-        {/* Adventure progress indicators - repositioned to be visible */}
-        <div className="flex justify-between text-xs text-gray-600 mt-4 px-2">
-          <div className="text-center flex flex-col items-center">
-            <span className="block text-base mb-1">🚀</span>
-            <span className="text-xs font-medium">Start</span>
+        {/* Enhanced Adventure progress indicators with better visibility */}
+        <div className="flex justify-between mt-6 px-3 gap-1">
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-lg mb-1 drop-shadow-lg">🚀</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Start
+            </span>
           </div>
-          <div className="text-center flex flex-col items-center">
-            <span className="block text-base mb-1">🌿</span>
-            <span className="text-xs font-medium">Jungle</span>
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-lg mb-1 drop-shadow-lg">🌿</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Jungle
+            </span>
           </div>
-          <div className="text-center flex flex-col items-center">
-            <span className="block text-base mb-1">🏔️</span>
-            <span className="text-xs font-medium">Peak</span>
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-lg mb-1 drop-shadow-lg">🏔️</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Peak
+            </span>
           </div>
-          <div className="text-center flex flex-col items-center">
-            <span className="block text-base mb-1">🏆</span>
-            <span className="text-xs font-medium">Victory</span>
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-lg mb-1 drop-shadow-lg">🏆</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Victory
+            </span>
           </div>
-          <div className="text-center flex flex-col items-center">
-            <span className="block text-base mb-1">👑</span>
-            <span className="text-xs font-medium">Legend</span>
+          <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
+            <span className="block text-lg mb-1 drop-shadow-lg">👑</span>
+            <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
+              Legend
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Enhanced styles for confetti, sparkles, and animations */}
+      {/* Enhanced styles for magical jungle effects */}
       <style>{`
         .wg-confetti{position:absolute;top:60%;border-radius:9999px;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset}
-        
+
         /* Jungle Adventure Shadow Effects */
         .shadow-jungle-success {
           box-shadow: 0 0 20px rgba(76, 175, 80, 0.5), 0 0 40px rgba(139, 195, 74, 0.3);
         }
-        
+
         .shadow-jungle-error {
           box-shadow: 0 0 20px rgba(255, 87, 34, 0.5), 0 0 40px rgba(255, 152, 0, 0.3);
         }
-        
+
         .shadow-jungle-hover {
           box-shadow: 0 0 15px rgba(255, 193, 7, 0.4), 0 0 30px rgba(255, 235, 59, 0.2);
+        }
+
+        /* Magical Jungle Animations */
+        @keyframes sunlight-shimmer {
+          0%, 100% {
+            opacity: 0.2;
+            transform: translateY(0) rotate(var(--rotation));
+          }
+          50% {
+            opacity: 0.4;
+            transform: translateY(-10px) rotate(var(--rotation));
+          }
+        }
+
+        @keyframes firefly-dance {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.6;
+          }
+          25% {
+            transform: translate(20px, -15px) scale(1.2);
+            opacity: 1;
+          }
+          50% {
+            transform: translate(-10px, -25px) scale(0.8);
+            opacity: 0.8;
+          }
+          75% {
+            transform: translate(-20px, 10px) scale(1.1);
+            opacity: 0.9;
+          }
+        }
+
+        @keyframes leaf-drift {
+          0% {
+            transform: translateX(-20px) translateY(-20px) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.7;
+          }
+          90% {
+            opacity: 0.7;
+          }
+          100% {
+            transform: translateX(100vw) translateY(100vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
+        @keyframes vine-sway {
+          0%, 100% {
+            transform: translateX(0) skewX(0deg);
+          }
+          50% {
+            transform: translateX(5px) skewX(2deg);
+          }
         }
 
         @keyframes celebrationPulse {
@@ -1405,6 +1546,19 @@ export default function WordGarden({
 
         .sparkle-rotate {
           animation: sparkleRotate 2s ease-in-out infinite;
+        }
+
+        /* Parallax effect for deeper immersion */
+        @keyframes parallax-float {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
+          }
+          33% {
+            transform: translateY(-8px) translateX(3px);
+          }
+          66% {
+            transform: translateY(5px) translateX(-2px);
+          }
         }
       `}</style>
 
