@@ -411,7 +411,7 @@ export const JungleAdventureWordCard: React.FC<
                   <div className="absolute inset-2 rounded-full border border-yellow-400/30 animate-pulse delay-500"></div>
 
                   {/* Main Emoji with Jungle Glow */}
-                  <span className="text-7xl sm:text-8xl md:text-9xl relative z-10 drop-shadow-2xl jungle-adventure-emoji animate-gentle-bounce filter-glow">
+                  <span className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl relative z-10 drop-shadow-2xl jungle-adventure-emoji animate-gentle-bounce filter-glow">
                     {word.emoji || "🌿"}
                   </span>
 
