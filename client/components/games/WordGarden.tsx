@@ -184,7 +184,7 @@ const PLANT_TYPES = [
   ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
   ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
-  ["���", "🍂", "🍁"], // autumn leaves - brown to red maple
+  ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
   ["🌱", "🌴", "🥥"], // palm coconut - palm tree to coconut
   ["🌱", "🌵", "🌵"], // growing cactus - small to big cactus
 ] as const;
@@ -1225,11 +1225,11 @@ export default function WordGarden({
         {/* Jungle Adventure XP + Streak */}
         <div className="mt-6 relative z-10 mb-8">
           <div className="text-sm flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2 text-sunshine-dark">
+            <div className="flex items-center gap-2 text-yellow-300">
               <Mountain className="w-4 h-4" />
               <span className="font-semibold">Jungle XP</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex items-center gap-2 text-emerald-200">
               <span className="animate-pulse">🔥</span>
               <span className="font-semibold">Adventure Streak: {streak}</span>
             </div>
