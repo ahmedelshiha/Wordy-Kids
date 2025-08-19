@@ -95,6 +95,12 @@ export default {
         navy: {
           DEFAULT: "hsl(var(--dark-navy))", // #1A237E
         },
+        // New Jungle Adventure Colors
+        "profile-purple": "hsl(var(--profile-purple))", // #6366F1
+        "bright-orange": "hsl(var(--bright-orange))", // #FF9800
+        "playful-purple": "hsl(var(--playful-purple))", // #9C27B0
+        "coral-red": "hsl(var(--coral-red))", // #FF5722
+        "light-background": "hsl(var(--light-background))", // #F8F9FA
       },
       borderRadius: {
         lg: "var(--radius)",

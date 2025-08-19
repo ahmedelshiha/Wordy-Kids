@@ -25,7 +25,6 @@ import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
-import { StreakSideCard } from "@/components/StreakSideCard";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
@@ -139,7 +138,7 @@ import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { AIWordRecommendationService } from "@/lib/aiWordRecommendationService";
 import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
-import { ChildProfileSidebar } from "@/components/ChildProfileSidebar";
+import { JungleAdventureSidebar } from "@/components/JungleAdventureSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
 import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
@@ -2070,21 +2069,11 @@ export default function Index({ initialProfile }: IndexProps) {
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <div className="sticky top-6">
-                            <Card className="bg-card text-card-foreground shadow-sm backdrop-blur-sm ring-1 ring-black/5">
-                              <ChildProfileSidebar
-                                profile={currentProfile}
-                                stats={enhancedChildStats}
-                                isCollapsed={isSidebarCollapsed}
-                                onToggleCollapse={handleSidebarToggle}
-                                onProfileEdit={handleProfileEdit}
-                                onQuickAction={handleQuickAction}
-                                onLogout={handleSidebarLogout}
-                                showTimeOfDay={true}
-                                showWeeklyProgress={true}
-                                position="left"
-                                className="border-none shadow-none bg-transparent"
-                              />
-                            </Card>
+                            <JungleAdventureSidebar
+                              profile={currentProfile}
+                              stats={enhancedChildStats}
+                              className="border-none shadow-none"
+                            />
                           </div>
                         </div>
 
@@ -2992,7 +2981,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                           <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                            🎵🔊 Audio!
+                                            ����🔊 Audio!
                                           </span>
                                         </div>
                                         <Button
@@ -3036,7 +3025,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           size="sm"
                                         >
                                           <Play className="w-3 h-3 md:w-4 md:h-4 mr-1" />
-                                          Let's Play! ���
+                                          Let's Play! ����
                                         </Button>
                                       </CardContent>
                                     </Card>
@@ -3374,21 +3363,6 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
                           </Tabs>
                         </div>
-
-                        {/* Streak Side Card - Desktop Only */}
-                        <div className="hidden lg:block w-80 flex-shrink-0">
-                          <StreakSideCard
-                            progressData={{
-                              wordsLearned: rememberedWords.size,
-                              currentStreak: learningStats?.currentStreak || 0,
-                              totalPoints: learningStats?.totalPoints || 0,
-                              level: learningStats?.level || 1,
-                            }}
-                            onDismiss={() => {
-                              console.log("Side card dismissed");
-                            }}
-                          />
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -3505,7 +3479,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["���", "���", "⭐", "💫", "🔮", "🌈", "🦄", "🎉"]}
+            particleEmojis={["���", "���", "⭐", "💫", "🔮", "���", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
