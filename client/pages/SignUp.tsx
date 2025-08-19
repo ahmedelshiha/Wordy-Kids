@@ -3,13 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  ArrowLeft,
-  Eye,
-  EyeOff,
-  AlertCircle,
-  CheckCircle,
-} from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -327,7 +321,7 @@ export default function SignUp() {
         >
           🌿
         </motion.div>
-        
+
         {/* Additional jungle elements */}
         <motion.div
           className="absolute top-1/3 left-5 text-2xl md:text-4xl"
@@ -476,7 +470,10 @@ export default function SignUp() {
                       onChange={(e) => {
                         if (e.target.value) {
                           const date = new Date(e.target.value);
-                          const day = date.getDate().toString().padStart(2, "0");
+                          const day = date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0");
                           const month = (date.getMonth() + 1)
                             .toString()
                             .padStart(2, "0");
@@ -559,7 +556,11 @@ export default function SignUp() {
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
                       disabled={isLoading}
                     >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
                     </button>
                   </div>
                 </motion.div>
@@ -591,11 +592,17 @@ export default function SignUp() {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
                       disabled={isLoading}
                     >
-                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showConfirmPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
                     </button>
                   </div>
                 </motion.div>
