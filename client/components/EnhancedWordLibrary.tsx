@@ -707,10 +707,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
             {wordViewMode === "grid" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredWords.map((word) => (
-                  <EnhancedWordCard
+                  <JungleAdventureWordCard
                     key={word.id}
                     word={word}
-                    onFavorite={() => handleWordFavorite(word)}
                     onWordMastered={(wordId, rating) => {
                       // Track word completion
                       CategoryCompletionTracker.trackWordReview(
@@ -720,9 +719,10 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                       CategoryCompletionTracker.trackTimeSpent(0.5); // 30 seconds per word
                     }}
                     showVocabularyBuilder={true}
-                    enableSwipeGestures={isMobile}
-                    showAccessibilityFeatures={accessibilityMode}
                     className={`${reducedMotion ? "" : "animate-mobile-slide-in"}`}
+                    adventureLevel={Math.floor(Math.random() * 10) + 1}
+                    explorerBadges={["jungle-explorer", "word-master"]}
+                    isJungleQuest={true}
                   />
                 ))}
               </div>
@@ -829,9 +829,8 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
               // Carousel view
               <div className="max-w-2xl mx-auto">
                 {currentWord && (
-                  <EnhancedWordCard
+                  <JungleAdventureWordCard
                     word={currentWord}
-                    onFavorite={() => handleWordFavorite(currentWord)}
                     onWordMastered={(wordId, rating) => {
                       // Track word completion
                       CategoryCompletionTracker.trackWordReview(
@@ -841,8 +840,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                       CategoryCompletionTracker.trackTimeSpent(0.5); // 30 seconds per word
                     }}
                     showVocabularyBuilder={true}
-                    enableSwipeGestures={isMobile}
-                    showAccessibilityFeatures={accessibilityMode}
+                    adventureLevel={Math.floor(Math.random() * 10) + 1}
+                    explorerBadges={["jungle-explorer", "word-master"]}
+                    isJungleQuest={true}
                   />
                 )}
 
