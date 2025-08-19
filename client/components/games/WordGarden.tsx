@@ -172,7 +172,7 @@ const PLANT_TYPES = [
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
-  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
+  ["🌱", "🌳", "���"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-white text-gray-800 border-2 border-gray-200">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/5 to-sunshine-light/5 text-gray-800 border-2 border-gray-200">
         {/* Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Animated jungle leaves */}
