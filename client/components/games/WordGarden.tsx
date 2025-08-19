@@ -1207,7 +1207,7 @@ export default function WordGarden({
       {/* Jungle Adventure Progress Trail */}
       <div className="mt-8 relative">
         {/* Jungle path background */}
-        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-jungle-dark/20 via-jungle-DEFAULT/10 to-jungle-dark/20 rounded-2xl border border-jungle-light/20 backdrop-blur-sm" />
+        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 rounded-2xl border border-gray-200" />
 
         <div className="relative grid grid-cols-5 gap-2 p-2">
           {gardenStages.map((stage, idx) => {
