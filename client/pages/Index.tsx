@@ -3041,10 +3041,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         🌟 Jungle Quiz Adventure! 🌟
                                       </h2>
                                       <p className="jungle-quiz-subtitle">
-                                        Embark on an epic word journey through
-                                        the mystical jungle! Discover treasures,
-                                        meet friendly creatures, and test your
-                                        vocabulary skills! 🏆✨
+                                        Test your vocabulary in the jungle! 🏆✨
                                       </p>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
