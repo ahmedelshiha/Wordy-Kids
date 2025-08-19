@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-DEFAULT/30 via-jungle-light/20 to-sunshine-DEFAULT/25 text-gray-800 border-2 border-jungle-DEFAULT/50 backdrop-blur-sm">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-DEFAULT via-jungle-light to-light-background text-gray-800 border-2 border-jungle-DEFAULT backdrop-blur-sm">
         {/* Enhanced Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Background jungle gradient overlay */}
@@ -1457,7 +1457,7 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-jungle-DEFAULT/40 via-jungle-light/25 to-sunshine-DEFAULT/20 rounded-2xl border border-jungle-DEFAULT/30 shadow-lg ${className}`}>
+    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-jungle-dark via-jungle-DEFAULT to-jungle-light rounded-2xl border border-jungle-DEFAULT shadow-lg ${className}`}>
       {children}
     </div>
   );
