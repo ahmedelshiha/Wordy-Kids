@@ -245,9 +245,7 @@ export const AdventureDashboard: React.FC<AdventureDashboardProps> = ({
   }
 
   return (
-    <div
-      className="min-h-screen bg-responsive-dashboard"
-    >
+    <div className="min-h-screen bg-responsive-dashboard">
       <div className="max-w-7xl mx-auto space-y-6 p-4">
         {/* Header */}
         <div className="text-center mb-8">
