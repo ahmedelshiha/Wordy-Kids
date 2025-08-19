@@ -55,12 +55,7 @@ const CompassIcon = ({ className }: { className?: string }) => (
 
 // Decorative jungle elements
 const JungleLeaf = ({ className }: { className?: string }) => (
-  <div
-    className={cn(
-      "w-6 h-6 opacity-20 animate-gentle-float",
-      className,
-    )}
-  >
+  <div className={cn("w-6 h-6 opacity-20 animate-gentle-float", className)}>
     <div className="w-full h-full bg-jungle rounded-full" />
   </div>
 );
@@ -94,8 +89,8 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       x: 0,
       opacity: 1,
       scale: 1,
-      transition: { 
-        duration: 0.4, 
+      transition: {
+        duration: 0.4,
         ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
@@ -103,11 +98,11 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
 
   const cardHoverVariants = {
     initial: { y: 0, boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)" },
-    hover: { 
-      y: -2, 
+    hover: {
+      y: -2,
       boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-      transition: { duration: 0.3, ease: "easeOut" }
-    }
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
   };
 
   const handleRegistration = () => {
@@ -158,7 +153,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       >
         {/* Profile Avatar with enhanced styling */}
         <div className="flex justify-center mb-4">
-          <motion.div 
+          <motion.div
             className="w-16 h-16 rounded-full border-3 border-white flex items-center justify-center bg-white/10 shadow-lg"
             whileHover={{ scale: 1.05, rotate: 5 }}
             transition={{ duration: 0.3 }}
@@ -205,7 +200,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               {stats?.wordsLearned || 15} words mastered
             </p>
           </div>
-          <motion.div 
+          <motion.div
             className="w-8 h-8 bg-jungle rounded-full flex items-center justify-center shadow-md"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
@@ -234,7 +229,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               {stats?.animalsLearned || 8} animals discovered
             </p>
           </div>
-          <motion.div 
+          <motion.div
             className="w-8 h-8 bg-playful-purple rounded-full flex items-center justify-center shadow-md"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
@@ -260,10 +255,11 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               Adventure Time
             </h3>
             <p className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium">
-              {stats?.totalTime ? `${Math.round(stats.totalTime / 60)}h` : "2h"} exploring
+              {stats?.totalTime ? `${Math.round(stats.totalTime / 60)}h` : "2h"}{" "}
+              exploring
             </p>
           </div>
-          <motion.div 
+          <motion.div
             className="w-8 h-8 bg-coral-red rounded-full flex items-center justify-center shadow-md"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
@@ -283,7 +279,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         {/* Subtle background decoration */}
         <div className="absolute top-2 right-2 w-8 h-8 bg-white/10 rounded-full" />
         <div className="absolute bottom-2 left-2 w-6 h-6 bg-white/10 rounded-full" />
-        
+
         <div className="text-center mb-3 relative z-10">
           <h3 className="text-navy font-['Baloo_2'] text-[18px] font-bold mb-3">
             {isGuest ? "Start Your Epic Journey!" : "Welcome Back, Explorer!"}
@@ -291,21 +287,21 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
 
           {isGuest && (
             <div className="space-y-2 mb-4 text-left">
-              <motion.p 
+              <motion.p
                 className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
               >
                 💾 Save your progress forever!
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
               >
                 🏆 Earn special badges and rewards!
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="text-navy font-['Baloo_2'] text-[14px] font-medium flex items-center"
                 whileHover={{ x: 2 }}
                 transition={{ duration: 0.2 }}
