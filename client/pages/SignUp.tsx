@@ -127,7 +127,7 @@ export default function SignUp() {
       return;
     }
 
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)/.test(formData.password)) {
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
       setMessage({
         type: "error",
         text: "Password should include uppercase, lowercase, and numbers for better security",
