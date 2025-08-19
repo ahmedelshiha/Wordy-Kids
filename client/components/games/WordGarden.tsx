@@ -433,46 +433,173 @@ function JungleGameCompletionDialog({
 
   return (
     <Dialog open={show} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 bg-gradient-to-br from-jungle-DEFAULT via-jungle-light to-emerald-600 border-jungle-light border-4">
-        <DialogHeader className="text-center pb-2">
-          <div className="text-6xl mb-3 animate-jungle-celebration">🏆</div>
-          <DialogTitle className="text-xl font-bold text-white drop-shadow-lg bg-jungle-DEFAULT/80 backdrop-blur-sm rounded-lg px-4 py-2 border-2 border-jungle-light shadow-lg">
-            🏆 🎉 Jungle Quest Complete! 🐒
+      <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 relative overflow-hidden border-jungle-light border-4">
+        {/* Magical Jungle Background with deep emerald-to-moss gradient */}
+        <div className="absolute inset-0 rounded-lg overflow-hidden">
+          {/* Deep emerald-to-moss gradient base */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-700 to-green-800" />
+          <div className="absolute inset-0 bg-gradient-to-t from-green-900/90 via-emerald-800/50 to-teal-700/40" />
+
+          {/* Misty blue-green horizon */}
+          <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-teal-600/50 via-emerald-600/30 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-32 bg-[radial-gradient(ellipse_at_top,rgba(52,211,153,0.4),transparent_70%)]" />
+
+          {/* Soft golden sunlight rays through leaves */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 12 }, (_, i) => (
+              <div
+                key={`completion-sunray-${i}`}
+                className="absolute opacity-30"
+                style={{
+                  left: `${5 + i * 8}%`,
+                  top: `-5%`,
+                  width: "1px",
+                  height: "110%",
+                  background: "linear-gradient(to bottom, rgba(255, 215, 0, 0.8), rgba(255, 235, 59, 0.4), transparent)",
+                  transform: `rotate(${-15 + i * 3}deg)`,
+                  animationName: "sunlight-shimmer",
+                  animationDuration: `${3 + Math.random() * 1.5}s`,
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
+                  animationDelay: `${i * 0.3}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Dark leafy silhouettes in foreground */}
+          <div className="absolute bottom-0 left-0 right-0 h-24">
+            {Array.from({ length: 20 }, (_, i) => (
+              <div
+                key={`completion-silhouette-${i}`}
+                className="absolute text-black/70"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  bottom: `${Math.random() * 25}%`,
+                  fontSize: `${1 + Math.random() * 0.8}rem`,
+                  transform: `rotate(${-30 + Math.random() * 60}deg)`,
+                  animationDelay: `${Math.random() * 2}s`,
+                }}
+              >
+                <span className="animate-jungle-sway drop-shadow-lg">
+                  {["🌿", "🍃", "🌱", "🌾", "🪴"][Math.floor(Math.random() * 5)]}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Jungle vines as dark silhouettes */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 8 }, (_, i) => (
+              <div
+                key={`completion-vine-${i}`}
+                className="absolute opacity-50"
+                style={{
+                  left: `${i * 12.5}%`,
+                  top: "0%",
+                  width: "2px",
+                  height: "100%",
+                  background: "linear-gradient(to bottom, transparent, rgba(0, 40, 20, 0.9), rgba(0, 60, 30, 0.7))",
+                  animationName: "vine-sway",
+                  animationDuration: `${2.5 + Math.random() * 1.5}s`,
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
+                  animationDelay: `${i * 0.2}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Magical fireflies */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 15 }, (_, i) => (
+              <div
+                key={`completion-firefly-${i}`}
+                className="absolute w-1.5 h-1.5 rounded-full opacity-90"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  background: "radial-gradient(circle, rgba(255, 255, 0, 1), rgba(255, 215, 0, 0.5))",
+                  boxShadow: "0 0 6px rgba(255, 255, 0, 0.8)",
+                  animationName: "firefly-dance",
+                  animationDuration: `${3 + Math.random() * 2}s`,
+                  animationTimingFunction: "ease-in-out",
+                  animationIterationCount: "infinite",
+                  animationDelay: `${Math.random() * 3}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Drifting leaves with subtle parallax */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 25 }, (_, i) => (
+              <div
+                key={`completion-drifting-leaf-${i}`}
+                className="absolute text-emerald-400/80"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  fontSize: `${0.5 + Math.random() * 0.6}rem`,
+                  animationName: "leaf-drift",
+                  animationDuration: `${6 + Math.random() * 3}s`,
+                  animationTimingFunction: "linear",
+                  animationIterationCount: "infinite",
+                  animationDelay: `${Math.random() * 6}s`,
+                }}
+              >
+                <span className="drop-shadow-md">
+                  {["🍃", "🌿", "🍂", "🌱"][Math.floor(Math.random() * 4)]}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Soft ambient glow overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-transparent to-green-600/15" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(34,197,94,0.2),transparent_60%)]" />
+        </div>
+        <DialogHeader className="text-center pb-2 relative z-10">
+          <div className="text-6xl mb-3 animate-jungle-celebration drop-shadow-2xl">🏆</div>
+          <DialogTitle className="text-xl font-bold text-white drop-shadow-2xl bg-emerald-900/70 backdrop-blur-md rounded-lg px-4 py-2 border-2 border-yellow-400/60 shadow-2xl relative">
+            {/* Magical glow effect behind text */}
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-yellow-300/30 to-yellow-400/20 rounded-lg blur-sm" />
+            <span className="relative z-10">🏆 🎉 Jungle Quest Complete! 🐒</span>
           </DialogTitle>
-          <DialogDescription className="text-jungle-light text-sm">
+          <DialogDescription className="text-emerald-100 text-sm drop-shadow-lg">
             Outstanding adventure! The monkey is so proud! 🍌
           </DialogDescription>
         </DialogHeader>
 
         {/* Compact Jungle Stats */}
-        <div className="bg-gradient-to-r from-jungle-dark/30 via-jungle-DEFAULT/20 to-jungle-dark/30 rounded-lg p-3 border border-jungle-light/50 backdrop-blur-sm">
+        <div className="bg-gradient-to-r from-emerald-900/40 via-emerald-800/30 to-emerald-900/40 rounded-lg p-3 border border-yellow-400/40 backdrop-blur-md shadow-lg relative z-10">
           <div className="flex justify-between items-center text-center">
             <div className="flex-1">
               <div className="text-3xl animate-pulse">🏆</div>
               <div className="text-lg font-bold text-white">
                 {stats.correct}
               </div>
-              <div className="text-xs text-jungle-light">Treasures</div>
+              <div className="text-xs text-emerald-200">Treasures</div>
             </div>
             <div className="flex-1">
               <div className="text-3xl animate-bounce">🔥</div>
               <div className="text-lg font-bold text-white">
                 {stats.bestStreak}
               </div>
-              <div className="text-xs text-jungle-light">Best Streak</div>
+              <div className="text-xs text-emerald-200">Best Streak</div>
             </div>
             <div className="flex-1">
               <div className="text-3xl">
                 {accuracy >= 90 ? "��" : accuracy >= 75 ? "🏖️" : "🌟"}
               </div>
               <div className="text-lg font-bold text-white">{accuracy}%</div>
-              <div className="text-xs text-jungle-light">Adventure Score</div>
+              <div className="text-xs text-emerald-200">Adventure Score</div>
             </div>
           </div>
         </div>
 
         {/* Jungle Treasure Collection Preview */}
-        <div className="flex justify-center gap-2 text-2xl my-4 p-2 bg-jungle-dark/20 rounded-lg border border-jungle-light/30">
+        <div className="flex justify-center gap-2 text-2xl my-4 p-2 bg-emerald-900/30 rounded-lg border border-yellow-400/30 backdrop-blur-sm shadow-md relative z-10">
           {Array.from({ length: Math.min(stats.correct, 5) }, (_, i) => (
             <div
               key={i}
@@ -488,7 +615,7 @@ function JungleGameCompletionDialog({
             </div>
           ))}
           {stats.correct > 5 && (
-            <div className="text-jungle-light animate-jungle-float flex items-center gap-1">
+            <div className="text-emerald-200 animate-jungle-float flex items-center gap-1">
               <span className="text-lg">🎒</span>
               <span className="text-sm font-semibold">
                 +{stats.correct - 5} more!
@@ -497,10 +624,10 @@ function JungleGameCompletionDialog({
           )}
         </div>
 
-        <DialogFooter className="flex gap-2 pt-2">
+        <DialogFooter className="flex gap-2 pt-2 relative z-10">
           <Button
             onClick={onContinue}
-            className="flex-1 bg-gradient-to-r from-jungle-DEFAULT to-jungle-light hover:from-jungle-light hover:to-jungle-DEFAULT text-white text-sm py-3 px-4 rounded-lg shadow-lg border border-jungle-light/50 transition-all duration-300 hover:scale-105"
+            className="flex-1 bg-gradient-to-r from-emerald-700 to-emerald-600 hover:from-emerald-600 hover:to-emerald-500 text-white text-sm py-3 px-4 rounded-lg shadow-xl border border-yellow-400/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
           >
             <span className="mr-2">🐒</span>
             New Adventure!
@@ -508,7 +635,7 @@ function JungleGameCompletionDialog({
           <Button
             onClick={onExit}
             variant="outline"
-            className="flex-1 bg-sunshine-DEFAULT/20 hover:bg-sunshine-DEFAULT/30 text-navy border-sunshine-DEFAULT/50 text-sm py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105"
+            className="flex-1 bg-yellow-400/20 hover:bg-yellow-400/30 text-emerald-900 border-yellow-400/50 text-sm py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 backdrop-blur-sm font-semibold"
           >
             <Home className="w-4 h-4 mr-1" />
             <span>Home Base</span>
@@ -1242,7 +1369,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Adventure XP + Streak */}
-        <div className="mt-3 md:mt-6 relative z-10 mb-4 md:mb-8">
+        <div className="mt-3 md:mt-6 relative z-10 mb-2 md:mb-4">
           <div className="text-sm flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-yellow-300">
               <Mountain className="w-4 h-4" />
