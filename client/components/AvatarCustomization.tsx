@@ -261,18 +261,18 @@ export function AvatarCustomization({
             {step === 1 && (
               <div className="text-center space-y-6">
                 <div className="text-6xl mb-4">👋</div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-2xl font-bold text-navy font-['Baloo_2']">
                   What's your name, young adventurer?
                 </h2>
-                <p className="text-gray-600 mb-6">
+                <p className="text-navy/70 mb-6 font-['Baloo_2']">
                   This is how your learning buddy will know you!
                 </p>
                 <div className="max-w-md mx-auto">
                   <Label
                     htmlFor="name"
-                    className="text-lg font-semibold text-gray-700"
+                    className="text-lg font-semibold text-navy font-['Baloo_2']"
                   >
-                    Your Name
+                    🌟 Your Name
                   </Label>
                   <Input
                     id="name"
@@ -280,12 +280,12 @@ export function AvatarCustomization({
                     placeholder="Enter your name..."
                     value={childName}
                     onChange={(e) => setChildName(e.target.value)}
-                    className="text-center text-xl py-3 mt-2 border-2"
+                    className="text-center text-xl py-3 mt-2 border-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 rounded-xl bg-white/80 font-['Baloo_2']"
                     maxLength={20}
                   />
                   {childName && (
-                    <p className="mt-2 text-educational-blue font-semibold">
-                      Hi {childName}! 🌟
+                    <p className="mt-2 text-jungle font-bold font-['Baloo_2']">
+                      Hi {childName}! 🌟 Welcome to the jungle!
                     </p>
                   )}
                 </div>
