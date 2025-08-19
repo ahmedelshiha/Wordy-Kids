@@ -3077,6 +3077,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       <div
                                         className="jungle-quiz-card jungle-quiz-card-enhanced jungle-hover-effect"
                                         style={{
+                                          display: "none",
                                           background:
                                             "linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(76, 175, 80, 0.15) 50%, rgba(139, 195, 74, 0.15) 100%)",
                                           border: "3px solid #FFD700",
