@@ -788,7 +788,7 @@ export function ChildFriendlyCategorySelector({
                   {/* Enhanced Mobile Selection Indicator */}
                   {selectedCategory === category.id && (
                     <div className="flex items-center justify-center">
-                      <Badge className="bg-gradient-to-r from-educational-green to-educational-blue text-white animate-pulse px-3 py-1.5 md:px-4 md:py-2">
+                      <Badge className="bg-gradient-to-r from-jungle to-sunshine text-white animate-pulse px-3 py-1.5 md:px-4 md:py-2 shadow-lg">
                         <Star className="w-3 h-3 md:w-4 md:h-4 mr-1 animate-spin" />
                         <span className="text-xs md:text-sm">✓ Selected!</span>
                         <Sparkles className="w-3 h-3 md:w-4 md:h-4 ml-1 animate-bounce" />
