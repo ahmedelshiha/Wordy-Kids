@@ -429,13 +429,13 @@ export class AudioService {
           speechState: {
             speaking: this.speechSynthesis.speaking,
             pending: this.speechSynthesis.pending,
-            paused: this.speechSynthesis.paused
+            paused: this.speechSynthesis.paused,
           },
           voiceInfo: {
             voicesCount: this.voices.length,
             voicesLoaded: this.voicesLoaded,
-            selectedVoiceType: this.selectedVoiceType
-          }
+            selectedVoiceType: this.selectedVoiceType,
+          },
         });
 
         try {

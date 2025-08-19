@@ -365,21 +365,21 @@ export class EnhancedAudioService {
     } = {},
   ): void {
     if (!this.isEnabled) {
-      console.log('Audio service is disabled');
+      console.log("Audio service is disabled");
       options.onError?.();
       return;
     }
 
     // Check browser support
-    if (!('speechSynthesis' in window) || !this.speechSynthesis) {
-      console.error('Speech synthesis not supported in this browser');
+    if (!("speechSynthesis" in window) || !this.speechSynthesis) {
+      console.error("Speech synthesis not supported in this browser");
       options.onError?.();
       return;
     }
 
     // Validate input
-    if (!word || typeof word !== 'string' || word.trim().length === 0) {
-      console.error('Invalid word provided for pronunciation:', word);
+    if (!word || typeof word !== "string" || word.trim().length === 0) {
+      console.error("Invalid word provided for pronunciation:", word);
       options.onError?.();
       return;
     }
@@ -388,8 +388,14 @@ export class EnhancedAudioService {
     const voiceDefaults = this.getVoiceDefaults(voiceType);
 
     // Validate and clamp parameters to safe ranges
-    const rate = Math.max(0.1, Math.min(10, options.rate ?? voiceDefaults.rate));
-    const pitch = Math.max(0, Math.min(2, options.pitch ?? voiceDefaults.pitch));
+    const rate = Math.max(
+      0.1,
+      Math.min(10, options.rate ?? voiceDefaults.rate),
+    );
+    const pitch = Math.max(
+      0,
+      Math.min(2, options.pitch ?? voiceDefaults.pitch),
+    );
     const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
     const { onStart, onEnd, onError } = options;
@@ -417,7 +423,7 @@ export class EnhancedAudioService {
         try {
           onStart?.();
         } catch (error) {
-          console.error('Error in onStart callback:', error);
+          console.error("Error in onStart callback:", error);
         }
       };
 
@@ -426,12 +432,12 @@ export class EnhancedAudioService {
         try {
           onEnd?.();
         } catch (error) {
-          console.error('Error in onEnd callback:', error);
+          console.error("Error in onEnd callback:", error);
         }
       };
 
       utterance.onerror = (event) => {
-        console.error('Speech synthesis error:', {
+        console.error("Speech synthesis error:", {
           error: event.error,
           message: event.message,
           word: word,
@@ -439,12 +445,12 @@ export class EnhancedAudioService {
           voice: voice?.name,
           rate: rate,
           pitch: pitch,
-          volume: volume
+          volume: volume,
         });
         try {
           onError?.();
         } catch (error) {
-          console.error('Error in onError callback:', error);
+          console.error("Error in onError callback:", error);
         }
       };
 
@@ -460,22 +466,21 @@ export class EnhancedAudioService {
       const timeoutDuration = Math.max(5000, word.length * 200); // Minimum 5s, or 200ms per character
       setTimeout(() => {
         if (this.speechSynthesis.speaking || this.speechSynthesis.pending) {
-          console.warn('Speech synthesis timeout, canceling...');
+          console.warn("Speech synthesis timeout, canceling...");
           this.speechSynthesis.cancel();
           try {
             onError?.();
           } catch (error) {
-            console.error('Error in timeout onError callback:', error);
+            console.error("Error in timeout onError callback:", error);
           }
         }
       }, timeoutDuration);
-
     } catch (error) {
-      console.error('Error in pronounceWord:', error);
+      console.error("Error in pronounceWord:", error);
       try {
         onError?.();
       } catch (callbackError) {
-        console.error('Error in error callback:', callbackError);
+        console.error("Error in error callback:", callbackError);
       }
     }
   }

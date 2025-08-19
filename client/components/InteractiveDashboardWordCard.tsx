@@ -341,39 +341,41 @@ export function InteractiveDashboardWordCard({
 
       // Play available jungle adventure sound effects
       try {
-        const difficulty = currentWord.difficulty || 'medium';
+        const difficulty = currentWord.difficulty || "medium";
 
         // Use available sound methods from audioService
         switch (difficulty) {
-          case 'easy':
+          case "easy":
             // Gentle click sound for easy words
             audioService.playClickSound();
             break;
-          case 'medium':
+          case "medium":
             // Whoosh sound for medium words
             audioService.playWhooshSound();
             break;
-          case 'hard':
+          case "hard":
             // Cheer sound for hard words
             audioService.playCheerSound();
             break;
         }
       } catch (error) {
-        console.log('Jungle sound effect not available, proceeding with pronunciation');
+        console.log(
+          "Jungle sound effect not available, proceeding with pronunciation",
+        );
       }
 
       // Pronounce word with enhanced error handling
       enhancedAudioService.pronounceWord(currentWord.word, {
         onStart: () => {
-          console.log('Speech started successfully');
+          console.log("Speech started successfully");
           setIsPlaying(true);
         },
         onEnd: () => {
-          console.log('Speech completed successfully');
+          console.log("Speech completed successfully");
           setIsPlaying(false);
         },
         onError: () => {
-          console.error('Speech synthesis failed for word:', currentWord.word);
+          console.error("Speech synthesis failed for word:", currentWord.word);
           setIsPlaying(false);
           // Fallback: try with basic audioService
           try {
@@ -383,7 +385,10 @@ export function InteractiveDashboardWordCard({
               onError: () => setIsPlaying(false),
             });
           } catch (fallbackError) {
-            console.error('Fallback speech synthesis also failed:', fallbackError);
+            console.error(
+              "Fallback speech synthesis also failed:",
+              fallbackError,
+            );
           }
         },
       });
@@ -528,49 +533,49 @@ export function InteractiveDashboardWordCard({
 
       // Play jungle celebration sound based on difficulty with proper error handling
       try {
-        const difficulty = currentWord.difficulty || 'medium';
+        const difficulty = currentWord.difficulty || "medium";
         switch (difficulty) {
-          case 'easy':
+          case "easy":
             // Gentle jungle celebration
             enhancedAudioService.playSuccessSound();
             setTimeout(() => {
               try {
                 audioService.playClickSound(); // Additional gentle sound
               } catch (e) {
-                console.log('Additional sound effect not available');
+                console.log("Additional sound effect not available");
               }
             }, 200);
             break;
-          case 'medium':
+          case "medium":
             // Adventure jungle celebration
             enhancedAudioService.playSuccessSound();
             setTimeout(() => {
               try {
                 audioService.playWhooshSound(); // Additional adventure sound
               } catch (e) {
-                console.log('Additional sound effect not available');
+                console.log("Additional sound effect not available");
               }
             }, 200);
             break;
-          case 'hard':
+          case "hard":
             // Epic jungle victory
             enhancedAudioService.playSuccessSound();
             setTimeout(() => {
               try {
                 audioService.playCheerSound(); // Additional victory sound
               } catch (e) {
-                console.log('Additional sound effect not available');
+                console.log("Additional sound effect not available");
               }
             }, 200);
             break;
         }
       } catch (error) {
-        console.log('Primary success sound failed, using basic fallback');
+        console.log("Primary success sound failed, using basic fallback");
         // Fallback to basic audioService
         try {
           audioService.playSuccessSound();
         } catch (fallbackError) {
-          console.log('All success sounds failed:', fallbackError);
+          console.log("All success sounds failed:", fallbackError);
         }
       }
 
@@ -580,11 +585,13 @@ export function InteractiveDashboardWordCard({
       try {
         enhancedAudioService.playEncouragementSound();
       } catch (error) {
-        console.log('Enhanced encouragement sound failed, using basic fallback');
+        console.log(
+          "Enhanced encouragement sound failed, using basic fallback",
+        );
         try {
           audioService.playEncouragementSound();
         } catch (fallbackError) {
-          console.log('All encouragement sounds failed:', fallbackError);
+          console.log("All encouragement sounds failed:", fallbackError);
         }
       }
     }
@@ -1034,16 +1041,16 @@ export function InteractiveDashboardWordCard({
               animate={{
                 scale: [1, 1.1, 1],
                 opacity: [0.3, 0.6, 0.3],
-                rotate: [0, 180, 360]
+                rotate: [0, 180, 360],
               }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
-                ease: "linear"
+                ease: "linear",
               }}
               className="absolute inset-0 rounded-full border-2 border-jungle/30"
               style={{
-                boxShadow: "0 0 20px rgba(76, 175, 80, 0.3)"
+                boxShadow: "0 0 20px rgba(76, 175, 80, 0.3)",
               }}
             />
           </motion.div>
@@ -1057,7 +1064,7 @@ export function InteractiveDashboardWordCard({
                   radial-gradient(circle at 25% 25%, rgba(76, 175, 80, 0.2) 0%, transparent 40%),
                   radial-gradient(circle at 75% 75%, rgba(255, 193, 7, 0.15) 0%, transparent 40%),
                   linear-gradient(45deg, transparent 30%, rgba(76, 175, 80, 0.05) 50%, transparent 70%)
-                `
+                `,
               }}
             />
           </div>
@@ -1259,15 +1266,16 @@ export function InteractiveDashboardWordCard({
               ),
               url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CAF50' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60c-16.569 0-30-13.431-30-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
             `,
-            borderImage: 'linear-gradient(45deg, rgba(255, 215, 0, 0.6), rgba(76, 175, 80, 0.4), rgba(255, 215, 0, 0.6)) 1',
-            borderWidth: '3px',
-            borderStyle: 'solid',
+            borderImage:
+              "linear-gradient(45deg, rgba(255, 215, 0, 0.6), rgba(76, 175, 80, 0.4), rgba(255, 215, 0, 0.6)) 1",
+            borderWidth: "3px",
+            borderStyle: "solid",
             boxShadow: `
               0 20px 40px rgba(76, 175, 80, 0.3),
               0 0 20px rgba(255, 215, 0, 0.2),
               inset 0 1px 0 rgba(255, 255, 255, 0.2),
               inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-            `
+            `,
           }}
         >
           {/* Jungle Adventure Background Elements */}
@@ -1276,12 +1284,12 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 y: [0, -20, 0],
-                rotate: [0, 5, 0]
+                rotate: [0, 5, 0],
               }}
               transition={{
                 duration: 8,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="absolute -top-10 -left-5 text-4xl opacity-20 text-jungle-light"
             >
@@ -1291,13 +1299,13 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 y: [0, -25, 0],
-                rotate: [0, -8, 0]
+                rotate: [0, -8, 0],
               }}
               transition={{
                 duration: 10,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: 1
+                delay: 1,
               }}
               className="absolute -top-8 -right-8 text-3xl opacity-15 text-jungle-light"
             >
@@ -1310,13 +1318,13 @@ export function InteractiveDashboardWordCard({
                 y: [0, -30, 0],
                 x: [0, 10, 0],
                 scale: [1, 1.2, 1],
-                opacity: [0.3, 0.7, 0.3]
+                opacity: [0.3, 0.7, 0.3],
               }}
               transition={{
                 duration: 6,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: 2
+                delay: 2,
               }}
               className="absolute top-1/4 right-4 text-lg text-sunshine"
             >
@@ -1327,12 +1335,12 @@ export function InteractiveDashboardWordCard({
               animate={{
                 y: [0, -20, 0],
                 x: [0, -15, 0],
-                rotate: [0, 360, 0]
+                rotate: [0, 360, 0],
               }}
               transition={{
                 duration: 12,
                 repeat: Infinity,
-                ease: "linear"
+                ease: "linear",
               }}
               className="absolute bottom-1/3 left-6 text-sm opacity-40 text-sunshine"
             >
@@ -1343,12 +1351,12 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 scale: [1, 1.1, 1],
-                opacity: [0.1, 0.2, 0.1]
+                opacity: [0.1, 0.2, 0.1],
               }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="absolute inset-0 bg-gradient-to-t from-jungle/10 via-transparent to-jungle/5 rounded-2xl"
             />
@@ -1363,7 +1371,7 @@ export function InteractiveDashboardWordCard({
                   scale: [0, 1.2, 1, 1.1, 1],
                   opacity: [0, 1, 0.8, 0.9, 0],
                   rotate: [0, 180, 360, 540, 720],
-                  y: [0, -20, -10, -15, -30]
+                  y: [0, -20, -10, -15, -30],
                 }}
                 transition={{ duration: 2, ease: "easeOut" }}
                 className="absolute top-4 left-4 text-2xl text-sunshine"
@@ -1377,7 +1385,7 @@ export function InteractiveDashboardWordCard({
                   scale: [0, 1.5, 1.2, 1.3, 1],
                   opacity: [0, 1, 0.7, 0.8, 0],
                   rotate: [0, -90, -180, -270, -360],
-                  y: [0, -15, -25, -20, -40]
+                  y: [0, -15, -25, -20, -40],
                 }}
                 transition={{ duration: 2.5, ease: "easeOut", delay: 0.2 }}
                 className="absolute top-6 right-6 text-3xl text-jungle-light"
@@ -1391,7 +1399,7 @@ export function InteractiveDashboardWordCard({
                   scale: [0, 1, 1.2, 1.1, 0.8],
                   opacity: [0, 1, 0.9, 0.7, 0],
                   x: [0, -10, -5, -8, -20],
-                  y: [0, -10, -20, -15, -35]
+                  y: [0, -10, -20, -15, -35],
                 }}
                 transition={{ duration: 2.2, ease: "easeOut", delay: 0.4 }}
                 className="absolute bottom-4 left-6 text-2xl text-sunshine"
@@ -1405,7 +1413,7 @@ export function InteractiveDashboardWordCard({
                   scale: [0, 1.3, 1, 1.4, 0.9],
                   opacity: [0, 1, 0.8, 0.9, 0],
                   rotate: [0, 45, 90, 135, 180],
-                  y: [0, -12, -8, -18, -30]
+                  y: [0, -12, -8, -18, -30],
                 }}
                 transition={{ duration: 2.8, ease: "easeOut", delay: 0.6 }}
                 className="absolute bottom-6 right-4 text-2xl text-jungle-light"
@@ -1420,7 +1428,7 @@ export function InteractiveDashboardWordCard({
                   scale: [0, 0.8, 1.2, 1, 0.6],
                   opacity: [0, 0.6, 1, 0.8, 0],
                   rotate: [0, 120, 240, 360],
-                  y: [0, -25, -15, -30, -50]
+                  y: [0, -25, -15, -30, -50],
                 }}
                 transition={{ duration: 3, ease: "easeOut", delay: 0.8 }}
                 className="absolute top-1/2 left-8 text-lg text-sunshine"
@@ -1434,7 +1442,7 @@ export function InteractiveDashboardWordCard({
                   scale: [0, 1.1, 0.9, 1.3, 0.7],
                   opacity: [0, 0.8, 1, 0.6, 0],
                   rotate: [0, -60, -120, -180],
-                  y: [0, -18, -28, -22, -45]
+                  y: [0, -18, -28, -22, -45],
                 }}
                 transition={{ duration: 2.6, ease: "easeOut", delay: 1 }}
                 className="absolute top-1/2 right-8 text-lg text-jungle-light"
@@ -1449,12 +1457,12 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 opacity: [0.1, 0.3, 0.1],
-                scale: [1, 1.02, 1]
+                scale: [1, 1.02, 1],
               }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="absolute inset-2 bg-gradient-to-br from-sunshine/10 via-transparent to-jungle/10 rounded-xl pointer-events-none"
             />
@@ -1532,7 +1540,7 @@ export function InteractiveDashboardWordCard({
                   type: "spring",
                   stiffness: 150,
                   damping: 20,
-                  delay: 0.2
+                  delay: 0.2,
                 }}
                 className="relative"
               >
@@ -1552,32 +1560,35 @@ export function InteractiveDashboardWordCard({
                     textShadow: [
                       "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
                       "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(76, 175, 80, 0.6)",
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)"
-                    ]
+                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
+                    ],
                   }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    times: [0, 0.5, 1]
+                    times: [0, 0.5, 1],
                   }}
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   style={{
-                    textShadow: "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3)",
-                    fontFamily: "'Baloo 2', cursive"
+                    textShadow:
+                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3)",
+                    fontFamily: "'Baloo 2', cursive",
                   }}
                 >
                   {(() => {
                     // Dynamic jungle adventure prompts based on word difficulty and category
-                    const difficulty = currentWord?.difficulty || 'medium';
-                    const category = currentWord?.category || 'general';
-                    const sessionProgress = Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100);
+                    const difficulty = currentWord?.difficulty || "medium";
+                    const category = currentWord?.category || "general";
+                    const sessionProgress = Math.round(
+                      (sessionStats.wordsCompleted / SESSION_SIZE) * 100,
+                    );
 
                     // Jungle Explorer Characters
                     const jungleExplorers = {
-                      easy: ['🐵', '🦜', '🐨', '🦋', '🐝'],
-                      medium: ['🦁', '🐯', '🐘', '🦓', '🦏'],
-                      hard: ['🐲', '🦅', '🐺', '🐆', '🦌']
+                      easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
+                      medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
+                      hard: ["🐲", "🦅", "🐺", "🐆", "🦌"],
                     };
 
                     // Category-specific prompts
@@ -1587,81 +1598,81 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "🦋 What creature lives in our jungle?"
+                          "🦋 What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
                           "🐯 Which powerful jungle hunter do you see?",
                           "🐘 Can you identify this jungle giant?",
-                          "🦓 What striped jungle dweller is this?"
+                          "🦓 What striped jungle dweller is this?",
                         ],
                         hard: [
                           "🐲 What legendary jungle creature awaits?",
                           "🦅 Which apex jungle predator soars here?",
                           "🐺 Can you name this elusive jungle hunter?",
-                          "🐆 What spotted jungle master is this?"
-                        ]
+                          "🐆 What spotted jungle master is this?",
+                        ],
                       },
                       Nature: {
                         easy: [
                           "🌿 What jungle treasure is this?",
                           "🌺 Which jungle bloom do you see?",
                           "🍃 Can you name this jungle wonder?",
-                          "🌳 What grows in our jungle home?"
+                          "🌳 What grows in our jungle home?",
                         ],
                         medium: [
                           "🌲 What ancient jungle guardian is this?",
                           "🎋 Which jungle element do you recognize?",
                           "🌾 Can you identify this jungle gift?",
-                          "🌴 What tropical jungle beauty is this?"
+                          "🌴 What tropical jungle beauty is this?",
                         ],
                         hard: [
                           "🌋 What powerful jungle force awaits?",
                           "⚡ Which jungle phenomenon do you see?",
                           "🌊 Can you name this jungle mystery?",
-                          "🔥 What fierce jungle element is this?"
-                        ]
+                          "🔥 What fierce jungle element is this?",
+                        ],
                       },
                       Food: {
                         easy: [
                           "🍌 What jungle snack is this?",
                           "🥥 Which jungle treat do you see?",
                           "🍯 Can you name this jungle delight?",
-                          "🫐 What jungle berry is this?"
+                          "🫐 What jungle berry is this?",
                         ],
                         medium: [
                           "🥭 What exotic jungle fruit is this?",
                           "🍍 Which tropical jungle treasure awaits?",
                           "🥑 Can you identify this jungle nutrition?",
-                          "🌰 What jungle harvest is this?"
+                          "🌰 What jungle harvest is this?",
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
                           "🫚 Which ancient jungle spice awaits?",
                           "🌶️ Can you name this fiery jungle flavor?",
-                          "🧄 What powerful jungle ingredient is this?"
-                        ]
+                          "🧄 What powerful jungle ingredient is this?",
+                        ],
                       },
                       Objects: {
                         easy: [
                           "🔍 What jungle tool is this?",
                           "🎒 Which jungle gear do you see?",
                           "🧭 Can you name this jungle helper?",
-                          "⛺ What jungle shelter is this?"
+                          "⛺ What jungle shelter is this?",
                         ],
                         medium: [
                           "🏹 What jungle equipment awaits?",
                           "🛶 Which jungle vessel do you recognize?",
                           "🔥 Can you identify this jungle necessity?",
-                          "🗡️ What jungle instrument is this?"
+                          "🗡️ What jungle instrument is this?",
                         ],
                         hard: [
                           "⚔️ What legendary jungle artifact is this?",
                           "🏺 Which ancient jungle relic awaits?",
                           "🔮 Can you name this mystical jungle object?",
-                          "👑 What sacred jungle treasure is this?"
-                        ]
-                      }
+                          "👑 What sacred jungle treasure is this?",
+                        ],
+                      },
                     };
 
                     // Default prompts for unknown categories
@@ -1670,20 +1681,20 @@ export function InteractiveDashboardWordCard({
                         "🌟 What jungle discovery is this?",
                         "🦋 Which jungle wonder do you see?",
                         "🌈 Can you name this jungle magic?",
-                        "✨ What sparkles in our jungle?"
+                        "✨ What sparkles in our jungle?",
                       ],
                       medium: [
                         "🔍 What jungle mystery awaits you?",
                         "🎯 Which jungle challenge do you see?",
                         "💎 Can you solve this jungle puzzle?",
-                        "🗝️ What jungle secret is this?"
+                        "🗝️ What jungle secret is this?",
                       ],
                       hard: [
                         "⚡ What legendary jungle power is this?",
                         "🌋 Which epic jungle force awaits?",
                         "🏆 Can you conquer this jungle trial?",
-                        "👑 What ultimate jungle quest is this?"
-                      ]
+                        "👑 What ultimate jungle quest is this?",
+                      ],
                     };
 
                     // Progress-based encouragement
@@ -1692,24 +1703,31 @@ export function InteractiveDashboardWordCard({
                       25: "🌟 You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
-                      90: "👑 Final jungle challenges await!"
+                      90: "👑 Final jungle challenges await!",
                     };
 
                     // Get category-specific prompts or use defaults
-                    const categoryKey = Object.keys(categoryPrompts).find(key =>
-                      category.toLowerCase().includes(key.toLowerCase())
-                    ) || 'default';
+                    const categoryKey =
+                      Object.keys(categoryPrompts).find((key) =>
+                        category.toLowerCase().includes(key.toLowerCase()),
+                      ) || "default";
 
-                    const prompts = categoryKey === 'default'
-                      ? defaultPrompts[difficulty]
-                      : categoryPrompts[categoryKey][difficulty];
+                    const prompts =
+                      categoryKey === "default"
+                        ? defaultPrompts[difficulty]
+                        : categoryPrompts[categoryKey][difficulty];
 
                     // Progress milestone check
                     const progressMilestone = Object.keys(progressPrompts)
                       .reverse()
-                      .find(milestone => sessionProgress >= parseInt(milestone));
+                      .find(
+                        (milestone) => sessionProgress >= parseInt(milestone),
+                      );
 
-                    if (progressMilestone && sessionProgress >= parseInt(progressMilestone)) {
+                    if (
+                      progressMilestone &&
+                      sessionProgress >= parseInt(progressMilestone)
+                    ) {
                       return progressPrompts[progressMilestone];
                     }
 
@@ -1725,13 +1743,13 @@ export function InteractiveDashboardWordCard({
                     animate={{
                       y: [0, -10, 0],
                       x: [0, 5, 0],
-                      rotate: [0, 5, 0]
+                      rotate: [0, 5, 0],
                     }}
                     transition={{
                       duration: 4,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      delay: 0
+                      delay: 0,
                     }}
                     className="absolute -top-2 -left-4 text-sm opacity-60"
                   >
@@ -1742,13 +1760,13 @@ export function InteractiveDashboardWordCard({
                     animate={{
                       y: [0, -15, 0],
                       x: [0, -3, 0],
-                      rotate: [0, -10, 0]
+                      rotate: [0, -10, 0],
                     }}
                     transition={{
                       duration: 5,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      delay: 1
+                      delay: 1,
                     }}
                     className="absolute -top-1 -right-6 text-sm opacity-50"
                   >
@@ -1759,13 +1777,13 @@ export function InteractiveDashboardWordCard({
                     animate={{
                       y: [0, -8, 0],
                       scale: [1, 1.1, 1],
-                      opacity: [0.4, 0.8, 0.4]
+                      opacity: [0.4, 0.8, 0.4],
                     }}
                     transition={{
                       duration: 3,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      delay: 2
+                      delay: 2,
                     }}
                     className="absolute top-0 right-2 text-xs"
                   >
@@ -1776,13 +1794,13 @@ export function InteractiveDashboardWordCard({
                     animate={{
                       y: [0, -12, 0],
                       x: [0, 8, 0],
-                      rotate: [0, 15, 0]
+                      rotate: [0, 15, 0],
                     }}
                     transition={{
                       duration: 6,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      delay: 0.5
+                      delay: 0.5,
                     }}
                     className="absolute -bottom-2 left-2 text-xs opacity-70"
                   >
@@ -1809,26 +1827,27 @@ export function InteractiveDashboardWordCard({
                   )}
                   style={{
                     textShadow: "0 1px 2px rgba(0, 0, 0, 0.5)",
-                    boxShadow: currentWord.difficulty === "easy"
-                      ? "0 0 15px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
-                      : currentWord.difficulty === "medium"
-                        ? "0 0 15px rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
-                        : currentWord.difficulty === "hard"
-                          ? "0 0 15px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
-                          : "0 0 10px rgba(107, 114, 128, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                    boxShadow:
+                      currentWord.difficulty === "easy"
+                        ? "0 0 15px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                        : currentWord.difficulty === "medium"
+                          ? "0 0 15px rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                          : currentWord.difficulty === "hard"
+                            ? "0 0 15px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                            : "0 0 10px rgba(107, 114, 128, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                   }}
                 >
                   {(() => {
-                    const difficulty = currentWord.difficulty || 'medium';
+                    const difficulty = currentWord.difficulty || "medium";
                     const difficultyEmojis = {
-                      easy: '🌱',
-                      medium: '⚡',
-                      hard: '🔥'
+                      easy: "🌱",
+                      medium: "⚡",
+                      hard: "🔥",
                     };
                     const difficultyNames = {
-                      easy: 'Explorer',
-                      medium: 'Adventurer',
-                      hard: 'Legend'
+                      easy: "Explorer",
+                      medium: "Adventurer",
+                      hard: "Legend",
                     };
 
                     return `${difficultyEmojis[difficulty]} ${difficultyNames[difficulty]}`;
@@ -1838,29 +1857,30 @@ export function InteractiveDashboardWordCard({
                 <Badge
                   className={cn(
                     "text-xs sm:text-sm px-2 sm:px-3 py-1 font-semibold relative overflow-hidden",
-                    "bg-gradient-to-r from-jungle/80 to-jungle-dark/90 text-white border-jungle-light shadow-md"
+                    "bg-gradient-to-r from-jungle/80 to-jungle-dark/90 text-white border-jungle-light shadow-md",
                   )}
                   style={{
                     textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)",
-                    boxShadow: "0 0 10px rgba(76, 175, 80, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
+                    boxShadow:
+                      "0 0 10px rgba(76, 175, 80, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)",
                   }}
                 >
                   {(() => {
                     const category = currentWord.category;
                     const categoryEmojis = {
-                      'Animals': '🐵',
-                      'Nature': '🌿',
-                      'Food': '🍌',
-                      'Objects': '🔍',
-                      'Colors': '🌈',
-                      'Body': '👤',
-                      'Family': '👨‍👩‍👧‍👦',
-                      'Home': '🏠',
-                      'Transportation': '🚗',
-                      'Clothes': '👕'
+                      Animals: "🐵",
+                      Nature: "🌿",
+                      Food: "🍌",
+                      Objects: "🔍",
+                      Colors: "🌈",
+                      Body: "👤",
+                      Family: "👨‍👩‍👧‍👦",
+                      Home: "🏠",
+                      Transportation: "🚗",
+                      Clothes: "👕",
                     };
 
-                    const emoji = categoryEmojis[category] || '🌟';
+                    const emoji = categoryEmojis[category] || "🌟";
                     return `${emoji} ${category}`;
                   })()}
                 </Badge>
@@ -1875,15 +1895,16 @@ export function InteractiveDashboardWordCard({
                         ? "bg-gradient-to-r from-jungle-light to-jungle text-white border-jungle"
                         : sessionStats.accuracy >= 50
                           ? "bg-gradient-to-r from-blue-400 to-blue-600 text-white border-blue-500"
-                          : "bg-gradient-to-r from-gray-400 to-gray-600 text-white border-gray-500"
+                          : "bg-gradient-to-r from-gray-400 to-gray-600 text-white border-gray-500",
                   )}
                   style={{
                     textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)",
-                    boxShadow: sessionStats.accuracy >= 90
-                      ? "0 0 12px rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
-                      : sessionStats.accuracy >= 75
-                        ? "0 0 12px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
-                        : "0 0 8px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                    boxShadow:
+                      sessionStats.accuracy >= 90
+                        ? "0 0 12px rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                        : sessionStats.accuracy >= 75
+                          ? "0 0 12px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                          : "0 0 8px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                   }}
                 >
                   {(() => {
@@ -1891,17 +1912,17 @@ export function InteractiveDashboardWordCard({
                     let emoji, title;
 
                     if (accuracy >= 90) {
-                      emoji = '👑';
-                      title = 'Jungle Master';
+                      emoji = "👑";
+                      title = "Jungle Master";
                     } else if (accuracy >= 75) {
-                      emoji = '🏆';
-                      title = 'Jungle Hero';
+                      emoji = "🏆";
+                      title = "Jungle Hero";
                     } else if (accuracy >= 50) {
-                      emoji = '🌟';
-                      title = 'Explorer';
+                      emoji = "🌟";
+                      title = "Explorer";
                     } else {
-                      emoji = '🌱';
-                      title = 'Rookie';
+                      emoji = "🌱";
+                      title = "Rookie";
                     }
 
                     return `${emoji} ${accuracy}% ${title}`;
