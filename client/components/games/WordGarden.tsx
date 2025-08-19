@@ -797,7 +797,9 @@ export default function WordGarden({
     return (
       <Wrapper className={className}>
         <div className="rounded-3xl bg-gradient-to-br from-jungle-light to-jungle-DEFAULT p-4 md:p-8 shadow-xl text-center border-2 border-jungle-light/30">
-          <div className="text-4xl md:text-6xl mb-2 md:mb-4 animate-jungle-float">🐒</div>
+          <div className="text-4xl md:text-6xl mb-2 md:mb-4 animate-jungle-float">
+            🐒
+          </div>
           <div className="font-bold text-white text-base md:text-lg drop-shadow-lg">
             Growing your jungle words…
           </div>
@@ -1045,7 +1047,9 @@ export default function WordGarden({
             aria-label="Play jungle sound"
           >
             <div className="flex items-center gap-2">
-              <span className="text-xl md:text-2xl group-hover:animate-pulse">🔊</span>
+              <span className="text-xl md:text-2xl group-hover:animate-pulse">
+                🔊
+              </span>
               <span className="hidden md:inline text-sm font-bold">Play</span>
             </div>
 
@@ -1422,31 +1426,41 @@ export default function WordGarden({
         {/* Enhanced Adventure progress indicators with better visibility */}
         <div className="flex justify-between mt-3 md:mt-6 px-2 md:px-3 gap-1">
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🚀</span>
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">
+              🚀
+            </span>
             <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Start
             </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🌿</span>
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">
+              🌿
+            </span>
             <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Jungle
             </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🏔️</span>
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">
+              🏔️
+            </span>
             <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Peak
             </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">🏆</span>
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">
+              🏆
+            </span>
             <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Victory
             </span>
           </div>
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-1 md:px-2 py-1 md:py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
-            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">👑</span>
+            <span className="block text-sm md:text-lg mb-0.5 md:mb-1 drop-shadow-lg">
+              👑
+            </span>
             <span className="text-[10px] md:text-xs font-semibold text-emerald-200 drop-shadow-md">
               Legend
             </span>
