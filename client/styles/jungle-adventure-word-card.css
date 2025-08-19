@@ -532,8 +532,8 @@
     transform: scale(0) rotate(0deg);
   }
   50% {
-    opacity: 0.5;
-    transform: scale(1) rotate(180deg);
+    opacity: 0.3;
+    transform: scale(0.7) rotate(180deg);
   }
   100% {
     opacity: 0;
@@ -542,7 +542,7 @@
 }
 
 .animate-celebration-sparkles {
-  animation: celebration-sparkles 3s ease-out infinite;
+  animation: celebration-sparkles 4s ease-out infinite;
 }
 
 /* Animation delays */

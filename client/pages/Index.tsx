@@ -1956,7 +1956,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🏆 My Journey",
+                      label: "��� My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
@@ -2312,12 +2312,12 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                             {/* Jungle Adventure Center: Category and Progress */}
                                             <div className="flex-1 text-center">
-                                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-2xl px-4 py-3 mx-2 border-2 border-jungle-light/40 shadow-lg">
+                                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-xl px-3 py-2 mx-1 border border-jungle-light/40 shadow-md">
                                                 {/* Jungle Decorative Elements */}
-                                                <div className="absolute -top-1 left-2 text-lg animate-gentle-bounce">
+                                                <div className="absolute -top-0.5 left-1 text-sm animate-gentle-bounce">
                                                   🌿
                                                 </div>
-                                                <div className="absolute -top-1 right-2 text-lg animate-gentle-bounce animation-delay-300">
+                                                <div className="absolute -top-0.5 right-1 text-sm animate-gentle-bounce animation-delay-300">
                                                   🦋
                                                 </div>
 
@@ -2332,23 +2332,23 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 </div>
 
                                                 {/* Progress Stats */}
-                                                <div className="flex items-center justify-center gap-3 text-xs text-white/90 font-semibold mt-1">
-                                                  <span className="inline-flex items-center gap-1 bg-white/20 rounded-full px-2 py-1">
+                                                <div className="flex items-center justify-center gap-2 text-xs text-white/90 font-semibold mt-0.5">
+                                                  <span className="inline-flex items-center gap-0.5 bg-white/20 rounded-full px-1.5 py-0.5 text-xs">
                                                     📍 {currentWordIndex + 1}/
                                                     {displayWords.length}
                                                   </span>
-                                                  <span className="inline-flex items-center gap-1 bg-sunshine/20 rounded-full px-2 py-1">
+                                                  <span className="inline-flex items-center gap-0.5 bg-sunshine/20 rounded-full px-1.5 py-0.5 text-xs">
                                                     🏆 {rememberedWords.size}
                                                   </span>
                                                   {forgottenWords.size > 0 && (
-                                                    <span className="inline-flex items-center gap-1 bg-coral-red/20 rounded-full px-2 py-1">
+                                                    <span className="inline-flex items-center gap-0.5 bg-coral-red/20 rounded-full px-1.5 py-0.5 text-xs">
                                                       🔄 {forgottenWords.size}
                                                     </span>
                                                   )}
                                                 </div>
 
                                                 {/* Animated Progress Bar */}
-                                                <div className="mt-2 bg-white/20 rounded-full h-2 overflow-hidden">
+                                                <div className="mt-1 bg-white/20 rounded-full h-1.5 overflow-hidden">
                                                   <div
                                                     className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
                                                     style={{

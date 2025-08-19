@@ -439,7 +439,7 @@ export const JungleAdventureWordCard: React.FC<
 
               {/* Jungle Adventure Word Display */}
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <div className="flex items-center justify-center gap-2 sm:gap-3">
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
                     {word.word}
                   </h2>
@@ -450,9 +450,9 @@ export const JungleAdventureWordCard: React.FC<
                     }}
                     disabled={isPlaying}
                     className={cn(
-                      "h-16 w-16 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
+                      "h-12 w-12 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
                       "bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400",
-                      "border-4 border-white/50 hover:border-white/70",
+                      "border-2 sm:border-4 border-white/50 hover:border-white/70",
                       "text-white hover:scale-110 active:scale-95",
                       "shadow-2xl hover:shadow-3xl",
                       "jungle-adventure-pronounce-btn",
@@ -461,7 +461,7 @@ export const JungleAdventureWordCard: React.FC<
                     )}
                     aria-label="Hear jungle word pronunciation"
                   >
-                    <Volume2 className="w-8 h-8 sm:w-7 sm:h-7 drop-shadow-lg" />
+                    <Volume2 className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-lg" />
                   </Button>
                 </div>
 
@@ -474,11 +474,11 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Jungle Adventure Flip Hint */}
-            <div className="mt-1 sm:mt-2 text-center px-2">
-              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-3 py-2 sm:px-4 sm:py-3 mx-auto max-w-[280px] sm:max-w-none animate-gentle-bounce shadow-lg">
-                <p className="text-xs sm:text-sm md:text-base opacity-95 leading-tight font-bold jungle-adventure-hint break-words">
-                  <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2 animate-spin-slow" />
-                  <span className="inline-block">
+            <div className="mt-1 sm:mt-2 text-center px-2 sm:px-4">
+              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border border-white/30 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mx-auto max-w-[95%] sm:max-w-none animate-gentle-bounce shadow-lg">
+                <p className="text-xs sm:text-sm opacity-95 leading-tight font-bold jungle-adventure-hint text-center flex items-center justify-center gap-1">
+                  <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 animate-spin-slow flex-shrink-0" />
+                  <span className="truncate">
                     Explore the jungle secrets! 🌿✨
                   </span>
                 </p>
