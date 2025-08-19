@@ -82,14 +82,15 @@ export function EnhancedMagicalAdventureMenu({
       description: "Test your knowledge",
     },
     {
-      id: "progress",
-      emoji: "🗺️",
-      gradientEmoji: "👑",
-      label: userRole === "parent" ? "Reports" : "Journey",
+      id: "achievements",
+      emoji: "🏆",
+      gradientEmoji: "🌟",
+      label: "Trophies",
       icon: Trophy,
-      gradient: "from-amber-500 via-yellow-400 to-orange-500",
-      shadowColor: "shadow-amber-500/25",
-      description: "Track your adventure",
+      gradient: "from-yellow-500 via-yellow-400 to-orange-500",
+      shadowColor: "shadow-yellow-500/25",
+      description: "View your achievements",
+      badge: achievementCount > 0 ? achievementCount : undefined,
     },
   ];
 
