@@ -1351,14 +1351,14 @@ export function InteractiveDashboardWordCard({
             <motion.div
               animate={{
                 scale: [1, 1.1, 1],
-                opacity: [0.1, 0.2, 0.1],
+                opacity: [0.2, 0.4, 0.2],
               }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-0 bg-gradient-to-t from-jungle/10 via-transparent to-jungle/5 rounded-2xl"
+              className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-yellow-900/10 rounded-2xl"
             />
           </div>
 
@@ -1635,7 +1635,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Food: {
                         easy: [
-                          "🍌 What jungle snack is this?",
+                          "�� What jungle snack is this?",
                           "🥥 Which jungle treat do you see?",
                           "🍯 Can you name this jungle delight?",
                           "🫐 What jungle berry is this?",
