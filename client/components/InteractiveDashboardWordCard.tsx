@@ -1456,7 +1456,7 @@ export function InteractiveDashboardWordCard({
             {/* Jungle Adventure Surface Glow */}
             <motion.div
               animate={{
-                opacity: [0.1, 0.3, 0.1],
+                opacity: [0.2, 0.4, 0.2],
                 scale: [1, 1.02, 1],
               }}
               transition={{
@@ -1464,8 +1464,10 @@ export function InteractiveDashboardWordCard({
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute inset-2 bg-gradient-to-br from-sunshine/10 via-transparent to-jungle/10 rounded-xl pointer-events-none"
+              className="absolute inset-2 bg-gradient-to-br from-yellow-400/20 via-transparent to-green-400/15 rounded-xl pointer-events-none"
             />
+            {/* Jungle Photo Texture Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-900/5 to-green-900/10 rounded-2xl pointer-events-none" />
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
