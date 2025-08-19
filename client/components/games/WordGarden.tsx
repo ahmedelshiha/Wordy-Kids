@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 text-white border-2 border-emerald-500/40 backdrop-blur-sm overflow-hidden">
+      <div className="relative rounded-3xl shadow-2xl p-2 md:p-4 pb-16 md:pb-20 text-white border-2 border-emerald-500/40 backdrop-blur-sm overflow-hidden">
         {/* Magical Jungle Background - Deep emerald-to-moss gradient */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Main jungle gradient background */}
@@ -965,7 +965,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Adventure Top Bar */}
-        <div className="mb-4 relative z-10">
+        <div className="mb-2 md:mb-4 relative z-10">
           <div className="flex items-center justify-between text-sm mb-2">
             <div className="flex items-center gap-2 bg-emerald-800/30 rounded-full px-3 py-1 border border-emerald-500/40 backdrop-blur-sm shadow-lg">
               <TreePine className="w-4 h-4 text-emerald-200" />
@@ -1015,7 +1015,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Guide + Play */}
-        <div className="flex items-center justify-between gap-3 mb-5 relative z-10">
+        <div className="flex items-center justify-between gap-2 md:gap-3 mb-3 md:mb-5 relative z-10">
           <div className="flex items-center gap-3">
             <div className="relative">
               <span className="text-5xl md:text-6xl animate-jungle-float">
@@ -1238,7 +1238,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Adventure XP + Streak */}
-        <div className="mt-6 relative z-10 mb-8">
+        <div className="mt-3 md:mt-6 relative z-10 mb-4 md:mb-8">
           <div className="text-sm flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-yellow-300">
               <Mountain className="w-4 h-4" />
@@ -1250,7 +1250,7 @@ export default function WordGarden({
             </div>
           </div>
 
-          <div className="relative mb-6">
+          <div className="relative mb-3 md:mb-6">
             <div className="h-4 rounded-full bg-gray-200 overflow-hidden border border-gray-300">
               <div
                 className="h-4 rounded-full bg-gradient-to-r from-jungle-DEFAULT via-jungle-light to-sunshine-DEFAULT transition-all duration-700 ease-out relative overflow-hidden"
@@ -1269,9 +1269,9 @@ export default function WordGarden({
             </div>
 
             {/* Enhanced Jungle adventure level indicators with better visibility */}
-            <div className="flex justify-between mt-4 px-2 gap-1">
+            <div className="flex justify-between mt-2 md:mt-4 px-1 md:px-2 gap-1">
               <div
-                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                className={`flex flex-col items-center gap-1 md:gap-2 px-1 md:px-2 py-2 md:py-3 rounded-xl border-2 transition-all duration-300 ${
                   xpPct >= 25
                     ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
                     : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
@@ -1284,7 +1284,7 @@ export default function WordGarden({
                 )}
               </div>
               <div
-                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                className={`flex flex-col items-center gap-1 md:gap-2 px-1 md:px-2 py-2 md:py-3 rounded-xl border-2 transition-all duration-300 ${
                   xpPct >= 50
                     ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
                     : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
@@ -1299,7 +1299,7 @@ export default function WordGarden({
                 )}
               </div>
               <div
-                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 ${
+                className={`flex flex-col items-center gap-1 md:gap-2 px-1 md:px-2 py-2 md:py-3 rounded-xl border-2 transition-all duration-300 ${
                   xpPct >= 75
                     ? "bg-gradient-to-b from-yellow-400/20 to-yellow-500/30 border-yellow-400/60 text-yellow-200 shadow-lg transform scale-105"
                     : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
@@ -1312,7 +1312,7 @@ export default function WordGarden({
                 )}
               </div>
               <div
-                className={`flex flex-col items-center gap-2 px-2 py-3 rounded-xl border-2 transition-all duration-300 relative ${
+                className={`flex flex-col items-center gap-1 md:gap-2 px-1 md:px-2 py-2 md:py-3 rounded-xl border-2 transition-all duration-300 relative ${
                   xpPct >= 100
                     ? "bg-gradient-to-b from-yellow-400/30 to-yellow-500/40 border-yellow-300/80 text-yellow-100 shadow-xl transform scale-110 animate-pulse"
                     : "bg-emerald-900/40 border-emerald-700/50 text-emerald-300 hover:bg-emerald-800/50"
@@ -1333,7 +1333,7 @@ export default function WordGarden({
       </div>
 
       {/* Immersive Jungle Adventure Progress Trail */}
-      <div className="mt-8 relative mb-12">
+      <div className="mt-4 md:mt-8 relative mb-6 md:mb-12">
         {/* Rich jungle path background */}
         <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-emerald-200/80 via-green-100/90 to-lime-200/80 rounded-2xl border-2 border-emerald-300/60 shadow-lg" />
         {/* Jungle path texture overlay */}
@@ -1420,7 +1420,7 @@ export default function WordGarden({
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-emerald-400 via-green-300 to-lime-400 rounded-full -translate-y-1/2 -z-10" />
 
         {/* Enhanced Adventure progress indicators with better visibility */}
-        <div className="flex justify-between mt-6 px-3 gap-1">
+        <div className="flex justify-between mt-3 md:mt-6 px-2 md:px-3 gap-1">
           <div className="text-center flex flex-col items-center bg-emerald-900/50 border border-emerald-600/40 rounded-lg px-2 py-2 backdrop-blur-sm hover:bg-emerald-800/60 transition-all duration-300">
             <span className="block text-lg mb-1 drop-shadow-lg">🚀</span>
             <span className="text-xs font-semibold text-emerald-200 drop-shadow-md">
