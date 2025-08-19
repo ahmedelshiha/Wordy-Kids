@@ -383,9 +383,9 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="birthDate"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🎂</span>
+                    <span className="text-base md:text-lg">🎂</span>
                     Birthday Adventure
                   </Label>
                   <div className="relative">
@@ -396,7 +396,7 @@ export default function SignUp() {
                       placeholder="dd/mm/yyyy"
                       value={formData.birthDate}
                       onChange={handleInputChange}
-                      className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      className="mt-1 md:mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-sm md:text-base pr-10 md:pr-12 rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] py-2 md:py-3"
                       maxLength={10}
                       disabled={isLoading}
                     />
