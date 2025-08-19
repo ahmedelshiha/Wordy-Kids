@@ -72,7 +72,7 @@ export const useUserProgress = (): UserStatsData => {
         
         // Get time spent from analytics
         const analyticsData = await AnalyticsDataService.getInstance().getAnalyticsData();
-        const timeSpent = analyticsData.overview?.totalLearningTime || 0;
+        const timeSpent = analyticsData.totalLearningTime || 0;
 
         const updatedProgress: UserProgressData = {
           wordsLearned: systematicProgress.totalWordsLearned || journeyProgress.wordsLearned || 0,
