@@ -3362,7 +3362,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       <motion.h1
                                         initial={{ y: -20, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
-                                        className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-jungle-dark via-jungle to-jungle-light bg-clip-text text-transparent relative"
+                                        className="text-4xl md:text-5xl font-bold text-white drop-shadow-2xl relative"
                                       >
                                         <span className="relative inline-block">
                                           <span className="animate-jungle-glow">

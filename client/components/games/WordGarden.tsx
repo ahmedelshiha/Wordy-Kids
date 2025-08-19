@@ -834,13 +834,13 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-sm border-2 border-jungle-light/30 overflow-hidden">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-gradient-to-br from-jungle-DEFAULT via-emerald-700 to-jungle-dark text-white backdrop-blur-md border-2 border-jungle-light/50 overflow-hidden">
         {/* Enhanced Immersive Jungle Background Environment */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Multiple Layer Jungle Canopy Background */}
           <div className="absolute inset-0">
             {/* Deep jungle canopy backdrop */}
-            <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/40 via-jungle-dark/60 to-jungle-DEFAULT/80" />
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/60 via-jungle-dark/80 to-jungle-DEFAULT/90" />
 
             {/* Animated jungle canopy layers */}
             <div
@@ -1698,7 +1698,7 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 ${className}`}>
+    <div className={`relative w-full max-w-md mx-auto p-4 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20 shadow-xl ${className}`}>
       {children}
     </div>
   );
