@@ -3162,89 +3162,72 @@ export default function Index({ initialProfile }: IndexProps) {
                                     </div>
                                   </div>
 
-                                  {/* Recent Scores */}
-                                  <div className="max-w-2xl mx-auto">
-                                    <Card className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 hidden">
-                                      <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                          <Trophy className="w-5 h-5 text-educational-orange" />
-                                          Your Recent Quiz Scores
-                                        </CardTitle>
-                                      </CardHeader>
-                                      <CardContent>
-                                        <div className="space-y-3">
-                                          <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                                            <div className="flex items-center gap-3">
-                                              <span className="text-2xl">
-                                                🎯
-                                              </span>
-                                              <div>
-                                                <div className="font-semibold">
-                                                  Standard Quiz
-                                                </div>
-                                                <div className="text-sm text-gray-600">
-                                                  Yesterday
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="text-right">
-                                              <div className="font-bold text-educational-blue">
-                                                8/10
-                                              </div>
-                                              <div className="text-sm text-gray-600">
-                                                80%
-                                              </div>
-                                            </div>
+                                  {/* Jungle Adventure Progress & Achievements */}
+                                  <div className="max-w-4xl mx-auto">
+                                    <div className="jungle-progress-container">
+                                      <div className="text-center mb-6">
+                                        <h3 className="text-2xl font-bold text-jungle-green mb-2 flex items-center justify-center gap-3">
+                                          <div className="jungle-sound-indicator">
+                                            <Trophy className="w-6 h-6 text-white" />
                                           </div>
-                                          <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                                            <div className="flex items-center gap-3">
-                                              <span className="text-2xl">
-                                                📊
-                                              </span>
-                                              <div>
-                                                <div className="font-semibold">
-                                                  Easy Quiz
-                                                </div>
-                                                <div className="text-sm text-gray-600">
-                                                  2 days ago
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="text-right">
-                                              <div className="font-bold text-educational-green">
-                                                5/5
-                                              </div>
-                                              <div className="text-sm text-gray-600">
-                                                100%
-                                              </div>
-                                            </div>
+                                          🏆 Your Jungle Adventures! 🏆
+                                        </h3>
+                                        <p className="text-jungle-dark">
+                                          Track your epic quiz journeys and celebrate your achievements! 🌟
+                                        </p>
+                                      </div>
+
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {/* Achievement Items */}
+                                        <div className="jungle-achievement-item">
+                                          <div className="jungle-achievement-icon">🌺</div>
+                                          <div className="flex-1">
+                                            <div className="font-bold text-jungle-green">Garden Explorer</div>
+                                            <div className="text-sm text-jungle-dark">Latest enchanted garden quest completed!</div>
                                           </div>
-                                          <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                                            <div className="flex items-center gap-3">
-                                              <span className="text-2xl">
-                                                🏆
-                                              </span>
-                                              <div>
-                                                <div className="font-semibold">
-                                                  Challenge Quiz
-                                                </div>
-                                                <div className="text-sm text-gray-600">
-                                                  3 days ago
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="text-right">
-                                              <div className="font-bold text-educational-purple">
-                                                12/15
-                                              </div>
-                                              <div className="text-sm text-gray-600">
-                                                80%
-                                              </div>
-                                            </div>
+                                          <div className="text-right">
+                                            <div className="font-bold text-sunshine-yellow">8/10</div>
+                                            <div className="text-sm text-jungle-dark">Amazing!</div>
                                           </div>
                                         </div>
-                                      </CardContent>
-                                    </Card>
+
+                                        <div className="jungle-achievement-item">
+                                          <div className="jungle-achievement-icon">🎧</div>
+                                          <div className="flex-1">
+                                            <div className="font-bold text-sky-blue">Sound Safari Master</div>
+                                            <div className="text-sm text-jungle-dark">Mystical audio adventure completed!</div>
+                                          </div>
+                                          <div className="text-right">
+                                            <div className="font-bold text-sunshine-yellow">5/5</div>
+                                            <div className="text-sm text-jungle-dark">Perfect!</div>
+                                          </div>
+                                        </div>
+
+                                        <div className="jungle-achievement-item">
+                                          <div className="jungle-achievement-icon">📸</div>
+                                          <div className="flex-1">
+                                            <div className="font-bold text-bright-orange">Treasure Hunter</div>
+                                            <div className="text-sm text-jungle-dark">Picture quest adventure awaits!</div>
+                                          </div>
+                                          <div className="text-right">
+                                            <div className="font-bold text-sunshine-yellow">12/15</div>
+                                            <div className="text-sm text-jungle-dark">Great job!</div>
+                                          </div>
+                                        </div>
+
+                                        <div className="jungle-achievement-item">
+                                          <div className="jungle-achievement-icon">💎</div>
+                                          <div className="flex-1">
+                                            <div className="font-bold text-playful-purple">Crystal Guardian</div>
+                                            <div className="text-sm text-jungle-dark">Vowel crystal expedition mastery!</div>
+                                          </div>
+                                          <div className="text-right">
+                                            <div className="font-bold text-sunshine-yellow">Ready!</div>
+                                            <div className="text-sm text-jungle-dark">Let's go!</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               ) : gameMode === "word-garden" ? (
