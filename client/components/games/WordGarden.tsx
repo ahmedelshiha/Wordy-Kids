@@ -1713,6 +1713,63 @@ export default function WordGarden({
             transform: translateY(5px) translateX(-2px);
           }
         }
+
+        /* Enhanced magical jungle completion animations */
+        @keyframes magical-pulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.8;
+          }
+          50% {
+            transform: scale(1.05);
+            opacity: 1;
+          }
+        }
+
+        @keyframes mystical-glow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 50px rgba(34, 197, 94, 0.2);
+          }
+        }
+
+        @keyframes jungle-breeze {
+          0%, 100% {
+            transform: translateX(0) skewX(0deg);
+          }
+          25% {
+            transform: translateX(2px) skewX(1deg);
+          }
+          75% {
+            transform: translateX(-2px) skewX(-1deg);
+          }
+        }
+
+        /* Additional firefly animation for completion dialog */
+        @keyframes firefly-celebration {
+          0%, 100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.7;
+          }
+          20% {
+            transform: translate(15px, -10px) scale(1.3);
+            opacity: 1;
+          }
+          40% {
+            transform: translate(-8px, -20px) scale(0.9);
+            opacity: 0.9;
+          }
+          60% {
+            transform: translate(-15px, 8px) scale(1.2);
+            opacity: 1;
+          }
+          80% {
+            transform: translate(10px, 12px) scale(0.8);
+            opacity: 0.8;
+          }
+        }
       `}</style>
 
       {/* Jungle Adventure Achievement Popup */}
