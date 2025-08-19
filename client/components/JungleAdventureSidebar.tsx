@@ -470,10 +470,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           </div>
         </div>
 
-        {/* Registration Section - Desktop Only - Ultra Compact with improved positioning */}
+        {/* Registration Section - Desktop Only - Ultra Compact directly under achievements */}
         <motion.div
           variants={itemVariants}
-          className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 mt-3 mb-2"
+          className="hidden lg:block bg-gradient-to-r from-sunshine/90 to-yellow-400/90 rounded-[16px] p-3 shadow-lg relative overflow-hidden flex-shrink-0 border border-yellow-400/30 mb-2"
         >
           <div className="relative z-10">
             {isGuest ? (
