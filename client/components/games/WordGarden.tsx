@@ -843,14 +843,15 @@ export default function WordGarden({
             <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/40 via-jungle-dark/60 to-jungle-DEFAULT/80" />
 
             {/* Animated jungle canopy layers */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-emerald-800/50 to-transparent animate-jungle-sway"
-                 style={{
-                   backgroundImage: `
+            <div
+              className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-emerald-800/50 to-transparent animate-jungle-sway"
+              style={{
+                backgroundImage: `
                      radial-gradient(circle at 20% 30%, rgba(34, 197, 94, 0.3) 0%, transparent 50%),
                      radial-gradient(circle at 80% 20%, rgba(139, 195, 74, 0.25) 0%, transparent 40%),
                      radial-gradient(circle at 60% 60%, rgba(76, 175, 80, 0.2) 0%, transparent 35%)
-                   `
-                 }}
+                   `,
+              }}
             />
 
             {/* Jungle vines hanging from top */}
@@ -884,16 +885,28 @@ export default function WordGarden({
               >
                 <span
                   className={`text-xs opacity-60 animate-jungle-float ${
-                    i % 4 === 0 ? 'text-sunshine-light' :
-                    i % 4 === 1 ? 'text-jungle-light' :
-                    i % 4 === 2 ? 'text-emerald-300' : 'text-lime-300'
+                    i % 4 === 0
+                      ? "text-sunshine-light"
+                      : i % 4 === 1
+                        ? "text-jungle-light"
+                        : i % 4 === 2
+                          ? "text-emerald-300"
+                          : "text-lime-300"
                   }`}
                   style={{
                     animationDuration: `${4 + Math.random() * 3}s`,
                     animationDelay: `${Math.random() * 2}s`,
                   }}
                 >
-                  {i % 5 === 0 ? '🦋' : i % 5 === 1 ? '🌺' : i % 5 === 2 ? '🍃' : i % 5 === 3 ? '✨' : '🌿'}
+                  {i % 5 === 0
+                    ? "🦋"
+                    : i % 5 === 1
+                      ? "🌺"
+                      : i % 5 === 2
+                        ? "🍃"
+                        : i % 5 === 3
+                          ? "✨"
+                          : "🌿"}
                 </span>
               </div>
             ))}
@@ -910,7 +923,9 @@ export default function WordGarden({
                     animationDuration: `${2 + Math.random()}s`,
                   }}
                 >
-                  <span className="text-lg animate-jungle-depth">{i % 3 === 0 ? '🌱' : i % 3 === 1 ? '🌿' : '🍀'}</span>
+                  <span className="text-lg animate-jungle-depth">
+                    {i % 3 === 0 ? "🌱" : i % 3 === 1 ? "🌿" : "🍀"}
+                  </span>
                 </div>
               ))}
             </div>
@@ -948,10 +963,16 @@ export default function WordGarden({
           {/* Enhanced jungle creatures and ambient life */}
           <div className="absolute inset-0">
             {/* Jungle monkeys in trees */}
-            <div className="absolute top-4 right-8 animate-jungle-creature" style={{ animationDelay: '0s' }}>
+            <div
+              className="absolute top-4 right-8 animate-jungle-creature"
+              style={{ animationDelay: "0s" }}
+            >
               <span className="text-2xl drop-shadow-lg">🐒</span>
             </div>
-            <div className="absolute top-12 left-12 animate-jungle-creature" style={{ animationDelay: '2s' }}>
+            <div
+              className="absolute top-12 left-12 animate-jungle-creature"
+              style={{ animationDelay: "2s" }}
+            >
               <span className="text-lg opacity-70 drop-shadow-lg">🦜</span>
             </div>
 
@@ -975,7 +996,10 @@ export default function WordGarden({
             <div className="absolute top-1/3 left-8 animate-jungle-depth">
               <span className="text-xl drop-shadow-lg">🌺</span>
             </div>
-            <div className="absolute bottom-1/4 right-12 animate-jungle-depth" style={{ animationDelay: '1s' }}>
+            <div
+              className="absolute bottom-1/4 right-12 animate-jungle-depth"
+              style={{ animationDelay: "1s" }}
+            >
               <span className="text-lg drop-shadow-lg">🌸</span>
             </div>
 
@@ -983,7 +1007,10 @@ export default function WordGarden({
             <div className="absolute bottom-8 left-8 animate-jungle-treasure opacity-60">
               <span className="text-sm drop-shadow-lg">📦</span>
             </div>
-            <div className="absolute top-1/2 right-4 animate-jungle-treasure opacity-60" style={{ animationDelay: '2s' }}>
+            <div
+              className="absolute top-1/2 right-4 animate-jungle-treasure opacity-60"
+              style={{ animationDelay: "2s" }}
+            >
               <span className="text-sm drop-shadow-lg">🗝️</span>
             </div>
           </div>
