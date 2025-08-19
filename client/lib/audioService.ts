@@ -323,7 +323,7 @@ export class AudioService {
       volume?: number;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     if (!this.isEnabled || !word?.trim()) return;
