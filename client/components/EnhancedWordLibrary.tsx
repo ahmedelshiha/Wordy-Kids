@@ -419,15 +419,15 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
               <h1
                 className={`font-bold ${
                   largeTextMode ? "text-xl" : "text-lg"
-                } ${highContrastMode ? "text-white" : "text-slate-800"}`}
+                } ${highContrastMode ? "text-white" : "bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent"}`}
               >
                 {viewMode === "categories"
-                  ? "Word Library"
+                  ? "🌿 Jungle Word Library 🦋"
                   : viewMode === "vocabulary"
-                    ? "Vocabulary Builder"
+                    ? "🎧 Jungle Vocabulary Builder 🌳"
                     : selectedCategory === "all"
-                      ? "All Words"
-                      : selectedCategory}
+                      ? "🌳 All Jungle Words 🦋"
+                      : `🌿 ${selectedCategory} Adventure`}
               </h1>
             </div>
 
