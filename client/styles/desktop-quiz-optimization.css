@@ -8,6 +8,11 @@
 .desktop-quiz-optimized {
   margin-bottom: 1.5rem;
 }
+
+/* Overall quiz section spacing optimization */
+.desktop-quiz-container .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1.5rem;
+}
 @media (min-width: 1024px) {
   /* Optimize hero section for desktop */
   .jungle-quiz-hero {
