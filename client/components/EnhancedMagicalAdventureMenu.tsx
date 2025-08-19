@@ -451,6 +451,13 @@ export function EnhancedMagicalAdventureMenu({
                     {tab.emoji}
                   </motion.div>
 
+                  {/* Badge for achievements */}
+                  {tab.badge && (
+                    <Badge className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-xs min-w-[20px] h-5 z-10">
+                      {tab.badge}
+                    </Badge>
+                  )}
+
                   {/* Gradient emoji overlay */}
                   <motion.div
                     className="absolute -top-1 -right-1 text-xs"
