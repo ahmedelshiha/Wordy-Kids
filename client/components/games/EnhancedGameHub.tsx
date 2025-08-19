@@ -19,6 +19,7 @@ import {
   Info,
 } from "lucide-react";
 import { EnhancedJungleQuizAdventure } from "./EnhancedJungleQuizAdventure";
+import { EnhancedJungleQuizAdventureDesktop } from "./EnhancedJungleQuizAdventureDesktop";
 import { AdventureGames } from "./AdventureGames";
 import { QuizGames } from "./QuizGames";
 import { WordGarden } from "./WordGarden";
@@ -217,7 +218,7 @@ export function EnhancedGameHub({
   if (activeSection === "enhanced-quiz") {
     return (
       <div className="min-h-screen">
-        <EnhancedJungleQuizAdventure
+        <EnhancedJungleQuizAdventureDesktop
           selectedCategory={selectedCategory}
           onComplete={handleEnhancedQuizComplete}
           onExit={handleGameExit}
