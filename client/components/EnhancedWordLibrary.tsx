@@ -957,20 +957,20 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   size="sm"
                   variant="outline"
                   onClick={() => setViewMode("categories")}
-                  className="min-h-[44px] px-4"
+                  className="min-h-[44px] px-4 hover:bg-jungle/10 hover:text-jungle border-jungle/30"
                 >
                   <Grid3X3 className="w-4 h-4 mr-2" />
-                  Categories
+                  🌳 Categories
                 </Button>
 
                 <Button
                   size="sm"
                   variant="outline"
                   onClick={handleVocabularyBuilder}
-                  className="min-h-[44px] px-4"
+                  className="min-h-[44px] px-4 hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30"
                 >
                   <Brain className="w-4 h-4 mr-2" />
-                  Practice
+                  🌿 Practice
                 </Button>
               </div>
 
@@ -1000,7 +1000,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     : "grid",
               )
             }
-            className="w-14 h-14 rounded-full bg-educational-blue hover:bg-educational-blue/90 shadow-lg"
+            className="w-14 h-14 rounded-full bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-xl"
             aria-label="Change view mode"
           >
             {wordViewMode === "grid"
@@ -1015,7 +1015,7 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
       {/* Skip Link for Screen Readers */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-educational-blue text-white px-4 py-2 rounded-md z-50"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gradient-to-r from-jungle to-sunshine text-white px-4 py-2 rounded-md z-50"
       >
         Skip to main content
       </a>
