@@ -65,8 +65,7 @@ export const useUserProgress = (): UserStatsData => {
       }
 
       try {
-        const progressTracker = GoalProgressTracker.getInstance();
-        const systematicProgress = await progressTracker.fetchSystematicProgress(user.id);
+        const systematicProgress = await goalProgressTracker.fetchSystematicProgress(user.id);
         
         // Get journey progress for additional stats
         const journeyProgress = AchievementTracker.getJourneyProgress();
