@@ -609,8 +609,8 @@ export function ChildFriendlyCategorySelector({
                   onClick={() => handleCategoryClick(category.id)}
                   className={`flex-shrink-0 h-16 w-16 flex-col gap-1 ${
                     selectedCategory === category.id
-                      ? "bg-educational-blue hover:bg-educational-blue/90 text-white border-2 border-educational-blue"
-                      : "hover:bg-educational-blue/10 hover:text-educational-blue hover:border-educational-blue"
+                      ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg"
+                      : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md"
                   }`}
                 >
                   <span className="text-lg">{category.icon}</span>
@@ -620,8 +620,8 @@ export function ChildFriendlyCategorySelector({
                 </Button>
               ))}
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              📱 Scroll right to see all {enrichedCategories.length} categories
+            <p className="text-xs text-jungle-dark/70 mt-1">
+              🌳 Scroll right to explore all {enrichedCategories.length} jungle adventures
             </p>
           </div>
         )}
@@ -641,7 +641,7 @@ export function ChildFriendlyCategorySelector({
               key={category.id}
               className={`cursor-pointer transition-all duration-300 overflow-hidden ${
                 selectedCategory === category.id
-                  ? "ring-3 ring-educational-blue shadow-xl bg-gradient-to-br from-blue-50 to-purple-50 scale-[1.02] md:scale-105"
+                  ? "ring-3 ring-jungle shadow-xl bg-gradient-to-br from-jungle/5 to-sunshine/10 scale-[1.02] md:scale-105"
                   : "hover:shadow-lg hover:scale-[1.01] md:hover:scale-110 md:hover:-translate-y-1"
               }`}
               style={{
@@ -660,8 +660,8 @@ export function ChildFriendlyCategorySelector({
                   {/* Mobile Recommended Badge */}
                   {isRecommended && (
                     <div className="absolute top-1 left-1 md:top-2 md:left-2">
-                      <Badge className="bg-yellow-400 text-yellow-900 text-xs px-1.5 py-0.5 md:px-2 md:py-1 animate-pulse">
-                        ⭐ For You
+                      <Badge className="bg-gradient-to-r from-sunshine to-bright-orange text-navy text-xs px-1.5 py-0.5 md:px-2 md:py-1 animate-pulse shadow-lg">
+                        🌟 For You
                       </Badge>
                     </div>
                   )}
@@ -689,7 +689,7 @@ export function ChildFriendlyCategorySelector({
                   <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2">
                     {category.name}
                   </h3>
-                  <Badge className="bg-white/20 border-white/30 text-white text-xs">
+                  <Badge className="bg-white/30 border-white/40 text-white text-xs shadow-lg backdrop-blur-sm">
                     <Zap className="w-3 h-3 mr-1" />
                     {category.wordCount} words
                   </Badge>
@@ -709,7 +709,7 @@ export function ChildFriendlyCategorySelector({
                   <p
                     className={`text-xs md:text-sm leading-relaxed transition-colors duration-300 ${
                       selectedCategory === category.id
-                        ? "text-educational-blue font-semibold"
+                        ? "text-jungle font-semibold"
                         : "text-slate-600"
                     }`}
                   >
@@ -719,9 +719,9 @@ export function ChildFriendlyCategorySelector({
                   {/* Mobile Fun Fact - Show for selected */}
                   {(hoveredCategory === category.id ||
                     selectedCategory === category.id) && (
-                    <div className="bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 rounded-lg p-2 md:p-3 animate-fade-in">
-                      <p className="text-xs md:text-sm text-educational-purple font-semibold">
-                        💡 {category.funFact}
+                    <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-lg p-2 md:p-3 animate-fade-in border border-jungle/20">
+                      <p className="text-xs md:text-sm text-jungle-dark font-semibold">
+                        🌿 {category.funFact}
                       </p>
                     </div>
                   )}
