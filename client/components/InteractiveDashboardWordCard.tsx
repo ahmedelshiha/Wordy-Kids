@@ -1196,17 +1196,275 @@ export function InteractiveDashboardWordCard({
             </div>
             */}
 
-            {/* Game Instructions */}
+            {/* Jungle Adventure Game Instructions */}
             <header className="text-center mb-3 sm:mb-4 md:mb-5" role="banner">
-              <motion.h1
-                key={`prompt-${currentWordIndex}`}
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.4, type: "spring", damping: 20 }}
-                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-1 sm:mb-2"
+              <motion.div
+                key={`jungle-prompt-${currentWordIndex}`}
+                initial={{ opacity: 0, y: -20, scale: 0.9, rotateY: -15 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
+                transition={{
+                  duration: 0.8,
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 20,
+                  delay: 0.2
+                }}
+                className="relative"
               >
-                🤔 Name this object!
-              </motion.h1>
+                {/* Jungle Adventure Background Glow */}
+                <motion.div
+                  initial={{ scale: 0, opacity: 0.8 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="absolute inset-0 bg-gradient-to-r from-jungle/20 via-sunshine/30 to-jungle/20 rounded-3xl blur-xl"
+                />
+
+                {/* Dynamic Jungle Explorer Prompt */}
+                <motion.h1
+                  initial={{ scale: 0.8 }}
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    textShadow: [
+                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
+                      "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(76, 175, 80, 0.6)",
+                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)"
+                    ]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    times: [0, 0.5, 1]
+                  }}
+                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
+                  style={{
+                    textShadow: "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3)",
+                    fontFamily: "'Baloo 2', cursive"
+                  }}
+                >
+                  {(() => {
+                    // Dynamic jungle adventure prompts based on word difficulty and category
+                    const difficulty = currentWord?.difficulty || 'medium';
+                    const category = currentWord?.category || 'general';
+                    const sessionProgress = Math.round((sessionStats.wordsCompleted / SESSION_SIZE) * 100);
+
+                    // Jungle Explorer Characters
+                    const jungleExplorers = {
+                      easy: ['🐵', '🦜', '🐨', '🦋', '🐝'],
+                      medium: ['🦁', '🐯', '🐘', '🦓', '🦏'],
+                      hard: ['🐲', '🦅', '🐺', '🐆', '🦌']
+                    };
+
+                    // Category-specific prompts
+                    const categoryPrompts = {
+                      Animals: {
+                        easy: [
+                          "🐵 What jungle friend is this?",
+                          "🦜 Which animal companion do you see?",
+                          "🐨 Can you name this jungle buddy?",
+                          "🦋 What creature lives in our jungle?"
+                        ],
+                        medium: [
+                          "🦁 What majestic jungle animal is this?",
+                          "🐯 Which powerful jungle hunter do you see?",
+                          "🐘 Can you identify this jungle giant?",
+                          "🦓 What striped jungle dweller is this?"
+                        ],
+                        hard: [
+                          "🐲 What legendary jungle creature awaits?",
+                          "🦅 Which apex jungle predator soars here?",
+                          "🐺 Can you name this elusive jungle hunter?",
+                          "🐆 What spotted jungle master is this?"
+                        ]
+                      },
+                      Nature: {
+                        easy: [
+                          "🌿 What jungle treasure is this?",
+                          "🌺 Which jungle bloom do you see?",
+                          "🍃 Can you name this jungle wonder?",
+                          "🌳 What grows in our jungle home?"
+                        ],
+                        medium: [
+                          "🌲 What ancient jungle guardian is this?",
+                          "🎋 Which jungle element do you recognize?",
+                          "🌾 Can you identify this jungle gift?",
+                          "🌴 What tropical jungle beauty is this?"
+                        ],
+                        hard: [
+                          "🌋 What powerful jungle force awaits?",
+                          "⚡ Which jungle phenomenon do you see?",
+                          "🌊 Can you name this jungle mystery?",
+                          "🔥 What fierce jungle element is this?"
+                        ]
+                      },
+                      Food: {
+                        easy: [
+                          "🍌 What jungle snack is this?",
+                          "🥥 Which jungle treat do you see?",
+                          "🍯 Can you name this jungle delight?",
+                          "🫐 What jungle berry is this?"
+                        ],
+                        medium: [
+                          "🥭 What exotic jungle fruit is this?",
+                          "🍍 Which tropical jungle treasure awaits?",
+                          "🥑 Can you identify this jungle nutrition?",
+                          "🌰 What jungle harvest is this?"
+                        ],
+                        hard: [
+                          "🍄 What rare jungle delicacy is this?",
+                          "🫚 Which ancient jungle spice awaits?",
+                          "🌶️ Can you name this fiery jungle flavor?",
+                          "🧄 What powerful jungle ingredient is this?"
+                        ]
+                      },
+                      Objects: {
+                        easy: [
+                          "🔍 What jungle tool is this?",
+                          "🎒 Which jungle gear do you see?",
+                          "🧭 Can you name this jungle helper?",
+                          "⛺ What jungle shelter is this?"
+                        ],
+                        medium: [
+                          "🏹 What jungle equipment awaits?",
+                          "🛶 Which jungle vessel do you recognize?",
+                          "🔥 Can you identify this jungle necessity?",
+                          "🗡️ What jungle instrument is this?"
+                        ],
+                        hard: [
+                          "⚔️ What legendary jungle artifact is this?",
+                          "🏺 Which ancient jungle relic awaits?",
+                          "🔮 Can you name this mystical jungle object?",
+                          "👑 What sacred jungle treasure is this?"
+                        ]
+                      }
+                    };
+
+                    // Default prompts for unknown categories
+                    const defaultPrompts = {
+                      easy: [
+                        "🌟 What jungle discovery is this?",
+                        "🦋 Which jungle wonder do you see?",
+                        "🌈 Can you name this jungle magic?",
+                        "✨ What sparkles in our jungle?"
+                      ],
+                      medium: [
+                        "🔍 What jungle mystery awaits you?",
+                        "🎯 Which jungle challenge do you see?",
+                        "💎 Can you solve this jungle puzzle?",
+                        "🗝️ What jungle secret is this?"
+                      ],
+                      hard: [
+                        "⚡ What legendary jungle power is this?",
+                        "🌋 Which epic jungle force awaits?",
+                        "🏆 Can you conquer this jungle trial?",
+                        "👑 What ultimate jungle quest is this?"
+                      ]
+                    };
+
+                    // Progress-based encouragement
+                    const progressPrompts = {
+                      0: "🚀 Ready for a jungle adventure?",
+                      25: "🌟 You're exploring well, jungle explorer!",
+                      50: "🏆 Halfway through the jungle quest!",
+                      75: "⚡ Almost at the jungle summit!",
+                      90: "👑 Final jungle challenges await!"
+                    };
+
+                    // Get category-specific prompts or use defaults
+                    const categoryKey = Object.keys(categoryPrompts).find(key =>
+                      category.toLowerCase().includes(key.toLowerCase())
+                    ) || 'default';
+
+                    const prompts = categoryKey === 'default'
+                      ? defaultPrompts[difficulty]
+                      : categoryPrompts[categoryKey][difficulty];
+
+                    // Progress milestone check
+                    const progressMilestone = Object.keys(progressPrompts)
+                      .reverse()
+                      .find(milestone => sessionProgress >= parseInt(milestone));
+
+                    if (progressMilestone && sessionProgress >= parseInt(progressMilestone)) {
+                      return progressPrompts[progressMilestone];
+                    }
+
+                    // Select prompt based on word index for variety
+                    const promptIndex = currentWordIndex % prompts.length;
+                    return prompts[promptIndex];
+                  })()}
+                </motion.h1>
+
+                {/* Floating Jungle Elements */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <motion.div
+                    animate={{
+                      y: [0, -10, 0],
+                      x: [0, 5, 0],
+                      rotate: [0, 5, 0]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0
+                    }}
+                    className="absolute -top-2 -left-4 text-sm opacity-60"
+                  >
+                    🌿
+                  </motion.div>
+
+                  <motion.div
+                    animate={{
+                      y: [0, -15, 0],
+                      x: [0, -3, 0],
+                      rotate: [0, -10, 0]
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1
+                    }}
+                    className="absolute -top-1 -right-6 text-sm opacity-50"
+                  >
+                    🦋
+                  </motion.div>
+
+                  <motion.div
+                    animate={{
+                      y: [0, -8, 0],
+                      scale: [1, 1.1, 1],
+                      opacity: [0.4, 0.8, 0.4]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2
+                    }}
+                    className="absolute top-0 right-2 text-xs"
+                  >
+                    ✨
+                  </motion.div>
+
+                  <motion.div
+                    animate={{
+                      y: [0, -12, 0],
+                      x: [0, 8, 0],
+                      rotate: [0, 15, 0]
+                    }}
+                    transition={{
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.5
+                    }}
+                    className="absolute -bottom-2 left-2 text-xs opacity-70"
+                  >
+                    🍃
+                  </motion.div>
+                </div>
+              </motion.div>
             </header>
 
             {/* Category and Progress Header */}
