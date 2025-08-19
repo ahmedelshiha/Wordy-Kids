@@ -13,6 +13,9 @@
 /* Import AI card mobile enhancements */
 @import "./styles/ai-card-mobile-enhancements.css";
 
+/* Import enhanced magical menu styles */
+@import "./styles/enhanced-magical-menu.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
