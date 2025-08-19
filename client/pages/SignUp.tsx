@@ -442,9 +442,9 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="email"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">👨‍👩‍👧‍👦</span>
+                    <span className="text-base md:text-lg">👨‍👩‍👧‍👦</span>
                     Parent's Contact
                   </Label>
                   <Input
@@ -457,7 +457,7 @@ export default function SignUp() {
                     spellCheck={false}
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base rounded-xl bg-white/80 font-['Baloo_2']"
+                    className="mt-1 md:mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-sm md:text-base rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] py-2 md:py-3"
                     disabled={isLoading}
                   />
                 </motion.div>
@@ -470,12 +470,12 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="password"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🔐</span>
+                    <span className="text-base md:text-lg">🔐</span>
                     Secret Explorer Code
                   </Label>
-                  <div className="relative mt-2">
+                  <div className="relative mt-1 md:mt-2">
                     <Input
                       id="password"
                       name="password"
@@ -484,19 +484,19 @@ export default function SignUp() {
                       autoComplete="new-password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-10 md:pr-12 rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] text-sm md:text-base py-2 md:py-3"
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
+                      className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark"
                       disabled={isLoading}
                     >
                       {showPassword ? (
-                        <EyeOff className="w-5 h-5" />
+                        <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                     </button>
                   </div>
@@ -510,12 +510,12 @@ export default function SignUp() {
                 >
                   <Label
                     htmlFor="confirmPassword"
-                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                    className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-lg">🔒</span>
+                    <span className="text-base md:text-lg">🔒</span>
                     Confirm Secret Code
                   </Label>
-                  <div className="relative mt-2">
+                  <div className="relative mt-1 md:mt-2">
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -524,7 +524,7 @@ export default function SignUp() {
                       autoComplete="new-password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-10 md:pr-12 rounded-lg md:rounded-xl bg-white/80 font-['Baloo_2'] text-sm md:text-base py-2 md:py-3"
                       disabled={isLoading}
                     />
                     <button
@@ -532,13 +532,13 @@ export default function SignUp() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
+                      className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark"
                       disabled={isLoading}
                     >
                       {showConfirmPassword ? (
-                        <EyeOff className="w-5 h-5" />
+                        <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                     </button>
                   </div>
