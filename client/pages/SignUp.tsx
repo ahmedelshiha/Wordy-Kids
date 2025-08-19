@@ -99,7 +99,7 @@ export default function SignUp() {
       return;
     }
 
-    if (!/^[a-zA-Z\\s'-]+$/.test(formData.childName.trim())) {
+    if (!/^[a-zA-Z\s'-]+$/.test(formData.childName.trim())) {
       setMessage({
         type: "error",
         text: "Child's name should only contain letters, spaces, hyphens, and apostrophes",
