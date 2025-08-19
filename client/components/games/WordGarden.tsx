@@ -1209,7 +1209,7 @@ export default function WordGarden({
       </div>
 
       {/* Jungle Adventure Progress Trail */}
-      <div className="mt-8 relative">
+      <div className="mt-8 relative mb-12">
         {/* Jungle path background */}
         <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 rounded-2xl border border-gray-200" />
 
