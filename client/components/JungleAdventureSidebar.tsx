@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserProgress } from "@/hooks/useUserProgress";
 import { useNavigate } from "react-router-dom";
 import { kidFriendlyEffects, SOUNDS } from "@/lib/kidFriendlyEffects";
 
