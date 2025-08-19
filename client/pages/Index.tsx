@@ -3030,17 +3030,17 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🌿
                                     </div>
 
-                                    {/* Hero Content */}
+                                    {/* Hero Content - Compact */}
                                     <div className="jungle-quiz-hero-content">
-                                      <div className="flex justify-center mb-6">
-                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-4 md:p-6 rounded-full shadow-2xl animate-jungle-glow border-4 border-white/30">
-                                          <Brain className="w-12 h-12 md:w-16 md:h-16 text-white drop-shadow-lg" />
+                                      <div className="flex justify-center mb-3">
+                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-2 md:p-3 rounded-full shadow-xl animate-jungle-glow border-2 border-white/30">
+                                          <Brain className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-lg" />
                                         </div>
                                       </div>
-                                      <h2 className="jungle-quiz-title">
+                                      <h2 className="jungle-quiz-title text-xl md:text-2xl">
                                         🌟 Jungle Quiz Adventure! 🌟
                                       </h2>
-                                      <p className="jungle-quiz-subtitle">
+                                      <p className="jungle-quiz-subtitle text-sm md:text-base">
                                         Test your vocabulary in the jungle! 🏆✨
                                       </p>
 
