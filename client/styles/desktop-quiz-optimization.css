@@ -71,9 +71,20 @@
     padding: 1.25rem;
     border-radius: 16px;
     min-height: 320px;
+    max-height: 380px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+  }
+
+  /* Content area organization */
+  .jungle-quiz-card .jungle-quiz-card-icon + h3 + p {
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .jungle-quiz-card-icon {
