@@ -1,6 +1,13 @@
 /* Desktop Quiz Optimization Styles */
 
 /* ========== DESKTOP QUIZ OPTIMIZATION ========== */
+.desktop-optimized {
+  transition: all 0.3s ease;
+}
+
+.desktop-quiz-optimized {
+  margin-bottom: 1.5rem;
+}
 @media (min-width: 1024px) {
   /* Optimize hero section for desktop */
   .jungle-quiz-hero {
