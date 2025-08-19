@@ -115,15 +115,15 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       variants={sidebarVariants}
       animate={isCollapsed ? "collapsed" : "expanded"}
       className={cn(
-        "bg-gradient-to-b from-blue-50 to-purple-50",
+        "bg-gradient-to-b from-jungle-light/30 to-sunshine-light/20",
         "flex flex-col h-fit max-h-full",
         "transition-all duration-300",
-        "relative border border-slate-200 rounded-xl shadow-md",
+        "relative border-2 border-jungle/40 rounded-2xl shadow-2xl backdrop-blur-sm",
         className,
       )}
     >
       {/* Simplified Sidebar Header */}
-      <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 relative z-10 rounded-t-xl border-b border-slate-200">
+      <div className="p-3 bg-gradient-to-r from-jungle-light/40 to-sunshine-light/30 relative z-10 rounded-t-2xl border-b-2 border-jungle/30">
         <div className="flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed && (
@@ -146,7 +146,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                 kidFriendlyEffects.playSound(SOUNDS.button_click);
                 onToggleCollapse();
               }}
-              className="h-8 w-8 p-0 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-all duration-200 lg:hidden"
+              className="h-8 w-8 p-0 bg-jungle hover:bg-jungle-dark text-white rounded-xl transition-all duration-200 lg:hidden shadow-lg"
             >
               {isCollapsed ? (
                 position === "left" ? (
@@ -187,33 +187,33 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Weekly Adventure Progress */}
               {showWeeklyProgress && stats && (
-                <div className="bg-gradient-to-r from-educational-green/20 to-educational-blue/20 rounded-xl p-3 border border-educational-green/30 shadow-lg backdrop-blur-sm kid-card">
-                  <h4 className="text-xs font-bold text-white mb-2 flex items-center kid-text-big text-shadow">
-                    <TrendingUp className="w-4 h-4 mr-1 text-educational-yellow" />
+                <div className="bg-gradient-to-br from-jungle-light/25 to-sunshine-light/15 rounded-2xl p-3 border-2 border-jungle/30 shadow-xl backdrop-blur-sm kid-card">
+                  <h4 className="text-xs font-bold text-jungle-dark mb-2 flex items-center kid-text-big text-shadow">
+                    <TrendingUp className="w-4 h-4 mr-1 text-sunshine" />
                     🏆 This Week
                   </h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
-                        🎮 Learning Sessions
+                        🗺️ Learning Sessions
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-yellow to-educational-orange text-white border-educational-yellow shadow-md font-bold">
+                      <Badge className="text-xs bg-[#FFC107] text-white border-[#FFC107] shadow-md font-bold">
                         {stats.sessionsThisWeek || 0} ✨
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
-                        📚 Words Mastered
+                        🦜 Words Mastered
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-blue to-educational-purple text-white border-educational-blue shadow-md font-bold">
+                      <Badge className="text-xs bg-[#4CAF50] text-white border-[#4CAF50] shadow-md font-bold">
                         {stats.wordsThisWeek || 0} 🎆
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-medium text-gray-700 flex items-center">
-                        ⏰ Adventure Time
+                        🌅 Adventure Time
                       </span>
-                      <Badge className="text-xs bg-gradient-to-r from-educational-purple to-educational-pink text-white border-educational-purple shadow-md font-bold">
+                      <Badge className="text-xs bg-[#9C27B0] text-white border-[#9C27B0] shadow-md font-bold">
                         {stats.timeThisWeek
                           ? `${Math.round(stats.timeThisWeek / 60)}h`
                           : "0h"}{" "}
@@ -226,9 +226,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Recent Awesome Moments */}
               {stats?.recentActivity && (
-                <div className="bg-gradient-to-r from-educational-pink/20 to-educational-purple/20 rounded-xl p-4 border border-educational-pink/30 shadow-lg backdrop-blur-sm kid-card">
-                  <h4 className="text-sm font-bold text-white mb-3 flex items-center kid-text-big text-shadow">
-                    <Activity className="w-5 h-5 mr-2 text-educational-yellow" />
+                <div className="bg-gradient-to-br from-sunshine-light/20 to-jungle-light/15 rounded-2xl p-4 border-2 border-sunshine/30 shadow-xl backdrop-blur-sm kid-card">
+                  <h4 className="text-sm font-bold text-navy mb-3 flex items-center kid-text-big text-shadow">
+                    <Activity className="w-5 h-5 mr-2 text-sunshine" />
                     🎉 Awesome Moments!
                   </h4>
                   <div className="space-y-2">
@@ -242,7 +242,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                           <span className="text-xs font-medium text-gray-700 truncate">
                             ✨ {activity.description}
                           </span>
-                          <Badge className="text-xs ml-2 bg-gradient-to-r from-educational-orange to-educational-yellow text-white border-educational-orange shadow-md font-bold animate-pulse">
+                          <Badge className="text-xs ml-2 bg-gradient-to-r from-sunshine to-sunshine-light text-navy border-sunshine shadow-md font-bold animate-pulse">
                             +{activity.points} 🎆
                           </Badge>
                         </div>
@@ -262,9 +262,9 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
               {/* Collapsed Profile Avatar */}
               <div
                 className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-md border-2 border-white",
-                  "bg-gradient-to-r transition-all duration-200",
-                  profile.avatar?.color || "from-blue-400 to-purple-400",
+                  "w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-sunshine",
+                  "bg-gradient-to-br transition-all duration-200",
+                  profile.avatar?.color || "from-jungle to-jungle-dark",
                 )}
               >
                 {profile.avatar?.emoji || "🎯"}
@@ -272,11 +272,11 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
 
               {/* Collapsed Quick Stats */}
               <div className="flex flex-col items-center space-y-1">
-                <Badge className="text-xs bg-blue-500 text-white px-2 py-1 rounded-md">
+                <Badge className="text-xs bg-jungle text-white px-2 py-1 rounded-xl shadow-md">
                   L{profile.level}
                 </Badge>
                 {profile.streak > 0 && (
-                  <Badge className="text-xs bg-orange-500 text-white px-2 py-1 rounded-md">
+                  <Badge className="text-xs bg-sunshine text-navy px-2 py-1 rounded-xl shadow-md font-bold">
                     {profile.streak >= 7
                       ? "Legendary!"
                       : `${profile.streak} days`}
@@ -289,7 +289,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
       </div>
 
       {/* Enhanced Sidebar Footer */}
-      <div className="p-4 border-t border-educational-purple/30 bg-gradient-to-r from-educational-blue/40 via-educational-purple/40 to-educational-pink/40 backdrop-blur-sm relative z-10 rounded-b-2xl">
+      <div className="p-4 border-t border-educational-purple/30 bg-[#6366F1] relative z-10 rounded-b-3xl">
         <AnimatePresence mode="wait">
           {!isCollapsed ? (
             <motion.div
