@@ -94,10 +94,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
     >
       {/* Decorative jungle elements */}
       <div className="absolute top-4 left-4 w-6 h-6 opacity-20">
-        <div className="w-full h-full bg-jungle-green rounded-full animate-gentle-float" />
+        <div className="w-full h-full bg-jungle rounded-full animate-gentle-float" />
       </div>
       <div className="absolute bottom-6 right-6 w-4 h-4 opacity-20">
-        <div className="w-full h-full bg-jungle-green rounded-full animate-gentle-float animation-delay-200" />
+        <div className="w-full h-full bg-jungle rounded-full animate-gentle-float animation-delay-200" />
       </div>
 
       {/* User Profile Section */}
@@ -161,7 +161,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               {stats?.wordsLearned || 15} words mastered
             </p>
           </div>
-          <div className="w-8 h-8 bg-jungle-green rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-jungle rounded-full flex items-center justify-center">
             <span
               className="text-white font-['Baloo_2'] text-[14px] font-bold"
               style={{ fontFamily: "'Baloo 2', cursive" }}
@@ -275,7 +275,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
             "w-full rounded-[25px] px-6 py-[14px] font-['Baloo_2'] text-[16px] font-bold text-white",
             "transition-all duration-300 hover:scale-105 shadow-lg",
             isGuest 
-              ? "bg-jungle-green hover:bg-jungle-green-dark" 
+              ? "bg-jungle hover:bg-jungle-dark" 
               : "bg-slate-500 hover:bg-slate-600"
           )}
           style={{ fontFamily: "'Baloo 2', cursive" }}
