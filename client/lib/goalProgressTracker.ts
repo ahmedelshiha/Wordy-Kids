@@ -12,6 +12,8 @@ interface LearningGoal {
   isActive: boolean;
   completedAt?: Date;
   createdAt: Date;
+  lastUpdated?: Date;
+  streak?: number;
 }
 
 interface ChildProfile {
