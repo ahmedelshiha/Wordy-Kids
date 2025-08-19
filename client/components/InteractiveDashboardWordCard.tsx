@@ -1106,33 +1106,224 @@ export function InteractiveDashboardWordCard({
         <Card
           className={cn(
             "w-[320px] h-[460px] sm:w-[380px] sm:h-[480px] md:w-[420px] md:h-[480px] lg:w-[460px] lg:h-[500px] xl:w-[480px] xl:h-[520px] mx-auto relative overflow-hidden",
-            "ai-card-background",
+            "jungle-adventure-card-container",
             "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
             "backdrop-blur-sm ring-1 ring-black/5",
             "bg-transparent",
             celebrationEffect &&
-              "animate-pulse shadow-2xl border-yellow-400 border-4",
+              "jungle-celebration-glow animate-pulse shadow-2xl border-sunshine border-4",
           )}
+          style={{
+            background: `
+              linear-gradient(
+                135deg,
+                rgba(76, 175, 80, 0.95) 0%,
+                rgba(56, 142, 60, 0.98) 25%,
+                rgba(27, 94, 32, 1) 50%,
+                rgba(56, 142, 60, 0.98) 75%,
+                rgba(76, 175, 80, 0.95) 100%
+              ),
+              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CAF50' fill-opacity='0.08'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60c-16.569 0-30-13.431-30-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+            `,
+            borderImage: 'linear-gradient(45deg, rgba(255, 215, 0, 0.6), rgba(76, 175, 80, 0.4), rgba(255, 215, 0, 0.6)) 1',
+            borderWidth: '3px',
+            borderStyle: 'solid',
+            boxShadow: `
+              0 20px 40px rgba(76, 175, 80, 0.3),
+              0 0 20px rgba(255, 215, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.1)
+            `
+          }}
         >
-          {/* Celebration Sparkles */}
+          {/* Jungle Adventure Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            {/* Animated Jungle Vines */}
+            <motion.div
+              animate={{
+                y: [0, -20, 0],
+                rotate: [0, 5, 0]
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute -top-10 -left-5 text-4xl opacity-20 text-jungle-light"
+            >
+              🌿
+            </motion.div>
+
+            <motion.div
+              animate={{
+                y: [0, -25, 0],
+                rotate: [0, -8, 0]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+              className="absolute -top-8 -right-8 text-3xl opacity-15 text-jungle-light"
+            >
+              🍃
+            </motion.div>
+
+            {/* Floating Jungle Particles */}
+            <motion.div
+              animate={{
+                y: [0, -30, 0],
+                x: [0, 10, 0],
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.7, 0.3]
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2
+              }}
+              className="absolute top-1/4 right-4 text-lg text-sunshine"
+            >
+              ✨
+            </motion.div>
+
+            <motion.div
+              animate={{
+                y: [0, -20, 0],
+                x: [0, -15, 0],
+                rotate: [0, 360, 0]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="absolute bottom-1/3 left-6 text-sm opacity-40 text-sunshine"
+            >
+              🌺
+            </motion.div>
+
+            {/* Jungle Mist Effect */}
+            <motion.div
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.1, 0.2, 0.1]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute inset-0 bg-gradient-to-t from-jungle/10 via-transparent to-jungle/5 rounded-2xl"
+            />
+          </div>
+
+          {/* Enhanced Celebration Sparkles */}
           {celebrationEffect && (
-            <div className="absolute inset-0 animate-pulse z-20">
-              <div className="absolute top-4 left-4 text-2xl animate-bounce">
+            <div className="absolute inset-0 z-20 pointer-events-none">
+              <motion.div
+                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                animate={{
+                  scale: [0, 1.2, 1, 1.1, 1],
+                  opacity: [0, 1, 0.8, 0.9, 0],
+                  rotate: [0, 180, 360, 540, 720],
+                  y: [0, -20, -10, -15, -30]
+                }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="absolute top-4 left-4 text-2xl text-sunshine"
+              >
                 ✨
-              </div>
-              <div className="absolute top-6 right-6 text-3xl animate-spin">
+              </motion.div>
+
+              <motion.div
+                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                animate={{
+                  scale: [0, 1.5, 1.2, 1.3, 1],
+                  opacity: [0, 1, 0.7, 0.8, 0],
+                  rotate: [0, -90, -180, -270, -360],
+                  y: [0, -15, -25, -20, -40]
+                }}
+                transition={{ duration: 2.5, ease: "easeOut", delay: 0.2 }}
+                className="absolute top-6 right-6 text-3xl text-jungle-light"
+              >
                 🌟
-              </div>
-              <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-300">
+              </motion.div>
+
+              <motion.div
+                initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
+                animate={{
+                  scale: [0, 1, 1.2, 1.1, 0.8],
+                  opacity: [0, 1, 0.9, 0.7, 0],
+                  x: [0, -10, -5, -8, -20],
+                  y: [0, -10, -20, -15, -35]
+                }}
+                transition={{ duration: 2.2, ease: "easeOut", delay: 0.4 }}
+                className="absolute bottom-4 left-6 text-2xl text-sunshine"
+              >
                 🎊
-              </div>
-              <div className="absolute bottom-6 right-4 text-2xl animate-pulse delay-500">
+              </motion.div>
+
+              <motion.div
+                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                animate={{
+                  scale: [0, 1.3, 1, 1.4, 0.9],
+                  opacity: [0, 1, 0.8, 0.9, 0],
+                  rotate: [0, 45, 90, 135, 180],
+                  y: [0, -12, -8, -18, -30]
+                }}
+                transition={{ duration: 2.8, ease: "easeOut", delay: 0.6 }}
+                className="absolute bottom-6 right-4 text-2xl text-jungle-light"
+              >
                 💫
-              </div>
+              </motion.div>
+
+              {/* Additional Jungle Celebration Elements */}
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: [0, 0.8, 1.2, 1, 0.6],
+                  opacity: [0, 0.6, 1, 0.8, 0],
+                  rotate: [0, 120, 240, 360],
+                  y: [0, -25, -15, -30, -50]
+                }}
+                transition={{ duration: 3, ease: "easeOut", delay: 0.8 }}
+                className="absolute top-1/2 left-8 text-lg text-sunshine"
+              >
+                🦋
+              </motion.div>
+
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: [0, 1.1, 0.9, 1.3, 0.7],
+                  opacity: [0, 0.8, 1, 0.6, 0],
+                  rotate: [0, -60, -120, -180],
+                  y: [0, -18, -28, -22, -45]
+                }}
+                transition={{ duration: 2.6, ease: "easeOut", delay: 1 }}
+                className="absolute top-1/2 right-8 text-lg text-jungle-light"
+              >
+                🌿
+              </motion.div>
             </div>
           )}
 
           <CardContent className="p-3 sm:p-4 md:p-4 lg:p-5 xl:p-6 relative z-10">
+            {/* Jungle Adventure Surface Glow */}
+            <motion.div
+              animate={{
+                opacity: [0.1, 0.3, 0.1],
+                scale: [1, 1.02, 1]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute inset-2 bg-gradient-to-br from-sunshine/10 via-transparent to-jungle/10 rounded-xl pointer-events-none"
+            />
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
