@@ -2977,7 +2977,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="flex justify-center gap-1 mb-2 md:mb-3">
                                           <span className="bg-educational-pink/20 text-educational-pink px-1.5 py-0.5 rounded-full text-xs">
-                                            ����🔊 Audio!
+                                            🎵🔊 Audio!
                                           </span>
                                         </div>
                                         <Button
