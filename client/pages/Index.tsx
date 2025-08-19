@@ -2996,7 +2996,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                             <TabsContent value="quiz">
                               {!showQuiz && !gameMode && !showMatchingGame ? (
-                                <div className="space-y-8">
+                                <div className="space-y-8 desktop-quiz-container">
                                   {/* Jungle Adventure Quiz Hero Section */}
                                   <div className="jungle-quiz-hero desktop-optimized">
                                     {/* Jungle Vines Decoration */}
