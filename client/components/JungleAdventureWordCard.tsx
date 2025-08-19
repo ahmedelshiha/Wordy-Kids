@@ -295,22 +295,22 @@ export const JungleAdventureWordCard: React.FC<
         className,
       )}
     >
-      {/* Light Jungle Adventure Particles Background */}
+      {/* Very Light Jungle Adventure Particles Background */}
       {showJungleParticles && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden rounded-xl">
-          {[...Array(3)].map((_, i) => (
+          {[...Array(2)].map((_, i) => (
             <div
               key={i}
               className={cn(
-                "absolute text-sm opacity-20 animate-float-up",
-                `animation-delay-${(i * 400) % 1000}`,
+                "absolute text-xs opacity-10 animate-float-up", // Much smaller and more transparent
+                `animation-delay-${(i * 600) % 1000}`,
               )}
               style={{
-                left: `${Math.random() * 100}%`,
-                animationDuration: `${4 + Math.random() * 2}s`,
+                left: `${Math.random() * 80 + 10}%`, // Keep particles more centered
+                animationDuration: `${2 + Math.random() * 1}s`, // Faster animation
               }}
             >
-              {["🌿", "🦋", "🌺"][i % 3]}
+              {["✨", "🌟"][i % 2]} {/* Only sparkles, no large emojis */}
             </div>
           ))}
         </div>
