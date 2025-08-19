@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 bg-white text-gray-800 border-2 border-gray-200">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/5 to-sunshine-light/5 text-gray-800 border-2 border-gray-200">
         {/* Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Animated jungle leaves */}
@@ -1147,7 +1147,7 @@ export default function WordGarden({
         </div>
 
         {/* Jungle Adventure XP + Streak */}
-        <div className="mt-6 relative z-10">
+        <div className="mt-6 relative z-10 mb-8">
           <div className="text-sm flex items-center justify-between mb-2">
             <div className="flex items-center gap-2 text-sunshine-dark">
               <Mountain className="w-4 h-4" />
@@ -1159,7 +1159,7 @@ export default function WordGarden({
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative mb-6">
             <div className="h-4 rounded-full bg-gray-200 overflow-hidden border border-gray-300">
               <div
                 className="h-4 rounded-full bg-gradient-to-r from-jungle-DEFAULT via-jungle-light to-sunshine-DEFAULT transition-all duration-700 ease-out relative overflow-hidden"
@@ -1177,27 +1177,31 @@ export default function WordGarden({
               </div>
             </div>
 
-            {/* Jungle adventure level indicators */}
-            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-gray-600">
+            {/* Jungle adventure level indicators - repositioned to avoid overflow */}
+            <div className="flex justify-between text-xs text-gray-600 mt-3 px-1">
               <span
-                className={`flex items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                🌱 Sprout
+                <span className="text-base">🌱</span>
+                <span className="text-xs">Sprout</span>
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                🌿 Explorer
+                <span className="text-base">🌿</span>
+                <span className="text-xs">Explorer</span>
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                🌳 Ranger
+                <span className="text-base">🌳</span>
+                <span className="text-xs">Ranger</span>
               </span>
               <span
-                className={`flex items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
               >
-                👑 Legend
+                <span className="text-base">👑</span>
+                <span className="text-xs">Legend</span>
               </span>
             </div>
           </div>
@@ -1205,7 +1209,7 @@ export default function WordGarden({
       </div>
 
       {/* Jungle Adventure Progress Trail */}
-      <div className="mt-8 relative">
+      <div className="mt-8 relative mb-12">
         {/* Jungle path background */}
         <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 rounded-2xl border border-gray-200" />
 
@@ -1287,27 +1291,27 @@ export default function WordGarden({
         {/* Jungle path connecting trail */}
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-jungle-dark/40 via-jungle-DEFAULT/60 to-jungle-dark/40 rounded-full -translate-y-1/2 -z-10" />
 
-        {/* Adventure progress indicators */}
-        <div className="absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-gray-600">
-          <div className="text-center">
-            <span className="block">��️</span>
-            <span>Start</span>
+        {/* Adventure progress indicators - repositioned to be visible */}
+        <div className="flex justify-between text-xs text-gray-600 mt-4 px-2">
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🚀</span>
+            <span className="text-xs font-medium">Start</span>
           </div>
-          <div className="text-center">
-            <span className="block">🌿</span>
-            <span>Jungle</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🌿</span>
+            <span className="text-xs font-medium">Jungle</span>
           </div>
-          <div className="text-center">
-            <span className="block">🏔️</span>
-            <span>Peak</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🏔️</span>
+            <span className="text-xs font-medium">Peak</span>
           </div>
-          <div className="text-center">
-            <span className="block">🏆</span>
-            <span>Victory</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🏆</span>
+            <span className="text-xs font-medium">Victory</span>
           </div>
-          <div className="text-center">
-            <span className="block">👑</span>
-            <span>Legend</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">👑</span>
+            <span className="text-xs font-medium">Legend</span>
           </div>
         </div>
       </div>
