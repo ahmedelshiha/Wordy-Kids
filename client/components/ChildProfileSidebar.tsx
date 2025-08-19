@@ -323,7 +323,7 @@ export const ChildProfileSidebar: React.FC<ChildProfileSidebarProps> = ({
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-transparent"
                       animate={{
-                        transform: ["translateX(-100%)", "translateX(200%)"],
+                        x: ["-100%", "200%"],
                         transition: {
                           duration: 2,
                           repeat: Infinity,
