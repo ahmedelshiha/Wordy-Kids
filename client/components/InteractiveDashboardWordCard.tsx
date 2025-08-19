@@ -1148,7 +1148,7 @@ export function InteractiveDashboardWordCard({
                     if (wordsLearned >= goal) {
                       if (wordsLearned >= goal * 2) return "⭐";
                       if (wordsLearned >= goal * 1.5) return "🚀";
-                      return "���";
+                      return "🌟";
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
