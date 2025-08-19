@@ -339,38 +339,54 @@ export function InteractiveDashboardWordCard({
       triggerHapticFeedback("light"); // Light feedback for audio action
       setIsPlaying(true);
 
-      // Play jungle adventure sound effect before pronunciation
+      // Play available jungle adventure sound effects
       try {
-        // Create jungle ambient sound based on difficulty
         const difficulty = currentWord.difficulty || 'medium';
-        let jungleSound;
 
+        // Use available sound methods from audioService
         switch (difficulty) {
           case 'easy':
-            // Gentle jungle sounds for easy words
-            audioService.playSound('gentle-chime'); // Replaced with available sound
+            // Gentle click sound for easy words
+            audioService.playClickSound();
             break;
           case 'medium':
-            // Adventure jungle sounds for medium words
-            audioService.playSound('adventure-chime'); // Replaced with available sound
+            // Whoosh sound for medium words
+            audioService.playWhooshSound();
             break;
           case 'hard':
-            // Epic jungle sounds for hard words
-            audioService.playSound('epic-chime'); // Replaced with available sound
+            // Cheer sound for hard words
+            audioService.playCheerSound();
             break;
         }
       } catch (error) {
         console.log('Jungle sound effect not available, proceeding with pronunciation');
       }
 
-      // Slight delay to let jungle sound play, then pronounce word
-      setTimeout(() => {
-        enhancedAudioService.pronounceWord(currentWord.word, {
-          onStart: () => setIsPlaying(true),
-          onEnd: () => setIsPlaying(false),
-          onError: () => setIsPlaying(false),
-        });
-      }, 300);
+      // Pronounce word with enhanced error handling
+      enhancedAudioService.pronounceWord(currentWord.word, {
+        onStart: () => {
+          console.log('Speech started successfully');
+          setIsPlaying(true);
+        },
+        onEnd: () => {
+          console.log('Speech completed successfully');
+          setIsPlaying(false);
+        },
+        onError: () => {
+          console.error('Speech synthesis failed for word:', currentWord.word);
+          setIsPlaying(false);
+          // Fallback: try with basic audioService
+          try {
+            audioService.pronounceWord(currentWord.word, {
+              onStart: () => setIsPlaying(true),
+              onEnd: () => setIsPlaying(false),
+              onError: () => setIsPlaying(false),
+            });
+          } catch (fallbackError) {
+            console.error('Fallback speech synthesis also failed:', fallbackError);
+          }
+        },
+      });
     }
   };
 
@@ -510,39 +526,66 @@ export function InteractiveDashboardWordCard({
     if (status === "remembered") {
       setCelebrationEffect(true);
 
-      // Play jungle celebration sound based on difficulty
+      // Play jungle celebration sound based on difficulty with proper error handling
       try {
         const difficulty = currentWord.difficulty || 'medium';
         switch (difficulty) {
           case 'easy':
             // Gentle jungle celebration
             enhancedAudioService.playSuccessSound();
-            audioService.playSound('gentle-success'); // Additional jungle chime
+            setTimeout(() => {
+              try {
+                audioService.playClickSound(); // Additional gentle sound
+              } catch (e) {
+                console.log('Additional sound effect not available');
+              }
+            }, 200);
             break;
           case 'medium':
             // Adventure jungle celebration
             enhancedAudioService.playSuccessSound();
-            audioService.playSound('adventure-success'); // Additional triumph sound
+            setTimeout(() => {
+              try {
+                audioService.playWhooshSound(); // Additional adventure sound
+              } catch (e) {
+                console.log('Additional sound effect not available');
+              }
+            }, 200);
             break;
           case 'hard':
             // Epic jungle victory
             enhancedAudioService.playSuccessSound();
-            audioService.playSound('epic-victory'); // Additional victory fanfare
+            setTimeout(() => {
+              try {
+                audioService.playCheerSound(); // Additional victory sound
+              } catch (e) {
+                console.log('Additional sound effect not available');
+              }
+            }, 200);
             break;
         }
       } catch (error) {
-        // Fallback to standard success sound
-        enhancedAudioService.playSuccessSound();
+        console.log('Primary success sound failed, using basic fallback');
+        // Fallback to basic audioService
+        try {
+          audioService.playSuccessSound();
+        } catch (fallbackError) {
+          console.log('All success sounds failed:', fallbackError);
+        }
       }
 
       setTimeout(() => setCelebrationEffect(false), 1000);
     } else if (status === "needs_practice") {
-      // Play encouraging jungle sound
+      // Play encouraging jungle sound with error handling
       try {
         enhancedAudioService.playEncouragementSound();
-        audioService.playSound('gentle-encouragement'); // Additional jungle encouragement
       } catch (error) {
-        enhancedAudioService.playEncouragementSound();
+        console.log('Enhanced encouragement sound failed, using basic fallback');
+        try {
+          audioService.playEncouragementSound();
+        } catch (fallbackError) {
+          console.log('All encouragement sounds failed:', fallbackError);
+        }
       }
     }
 
