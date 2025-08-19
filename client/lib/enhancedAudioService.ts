@@ -366,21 +366,41 @@ export class EnhancedAudioService {
   ): void {
     if (!this.isEnabled) {
       console.log("Audio service is disabled");
-      options.onError?.();
+      const disabledError = {
+        type: 'service_disabled',
+        word: word,
+        timestamp: new Date().toISOString()
+      };
+      options.onError?.(disabledError);
       return;
     }
 
     // Check browser support
     if (!("speechSynthesis" in window) || !this.speechSynthesis) {
       console.error("Speech synthesis not supported in this browser");
-      options.onError?.();
+      const supportError = {
+        type: 'unsupported_browser',
+        word: word,
+        userAgent: navigator.userAgent,
+        hasWindow: typeof window !== 'undefined',
+        hasSpeechSynthesis: 'speechSynthesis' in window,
+        timestamp: new Date().toISOString()
+      };
+      options.onError?.(supportError);
       return;
     }
 
     // Validate input
     if (!word || typeof word !== "string" || word.trim().length === 0) {
       console.error("Invalid word provided for pronunciation:", word);
-      options.onError?.();
+      const validationError = {
+        type: 'invalid_input',
+        word: word,
+        wordType: typeof word,
+        wordLength: word ? word.length : 0,
+        timestamp: new Date().toISOString()
+      };
+      options.onError?.(validationError);
       return;
     }
 
