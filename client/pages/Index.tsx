@@ -1956,7 +1956,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🏆 My Journey",
+                      label: "��� My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
@@ -2348,7 +2348,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 </div>
 
                                                 {/* Animated Progress Bar */}
-                                                <div className="mt-2 bg-white/20 rounded-full h-2 overflow-hidden">
+                                                <div className="mt-1 bg-white/20 rounded-full h-1.5 overflow-hidden">
                                                   <div
                                                     className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
                                                     style={{
