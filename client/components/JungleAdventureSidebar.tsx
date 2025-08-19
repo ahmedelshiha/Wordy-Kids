@@ -304,8 +304,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
             }}
             animate={{
               y: [0, -20, 0],
-              opacity: [0.2, 0.5, 0.2],
-              scale: [1, 1.5, 1],
+              opacity: [0.2, 0.5, 0.2]
             }}
             transition={{
               duration: 3 + i * 0.5,
