@@ -1105,7 +1105,7 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-[340px] h-[480px] sm:w-[480px] sm:h-[540px] md:w-[600px] md:h-[560px] lg:w-[800px] lg:h-[600px] mx-auto relative overflow-hidden",
+            "w-[320px] h-[460px] sm:w-[380px] sm:h-[480px] md:w-[420px] md:h-[480px] lg:w-[460px] lg:h-[500px] xl:w-[480px] xl:h-[520px] mx-auto relative overflow-hidden",
             "ai-card-background",
             "shadow-lg hover:shadow-xl border-0 rounded-2xl sm:rounded-3xl",
             "backdrop-blur-sm ring-1 ring-black/5",
@@ -1132,7 +1132,7 @@ export function InteractiveDashboardWordCard({
             </div>
           )}
 
-          <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 relative z-10">
+          <CardContent className="p-3 sm:p-4 md:p-4 lg:p-5 xl:p-6 relative z-10">
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
@@ -1626,7 +1626,7 @@ export function InteractiveDashboardWordCard({
                   "space-y-3 sm:space-y-4 px-2 sm:px-0 relative z-30",
                   showHint
                     ? "mt-4 sm:mt-6 md:mt-8" // Reduced margin when hint is active
-                    : "mt-40 sm:mt-48 md:mt-48 lg:mt-52 xl:mt-60", // Normal margin when no hint
+                    : "mt-36 sm:mt-40 md:mt-40 lg:mt-36 xl:mt-38", // Normal margin when no hint
                 )}
                 role="group"
                 aria-label="Word learning choices"
@@ -1741,7 +1741,7 @@ export function InteractiveDashboardWordCard({
                             : "filter drop-shadow-md"
                         }`}
                       >
-                        {particle.type === "success" ? "⭐" : "💪"}
+                        {particle.type === "success" ? "⭐" : "���"}
                       </div>
                     </motion.div>
                   ))}
