@@ -98,14 +98,15 @@ const StreakIcon = ({ className }: { className?: string }) => (
     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
     <motion.div
       className="text-white text-lg relative z-10"
-      animate={{ 
+      animate={{
         scale: [1, 1.2, 1],
         rotate: [0, 10, -10, 0]
       }}
-      transition={{ 
+      transition={{
         duration: 2,
         repeat: Infinity,
-        repeatType: "reverse"
+        repeatType: "reverse",
+        ease: "easeInOut"
       }}
     >
       🔥
