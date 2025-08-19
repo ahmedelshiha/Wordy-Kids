@@ -1491,7 +1491,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "🎓⭐";
+        achievementIcon = "🎓���";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! ����✨";
@@ -2035,7 +2035,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {/* Enhanced Desktop Layout */}
                 <div className="flex min-h-screen">
                   {/* Enhanced Main Game Content Container */}
-                  <div className="flex-1 min-w-0 overflow-hidden relative">
+                  <div className="flex-1 min-w-0 relative">
                     {/* Game Content Background */}
                     <div className="relative z-10 w-full min-h-screen p-1 sm:p-2 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Logo Box Component */}
