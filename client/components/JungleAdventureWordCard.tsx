@@ -293,22 +293,22 @@ export const JungleAdventureWordCard: React.FC<
         className,
       )}
     >
-      {/* Jungle Adventure Particles Background */}
+      {/* Light Jungle Adventure Particles Background */}
       {showJungleParticles && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden rounded-xl">
-          {[...Array(12)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <div
               key={i}
               className={cn(
-                "absolute text-2xl opacity-80 animate-float-up",
-                `animation-delay-${(i * 200) % 1000}`,
+                "absolute text-lg opacity-40 animate-float-up",
+                `animation-delay-${(i * 300) % 1000}`,
               )}
               style={{
                 left: `${Math.random() * 100}%`,
-                animationDuration: `${2 + Math.random() * 2}s`,
+                animationDuration: `${3 + Math.random() * 2}s`,
               }}
             >
-              {["🌿", "🦋", "🌺", "🍃", "🐦", "🌳"][i % 6]}
+              {["🌿", "🦋", "🌺"][i % 3]}
             </div>
           ))}
         </div>
@@ -402,10 +402,9 @@ export const JungleAdventureWordCard: React.FC<
               <div className="relative mb-4 sm:mb-5">
                 <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container">
                   {/* Jungle Decorative Elements */}
-                  <div className="absolute top-3 left-3 w-4 h-4 bg-yellow-300/60 rounded-full animate-sparkle shadow-lg"></div>
-                  <div className="absolute bottom-4 right-4 w-3 h-3 bg-green-300/60 rounded-full animate-bounce delay-300 shadow-lg"></div>
-                  <div className="absolute top-1/2 right-3 w-3 h-3 bg-blue-300/60 rounded-full animate-ping delay-700 shadow-lg"></div>
-                  <div className="absolute bottom-3 left-3 w-2 h-2 bg-pink-300/60 rounded-full animate-pulse delay-500 shadow-lg"></div>
+                  <div className="absolute top-3 left-3 w-3 h-3 bg-yellow-300/30 rounded-full animate-sparkle opacity-60"></div>
+                  <div className="absolute bottom-4 right-4 w-2 h-2 bg-green-300/30 rounded-full animate-bounce delay-300 opacity-50"></div>
+                  <div className="absolute top-1/2 right-3 w-2 h-2 bg-blue-300/30 rounded-full animate-ping delay-700 opacity-40"></div>
 
                   {/* Jungle Vine Border Effect */}
                   <div className="absolute inset-0 rounded-full border-2 border-green-400/40 animate-pulse"></div>
@@ -416,14 +415,14 @@ export const JungleAdventureWordCard: React.FC<
                     {word.emoji || "🌿"}
                   </span>
 
-                  {/* Magical Sparkles */}
+                  {/* Light Magical Sparkles */}
                   {showMagicalSparkles && (
                     <div className="absolute inset-0 overflow-hidden">
-                      {[...Array(10)].map((_, i) => (
+                      {[...Array(4)].map((_, i) => (
                         <Sparkles
                           key={i}
                           className={cn(
-                            "absolute w-5 h-5 text-yellow-300 animate-sparkle filter drop-shadow-lg",
+                            "absolute w-3 h-3 text-yellow-300 animate-sparkle opacity-50",
                             i % 3 === 0
                               ? "text-green-300"
                               : i % 3 === 1
@@ -433,7 +432,7 @@ export const JungleAdventureWordCard: React.FC<
                           style={{
                             top: `${Math.random() * 100}%`,
                             left: `${Math.random() * 100}%`,
-                            animationDelay: `${i * 100}ms`,
+                            animationDelay: `${i * 200}ms`,
                           }}
                         />
                       ))}
