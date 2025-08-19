@@ -445,7 +445,7 @@
   }
 }
 
-/* Jungle sparkle effects */
+/* Light jungle sparkle effects */
 @keyframes jungle-sparkle {
   0%,
   100% {
@@ -453,16 +453,16 @@
     transform: scale(0) rotate(0deg);
   }
   25% {
-    opacity: 1;
-    transform: scale(0.5) rotate(90deg);
+    opacity: 0.4;
+    transform: scale(0.3) rotate(90deg);
   }
   50% {
-    opacity: 1;
-    transform: scale(1) rotate(180deg);
+    opacity: 0.6;
+    transform: scale(0.6) rotate(180deg);
   }
   75% {
-    opacity: 1;
-    transform: scale(0.5) rotate(270deg);
+    opacity: 0.4;
+    transform: scale(0.3) rotate(270deg);
   }
 }
 
@@ -475,7 +475,9 @@
   position: absolute;
   top: -10px;
   right: -10px;
-  animation: jungle-sparkle 2s ease-in-out infinite;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  animation: jungle-sparkle 3s ease-in-out infinite;
   pointer-events: none;
 }
 

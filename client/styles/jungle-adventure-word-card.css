@@ -379,13 +379,13 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Jungle celebration effects */
+/* Light jungle celebration effects */
 .jungle-celebration-glow {
   animation: jungleCelebration 2s ease-in-out;
   box-shadow:
-    0 0 30px rgba(255, 215, 0, 0.8),
-    0 0 60px rgba(34, 197, 94, 0.6),
-    0 10px 20px rgba(0, 0, 0, 0.3);
+    0 0 15px rgba(255, 215, 0, 0.3),
+    0 0 25px rgba(34, 197, 94, 0.2),
+    0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes jungleCelebration {
@@ -393,46 +393,46 @@
   100% {
     transform: scale(1);
     box-shadow:
-      0 0 20px rgba(255, 215, 0, 0.6),
-      0 0 40px rgba(34, 197, 94, 0.4);
+      0 0 8px rgba(255, 215, 0, 0.2),
+      0 0 15px rgba(34, 197, 94, 0.15);
   }
   25% {
-    transform: scale(1.1);
+    transform: scale(1.02);
     box-shadow:
-      0 0 40px rgba(255, 215, 0, 0.8),
-      0 0 80px rgba(34, 197, 94, 0.6);
+      0 0 12px rgba(255, 215, 0, 0.3),
+      0 0 20px rgba(34, 197, 94, 0.2);
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.01);
     box-shadow:
-      0 0 50px rgba(255, 215, 0, 0.9),
-      0 0 100px rgba(34, 197, 94, 0.7);
+      0 0 15px rgba(255, 215, 0, 0.35),
+      0 0 25px rgba(34, 197, 94, 0.25);
   }
   75% {
-    transform: scale(1.08);
+    transform: scale(1.02);
     box-shadow:
-      0 0 35px rgba(255, 215, 0, 0.7),
-      0 0 70px rgba(34, 197, 94, 0.5);
+      0 0 10px rgba(255, 215, 0, 0.25),
+      0 0 18px rgba(34, 197, 94, 0.18);
   }
 }
 
-/* Floating jungle particles */
+/* Light floating jungle particles */
 @keyframes float-up {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.8);
+    transform: translateY(15px) scale(0.9);
   }
   10% {
-    opacity: 1;
+    opacity: 0.4;
     transform: translateY(0) scale(1);
   }
   90% {
-    opacity: 1;
-    transform: translateY(-60px) scale(0.9);
+    opacity: 0.4;
+    transform: translateY(-30px) scale(0.95);
   }
   100% {
     opacity: 0;
-    transform: translateY(-80px) scale(0.6);
+    transform: translateY(-40px) scale(0.8);
   }
 }
 
@@ -513,17 +513,17 @@
 @keyframes sparkle {
   0%,
   100% {
-    opacity: 0.4;
-    transform: scale(1);
+    opacity: 0.2;
+    transform: scale(0.8);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.2);
+    opacity: 0.6;
+    transform: scale(1);
   }
 }
 
 .animate-sparkle {
-  animation: sparkle 1.5s ease-in-out infinite;
+  animation: sparkle 2.5s ease-in-out infinite;
 }
 
 @keyframes celebration-sparkles {
@@ -532,8 +532,8 @@
     transform: scale(0) rotate(0deg);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.2) rotate(180deg);
+    opacity: 0.5;
+    transform: scale(1) rotate(180deg);
   }
   100% {
     opacity: 0;
@@ -542,7 +542,7 @@
 }
 
 .animate-celebration-sparkles {
-  animation: celebration-sparkles 1.5s ease-out infinite;
+  animation: celebration-sparkles 3s ease-out infinite;
 }
 
 /* Animation delays */
