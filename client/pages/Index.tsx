@@ -3363,7 +3363,6 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
                           </Tabs>
                         </div>
-
                       </div>
                     </div>
                   </div>

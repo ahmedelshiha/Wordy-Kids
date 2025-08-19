@@ -5,10 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import {
-  kidFriendlyEffects,
-  SOUNDS,
-} from "@/lib/kidFriendlyEffects";
+import { kidFriendlyEffects, SOUNDS } from "@/lib/kidFriendlyEffects";
 
 interface JungleAdventureSidebarProps {
   profile: any;
@@ -18,19 +15,34 @@ interface JungleAdventureSidebarProps {
 
 // Custom jungle-themed icons as SVG components
 const ParrotIcon = ({ className }: { className?: string }) => (
-  <div className={cn("w-10 h-10 rounded-lg bg-sky flex items-center justify-center", className)}>
+  <div
+    className={cn(
+      "w-10 h-10 rounded-lg bg-sky flex items-center justify-center",
+      className,
+    )}
+  >
     <span className="text-white text-lg">🦜</span>
   </div>
 );
 
 const MonkeyIcon = ({ className }: { className?: string }) => (
-  <div className={cn("w-10 h-10 rounded-lg bg-bright-orange flex items-center justify-center", className)}>
+  <div
+    className={cn(
+      "w-10 h-10 rounded-lg bg-bright-orange flex items-center justify-center",
+      className,
+    )}
+  >
     <span className="text-white text-lg">🐵</span>
   </div>
 );
 
 const CompassIcon = ({ className }: { className?: string }) => (
-  <div className={cn("w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center", className)}>
+  <div
+    className={cn(
+      "w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center",
+      className,
+    )}
+  >
     <span className="text-white text-lg">🧭</span>
   </div>
 );
@@ -89,7 +101,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         "w-[280px] h-[calc(100vh-80px)] flex flex-col",
         "bg-light-background/95 relative rounded-2xl shadow-xl",
         "p-5 space-y-5",
-        className
+        className,
       )}
     >
       {/* Decorative jungle elements */}
@@ -218,7 +230,8 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               className="text-navy/70 font-['Baloo_2'] text-[14px] font-medium"
               style={{ fontFamily: "'Baloo 2', cursive" }}
             >
-              {stats?.totalTime ? `${Math.round(stats.totalTime / 60)}h` : "2h"} exploring
+              {stats?.totalTime ? `${Math.round(stats.totalTime / 60)}h` : "2h"}{" "}
+              exploring
             </p>
           </div>
           <div className="w-8 h-8 bg-coral-red rounded-full flex items-center justify-center">
@@ -244,7 +257,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           >
             {isGuest ? "Start Your Epic Journey!" : "Welcome Back, Explorer!"}
           </h3>
-          
+
           {isGuest && (
             <div className="space-y-2 mb-4 text-left">
               <p
@@ -274,9 +287,9 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           className={cn(
             "w-full rounded-[25px] px-6 py-[14px] font-['Baloo_2'] text-[16px] font-bold text-white",
             "transition-all duration-300 hover:scale-105 shadow-lg",
-            isGuest 
-              ? "bg-jungle hover:bg-jungle-dark" 
-              : "bg-slate-500 hover:bg-slate-600"
+            isGuest
+              ? "bg-jungle hover:bg-jungle-dark"
+              : "bg-slate-500 hover:bg-slate-600",
           )}
           style={{ fontFamily: "'Baloo 2', cursive" }}
         >
@@ -310,12 +323,12 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
             space-y: 0;
             gap: 16px;
           }
-          
+
           .progress-cards-mobile {
             flex-direction: row;
             min-width: fit-content;
           }
-          
+
           .progress-card-mobile {
             min-width: 200px;
             flex-shrink: 0;
