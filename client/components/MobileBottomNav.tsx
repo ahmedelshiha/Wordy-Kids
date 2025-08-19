@@ -172,10 +172,10 @@ export function MobileBottomNav({
       {showMoreMenu && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute inset-0 bg-black/20"
+            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
             onClick={onMoreToggle}
           />
-          <div className="absolute bottom-12 left-3 right-3 bg-gradient-to-br from-jungle-light/20 via-sunshine-yellow/10 to-sky-blue/20 backdrop-blur-sm rounded-3xl shadow-2xl p-4 border-4 border-jungle max-h-[70vh] overflow-y-auto animate-kid-pulse-glow overflow-hidden relative">
+          <div className="absolute bottom-16 left-2 right-2 bg-gradient-to-br from-white via-jungle-light/30 to-sunshine-yellow/40 backdrop-blur-md rounded-3xl shadow-2xl p-5 border-4 border-jungle/60 max-h-[75vh] overflow-y-auto animate-kid-pulse-glow relative">
             {/* Jungle background elements */}
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-2 left-4 text-2xl animate-gentle-float animation-delay-100">🌿</div>
@@ -190,10 +190,10 @@ export function MobileBottomNav({
                 🌟
                 <span className="absolute -top-1 -right-1 text-lg animate-sparkle">✨</span>
               </div>
-              <h3 className="text-lg font-kid-friendly font-bold text-jungle-dark text-shadow-jungle mb-1">
+              <h3 className="text-xl font-kid-friendly font-bold text-jungle-dark text-shadow-jungle mb-2 bg-white/80 px-4 py-2 rounded-2xl border-2 border-jungle-light/50">
                 🌿 Jungle Adventure Menu! ✨🦋
               </h3>
-              <p className="text-sm font-kid-friendly text-jungle bg-sunshine-yellow/20 px-3 py-1 rounded-full border border-jungle-light/30">
+              <p className="text-sm font-kid-friendly text-jungle-dark font-semibold bg-sunshine-yellow/60 px-4 py-2 rounded-full border-2 border-jungle-light/60 shadow-md">
                 🗺️ Explore the magical jungle! 🐾
               </p>
             </div>
@@ -206,7 +206,7 @@ export function MobileBottomNav({
                     item.onClick();
                     onMoreToggle();
                   }}
-                  className="kid-nav-item bg-gradient-to-br from-white via-jungle-light/10 to-sunshine-yellow/20 hover:from-jungle-light hover:to-sunshine-yellow hover:text-white border-2 border-jungle-light/50 hover:border-jungle kid-interactive min-h-[90px] justify-center relative overflow-hidden group transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="kid-nav-item bg-gradient-to-br from-white via-jungle-light/20 to-sunshine-yellow/30 hover:from-jungle-light hover:to-sunshine-yellow hover:text-white border-2 border-jungle-light/70 hover:border-jungle kid-interactive min-h-[90px] justify-center relative overflow-hidden group transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   {/* Jungle-themed background pattern */}
                   <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -217,7 +217,7 @@ export function MobileBottomNav({
                   <div className="text-2xl sm:text-3xl animate-gentle-float relative z-10 group-hover:animate-mascot-bounce transition-all">
                     {item.emoji}
                   </div>
-                  <span className="text-sm font-kid-friendly font-bold text-jungle-dark group-hover:text-white transition-colors relative z-10">
+                  <span className="text-sm font-kid-friendly font-bold text-jungle-dark group-hover:text-white transition-colors relative z-10 text-shadow-sm">
                     {item.label}
                   </span>
                   {item.sparkle && (
@@ -236,7 +236,7 @@ export function MobileBottomNav({
 
             <button
               onClick={onMoreToggle}
-              className="w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-kid-friendly font-bold transition-all transform active:scale-95 shadow-lg kid-button relative overflow-hidden group"
+              className="w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-kid-friendly font-bold transition-all transform active:scale-95 shadow-xl kid-button relative overflow-hidden group border-2 border-jungle-dark"
             >
               {/* Jungle-themed background animation */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
