@@ -1022,7 +1022,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "quiz-master",
         name: "Quiz Master",
-        icon: "🧠",
+        icon: "���",
         earned: false,
         description: "Score 100% on 5 quizzes",
       },
@@ -2239,7 +2239,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
 
                             <TabsContent value="learn">
-                              <div className="space-y-8">
+                              <div className="space-y-4">
                                 {learningMode === "selector" ||
                                 !selectedCategory ? (
                                   <ChildFriendlyCategorySelector
