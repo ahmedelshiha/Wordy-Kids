@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { WordCard } from "@/components/WordCard";
+import { JungleAdventureWordCard } from "@/components/JungleAdventureWordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
 import {
