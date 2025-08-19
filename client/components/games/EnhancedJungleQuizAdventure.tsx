@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { 
-  Play, 
-  Star, 
-  Zap, 
-  Crown, 
-  Trophy, 
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  Play,
+  Star,
+  Zap,
+  Crown,
+  Trophy,
   Sparkles,
   Volume2,
   VolumeX,
@@ -16,19 +22,23 @@ import {
   Heart,
   Gem,
   Target,
-  Award
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { audioService } from '@/lib/audioService';
-import { enhancedAudioService } from '@/lib/enhancedAudioService';
-import { wordsDatabase, getWordsByCategory, getRandomWords } from '@/data/wordsDatabase';
-import { useAchievementNotifications } from '@/hooks/use-achievement-notifications';
-import { useMobileTouch } from '@/hooks/use-mobile-touch';
-import { useAccessibilityFeatures } from '@/hooks/use-accessibility-features';
+  Award,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { audioService } from "@/lib/audioService";
+import { enhancedAudioService } from "@/lib/enhancedAudioService";
+import {
+  wordsDatabase,
+  getWordsByCategory,
+  getRandomWords,
+} from "@/data/wordsDatabase";
+import { useAchievementNotifications } from "@/hooks/use-achievement-notifications";
+import { useMobileTouch } from "@/hooks/use-mobile-touch";
+import { useAccessibilityFeatures } from "@/hooks/use-accessibility-features";
 
 interface PowerUp {
   id: string;
-  type: 'hint' | 'streak' | 'time' | 'gems';
+  type: "hint" | "streak" | "time" | "gems";
   name: string;
   icon: React.ReactNode;
   description: string;
@@ -63,7 +73,7 @@ interface Word {
   funFact: string;
   emoji: string;
   category: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
 }
 
 interface EnhancedJungleQuizAdventureProps {
@@ -71,17 +81,19 @@ interface EnhancedJungleQuizAdventureProps {
   onComplete?: (score: number, stats: any) => void;
   onExit?: () => void;
   words?: Word[];
-  difficulty?: 'easy' | 'medium' | 'hard';
-  gameMode?: 'adventure' | 'challenge' | 'zen';
+  difficulty?: "easy" | "medium" | "hard";
+  gameMode?: "adventure" | "challenge" | "zen";
 }
 
-export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventureProps> = ({
-  selectedCategory = 'animals',
+export const EnhancedJungleQuizAdventure: React.FC<
+  EnhancedJungleQuizAdventureProps
+> = ({
+  selectedCategory = "animals",
   onComplete,
   onExit,
   words: customWords,
-  difficulty = 'medium',
-  gameMode = 'adventure'
+  difficulty = "medium",
+  gameMode = "adventure",
 }) => {
   // Core game state
   const [gameState, setGameState] = useState<GameState>({
@@ -97,39 +109,39 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
     experience: 0,
     powerUps: [
       {
-        id: 'hint',
-        type: 'hint',
-        name: 'Jungle Hint',
+        id: "hint",
+        type: "hint",
+        name: "Jungle Hint",
         icon: <Sparkles className="w-4 h-4" />,
-        description: 'Reveals the first letter',
+        description: "Reveals the first letter",
         cost: 10,
         active: false,
-        uses: 3
+        uses: 3,
       },
       {
-        id: 'streak',
-        type: 'streak',
-        name: 'Streak Multiplier',
+        id: "streak",
+        type: "streak",
+        name: "Streak Multiplier",
         icon: <Zap className="w-4 h-4" />,
-        description: 'Double points for next answer',
+        description: "Double points for next answer",
         cost: 25,
         active: false,
-        uses: 2
+        uses: 2,
       },
       {
-        id: 'time',
-        type: 'time',
-        name: 'Time Boost',
+        id: "time",
+        type: "time",
+        name: "Time Boost",
         icon: <Target className="w-4 h-4" />,
-        description: 'Extra time for this question',
+        description: "Extra time for this question",
         cost: 15,
         active: false,
-        uses: 5
-      }
+        uses: 5,
+      },
     ],
     achievements: [],
     plantGrowthStage: 0,
-    treasuresFound: 0
+    treasuresFound: 0,
   });
 
   // Game setup
@@ -143,7 +155,9 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
   const [timeLeft, setTimeLeft] = useState(15);
   const [isTimerActive, setIsTimerActive] = useState(true);
   const [showHint, setShowHint] = useState(false);
-  const [gamePhase, setGamePhase] = useState<'playing' | 'result' | 'levelUp' | 'gameOver'>('playing');
+  const [gamePhase, setGamePhase] = useState<
+    "playing" | "result" | "levelUp" | "gameOver"
+  >("playing");
 
   // Visual effects state
   const [isCardFlipping, setIsCardFlipping] = useState(false);
@@ -151,8 +165,12 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
   const [showStreakEffect, setShowStreakEffect] = useState(false);
   const [showTreasureDiscovery, setShowTreasureDiscovery] = useState(false);
   const [showLevelUpEffect, setShowLevelUpEffect] = useState(false);
-  const [backgroundTheme, setBackgroundTheme] = useState<'morning' | 'midday' | 'evening' | 'night'>('morning');
-  const [weatherEffect, setWeatherEffect] = useState<'sunny' | 'misty' | 'gentle-rain' | 'sparkles'>('sunny');
+  const [backgroundTheme, setBackgroundTheme] = useState<
+    "morning" | "midday" | "evening" | "night"
+  >("morning");
+  const [weatherEffect, setWeatherEffect] = useState<
+    "sunny" | "misty" | "gentle-rain" | "sparkles"
+  >("sunny");
 
   // Audio and accessibility
   const [isMuted, setIsMuted] = useState(false);
@@ -173,20 +191,24 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
   useEffect(() => {
     const initializeGame = () => {
       let gameWords: Word[] = [];
-      
+
       if (customWords && customWords.length > 0) {
         gameWords = customWords;
       } else {
-        gameWords = selectedCategory === 'mixed' 
-          ? getRandomWords(20)
-          : getWordsByCategory(selectedCategory);
+        gameWords =
+          selectedCategory === "mixed"
+            ? getRandomWords(20)
+            : getWordsByCategory(selectedCategory);
       }
 
       // Filter by difficulty
-      gameWords = gameWords.filter(word => 
-        difficulty === 'easy' ? word.difficulty === 'easy' :
-        difficulty === 'medium' ? ['easy', 'medium'].includes(word.difficulty) :
-        word.difficulty // hard includes all
+      gameWords = gameWords.filter(
+        (word) =>
+          difficulty === "easy"
+            ? word.difficulty === "easy"
+            : difficulty === "medium"
+              ? ["easy", "medium"].includes(word.difficulty)
+              : word.difficulty, // hard includes all
       );
 
       // Ensure we have enough words
@@ -206,13 +228,15 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
       const word = words[gameState.currentWordIndex];
       setCurrentWord(word);
       generateOptions(word);
-      setTimeLeft(difficulty === 'easy' ? 20 : difficulty === 'medium' ? 15 : 10);
+      setTimeLeft(
+        difficulty === "easy" ? 20 : difficulty === "medium" ? 15 : 10,
+      );
       setIsTimerActive(true);
       setShowHint(false);
       setSelectedOption(null);
       setShowResult(false);
       setIsAnswering(false);
-      
+
       // Auto-play pronunciation if enabled
       if (autoPlayAudio && !isMuted) {
         setTimeout(() => {
@@ -224,9 +248,9 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
 
   // Timer effect
   useEffect(() => {
-    if (isTimerActive && timeLeft > 0 && gamePhase === 'playing') {
+    if (isTimerActive && timeLeft > 0 && gamePhase === "playing") {
       timerRef.current = setTimeout(() => {
-        setTimeLeft(prev => {
+        setTimeLeft((prev) => {
           if (prev <= 1) {
             handleTimeUp();
             return 0;
@@ -250,220 +274,251 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
   // Dynamic background theme based on progress
   useEffect(() => {
     const progressPercent = (gameState.currentWordIndex / words.length) * 100;
-    
+
     if (progressPercent < 25) {
-      setBackgroundTheme('morning');
-      setWeatherEffect('sunny');
+      setBackgroundTheme("morning");
+      setWeatherEffect("sunny");
     } else if (progressPercent < 50) {
-      setBackgroundTheme('midday');
-      setWeatherEffect('sparkles');
+      setBackgroundTheme("midday");
+      setWeatherEffect("sparkles");
     } else if (progressPercent < 75) {
-      setBackgroundTheme('evening');
-      setWeatherEffect('misty');
+      setBackgroundTheme("evening");
+      setWeatherEffect("misty");
     } else {
-      setBackgroundTheme('night');
-      setWeatherEffect('gentle-rain');
+      setBackgroundTheme("night");
+      setWeatherEffect("gentle-rain");
     }
   }, [gameState.currentWordIndex, words.length]);
 
   // Generate multiple choice options
   const generateOptions = useCallback((correctWord: Word) => {
-    const allWords = wordsDatabase.filter(w => 
-      w.category === correctWord.category && w.id !== correctWord.id
+    const allWords = wordsDatabase.filter(
+      (w) => w.category === correctWord.category && w.id !== correctWord.id,
     );
-    
+
     // Get 3 random incorrect options
     const shuffled = allWords.sort(() => 0.5 - Math.random());
     const incorrectOptions = shuffled.slice(0, 3);
-    
+
     // Combine with correct answer and shuffle
-    const allOptions = [correctWord, ...incorrectOptions].sort(() => 0.5 - Math.random());
+    const allOptions = [correctWord, ...incorrectOptions].sort(
+      () => 0.5 - Math.random(),
+    );
     setOptions(allOptions);
   }, []);
 
   // Audio functions
-  const playWordPronunciation = useCallback(async (word: string) => {
-    if (isMuted) return;
-    
-    try {
-      await enhancedAudioService.speakText(word, {
-        rate: 0.8,
-        pitch: 1.1,
-        volume: 0.9
-      });
-    } catch (error) {
-      console.error('Failed to play word pronunciation:', error);
-      // Fallback to regular audio service
-      audioService.playSuccessSound();
-    }
-  }, [isMuted]);
+  const playWordPronunciation = useCallback(
+    async (word: string) => {
+      if (isMuted) return;
 
-  const playSound = useCallback((soundType: 'success' | 'error' | 'click' | 'whoosh' | 'celebration') => {
-    if (isMuted) return;
-    
-    switch (soundType) {
-      case 'success':
+      try {
+        await enhancedAudioService.speakText(word, {
+          rate: 0.8,
+          pitch: 1.1,
+          volume: 0.9,
+        });
+      } catch (error) {
+        console.error("Failed to play word pronunciation:", error);
+        // Fallback to regular audio service
         audioService.playSuccessSound();
-        break;
-      case 'error':
-        audioService.playErrorSound();
-        break;
-      case 'click':
-        audioService.playClickSound();
-        break;
-      case 'whoosh':
-        audioService.playWhooshSound();
-        break;
-      case 'celebration':
-        // Play multiple celebration sounds in sequence
-        audioService.playSuccessSound();
-        setTimeout(() => audioService.playClickSound(), 200);
-        setTimeout(() => audioService.playWhooshSound(), 400);
-        break;
-    }
-  }, [isMuted]);
+      }
+    },
+    [isMuted],
+  );
+
+  const playSound = useCallback(
+    (soundType: "success" | "error" | "click" | "whoosh" | "celebration") => {
+      if (isMuted) return;
+
+      switch (soundType) {
+        case "success":
+          audioService.playSuccessSound();
+          break;
+        case "error":
+          audioService.playErrorSound();
+          break;
+        case "click":
+          audioService.playClickSound();
+          break;
+        case "whoosh":
+          audioService.playWhooshSound();
+          break;
+        case "celebration":
+          // Play multiple celebration sounds in sequence
+          audioService.playSuccessSound();
+          setTimeout(() => audioService.playClickSound(), 200);
+          setTimeout(() => audioService.playWhooshSound(), 400);
+          break;
+      }
+    },
+    [isMuted],
+  );
 
   // Power-up functions
-  const usePowerUp = useCallback((powerUpId: string) => {
-    const powerUp = gameState.powerUps.find(p => p.id === powerUpId);
-    if (!powerUp || powerUp.uses <= 0 || gameState.gems < powerUp.cost) return;
+  const usePowerUp = useCallback(
+    (powerUpId: string) => {
+      const powerUp = gameState.powerUps.find((p) => p.id === powerUpId);
+      if (!powerUp || powerUp.uses <= 0 || gameState.gems < powerUp.cost)
+        return;
 
-    setGameState(prev => ({
-      ...prev,
-      gems: prev.gems - powerUp.cost,
-      powerUps: prev.powerUps.map(p => 
-        p.id === powerUpId 
-          ? { ...p, uses: p.uses - 1, active: true }
-          : p
-      )
-    }));
+      setGameState((prev) => ({
+        ...prev,
+        gems: prev.gems - powerUp.cost,
+        powerUps: prev.powerUps.map((p) =>
+          p.id === powerUpId ? { ...p, uses: p.uses - 1, active: true } : p,
+        ),
+      }));
 
-    // Apply power-up effect
-    switch (powerUpId) {
-      case 'hint':
-        setShowHint(true);
-        triggerHaptic('light');
-        playSound('click');
-        break;
-      case 'streak':
-        triggerHaptic('medium');
-        playSound('success');
-        break;
-      case 'time':
-        setTimeLeft(prev => prev + 10);
-        triggerHaptic('light');
-        playSound('whoosh');
-        break;
-    }
-  }, [gameState.powerUps, gameState.gems, triggerHaptic, playSound]);
+      // Apply power-up effect
+      switch (powerUpId) {
+        case "hint":
+          setShowHint(true);
+          triggerHaptic("light");
+          playSound("click");
+          break;
+        case "streak":
+          triggerHaptic("medium");
+          playSound("success");
+          break;
+        case "time":
+          setTimeLeft((prev) => prev + 10);
+          triggerHaptic("light");
+          playSound("whoosh");
+          break;
+      }
+    },
+    [gameState.powerUps, gameState.gems, triggerHaptic, playSound],
+  );
 
   // Handle answer selection
-  const handleAnswerSelect = useCallback((selectedWordId: number) => {
-    if (isAnswering || !currentWord) return;
+  const handleAnswerSelect = useCallback(
+    (selectedWordId: number) => {
+      if (isAnswering || !currentWord) return;
 
-    setIsAnswering(true);
-    setSelectedOption(selectedWordId.toString());
-    setIsTimerActive(false);
+      setIsAnswering(true);
+      setSelectedOption(selectedWordId.toString());
+      setIsTimerActive(false);
 
-    const correct = selectedWordId === currentWord.id;
-    setIsCorrect(correct);
+      const correct = selectedWordId === currentWord.id;
+      setIsCorrect(correct);
 
-    // Calculate points
-    let points = 100;
-    if (correct) {
-      // Base points
-      points = 100;
-      
-      // Time bonus
-      const timeBonus = Math.max(0, timeLeft * 5);
-      points += timeBonus;
-      
-      // Streak multiplier
-      const streakMultiplier = Math.min(5, Math.floor(gameState.streak / 3) + 1);
-      points *= streakMultiplier;
-      
-      // Power-up multiplier
-      const streakPowerUp = gameState.powerUps.find(p => p.id === 'streak' && p.active);
-      if (streakPowerUp) {
-        points *= 2;
+      // Calculate points
+      let points = 100;
+      if (correct) {
+        // Base points
+        points = 100;
+
+        // Time bonus
+        const timeBonus = Math.max(0, timeLeft * 5);
+        points += timeBonus;
+
+        // Streak multiplier
+        const streakMultiplier = Math.min(
+          5,
+          Math.floor(gameState.streak / 3) + 1,
+        );
+        points *= streakMultiplier;
+
+        // Power-up multiplier
+        const streakPowerUp = gameState.powerUps.find(
+          (p) => p.id === "streak" && p.active,
+        );
+        if (streakPowerUp) {
+          points *= 2;
+        }
+
+        // Difficulty multiplier
+        const difficultyMultiplier =
+          difficulty === "easy" ? 1 : difficulty === "medium" ? 1.2 : 1.5;
+        points = Math.round(points * difficultyMultiplier);
       }
-      
-      // Difficulty multiplier
-      const difficultyMultiplier = difficulty === 'easy' ? 1 : difficulty === 'medium' ? 1.2 : 1.5;
-      points = Math.round(points * difficultyMultiplier);
-    }
 
-    // Update game state
-    setGameState(prev => {
-      const newStreak = correct ? prev.streak + 1 : 0;
-      const newScore = correct ? prev.score + points : prev.score;
-      const newExperience = prev.experience + (correct ? 25 : 5);
-      const newLevel = Math.floor(newExperience / 100) + 1;
-      const leveledUp = newLevel > prev.level;
-      
-      return {
-        ...prev,
-        score: newScore,
-        streak: newStreak,
-        maxStreak: Math.max(prev.maxStreak, newStreak),
-        experience: newExperience,
-        level: newLevel,
-        lives: correct ? prev.lives : Math.max(0, prev.lives - 1),
-        treasuresFound: correct ? prev.treasuresFound + 1 : prev.treasuresFound,
-        plantGrowthStage: Math.min(5, prev.plantGrowthStage + (correct ? 1 : 0)),
-        powerUps: prev.powerUps.map(p => ({ ...p, active: false })) // Deactivate power-ups
-      };
-    });
+      // Update game state
+      setGameState((prev) => {
+        const newStreak = correct ? prev.streak + 1 : 0;
+        const newScore = correct ? prev.score + points : prev.score;
+        const newExperience = prev.experience + (correct ? 25 : 5);
+        const newLevel = Math.floor(newExperience / 100) + 1;
+        const leveledUp = newLevel > prev.level;
 
-    // Visual and audio feedback
-    if (correct) {
-      triggerHaptic('success');
-      playSound('success');
-      setShowSuccessParticles(true);
-      
-      if (gameState.streak > 0 && (gameState.streak + 1) % 3 === 0) {
-        setShowStreakEffect(true);
-        setTimeout(() => setShowStreakEffect(false), 2000);
+        return {
+          ...prev,
+          score: newScore,
+          streak: newStreak,
+          maxStreak: Math.max(prev.maxStreak, newStreak),
+          experience: newExperience,
+          level: newLevel,
+          lives: correct ? prev.lives : Math.max(0, prev.lives - 1),
+          treasuresFound: correct
+            ? prev.treasuresFound + 1
+            : prev.treasuresFound,
+          plantGrowthStage: Math.min(
+            5,
+            prev.plantGrowthStage + (correct ? 1 : 0),
+          ),
+          powerUps: prev.powerUps.map((p) => ({ ...p, active: false })), // Deactivate power-ups
+        };
+      });
+
+      // Visual and audio feedback
+      if (correct) {
+        triggerHaptic("success");
+        playSound("success");
+        setShowSuccessParticles(true);
+
+        if (gameState.streak > 0 && (gameState.streak + 1) % 3 === 0) {
+          setShowStreakEffect(true);
+          setTimeout(() => setShowStreakEffect(false), 2000);
+        }
+
+        if ((gameState.treasuresFound + 1) % 5 === 0) {
+          setShowTreasureDiscovery(true);
+          setTimeout(() => setShowTreasureDiscovery(false), 3000);
+        }
+      } else {
+        triggerHaptic("error");
+        playSound("error");
       }
-      
-      if ((gameState.treasuresFound + 1) % 5 === 0) {
-        setShowTreasureDiscovery(true);
-        setTimeout(() => setShowTreasureDiscovery(false), 3000);
-      }
-    } else {
-      triggerHaptic('error');
-      playSound('error');
-    }
 
-    // Show result
-    setTimeout(() => {
-      setShowResult(true);
-      setIsCardFlipping(true);
-      
+      // Show result
       setTimeout(() => {
-        setIsCardFlipping(false);
-        setShowSuccessParticles(false);
-      }, 1000);
-    }, 500);
+        setShowResult(true);
+        setIsCardFlipping(true);
 
-  }, [isAnswering, currentWord, timeLeft, gameState, difficulty, triggerHaptic, playSound]);
+        setTimeout(() => {
+          setIsCardFlipping(false);
+          setShowSuccessParticles(false);
+        }, 1000);
+      }, 500);
+    },
+    [
+      isAnswering,
+      currentWord,
+      timeLeft,
+      gameState,
+      difficulty,
+      triggerHaptic,
+      playSound,
+    ],
+  );
 
   // Handle time up
   const handleTimeUp = useCallback(() => {
     if (isAnswering || showResult) return;
-    
+
     setIsTimerActive(false);
     setIsCorrect(false);
-    
-    setGameState(prev => ({
+
+    setGameState((prev) => ({
       ...prev,
       streak: 0,
-      lives: Math.max(0, prev.lives - 1)
+      lives: Math.max(0, prev.lives - 1),
     }));
 
-    triggerHaptic('error');
-    playSound('error');
-    
+    triggerHaptic("error");
+    playSound("error");
+
     setTimeout(() => {
       setShowResult(true);
     }, 500);
@@ -473,13 +528,13 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
   const handleNextQuestion = useCallback(() => {
     if (gameState.currentWordIndex + 1 >= words.length) {
       // Game complete
-      setGamePhase('result');
+      setGamePhase("result");
       if (onComplete) {
         onComplete(gameState.score, {
           streak: gameState.maxStreak,
           accuracy: Math.round((gameState.treasuresFound / words.length) * 100),
           level: gameState.level,
-          gems: gameState.gems
+          gems: gameState.gems,
         });
       }
       return;
@@ -487,13 +542,13 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
 
     if (gameState.lives <= 0) {
       // Game over
-      setGamePhase('gameOver');
+      setGamePhase("gameOver");
       return;
     }
 
-    setGameState(prev => ({
+    setGameState((prev) => ({
       ...prev,
-      currentWordIndex: prev.currentWordIndex + 1
+      currentWordIndex: prev.currentWordIndex + 1,
     }));
   }, [gameState, words.length, onComplete]);
 
@@ -501,23 +556,24 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
   const handleReplayAudio = useCallback(() => {
     if (currentWord) {
       playWordPronunciation(currentWord.word);
-      triggerHaptic('light');
+      triggerHaptic("light");
     }
   }, [currentWord, playWordPronunciation, triggerHaptic]);
 
   // Progress calculation
-  const progressPercent = words.length > 0 ? (gameState.currentWordIndex / words.length) * 100 : 0;
-  const experiencePercent = (gameState.experience % 100);
+  const progressPercent =
+    words.length > 0 ? (gameState.currentWordIndex / words.length) * 100 : 0;
+  const experiencePercent = gameState.experience % 100;
 
   return (
-    <div 
+    <div
       ref={gameContainerRef}
       className={cn(
         "min-h-screen relative overflow-hidden",
         `jungle-background-${backgroundTheme}`,
         `weather-${weatherEffect}`,
         reducedMotion && "reduce-motion",
-        isHighContrast && "high-contrast"
+        isHighContrast && "high-contrast",
       )}
     >
       {/* Immersive Background Layers */}
@@ -525,7 +581,7 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
       <div className="absolute inset-0 jungle-parallax-layer-1" />
       <div className="absolute inset-0 jungle-parallax-layer-2" />
       <div className="absolute inset-0 jungle-parallax-layer-3" />
-      
+
       {/* Floating Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -534,15 +590,17 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
             className={cn(
               "absolute w-2 h-2 rounded-full opacity-60",
               "animate-jungle-float",
-              weatherEffect === 'sparkles' ? "bg-yellow-300" :
-              weatherEffect === 'gentle-rain' ? "bg-blue-200" :
-              "bg-green-300"
+              weatherEffect === "sparkles"
+                ? "bg-yellow-300"
+                : weatherEffect === "gentle-rain"
+                  ? "bg-blue-200"
+                  : "bg-green-300",
             )}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${4 + Math.random() * 2}s`
+              animationDuration: `${4 + Math.random() * 2}s`,
             }}
           />
         ))}
@@ -583,7 +641,11 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
               onClick={() => setIsMuted(!isMuted)}
               className="jungle-glass-button"
             >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              {isMuted ? (
+                <VolumeX className="w-4 h-4" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
             </Button>
             {onExit && (
               <Button
@@ -600,8 +662,8 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
 
         {/* Progress Bar */}
         <div className="relative mb-4">
-          <Progress 
-            value={progressPercent} 
+          <Progress
+            value={progressPercent}
             className="h-3 jungle-progress-trail"
           />
           <div className="absolute -top-1 left-0 w-full h-5 flex items-center justify-between pointer-events-none">
@@ -609,15 +671,17 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
               const stationProgress = (i / 4) * 100;
               const isActive = progressPercent >= stationProgress;
               const isComplete = progressPercent > stationProgress + 10;
-              
+
               return (
                 <div
                   key={i}
                   className={cn(
                     "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-500",
-                    isComplete ? "bg-yellow-400 border-yellow-500 text-yellow-900 animate-jungle-glow" :
-                    isActive ? "bg-green-400 border-green-500 text-green-900 animate-jungle-sparkle" :
-                    "bg-gray-300 border-gray-400 text-gray-600"
+                    isComplete
+                      ? "bg-yellow-400 border-yellow-500 text-yellow-900 animate-jungle-glow"
+                      : isActive
+                        ? "bg-green-400 border-green-500 text-green-900 animate-jungle-sparkle"
+                        : "bg-gray-300 border-gray-400 text-gray-600",
                   )}
                 >
                   {isComplete ? "🏆" : isActive ? "🌟" : "🌱"}
@@ -635,21 +699,21 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                 key={i}
                 className={cn(
                   "w-6 h-6 transition-all duration-300",
-                  i < gameState.lives 
-                    ? "text-red-500 fill-red-500 animate-pulse" 
-                    : "text-gray-400"
+                  i < gameState.lives
+                    ? "text-red-500 fill-red-500 animate-pulse"
+                    : "text-gray-400",
                 )}
               />
             ))}
           </div>
-          
+
           <div className="flex items-center gap-4">
             <Badge className="level-badge bg-blue-500 text-blue-900 font-bold px-3 py-1">
               <Crown className="w-4 h-4 mr-1" />
               Level {gameState.level}
             </Badge>
             <div className="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full bg-blue-500 transition-all duration-500 animate-jungle-glow"
                 style={{ width: `${experiencePercent}%` }}
               />
@@ -659,14 +723,20 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
 
         {/* Timer */}
         <div className="text-center mb-4">
-          <div className={cn(
-            "inline-flex items-center gap-2 px-4 py-2 rounded-full jungle-glass-morphism",
-            timeLeft <= 5 ? "animate-pulse bg-red-500/20 text-red-700" : "text-green-700"
-          )}>
-            <div className={cn(
-              "w-4 h-4 rounded-full",
-              timeLeft <= 5 ? "bg-red-500 animate-ping" : "bg-green-500"
-            )} />
+          <div
+            className={cn(
+              "inline-flex items-center gap-2 px-4 py-2 rounded-full jungle-glass-morphism",
+              timeLeft <= 5
+                ? "animate-pulse bg-red-500/20 text-red-700"
+                : "text-green-700",
+            )}
+          >
+            <div
+              className={cn(
+                "w-4 h-4 rounded-full",
+                timeLeft <= 5 ? "bg-red-500 animate-ping" : "bg-green-500",
+              )}
+            />
             <span className="font-bold text-lg">{timeLeft}s</span>
           </div>
         </div>
@@ -685,7 +755,7 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
               className={cn(
                 "jungle-glass-button flex items-center gap-2 transition-all duration-300",
                 powerUp.active && "animate-jungle-glow",
-                powerUp.uses <= 0 && "opacity-50"
+                powerUp.uses <= 0 && "opacity-50",
               )}
             >
               {powerUp.icon}
@@ -705,11 +775,13 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
         {currentWord && (
           <div className="max-w-4xl mx-auto">
             {/* Question Card */}
-            <Card className={cn(
-              "jungle-treasure-card mb-6 relative overflow-hidden transition-all duration-500",
-              isCardFlipping && "animate-jungle-celebration",
-              showResult && isCorrect && "animate-treasureDiscovery"
-            )}>
+            <Card
+              className={cn(
+                "jungle-treasure-card mb-6 relative overflow-hidden transition-all duration-500",
+                isCardFlipping && "animate-jungle-celebration",
+                showResult && isCorrect && "animate-treasureDiscovery",
+              )}
+            >
               <CardHeader className="text-center relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-green-500/5 to-yellow-500/10" />
                 <CardTitle className="text-2xl font-bold text-emerald-800 relative z-10">
@@ -718,12 +790,13 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                 <p className="text-emerald-600 relative z-10">
                   What word do you hear? 🎧
                 </p>
-                
+
                 {/* Hint Display */}
                 {showHint && (
                   <div className="mt-4 p-3 bg-yellow-100 rounded-lg border border-yellow-300 animate-jungle-sparkle">
                     <p className="text-yellow-800 font-medium">
-                      🔍 Hint: The word starts with "{currentWord.word[0].toUpperCase()}"
+                      🔍 Hint: The word starts with "
+                      {currentWord.word[0].toUpperCase()}"
                     </p>
                   </div>
                 )}
@@ -749,12 +822,13 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                   {options.map((option, index) => {
                     const isSelected = selectedOption === option.id.toString();
                     const isCorrectAnswer = option.id === currentWord.id;
-                    
-                    let cardState = 'default';
+
+                    let cardState = "default";
                     if (showResult) {
-                      if (isSelected && isCorrectAnswer) cardState = 'correct';
-                      else if (isSelected && !isCorrectAnswer) cardState = 'incorrect';
-                      else if (isCorrectAnswer) cardState = 'reveal-correct';
+                      if (isSelected && isCorrectAnswer) cardState = "correct";
+                      else if (isSelected && !isCorrectAnswer)
+                        cardState = "incorrect";
+                      else if (isCorrectAnswer) cardState = "reveal-correct";
                     }
 
                     return (
@@ -764,27 +838,30 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                           "treasure-option-card cursor-pointer transition-all duration-300 relative overflow-hidden",
                           "hover:scale-105 hover:shadow-xl active:scale-98",
                           isSelected && "ring-4",
-                          cardState === 'correct' && "ring-green-500 bg-green-50 animate-treasureDiscovery",
-                          cardState === 'incorrect' && "ring-red-500 bg-red-50 animate-shake",
-                          cardState === 'reveal-correct' && "ring-green-400 bg-green-25 animate-jungle-glow",
-                          isAnswering && "pointer-events-none"
+                          cardState === "correct" &&
+                            "ring-green-500 bg-green-50 animate-treasureDiscovery",
+                          cardState === "incorrect" &&
+                            "ring-red-500 bg-red-50 animate-shake",
+                          cardState === "reveal-correct" &&
+                            "ring-green-400 bg-green-25 animate-jungle-glow",
+                          isAnswering && "pointer-events-none",
                         )}
                         onClick={() => handleAnswerSelect(option.id)}
                       >
                         <CardContent className="p-6 text-center relative">
                           {/* Card Background Effect */}
                           <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-emerald-50/30 to-green-100/20" />
-                          
+
                           {/* Emoji */}
                           <div className="text-6xl mb-4 relative z-10 select-none">
                             {option.emoji}
                           </div>
-                          
+
                           {/* Word */}
                           <h3 className="text-xl font-bold text-gray-800 mb-2 relative z-10">
                             {option.word}
                           </h3>
-                          
+
                           {/* Definition (shown after selection) */}
                           {showResult && isSelected && (
                             <p className="text-sm text-gray-600 mt-2 animate-fadeIn relative z-10">
@@ -793,7 +870,7 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                           )}
 
                           {/* Success Particles */}
-                          {showSuccessParticles && cardState === 'correct' && (
+                          {showSuccessParticles && cardState === "correct" && (
                             <div className="absolute inset-0 pointer-events-none">
                               {[...Array(8)].map((_, i) => (
                                 <div
@@ -802,7 +879,7 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                                   style={{
                                     left: `${20 + Math.random() * 60}%`,
                                     top: `${20 + Math.random() * 60}%`,
-                                    animationDelay: `${i * 0.1}s`
+                                    animationDelay: `${i * 0.1}s`,
                                   }}
                                 />
                               ))}
@@ -829,7 +906,7 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                         <p className="text-sm text-gray-600 max-w-md mx-auto">
                           {currentWord.funFact}
                         </p>
-                        
+
                         {/* Streak Display */}
                         {gameState.streak > 1 && (
                           <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 rounded-full border border-orange-300">
@@ -847,14 +924,15 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
                           Keep Exploring! 🗺️
                         </h3>
                         <p className="text-blue-600">
-                          The correct answer was: <strong>{currentWord.word}</strong>
+                          The correct answer was:{" "}
+                          <strong>{currentWord.word}</strong>
                         </p>
                         <p className="text-sm text-gray-600 max-w-md mx-auto">
                           {currentWord.definition}
                         </p>
                       </div>
                     )}
-                    
+
                     <Button
                       onClick={handleNextQuestion}
                       className="mt-6 jungle-continue-button group"
@@ -872,11 +950,17 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 rounded-full border border-green-300">
                 <span className="text-2xl">
-                  {gameState.plantGrowthStage === 0 ? '🌱' :
-                   gameState.plantGrowthStage === 1 ? '🌿' :
-                   gameState.plantGrowthStage === 2 ? '🌸' :
-                   gameState.plantGrowthStage === 3 ? '🌺' :
-                   gameState.plantGrowthStage === 4 ? '🌻' : '🏆'}
+                  {gameState.plantGrowthStage === 0
+                    ? "🌱"
+                    : gameState.plantGrowthStage === 1
+                      ? "🌿"
+                      : gameState.plantGrowthStage === 2
+                        ? "🌸"
+                        : gameState.plantGrowthStage === 3
+                          ? "🌺"
+                          : gameState.plantGrowthStage === 4
+                            ? "🌻"
+                            : "🏆"}
                 </span>
                 <span className="font-semibold text-green-800">
                   Garden Stage: {Math.min(gameState.plantGrowthStage, 5)}/5
@@ -911,9 +995,7 @@ export const EnhancedJungleQuizAdventure: React.FC<EnhancedJungleQuizAdventurePr
         <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
           <div className="text-center animate-jungle-level-up">
             <div className="text-8xl mb-4">👑</div>
-            <h2 className="text-4xl font-bold text-purple-600">
-              LEVEL UP!
-            </h2>
+            <h2 className="text-4xl font-bold text-purple-600">LEVEL UP!</h2>
             <p className="text-xl text-purple-500">
               Welcome to Level {gameState.level}
             </p>

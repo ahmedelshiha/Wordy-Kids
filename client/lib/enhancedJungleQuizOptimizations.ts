@@ -41,17 +41,21 @@ export class EnhancedJungleQuizOptimizer {
   private isLowEndDevice: boolean = false;
   private batteryInfo: BatteryInfo | null = null;
   private memoryMonitor: NodeJS.Timeout | null = null;
-  private animationQueue: Array<{ id: string; priority: number; animation: () => void }> = [];
+  private animationQueue: Array<{
+    id: string;
+    priority: number;
+    animation: () => void;
+  }> = [];
   private imageCache = new Map<string, HTMLImageElement>();
   private audioCache = new Map<string, AudioBuffer>();
-  
+
   // Performance metrics
   private performanceMetrics = {
     averageFPS: 60,
     memoryUsage: 0,
     renderTime: 0,
     audioLatency: 0,
-    animationDroppedFrames: 0
+    animationDroppedFrames: 0,
   };
 
   // Optimization strategies
@@ -72,9 +76,9 @@ export class EnhancedJungleQuizOptimizer {
       memoryManagement: {
         maxCacheSize: 50, // 50MB
         cleanupInterval: 30000, // 30 seconds
-        lowMemoryThreshold: 100 // 100MB
+        lowMemoryThreshold: 100, // 100MB
       },
-      ...config
+      ...config,
     };
 
     this.initialize();
@@ -87,23 +91,23 @@ export class EnhancedJungleQuizOptimizer {
   private async initialize(): Promise<void> {
     // Detect device capabilities
     await this.detectDeviceCapabilities();
-    
+
     // Initialize battery monitoring
     await this.initializeBatteryMonitoring();
-    
+
     // Start memory monitoring
     this.startMemoryMonitoring();
-    
+
     // Apply initial optimizations
     this.applyInitialOptimizations();
-    
+
     // Set up optimization strategies
     this.setupOptimizationStrategies();
 
-    console.log('Enhanced Jungle Quiz Optimizer initialized', {
+    console.log("Enhanced Jungle Quiz Optimizer initialized", {
       isLowEndDevice: this.isLowEndDevice,
       batteryLevel: this.batteryInfo?.level,
-      memoryLimit: this.getMemoryInfo()?.jsHeapSizeLimit
+      memoryLimit: this.getMemoryInfo()?.jsHeapSizeLimit,
     });
   }
 
@@ -114,53 +118,56 @@ export class EnhancedJungleQuizOptimizer {
       Math.random();
     }
     const cpuTime = performance.now() - start;
-    
+
     // Memory detection
     const memoryInfo = this.getMemoryInfo();
     const totalMemory = memoryInfo?.jsHeapSizeLimit || 0;
-    
+
     // GPU detection (WebGL test)
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    const canvas = document.createElement("canvas");
+    const gl =
+      canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
     const hasWebGL = !!gl;
-    
+
     // Determine if this is a low-end device
-    this.isLowEndDevice = 
+    this.isLowEndDevice =
       cpuTime > 50 || // Slow CPU
       totalMemory < 50 * 1024 * 1024 || // Less than 50MB heap
       !hasWebGL || // No WebGL support
       navigator.hardwareConcurrency <= 2; // 2 or fewer cores
 
     if (this.isLowEndDevice) {
-      console.log('Low-end device detected, applying performance optimizations');
+      console.log(
+        "Low-end device detected, applying performance optimizations",
+      );
       this.applyLowEndOptimizations();
     }
   }
 
   private async initializeBatteryMonitoring(): Promise<void> {
     try {
-      if ('getBattery' in navigator) {
+      if ("getBattery" in navigator) {
         const battery = await (navigator as any).getBattery();
-        
+
         this.batteryInfo = {
           level: battery.level,
           charging: battery.charging,
-          dischargingTime: battery.dischargingTime
+          dischargingTime: battery.dischargingTime,
         };
 
         // Monitor battery changes
-        battery.addEventListener('levelchange', () => {
+        battery.addEventListener("levelchange", () => {
           this.batteryInfo!.level = battery.level;
           this.handleBatteryChange();
         });
 
-        battery.addEventListener('chargingchange', () => {
+        battery.addEventListener("chargingchange", () => {
           this.batteryInfo!.charging = battery.charging;
           this.handleBatteryChange();
         });
       }
     } catch (error) {
-      console.warn('Battery API not available:', error);
+      console.warn("Battery API not available:", error);
     }
   }
 
@@ -178,33 +185,51 @@ export class EnhancedJungleQuizOptimizer {
 
   private setupOptimizationStrategies(): void {
     // Image optimization strategy
-    this.optimizationStrategies.set('lazy-loading', this.config.enableImageLazyLoading);
-    this.optimizationStrategies.set('image-compression', true);
-    this.optimizationStrategies.set('webp-support', this.supportsWebP());
-    
+    this.optimizationStrategies.set(
+      "lazy-loading",
+      this.config.enableImageLazyLoading,
+    );
+    this.optimizationStrategies.set("image-compression", true);
+    this.optimizationStrategies.set("webp-support", this.supportsWebP());
+
     // Animation optimization strategy
-    this.optimizationStrategies.set('animation-culling', this.config.enableAnimationOptimizations);
-    this.optimizationStrategies.set('reduced-motion', this.config.enableReducedMotion || this.isLowEndDevice);
-    this.optimizationStrategies.set('animation-queuing', true);
-    
+    this.optimizationStrategies.set(
+      "animation-culling",
+      this.config.enableAnimationOptimizations,
+    );
+    this.optimizationStrategies.set(
+      "reduced-motion",
+      this.config.enableReducedMotion || this.isLowEndDevice,
+    );
+    this.optimizationStrategies.set("animation-queuing", true);
+
     // Audio optimization strategy
-    this.optimizationStrategies.set('audio-preloading', this.config.enableAudioPreloading);
-    this.optimizationStrategies.set('audio-compression', true);
-    this.optimizationStrategies.set('spatial-audio', !this.isLowEndDevice);
-    
+    this.optimizationStrategies.set(
+      "audio-preloading",
+      this.config.enableAudioPreloading,
+    );
+    this.optimizationStrategies.set("audio-compression", true);
+    this.optimizationStrategies.set("spatial-audio", !this.isLowEndDevice);
+
     // Rendering optimization strategy
-    this.optimizationStrategies.set('virtualization', this.config.enableVirtualization);
-    this.optimizationStrategies.set('component-memoization', this.config.enableComponentMemoization);
-    this.optimizationStrategies.set('gpu-acceleration', !this.isLowEndDevice);
+    this.optimizationStrategies.set(
+      "virtualization",
+      this.config.enableVirtualization,
+    );
+    this.optimizationStrategies.set(
+      "component-memoization",
+      this.config.enableComponentMemoization,
+    );
+    this.optimizationStrategies.set("gpu-acceleration", !this.isLowEndDevice);
   }
 
   private applyInitialOptimizations(): void {
     // CSS optimizations
     this.applyCSSOptimizations();
-    
+
     // DOM optimizations
     this.applyDOMOptimizations();
-    
+
     // Event optimizations
     this.applyEventOptimizations();
   }
@@ -213,13 +238,13 @@ export class EnhancedJungleQuizOptimizer {
     // Reduce animation complexity
     this.config.maxConcurrentAnimations = 2;
     this.config.enableReducedMotion = true;
-    
+
     // Reduce audio quality
     this.config.audioBufferSize = 2048;
-    
+
     // Reduce image quality
     this.config.imageCompressionQuality = 0.6;
-    
+
     // Increase cleanup frequency
     this.config.memoryManagement.cleanupInterval = 15000; // 15 seconds
     this.config.memoryManagement.maxCacheSize = 25; // 25MB
@@ -230,7 +255,7 @@ export class EnhancedJungleQuizOptimizer {
   // =====================================================
 
   private applyCSSOptimizations(): void {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       /* Performance optimizations for Enhanced Jungle Quiz */
       
@@ -247,7 +272,9 @@ export class EnhancedJungleQuizOptimizer {
       }
       
       /* Optimize animations for low-end devices */
-      ${this.isLowEndDevice ? `
+      ${
+        this.isLowEndDevice
+          ? `
         .treasure-option-card:hover {
           transform: translateY(-4px) scale(1.02) !important;
           transition: transform 0.2s ease !important;
@@ -264,7 +291,9 @@ export class EnhancedJungleQuizOptimizer {
         .weather-misty::before {
           display: none !important;
         }
-      ` : ''}
+      `
+          : ""
+      }
       
       /* Contain layout and paint for performance */
       .enhanced-jungle-quiz-container {
@@ -288,7 +317,9 @@ export class EnhancedJungleQuizOptimizer {
       }
       
       /* Battery optimization styles */
-      ${this.batteryInfo && this.batteryInfo.level < 0.2 ? `
+      ${
+        this.batteryInfo && this.batteryInfo.level < 0.2
+          ? `
         .battery-saving-mode {
           animation: none !important;
           transition: none !important;
@@ -301,9 +332,11 @@ export class EnhancedJungleQuizOptimizer {
           animation: none !important;
           transition: opacity 0.2s ease !important;
         }
-      ` : ''}
+      `
+          : ""
+      }
     `;
-    
+
     document.head.appendChild(style);
   }
 
@@ -315,15 +348,16 @@ export class EnhancedJungleQuizOptimizer {
     // Optimize viewport meta tag
     const viewport = document.querySelector('meta[name="viewport"]');
     if (viewport) {
-      viewport.setAttribute('content', 
-        'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'
+      viewport.setAttribute(
+        "content",
+        "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
       );
     }
 
     // Add performance hints
-    const preconnect = document.createElement('link');
-    preconnect.rel = 'preconnect';
-    preconnect.href = 'https://fonts.googleapis.com';
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = "https://fonts.googleapis.com";
     document.head.appendChild(preconnect);
 
     // Prefetch critical resources
@@ -335,11 +369,20 @@ export class EnhancedJungleQuizOptimizer {
   private applyEventOptimizations(): void {
     // Passive event listeners for better scroll performance
     const passiveOptions = { passive: true };
-    
+
     // Override default event listener additions for better performance
     const originalAddEventListener = EventTarget.prototype.addEventListener;
-    EventTarget.prototype.addEventListener = function(type, listener, options) {
-      if (type === 'touchstart' || type === 'touchmove' || type === 'wheel' || type === 'scroll') {
+    EventTarget.prototype.addEventListener = function (
+      type,
+      listener,
+      options,
+    ) {
+      if (
+        type === "touchstart" ||
+        type === "touchmove" ||
+        type === "wheel" ||
+        type === "scroll"
+      ) {
         options = { ...options, ...passiveOptions };
       }
       return originalAddEventListener.call(this, type, listener, options);
@@ -350,12 +393,15 @@ export class EnhancedJungleQuizOptimizer {
   // IMAGE OPTIMIZATIONS
   // =====================================================
 
-  public optimizeImage(src: string, options?: {
-    quality?: number;
-    format?: 'webp' | 'jpeg' | 'png';
-    width?: number;
-    height?: number;
-  }): Promise<string> {
+  public optimizeImage(
+    src: string,
+    options?: {
+      quality?: number;
+      format?: "webp" | "jpeg" | "png";
+      width?: number;
+      height?: number;
+    },
+  ): Promise<string> {
     return new Promise((resolve, reject) => {
       // Check cache first
       if (this.imageCache.has(src)) {
@@ -364,13 +410,13 @@ export class EnhancedJungleQuizOptimizer {
       }
 
       const img = new Image();
-      img.crossOrigin = 'anonymous';
-      
+      img.crossOrigin = "anonymous";
+
       img.onload = () => {
         try {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
           if (!ctx) {
             resolve(src);
             return;
@@ -379,40 +425,42 @@ export class EnhancedJungleQuizOptimizer {
           // Set dimensions
           const targetWidth = options?.width || img.width;
           const targetHeight = options?.height || img.height;
-          
+
           // Apply device pixel ratio for crisp images
           const dpr = window.devicePixelRatio || 1;
           canvas.width = targetWidth * dpr;
           canvas.height = targetHeight * dpr;
-          
+
           ctx.scale(dpr, dpr);
-          canvas.style.width = targetWidth + 'px';
-          canvas.style.height = targetHeight + 'px';
-          
+          canvas.style.width = targetWidth + "px";
+          canvas.style.height = targetHeight + "px";
+
           // Draw optimized image
           ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
+          ctx.imageSmoothingQuality = "high";
           ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-          
+
           // Convert to optimized format
-          const quality = options?.quality || this.config.imageCompressionQuality;
-          const format = options?.format || (this.supportsWebP() ? 'webp' : 'jpeg');
+          const quality =
+            options?.quality || this.config.imageCompressionQuality;
+          const format =
+            options?.format || (this.supportsWebP() ? "webp" : "jpeg");
           const mimeType = `image/${format}`;
-          
+
           const optimizedSrc = canvas.toDataURL(mimeType, quality);
-          
+
           // Cache the optimized image
           this.imageCache.set(src, img);
-          
+
           resolve(optimizedSrc);
         } catch (error) {
-          console.warn('Image optimization failed:', error);
+          console.warn("Image optimization failed:", error);
           resolve(src);
         }
       };
 
       img.onerror = () => {
-        console.warn('Failed to load image for optimization:', src);
+        console.warn("Failed to load image for optimization:", src);
         resolve(src);
       };
 
@@ -421,23 +469,23 @@ export class EnhancedJungleQuizOptimizer {
   }
 
   private supportsWebP(): boolean {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = 1;
     canvas.height = 1;
-    return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+    return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
   }
 
   private prefetchCriticalAssets(): void {
     const criticalAssets = [
-      '/audio/sfx/correct-answer.mp3',
-      '/audio/sfx/wrong-answer.mp3',
-      '/audio/sfx/ui-click.mp3',
-      '/audio/sfx/treasure-found.mp3'
+      "/audio/sfx/correct-answer.mp3",
+      "/audio/sfx/wrong-answer.mp3",
+      "/audio/sfx/ui-click.mp3",
+      "/audio/sfx/treasure-found.mp3",
     ];
 
-    criticalAssets.forEach(asset => {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
+    criticalAssets.forEach((asset) => {
+      const link = document.createElement("link");
+      link.rel = "prefetch";
       link.href = asset;
       document.head.appendChild(link);
     });
@@ -447,7 +495,11 @@ export class EnhancedJungleQuizOptimizer {
   // ANIMATION OPTIMIZATIONS
   // =====================================================
 
-  public queueAnimation(id: string, animation: () => void, priority: number = 0): void {
+  public queueAnimation(
+    id: string,
+    animation: () => void,
+    priority: number = 0,
+  ): void {
     if (!this.config.enableAnimationOptimizations) {
       animation();
       return;
@@ -477,7 +529,7 @@ export class EnhancedJungleQuizOptimizer {
         try {
           nextAnimation.animation();
         } catch (error) {
-          console.warn('Animation failed:', error);
+          console.warn("Animation failed:", error);
         }
         this.processAnimationQueue();
       });
@@ -517,7 +569,7 @@ export class EnhancedJungleQuizOptimizer {
   }
 
   private performMemoryCleanup(): void {
-    console.log('Performing memory cleanup');
+    console.log("Performing memory cleanup");
 
     // Clear old images from cache
     if (this.imageCache.size > 20) {
@@ -530,7 +582,7 @@ export class EnhancedJungleQuizOptimizer {
     this.animationQueue = this.animationQueue.slice(0, 3);
 
     // Force garbage collection if available
-    if ('gc' in window) {
+    if ("gc" in window) {
       (window as any).gc();
     }
 
@@ -540,7 +592,7 @@ export class EnhancedJungleQuizOptimizer {
 
   private calculateCacheSize(): number {
     // Rough estimation of cache size in MB
-    return (this.imageCache.size * 0.5) + (this.audioCache.size * 2);
+    return this.imageCache.size * 0.5 + this.audioCache.size * 2;
   }
 
   private clearOldCacheEntries(): void {
@@ -554,13 +606,13 @@ export class EnhancedJungleQuizOptimizer {
     // Apply aggressive optimizations
     this.config.maxConcurrentAnimations = 1;
     this.config.enableReducedMotion = true;
-    
+
     // Add CSS class for low memory mode
-    document.body.classList.add('low-memory-mode');
-    
+    document.body.classList.add("low-memory-mode");
+
     // Remove after some time
     setTimeout(() => {
-      document.body.classList.remove('low-memory-mode');
+      document.body.classList.remove("low-memory-mode");
       this.config.maxConcurrentAnimations = this.isLowEndDevice ? 2 : 5;
     }, 30000); // 30 seconds
   }
@@ -588,25 +640,25 @@ export class EnhancedJungleQuizOptimizer {
   }
 
   private enableBatterySavingMode(): void {
-    console.log('Enabling battery saving mode');
-    
+    console.log("Enabling battery saving mode");
+
     // Add CSS class
-    document.body.classList.add('battery-saving-mode');
-    
+    document.body.classList.add("battery-saving-mode");
+
     // Reduce performance-intensive features
     this.config.maxConcurrentAnimations = 1;
     this.config.enableReducedMotion = true;
-    
+
     // Reduce update frequency
     this.config.memoryManagement.cleanupInterval = 60000; // 1 minute
   }
 
   private disableBatterySavingMode(): void {
-    console.log('Disabling battery saving mode');
-    
+    console.log("Disabling battery saving mode");
+
     // Remove CSS class
-    document.body.classList.remove('battery-saving-mode');
-    
+    document.body.classList.remove("battery-saving-mode");
+
     // Restore normal settings
     this.config.maxConcurrentAnimations = this.isLowEndDevice ? 2 : 5;
     this.config.enableReducedMotion = this.isLowEndDevice;
@@ -617,9 +669,11 @@ export class EnhancedJungleQuizOptimizer {
   // PERFORMANCE MONITORING
   // =====================================================
 
-  public updatePerformanceMetrics(metrics: Partial<typeof this.performanceMetrics>): void {
+  public updatePerformanceMetrics(
+    metrics: Partial<typeof this.performanceMetrics>,
+  ): void {
     Object.assign(this.performanceMetrics, metrics);
-    
+
     // Auto-adjust settings based on performance
     this.autoOptimize();
   }
@@ -630,10 +684,16 @@ export class EnhancedJungleQuizOptimizer {
 
     // Adjust based on FPS
     if (fps < 30) {
-      this.config.maxConcurrentAnimations = Math.max(1, this.config.maxConcurrentAnimations - 1);
+      this.config.maxConcurrentAnimations = Math.max(
+        1,
+        this.config.maxConcurrentAnimations - 1,
+      );
       this.config.enableReducedMotion = true;
     } else if (fps > 55 && !this.isLowEndDevice) {
-      this.config.maxConcurrentAnimations = Math.min(5, this.config.maxConcurrentAnimations + 1);
+      this.config.maxConcurrentAnimations = Math.min(
+        5,
+        this.config.maxConcurrentAnimations + 1,
+      );
     }
 
     // Adjust based on memory usage
@@ -646,40 +706,46 @@ export class EnhancedJungleQuizOptimizer {
   // PUBLIC API
   // =====================================================
 
-  public getOptimizationLevel(): 'low' | 'medium' | 'high' {
-    if (this.isLowEndDevice || (this.batteryInfo && this.batteryInfo.level < 0.2)) {
-      return 'high';
-    } else if (this.performanceMetrics.averageFPS < 45 || this.performanceMetrics.memoryUsage > 60) {
-      return 'medium';
+  public getOptimizationLevel(): "low" | "medium" | "high" {
+    if (
+      this.isLowEndDevice ||
+      (this.batteryInfo && this.batteryInfo.level < 0.2)
+    ) {
+      return "high";
+    } else if (
+      this.performanceMetrics.averageFPS < 45 ||
+      this.performanceMetrics.memoryUsage > 60
+    ) {
+      return "medium";
     }
-    return 'low';
+    return "low";
   }
 
   public getRecommendedSettings(): Partial<PerformanceConfig> {
     const level = this.getOptimizationLevel();
-    
+
     switch (level) {
-      case 'high':
+      case "high":
         return {
           enableReducedMotion: true,
           maxConcurrentAnimations: 1,
           audioBufferSize: 2048,
-          imageCompressionQuality: 0.6
+          imageCompressionQuality: 0.6,
         };
-      case 'medium':
+      case "medium":
         return {
           enableReducedMotion: false,
           maxConcurrentAnimations: 3,
           audioBufferSize: 4096,
-          imageCompressionQuality: 0.7
+          imageCompressionQuality: 0.7,
         };
-      case 'low':
+      case "low":
       default:
         return {
           enableReducedMotion: false,
           maxConcurrentAnimations: 5,
           audioBufferSize: 8192,
-          imageCompressionQuality: 0.9
+          imageCompressionQuality: 0.9,
         };
     }
   }
@@ -692,14 +758,14 @@ export class EnhancedJungleQuizOptimizer {
   private applyConfigChanges(): void {
     // Reapply optimizations with new config
     this.applyCSSOptimizations();
-    
+
     // Update optimization strategies
     this.setupOptimizationStrategies();
   }
 
   public getPerformanceReport(): any {
     return {
-      deviceType: this.isLowEndDevice ? 'low-end' : 'high-end',
+      deviceType: this.isLowEndDevice ? "low-end" : "high-end",
       batteryLevel: this.batteryInfo?.level,
       isCharging: this.batteryInfo?.charging,
       metrics: this.performanceMetrics,
@@ -708,9 +774,9 @@ export class EnhancedJungleQuizOptimizer {
       cacheSize: {
         images: this.imageCache.size,
         audio: this.audioCache.size,
-        totalMB: this.calculateCacheSize()
+        totalMB: this.calculateCacheSize(),
       },
-      config: this.config
+      config: this.config,
     };
   }
 
@@ -726,7 +792,7 @@ export class EnhancedJungleQuizOptimizer {
     this.animationQueue = [];
 
     // Remove CSS classes
-    document.body.classList.remove('battery-saving-mode', 'low-memory-mode');
+    document.body.classList.remove("battery-saving-mode", "low-memory-mode");
   }
 }
 
@@ -737,37 +803,38 @@ export class EnhancedJungleQuizOptimizer {
 export class ProductionOptimizer {
   public static enableProductionMode(): void {
     // Remove development-only features
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       // Disable console logging
       console.log = () => {};
       console.warn = () => {};
       console.info = () => {};
-      
+
       // Enable service worker if available
       this.enableServiceWorker();
-      
+
       // Enable compression
       this.enableCompression();
     }
   }
 
   private static enableServiceWorker(): void {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-          console.log('Service Worker registered:', registration);
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => {
+          console.log("Service Worker registered:", registration);
         })
-        .catch(error => {
-          console.error('Service Worker registration failed:', error);
+        .catch((error) => {
+          console.error("Service Worker registration failed:", error);
         });
     }
   }
 
   private static enableCompression(): void {
     // Add compression hints for browsers
-    const meta = document.createElement('meta');
-    meta.httpEquiv = 'Content-Encoding';
-    meta.content = 'gzip, deflate, br';
+    const meta = document.createElement("meta");
+    meta.httpEquiv = "Content-Encoding";
+    meta.content = "gzip, deflate, br";
     document.head.appendChild(meta);
   }
 
@@ -783,11 +850,11 @@ export class ProductionOptimizer {
       compressionRatio: 0.68,
       loadTime: 1.8, // seconds
       recommendations: [
-        'Enable gzip compression on server',
-        'Use CDN for static assets',
-        'Implement code splitting for lazy loading',
-        'Enable browser caching headers'
-      ]
+        "Enable gzip compression on server",
+        "Use CDN for static assets",
+        "Implement code splitting for lazy loading",
+        "Enable browser caching headers",
+      ],
     };
   }
 }
@@ -799,7 +866,7 @@ export class ProductionOptimizer {
 export const jungleQuizOptimizer = new EnhancedJungleQuizOptimizer();
 
 // Auto-enable production mode
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   ProductionOptimizer.enableProductionMode();
 }
 

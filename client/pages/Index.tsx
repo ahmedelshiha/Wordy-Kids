@@ -3073,81 +3073,117 @@ export default function Index({ initialProfile }: IndexProps) {
                                   <div className="jungle-quiz-cards-container desktop-quiz-optimized">
                                     <div className="jungle-quiz-cards-grid">
                                       {/* 🌟 NEW: Enhanced Jungle Quiz Adventure - Featured */}
-                                      <div className="jungle-quiz-card jungle-quiz-card-enhanced jungle-hover-effect" style={{
-                                        background: 'linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(76, 175, 80, 0.15) 50%, rgba(139, 195, 74, 0.15) 100%)',
-                                        border: '3px solid #FFD700',
-                                        boxShadow: '0 8px 25px rgba(255, 193, 7, 0.3), 0 4px 12px rgba(76, 175, 80, 0.2)',
-                                        position: 'relative'
-                                      }}>
+                                      <div
+                                        className="jungle-quiz-card jungle-quiz-card-enhanced jungle-hover-effect"
+                                        style={{
+                                          background:
+                                            "linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(76, 175, 80, 0.15) 50%, rgba(139, 195, 74, 0.15) 100%)",
+                                          border: "3px solid #FFD700",
+                                          boxShadow:
+                                            "0 8px 25px rgba(255, 193, 7, 0.3), 0 4px 12px rgba(76, 175, 80, 0.2)",
+                                          position: "relative",
+                                        }}
+                                      >
                                         {/* Featured Badge */}
-                                        <div style={{
-                                          position: 'absolute',
-                                          top: '-8px',
-                                          right: '-8px',
-                                          background: 'linear-gradient(135deg, #FF4081, #E91E63)',
-                                          color: 'white',
-                                          padding: '4px 12px',
-                                          borderRadius: '12px',
-                                          fontSize: '12px',
-                                          fontWeight: 'bold',
-                                          animation: 'pulse 2s infinite'
-                                        }}>
+                                        <div
+                                          style={{
+                                            position: "absolute",
+                                            top: "-8px",
+                                            right: "-8px",
+                                            background:
+                                              "linear-gradient(135deg, #FF4081, #E91E63)",
+                                            color: "white",
+                                            padding: "4px 12px",
+                                            borderRadius: "12px",
+                                            fontSize: "12px",
+                                            fontWeight: "bold",
+                                            animation: "pulse 2s infinite",
+                                          }}
+                                        >
                                           ✨ NEW!
                                         </div>
-                                        <div className="jungle-quiz-card-icon" style={{
-                                          animation: 'jungle-glow 3s ease-in-out infinite'
-                                        }}>
+                                        <div
+                                          className="jungle-quiz-card-icon"
+                                          style={{
+                                            animation:
+                                              "jungle-glow 3s ease-in-out infinite",
+                                          }}
+                                        >
                                           👑
                                         </div>
-                                        <h3 className="jungle-quiz-card-title" style={{
-                                          background: 'linear-gradient(135deg, #FFD700, #FFC107)',
-                                          WebkitBackgroundClip: 'text',
-                                          WebkitTextFillColor: 'transparent',
-                                          fontWeight: 'bold'
-                                        }}>
+                                        <h3
+                                          className="jungle-quiz-card-title"
+                                          style={{
+                                            background:
+                                              "linear-gradient(135deg, #FFD700, #FFC107)",
+                                            WebkitBackgroundClip: "text",
+                                            WebkitTextFillColor: "transparent",
+                                            fontWeight: "bold",
+                                          }}
+                                        >
                                           🏆 Enhanced Jungle Adventure
                                         </h3>
                                         <p className="jungle-quiz-card-description">
-                                          Experience the ultimate AAA-quality jungle quiz!
-                                          3D effects, power-ups, achievements, dynamic music,
-                                          and immersive gaming that rivals premium mobile games! 🎮✨🌟
+                                          Experience the ultimate AAA-quality
+                                          jungle quiz! 3D effects, power-ups,
+                                          achievements, dynamic music, and
+                                          immersive gaming that rivals premium
+                                          mobile games! 🎮✨🌟
                                         </p>
                                         <div className="jungle-quiz-card-badges">
-                                          <span className="jungle-quiz-badge" style={{
-                                            background: 'rgba(255, 193, 7, 0.2)',
-                                            color: '#FF8F00',
-                                            fontWeight: 'bold'
-                                          }}>
+                                          <span
+                                            className="jungle-quiz-badge"
+                                            style={{
+                                              background:
+                                                "rgba(255, 193, 7, 0.2)",
+                                              color: "#FF8F00",
+                                              fontWeight: "bold",
+                                            }}
+                                          >
                                             🎮 AAA Gaming
                                           </span>
-                                          <span className="jungle-quiz-badge-audio" style={{
-                                            background: 'rgba(76, 175, 80, 0.2)',
-                                            color: '#2E7D32',
-                                            fontWeight: 'bold'
-                                          }}>
+                                          <span
+                                            className="jungle-quiz-badge-audio"
+                                            style={{
+                                              background:
+                                                "rgba(76, 175, 80, 0.2)",
+                                              color: "#2E7D32",
+                                              fontWeight: "bold",
+                                            }}
+                                          >
                                             🎵 3D Audio
                                           </span>
-                                          <span className="jungle-quiz-badge" style={{
-                                            background: 'rgba(156, 39, 176, 0.2)',
-                                            color: '#6A1B9A',
-                                            fontWeight: 'bold'
-                                          }}>
+                                          <span
+                                            className="jungle-quiz-badge"
+                                            style={{
+                                              background:
+                                                "rgba(156, 39, 176, 0.2)",
+                                              color: "#6A1B9A",
+                                              fontWeight: "bold",
+                                            }}
+                                          >
                                             ⚡ Power-ups
                                           </span>
                                         </div>
                                         <button
                                           onClick={() => {
-                                            setGameMode("enhanced-jungle-adventure");
+                                            setGameMode(
+                                              "enhanced-jungle-adventure",
+                                            );
                                           }}
                                           className="jungle-quiz-button"
                                           style={{
-                                            background: 'linear-gradient(135deg, #FFD700 0%, #FF8F00 50%, #FFC107 100%)',
-                                            border: '2px solid rgba(255, 255, 255, 0.3)',
-                                            color: '#1A237E',
-                                            fontWeight: 'bold',
-                                            textShadow: '0 1px 2px rgba(255, 255, 255, 0.3)',
-                                            boxShadow: '0 8px 20px rgba(255, 193, 7, 0.4)',
-                                            transform: 'scale(1.05)'
+                                            background:
+                                              "linear-gradient(135deg, #FFD700 0%, #FF8F00 50%, #FFC107 100%)",
+                                            border:
+                                              "2px solid rgba(255, 255, 255, 0.3)",
+                                            color: "#1A237E",
+                                            fontWeight: "bold",
+                                            textShadow:
+                                              "0 1px 2px rgba(255, 255, 255, 0.3)",
+                                            boxShadow:
+                                              "0 8px 20px rgba(255, 193, 7, 0.4)",
+                                            transform: "scale(1.05)",
                                           }}
                                         >
                                           <Crown className="w-5 h-5 mr-2" />
@@ -3441,14 +3477,19 @@ export default function Index({ initialProfile }: IndexProps) {
                                     </Button>
                                   </div>
                                   <EnhancedJungleQuizAdventure
-                                    selectedCategory={selectedCategory !== "all" ? selectedCategory : "animals"}
+                                    selectedCategory={
+                                      selectedCategory !== "all"
+                                        ? selectedCategory
+                                        : "animals"
+                                    }
                                     difficulty="medium"
                                     gameMode="adventure"
                                     onComplete={(score, stats) => {
                                       setGameMode(false);
                                       setFeedback({
                                         type: "celebration",
-                                        title: "Epic Adventure Complete! 🏆👑✨",
+                                        title:
+                                          "Epic Adventure Complete! 🏆👑✨",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
 🎯 Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
