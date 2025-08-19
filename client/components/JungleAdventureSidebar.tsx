@@ -418,6 +418,31 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               </div>
             </motion.div>
 
+            {/* Learning Streak Card - Compact */}
+            <motion.div
+              variants={itemVariants}
+              initial="initial"
+              className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-red-400/20 transition-all duration-300"
+              whileHover={cardHoverVariants.hover}
+              onMouseEnter={() => setHoveredCard("streak")}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <StreakIcon className="w-10 h-10" />
+              <div className="flex-1 ml-3 min-w-0">
+                <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
+                  Learning Streak
+                </h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
+                    {userData.streak} days
+                  </p>
+                  <span className="text-red-500 font-['Baloo_2'] text-[12px] font-bold">
+                    {userData.streak}🔥
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Achievements Card - Compact */}
             <motion.div
               variants={itemVariants}
@@ -438,31 +463,6 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
                   </p>
                   <span className="text-yellow-500 font-['Baloo_2'] text-[12px] font-bold">
                     {userData.stats.achievements || 5}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Streak Card - Compact */}
-            <motion.div
-              variants={itemVariants}
-              initial="initial"
-              className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md flex items-center group cursor-pointer border border-gray-100/50 hover:border-red-400/20 transition-all duration-300"
-              whileHover={cardHoverVariants.hover}
-              onMouseEnter={() => setHoveredCard("streak")}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <StreakIcon className="w-10 h-10" />
-              <div className="flex-1 ml-3 min-w-0">
-                <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
-                  Learning Streak
-                </h3>
-                <div className="flex items-center justify-between">
-                  <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
-                    {userData.streak} days
-                  </p>
-                  <span className="text-red-500 font-['Baloo_2'] text-[12px] font-bold">
-                    {userData.streak}🔥
                   </span>
                 </div>
               </div>
