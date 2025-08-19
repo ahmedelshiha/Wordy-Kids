@@ -209,7 +209,7 @@ export const JungleAdventureWordCard: React.FC<
     setTimeout(() => {
       setShowCelebration(false);
       setShowJungleParticles(false);
-    }, 2500);
+    }, 1500);
   };
 
   // Touch handlers for mobile
@@ -296,16 +296,16 @@ export const JungleAdventureWordCard: React.FC<
       {/* Light Jungle Adventure Particles Background */}
       {showJungleParticles && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden rounded-xl">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(3)].map((_, i) => (
             <div
               key={i}
               className={cn(
-                "absolute text-lg opacity-40 animate-float-up",
-                `animation-delay-${(i * 300) % 1000}`,
+                "absolute text-sm opacity-20 animate-float-up",
+                `animation-delay-${(i * 400) % 1000}`,
               )}
               style={{
                 left: `${Math.random() * 100}%`,
-                animationDuration: `${3 + Math.random() * 2}s`,
+                animationDuration: `${4 + Math.random() * 2}s`,
               }}
             >
               {["🌿", "🦋", "🌺"][i % 3]}
@@ -418,21 +418,19 @@ export const JungleAdventureWordCard: React.FC<
                   {/* Light Magical Sparkles */}
                   {showMagicalSparkles && (
                     <div className="absolute inset-0 overflow-hidden">
-                      {[...Array(4)].map((_, i) => (
+                      {[...Array(2)].map((_, i) => (
                         <Sparkles
                           key={i}
                           className={cn(
-                            "absolute w-3 h-3 text-yellow-300 animate-sparkle opacity-50",
-                            i % 3 === 0
+                            "absolute w-2 h-2 text-yellow-300 animate-sparkle opacity-30",
+                            i % 2 === 0
                               ? "text-green-300"
-                              : i % 3 === 1
-                                ? "text-yellow-300"
-                                : "text-blue-300",
+                              : "text-yellow-300",
                           )}
                           style={{
                             top: `${Math.random() * 100}%`,
                             left: `${Math.random() * 100}%`,
-                            animationDelay: `${i * 200}ms`,
+                            animationDelay: `${i * 300}ms`,
                           }}
                         />
                       ))}
@@ -526,7 +524,7 @@ export const JungleAdventureWordCard: React.FC<
                 🌺
               </div>
               <div className="absolute bottom-0 right-0 text-6xl transform -rotate-45">
-                🌳
+                ����
               </div>
             </div>
 
@@ -689,7 +687,7 @@ export const JungleAdventureWordCard: React.FC<
                               "ring-3 ring-green-300 scale-105 border-green-300",
                             showCelebration &&
                               ratedAs === "easy" &&
-                              "jungle-celebration-glow",
+                              "ring-2 ring-green-300/50 animate-pulse",
                           )}
                           aria-label="Mastered jungle word - expert explorer"
                         >
