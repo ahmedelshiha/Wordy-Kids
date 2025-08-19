@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/5 to-sunshine-light/5 text-gray-800 border-2 border-gray-200">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/20 via-light-background to-sunshine-light/15 text-gray-800 border-2 border-jungle-light/40 backdrop-blur-sm">
         {/* Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Animated jungle leaves */}
