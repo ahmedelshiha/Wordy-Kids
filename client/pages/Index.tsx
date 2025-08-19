@@ -3423,6 +3423,48 @@ export default function Index({ initialProfile }: IndexProps) {
                                     </div>
                                   </div>
                                 </div>
+                              ) : gameMode === "enhanced-jungle-adventure" ? (
+                                <div className="space-y-6">
+                                  <div className="flex items-center justify-between md:justify-center md:relative">
+                                    <h2 className="text-2xl font-bold bg-gradient-to-r from-yellow-600 via-green-600 to-emerald-600 bg-clip-text text-transparent">
+                                      👑 Enhanced Jungle Quiz Adventure
+                                    </h2>
+                                    <Button
+                                      onClick={() => setShowExitDialog(true)}
+                                      variant="outline"
+                                      size="sm"
+                                      className="bg-yellow-50 hover:bg-yellow-100 text-yellow-700 border-yellow-300 hover:border-yellow-400 transition-all duration-200 shadow-sm hover:shadow-md md:absolute md:right-0"
+                                    >
+                                      <span className="mr-2">🚪</span>
+                                      Exit Adventure
+                                    </Button>
+                                  </div>
+                                  <EnhancedJungleQuizAdventure
+                                    selectedCategory={selectedCategory !== "all" ? selectedCategory : "animals"}
+                                    difficulty="medium"
+                                    gameMode="adventure"
+                                    onComplete={(score, stats) => {
+                                      setGameMode(false);
+                                      setFeedback({
+                                        type: "celebration",
+                                        title: "Epic Adventure Complete! 🏆👑✨",
+                                        message: `Incredible performance! Score: ${score.toLocaleString()} points
+🎯 Accuracy: ${stats.accuracy || 0}%
+⚡ Max Streak: ${stats.maxStreak || 0}
+💎 Gems Earned: ${stats.gems || 0}
+🏆 Level Reached: ${stats.level || 1}
+🌟 Achievements: ${stats.achievements || 0} unlocked!`,
+                                        score: score,
+                                        total: stats.totalWords || 10,
+                                        celebrationType: "fireworks",
+                                        autoHide: false,
+                                        hideDelay: 5000,
+                                        onContinue: () => setFeedback(null),
+                                      });
+                                    }}
+                                    onExit={() => setGameMode(false)}
+                                  />
+                                </div>
                               ) : gameMode === "word-garden" ? (
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
