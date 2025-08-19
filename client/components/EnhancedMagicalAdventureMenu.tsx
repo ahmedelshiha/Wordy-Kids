@@ -185,7 +185,7 @@ export function EnhancedMagicalAdventureMenu({
             {/* Bottom-positioned menu */}
             <motion.div
               initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              animate={{ y: "0%", opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className="absolute bottom-0 left-0 right-0 bg-gradient-to-br from-white via-purple-50/95 to-pink-50/95 backdrop-blur-lg rounded-t-3xl shadow-2xl max-h-[80vh] overflow-hidden"
