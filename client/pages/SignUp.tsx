@@ -5,19 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   ArrowLeft,
-  UserPlus,
   Eye,
   EyeOff,
-  User,
-  Lock,
-  Mail,
   AlertCircle,
   CheckCircle,
-  BookOpen,
-  Baby,
-  Calendar,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -42,7 +36,7 @@ export default function SignUp() {
     // Format birth date as dd/mm/yyyy
     if (e.target.name === "birthDate") {
       // Remove all non-digit characters
-      const digits = value.replace(/\D/g, "");
+      const digits = value.replace(/\\D/g, "");
 
       // Format as dd/mm/yyyy
       if (digits.length >= 1) {
@@ -105,7 +99,7 @@ export default function SignUp() {
       return;
     }
 
-    if (!/^[a-zA-Z\s'-]+$/.test(formData.childName.trim())) {
+    if (!/^[a-zA-Z\\s'-]+$/.test(formData.childName.trim())) {
       setMessage({
         type: "error",
         text: "Child's name should only contain letters, spaces, hyphens, and apostrophes",
@@ -133,7 +127,7 @@ export default function SignUp() {
       return;
     }
 
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)/.test(formData.password)) {
       setMessage({
         type: "error",
         text: "Password should include uppercase, lowercase, and numbers for better security",
@@ -205,7 +199,7 @@ export default function SignUp() {
 
     // Enhanced email validation
     const emailRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!emailRegex.test(formData.email)) {
       setMessage({
         type: "error",
@@ -248,12 +242,12 @@ export default function SignUp() {
         age: actualAge,
         avatar:
           actualAge <= 6
-            ? "👶"
+            ? "🐵"
             : actualAge <= 10
-              ? "🧒"
+              ? "🦁"
               : actualAge <= 14
-                ? "👦"
-                : "👨‍🎓",
+                ? "🐅"
+                : "🦅",
         level: 1,
         totalPoints: 0,
         wordsLearned: 0,
@@ -285,7 +279,7 @@ export default function SignUp() {
 
       setMessage({
         type: "success",
-        text: `Child profile created successfully! ${formData.childName} is ready to start learning!`,
+        text: `🎉 Welcome to the jungle adventure! ${formData.childName} is ready to explore and learn!`,
       });
 
       // Navigate to login page after successful creation
@@ -301,266 +295,382 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-2 md:p-4">
-      {/* Simple Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 text-3xl">📚</div>
-        <div className="absolute top-32 right-20 text-3xl">✨</div>
-        <div className="absolute bottom-20 left-20 text-3xl">🎯</div>
-        <div className="absolute bottom-32 right-20 text-3xl">🌟</div>
+    <div className="min-h-screen bg-gradient-to-br from-jungle-light via-sunshine-light to-light-background flex items-center justify-center p-2 md:p-4 relative overflow-hidden">
+      {/* Jungle Background Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        {/* Large Background Elements */}
+        <motion.div
+          className="absolute top-10 left-10 text-4xl md:text-6xl"
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🌳
+        </motion.div>
+        <motion.div
+          className="absolute top-20 right-20 text-3xl md:text-5xl"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🦜
+        </motion.div>
+        <motion.div
+          className="absolute bottom-20 left-20 text-3xl md:text-5xl"
+          animate={{ rotate: [0, -15, 15, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🐵
+        </motion.div>
+        <motion.div
+          className="absolute bottom-10 right-10 text-4xl md:text-6xl"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🌿
+        </motion.div>
+        
+        {/* Additional jungle elements */}
+        <motion.div
+          className="absolute top-1/3 left-5 text-2xl md:text-4xl"
+          animate={{ x: [0, 5, -5, 0] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🦋
+        </motion.div>
+        <motion.div
+          className="absolute top-1/2 right-5 text-2xl md:text-4xl"
+          animate={{ rotate: [0, 20, -20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🐆
+        </motion.div>
+        <motion.div
+          className="absolute bottom-1/3 left-1/4 text-2xl md:text-3xl"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🌺
+        </motion.div>
+        <motion.div
+          className="absolute top-1/4 right-1/3 text-2xl md:text-3xl"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          🦅
+        </motion.div>
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-md mx-auto">
+      <motion.div
+        className="relative z-10 w-full max-w-md mx-auto"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         {/* Header */}
-        <div className="text-center mb-2 md:mb-8">
-          <div className="flex justify-center mb-2 md:mb-6">
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 md:p-6 rounded-full shadow-lg">
-              <BookOpen className="w-8 md:w-12 h-8 md:h-12 text-white" />
-            </div>
+        <motion.div
+          className="text-center mb-4 md:mb-8"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="flex justify-center mb-4 md:mb-6">
+            <motion.div
+              className="bg-gradient-to-r from-jungle to-bright-orange p-4 md:p-6 rounded-full shadow-xl border-4 border-white"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="text-3xl md:text-5xl">🦁</span>
+            </motion.div>
           </div>
-          <h1 className="text-xl md:text-4xl font-bold text-gray-800 mb-1 md:mb-4">
-            Create Child Profile
-          </h1>
-          <p className="text-sm md:text-lg text-gray-600">
-            Set up a learning profile for your child
-          </p>
-        </div>
+          <motion.h1
+            className="text-xl md:text-4xl font-bold text-navy mb-2 md:mb-4 font-['Baloo_2']"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Join the Jungle Adventure! 🌟
+          </motion.h1>
+          <motion.p
+            className="text-sm md:text-lg text-navy/80 font-['Baloo_2'] font-medium"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            Create your explorer profile and start learning! 🎯
+          </motion.p>
+        </motion.div>
 
         {/* Sign Up Form */}
-        <Card className="bg-white/95 backdrop-blur-sm shadow-xl border border-gray-200 rounded-lg">
-          <CardHeader className="pb-2 md:pb-6">
-            <CardTitle className="text-center text-xl text-gray-800">
-              Create Child Profile
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-2 md:pt-6">
-            <form onSubmit={handleSignUp} className="space-y-2 md:space-y-4">
-              {/* Child Name Field */}
-              <div>
-                <Label
-                  htmlFor="childName"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-4 border-jungle/20 rounded-[24px] overflow-hidden">
+            <CardHeader className="pb-2 md:pb-4 bg-gradient-to-r from-jungle/10 to-sunshine/10">
+              <CardTitle className="text-center text-lg md:text-xl text-navy font-['Baloo_2'] font-bold flex items-center justify-center gap-2">
+                <span className="text-2xl">🌍</span>
+                Create Explorer Profile
+                <span className="text-2xl">🎒</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-4 md:pt-6 px-4 md:px-6">
+              <form onSubmit={handleSignUp} className="space-y-3 md:space-y-4">
+                {/* Child Name Field */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  <Baby className="w-4 h-4" />
-                  Child's Name
-                </Label>
-                <Input
-                  id="childName"
-                  name="childName"
-                  type="text"
-                  placeholder="Enter your child's first name"
-                  autoComplete="given-name"
-                  spellCheck={true}
-                  maxLength={50}
-                  value={formData.childName}
-                  onChange={handleInputChange}
-                  className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
-                  disabled={isLoading}
-                />
-              </div>
-
-              {/* Birth Date Field */}
-              <div>
-                <Label
-                  htmlFor="birthDate"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
-                >
-                  <Calendar className="w-4 h-4" />
-                  Birth Date
-                </Label>
-                <div className="relative">
+                  <Label
+                    htmlFor="childName"
+                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                  >
+                    <span className="text-lg">🐵</span>
+                    Young Explorer's Name
+                  </Label>
                   <Input
-                    id="birthDate"
-                    name="birthDate"
+                    id="childName"
+                    name="childName"
                     type="text"
-                    placeholder="dd/mm/yyyy"
-                    value={formData.birthDate}
+                    placeholder="What should we call our brave explorer?"
+                    autoComplete="given-name"
+                    spellCheck={true}
+                    maxLength={50}
+                    value={formData.childName}
                     onChange={handleInputChange}
-                    className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base pr-12"
-                    maxLength={10}
+                    className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base rounded-xl bg-white/80 font-['Baloo_2']"
                     disabled={isLoading}
                   />
-                  {/* Hidden date picker for calendar selection */}
-                  <input
-                    type="date"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        const date = new Date(e.target.value);
-                        const day = date.getDate().toString().padStart(2, "0");
-                        const month = (date.getMonth() + 1)
-                          .toString()
-                          .padStart(2, "0");
-                        const year = date.getFullYear();
-                        const formattedDate = `${day}/${month}/${year}`;
-                        setFormData({
-                          ...formData,
-                          birthDate: formattedDate,
-                        });
-                        if (message) {
-                          setMessage(null);
+                </motion.div>
+
+                {/* Birth Date Field */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
+                  <Label
+                    htmlFor="birthDate"
+                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                  >
+                    <span className="text-lg">🎂</span>
+                    Birthday Adventure
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="birthDate"
+                      name="birthDate"
+                      type="text"
+                      placeholder="dd/mm/yyyy"
+                      value={formData.birthDate}
+                      onChange={handleInputChange}
+                      className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      maxLength={10}
+                      disabled={isLoading}
+                    />
+                    {/* Hidden date picker for calendar selection */}
+                    <input
+                      type="date"
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                      onChange={(e) => {
+                        if (e.target.value) {
+                          const date = new Date(e.target.value);
+                          const day = date.getDate().toString().padStart(2, "0");
+                          const month = (date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0");
+                          const year = date.getFullYear();
+                          const formattedDate = `${day}/${month}/${year}`;
+                          setFormData({
+                            ...formData,
+                            birthDate: formattedDate,
+                          });
+                          if (message) {
+                            setMessage(null);
+                          }
                         }
-                      }
-                    }}
-                    disabled={isLoading}
-                  />
-                  {/* Calendar icon for visual indication */}
-                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-                </div>
-              </div>
-
-              {/* Email Field */}
-              <div>
-                <Label
-                  htmlFor="email"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
-                >
-                  <Mail className="w-4 h-4" />
-                  Parent Email
-                </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter parent's email address"
-                  autoComplete="email"
-                  inputMode="email"
-                  spellCheck={false}
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="mt-1 md:mt-2 border-gray-300 focus:border-blue-500 text-base"
-                  disabled={isLoading}
-                />
-              </div>
-
-              {/* Password Field */}
-              <div>
-                <Label
-                  htmlFor="password"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
-                >
-                  <Lock className="w-4 h-4" />
-                  Parent Password
-                </Label>
-                <div className="relative mt-1 md:mt-2">
-                  <Input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Create password (min 6 chars, mixed case + numbers)"
-                    autoComplete="new-password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className="border-gray-300 focus:border-blue-500 pr-10"
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    disabled={isLoading}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Confirm Password Field */}
-              <div>
-                <Label
-                  htmlFor="confirmPassword"
-                  className="text-sm font-medium text-gray-700 flex items-center gap-2"
-                >
-                  <Lock className="w-4 h-4" />
-                  Confirm Password
-                </Label>
-                <div className="relative mt-1 md:mt-2">
-                  <Input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Re-enter password to confirm"
-                    autoComplete="new-password"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                    className="border-gray-300 focus:border-blue-500 pr-10"
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                    disabled={isLoading}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Message Display */}
-              {message && (
-                <div
-                  className={`text-center p-4 rounded-lg ${
-                    message.type === "success"
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : "bg-red-50 text-red-700 border border-red-200"
-                  }`}
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    {message.type === "success" ? (
-                      <CheckCircle className="w-5 h-5" />
-                    ) : (
-                      <AlertCircle className="w-5 h-5" />
-                    )}
-                    {message.text}
+                      }}
+                      disabled={isLoading}
+                    />
+                    {/* Calendar icon */}
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-lg pointer-events-none">
+                      📅
+                    </span>
                   </div>
-                </div>
-              )}
+                </motion.div>
 
-              {/* Sign Up Button */}
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Creating Profile...
+                {/* Email Field */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <Label
+                    htmlFor="email"
+                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                  >
+                    <span className="text-lg">👨‍👩‍👧‍👦</span>
+                    Parent's Contact
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="parent@email.com"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="mt-2 border-jungle/30 focus:border-jungle focus:ring-jungle/20 text-base rounded-xl bg-white/80 font-['Baloo_2']"
+                    disabled={isLoading}
+                  />
+                </motion.div>
+
+                {/* Password Field */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                >
+                  <Label
+                    htmlFor="password"
+                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                  >
+                    <span className="text-lg">🔐</span>
+                    Secret Explorer Code
+                  </Label>
+                  <div className="relative mt-2">
+                    <Input
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Create a strong password (min 6 chars)"
+                      autoComplete="new-password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      disabled={isLoading}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
+                      disabled={isLoading}
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
                   </div>
-                ) : (
-                  <>
-                    <Baby className="w-4 h-4 mr-2" />
-                    Create Child Profile
-                  </>
+                </motion.div>
+
+                {/* Confirm Password Field */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  <Label
+                    htmlFor="confirmPassword"
+                    className="text-sm font-semibold text-navy flex items-center gap-2 font-['Baloo_2']"
+                  >
+                    <span className="text-lg">🔒</span>
+                    Confirm Secret Code
+                  </Label>
+                  <div className="relative mt-2">
+                    <Input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Enter the same password again"
+                      autoComplete="new-password"
+                      value={formData.confirmPassword}
+                      onChange={handleInputChange}
+                      className="border-jungle/30 focus:border-jungle focus:ring-jungle/20 pr-12 rounded-xl bg-white/80 font-['Baloo_2']"
+                      disabled={isLoading}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-jungle hover:text-jungle-dark text-lg"
+                      disabled={isLoading}
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* Message Display */}
+                {message && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className={`text-center p-4 rounded-xl border-2 ${
+                      message.type === "success"
+                        ? "bg-jungle/10 text-jungle-dark border-jungle/30"
+                        : "bg-coral-red/10 text-coral-red border-coral-red/30"
+                    }`}
+                  >
+                    <div className="flex items-center justify-center gap-2 font-['Baloo_2'] font-medium">
+                      {message.type === "success" ? (
+                        <CheckCircle className="w-5 h-5" />
+                      ) : (
+                        <AlertCircle className="w-5 h-5" />
+                      )}
+                      {message.text}
+                    </div>
+                  </motion.div>
                 )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+
+                {/* Sign Up Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.9 }}
+                >
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full py-4 bg-gradient-to-r from-jungle to-bright-orange text-white hover:from-jungle-dark hover:to-orange-600 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none rounded-xl font-['Baloo_2'] border-2 border-white/20"
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-lg">🌟</span>
+                        Creating Adventure Profile...
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center gap-3">
+                        <span className="text-2xl">🎯</span>
+                        Start Jungle Adventure!
+                        <span className="text-2xl">🌟</span>
+                      </div>
+                    )}
+                  </Button>
+                </motion.div>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Back to Login */}
-        <div className="text-center mt-3 md:mt-6">
+        <motion.div
+          className="text-center mt-4 md:mt-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
           <Button
             onClick={handleBackToLogin}
             variant="link"
-            className="p-0 h-auto text-sm text-gray-500 hover:text-gray-700 underline-offset-2"
+            className="p-0 h-auto text-sm text-navy/70 hover:text-navy underline-offset-2 font-['Baloo_2'] font-medium"
             disabled={isLoading}
           >
-            <ArrowLeft className="w-3 h-3 mr-1" />
-            Back to Sign In
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            🏠 Back to Home Base
           </Button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
