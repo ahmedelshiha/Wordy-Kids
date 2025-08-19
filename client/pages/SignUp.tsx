@@ -597,7 +597,7 @@ export default function SignUp() {
           </Card>
         </motion.div>
 
-        {/* Back to Login */}
+        {/* Enhanced Jungle-Themed Back to Home Base */}
         <motion.div
           className="text-center mt-4 md:mt-6"
           initial={{ opacity: 0 }}
@@ -606,13 +606,27 @@ export default function SignUp() {
         >
           <Button
             onClick={handleBackToLogin}
-            variant="link"
-            className="p-0 h-auto text-sm text-navy/70 hover:text-navy underline-offset-2 font-['Baloo_2'] font-medium"
+            variant="outline"
+            className="group px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-sunshine/10 to-educational-yellow-light/10 border-2 border-sunshine/40 hover:border-sunshine hover:bg-sunshine/10 text-navy hover:text-navy-dark font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-h-[44px] min-w-[160px] touch-target"
+            style={{
+              boxShadow: "0 2px 8px rgba(255, 193, 7, 0.2)",
+              fontFamily: "Baloo 2",
+              fontWeight: 600,
+              letterSpacing: "0.3px",
+            }}
             disabled={isLoading}
+            aria-label="Return to the main jungle adventure login page"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            🏠 Back to Home Base
+            <div className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:animate-pulse transition-all duration-300" />
+              <span className="text-lg group-hover:animate-bounce">🏠</span>
+              <span className="text-sm md:text-base">Back to Home Base</span>
+              <span className="text-sm group-hover:animate-pulse">🌿</span>
+            </div>
           </Button>
+          <p className="text-xs text-sunshine-dark/70 mt-2 font-medium font-['Baloo_2']">
+            🦋 Return to the jungle entrance
+          </p>
         </motion.div>
       </motion.div>
     </div>
