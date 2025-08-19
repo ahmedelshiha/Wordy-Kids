@@ -184,7 +184,7 @@ export const EnhancedJungleQuizAdventure: React.FC<
 
   // Hooks
   const { showAchievement } = useAchievementNotifications();
-  const { enableHapticFeedback, triggerHaptic } = useMobileTouch();
+  const { elementRef, triggerHaptic } = useMobileTouch();
   const { isHighContrast, fontSize } = useAccessibilityFeatures();
 
   // Initialize words and game
