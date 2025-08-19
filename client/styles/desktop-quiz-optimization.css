@@ -16,9 +16,9 @@
 @media (min-width: 1024px) {
   /* Optimize hero section for desktop */
   .jungle-quiz-hero {
-    padding: 2rem 2rem;
-    margin-bottom: 1.5rem;
-    max-height: 400px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    max-height: 280px;
   }
 
   .jungle-quiz-hero-content {
