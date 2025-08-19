@@ -311,7 +311,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       </motion.div>
 
       {/* Mobile responsive adjustments */}
-      <style jsx>{`
+      <style>{`
         @media (max-width: 768px) {
           .sidebar-mobile {
             width: 100%;
