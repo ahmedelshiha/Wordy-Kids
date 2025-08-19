@@ -367,31 +367,31 @@ export const JungleAdventureWordCard: React.FC<
         >
           <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
             {/* Jungle Adventure Header */}
-            <div className="flex items-start justify-between mb-1 sm:mb-2">
-              <div className="flex flex-wrap gap-1.5">
+            <div className="flex items-start justify-between mb-1 sm:mb-1.5">
+              <div className="flex flex-wrap gap-1 sm:gap-1.5 flex-1 pr-2">
                 <Badge
                   className={cn(
                     difficultyTheme.bg,
                     difficultyTheme.color,
                     difficultyTheme.border,
-                    "text-xs sm:text-sm font-bold px-2 py-1.5 sm:px-3 sm:py-2",
-                    "border-2 shadow-lg",
-                    "jungle-adventure-badge",
+                    "text-xs sm:text-sm font-bold px-2 py-1 sm:px-3 sm:py-1.5",
+                    "border-2 shadow-lg min-h-[24px] sm:min-h-[28px]",
+                    "jungle-adventure-badge flex-shrink-0",
                   )}
                 >
                   {difficultyTheme.icon}
-                  <span className="ml-1">{difficultyTheme.text}</span>
+                  <span className="ml-1 truncate">{difficultyTheme.text}</span>
                 </Badge>
                 <Badge
                   variant="outline"
-                  className="bg-white/20 border-white/40 text-white text-xs sm:text-sm px-2 py-1.5 sm:px-3 sm:py-2 backdrop-blur-md"
+                  className="bg-white/20 border-white/40 text-white text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md min-h-[24px] sm:min-h-[28px] flex-shrink-0"
                 >
-                  🌿 {word.category}
+                  🌿 <span className="truncate">{word.category}</span>
                 </Badge>
               </div>
 
               {/* Adventure Level Indicator */}
-              <div className="flex items-center gap-1 bg-white/20 backdrop-blur-md rounded-full px-2 py-1 border border-white/30">
+              <div className="flex items-center gap-1 bg-white/20 backdrop-blur-md rounded-full px-2 py-1 border border-white/30 flex-shrink-0 min-h-[24px] sm:min-h-[28px]">
                 <Trophy className="w-3 h-3 text-yellow-300" />
                 <span className="text-xs font-bold">Lv.{adventureLevel}</span>
               </div>
