@@ -439,7 +439,7 @@ export const JungleAdventureWordCard: React.FC<
 
               {/* Jungle Adventure Word Display */}
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <div className="flex items-center justify-center gap-2 sm:gap-3">
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
                     {word.word}
                   </h2>
@@ -450,9 +450,9 @@ export const JungleAdventureWordCard: React.FC<
                     }}
                     disabled={isPlaying}
                     className={cn(
-                      "h-16 w-16 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
+                      "h-12 w-12 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
                       "bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400",
-                      "border-4 border-white/50 hover:border-white/70",
+                      "border-2 sm:border-4 border-white/50 hover:border-white/70",
                       "text-white hover:scale-110 active:scale-95",
                       "shadow-2xl hover:shadow-3xl",
                       "jungle-adventure-pronounce-btn",
@@ -461,7 +461,7 @@ export const JungleAdventureWordCard: React.FC<
                     )}
                     aria-label="Hear jungle word pronunciation"
                   >
-                    <Volume2 className="w-8 h-8 sm:w-7 sm:h-7 drop-shadow-lg" />
+                    <Volume2 className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-lg" />
                   </Button>
                 </div>
 
