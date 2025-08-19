@@ -719,7 +719,7 @@ export class EnhancedAudioService {
       voiceType?: VoiceType;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     this.pronounceWord(text, options);
