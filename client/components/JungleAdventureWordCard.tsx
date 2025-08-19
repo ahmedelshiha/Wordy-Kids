@@ -90,12 +90,12 @@ export const JungleAdventureWordCard: React.FC<
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
-  // Jungle adventure effects
+  // Jungle adventure effects - much lighter
   useEffect(() => {
     const interval = setInterval(() => {
       setShowJungleParticles(true);
-      setTimeout(() => setShowJungleParticles(false), 2000);
-    }, 8000);
+      setTimeout(() => setShowJungleParticles(false), 800); // Reduced from 2000ms
+    }, 15000); // Reduced frequency from 8000ms
     return () => clearInterval(interval);
   }, []);
 
