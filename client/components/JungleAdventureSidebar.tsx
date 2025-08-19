@@ -208,9 +208,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         <motion.div
           variants={itemVariants}
           initial="initial"
-          whileHover="hover"
           className="bg-white rounded-[14px] p-3 shadow-md flex items-center group cursor-pointer flex-shrink-0"
-          style={cardHoverVariants.initial}
           whileHover={cardHoverVariants.hover}
         >
           <MonkeyIcon className="w-8 h-8" />
