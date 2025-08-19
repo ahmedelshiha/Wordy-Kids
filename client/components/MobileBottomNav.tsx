@@ -225,7 +225,7 @@ export function MobileBottomNav({
 
       {/* Magical Kid-Friendly Bottom Navigation Bar */}
       <div className="fixed bottom-8 left-0 right-0 z-30 lg:hidden">
-        <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 border-t-2 border-rainbow shadow-2xl safe-area-padding-bottom backdrop-blur-lg">
+        <div className="bg-[#FFC107] border-t-2 border-rainbow shadow-2xl safe-area-padding-bottom backdrop-blur-lg">
           <div className="flex items-center justify-around px-0.5 py-0 -my-6">
             {/* Primary Navigation Tabs - Kid Style */}
             {primaryTabs.map((tab) => (
@@ -235,8 +235,8 @@ export function MobileBottomNav({
                 className={cn(
                   "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 relative min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                   activeTab === tab.id
-                    ? "text-white shadow-lg kid-button active"
-                    : "text-gray-700 hover:text-purple-600 kid-interactive",
+                    ? "text-[#1A237E] shadow-lg kid-button active"
+                    : "text-[#1A237E] hover:text-[#1A237E] kid-interactive",
                 )}
               >
                 {/* Magical Emoji Icon & Label Combined */}
@@ -256,7 +256,7 @@ export function MobileBottomNav({
                       className="w-full h-full object-contain filter drop-shadow-lg"
                     />
                   </div>
-                  <span className="text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
+                  <span className="text-xs font-kid-friendly font-bold leading-none text-center text-[#1A237E] whitespace-nowrap mt-1">
                     {tab.label}
                   </span>
                 </div>
@@ -270,7 +270,7 @@ export function MobileBottomNav({
 
                 {/* Active Indicator - Rainbow dot */}
                 {activeTab === tab.id && (
-                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg animate-gentle-bounce"></div>
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-[#1A237E] rounded-full shadow-lg animate-gentle-bounce"></div>
                 )}
               </button>
             ))}
@@ -281,8 +281,8 @@ export function MobileBottomNav({
               className={cn(
                 "kid-nav-item flex flex-col items-center gap-0 p-0 rounded-lg transition-all duration-200 transform active:scale-95 min-w-0 flex-1 mx-0.5 min-h-[10px] justify-center overflow-visible",
                 showMoreMenu
-                  ? "text-white shadow-lg kid-button active"
-                  : "text-purple-600 hover:text-purple-700 kid-interactive",
+                  ? "text-[#1A237E] shadow-lg kid-button active"
+                  : "text-[#1A237E] hover:text-[#1A237E] kid-interactive",
               )}
             >
               <div
@@ -296,7 +296,7 @@ export function MobileBottomNav({
                 <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
                   🎪
                 </div>
-                <span className="text-xs font-kid-friendly font-bold leading-none text-center text-white whitespace-nowrap mt-1">
+                <span className="text-xs font-kid-friendly font-bold leading-none text-center text-[#1A237E] whitespace-nowrap mt-1">
                   More
                 </span>
               </div>
@@ -309,7 +309,7 @@ export function MobileBottomNav({
               )}
 
               {showMoreMenu && (
-                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-white rounded-full shadow-lg animate-gentle-bounce"></div>
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-[#1A237E] rounded-full shadow-lg animate-gentle-bounce"></div>
               )}
             </button>
           </div>
