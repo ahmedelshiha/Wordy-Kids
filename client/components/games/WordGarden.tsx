@@ -796,7 +796,7 @@ export default function WordGarden({
   if (loading)
     return (
       <Wrapper className={className}>
-        <div className="rounded-3xl bg-gradient-to-br from-jungle-light to-jungle-DEFAULT p-8 shadow-xl text-center border-2 border-jungle-light/30">
+        <div className="rounded-3xl bg-gradient-to-br from-jungle-light to-jungle-DEFAULT p-8 shadow-xl text-center border-2 border-jungle-light/50 backdrop-blur-md">
           <div className="text-6xl mb-4 animate-jungle-float">🐒</div>
           <div className="font-bold text-white text-lg drop-shadow-lg">
             Growing your jungle words…
@@ -811,7 +811,7 @@ export default function WordGarden({
   if (error || !current)
     return (
       <Wrapper className={className}>
-        <div className="rounded-3xl bg-gradient-to-br from-coral-red/20 to-orange-500/20 p-8 shadow-xl text-center border-2 border-coral-red/30">
+        <div className="rounded-3xl bg-gradient-to-br from-coral-red/40 to-orange-500/40 p-8 shadow-xl text-center border-2 border-coral-red/50 backdrop-blur-md">
           <div className="text-6xl mb-4">🐒</div>
           <div className="font-bold text-jungle-dark text-lg">
             No jungle words to explore
