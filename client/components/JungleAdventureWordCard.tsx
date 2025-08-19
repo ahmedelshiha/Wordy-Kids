@@ -209,7 +209,7 @@ export const JungleAdventureWordCard: React.FC<
     setTimeout(() => {
       setShowCelebration(false);
       setShowJungleParticles(false);
-    }, 2500);
+    }, 1500);
   };
 
   // Touch handlers for mobile
@@ -296,16 +296,16 @@ export const JungleAdventureWordCard: React.FC<
       {/* Light Jungle Adventure Particles Background */}
       {showJungleParticles && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden rounded-xl">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(3)].map((_, i) => (
             <div
               key={i}
               className={cn(
-                "absolute text-lg opacity-40 animate-float-up",
-                `animation-delay-${(i * 300) % 1000}`,
+                "absolute text-sm opacity-20 animate-float-up",
+                `animation-delay-${(i * 400) % 1000}`,
               )}
               style={{
                 left: `${Math.random() * 100}%`,
-                animationDuration: `${3 + Math.random() * 2}s`,
+                animationDuration: `${4 + Math.random() * 2}s`,
               }}
             >
               {["🌿", "🦋", "🌺"][i % 3]}
@@ -329,7 +329,7 @@ export const JungleAdventureWordCard: React.FC<
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[420px] xs:h-[440px] sm:h-[400px] md:h-[420px] lg:h-[440px]",
+          "h-[380px] xs:h-[400px] sm:h-[380px] md:h-[400px] lg:h-[420px]",
           "jungle-adventure-touch-target",
           "hover:scale-[1.02] transition-transform",
           "jungle-adventure-card-flip",
@@ -365,33 +365,33 @@ export const JungleAdventureWordCard: React.FC<
             "border-4 border-yellow-400/30",
           )}
         >
-          <CardContent className="p-3 sm:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
+          <CardContent className="p-2 sm:p-3 md:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
             {/* Jungle Adventure Header */}
-            <div className="flex items-start justify-between mb-1 sm:mb-2">
-              <div className="flex flex-wrap gap-1.5">
+            <div className="flex items-start justify-between mb-1 sm:mb-1.5">
+              <div className="flex flex-wrap gap-1 sm:gap-1.5 flex-1 pr-2">
                 <Badge
                   className={cn(
                     difficultyTheme.bg,
                     difficultyTheme.color,
                     difficultyTheme.border,
-                    "text-xs sm:text-sm font-bold px-2 py-1.5 sm:px-3 sm:py-2",
-                    "border-2 shadow-lg",
-                    "jungle-adventure-badge",
+                    "text-xs sm:text-sm font-bold px-2 py-1 sm:px-3 sm:py-1.5",
+                    "border-2 shadow-lg min-h-[24px] sm:min-h-[28px]",
+                    "jungle-adventure-badge flex-shrink-0",
                   )}
                 >
                   {difficultyTheme.icon}
-                  <span className="ml-1">{difficultyTheme.text}</span>
+                  <span className="ml-1 truncate">{difficultyTheme.text}</span>
                 </Badge>
                 <Badge
                   variant="outline"
-                  className="bg-white/20 border-white/40 text-white text-xs sm:text-sm px-2 py-1.5 sm:px-3 sm:py-2 backdrop-blur-md"
+                  className="bg-white/20 border-white/40 text-white text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md min-h-[24px] sm:min-h-[28px] flex-shrink-0"
                 >
-                  🌿 {word.category}
+                  🌿 <span className="truncate">{word.category}</span>
                 </Badge>
               </div>
 
               {/* Adventure Level Indicator */}
-              <div className="flex items-center gap-1 bg-white/20 backdrop-blur-md rounded-full px-2 py-1 border border-white/30">
+              <div className="flex items-center gap-1 bg-white/20 backdrop-blur-md rounded-full px-2 py-1 border border-white/30 flex-shrink-0 min-h-[24px] sm:min-h-[28px]">
                 <Trophy className="w-3 h-3 text-yellow-300" />
                 <span className="text-xs font-bold">Lv.{adventureLevel}</span>
               </div>
@@ -399,7 +399,7 @@ export const JungleAdventureWordCard: React.FC<
 
             {/* Jungle Adventure Emoji Circle */}
             <div className="flex-1 flex flex-col items-center justify-center">
-              <div className="relative mb-3 sm:mb-4">
+              <div className="relative mb-2 sm:mb-3">
                 <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container">
                   {/* Jungle Decorative Elements */}
                   <div className="absolute top-3 left-3 w-3 h-3 bg-yellow-300/30 rounded-full animate-sparkle opacity-60"></div>
@@ -411,28 +411,24 @@ export const JungleAdventureWordCard: React.FC<
                   <div className="absolute inset-2 rounded-full border border-yellow-400/30 animate-pulse delay-500"></div>
 
                   {/* Main Emoji with Jungle Glow */}
-                  <span className="text-7xl sm:text-8xl md:text-9xl relative z-10 drop-shadow-2xl jungle-adventure-emoji animate-gentle-bounce filter-glow">
+                  <span className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl relative z-10 drop-shadow-2xl jungle-adventure-emoji animate-gentle-bounce filter-glow">
                     {word.emoji || "🌿"}
                   </span>
 
                   {/* Light Magical Sparkles */}
                   {showMagicalSparkles && (
                     <div className="absolute inset-0 overflow-hidden">
-                      {[...Array(4)].map((_, i) => (
+                      {[...Array(2)].map((_, i) => (
                         <Sparkles
                           key={i}
                           className={cn(
-                            "absolute w-3 h-3 text-yellow-300 animate-sparkle opacity-50",
-                            i % 3 === 0
-                              ? "text-green-300"
-                              : i % 3 === 1
-                                ? "text-yellow-300"
-                                : "text-blue-300",
+                            "absolute w-2 h-2 text-yellow-300 animate-sparkle opacity-30",
+                            i % 2 === 0 ? "text-green-300" : "text-yellow-300",
                           )}
                           style={{
                             top: `${Math.random() * 100}%`,
                             left: `${Math.random() * 100}%`,
-                            animationDelay: `${i * 200}ms`,
+                            animationDelay: `${i * 300}ms`,
                           }}
                         />
                       ))}
@@ -442,7 +438,7 @@ export const JungleAdventureWordCard: React.FC<
               </div>
 
               {/* Jungle Adventure Word Display */}
-              <div className="text-center space-y-2 sm:space-y-3">
+              <div className="text-center space-y-1 sm:space-y-2">
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
                     {word.word}
@@ -478,11 +474,13 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Jungle Adventure Flip Hint */}
-            <div className="mt-2 sm:mt-3 text-center">
-              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-4 py-3 mx-auto w-fit animate-gentle-bounce shadow-lg">
-                <p className="text-sm sm:text-base opacity-95 leading-tight font-bold jungle-adventure-hint">
-                  <RotateCcw className="w-4 h-4 inline mr-2 animate-spin-slow" />
-                  Explore the jungle secrets! 🌿✨
+            <div className="mt-1 sm:mt-2 text-center px-2">
+              <div className="bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-md border-2 border-white/30 rounded-full px-3 py-2 sm:px-4 sm:py-3 mx-auto max-w-[280px] sm:max-w-none animate-gentle-bounce shadow-lg">
+                <p className="text-xs sm:text-sm md:text-base opacity-95 leading-tight font-bold jungle-adventure-hint break-words">
+                  <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1 sm:mr-2 animate-spin-slow" />
+                  <span className="inline-block">
+                    Explore the jungle secrets! 🌿✨
+                  </span>
                 </p>
               </div>
             </div>
@@ -526,7 +524,7 @@ export const JungleAdventureWordCard: React.FC<
                 🌺
               </div>
               <div className="absolute bottom-0 right-0 text-6xl transform -rotate-45">
-                🌳
+                ����
               </div>
             </div>
 
@@ -689,7 +687,7 @@ export const JungleAdventureWordCard: React.FC<
                               "ring-3 ring-green-300 scale-105 border-green-300",
                             showCelebration &&
                               ratedAs === "easy" &&
-                              "jungle-celebration-glow",
+                              "ring-2 ring-green-300/50 animate-pulse",
                           )}
                           aria-label="Mastered jungle word - expert explorer"
                         >

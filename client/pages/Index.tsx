@@ -1022,7 +1022,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "quiz-master",
         name: "Quiz Master",
-        icon: "🧠",
+        icon: "���",
         earned: false,
         description: "Score 100% on 5 quizzes",
       },
@@ -1495,7 +1495,7 @@ export default function Index({ initialProfile }: IndexProps) {
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 📚✨";
         achievementIcon = "📚";
-        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎁 Scholar Bonus: 100 points!`;
+        achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n��� Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
         achievementIcon = "🗺️";
@@ -2036,12 +2036,12 @@ export default function Index({ initialProfile }: IndexProps) {
                   {/* Enhanced Main Game Content Container */}
                   <div className="flex-1 min-w-0 overflow-hidden relative">
                     {/* Game Content Background */}
-                    <div className="relative z-10 w-full min-h-screen p-2 sm:p-3 lg:p-6 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
+                    <div className="relative z-10 w-full min-h-screen p-1 sm:p-2 lg:p-4 pb-20 sm:pb-24 lg:pb-6 overflow-y-auto scroll-smooth">
                       {/* Logo Box Component */}
                       <div
                         className="w-full flex justify-center items-center relative"
                         style={{
-                          padding: "10px 20px 5px 20px",
+                          padding: "5px 20px 2px 20px",
                           zIndex: 10,
                         }}
                       >
@@ -2065,7 +2065,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       </div>
 
                       {/* Desktop: Three-column layout with sidebar + main content + side card */}
-                      <div className="flex gap-6 items-start">
+                      <div className="flex gap-4 items-start">
                         {/* Child Profile Sidebar - Desktop Only */}
                         <div className="hidden lg:block w-64 xl:w-72 flex-shrink-0">
                           <div className="sticky top-6">
@@ -2239,7 +2239,7 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
 
                             <TabsContent value="learn">
-                              <div className="space-y-8">
+                              <div className="space-y-4">
                                 {learningMode === "selector" ||
                                 !selectedCategory ? (
                                   <ChildFriendlyCategorySelector
