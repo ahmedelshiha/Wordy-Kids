@@ -501,7 +501,7 @@ export function ChildFriendlyCategorySelector({
       {/* Enhanced Mobile Header */}
       <div className="text-center relative mt-2 md:mt-4 px-2 md:px-0">
         <div className="md:hidden mb-4">
-          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg jungle-card animate-jungle-entrance">
+          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg jungle-mobile-card animate-jungle-entrance">
             <div className="flex items-center justify-between mb-1">
               <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent">
                 🌿 Jungle Adventure Library! 🦎
