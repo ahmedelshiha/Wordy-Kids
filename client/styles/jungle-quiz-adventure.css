@@ -352,31 +352,38 @@
   border: 2px solid rgba(76, 175, 80, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   backdrop-filter: blur(5px);
+  width: 100%;
+  max-width: none;
 }
 
 .jungle-achievement-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  text-align: center;
+  gap: 0.75rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
   margin-bottom: 1rem;
   border: 1px solid rgba(76, 175, 80, 0.2);
   transition: all 0.3s ease;
+  min-height: 140px;
+  justify-content: space-between;
 }
 
 .jungle-achievement-item:hover {
-  transform: translateX(5px);
+  transform: translateY(-3px);
   border-color: rgba(76, 175, 80, 0.4);
   box-shadow: 0 4px 16px rgba(76, 175, 80, 0.15);
 }
 
 .jungle-achievement-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   animation: jungle-achievement-pulse 2s ease-in-out infinite;
+  margin-bottom: 0.5rem;
 }
 
 /* ========== MOBILE OPTIMIZATIONS ========== */
