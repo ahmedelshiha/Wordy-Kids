@@ -559,10 +559,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
         </motion.div>
       </div>
 
-      {/* Enhanced Registration Call-to-Action Section */}
+      {/* Enhanced Registration Call-to-Action Section - Desktop Only */}
       <motion.div
         variants={itemVariants}
-        className="bg-gradient-to-br from-sunshine to-yellow-500 rounded-[20px] p-4 lg:p-5 shadow-xl relative overflow-hidden flex-shrink-0 border border-yellow-400/20"
+        className="hidden lg:block bg-gradient-to-br from-sunshine to-yellow-500 rounded-[20px] p-5 shadow-xl relative overflow-hidden flex-shrink-0 border border-yellow-400/20"
         style={{
           backgroundImage: `
             radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
