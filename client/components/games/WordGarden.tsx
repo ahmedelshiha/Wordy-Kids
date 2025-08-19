@@ -1254,27 +1254,27 @@ export default function WordGarden({
             </div>
 
             {/* Jungle adventure level indicators - repositioned to avoid overflow */}
-            <div className="flex justify-between text-xs text-gray-600 mt-3 px-1">
+            <div className="flex justify-between text-xs text-emerald-200 mt-3 px-1">
               <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 25 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 25 ? "text-yellow-300 font-semibold" : ""}`}
               >
                 <span className="text-base">🌱</span>
                 <span className="text-xs">Sprout</span>
               </span>
               <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-yellow-300 font-semibold" : ""}`}
               >
                 <span className="text-base">🌿</span>
                 <span className="text-xs">Explorer</span>
               </span>
               <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 75 ? "text-sunshine-dark font-semibold" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 75 ? "text-yellow-300 font-semibold" : ""}`}
               >
                 <span className="text-base">🌳</span>
                 <span className="text-xs">Ranger</span>
               </span>
               <span
-                className={`flex flex-col items-center gap-1 ${xpPct >= 100 ? "text-sunshine-dark font-semibold animate-pulse" : ""}`}
+                className={`flex flex-col items-center gap-1 ${xpPct >= 100 ? "text-yellow-300 font-semibold animate-pulse" : ""}`}
               >
                 <span className="text-base">👑</span>
                 <span className="text-xs">Legend</span>
