@@ -477,7 +477,18 @@ export class EnhancedAudioService {
           console.warn("Speech synthesis timeout, canceling...");
           this.speechSynthesis.cancel();
           try {
-            onError?.();
+            const timeoutError = {
+              type: 'timeout',
+              word: word,
+              duration: timeoutDuration,
+              speechState: {
+                speaking: this.speechSynthesis.speaking,
+                pending: this.speechSynthesis.pending,
+                paused: this.speechSynthesis.paused,
+              },
+              timestamp: new Date().toISOString()
+            };
+            onError?.(timeoutError);
           } catch (error) {
             console.error("Error in timeout onError callback:", error);
           }
@@ -486,7 +497,17 @@ export class EnhancedAudioService {
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       try {
-        onError?.();
+        const generalError = {
+          type: 'general_error',
+          word: word,
+          originalError: error instanceof Error ? {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+          } : error,
+          timestamp: new Date().toISOString()
+        };
+        onError?.(generalError);
       } catch (callbackError) {
         console.error("Error in error callback:", callbackError);
       }
