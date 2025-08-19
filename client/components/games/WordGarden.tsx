@@ -170,7 +170,7 @@ const PLANT_TYPES = [
   ["🌱", "🌿", "🌻"], // sunflower - leafy to bright sunflower
   ["🌱", "🌵", "🌺"], // cactus-flower - spiky cactus to hibiscus
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
-  ["����", "🌾", "🌼"], // daisy field - grain to white daisy
+  ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
   ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-white text-gray-800 border-2 border-jungle-light/50 backdrop-blur-sm">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-white text-gray-800 border-2 border-gray-200 backdrop-blur-sm">
         {/* Enhanced Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Background jungle gradient overlay */}
@@ -1457,7 +1457,7 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-white via-light-background to-jungle-light/10 rounded-2xl border border-jungle-light/30 shadow-lg ${className}`}>
+    <div className={`relative w-full max-w-md mx-auto p-4 bg-white rounded-2xl border border-gray-200 shadow-lg ${className}`}>
       {children}
     </div>
   );
