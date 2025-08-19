@@ -843,12 +843,12 @@ export default function WordGarden({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.1),transparent_50%)] rounded-3xl" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(132,204,22,0.1),transparent_50%)] rounded-3xl" />
 
-          {/* Animated jungle leaves */}
+          {/* Enhanced jungle foliage */}
           <div className="absolute top-0 left-0 w-full h-full">
-            {Array.from({ length: 8 }, (_, i) => (
+            {Array.from({ length: 12 }, (_, i) => (
               <div
                 key={`leaf-${i}`}
-                className="absolute text-jungle-DEFAULT opacity-25"
+                className="absolute text-emerald-600 opacity-30"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -856,24 +856,54 @@ export default function WordGarden({
                   animationDelay: `${Math.random() * 3}s`,
                 }}
               >
-                <Leaf className="w-4 h-4 md:w-6 md:h-6 animate-jungle-sway drop-shadow-sm" />
+                <Leaf className="w-5 h-5 md:w-7 md:h-7 animate-jungle-sway drop-shadow-md text-green-600" />
+              </div>
+            ))}
+            {/* Add some jungle vines */}
+            {Array.from({ length: 6 }, (_, i) => (
+              <div
+                key={`vine-${i}`}
+                className="absolute text-green-500 opacity-25"
+                style={{
+                  left: `${15 + i * 15}%`,
+                  top: `${Math.random() * 20}%`,
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              >
+                <span className="text-xl animate-jungle-sway">🌿</span>
               </div>
             ))}
           </div>
 
-          {/* Jungle atmosphere sparkles */}
+          {/* Enhanced jungle atmosphere */}
           <div className="absolute inset-0">
-            {Array.from({ length: 12 }, (_, i) => (
+            {Array.from({ length: 15 }, (_, i) => (
               <div
                 key={`sparkle-${i}`}
-                className="absolute text-sunshine-DEFAULT opacity-40"
+                className="absolute text-amber-400 opacity-60"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
                   animationDelay: `${Math.random() * 4}s`,
                 }}
               >
-                <span className="text-xs animate-jungle-sparkle drop-shadow-sm">✨</span>
+                <span className="text-sm animate-jungle-sparkle drop-shadow-md">✨</span>
+              </div>
+            ))}
+            {/* Jungle creatures */}
+            {Array.from({ length: 4 }, (_, i) => (
+              <div
+                key={`creature-${i}`}
+                className="absolute opacity-20"
+                style={{
+                  left: `${25 + i * 20}%`,
+                  top: `${80 + Math.sin(i) * 10}%`,
+                  animationDelay: `${i * 1.5}s`,
+                }}
+              >
+                <span className="text-lg animate-jungle-float">
+                  {['🦋', '🐛', '🦜', '🐸'][i]}
+                </span>
               </div>
             ))}
           </div>
