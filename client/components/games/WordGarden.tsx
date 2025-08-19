@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 
 /**
- * Jungle Adventure Word Garden �� Immersive Listen & Pick Game for Ages 3–5
+ * Jungle Adventure Word Garden — Immersive Listen & Pick Game for Ages 3–5
  * --------------------------------------------------------------------------
  * 🌟 Comprehensive jungle adventure theme with enhanced visuals and interactions
  * • Kids listen to pronunciation then pick the matching jungle treasure picture
@@ -834,7 +834,7 @@ export default function WordGarden({
         className="pointer-events-none absolute inset-0 overflow-hidden"
       />
 
-      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-light/20 via-light-background to-sunshine-light/15 text-gray-800 border-2 border-jungle-light/40 backdrop-blur-sm">
+      <div className="relative rounded-3xl shadow-2xl p-4 md:p-6 pb-20 bg-gradient-to-br from-jungle-DEFAULT/30 via-jungle-light/20 to-sunshine-DEFAULT/25 text-gray-800 border-2 border-jungle-DEFAULT/50 backdrop-blur-sm">
         {/* Enhanced Jungle Background Effects */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           {/* Background jungle gradient overlay */}
@@ -870,7 +870,7 @@ export default function WordGarden({
                   animationDelay: `${Math.random() * 4}s`,
                 }}
               >
-                <span className="text-xs animate-jungle-sparkle drop-shadow-sm">���</span>
+                <span className="text-xs animate-jungle-sparkle drop-shadow-sm">✨</span>
               </div>
             ))}
           </div>
@@ -1191,7 +1191,7 @@ export default function WordGarden({
               <span
                 className={`flex flex-col items-center gap-1 ${xpPct >= 50 ? "text-sunshine-dark font-semibold" : ""}`}
               >
-                <span className="text-base">����</span>
+                <span className="text-base">🌿</span>
                 <span className="text-xs">Explorer</span>
               </span>
               <span
@@ -1457,7 +1457,7 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-jungle-light/25 via-jungle-light/5 to-sunshine-light/15 rounded-2xl border border-jungle-light/20 ${className}`}>
+    <div className={`relative w-full max-w-md mx-auto p-4 bg-gradient-to-br from-jungle-DEFAULT/40 via-jungle-light/25 to-sunshine-DEFAULT/20 rounded-2xl border border-jungle-DEFAULT/30 shadow-lg ${className}`}>
       {children}
     </div>
   );
