@@ -1291,27 +1291,27 @@ export default function WordGarden({
         {/* Jungle path connecting trail */}
         <div className="absolute top-1/2 left-2 right-2 h-1 bg-gradient-to-r from-jungle-dark/40 via-jungle-DEFAULT/60 to-jungle-dark/40 rounded-full -translate-y-1/2 -z-10" />
 
-        {/* Adventure progress indicators */}
-        <div className="absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-gray-600">
-          <div className="text-center">
-            <span className="block">��️</span>
-            <span>Start</span>
+        {/* Adventure progress indicators - repositioned to be visible */}
+        <div className="flex justify-between text-xs text-gray-600 mt-4 px-2">
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🚀</span>
+            <span className="text-xs font-medium">Start</span>
           </div>
-          <div className="text-center">
-            <span className="block">🌿</span>
-            <span>Jungle</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🌿</span>
+            <span className="text-xs font-medium">Jungle</span>
           </div>
-          <div className="text-center">
-            <span className="block">🏔️</span>
-            <span>Peak</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🏔️</span>
+            <span className="text-xs font-medium">Peak</span>
           </div>
-          <div className="text-center">
-            <span className="block">🏆</span>
-            <span>Victory</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">🏆</span>
+            <span className="text-xs font-medium">Victory</span>
           </div>
-          <div className="text-center">
-            <span className="block">👑</span>
-            <span>Legend</span>
+          <div className="text-center flex flex-col items-center">
+            <span className="block text-base mb-1">👑</span>
+            <span className="text-xs font-medium">Legend</span>
           </div>
         </div>
       </div>
