@@ -69,7 +69,7 @@ import { ParentDashboard } from "@/components/ParentDashboard";
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { DesktopKidNav } from "@/components/DesktopKidNav";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
