@@ -910,7 +910,7 @@ export default function WordGarden({
                     animationDuration: `${2 + Math.random()}s`,
                   }}
                 >
-                  <span className="text-lg">{i % 3 === 0 ? '🌱' : i % 3 === 1 ? '🌿' : '🍀'}</span>
+                  <span className="text-lg animate-jungle-depth">{i % 3 === 0 ? '🌱' : i % 3 === 1 ? '🌿' : '🍀'}</span>
                 </div>
               ))}
             </div>
@@ -920,7 +920,7 @@ export default function WordGarden({
               {Array.from({ length: 4 }, (_, i) => (
                 <div
                   key={`glow-${i}`}
-                  className="absolute rounded-full animate-jungle-glow"
+                  className="absolute rounded-full animate-jungle-mystical"
                   style={{
                     left: `${20 + i * 20}%`,
                     top: `${30 + Math.sin(i) * 20}%`,
