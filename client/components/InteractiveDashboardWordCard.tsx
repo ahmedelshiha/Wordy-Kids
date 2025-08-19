@@ -1252,7 +1252,7 @@ export function InteractiveDashboardWordCard({
             "backdrop-blur-sm ring-1 ring-black/5",
             "bg-transparent",
             celebrationEffect &&
-              "jungle-celebration-glow animate-pulse shadow-2xl border-sunshine border-4",
+              "jungle-celebration-glow animate-pulse shadow-2xl",
           )}
           style={{
             background: `
@@ -1596,7 +1596,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "🦋 What creature lives in our jungle?",
+                          "���� What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
