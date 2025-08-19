@@ -42,11 +42,11 @@ const MonkeyIcon = ({ className }: { className?: string }) => (
 const CompassIcon = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      "w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105",
+      "w-10 h-10 rounded-lg bg-sunshine flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 flex-shrink-0",
       className,
     )}
   >
-    <div className="text-white text-lg transform hover:rotate-180 transition-transform duration-700">
+    <div className="text-white text-sm transform hover:rotate-180 transition-transform duration-700">
       🧭
     </div>
   </div>
