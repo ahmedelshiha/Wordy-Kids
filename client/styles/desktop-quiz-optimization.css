@@ -184,12 +184,12 @@
   /* Further optimize for large screens */
   .jungle-quiz-cards-grid {
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1200px;
+    max-width: 1400px;
     gap: 1rem;
   }
 
   .jungle-quiz-card {
-    min-height: 260px;
+    min-height: 280px;
     padding: 1rem;
   }
 
@@ -204,7 +204,7 @@
   }
 
   .jungle-quiz-card-description {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin-bottom: 0.75rem;
   }
 
