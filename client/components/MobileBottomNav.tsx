@@ -175,49 +175,77 @@ export function MobileBottomNav({
             className="absolute inset-0 bg-black/20"
             onClick={onMoreToggle}
           />
-          <div className="absolute bottom-12 left-3 right-3 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl shadow-2xl p-4 border-4 border-rainbow max-h-[70vh] overflow-y-auto animate-kid-pulse-glow">
-            <div className="text-center mb-4">
-              <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce">
-                🎪
+          <div className="absolute bottom-12 left-3 right-3 bg-gradient-to-br from-jungle-light/20 via-sunshine-yellow/10 to-sky-blue/20 backdrop-blur-sm rounded-3xl shadow-2xl p-4 border-4 border-jungle max-h-[70vh] overflow-y-auto animate-kid-pulse-glow overflow-hidden relative">
+            {/* Jungle background elements */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-2 left-4 text-2xl animate-gentle-float animation-delay-100">🌿</div>
+              <div className="absolute top-6 right-6 text-xl animate-gentle-bounce animation-delay-200">🦋</div>
+              <div className="absolute bottom-4 left-2 text-lg animate-gentle-float animation-delay-300">🌺</div>
+              <div className="absolute bottom-8 right-4 text-xl animate-gentle-bounce animation-delay-400">🐸</div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl opacity-10 animate-gentle-float animation-delay-500">🌳</div>
+            </div>
+
+            <div className="text-center mb-4 relative z-10">
+              <div className="text-2xl sm:text-3xl mb-2 animate-mascot-bounce relative">
+                🌟
+                <span className="absolute -top-1 -right-1 text-lg animate-sparkle">✨</span>
               </div>
-              <h3 className="text-lg font-kid-friendly font-bold text-purple-800 text-shadow">
-                Magical Adventure Menu! ✨
+              <h3 className="text-lg font-kid-friendly font-bold text-jungle-dark text-shadow-jungle mb-1">
+                🌿 Jungle Adventure Menu! ✨🦋
               </h3>
-              <p className="text-sm font-kid-friendly text-purple-600">
-                Tap to explore new worlds!
+              <p className="text-sm font-kid-friendly text-jungle bg-sunshine-yellow/20 px-3 py-1 rounded-full border border-jungle-light/30">
+                🗺️ Explore the magical jungle! 🐾
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              {secondaryMenuItems.map((item) => (
+            <div className="grid grid-cols-2 gap-3 relative z-10">
+              {secondaryMenuItems.map((item, index) => (
                 <button
                   key={item.id}
                   onClick={() => {
                     item.onClick();
                     onMoreToggle();
                   }}
-                  className="kid-nav-item bg-white hover:kid-gradient-magic hover:text-white border-2 border-purple-200 kid-interactive min-h-[90px] justify-center"
+                  className="kid-nav-item bg-gradient-to-br from-white via-jungle-light/10 to-sunshine-yellow/20 hover:from-jungle-light hover:to-sunshine-yellow hover:text-white border-2 border-jungle-light/50 hover:border-jungle kid-interactive min-h-[90px] justify-center relative overflow-hidden group transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
-                  <div className="text-2xl sm:text-3xl animate-gentle-float">
+                  {/* Jungle-themed background pattern */}
+                  <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <div className="absolute top-1 left-1 text-green-600">🌿</div>
+                    <div className="absolute bottom-1 right-1 text-yellow-600">🌺</div>
+                  </div>
+
+                  <div className="text-2xl sm:text-3xl animate-gentle-float relative z-10 group-hover:animate-mascot-bounce transition-all">
                     {item.emoji}
                   </div>
-                  <span className="text-sm font-kid-friendly font-bold">
+                  <span className="text-sm font-kid-friendly font-bold text-jungle-dark group-hover:text-white transition-colors relative z-10">
                     {item.label}
                   </span>
                   {item.sparkle && (
-                    <div className="ml-auto animate-kid-magic-sparkle text-xs">
+                    <div className="ml-auto animate-kid-magic-sparkle text-xs text-sunshine-yellow group-hover:text-white transition-colors">
                       {item.sparkle}
                     </div>
                   )}
+
+                  {/* Jungle adventure trail effect */}
+                  <div className="absolute -top-1 -right-1 text-xs animate-gentle-bounce text-jungle opacity-60 group-hover:opacity-100 transition-opacity">
+                    {index % 2 === 0 ? '🍃' : '🦋'}
+                  </div>
                 </button>
               ))}
             </div>
 
             <button
               onClick={onMoreToggle}
-              className="w-full mt-4 py-3 rounded-2xl kid-gradient-magic text-white font-kid-friendly font-bold transition-all transform active:scale-95 shadow-lg kid-button"
+              className="w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-kid-friendly font-bold transition-all transform active:scale-95 shadow-lg kid-button relative overflow-hidden group"
             >
-              Close Magic Menu ✨
+              {/* Jungle-themed background animation */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                🌿 Close Jungle Menu
+                <span className="animate-sparkle">✨</span>
+                🦋
+              </span>
             </button>
           </div>
         </div>
