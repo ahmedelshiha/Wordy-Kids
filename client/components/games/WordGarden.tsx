@@ -436,8 +436,8 @@ function JungleGameCompletionDialog({
       <DialogContent className="sm:max-w-xs max-w-[90vw] p-3 bg-gradient-to-br from-jungle-DEFAULT via-jungle-light to-emerald-600 border-jungle-light border-4">
         <DialogHeader className="text-center pb-2">
           <div className="text-6xl mb-3 animate-jungle-celebration">🏆</div>
-          <DialogTitle className="text-xl font-bold text-white drop-shadow-lg">
-            🎉 Jungle Quest Complete! 🐒
+          <DialogTitle className="text-xl font-bold text-white drop-shadow-lg bg-jungle-DEFAULT/80 backdrop-blur-sm rounded-lg px-4 py-2 border-2 border-jungle-light shadow-lg">
+            🏆 🎉 Jungle Quest Complete! 🐒
           </DialogTitle>
           <DialogDescription className="text-jungle-light text-sm">
             Outstanding adventure! The monkey is so proud! 🍌
@@ -1290,7 +1290,7 @@ export default function WordGarden({
         {/* Adventure progress indicators */}
         <div className="absolute -bottom-8 left-0 right-0 flex justify-between text-xs text-gray-600">
           <div className="text-center">
-            <span className="block">🗺️</span>
+            <span className="block">��️</span>
             <span>Start</span>
           </div>
           <div className="text-center">
