@@ -192,20 +192,30 @@ export function AvatarCustomization({
 
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <motion.div
+          className="flex items-center justify-between mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <Button
             variant="outline"
             onClick={onBack}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-white/90 border-jungle/30 hover:bg-jungle/10 text-navy font-['Baloo_2']"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back
+            🏠 Back
           </Button>
-          <h1 className="text-3xl font-bold text-gray-800">
-            Create Your Adventure Profile! ✨
-          </h1>
+          <motion.h1
+            className="text-2xl md:text-4xl font-bold text-navy font-['Baloo_2'] text-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            🌟 Create Your Adventure Profile! 🎯
+          </motion.h1>
           <div></div>
-        </div>
+        </motion.div>
 
         {/* Progress Indicator */}
         <div className="flex justify-center mb-8">
@@ -238,7 +248,7 @@ export function AvatarCustomization({
             {/* Step 1: Name */}
             {step === 1 && (
               <div className="text-center space-y-6">
-                <div className="text-6xl mb-4">����</div>
+                <div className="text-6xl mb-4">👋</div>
                 <h2 className="text-2xl font-bold text-gray-800">
                   What's your name, young adventurer?
                 </h2>
