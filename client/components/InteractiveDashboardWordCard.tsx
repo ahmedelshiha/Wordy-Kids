@@ -482,7 +482,7 @@ export function InteractiveDashboardWordCard({
     if (status === "remembered") {
       setCelebrationEffect(true);
       enhancedAudioService.playSuccessSound();
-      setTimeout(() => setCelebrationEffect(false), 2000);
+      setTimeout(() => setCelebrationEffect(false), 1000);
     } else if (status === "needs_practice") {
       enhancedAudioService.playEncouragementSound();
     }
