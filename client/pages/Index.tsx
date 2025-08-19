@@ -2304,10 +2304,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 setCurrentWordIndex(0);
                                               }}
                                               variant="ghost"
-                                              size="sm"
-                                              className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                                              size="lg"
+                                              className="h-12 px-4 text-slate-600 hover:bg-slate-100 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
                                             >
-                                              <BookOpen className="w-3.5 h-3.5" />
+                                              <BookOpen className="w-5 h-5" />
                                             </Button>
 
                                             {/* Jungle Adventure Center: Category and Progress */}
