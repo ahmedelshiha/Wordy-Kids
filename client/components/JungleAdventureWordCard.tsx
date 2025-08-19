@@ -329,7 +329,7 @@ export const JungleAdventureWordCard: React.FC<
         ref={cardRef}
         className={cn(
           "relative w-full transition-all duration-700 transform-gpu preserve-3d",
-          "h-[420px] xs:h-[440px] sm:h-[400px] md:h-[420px] lg:h-[440px]",
+          "h-[380px] xs:h-[400px] sm:h-[380px] md:h-[400px] lg:h-[420px]",
           "jungle-adventure-touch-target",
           "hover:scale-[1.02] transition-transform",
           "jungle-adventure-card-flip",
