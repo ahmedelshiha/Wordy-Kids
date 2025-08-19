@@ -311,7 +311,7 @@ export function AvatarCustomization({
                       key={avatar.id}
                       className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
                         selectedAvatar.id === avatar.id
-                          ? "ring-4 ring-educational-blue bg-gradient-to-br from-blue-50 to-purple-50"
+                          ? "ring-4 ring-jungle bg-gradient-to-br from-jungle-light/30 to-sunshine-light/30"
                           : "hover:shadow-lg"
                       }`}
                       onClick={() => setSelectedAvatar(avatar)}
