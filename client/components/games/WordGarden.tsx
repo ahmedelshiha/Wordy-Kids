@@ -521,7 +521,7 @@ function JungleGameCompletionDialog({
                   top: `${Math.random() * 100}%`,
                   background: "radial-gradient(circle, rgba(255, 255, 0, 1), rgba(255, 215, 0, 0.5))",
                   boxShadow: "0 0 6px rgba(255, 255, 0, 0.8)",
-                  animationName: "firefly-dance",
+                  animationName: "firefly-celebration",
                   animationDuration: `${3 + Math.random() * 2}s`,
                   animationTimingFunction: "ease-in-out",
                   animationIterationCount: "infinite",
