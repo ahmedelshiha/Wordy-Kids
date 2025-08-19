@@ -54,7 +54,8 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
 
   const createParticles = () => {
     const newParticles: Particle[] = [];
-    const particleCount = type === "fireworks" ? 50 : 30;
+    // Reduced particle count for lighter effect
+    const particleCount = type === "fireworks" ? 20 : 12;
 
     for (let i = 0; i < particleCount; i++) {
       const centerX = window.innerWidth / 2;
@@ -62,17 +63,17 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
 
       newParticles.push({
         id: i,
-        x: centerX + (Math.random() - 0.5) * 100,
-        y: centerY + (Math.random() - 0.5) * 100,
-        vx: (Math.random() - 0.5) * 10,
-        vy: (Math.random() - 0.5) * 10 - 5,
+        x: centerX + (Math.random() - 0.5) * 60, // Smaller spread
+        y: centerY + (Math.random() - 0.5) * 60,
+        vx: (Math.random() - 0.5) * 6, // Reduced velocity
+        vy: (Math.random() - 0.5) * 6 - 3,
         color: colors[Math.floor(Math.random() * colors.length)],
         emoji:
           type === "stars"
             ? emojis[Math.floor(Math.random() * emojis.length)]
             : undefined,
         life: 0,
-        maxLife: 60 + Math.random() * 40,
+        maxLife: 40 + Math.random() * 20, // Shorter lifespan
       });
     }
 
@@ -147,9 +148,9 @@ export const CelebrationEffect: React.FC<CelebrationEffectProps> = ({
             left: particle.x,
             top: particle.y,
             color: particle.color,
-            opacity: 1 - particle.life / particle.maxLife,
-            fontSize: type === "stars" ? "24px" : "12px",
-            transform: `rotate(${particle.life * 10}deg)`,
+            opacity: (1 - particle.life / particle.maxLife) * 0.7, // More transparent
+            fontSize: type === "stars" ? "18px" : "10px", // Smaller size
+            transform: `rotate(${particle.life * 5}deg)`, // Slower rotation
           }}
         >
           {particle.emoji || (type === "confetti" ? "■" : "●")}

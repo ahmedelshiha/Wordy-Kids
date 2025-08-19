@@ -2874,7 +2874,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               setShowCelebration(
                                                                 false,
                                                               );
-                                                            }, 2000);
+                                                            }, 1000);
                                                           }
                                                           // Auto-advance to next word
                                                           if (

@@ -90,12 +90,12 @@ export const JungleAdventureWordCard: React.FC<
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
 
-  // Jungle adventure effects
+  // Jungle adventure effects - much lighter
   useEffect(() => {
     const interval = setInterval(() => {
       setShowJungleParticles(true);
-      setTimeout(() => setShowJungleParticles(false), 2000);
-    }, 8000);
+      setTimeout(() => setShowJungleParticles(false), 800); // Reduced from 2000ms
+    }, 15000); // Reduced frequency from 8000ms
     return () => clearInterval(interval);
   }, []);
 
@@ -105,7 +105,7 @@ export const JungleAdventureWordCard: React.FC<
 
     setIsPlaying(true);
     setShowMagicalSparkles(true);
-    setShowJungleParticles(true);
+    // Removed jungle particles for pronunciation to be lighter
 
     try {
       // Jungle adventure pronunciation
@@ -153,10 +153,9 @@ export const JungleAdventureWordCard: React.FC<
     }
 
     setIsPressed(true);
-    setShowJungleParticles(true);
+    // Removed jungle particles on flip to make it lighter
     setTimeout(() => {
       setIsPressed(false);
-      setShowJungleParticles(false);
     }, 300);
   };
 
@@ -164,7 +163,10 @@ export const JungleAdventureWordCard: React.FC<
   const handleRating = (rating: "easy" | "medium" | "hard") => {
     setRatedAs(rating);
     setShowCelebration(true);
-    setShowJungleParticles(true);
+    // Only show particles for "easy" rating (I Remember equivalent)
+    if (rating === "easy") {
+      setShowJungleParticles(true);
+    }
 
     // Calculate XP based on difficulty and rating
     let xpGained = 0;
@@ -209,7 +211,7 @@ export const JungleAdventureWordCard: React.FC<
     setTimeout(() => {
       setShowCelebration(false);
       setShowJungleParticles(false);
-    }, 1500);
+    }, 800); // Much shorter duration
   };
 
   // Touch handlers for mobile
@@ -293,22 +295,22 @@ export const JungleAdventureWordCard: React.FC<
         className,
       )}
     >
-      {/* Light Jungle Adventure Particles Background */}
+      {/* Very Light Jungle Adventure Particles Background */}
       {showJungleParticles && (
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden rounded-xl">
-          {[...Array(3)].map((_, i) => (
+          {[...Array(2)].map((_, i) => (
             <div
               key={i}
               className={cn(
-                "absolute text-sm opacity-20 animate-float-up",
-                `animation-delay-${(i * 400) % 1000}`,
+                "absolute text-xs opacity-10 animate-float-up", // Much smaller and more transparent
+                `animation-delay-${(i * 600) % 1000}`,
               )}
               style={{
-                left: `${Math.random() * 100}%`,
-                animationDuration: `${4 + Math.random() * 2}s`,
+                left: `${Math.random() * 80 + 10}%`, // Keep particles more centered
+                animationDuration: `${2 + Math.random() * 1}s`, // Faster animation
               }}
             >
-              {["🌿", "🦋", "🌺"][i % 3]}
+              {["✨", "🌟"][i % 2]} {/* Only sparkles, no large emojis */}
             </div>
           ))}
         </div>
@@ -618,7 +620,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-red-500/40 to-red-700/40 hover:from-red-500/60 hover:to-red-700/60 border-3 border-red-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "hard" &&
                               "ring-3 ring-red-300 scale-105 border-red-300",
                             showCelebration &&
@@ -628,8 +630,10 @@ export const JungleAdventureWordCard: React.FC<
                           aria-label="Jungle was challenging - need more exploration"
                         >
                           <div className="flex items-center gap-1">
-                            <Mountain className="w-4 h-4" />
-                            <span className="text-xl animate-bounce">😰</span>
+                            <Mountain className="w-3 h-3 md:w-4 md:h-4" />
+                            <span className="text-lg md:text-xl animate-bounce">
+                              😰
+                            </span>
                           </div>
                           <span className="text-xs font-bold">Tough Trek</span>
                         </Button>
@@ -649,7 +653,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-yellow-500/40 to-orange-600/40 hover:from-yellow-500/60 hover:to-orange-600/60 border-3 border-yellow-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "medium" &&
                               "ring-3 ring-yellow-300 scale-105 border-yellow-300",
                             showCelebration &&
@@ -659,8 +663,8 @@ export const JungleAdventureWordCard: React.FC<
                           aria-label="Good jungle exploration - getting there"
                         >
                           <div className="flex items-center gap-1">
-                            <Sun className="w-4 h-4 animate-pulse" />
-                            <span className="text-xl animate-gentle-bounce">
+                            <Sun className="w-3 h-3 md:w-4 md:h-4 animate-pulse" />
+                            <span className="text-lg md:text-xl animate-gentle-bounce">
                               🤔
                             </span>
                           </div>
@@ -682,7 +686,7 @@ export const JungleAdventureWordCard: React.FC<
                             }
                           }}
                           className={cn(
-                            "w-full h-14 sm:h-16 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
+                            "w-full h-12 sm:h-14 md:h-12 lg:h-11 bg-gradient-to-b from-green-500/40 to-emerald-700/40 hover:from-green-500/60 hover:to-emerald-700/60 border-3 border-green-400/60 text-white font-bold transition-all duration-300 flex flex-col items-center justify-center gap-1 rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95 jungle-rating-btn",
                             ratedAs === "easy" &&
                               "ring-3 ring-green-300 scale-105 border-green-300",
                             showCelebration &&
@@ -692,8 +696,8 @@ export const JungleAdventureWordCard: React.FC<
                           aria-label="Mastered jungle word - expert explorer"
                         >
                           <div className="flex items-center gap-1">
-                            <Crown className="w-4 h-4 animate-sparkle" />
-                            <span className="text-xl animate-celebration-sparkles">
+                            <Crown className="w-3 h-3 md:w-4 md:h-4 animate-sparkle" />
+                            <span className="text-lg md:text-xl animate-celebration-sparkles">
                               🎉
                             </span>
                           </div>
