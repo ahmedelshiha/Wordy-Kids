@@ -598,7 +598,9 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={`pl-10 ${
-                    highContrastMode ? "bg-black text-white border-white" : "border-jungle/30 focus:border-jungle"
+                    highContrastMode
+                      ? "bg-black text-white border-white"
+                      : "border-jungle/30 focus:border-jungle"
                   }`}
                 />
               </div>

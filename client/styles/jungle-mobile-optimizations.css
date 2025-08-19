@@ -9,7 +9,7 @@
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(76, 175, 80, 0.15);
-    box-shadow: 
+    box-shadow:
       0 4px 20px rgba(76, 175, 80, 0.1),
       0 0 0 1px rgba(76, 175, 80, 0.05);
     transition: all 0.2s ease;
@@ -30,7 +30,7 @@
     background: linear-gradient(135deg, #4caf50, #8bc34a);
     color: white;
     border: none;
-    box-shadow: 
+    box-shadow:
       0 4px 15px rgba(76, 175, 80, 0.2),
       0 0 0 1px rgba(76, 175, 80, 0.1);
     transition: all 0.2s ease;
@@ -38,7 +38,7 @@
 
   .jungle-mobile-button:active {
     transform: scale(0.95);
-    box-shadow: 
+    box-shadow:
       0 2px 8px rgba(76, 175, 80, 0.3),
       0 0 0 1px rgba(76, 175, 80, 0.2);
   }
@@ -56,7 +56,7 @@
     padding: 16px;
     margin: 8px 4px;
     border: 1px solid rgba(76, 175, 80, 0.1);
-    box-shadow: 
+    box-shadow:
       0 6px 25px rgba(76, 175, 80, 0.08),
       0 0 0 1px rgba(76, 175, 80, 0.03);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -64,16 +64,20 @@
 
   .jungle-mobile-category-card:active {
     transform: scale(0.98) translateY(1px);
-    box-shadow: 
+    box-shadow:
       0 4px 15px rgba(76, 175, 80, 0.15),
       0 0 0 1px rgba(76, 175, 80, 0.1);
   }
 
   .jungle-mobile-category-card.selected {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(255, 193, 7, 0.05));
+    background: linear-gradient(
+      135deg,
+      rgba(76, 175, 80, 0.1),
+      rgba(255, 193, 7, 0.05)
+    );
     border-color: rgba(76, 175, 80, 0.3);
     transform: scale(1.02);
-    box-shadow: 
+    box-shadow:
       0 8px 30px rgba(76, 175, 80, 0.15),
       0 0 0 2px rgba(76, 175, 80, 0.2);
   }
@@ -93,7 +97,7 @@
     outline: none;
     border-color: rgba(76, 175, 80, 0.5);
     background: rgba(255, 255, 255, 1);
-    box-shadow: 
+    box-shadow:
       0 0 0 4px rgba(76, 175, 80, 0.1),
       0 4px 20px rgba(76, 175, 80, 0.1);
   }
@@ -103,7 +107,7 @@
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     border-top: 1px solid rgba(76, 175, 80, 0.1);
-    box-shadow: 
+    box-shadow:
       0 -4px 20px rgba(76, 175, 80, 0.1),
       0 0 0 1px rgba(76, 175, 80, 0.05);
   }
@@ -126,7 +130,7 @@
     height: 56px;
     border-radius: 28px;
     background: linear-gradient(135deg, #4caf50, #8bc34a);
-    box-shadow: 
+    box-shadow:
       0 8px 25px rgba(76, 175, 80, 0.3),
       0 0 0 1px rgba(76, 175, 80, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -134,7 +138,7 @@
 
   .jungle-mobile-fab:active {
     transform: scale(0.9);
-    box-shadow: 
+    box-shadow:
       0 4px 15px rgba(76, 175, 80, 0.4),
       0 0 0 1px rgba(76, 175, 80, 0.2);
   }
@@ -169,7 +173,7 @@
   }
 
   .jungle-mobile-scroll-indicator::after {
-    content: '';
+    content: "";
     position: absolute;
     right: 0;
     top: 0;
@@ -190,7 +194,7 @@
   }
 
   .jungle-mobile-swipe-hint::before {
-    content: '👆 Swipe to explore';
+    content: "👆 Swipe to explore";
     position: absolute;
     bottom: 8px;
     right: 8px;
@@ -205,11 +209,14 @@
   }
 
   @keyframes jungle-swipe-hint {
-    0%, 70%, 100% {
+    0%,
+    70%,
+    100% {
       opacity: 0;
       transform: translateY(10px);
     }
-    10%, 60% {
+    10%,
+    60% {
       opacity: 1;
       transform: translateY(0);
     }
@@ -245,7 +252,9 @@
   }
 
   @keyframes jungle-mobile-loading {
-    0%, 40%, 100% {
+    0%,
+    40%,
+    100% {
       transform: scale(1);
       opacity: 0.5;
     }
@@ -343,7 +352,7 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-    
+
     .jungle-mobile-swipe-hint::before {
       animation: none;
       opacity: 0.7;
@@ -356,7 +365,7 @@
       padding: 12px;
       margin: 6px 3px;
     }
-    
+
     .jungle-mobile-title {
       font-size: 1.125rem;
     }
@@ -370,12 +379,12 @@
       -webkit-user-select: none;
       user-select: none;
     }
-    
+
     .jungle-mobile-button {
       -webkit-appearance: none;
       appearance: none;
     }
-    
+
     .jungle-mobile-search {
       -webkit-appearance: none;
       appearance: none;
@@ -388,7 +397,7 @@
       min-height: 52px;
       min-width: 52px;
     }
-    
+
     .jungle-mobile-nav-item {
       min-height: 52px;
       min-width: 52px;
@@ -404,7 +413,7 @@
     border-radius: 16px;
     padding: 20px;
     border: 1px solid rgba(76, 175, 80, 0.1);
-    box-shadow: 
+    box-shadow:
       0 8px 30px rgba(76, 175, 80, 0.1),
       0 0 0 1px rgba(76, 175, 80, 0.05);
     transition: all 0.3s ease;
@@ -412,7 +421,7 @@
 
   .jungle-tablet-card:hover {
     transform: translateY(-2px);
-    box-shadow: 
+    box-shadow:
       0 12px 40px rgba(76, 175, 80, 0.15),
       0 0 0 1px rgba(76, 175, 80, 0.1);
   }
@@ -429,11 +438,11 @@
   .jungle-mobile-category-card {
     padding: 10px 16px;
   }
-  
+
   .jungle-mobile-title {
     font-size: 1rem;
   }
-  
+
   .jungle-mobile-fab {
     width: 48px;
     height: 48px;
@@ -447,17 +456,17 @@
     margin: 6px 2px;
     padding: 10px 12px;
   }
-  
+
   .jungle-mobile-button {
     min-height: 44px;
     min-width: 44px;
     padding: 10px 14px;
   }
-  
+
   .jungle-mobile-title {
     font-size: 1.125rem;
   }
-  
+
   .jungle-mobile-category-card {
     padding: 14px;
     margin: 6px 2px;

@@ -569,7 +569,8 @@ export function ChildFriendlyCategorySelector({
             </div>
             {searchTerm && (
               <div className="mt-2 text-sm text-jungle-dark text-center font-medium">
-                🌳 Found {categories.length} jungle paths matching "{searchTerm}" 🦋
+                🌳 Found {categories.length} jungle paths matching "{searchTerm}
+                " 🦋
               </div>
             )}
           </div>
@@ -621,7 +622,8 @@ export function ChildFriendlyCategorySelector({
               ))}
             </div>
             <p className="text-xs text-jungle-dark/70 mt-1">
-              🌳 Scroll right to explore all {enrichedCategories.length} jungle adventures
+              🌳 Scroll right to explore all {enrichedCategories.length} jungle
+              adventures
             </p>
           </div>
         )}
