@@ -1698,7 +1698,9 @@ function Wrapper({
   className?: string;
 }) {
   return (
-    <div className={`relative w-full max-w-md mx-auto p-4 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20 shadow-xl ${className}`}>
+    <div
+      className={`relative w-full max-w-md mx-auto p-4 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20 shadow-xl ${className}`}
+    >
       {children}
     </div>
   );
