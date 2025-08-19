@@ -336,7 +336,7 @@ export default function LoginForm() {
           ⭐
         </div>
         <div className="absolute top-16 right-8 text-xl sm:text-3xl animate-gentle-float animation-delay-200">
-          ����
+          🌟
         </div>
         <div className="absolute bottom-16 left-8 text-2xl sm:text-4xl animate-gentle-float animation-delay-100">
           🎯
