@@ -44,6 +44,7 @@ import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup"
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
+import { motion } from "framer-motion";
 import {
   FriendlyMascot,
   FloatingMascot,
@@ -2855,7 +2856,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   completionResult.title,
-                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
+                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! ����`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                     20 +
