@@ -181,7 +181,7 @@ const PLANT_TYPES = [
   ["🌱", "🎍", "🌸"], // bamboo cherry - bamboo decoration to blossom
   ["🌱", "🌳", "🍃"], // tree leaves - tree to fresh leaves
   ["🌱", "🪷", "🌺"], // lotus hibiscus - lotus to hibiscus
-  ["🌱", "🌾", "🌻"], // wheat sunflower - grain field to sunflower
+  ["🌱", "���", "🌻"], // wheat sunflower - grain field to sunflower
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
   ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
@@ -1244,10 +1244,13 @@ export default function WordGarden({
         </div>
       </div>
 
-      {/* Jungle Adventure Progress Trail */}
+      {/* Immersive Jungle Adventure Progress Trail */}
       <div className="mt-8 relative mb-12">
-        {/* Jungle path background */}
-        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 rounded-2xl border border-gray-200" />
+        {/* Rich jungle path background */}
+        <div className="absolute inset-0 -mx-2 h-24 bg-gradient-to-r from-emerald-200/80 via-green-100/90 to-lime-200/80 rounded-2xl border-2 border-emerald-300/60 shadow-lg" />
+        {/* Jungle path texture overlay */}
+        <div className="absolute inset-0 -mx-2 h-24 bg-[radial-gradient(circle_at_25%_50%,rgba(34,197,94,0.15),transparent_40%)] rounded-2xl" />
+        <div className="absolute inset-0 -mx-2 h-24 bg-[radial-gradient(circle_at_75%_50%,rgba(132,204,22,0.15),transparent_40%)] rounded-2xl" />
 
         <div className="relative grid grid-cols-5 gap-2 p-2">
           {gardenStages.map((stage, idx) => {
