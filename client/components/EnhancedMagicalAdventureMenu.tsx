@@ -82,14 +82,15 @@ export function EnhancedMagicalAdventureMenu({
       description: "Test your knowledge",
     },
     {
-      id: "progress",
-      emoji: "🗺️",
-      gradientEmoji: "👑",
-      label: userRole === "parent" ? "Reports" : "Journey",
+      id: "achievements",
+      emoji: "🏆",
+      gradientEmoji: "🌟",
+      label: "Trophies",
       icon: Trophy,
-      gradient: "from-amber-500 via-yellow-400 to-orange-500",
-      shadowColor: "shadow-amber-500/25",
-      description: "Track your adventure",
+      gradient: "from-yellow-500 via-yellow-400 to-orange-500",
+      shadowColor: "shadow-yellow-500/25",
+      description: "View your achievements",
+      badge: achievementCount > 0 ? achievementCount : undefined,
     },
   ];
 
@@ -118,16 +119,15 @@ export function EnhancedMagicalAdventureMenu({
       category: "tools",
     },
     {
-      id: "achievements",
-      emoji: "🏆",
-      gradientEmoji: "🌟",
-      label: "Achievements",
-      icon: Trophy,
-      onClick: () => onTabChange("achievements"),
-      gradient: "from-yellow-500 to-orange-600",
-      description: "View your trophies",
+      id: "adventure",
+      emoji: "🗺️",
+      gradientEmoji: "👑",
+      label: "My Adventure",
+      icon: Map,
+      onClick: () => onTabChange("adventure"),
+      gradient: "from-amber-500 to-orange-600",
+      description: "Track your journey",
       category: "progress",
-      badge: achievementCount > 0 ? achievementCount : undefined,
     },
     {
       id: "games",
@@ -450,6 +450,13 @@ export function EnhancedMagicalAdventureMenu({
                   >
                     {tab.emoji}
                   </motion.div>
+
+                  {/* Badge for achievements */}
+                  {tab.badge && (
+                    <Badge className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-xs min-w-[20px] h-5 z-10">
+                      {tab.badge}
+                    </Badge>
+                  )}
 
                   {/* Gradient emoji overlay */}
                   <motion.div
