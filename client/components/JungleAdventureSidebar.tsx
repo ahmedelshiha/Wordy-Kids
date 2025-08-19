@@ -235,7 +235,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       {/* Registration Call-to-Action Section */}
       <motion.div
         variants={itemVariants}
-        className="bg-sunshine-yellow rounded-[20px] p-5 shadow-lg"
+        className="bg-sunshine rounded-[20px] p-5 shadow-lg"
       >
         <div className="text-center mb-3">
           <h3
