@@ -1318,7 +1318,10 @@
         rgba(0, 0, 0, 0.3) 75%,
         rgba(0, 0, 0, 0.4) 100%
       ),
-      url("/images/ai-card-tablet-bg.webp");
+      url("/images/ai-card-tablet-bg.webp") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
 }
 
