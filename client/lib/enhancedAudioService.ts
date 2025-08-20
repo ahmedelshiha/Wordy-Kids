@@ -540,9 +540,9 @@ export class EnhancedAudioService {
 
       // Set a timeout as fallback in case the speech gets stuck
       const timeoutDuration = Math.max(5000, word.length * 200); // Minimum 5s, or 200ms per character
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         if (this.speechSynthesis.speaking || this.speechSynthesis.pending) {
-          console.warn("Speech synthesis timeout, canceling...");
+          console.warn(`Speech synthesis timeout for "${word}", canceling...`);
           this.speechSynthesis.cancel();
           try {
             const timeoutError = {
@@ -556,12 +556,30 @@ export class EnhancedAudioService {
               },
               timestamp: new Date().toISOString(),
             };
+            speechSynthesisDebugger.recordError(timeoutError);
             onError?.(timeoutError);
           } catch (error) {
             console.error("Error in timeout onError callback:", error);
           }
         }
       }, timeoutDuration);
+
+      // Clear timeout if speech completes normally
+      const originalOnEnd = utterance.onend;
+      utterance.onend = () => {
+        clearTimeout(timeoutId);
+        if (originalOnEnd) {
+          originalOnEnd();
+        }
+      };
+
+      const originalOnError = utterance.onerror;
+      utterance.onerror = (event) => {
+        clearTimeout(timeoutId);
+        if (originalOnError) {
+          originalOnError(event);
+        }
+      };
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       try {
