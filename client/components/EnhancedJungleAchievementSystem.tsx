@@ -519,7 +519,7 @@ const EnhancedJungleAchievementSystemComponent = ({
       exploration: "🗺️",
       social: "🐾",
     };
-    return iconMap[category] || "��";
+    return iconMap[category] || "🌳";
   };
 
   const mapToJungleCategory = (
@@ -1090,7 +1090,7 @@ const EnhancedJungleAchievementSystemComponent = ({
   return (
     <div
       className={cn(
-        "min-h-screen w-full transition-all duration-300 optimize-for-small-screen jungle-mobile-optimized jungle-pattern-bg",
+        "min-h-screen w-full transition-all duration-300 optimize-for-small-screen jungle-mobile-optimized",
         "jungle-achievement-system",
         animPrefs.getAnimationClass("high"),
       )}
