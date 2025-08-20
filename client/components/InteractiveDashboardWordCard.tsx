@@ -1034,7 +1034,11 @@ export function InteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-9xl filter drop-shadow-lg relative z-10"
+            className="text-9xl relative z-10"
+            style={{
+              filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.4))",
+              textShadow: "0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5)"
+            }}
           >
             {currentWord.emoji}
 
