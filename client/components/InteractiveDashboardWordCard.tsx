@@ -1985,81 +1985,47 @@ export function InteractiveDashboardWordCard({
                   >
                     {/* Jungle Canopy Background */}
                     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                      {/* Animated Jungle Leaves */}
+                      {/* Simplified Jungle Elements */}
                       <motion.div
                         animate={{
-                          y: [0, -15, 0],
-                          rotate: [0, 8, 0],
-                          scale: [1, 1.1, 1],
+                          y: [0, -8, 0],
+                          rotate: [0, 5, 0],
                         }}
                         transition={{
-                          duration: 6,
+                          duration: 4,
                           repeat: Infinity,
                           ease: "easeInOut",
                         }}
-                        className="absolute -top-4 -left-3 text-2xl opacity-30 text-jungle-light"
+                        className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                       >
                         🌿
                       </motion.div>
                       <motion.div
                         animate={{
-                          y: [0, -12, 0],
-                          rotate: [0, -6, 0],
-                          scale: [1, 1.05, 1],
-                        }}
-                        transition={{
-                          duration: 7,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1,
-                        }}
-                        className="absolute -top-3 -right-4 text-xl opacity-25 text-jungle"
-                      >
-                        🍃
-                      </motion.div>
-                      <motion.div
-                        animate={{
-                          y: [0, -10, 0],
-                          x: [0, 5, 0],
-                          scale: [1, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 8,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 2,
-                        }}
-                        className="absolute -bottom-3 -left-2 text-lg opacity-20 text-sunshine"
-                      >
-                        🌺
-                      </motion.div>
-                      <motion.div
-                        animate={{
-                          y: [0, -8, 0],
-                          x: [0, -3, 0],
+                          y: [0, -6, 0],
                           rotate: [0, 360, 0],
                         }}
                         transition={{
-                          duration: 10,
+                          duration: 6,
                           repeat: Infinity,
                           ease: "linear",
                         }}
-                        className="absolute -bottom-2 -right-3 text-sm opacity-30 text-jungle-light"
+                        className="absolute -bottom-1 -right-2 text-sm opacity-20 text-sunshine"
                       >
                         🦋
                       </motion.div>
                     </div>
 
-                    {/* Jungle Explorer Exit Button */}
+                    {/* Compact Exit Button */}
                     <motion.button
-                      initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{ delay: 0.8, duration: 0.4 }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.6, duration: 0.3 }}
                       onClick={() => setShowHint(false)}
-                      className="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-coral-red to-bright-orange hover:from-bright-orange hover:to-coral-red text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 z-20 shadow-lg border-2 border-white/30"
-                      aria-label="Close jungle hint"
+                      className="absolute top-1 right-1 w-5 h-5 sm:w-6 sm:h-6 bg-coral-red/80 hover:bg-coral-red text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20 shadow-md"
+                      aria-label="Close hint"
                     >
-                      <span className="text-sm sm:text-base font-bold">✖️</span>
+                      <span className="text-xs font-bold">×</span>
                     </motion.button>
 
                     {/* Magical Jungle Glow */}
@@ -2071,33 +2037,19 @@ export function InteractiveDashboardWordCard({
                     />
 
                     <div className="text-center relative z-10">
-                      {/* Jungle Explorer Icon */}
+                      {/* Compact Explorer Icon */}
                       <motion.div
-                        initial={{ scale: 0, rotate: -180, y: -20 }}
-                        animate={{ scale: 1, rotate: 0, y: 0 }}
+                        initial={{ scale: 0, rotate: -90 }}
+                        animate={{ scale: 1, rotate: 0 }}
                         transition={{
                           delay: 0.2,
-                          duration: 0.8,
+                          duration: 0.5,
                           type: "spring",
-                          stiffness: 200,
                         }}
-                        className="text-2xl sm:text-3xl md:text-4xl mb-2"
+                        className="text-lg sm:text-xl mb-1"
                         aria-hidden="true"
                       >
-                        <motion.span
-                          animate={{
-                            scale: [1, 1.2, 1],
-                            rotate: [0, 10, -10, 0],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                          className="inline-block"
-                        >
-                          🔍
-                        </motion.span>
+                        💡
                       </motion.div>
 
                       {/* Jungle Adventure Hint Container */}
@@ -2124,68 +2076,26 @@ export function InteractiveDashboardWordCard({
                           `,
                         }}
                       >
-                        {/* Jungle Word Discovery */}
+                        {/* Compact Word Display */}
                         <motion.div
-                          initial={{ scale: 0.5, opacity: 0 }}
+                          initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: 0.6, duration: 0.5 }}
-                          className="mb-3"
+                          transition={{ delay: 0.4, duration: 0.4 }}
+                          className="mb-2"
                         >
-                          <div className="text-3xl sm:text-4xl md:text-5xl mb-2 relative">
-                            <motion.span
-                              animate={{
-                                scale: [1, 1.1, 1],
-                                filter: [
-                                  "drop-shadow(0 0 10px rgba(255, 193, 7, 0.6))",
-                                  "drop-shadow(0 0 20px rgba(255, 193, 7, 0.8))",
-                                  "drop-shadow(0 0 10px rgba(255, 193, 7, 0.6))",
-                                ],
-                              }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                              }}
-                              className="inline-block"
-                            >
-                              {currentWord.emoji}
-                            </motion.span>
-                            {/* Jungle Sparkles */}
-                            <motion.div
-                              animate={{
-                                opacity: [0, 1, 0],
-                                scale: [0.5, 1, 0.5],
-                                x: [0, 15, 0],
-                                y: [0, -10, 0],
-                              }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                              }}
-                              className="absolute -top-2 -right-1 text-sunshine text-lg"
-                            >
-                              ✨
-                            </motion.div>
+                          <div className="text-2xl sm:text-3xl mb-1">
+                            {currentWord.emoji}
                           </div>
-                          <motion.p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.8, duration: 0.4 }}
-                            className="text-xl sm:text-2xl md:text-3xl font-bold text-jungle-dark tracking-wide"
-                            style={{
-                              textShadow: "0 2px 4px rgba(34, 139, 34, 0.2)",
-                            }}
-                          >
+                          <p className="text-lg sm:text-xl font-bold text-jungle-dark">
                             {currentWord.word}
-                          </motion.p>
+                          </p>
                         </motion.div>
 
-                        {/* Jungle Explorer Listen Button */}
+                        {/* Compact Listen Button */}
                         <motion.div
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 1, duration: 0.4 }}
+                          transition={{ delay: 0.6, duration: 0.3 }}
                           className="flex justify-center"
                         >
                           <Button
@@ -2193,97 +2103,37 @@ export function InteractiveDashboardWordCard({
                             disabled={isPlaying}
                             size="sm"
                             className={cn(
-                              "bg-gradient-to-br from-jungle via-jungle-dark to-jungle-light hover:from-jungle-dark hover:via-jungle hover:to-jungle-light text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-lg hover:shadow-xl border-2 border-jungle-light/50 hover:border-sunshine/50",
-                              "ring-2 ring-jungle/30 hover:ring-sunshine/50",
-                              "backdrop-blur-sm relative overflow-hidden",
-                              isPlaying &&
-                                "animate-pulse ring-sunshine/80 shadow-sunshine/40 scale-105",
-                              "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
+                              "bg-gradient-to-br from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md",
+                              isPlaying && "animate-pulse scale-105",
+                              "disabled:opacity-50",
                             )}
-                            aria-label="🔊 Listen to jungle word - Hear the explorer say this word!"
+                            aria-label="Listen to word pronunciation"
                           >
-                            {/* Jungle Sound Waves Animation */}
-                            {isPlaying && (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: [0, 1.5, 0] }}
-                                transition={{
-                                  duration: 1,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                                className="absolute inset-0 rounded-xl bg-gradient-to-r from-sunshine/30 to-jungle-light/30"
-                              />
-                            )}
-                            <Volume2
-                              className={cn(
-                                "w-4 h-4 sm:w-5 sm:h-5 mr-2 relative z-10",
-                                "drop-shadow-lg",
-                                isPlaying &&
-                                  "animate-bounce text-sunshine scale-110",
-                              )}
-                            />
-                            <span className="text-sm sm:text-base font-bold relative z-10">
-                              {isPlaying ? "🎵 Playing..." : "🔊 Listen"}
+                            <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                            <span className="text-xs sm:text-sm font-medium">
+                              {isPlaying ? "Playing" : "Listen"}
                             </span>
                           </Button>
                         </motion.div>
                       </motion.div>
 
-                      {/* Magical Jungle Creatures Floating Around */}
+                      {/* Single Floating Element */}
                       <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0 }}
                         animate={{
-                          opacity: [0, 1, 0.8, 1, 0],
-                          y: [20, -15, -25, -35, -50],
-                          x: [-15, 10, -5, 15, -10],
-                          rotate: [0, 180, 360, 540, 720],
+                          opacity: [0, 1, 0],
+                          y: [0, -15, -25],
+                          x: [0, 5, -5],
                         }}
                         transition={{
-                          duration: 4,
+                          duration: 3,
                           repeat: Infinity,
                           ease: "easeInOut",
-                          delay: 1.2,
+                          delay: 1,
                         }}
-                        className="absolute -top-3 -right-3 text-sunshine text-lg"
+                        className="absolute -top-2 -right-2 text-sunshine text-sm"
                       >
-                        🐝
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{
-                          opacity: [0, 1, 0.7, 1, 0],
-                          y: [20, -12, -20, -28, -40],
-                          x: [15, -12, 8, -15, 12],
-                          scale: [0.8, 1.2, 1, 1.1, 0.9],
-                        }}
-                        transition={{
-                          duration: 5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 2,
-                        }}
-                        className="absolute -bottom-3 -left-3 text-jungle-light text-sm"
-                      >
-                        🦜
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{
-                          opacity: [0, 1, 0.6, 1, 0],
-                          scale: [0, 1, 1.3, 1.1, 0],
-                          y: [0, -8, -15, -22, -30],
-                          x: [0, 8, -5, 10, -8],
-                        }}
-                        transition={{
-                          duration: 3.5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 2.8,
-                        }}
-                        className="absolute top-1/2 -right-4 text-coral-red text-base"
-                      >
-                        🌟
+                        ⭐
                       </motion.div>
                     </div>
                   </motion.div>
