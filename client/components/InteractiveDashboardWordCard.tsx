@@ -23,7 +23,7 @@ import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
 import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   DashboardWordGenerator,
@@ -2387,8 +2387,8 @@ export function InteractiveDashboardWordCard({
 
       {/* Enhanced Achievement Popup for Journey Achievements */}
       {journeyAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={journeyAchievements}
+        <EnhancedAchievementDialog
+        achievements={journeyAchievements}
           onClose={() => setJourneyAchievements([])}
           onAchievementClaim={(achievement) => {
             console.log(
