@@ -2576,6 +2576,10 @@
   border: 1px solid hsl(var(--jungle-green-light));
 }
 
+.text-jungle-dark {
+  color: hsl(var(--jungle-green-dark));
+}
+
 .shadow-jungle {
   box-shadow: var(--jungle-shadow);
 }
