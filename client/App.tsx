@@ -64,8 +64,9 @@ const App = () => {
         <CompactWordDatabaseNotifications />
         <BrowserRouter>
           <AuthProvider>
-            <NavigationGuard>
-              <Routes>
+            <LightweightAchievementProvider>
+              <NavigationGuard>
+                <Routes>
                 <Route path="/" element={<LoginForm />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -124,8 +125,9 @@ const App = () => {
                 />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
-              </Routes>
-            </NavigationGuard>
+                </Routes>
+              </NavigationGuard>
+            </LightweightAchievementProvider>
           </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
