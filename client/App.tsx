@@ -62,7 +62,13 @@ const App = () => {
       "hapticFeedback",
       "highContrastMode",
       "largeText",
-      "reducedMotion"
+      "reducedMotion",
+      "parentDashboardSettings",
+      "parentDashboardChildren",
+      "categoryProgress",
+      "systematic_progress_reading",
+      "systematic_progress_vocabulary",
+      "systematic_progress_comprehension"
     ];
     const jungleKey = "jungleAdventureSettings";
 
