@@ -3702,6 +3702,23 @@ export default function Index({ initialProfile }: IndexProps) {
                               />
                             </TabsContent>
 
+                            <TabsContent value="achievements">
+                              <EnhancedJungleAchievementSystem
+                                onUnlock={(achievement) => {
+                                  setFeedback({
+                                    type: "celebration",
+                                    title: "Achievement Unlocked! 🏆",
+                                    message: `You earned: ${achievement.name}`,
+                                    onContinue: () => setFeedback(null),
+                                  });
+                                }}
+                                onRefresh={() => {
+                                  // Optional: Add refresh logic here
+                                  console.log("Refreshing achievements...");
+                                }}
+                              />
+                            </TabsContent>
+
                             <TabsContent value="progress">
                               <AchievementSystem
                                 onUnlock={(achievement) => {
