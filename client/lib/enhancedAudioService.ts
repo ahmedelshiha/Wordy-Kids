@@ -10,6 +10,8 @@ export class EnhancedAudioService {
   private isEnabled: boolean = true;
   private selectedVoiceType: VoiceType = "woman";
   private voicesLoaded: boolean = false;
+  private lastSpeechTime: number = 0;
+  private minSpeechInterval: number = 100; // Minimum 100ms between speech calls
 
   private constructor() {
     this.speechSynthesis = window.speechSynthesis;
