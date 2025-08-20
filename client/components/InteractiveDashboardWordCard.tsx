@@ -23,7 +23,7 @@ import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   DashboardWordGenerator,
@@ -192,7 +192,7 @@ export function InteractiveDashboardWordCard({
   const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
     [],
   );
-  const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
+  // journeyAchievements state removed - now using event-based system
 
   // UI States
   const [showWordDetails, setShowWordDetails] = useState(false);
@@ -1733,7 +1733,7 @@ export function InteractiveDashboardWordCard({
                       Objects: "🔍",
                       Colors: "🌈",
                       Body: "👤",
-                      Family: "👨‍👩‍👧‍👦",
+                      Family: "👨‍��‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
                       Clothes: "👕",
@@ -2385,21 +2385,7 @@ export function InteractiveDashboardWordCard({
         </div>
       </div> */}
 
-      {/* Enhanced Achievement Popup for Journey Achievements */}
-      {journeyAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={journeyAchievements}
-          onClose={() => setJourneyAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log(
-              "Journey achievement claimed in dashboard:",
-              achievement,
-            );
-            // Could add additional reward logic here
-          }}
-          autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
-        />
-      )}
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
     </div>
   );
 }
