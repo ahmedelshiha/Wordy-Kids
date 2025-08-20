@@ -81,7 +81,7 @@ const TrophyIcon = ({ className }: { className?: string }) => (
     <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
     <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full animate-pulse" />
     <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300 relative z-10">
-      🏆
+      ����
     </div>
   </motion.div>
 );
@@ -223,13 +223,11 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
       x: -60,
       opacity: 0,
       scale: 0.9,
-      rotateY: -15,
     },
     visible: {
       x: 0,
       opacity: 1,
       scale: 1,
-      rotateY: 0,
       transition: {
         duration: 0.6,
         ease: [0.25, 0.46, 0.45, 0.94],
@@ -381,7 +379,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
                 🌟 Level {userData.level}
               </Badge>
               <Badge className="bg-orange-500/80 text-white border-orange-400/50 font-['Baloo_2'] text-xs px-3 py-1">
-                🔥 {userData.streak} days
+                ��� {userData.streak} days
               </Badge>
             </div>
             <p className="text-white/90 font-['Baloo_2'] text-[14px] font-medium">
