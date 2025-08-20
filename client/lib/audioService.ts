@@ -394,9 +394,13 @@ export class AudioService {
 
       const { onStart, onEnd, onError } = options;
 
-      // Cancel any ongoing speech safely
+      // Cancel any ongoing speech safely with a delay to prevent interruption errors
       try {
-        this.speechSynthesis.cancel();
+        if (this.speechSynthesis.speaking || this.speechSynthesis.pending) {
+          this.speechSynthesis.cancel();
+          // Wait a brief moment for cancellation to complete
+          await new Promise(resolve => setTimeout(resolve, 50));
+        }
       } catch (cancelError) {
         console.warn("Error canceling previous speech:", cancelError);
       }
