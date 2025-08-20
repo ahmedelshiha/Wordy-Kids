@@ -3,14 +3,7 @@ import { useLightweightAchievementPopup } from "@/hooks/use-lightweight-achievem
 import AchievementPopup from "./AchievementPopup";
 import { Trophy, Medal, Award, Crown, Star } from "lucide-react";
 
-interface LightweightAchievementContextType {
-  triggerTestPopup: () => void;
-  clearQueue: () => void;
-  queueStatus: any;
-}
-
-const LightweightAchievementContext =
-  createContext<LightweightAchievementContextType | null>(null);
+const LightweightAchievementContext = createContext(null);
 
 interface LightweightAchievementProviderProps {
   children: ReactNode;
@@ -23,9 +16,6 @@ export function LightweightAchievementProvider({
     isVisible,
     achievement,
     popupProps,
-    triggerTestPopup,
-    clearQueue,
-    queueStatus,
   } = useLightweightAchievementPopup();
 
   /**
@@ -56,11 +46,7 @@ export function LightweightAchievementProvider({
     }
   };
 
-  const contextValue: LightweightAchievementContextType = {
-    triggerTestPopup,
-    clearQueue,
-    queueStatus,
-  };
+  const contextValue = {};
 
   return (
     <LightweightAchievementContext.Provider value={contextValue}>
@@ -77,60 +63,9 @@ export function LightweightAchievementProvider({
         />
       )}
 
-      {/* Test Controls for Development */}
-      <AchievementTestControls />
     </LightweightAchievementContext.Provider>
   );
 }
 
-/**
- * Hook to access lightweight achievement context
- */
-export function useLightweightAchievement() {
-  const context = useContext(LightweightAchievementContext);
-  if (!context) {
-    throw new Error(
-      "useLightweightAchievement must be used within LightweightAchievementProvider",
-    );
-  }
-  return context;
-}
-
-/**
- * Test component for debugging (can be removed in production)
- */
-export function AchievementTestControls() {
-  const { triggerTestPopup, clearQueue, queueStatus } =
-    useLightweightAchievement();
-
-  // Only show in development
-  if (process.env.NODE_ENV !== "development") {
-    return null;
-  }
-
-  return (
-    <div className="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border">
-      <h3 className="text-sm font-bold mb-2">Achievement Test Controls</h3>
-      <div className="space-y-2">
-        <button
-          onClick={triggerTestPopup}
-          className="block w-full px-3 py-1 bg-green-500 text-white rounded text-xs hover:bg-green-600"
-        >
-          🎯 Test Popup
-        </button>
-        <button
-          onClick={clearQueue}
-          className="block w-full px-3 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
-        >
-          🧹 Clear Queue
-        </button>
-        <div className="text-xs text-gray-600">
-          Queue: {queueStatus.queueLength} | Status:{" "}
-          {queueStatus.isDisplaying ? "Showing" : "Idle"}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default LightweightAchievementProvider;
