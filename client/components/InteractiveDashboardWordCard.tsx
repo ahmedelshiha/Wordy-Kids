@@ -1195,7 +1195,7 @@ export function InteractiveDashboardWordCard({
                         }
                         if (percentage >= 90)
                           return "🌟 Almost there, superstar!";
-                        if (percentage >= 75) return "���� You're doing great!";
+                        if (percentage >= 75) return "🚀 You're doing great!";
                         if (percentage >= 50) return "💪 Keep going, champion!";
                         if (percentage >= 25) return "🌱 Nice start!";
                         return "🌟 Ready for an adventure?";
@@ -1666,7 +1666,7 @@ export function InteractiveDashboardWordCard({
                           "🥭 What exotic jungle fruit is this?",
                           "🍍 Which tropical jungle treasure awaits?",
                           "🥑 Can you identify this jungle nutrition?",
-                          "🌰 What jungle harvest is this?",
+                          "��� What jungle harvest is this?",
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
@@ -1792,7 +1792,7 @@ export function InteractiveDashboardWordCard({
                     }}
                     className="absolute -top-1 -right-6 text-sm opacity-50"
                   >
-                    ����
+                    🌸
                   </motion.div>
 
                   <motion.div
