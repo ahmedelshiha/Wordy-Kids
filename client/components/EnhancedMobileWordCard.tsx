@@ -88,7 +88,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   const [showSparkles, setShowSparkles] = useState(false);
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
-  const [wordAchievements, setWordAchievements] = useState<any[]>([]);
+  // wordAchievements state removed - now using event-based system
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
     null,
   );
