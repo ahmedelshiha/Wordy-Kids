@@ -84,7 +84,9 @@ export class JungleAdventureStorage {
         settings = this.migrateSettings(settings, currentVersion);
         // Save migrated settings
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-        console.log(`✅ Settings migrated from ${currentVersion} to ${CURRENT_VERSION}`);
+        console.log(
+          `✅ Settings migrated from ${currentVersion} to ${CURRENT_VERSION}`,
+        );
       }
 
       return {
@@ -119,7 +121,10 @@ export class JungleAdventureStorage {
   /**
    * Determine migration path between versions
    */
-  private static getMigrationPath(fromVersion: string, toVersion: string): string[] {
+  private static getMigrationPath(
+    fromVersion: string,
+    toVersion: string,
+  ): string[] {
     const migrations: string[] = [];
 
     // Simple version progression for now

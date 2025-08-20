@@ -52,15 +52,17 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
   // Get basic stats from storage (safe fallback)
   const getBasicStats = (): BasicStats => {
     try {
-      const settings = JSON.parse(localStorage.getItem("jungleAdventureSettings") || "{}");
+      const settings = JSON.parse(
+        localStorage.getItem("jungleAdventureSettings") || "{}",
+      );
       const children = settings.parentDashboardChildren || [];
-      
+
       // Aggregate basic stats from all children
       let totalWords = 0;
       let completedCategories = 0;
       let achievements = 0;
       let maxStreak = 0;
-      
+
       children.forEach((child: any) => {
         totalWords += child?.wordsLearned || 0;
         completedCategories += child?.completedCategories || 0;
@@ -89,17 +91,20 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
 
   const handleRetry = async () => {
     if (!onRetry) return;
-    
+
     setIsRetrying(true);
-    parentDashboardAnalytics.trackFeatureUsage('fallback', 'retry_clicked', { error });
-    
+    parentDashboardAnalytics.trackFeatureUsage("fallback", "retry_clicked", {
+      error,
+    });
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Brief delay for UX
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Brief delay for UX
       await onRetry();
     } catch (retryError) {
-      parentDashboardAnalytics.trackError('dashboard', 'retry_failed', { 
+      parentDashboardAnalytics.trackError("dashboard", "retry_failed", {
         originalError: error,
-        retryError: retryError instanceof Error ? retryError.message : String(retryError)
+        retryError:
+          retryError instanceof Error ? retryError.message : String(retryError),
       });
     } finally {
       setIsRetrying(false);
@@ -120,11 +125,16 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
         >
           <TreePine className="w-12 h-12 text-green-500 opacity-30" />
         </motion.div>
-        
+
         <motion.div
           className="absolute top-16 right-12"
           animate={{ x: [0, 10, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
         >
           <Bird className="w-8 h-8 text-blue-400 opacity-40" />
         </motion.div>
@@ -132,7 +142,12 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
         <motion.div
           className="absolute bottom-16 left-16"
           animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5,
+          }}
         >
           <Flower className="w-10 h-10 text-pink-400 opacity-35" />
         </motion.div>
@@ -140,7 +155,12 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
         <motion.div
           className="absolute bottom-8 right-8"
           animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          transition={{
+            duration: 3.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
         >
           <Crown className="w-10 h-10 text-yellow-500 opacity-30" />
         </motion.div>
@@ -157,18 +177,17 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
             >
               <Compass className="w-12 h-12 text-green-600" />
             </motion.div>
-            
+
             <CardTitle className="text-2xl font-bold text-jungle-dark flex items-center justify-center gap-2">
               <span>🦜</span>
               Jungle Guide
               <span>🌿</span>
             </CardTitle>
-            
+
             <p className="text-jungle-dark/70 mt-2">
-              {error 
-                ? "Oops! The jungle path seems a bit tangled right now." 
-                : "Let me show you the highlights of your learning adventure!"
-              }
+              {error
+                ? "Oops! The jungle path seems a bit tangled right now."
+                : "Let me show you the highlights of your learning adventure!"}
             </p>
           </CardHeader>
 
@@ -204,26 +223,36 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="text-center p-3 bg-green-50 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">{basicStats.totalWords}</div>
+                    <div className="text-2xl font-bold text-green-600">
+                      {basicStats.totalWords}
+                    </div>
                     <div className="text-xs text-green-700">Words Learned</div>
                     <div className="text-lg">📚</div>
                   </div>
 
                   <div className="text-center p-3 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">{basicStats.achievements}</div>
+                    <div className="text-2xl font-bold text-blue-600">
+                      {basicStats.achievements}
+                    </div>
                     <div className="text-xs text-blue-700">Achievements</div>
                     <div className="text-lg">🏆</div>
                   </div>
 
                   <div className="text-center p-3 bg-orange-50 rounded-lg">
-                    <div className="text-2xl font-bold text-orange-600">{basicStats.currentStreak}</div>
+                    <div className="text-2xl font-bold text-orange-600">
+                      {basicStats.currentStreak}
+                    </div>
                     <div className="text-xs text-orange-700">Day Streak</div>
                     <div className="text-lg">🔥</div>
                   </div>
 
                   <div className="text-center p-3 bg-purple-50 rounded-lg">
-                    <div className="text-2xl font-bold text-purple-600">{basicStats.completedCategories}</div>
-                    <div className="text-xs text-purple-700">Categories Done</div>
+                    <div className="text-2xl font-bold text-purple-600">
+                      {basicStats.completedCategories}
+                    </div>
+                    <div className="text-xs text-purple-700">
+                      Categories Done
+                    </div>
                     <div className="text-lg">✅</div>
                   </div>
                 </div>
@@ -233,11 +262,15 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
                   <div className="flex justify-between text-sm">
                     <span className="text-jungle-dark/70">Progress</span>
                     <span className="text-jungle-dark font-medium">
-                      {Math.min(Math.round((basicStats.totalWords / 100) * 100), 100)}%
+                      {Math.min(
+                        Math.round((basicStats.totalWords / 100) * 100),
+                        100,
+                      )}
+                      %
                     </span>
                   </div>
-                  <Progress 
-                    value={Math.min((basicStats.totalWords / 100) * 100, 100)} 
+                  <Progress
+                    value={Math.min((basicStats.totalWords / 100) * 100, 100)}
                     className="h-3"
                   />
                 </div>
@@ -278,9 +311,10 @@ export const JungleGuideFallback: React.FC<JungleGuideFallbackProps> = ({
               {/* Helpful Tips */}
               <div className="text-center space-y-2 pt-2 border-t border-jungle/10">
                 <p className="text-sm text-jungle-dark/60">
-                  🌟 Tip: Try refreshing the page or check your internet connection
+                  🌟 Tip: Try refreshing the page or check your internet
+                  connection
                 </p>
-                
+
                 <div className="flex justify-center gap-2 flex-wrap">
                   <Badge variant="outline" className="text-xs bg-green-50">
                     🦜 Safari Compatible

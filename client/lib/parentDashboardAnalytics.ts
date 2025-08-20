@@ -57,7 +57,11 @@ class ParentDashboardAnalytics {
   /**
    * Record a generic analytics event
    */
-  private recordEvent(event: string, duration?: number, metadata?: Record<string, any>): void {
+  private recordEvent(
+    event: string,
+    duration?: number,
+    metadata?: Record<string, any>,
+  ): void {
     if (!this.isEnabled) return;
 
     const analyticsEvent: AnalyticsEvent = {
@@ -75,7 +79,7 @@ class ParentDashboardAnalytics {
     }
 
     // Optional: Log to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.log(`📊 Analytics: ${event}`, analyticsEvent);
     }
   }
@@ -84,7 +88,7 @@ class ParentDashboardAnalytics {
    * Track Parent Dashboard load time
    */
   trackDashboardLoad(loadTime: number): void {
-    this.recordEvent('dashboard_load', loadTime, {
+    this.recordEvent("dashboard_load", loadTime, {
       userAgent: navigator.userAgent.substring(0, 100), // Truncated for privacy
       viewport: {
         width: window.innerWidth,
@@ -105,8 +109,11 @@ class ParentDashboardAnalytics {
   /**
    * Track Jungle Map interactions
    */
-  trackMapInteraction(interactionType: 'marker_click' | 'zoom' | 'pan' | 'reset', metadata?: Record<string, any>): void {
-    this.recordEvent('map_interaction', undefined, {
+  trackMapInteraction(
+    interactionType: "marker_click" | "zoom" | "pan" | "reset",
+    metadata?: Record<string, any>,
+  ): void {
+    this.recordEvent("map_interaction", undefined, {
       type: interactionType,
       ...metadata,
     });
@@ -119,8 +126,11 @@ class ParentDashboardAnalytics {
   /**
    * Track Timeline filter usage
    */
-  trackTimelineFilter(filterType: 'all' | 'achievements' | 'milestones', eventCount: number): void {
-    this.recordEvent('timeline_filter', undefined, {
+  trackTimelineFilter(
+    filterType: "all" | "achievements" | "milestones",
+    eventCount: number,
+  ): void {
+    this.recordEvent("timeline_filter", undefined, {
       filter: filterType,
       eventCount,
     });
@@ -133,8 +143,11 @@ class ParentDashboardAnalytics {
   /**
    * Track Timeline event interactions
    */
-  trackTimelineEventClick(eventType: 'achievement' | 'milestone' | 'celebration', metadata?: Record<string, any>): void {
-    this.recordEvent('timeline_event_click', undefined, {
+  trackTimelineEventClick(
+    eventType: "achievement" | "milestone" | "celebration",
+    metadata?: Record<string, any>,
+  ): void {
+    this.recordEvent("timeline_event_click", undefined, {
       eventType,
       ...metadata,
     });
@@ -143,8 +156,12 @@ class ParentDashboardAnalytics {
   /**
    * Track component errors
    */
-  trackError(component: 'dashboard' | 'map' | 'timeline', error: string, metadata?: Record<string, any>): void {
-    this.recordEvent('component_error', undefined, {
+  trackError(
+    component: "dashboard" | "map" | "timeline",
+    error: string,
+    metadata?: Record<string, any>,
+  ): void {
+    this.recordEvent("component_error", undefined, {
       component,
       error: error.substring(0, 200), // Limit error message length
       ...metadata,
@@ -158,8 +175,12 @@ class ParentDashboardAnalytics {
   /**
    * Track feature usage
    */
-  trackFeatureUsage(feature: string, action: string, metadata?: Record<string, any>): void {
-    this.recordEvent('feature_usage', undefined, {
+  trackFeatureUsage(
+    feature: string,
+    action: string,
+    metadata?: Record<string, any>,
+  ): void {
+    this.recordEvent("feature_usage", undefined, {
       feature,
       action,
       ...metadata,
@@ -174,10 +195,13 @@ class ParentDashboardAnalytics {
       const currentMetrics = this.getMetrics();
       updater(currentMetrics);
       currentMetrics.lastSession = Date.now();
-      
-      localStorage.setItem('parentDashboardMetrics', JSON.stringify(currentMetrics));
+
+      localStorage.setItem(
+        "parentDashboardMetrics",
+        JSON.stringify(currentMetrics),
+      );
     } catch (error) {
-      console.warn('Failed to update dashboard metrics:', error);
+      console.warn("Failed to update dashboard metrics:", error);
     }
   }
 
@@ -186,7 +210,7 @@ class ParentDashboardAnalytics {
    */
   getMetrics(): DashboardMetrics {
     try {
-      const stored = localStorage.getItem('parentDashboardMetrics');
+      const stored = localStorage.getItem("parentDashboardMetrics");
       if (stored) {
         return JSON.parse(stored);
       }
@@ -216,9 +240,13 @@ class ParentDashboardAnalytics {
     const sessionDuration = Date.now() - this.startTime;
 
     return {
-      averageLoadTime: metrics.loadTimes.length > 0 
-        ? Math.round(metrics.loadTimes.reduce((a, b) => a + b, 0) / metrics.loadTimes.length)
-        : 0,
+      averageLoadTime:
+        metrics.loadTimes.length > 0
+          ? Math.round(
+              metrics.loadTimes.reduce((a, b) => a + b, 0) /
+                metrics.loadTimes.length,
+            )
+          : 0,
       totalInteractions: metrics.mapInteractions + metrics.timelineFilters,
       errorRate: metrics.errorOccurrences,
       sessionDuration: Math.round(sessionDuration / 1000), // Convert to seconds
@@ -229,17 +257,21 @@ class ParentDashboardAnalytics {
    * Export analytics data for debugging (development only)
    */
   exportAnalyticsData(): string | null {
-    if (process.env.NODE_ENV !== 'development') {
-      console.warn('Analytics export only available in development mode');
+    if (process.env.NODE_ENV !== "development") {
+      console.warn("Analytics export only available in development mode");
       return null;
     }
 
-    return JSON.stringify({
-      sessionId: this.sessionId,
-      events: this.events,
-      metrics: this.getMetrics(),
-      summary: this.getPerformanceSummary(),
-    }, null, 2);
+    return JSON.stringify(
+      {
+        sessionId: this.sessionId,
+        events: this.events,
+        metrics: this.getMetrics(),
+        summary: this.getPerformanceSummary(),
+      },
+      null,
+      2,
+    );
   }
 
   /**
@@ -247,8 +279,8 @@ class ParentDashboardAnalytics {
    */
   clearAnalyticsData(): void {
     this.events = [];
-    localStorage.removeItem('parentDashboardMetrics');
-    console.log('✅ Parent Dashboard analytics data cleared');
+    localStorage.removeItem("parentDashboardMetrics");
+    console.log("✅ Parent Dashboard analytics data cleared");
   }
 
   /**
@@ -256,13 +288,15 @@ class ParentDashboardAnalytics {
    */
   setAnalyticsEnabled(enabled: boolean): void {
     this.isEnabled = enabled;
-    
+
     try {
-      const settings = JSON.parse(localStorage.getItem("jungleAdventureSettings") || "{}");
+      const settings = JSON.parse(
+        localStorage.getItem("jungleAdventureSettings") || "{}",
+      );
       settings.analyticsEnabled = enabled;
       localStorage.setItem("jungleAdventureSettings", JSON.stringify(settings));
     } catch (error) {
-      console.warn('Failed to update analytics settings:', error);
+      console.warn("Failed to update analytics settings:", error);
     }
 
     if (!enabled) {
@@ -281,29 +315,33 @@ export { ParentDashboardAnalytics };
 export const withPerformanceTracking = async <T>(
   operation: () => Promise<T> | T,
   eventName: string,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ): Promise<T> => {
   const startTime = performance.now();
-  
+
   try {
     const result = await operation();
     const duration = performance.now() - startTime;
-    
-    parentDashboardAnalytics.trackFeatureUsage(eventName, 'success', {
+
+    parentDashboardAnalytics.trackFeatureUsage(eventName, "success", {
       ...metadata,
       duration: Math.round(duration),
     });
-    
+
     return result;
   } catch (error) {
     const duration = performance.now() - startTime;
-    
-    parentDashboardAnalytics.trackError('dashboard', error instanceof Error ? error.message : String(error), {
-      ...metadata,
-      duration: Math.round(duration),
-      operation: eventName,
-    });
-    
+
+    parentDashboardAnalytics.trackError(
+      "dashboard",
+      error instanceof Error ? error.message : String(error),
+      {
+        ...metadata,
+        duration: Math.round(duration),
+        operation: eventName,
+      },
+    );
+
     throw error;
   }
 };

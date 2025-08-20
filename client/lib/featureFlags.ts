@@ -9,14 +9,14 @@ interface FeatureFlag {
   description: string;
   enabled: boolean;
   rolloutPercentage: number; // 0-100
-  targetAudience?: 'all' | 'parents' | 'children';
+  targetAudience?: "all" | "parents" | "children";
   minimumVersion?: string;
   expiryDate?: Date;
 }
 
 interface UserContext {
   userId?: string;
-  userRole?: 'child' | 'parent';
+  userRole?: "child" | "parent";
   sessionId?: string;
   version?: string;
 }
@@ -24,69 +24,70 @@ interface UserContext {
 class FeatureFlagManager {
   private flags: Record<string, FeatureFlag> = {
     // Jungle Map & Timeline Features
-    'jungle-map-enhanced': {
-      key: 'jungle-map-enhanced',
-      name: 'Enhanced Jungle Map',
-      description: 'Interactive map with analytics tooltips and zoom controls',
+    "jungle-map-enhanced": {
+      key: "jungle-map-enhanced",
+      name: "Enhanced Jungle Map",
+      description: "Interactive map with analytics tooltips and zoom controls",
       enabled: true,
       rolloutPercentage: 100, // Full rollout post-migration
-      targetAudience: 'parents',
-      minimumVersion: '2.0.0',
+      targetAudience: "parents",
+      minimumVersion: "2.0.0",
     },
-    'family-achievements-timeline': {
-      key: 'family-achievements-timeline',
-      name: 'Family Achievements Timeline',
-      description: 'Chronological timeline of learning milestones and achievements',
+    "family-achievements-timeline": {
+      key: "family-achievements-timeline",
+      name: "Family Achievements Timeline",
+      description:
+        "Chronological timeline of learning milestones and achievements",
       enabled: true,
       rolloutPercentage: 100, // Full rollout post-migration
-      targetAudience: 'parents',
-      minimumVersion: '2.0.0',
+      targetAudience: "parents",
+      minimumVersion: "2.0.0",
     },
     // New Features for Gradual Rollout
-    'advanced-analytics': {
-      key: 'advanced-analytics',
-      name: 'Advanced Analytics Dashboard',
-      description: 'Detailed performance metrics and insights',
+    "advanced-analytics": {
+      key: "advanced-analytics",
+      name: "Advanced Analytics Dashboard",
+      description: "Detailed performance metrics and insights",
       enabled: true,
       rolloutPercentage: 50, // 50% rollout
-      targetAudience: 'parents',
-      minimumVersion: '2.0.0',
+      targetAudience: "parents",
+      minimumVersion: "2.0.0",
     },
-    'ai-powered-recommendations': {
-      key: 'ai-powered-recommendations',
-      name: 'AI-Powered Learning Recommendations',
-      description: 'Personalized learning path suggestions',
+    "ai-powered-recommendations": {
+      key: "ai-powered-recommendations",
+      name: "AI-Powered Learning Recommendations",
+      description: "Personalized learning path suggestions",
       enabled: false,
       rolloutPercentage: 10, // Limited beta
-      targetAudience: 'all',
-      minimumVersion: '2.0.0',
+      targetAudience: "all",
+      minimumVersion: "2.0.0",
     },
-    'social-learning-features': {
-      key: 'social-learning-features',
-      name: 'Social Learning Features',
-      description: 'Share progress with friends and family',
+    "social-learning-features": {
+      key: "social-learning-features",
+      name: "Social Learning Features",
+      description: "Share progress with friends and family",
       enabled: false,
       rolloutPercentage: 0, // Not yet ready
-      targetAudience: 'all',
-      minimumVersion: '2.1.0',
+      targetAudience: "all",
+      minimumVersion: "2.1.0",
     },
     // Performance & Debugging Features
-    'performance-monitoring': {
-      key: 'performance-monitoring',
-      name: 'Performance Monitoring',
-      description: 'Advanced telemetry and performance tracking',
+    "performance-monitoring": {
+      key: "performance-monitoring",
+      name: "Performance Monitoring",
+      description: "Advanced telemetry and performance tracking",
       enabled: true,
       rolloutPercentage: 100,
-      targetAudience: 'all',
-      minimumVersion: '2.0.0',
+      targetAudience: "all",
+      minimumVersion: "2.0.0",
     },
-    'debug-mode': {
-      key: 'debug-mode',
-      name: 'Debug Mode',
-      description: 'Show debug information and development tools',
+    "debug-mode": {
+      key: "debug-mode",
+      name: "Debug Mode",
+      description: "Show debug information and development tools",
       enabled: false,
       rolloutPercentage: 0,
-      targetAudience: 'all',
+      targetAudience: "all",
     },
   };
 
@@ -95,7 +96,7 @@ class FeatureFlagManager {
    */
   isFeatureEnabled(featureKey: string, userContext: UserContext = {}): boolean {
     const flag = this.flags[featureKey];
-    
+
     if (!flag) {
       console.warn(`Feature flag not found: ${featureKey}`);
       return false;
@@ -114,7 +115,7 @@ class FeatureFlagManager {
     }
 
     // Check target audience
-    if (flag.targetAudience && flag.targetAudience !== 'all') {
+    if (flag.targetAudience && flag.targetAudience !== "all") {
       if (userContext.userRole !== flag.targetAudience) {
         return false;
       }
@@ -127,10 +128,10 @@ class FeatureFlagManager {
 
     // Check rollout percentage
     if (flag.rolloutPercentage < 100) {
-      const userId = userContext.userId || userContext.sessionId || 'anonymous';
+      const userId = userContext.userId || userContext.sessionId || "anonymous";
       const hash = this.hashUserId(userId + featureKey);
       const userPercentile = hash % 100;
-      
+
       if (userPercentile >= flag.rolloutPercentage) {
         return false;
       }
@@ -143,8 +144,8 @@ class FeatureFlagManager {
    * Get all enabled features for a user context
    */
   getEnabledFeatures(userContext: UserContext = {}): string[] {
-    return Object.keys(this.flags).filter(key => 
-      this.isFeatureEnabled(key, userContext)
+    return Object.keys(this.flags).filter((key) =>
+      this.isFeatureEnabled(key, userContext),
     );
   }
 
@@ -166,10 +167,13 @@ class FeatureFlagManager {
    * Override feature flag for testing/debugging
    */
   overrideFeatureFlag(featureKey: string, enabled: boolean): void {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       const overrides = this.getOverrides();
       overrides[featureKey] = enabled;
-      localStorage.setItem('jungleFeatureFlagOverrides', JSON.stringify(overrides));
+      localStorage.setItem(
+        "jungleFeatureFlagOverrides",
+        JSON.stringify(overrides),
+      );
       console.log(`🎛️ Feature flag override: ${featureKey} = ${enabled}`);
     }
   }
@@ -178,8 +182,8 @@ class FeatureFlagManager {
    * Clear all feature flag overrides
    */
   clearOverrides(): void {
-    localStorage.removeItem('jungleFeatureFlagOverrides');
-    console.log('🧹 Feature flag overrides cleared');
+    localStorage.removeItem("jungleFeatureFlagOverrides");
+    console.log("🧹 Feature flag overrides cleared");
   }
 
   /**
@@ -187,7 +191,7 @@ class FeatureFlagManager {
    */
   private getOverrides(): Record<string, boolean> {
     try {
-      const stored = localStorage.getItem('jungleFeatureFlagOverrides');
+      const stored = localStorage.getItem("jungleFeatureFlagOverrides");
       return stored ? JSON.parse(stored) : {};
     } catch {
       return {};
@@ -198,10 +202,10 @@ class FeatureFlagManager {
    * Check for development overrides
    */
   private isOverridden(featureKey: string): boolean | null {
-    if (process.env.NODE_ENV !== 'development') {
+    if (process.env.NODE_ENV !== "development") {
       return null;
     }
-    
+
     const overrides = this.getOverrides();
     return overrides.hasOwnProperty(featureKey) ? overrides[featureKey] : null;
   }
@@ -209,18 +213,21 @@ class FeatureFlagManager {
   /**
    * Simple version comparison
    */
-  private isVersionSupported(currentVersion: string, requiredVersion: string): boolean {
-    const current = currentVersion.split('.').map(Number);
-    const required = requiredVersion.split('.').map(Number);
-    
+  private isVersionSupported(
+    currentVersion: string,
+    requiredVersion: string,
+  ): boolean {
+    const current = currentVersion.split(".").map(Number);
+    const required = requiredVersion.split(".").map(Number);
+
     for (let i = 0; i < Math.max(current.length, required.length); i++) {
       const currentPart = current[i] || 0;
       const requiredPart = required[i] || 0;
-      
+
       if (currentPart > requiredPart) return true;
       if (currentPart < requiredPart) return false;
     }
-    
+
     return true; // Equal versions
   }
 
@@ -231,7 +238,7 @@ class FeatureFlagManager {
     let hash = 0;
     for (let i = 0; i < input.length; i++) {
       const char = input.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32-bit integer
     }
     return Math.abs(hash);
@@ -242,7 +249,10 @@ class FeatureFlagManager {
    */
   updateRolloutPercentage(featureKey: string, percentage: number): boolean {
     if (this.flags[featureKey]) {
-      this.flags[featureKey].rolloutPercentage = Math.max(0, Math.min(100, percentage));
+      this.flags[featureKey].rolloutPercentage = Math.max(
+        0,
+        Math.min(100, percentage),
+      );
       console.log(`📊 Updated ${featureKey} rollout to ${percentage}%`);
       return true;
     }
@@ -255,7 +265,9 @@ class FeatureFlagManager {
   toggleFeature(featureKey: string, enabled: boolean): boolean {
     if (this.flags[featureKey]) {
       this.flags[featureKey].enabled = enabled;
-      console.log(`🎛️ Feature ${featureKey} ${enabled ? 'enabled' : 'disabled'}`);
+      console.log(
+        `🎛️ Feature ${featureKey} ${enabled ? "enabled" : "disabled"}`,
+      );
       return true;
     }
     return false;
@@ -264,21 +276,26 @@ class FeatureFlagManager {
   /**
    * Get feature usage statistics (for analytics)
    */
-  getFeatureUsageStats(): Record<string, { 
-    enabled: boolean; 
-    rolloutPercentage: number; 
-    estimatedUsers: number;
-  }> {
+  getFeatureUsageStats(): Record<
+    string,
+    {
+      enabled: boolean;
+      rolloutPercentage: number;
+      estimatedUsers: number;
+    }
+  > {
     const stats: Record<string, any> = {};
-    
+
     for (const [key, flag] of Object.entries(this.flags)) {
       stats[key] = {
         enabled: flag.enabled,
         rolloutPercentage: flag.rolloutPercentage,
-        estimatedUsers: flag.enabled ? Math.round(100 * flag.rolloutPercentage / 100) : 0,
+        estimatedUsers: flag.enabled
+          ? Math.round((100 * flag.rolloutPercentage) / 100)
+          : 0,
       };
     }
-    
+
     return stats;
   }
 }
@@ -287,12 +304,18 @@ class FeatureFlagManager {
 export const featureFlags = new FeatureFlagManager();
 
 // Convenience function for checking features
-export const isFeatureEnabled = (featureKey: string, userContext?: UserContext): boolean => {
+export const isFeatureEnabled = (
+  featureKey: string,
+  userContext?: UserContext,
+): boolean => {
   return featureFlags.isFeatureEnabled(featureKey, userContext);
 };
 
 // Hook for React components
-export const useFeatureFlag = (featureKey: string, userContext?: UserContext): boolean => {
+export const useFeatureFlag = (
+  featureKey: string,
+  userContext?: UserContext,
+): boolean => {
   // In a real implementation, this would use React.useState and React.useEffect
   // to re-evaluate when context changes
   return featureFlags.isFeatureEnabled(featureKey, userContext);
