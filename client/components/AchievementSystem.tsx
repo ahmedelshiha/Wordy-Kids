@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { EnhancedBadge, JungleBadges } from "@/components/ui/enhanced-badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -25,6 +27,14 @@ import {
   Calendar,
   TrendingUp,
   Award,
+  Map,
+  Compass,
+  TreePine,
+  Leaf,
+  Mountain,
+  River,
+  Binoculars,
+  Backpack,
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
@@ -39,16 +49,24 @@ interface Achievement {
   name: string;
   description: string;
   icon: string;
-  category: "learning" | "streak" | "quiz" | "exploration" | "social";
-  difficulty: "bronze" | "silver" | "gold" | "diamond";
+  category: "learning" | "streak" | "quiz" | "exploration" | "social" | "jungle_adventure";
+  difficulty: "sapling" | "growing" | "mighty" | "ancient" | "legendary";
+  rarity?: "common" | "rare" | "epic" | "legendary";
   requirements: number;
   currentProgress: number;
   unlocked: boolean;
   dateUnlocked?: Date;
+  region?: "canopy" | "floor" | "undergrowth" | "river" | "mountain" | "clearing";
   reward?: {
-    type: "avatar_accessory" | "theme" | "sound_effect" | "title" | "points";
+    type: "avatar_accessory" | "jungle_theme" | "sound_effect" | "title" | "points" | "animal_companion";
     item: string;
     value?: number;
+    preview?: string;
+  };
+  storyline?: {
+    unlockText: string;
+    celebrationText: string;
+    nextHint?: string;
   };
 }
 
@@ -209,31 +227,53 @@ const unlockableContent: UnlockableContent[] = [
 
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
+    case "sapling":
+      return "from-jungle-green to-jungle-light";
+    case "growing":
+      return "from-jungle to-jungle-dark";
+    case "mighty":
+      return "from-sunshine-yellow to-sunshine-dark";
+    case "ancient":
+      return "from-sky-blue to-sky-dark";
+    case "legendary":
+      return "from-playful-purple via-coral-red to-sunshine";
+    // Fallback for old difficulty names
     case "bronze":
-      return "from-amber-400 to-amber-600";
+      return "from-jungle-green to-jungle-light";
     case "silver":
-      return "from-gray-400 to-gray-600";
+      return "from-jungle to-jungle-dark";
     case "gold":
-      return "from-yellow-400 to-yellow-600";
+      return "from-sunshine-yellow to-sunshine-dark";
     case "diamond":
-      return "from-cyan-400 to-blue-600";
+      return "from-sky-blue to-sky-dark";
     default:
-      return "from-gray-400 to-gray-600";
+      return "from-jungle to-jungle-dark";
   }
 };
 
 const getDifficultyIcon = (difficulty: string) => {
   switch (difficulty) {
+    case "sapling":
+      return <Leaf className="w-4 h-4 text-jungle-green" />;
+    case "growing":
+      return <TreePine className="w-4 h-4 text-jungle" />;
+    case "mighty":
+      return <Mountain className="w-4 h-4 text-sunshine" />;
+    case "ancient":
+      return <Crown className="w-4 h-4 text-sky-blue" />;
+    case "legendary":
+      return <Gem className="w-4 h-4 text-playful-purple" />;
+    // Fallback for old difficulty names
     case "bronze":
-      return <Trophy className="w-4 h-4 text-amber-600" />;
+      return <Leaf className="w-4 h-4 text-jungle-green" />;
     case "silver":
-      return <Star className="w-4 h-4 text-gray-600" />;
+      return <TreePine className="w-4 h-4 text-jungle" />;
     case "gold":
-      return <Crown className="w-4 h-4 text-yellow-600" />;
+      return <Crown className="w-4 h-4 text-sunshine" />;
     case "diamond":
-      return <Gem className="w-4 h-4 text-cyan-600" />;
+      return <Gem className="w-4 h-4 text-sky-blue" />;
     default:
-      return <Trophy className="w-4 h-4" />;
+      return <TreePine className="w-4 h-4 text-jungle" />;
   }
 };
 
@@ -529,20 +569,26 @@ export function AchievementSystem({
   const stats = realStats;
   const achievements = realAchievements;
 
-  // Show loading state
+  // Show loading state with jungle theme
   if (isLoading || !stats) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-educational-blue mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading your learning journey...</p>
+      <div className="jungle-loading-container bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="flex flex-col items-center justify-center h-full p-8">
+          <div className="jungle-loading-spinner mb-6"></div>
+          <h3 className="jungle-loading-title text-jungle mb-2">
+            🌿 Loading Your Jungle Adventure
+          </h3>
+          <p className="jungle-loading-subtitle text-jungle/80 text-center max-w-md">
+            Preparing your amazing journey through the magical jungle realms...
+          </p>
         </div>
       </div>
     );
   }
 
   const categories = [
-    { id: "all", name: "All", icon: "🏆" },
+    { id: "all", name: "All Adventures", icon: "🌍" },
+    { id: "jungle_adventure", name: "Jungle Quest", icon: "🌿" },
     { id: "learning", name: "Learning", icon: "📚" },
     { id: "streak", name: "Streaks", icon: "🔥" },
     { id: "quiz", name: "Quizzes", icon: "🧠" },
