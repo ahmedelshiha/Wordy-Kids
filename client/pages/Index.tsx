@@ -74,6 +74,7 @@ import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { DesktopKidNav } from "@/components/DesktopKidNav";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
+import AchievementsSystemMap from "./AchievementsSystemMap";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import {
@@ -3833,7 +3834,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["����", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
