@@ -520,6 +520,23 @@ export class AudioService {
       onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
+    // Input validation
+    if (typeof word !== 'string') {
+      console.error('Audio service (default voice): word parameter must be a string, received:', typeof word, word);
+      if (options.onError) {
+        options.onError(new Error(`Invalid word parameter: expected string, got ${typeof word}`));
+      }
+      return;
+    }
+
+    if (!word || word.trim() === '') {
+      console.error('Audio service (default voice): word parameter is empty or undefined');
+      if (options.onError) {
+        options.onError(new Error('Word parameter is empty or undefined'));
+      }
+      return;
+    }
+
     try {
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
