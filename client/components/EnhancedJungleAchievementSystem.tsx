@@ -624,7 +624,7 @@ const EnhancedJungleAchievementSystemComponent = ({
     return (
       <div
         className={cn(
-          "flex items-center justify-center min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl",
+          "flex items-center justify-center min-h-[400px] jungle-card rounded-3xl",
           "jungle-loading",
         )}
       >
