@@ -914,7 +914,104 @@ export function AchievementsSystemMap() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Final Integration Report Toggle */}
+        <Card className="jungle-card">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-jungle-dark">
+              <ClipboardCheck className="w-5 h-5" />
+              Final Integration Report
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <p className="text-jungle-dark/70 text-sm">
+                Comprehensive completion and validation report for the Enhanced Jungle Adventure Achievements System.
+              </p>
+
+              <Button
+                onClick={async () => {
+                  setIsGeneratingReport(true);
+                  try {
+                    const report = await finalIntegrationReportGenerator.generateReport();
+                    setIntegrationReport(report);
+                    setShowIntegrationReport(true);
+                  } catch (error) {
+                    console.error('Failed to generate integration report:', error);
+                  } finally {
+                    setIsGeneratingReport(false);
+                  }
+                }}
+                disabled={isGeneratingReport}
+                className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white"
+              >
+                {isGeneratingReport ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                    Generating Report...
+                  </>
+                ) : (
+                  <>
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    Show Integration Report
+                  </>
+                )}
+              </Button>
+
+              {integrationReport && (
+                <div className="mt-4 p-4 bg-jungle/5 rounded-lg border border-jungle/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-2xl">
+                      {integrationReport.overallStatus.status === 'production_ready' ? '🚀' :
+                       integrationReport.overallStatus.status === 'minor_issues' ? '⚠️' : '🔧'}
+                    </span>
+                    <div>
+                      <div className="font-semibold text-jungle-dark">
+                        {integrationReport.overallStatus.completionPercentage}% Complete
+                      </div>
+                      <div className="text-sm text-jungle-dark/70">
+                        {integrationReport.overallStatus.completedComponents}/{integrationReport.overallStatus.totalComponents} components
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-xs text-jungle-dark/60">
+                    Last updated: {new Date(integrationReport.timestamp).toLocaleString()}
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Integration Report Dialog */}
+      {showIntegrationReport && integrationReport && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <Card className="max-w-4xl max-h-[90vh] w-full bg-white overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+              <CardTitle className="flex items-center gap-2">
+                <ClipboardCheck className="w-5 h-5" />
+                Final Integration Report
+              </CardTitle>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowIntegrationReport(false)}
+              >
+                Close
+              </Button>
+            </CardHeader>
+            <CardContent className="overflow-y-auto max-h-[calc(90vh-120px)]">
+              <div className="prose prose-sm max-w-none">
+                <pre className="whitespace-pre-wrap text-sm bg-gray-50 p-4 rounded-lg overflow-x-auto">
+                  {finalIntegrationReportGenerator.formatReportForDisplay(integrationReport)}
+                </pre>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
