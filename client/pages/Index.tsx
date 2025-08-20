@@ -1495,7 +1495,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ���";
+        achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -3240,7 +3240,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Follow ancient jungle sounds to hidden
                                           treasures! Listen carefully to
                                           nature's magical symphony and discover
-                                          secret word treasures! 🎵🗺️
+                                          secret word treasures! ����🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3705,15 +3705,8 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
 
                             <TabsContent value="progress">
-                              <AchievementSystem
-                                onUnlock={(achievement) => {
-                                  setFeedback({
-                                    type: "celebration",
-                                    title: "Achievement Unlocked! 🏆",
-                                    message: `You earned: ${achievement.name}`,
-                                    onContinue: () => setFeedback(null),
-                                  });
-                                }}
+                              <EnhancedAchievementsPage
+                                onBack={() => setActiveTab("dashboard")}
                               />
                             </TabsContent>
 
