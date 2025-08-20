@@ -214,6 +214,24 @@ export function EnhancedAchievementsPage({
                 />
               </div>
             )}
+
+            {/* System Map Access Button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                // Navigate to system map in the main app
+                if (onBack) {
+                  // Set the tab to system-map if we have a way to do it
+                  const event = new CustomEvent('navigate-to-system-map');
+                  window.dispatchEvent(event);
+                }
+              }}
+              className="jungle-card text-jungle-dark hover:bg-jungle/10 text-xs"
+              title="View System Architecture Map"
+            >
+              🗺️ System Map
+            </Button>
           </div>
         </div>
       </div>
@@ -349,7 +367,7 @@ export function EnhancedAchievementsPage({
                         "Sat",
                         "Sun",
                       ];
-                      const emojis = ["🌱", "🌿", "🍃", "🌳", "🦋", "🌺", "🏆"];
+                      const emojis = ["🌱", "🌿", "🍃", "🌳", "����", "🌺", "🏆"];
 
                       return (
                         <div key={index} className="flex flex-col items-center">
