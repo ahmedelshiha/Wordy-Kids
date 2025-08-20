@@ -1,6 +1,12 @@
 // Enhanced Reward Celebration System for Jungle Adventure
 export interface CelebrationConfig {
-  type: "achievement" | "badge" | "milestone" | "level_up" | "streak" | "perfect_score";
+  type:
+    | "achievement"
+    | "badge"
+    | "milestone"
+    | "level_up"
+    | "streak"
+    | "perfect_score";
   title: string;
   description: string;
   icon: string;
@@ -34,7 +40,15 @@ export interface CelebrationConfig {
 }
 
 export interface ParticleConfig {
-  type: "sparkles" | "leaves" | "fireflies" | "stars" | "hearts" | "confetti" | "coins" | "lightning";
+  type:
+    | "sparkles"
+    | "leaves"
+    | "fireflies"
+    | "stars"
+    | "hearts"
+    | "confetti"
+    | "coins"
+    | "lightning";
   count: number;
   duration: number;
   color: string;
@@ -123,26 +137,41 @@ class EnhancedRewardCelebration {
     if (typeof window === "undefined") return;
 
     // Listen for achievement unlocks
-    window.addEventListener("achievementUnlocked", this.handleAchievementUnlocked.bind(this));
-    
+    window.addEventListener(
+      "achievementUnlocked",
+      this.handleAchievementUnlocked.bind(this),
+    );
+
     // Listen for badge earned
-    window.addEventListener("badgeUnlocked", this.handleBadgeUnlocked.bind(this));
-    
+    window.addEventListener(
+      "badgeUnlocked",
+      this.handleBadgeUnlocked.bind(this),
+    );
+
     // Listen for level up
     window.addEventListener("levelUp", this.handleLevelUp.bind(this));
-    
+
     // Listen for milestone reached
-    window.addEventListener("milestoneReached", this.handleMilestoneReached.bind(this));
-    
+    window.addEventListener(
+      "milestoneReached",
+      this.handleMilestoneReached.bind(this),
+    );
+
     // Listen for perfect score
     window.addEventListener("perfectScore", this.handlePerfectScore.bind(this));
-    
+
     // Listen for streak celebration
-    window.addEventListener("streakAchieved", this.handleStreakAchieved.bind(this));
+    window.addEventListener(
+      "streakAchieved",
+      this.handleStreakAchieved.bind(this),
+    );
   }
 
   // Trigger a celebration
-  public triggerCelebration(config: CelebrationConfig, context?: Partial<CelebrationEvent["context"]>): string {
+  public triggerCelebration(
+    config: CelebrationConfig,
+    context?: Partial<CelebrationEvent["context"]>,
+  ): string {
     const event: CelebrationEvent = {
       id: `celebration_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       timestamp: new Date(),
@@ -157,7 +186,7 @@ class EnhancedRewardCelebration {
     };
 
     this.celebrationQueue.push(event);
-    
+
     if (!this.isPlaying) {
       this.playNextCelebration();
     }
@@ -197,7 +226,7 @@ class EnhancedRewardCelebration {
     // Create celebration overlay
     const overlay = this.createCelebrationOverlay(config);
     if (!this.celebrationContainer) return;
-    
+
     this.celebrationContainer.appendChild(overlay);
 
     // Play sound effect
@@ -331,7 +360,9 @@ class EnhancedRewardCelebration {
   }
 
   // Create rewards display
-  private createRewardsDisplay(rewards: NonNullable<CelebrationConfig["rewards"]>): HTMLElement {
+  private createRewardsDisplay(
+    rewards: NonNullable<CelebrationConfig["rewards"]>,
+  ): HTMLElement {
     const rewardsContainer = document.createElement("div");
     rewardsContainer.className = "celebration-rewards";
     rewardsContainer.style.cssText = `
@@ -377,7 +408,7 @@ class EnhancedRewardCelebration {
     }
 
     // Items
-    rewards.items?.forEach(item => {
+    rewards.items?.forEach((item) => {
       const itemReward = document.createElement("div");
       itemReward.style.cssText = `
         display: flex;
@@ -396,11 +427,14 @@ class EnhancedRewardCelebration {
   }
 
   // Play background effect
-  private async playBackgroundEffect(overlay: HTMLElement, config: CelebrationConfig): Promise<void> {
+  private async playBackgroundEffect(
+    overlay: HTMLElement,
+    config: CelebrationConfig,
+  ): Promise<void> {
     return new Promise((resolve) => {
       const background = document.createElement("div");
       background.className = "celebration-background";
-      
+
       let backgroundStyle = "";
       switch (config.animations.background) {
         case "jungle_canopy":
@@ -428,7 +462,7 @@ class EnhancedRewardCelebration {
         default:
           backgroundStyle = `background: ${config.colors.primary}20;`;
       }
-      
+
       background.style.cssText = `
         position: absolute;
         top: 0;
@@ -437,35 +471,41 @@ class EnhancedRewardCelebration {
         height: 100%;
         ${backgroundStyle}
       `;
-      
+
       overlay.insertBefore(background, overlay.firstChild);
-      
+
       setTimeout(resolve, config.duration * 0.3);
     });
   }
 
   // Play particle effects
-  private async playParticleEffects(overlay: HTMLElement, config: CelebrationConfig): Promise<void> {
+  private async playParticleEffects(
+    overlay: HTMLElement,
+    config: CelebrationConfig,
+  ): Promise<void> {
     return new Promise((resolve) => {
       const particleConfigs = this.getParticleConfigs(config);
-      
+
       particleConfigs.forEach((particleConfig, index) => {
         setTimeout(() => {
           this.createParticleSystem(overlay, particleConfig);
         }, index * 200);
       });
-      
+
       setTimeout(resolve, config.duration * 0.8);
     });
   }
 
   // Create particle system
-  private createParticleSystem(container: HTMLElement, config: ParticleConfig): void {
+  private createParticleSystem(
+    container: HTMLElement,
+    config: ParticleConfig,
+  ): void {
     for (let i = 0; i < config.count; i++) {
       setTimeout(() => {
         const particle = this.createParticle(config);
         container.appendChild(particle);
-        
+
         // Remove particle after animation
         setTimeout(() => {
           if (particle.parentNode) {
@@ -480,11 +520,16 @@ class EnhancedRewardCelebration {
   private createParticle(config: ParticleConfig): HTMLElement {
     const particle = document.createElement("div");
     particle.className = `particle particle-${config.type}`;
-    
-    const size = config.size === "small" ? "8px" : config.size === "medium" ? "12px" : "16px";
+
+    const size =
+      config.size === "small"
+        ? "8px"
+        : config.size === "medium"
+          ? "12px"
+          : "16px";
     const startX = Math.random() * window.innerWidth;
     const startY = window.innerHeight + 20;
-    
+
     let particleContent = "";
     switch (config.type) {
       case "sparkles":
@@ -514,7 +559,7 @@ class EnhancedRewardCelebration {
       default:
         particleContent = "✨";
     }
-    
+
     particle.textContent = particleContent;
     particle.style.cssText = `
       position: absolute;
@@ -527,7 +572,7 @@ class EnhancedRewardCelebration {
       filter: drop-shadow(0 0 6px ${config.color});
       animation: ${this.getParticleAnimation(config)} ${config.duration}ms ease-out forwards;
     `;
-    
+
     return particle;
   }
 
@@ -548,9 +593,14 @@ class EnhancedRewardCelebration {
   }
 
   // Play main animation
-  private async playMainAnimation(overlay: HTMLElement, config: CelebrationConfig): Promise<void> {
+  private async playMainAnimation(
+    overlay: HTMLElement,
+    config: CelebrationConfig,
+  ): Promise<void> {
     return new Promise((resolve) => {
-      const content = overlay.querySelector(".celebration-content") as HTMLElement;
+      const content = overlay.querySelector(
+        ".celebration-content",
+      ) as HTMLElement;
       if (!content) {
         resolve();
         return;
@@ -560,11 +610,11 @@ class EnhancedRewardCelebration {
       if (config.effects.shake) {
         content.style.animation += ", celebrationShake 0.5s ease-in-out";
       }
-      
+
       if (config.effects.zoom) {
         content.style.animation += ", celebrationZoom 1s ease-in-out";
       }
-      
+
       if (config.effects.glow) {
         content.style.boxShadow = `0 0 50px ${config.colors.glow}`;
       }
@@ -574,7 +624,10 @@ class EnhancedRewardCelebration {
   }
 
   // Play confetti effect
-  private async playConfettiEffect(overlay: HTMLElement, config: CelebrationConfig): Promise<void> {
+  private async playConfettiEffect(
+    overlay: HTMLElement,
+    config: CelebrationConfig,
+  ): Promise<void> {
     return new Promise((resolve) => {
       const confettiConfig: ParticleConfig = {
         type: "confetti",
@@ -589,17 +642,24 @@ class EnhancedRewardCelebration {
           fade: true,
         },
       };
-      
+
       this.createParticleSystem(overlay, confettiConfig);
       setTimeout(resolve, confettiConfig.duration);
     });
   }
 
   // Play fireworks effect
-  private async playFireworksEffect(overlay: HTMLElement, config: CelebrationConfig): Promise<void> {
+  private async playFireworksEffect(
+    overlay: HTMLElement,
+    config: CelebrationConfig,
+  ): Promise<void> {
     return new Promise((resolve) => {
-      const colors = [config.colors.primary, config.colors.secondary, config.colors.accent];
-      
+      const colors = [
+        config.colors.primary,
+        config.colors.secondary,
+        config.colors.accent,
+      ];
+
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           const fireworkConfig: ParticleConfig = {
@@ -615,11 +675,11 @@ class EnhancedRewardCelebration {
               fade: true,
             },
           };
-          
+
           this.createParticleSystem(overlay, fireworkConfig);
         }, i * 500);
       }
-      
+
       setTimeout(resolve, 3000);
     });
   }
@@ -627,7 +687,7 @@ class EnhancedRewardCelebration {
   // Get particle configurations based on celebration type
   private getParticleConfigs(config: CelebrationConfig): ParticleConfig[] {
     const configs: ParticleConfig[] = [];
-    
+
     switch (config.type) {
       case "achievement":
         configs.push({
@@ -640,7 +700,7 @@ class EnhancedRewardCelebration {
           physics: { gravity: -0.1, bounce: 0, fade: true },
         });
         break;
-        
+
       case "badge":
         configs.push({
           type: "stars",
@@ -652,7 +712,7 @@ class EnhancedRewardCelebration {
           physics: { gravity: 0, bounce: 0, fade: true },
         });
         break;
-        
+
       case "level_up":
         configs.push({
           type: "fireflies",
@@ -664,7 +724,7 @@ class EnhancedRewardCelebration {
           physics: { gravity: -0.05, bounce: 0, fade: true },
         });
         break;
-        
+
       case "streak":
         configs.push({
           type: "lightning",
@@ -676,7 +736,7 @@ class EnhancedRewardCelebration {
           physics: { gravity: 0.2, bounce: 0, fade: true },
         });
         break;
-        
+
       default:
         configs.push({
           type: "sparkles",
@@ -688,14 +748,14 @@ class EnhancedRewardCelebration {
           physics: { gravity: 0, bounce: 0, fade: true },
         });
     }
-    
+
     return configs;
   }
 
   // Event handlers
   private handleAchievementUnlocked(event: CustomEvent): void {
     const { achievement } = event.detail;
-    
+
     const config: CelebrationConfig = {
       type: "achievement",
       title: `Achievement Unlocked!`,
@@ -723,13 +783,15 @@ class EnhancedRewardCelebration {
         confetti: true,
         fireworks: achievement.difficulty === "legendary",
       },
-      rewards: achievement.reward ? {
-        coins: 0,
-        xp: achievement.reward.value,
-        items: [achievement.reward.item],
-      } : undefined,
+      rewards: achievement.reward
+        ? {
+            coins: 0,
+            xp: achievement.reward.value,
+            items: [achievement.reward.item],
+          }
+        : undefined,
     };
-    
+
     this.triggerCelebration(config, {
       triggeredBy: "achievement_system",
       metadata: { achievementId: achievement.id },
@@ -738,7 +800,7 @@ class EnhancedRewardCelebration {
 
   private handleBadgeUnlocked(event: CustomEvent): void {
     const { badge } = event.detail;
-    
+
     const config: CelebrationConfig = {
       type: "badge",
       title: `Badge Earned!`,
@@ -772,7 +834,7 @@ class EnhancedRewardCelebration {
         items: badge.rewards.special ? [badge.rewards.special.item] : [],
       },
     };
-    
+
     this.triggerCelebration(config, {
       triggeredBy: "badge_system",
       metadata: { badgeId: badge.id },
@@ -781,7 +843,7 @@ class EnhancedRewardCelebration {
 
   private handleLevelUp(event: CustomEvent): void {
     const { level, xpGained } = event.detail;
-    
+
     const config: CelebrationConfig = {
       type: "level_up",
       title: `Level Up!`,
@@ -815,7 +877,7 @@ class EnhancedRewardCelebration {
         items: [`Level ${level} Achievement`],
       },
     };
-    
+
     this.triggerCelebration(config, {
       triggeredBy: "level_system",
       metadata: { newLevel: level, xpGained },
@@ -824,7 +886,7 @@ class EnhancedRewardCelebration {
 
   private handleMilestoneReached(event: CustomEvent): void {
     const { milestone } = event.detail;
-    
+
     const config: CelebrationConfig = {
       type: "milestone",
       title: `Milestone Reached!`,
@@ -853,7 +915,7 @@ class EnhancedRewardCelebration {
         fireworks: false,
       },
     };
-    
+
     this.triggerCelebration(config, {
       triggeredBy: "milestone_system",
       metadata: { milestoneId: milestone.id },
@@ -862,7 +924,7 @@ class EnhancedRewardCelebration {
 
   private handlePerfectScore(event: CustomEvent): void {
     const { score, gameType } = event.detail;
-    
+
     const config: CelebrationConfig = {
       type: "perfect_score",
       title: `Perfect Score!`,
@@ -896,7 +958,7 @@ class EnhancedRewardCelebration {
         items: ["Perfect Score Badge"],
       },
     };
-    
+
     this.triggerCelebration(config, {
       triggeredBy: "game_system",
       metadata: { score, gameType },
@@ -905,13 +967,14 @@ class EnhancedRewardCelebration {
 
   private handleStreakAchieved(event: CustomEvent): void {
     const { streakDays } = event.detail;
-    
+
     const config: CelebrationConfig = {
       type: "streak",
       title: `${streakDays} Day Streak!`,
       description: `Amazing consistency! Keep it up!`,
       icon: "🔥",
-      rarity: streakDays >= 30 ? "legendary" : streakDays >= 7 ? "epic" : "rare",
+      rarity:
+        streakDays >= 30 ? "legendary" : streakDays >= 7 ? "epic" : "rare",
       duration: 3500,
       animations: {
         primary: "streak_flame",
@@ -939,7 +1002,7 @@ class EnhancedRewardCelebration {
         items: [`${streakDays} Day Streak Award`],
       },
     };
-    
+
     this.triggerCelebration(config, {
       triggeredBy: "streak_system",
       metadata: { streakDays },
@@ -947,8 +1010,13 @@ class EnhancedRewardCelebration {
   }
 
   // Helper methods
-  private mapDifficultyToRarity(difficulty: string): "common" | "rare" | "epic" | "legendary" | "mythic" {
-    const mapping: Record<string, "common" | "rare" | "epic" | "legendary" | "mythic"> = {
+  private mapDifficultyToRarity(
+    difficulty: string,
+  ): "common" | "rare" | "epic" | "legendary" | "mythic" {
+    const mapping: Record<
+      string,
+      "common" | "rare" | "epic" | "legendary" | "mythic"
+    > = {
       bronze: "common",
       silver: "rare",
       gold: "epic",
@@ -960,11 +1028,14 @@ class EnhancedRewardCelebration {
 
   private getRarityBackground(rarity: string): string {
     const backgrounds: Record<string, string> = {
-      common: "radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, rgba(0,0,0,0.3) 100%)",
+      common:
+        "radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, rgba(0,0,0,0.3) 100%)",
       rare: "radial-gradient(circle, rgba(33, 150, 243, 0.15) 0%, rgba(0,0,0,0.3) 100%)",
       epic: "radial-gradient(circle, rgba(156, 39, 176, 0.2) 0%, rgba(0,0,0,0.3) 100%)",
-      legendary: "radial-gradient(circle, rgba(255, 193, 7, 0.25) 0%, rgba(0,0,0,0.3) 100%)",
-      mythic: "radial-gradient(circle, rgba(233, 30, 99, 0.3) 0%, rgba(0,0,0,0.3) 100%)",
+      legendary:
+        "radial-gradient(circle, rgba(255, 193, 7, 0.25) 0%, rgba(0,0,0,0.3) 100%)",
+      mythic:
+        "radial-gradient(circle, rgba(233, 30, 99, 0.3) 0%, rgba(0,0,0,0.3) 100%)",
     };
     return backgrounds[rarity] || backgrounds.common;
   }
@@ -1004,29 +1075,35 @@ class EnhancedRewardCelebration {
 
   // Public API methods
   public cancelCelebration(celebrationId: string): boolean {
-    const index = this.celebrationQueue.findIndex(event => event.id === celebrationId);
+    const index = this.celebrationQueue.findIndex(
+      (event) => event.id === celebrationId,
+    );
     if (index >= 0) {
       this.celebrationQueue[index].status = "cancelled";
       this.celebrationQueue.splice(index, 1);
       return true;
     }
-    
+
     if (this.currentCelebration?.id === celebrationId) {
       this.currentCelebration.status = "cancelled";
       return true;
     }
-    
+
     return false;
   }
 
   public clearQueue(): void {
-    this.celebrationQueue.forEach(event => {
+    this.celebrationQueue.forEach((event) => {
       event.status = "cancelled";
     });
     this.celebrationQueue = [];
   }
 
-  public getQueueStatus(): { pending: number; playing: boolean; current: string | null } {
+  public getQueueStatus(): {
+    pending: number;
+    playing: boolean;
+    current: string | null;
+  } {
     return {
       pending: this.celebrationQueue.length,
       playing: this.isPlaying,
@@ -1152,7 +1229,7 @@ class EnhancedRewardCelebration {
         to { transform: translateY(-100px); }
       }
     `;
-    
+
     document.head.appendChild(style);
   }
 }

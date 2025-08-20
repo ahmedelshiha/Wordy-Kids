@@ -5,7 +5,15 @@ export interface EnhancedBadge {
   description: string;
   icon: string;
   tier: "bronze" | "silver" | "gold" | "platinum" | "diamond" | "legendary";
-  category: "rescue" | "skill" | "speed" | "streak" | "milestone" | "progression" | "exploration" | "mastery";
+  category:
+    | "rescue"
+    | "skill"
+    | "speed"
+    | "streak"
+    | "milestone"
+    | "progression"
+    | "exploration"
+    | "mastery";
   requirements: {
     type: string;
     threshold: number;
@@ -34,11 +42,14 @@ export interface EnhancedBadge {
 export interface BadgeCollection {
   totalBadges: number;
   earnedBadges: number;
-  categories: Record<string, {
-    total: number;
-    earned: number;
-    badges: EnhancedBadge[];
-  }>;
+  categories: Record<
+    string,
+    {
+      total: number;
+      earned: number;
+      badges: EnhancedBadge[];
+    }
+  >;
   totalPoints: number;
   totalXP: number;
   prestigeLevel: number;
@@ -531,10 +542,10 @@ class EnhancedBadgeSystem {
       if (saved) {
         const badgeData = JSON.parse(saved);
         this.userBadges = new Set(badgeData.badges || []);
-        
+
         // Update earned status and dates
         badgeData.earnedDates = badgeData.earnedDates || {};
-        this.badges.forEach(badge => {
+        this.badges.forEach((badge) => {
           badge.earned = this.userBadges.has(badge.id);
           if (badge.earned && badgeData.earnedDates[badge.id]) {
             badge.earnedAt = new Date(badgeData.earnedDates[badge.id]);
@@ -549,7 +560,7 @@ class EnhancedBadgeSystem {
   private saveUserBadges(): void {
     try {
       const earnedDates: Record<string, string> = {};
-      this.badges.forEach(badge => {
+      this.badges.forEach((badge) => {
         if (badge.earned && badge.earnedAt) {
           earnedDates[badge.id] = badge.earnedAt.toISOString();
         }
@@ -571,7 +582,7 @@ class EnhancedBadgeSystem {
   public updateProgress(progressData: Record<string, any>): void {
     let hasNewBadges = false;
 
-    this.badges.forEach(badge => {
+    this.badges.forEach((badge) => {
       if (badge.earned) return; // Skip already earned badges
 
       let currentProgress = 0;
@@ -585,8 +596,10 @@ class EnhancedBadgeSystem {
           break;
         case "speed_completion":
           // Check if latest completion time meets requirement
-          if (progressData.lastCompletionTime && 
-              progressData.lastCompletionTime <= badge.requirements.threshold) {
+          if (
+            progressData.lastCompletionTime &&
+            progressData.lastCompletionTime <= badge.requirements.threshold
+          ) {
             currentProgress = badge.requirements.threshold;
           }
           break;
@@ -615,9 +628,10 @@ class EnhancedBadgeSystem {
       badge.currentProgress = currentProgress;
 
       // Check if badge should be earned
-      const meetsThreshold = badge.requirements.conditions?.operator === "less_than" 
-        ? currentProgress <= badge.requirements.threshold
-        : currentProgress >= badge.requirements.threshold;
+      const meetsThreshold =
+        badge.requirements.conditions?.operator === "less_than"
+          ? currentProgress <= badge.requirements.threshold
+          : currentProgress >= badge.requirements.threshold;
 
       if (meetsThreshold && !badge.earned) {
         this.earnBadge(badge.id);
@@ -632,7 +646,7 @@ class EnhancedBadgeSystem {
 
   // Earn a specific badge
   public earnBadge(badgeId: string): boolean {
-    const badge = this.badges.find(b => b.id === badgeId);
+    const badge = this.badges.find((b) => b.id === badgeId);
     if (!badge || badge.earned) return false;
 
     badge.earned = true;
@@ -653,20 +667,23 @@ class EnhancedBadgeSystem {
 
   // Get badges by category
   public getBadgesByCategory(category: string): EnhancedBadge[] {
-    return this.badges.filter(badge => badge.category === category);
+    return this.badges.filter((badge) => badge.category === category);
   }
 
   // Get earned badges
   public getEarnedBadges(): EnhancedBadge[] {
-    return this.badges.filter(badge => badge.earned);
+    return this.badges.filter((badge) => badge.earned);
   }
 
   // Get badge collection overview
   public getBadgeCollection(): BadgeCollection {
-    const categories: Record<string, { total: number; earned: number; badges: EnhancedBadge[] }> = {};
+    const categories: Record<
+      string,
+      { total: number; earned: number; badges: EnhancedBadge[] }
+    > = {};
 
     // Group badges by category
-    this.badges.forEach(badge => {
+    this.badges.forEach((badge) => {
       if (!categories[badge.category]) {
         categories[badge.category] = { total: 0, earned: 0, badges: [] };
       }
@@ -678,12 +695,21 @@ class EnhancedBadgeSystem {
     });
 
     const earnedBadges = this.getEarnedBadges();
-    const totalPoints = earnedBadges.reduce((sum, badge) => sum + badge.rewards.coins, 0);
-    const totalXP = earnedBadges.reduce((sum, badge) => sum + badge.rewards.xp, 0);
+    const totalPoints = earnedBadges.reduce(
+      (sum, badge) => sum + badge.rewards.coins,
+      0,
+    );
+    const totalXP = earnedBadges.reduce(
+      (sum, badge) => sum + badge.rewards.xp,
+      0,
+    );
 
     // Calculate prestige level based on rare badges earned
-    const rareBadges = earnedBadges.filter(b => 
-      b.rarity === "epic" || b.rarity === "legendary" || b.rarity === "mythic"
+    const rareBadges = earnedBadges.filter(
+      (b) =>
+        b.rarity === "epic" ||
+        b.rarity === "legendary" ||
+        b.rarity === "mythic",
     ).length;
     const prestigeLevel = Math.floor(rareBadges / 3) + 1;
 
@@ -700,24 +726,26 @@ class EnhancedBadgeSystem {
   // Get badge statistics
   public getBadgeStatistics(): BadgeStatistics {
     const earnedBadges = this.getEarnedBadges();
-    
+
     const byCategory: Record<string, number> = {};
     const byTier: Record<string, number> = {};
     const byRarity: Record<string, number> = {};
 
-    earnedBadges.forEach(badge => {
+    earnedBadges.forEach((badge) => {
       byCategory[badge.category] = (byCategory[badge.category] || 0) + 1;
       byTier[badge.tier] = (byTier[badge.tier] || 0) + 1;
       byRarity[badge.rarity] = (byRarity[badge.rarity] || 0) + 1;
     });
 
-    const totalValue = earnedBadges.reduce((sum, badge) => 
-      sum + badge.rewards.coins + badge.rewards.xp, 0);
+    const totalValue = earnedBadges.reduce(
+      (sum, badge) => sum + badge.rewards.coins + badge.rewards.xp,
+      0,
+    );
 
     // Find closest badges to completion
     const progressToNext = this.badges
-      .filter(badge => !badge.earned)
-      .map(badge => ({
+      .filter((badge) => !badge.earned)
+      .map((badge) => ({
         badgeId: badge.id,
         progress: badge.currentProgress,
         threshold: badge.requirements.threshold,
@@ -741,10 +769,11 @@ class EnhancedBadgeSystem {
   // Get next achievable badges
   public getNextAchievableBadges(limit: number = 3): EnhancedBadge[] {
     return this.badges
-      .filter(badge => !badge.earned)
-      .map(badge => ({
+      .filter((badge) => !badge.earned)
+      .map((badge) => ({
         ...badge,
-        progressPercent: (badge.currentProgress / badge.requirements.threshold) * 100,
+        progressPercent:
+          (badge.currentProgress / badge.requirements.threshold) * 100,
       }))
       .sort((a, b) => b.progressPercent - a.progressPercent)
       .slice(0, limit);
@@ -774,12 +803,12 @@ class EnhancedBadgeSystem {
 
   // Get badge by ID
   public getBadgeById(id: string): EnhancedBadge | null {
-    return this.badges.find(badge => badge.id === id) || null;
+    return this.badges.find((badge) => badge.id === id) || null;
   }
 
   // Reset all badges (for testing)
   public resetAllBadges(): void {
-    this.badges.forEach(badge => {
+    this.badges.forEach((badge) => {
       badge.earned = false;
       badge.earnedAt = undefined;
       badge.currentProgress = 0;
@@ -790,10 +819,11 @@ class EnhancedBadgeSystem {
 
   // Import badge progress from existing system
   public importFromExistingSystem(existingBadges: any[]): void {
-    existingBadges.forEach(oldBadge => {
-      const enhancedBadge = this.badges.find(b => 
-        b.name.toLowerCase().includes(oldBadge.name?.toLowerCase()) ||
-        b.id === oldBadge.id
+    existingBadges.forEach((oldBadge) => {
+      const enhancedBadge = this.badges.find(
+        (b) =>
+          b.name.toLowerCase().includes(oldBadge.name?.toLowerCase()) ||
+          b.id === oldBadge.id,
       );
 
       if (enhancedBadge && !enhancedBadge.earned) {

@@ -128,9 +128,13 @@ class EnhancedLearningAnalytics {
   }
 
   // Session Management
-  public startSession(gameType: string, category: string, difficulty: "easy" | "medium" | "hard"): string {
+  public startSession(
+    gameType: string,
+    category: string,
+    difficulty: "easy" | "medium" | "hard",
+  ): string {
     const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     this.currentSession = {
       id: sessionId,
       startTime: new Date(),
@@ -153,11 +157,15 @@ class EnhancedLearningAnalytics {
     Object.assign(this.currentSession, sessionData);
   }
 
-  public endSession(finalData?: Partial<LearningSession>): LearningSession | null {
+  public endSession(
+    finalData?: Partial<LearningSession>,
+  ): LearningSession | null {
     if (!this.currentSession || !this.currentSession.startTime) return null;
 
     const endTime = new Date();
-    const duration = (endTime.getTime() - this.currentSession.startTime.getTime()) / (1000 * 60); // minutes
+    const duration =
+      (endTime.getTime() - this.currentSession.startTime.getTime()) /
+      (1000 * 60); // minutes
 
     const completedSession: LearningSession = {
       id: this.currentSession.id!,
@@ -187,24 +195,25 @@ class EnhancedLearningAnalytics {
   public getWeeklyAnalytics(weekOffset: number = 0): WeeklyAnalytics {
     const now = new Date();
     const weekStart = new Date(now);
-    weekStart.setDate(now.getDate() - now.getDay() - (weekOffset * 7));
+    weekStart.setDate(now.getDate() - now.getDay() - weekOffset * 7);
     weekStart.setHours(0, 0, 0, 0);
-    
+
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
     weekEnd.setHours(23, 59, 59, 999);
 
-    const weekSessions = this.sessions.filter(session => 
-      session.startTime >= weekStart && session.startTime <= weekEnd
+    const weekSessions = this.sessions.filter(
+      (session) =>
+        session.startTime >= weekStart && session.startTime <= weekEnd,
     );
 
     const dailyBreakdown = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(weekStart);
       date.setDate(weekStart.getDate() + i);
-      
-      const daySessions = weekSessions.filter(session => 
-        session.startTime.toDateString() === date.toDateString()
+
+      const daySessions = weekSessions.filter(
+        (session) => session.startTime.toDateString() === date.toDateString(),
       );
 
       dailyBreakdown.push({
@@ -212,13 +221,17 @@ class EnhancedLearningAnalytics {
         sessions: daySessions.length,
         timeSpent: daySessions.reduce((sum, s) => sum + s.duration, 0),
         wordsLearned: daySessions.reduce((sum, s) => sum + s.wordsLearned, 0),
-        accuracy: daySessions.length > 0 
-          ? daySessions.reduce((sum, s) => sum + s.accuracy, 0) / daySessions.length 
-          : 0,
+        accuracy:
+          daySessions.length > 0
+            ? daySessions.reduce((sum, s) => sum + s.accuracy, 0) /
+              daySessions.length
+            : 0,
       });
     }
 
-    const categoriesExplored = [...new Set(weekSessions.map(s => s.category))];
+    const categoriesExplored = [
+      ...new Set(weekSessions.map((s) => s.category)),
+    ];
     const streakDays = this.calculateWeeklyStreak(weekStart, weekEnd);
 
     return {
@@ -226,10 +239,15 @@ class EnhancedLearningAnalytics {
       weekEnd,
       totalSessions: weekSessions.length,
       totalTimeSpent: weekSessions.reduce((sum, s) => sum + s.duration, 0),
-      totalWordsLearned: weekSessions.reduce((sum, s) => sum + s.wordsLearned, 0),
-      averageAccuracy: weekSessions.length > 0 
-        ? weekSessions.reduce((sum, s) => sum + s.accuracy, 0) / weekSessions.length 
-        : 0,
+      totalWordsLearned: weekSessions.reduce(
+        (sum, s) => sum + s.wordsLearned,
+        0,
+      ),
+      averageAccuracy:
+        weekSessions.length > 0
+          ? weekSessions.reduce((sum, s) => sum + s.accuracy, 0) /
+            weekSessions.length
+          : 0,
       streakDays,
       categoriesExplored,
       dailyBreakdown,
@@ -240,26 +258,45 @@ class EnhancedLearningAnalytics {
 
   public getMonthlyAnalytics(monthOffset: number = 0): MonthlyAnalytics {
     const now = new Date();
-    const monthStart = new Date(now.getFullYear(), now.getMonth() - monthOffset, 1);
-    const monthEnd = new Date(now.getFullYear(), now.getMonth() - monthOffset + 1, 0);
+    const monthStart = new Date(
+      now.getFullYear(),
+      now.getMonth() - monthOffset,
+      1,
+    );
+    const monthEnd = new Date(
+      now.getFullYear(),
+      now.getMonth() - monthOffset + 1,
+      0,
+    );
 
-    const monthSessions = this.sessions.filter(session => 
-      session.startTime >= monthStart && session.startTime <= monthEnd
+    const monthSessions = this.sessions.filter(
+      (session) =>
+        session.startTime >= monthStart && session.startTime <= monthEnd,
     );
 
     // Generate weekly breakdown
     const weeklyBreakdown: WeeklyAnalytics[] = [];
-    const weeksInMonth = Math.ceil((monthEnd.getDate() - monthStart.getDate() + 1) / 7);
-    
+    const weeksInMonth = Math.ceil(
+      (monthEnd.getDate() - monthStart.getDate() + 1) / 7,
+    );
+
     for (let i = 0; i < weeksInMonth; i++) {
       weeklyBreakdown.push(this.getWeeklyAnalytics(i));
     }
 
     // Calculate top categories
-    const categoryStats = new Map<string, { words: number; time: number; accuracy: number; count: number }>();
-    
-    monthSessions.forEach(session => {
-      const existing = categoryStats.get(session.category) || { words: 0, time: 0, accuracy: 0, count: 0 };
+    const categoryStats = new Map<
+      string,
+      { words: number; time: number; accuracy: number; count: number }
+    >();
+
+    monthSessions.forEach((session) => {
+      const existing = categoryStats.get(session.category) || {
+        words: 0,
+        time: 0,
+        accuracy: 0,
+        count: 0,
+      };
       existing.words += session.wordsLearned;
       existing.time += session.duration;
       existing.accuracy += session.accuracy;
@@ -285,12 +322,17 @@ class EnhancedLearningAnalytics {
       monthEnd,
       totalSessions: monthSessions.length,
       totalTimeSpent: monthSessions.reduce((sum, s) => sum + s.duration, 0),
-      totalWordsLearned: monthSessions.reduce((sum, s) => sum + s.wordsLearned, 0),
-      averageAccuracy: monthSessions.length > 0 
-        ? monthSessions.reduce((sum, s) => sum + s.accuracy, 0) / monthSessions.length 
-        : 0,
+      totalWordsLearned: monthSessions.reduce(
+        (sum, s) => sum + s.wordsLearned,
+        0,
+      ),
+      averageAccuracy:
+        monthSessions.length > 0
+          ? monthSessions.reduce((sum, s) => sum + s.accuracy, 0) /
+            monthSessions.length
+          : 0,
       longestStreak: this.calculateLongestStreak(monthStart, monthEnd),
-      categoriesCompleted: [...new Set(monthSessions.map(s => s.category))],
+      categoriesCompleted: [...new Set(monthSessions.map((s) => s.category))],
       levelGained: this.calculateLevelGained(monthStart, monthEnd),
       experienceEarned: this.calculateExperienceEarned(monthStart, monthEnd),
       weeklyBreakdown,
@@ -305,8 +347,9 @@ class EnhancedLearningAnalytics {
     const startDate = new Date(endDate);
     startDate.setDate(endDate.getDate() - days);
 
-    const relevantSessions = this.sessions.filter(session => 
-      session.startTime >= startDate && session.startTime <= endDate
+    const relevantSessions = this.sessions.filter(
+      (session) =>
+        session.startTime >= startDate && session.startTime <= endDate,
     );
 
     return {
@@ -314,7 +357,8 @@ class EnhancedLearningAnalytics {
       speedTrend: this.calculateSpeedTrend(relevantSessions),
       consistencyTrend: this.calculateConsistencyTrend(relevantSessions),
       engagementTrend: this.calculateEngagementTrend(relevantSessions),
-      difficultyProgression: this.calculateDifficultyProgression(relevantSessions),
+      difficultyProgression:
+        this.calculateDifficultyProgression(relevantSessions),
     };
   }
 
@@ -329,13 +373,17 @@ class EnhancedLearningAnalytics {
       improvementCategories: this.identifyWeaknesses(recentSessions),
       motivationalFactors: this.analyzeMotivationalFactors(recentSessions),
       recommendedGoals: this.generateRecommendedGoals(recentSessions),
-      adaptiveRecommendations: this.generateAdaptiveRecommendations(recentSessions),
+      adaptiveRecommendations:
+        this.generateAdaptiveRecommendations(recentSessions),
     };
   }
 
   // Jungle Progress Report
   public getJungleProgressReport(): JungleProgressReport {
-    const totalWords = this.sessions.reduce((sum, s) => sum + s.wordsLearned, 0);
+    const totalWords = this.sessions.reduce(
+      (sum, s) => sum + s.wordsLearned,
+      0,
+    );
     const currentStreak = this.getCurrentStreak();
     const longestStreak = this.getLongestStreak();
 
@@ -344,7 +392,7 @@ class EnhancedLearningAnalytics {
       experiencePoints: this.calculateExperiencePoints(),
       nextLevelProgress: this.calculateNextLevelProgress(),
       totalWordsRescued: totalWords,
-      categoriesExplored: new Set(this.sessions.map(s => s.category)).size,
+      categoriesExplored: new Set(this.sessions.map((s) => s.category)).size,
       currentStreak,
       longestStreak,
       achievementsUnlocked: this.getAchievementsCount(),
@@ -383,7 +431,10 @@ class EnhancedLearningAnalytics {
 
   private saveSessions(): void {
     try {
-      localStorage.setItem("enhanced_learning_sessions", JSON.stringify(this.sessions));
+      localStorage.setItem(
+        "enhanced_learning_sessions",
+        JSON.stringify(this.sessions),
+      );
     } catch (error) {
       console.error("Error saving learning sessions:", error);
     }
@@ -392,19 +443,20 @@ class EnhancedLearningAnalytics {
   private calculateWeeklyStreak(weekStart: Date, weekEnd: Date): number {
     let streak = 0;
     const currentDate = new Date(weekStart);
-    
+
     while (currentDate <= weekEnd) {
-      const dayHasSessions = this.sessions.some(session => 
-        session.startTime.toDateString() === currentDate.toDateString()
+      const dayHasSessions = this.sessions.some(
+        (session) =>
+          session.startTime.toDateString() === currentDate.toDateString(),
       );
-      
+
       if (dayHasSessions) {
         streak++;
       }
-      
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    
+
     return streak;
   }
 
@@ -427,7 +479,8 @@ class EnhancedLearningAnalytics {
     const areas = [];
 
     // Accuracy improvement
-    const avgAccuracy = sessions.reduce((sum, s) => sum + s.accuracy, 0) / sessions.length;
+    const avgAccuracy =
+      sessions.reduce((sum, s) => sum + s.accuracy, 0) / sessions.length;
     if (avgAccuracy < 85) {
       areas.push({
         area: "Accuracy",
@@ -442,8 +495,10 @@ class EnhancedLearningAnalytics {
     }
 
     // Speed improvement
-    const avgCompletionTime = sessions.reduce((sum, s) => sum + s.completionTime, 0) / sessions.length;
-    if (avgCompletionTime > 120) { // 2 minutes
+    const avgCompletionTime =
+      sessions.reduce((sum, s) => sum + s.completionTime, 0) / sessions.length;
+    if (avgCompletionTime > 120) {
+      // 2 minutes
       areas.push({
         area: "Speed",
         currentScore: Math.round(avgCompletionTime),
@@ -463,22 +518,23 @@ class EnhancedLearningAnalytics {
     let longestStreak = 0;
     let currentStreak = 0;
     const currentDate = new Date(monthStart);
-    
+
     while (currentDate <= monthEnd) {
-      const dayHasSessions = this.sessions.some(session => 
-        session.startTime.toDateString() === currentDate.toDateString()
+      const dayHasSessions = this.sessions.some(
+        (session) =>
+          session.startTime.toDateString() === currentDate.toDateString(),
       );
-      
+
       if (dayHasSessions) {
         currentStreak++;
         longestStreak = Math.max(longestStreak, currentStreak);
       } else {
         currentStreak = 0;
       }
-      
+
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    
+
     return longestStreak;
   }
 
@@ -488,16 +544,19 @@ class EnhancedLearningAnalytics {
   }
 
   private calculateExperienceEarned(monthStart: Date, monthEnd: Date): number {
-    const monthSessions = this.sessions.filter(session => 
-      session.startTime >= monthStart && session.startTime <= monthEnd
+    const monthSessions = this.sessions.filter(
+      (session) =>
+        session.startTime >= monthStart && session.startTime <= monthEnd,
     );
     return monthSessions.reduce((sum, s) => sum + s.wordsLearned * 10, 0);
   }
 
-  private calculateAccuracyTrend(sessions: LearningSession[]): Array<{ date: Date; value: number }> {
+  private calculateAccuracyTrend(
+    sessions: LearningSession[],
+  ): Array<{ date: Date; value: number }> {
     const dailyAccuracy = new Map<string, { total: number; count: number }>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       const dateKey = session.startTime.toDateString();
       const existing = dailyAccuracy.get(dateKey) || { total: 0, count: 0 };
       existing.total += session.accuracy;
@@ -511,13 +570,16 @@ class EnhancedLearningAnalytics {
     }));
   }
 
-  private calculateSpeedTrend(sessions: LearningSession[]): Array<{ date: Date; value: number }> {
+  private calculateSpeedTrend(
+    sessions: LearningSession[],
+  ): Array<{ date: Date; value: number }> {
     const dailySpeed = new Map<string, { total: number; count: number }>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       const dateKey = session.startTime.toDateString();
       const existing = dailySpeed.get(dateKey) || { total: 0, count: 0 };
-      const wordsPerMinute = session.wordsLearned / Math.max(session.duration, 1);
+      const wordsPerMinute =
+        session.wordsLearned / Math.max(session.duration, 1);
       existing.total += wordsPerMinute;
       existing.count += 1;
       dailySpeed.set(dateKey, existing);
@@ -529,11 +591,13 @@ class EnhancedLearningAnalytics {
     }));
   }
 
-  private calculateConsistencyTrend(sessions: LearningSession[]): Array<{ date: Date; value: number }> {
+  private calculateConsistencyTrend(
+    sessions: LearningSession[],
+  ): Array<{ date: Date; value: number }> {
     // Consistency based on daily engagement
     const dailyEngagement = new Map<string, boolean>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       dailyEngagement.set(session.startTime.toDateString(), true);
     });
 
@@ -543,7 +607,7 @@ class EnhancedLearningAnalytics {
       const date = new Date(endDate);
       date.setDate(endDate.getDate() - i);
       const dateKey = date.toDateString();
-      
+
       trend.push({
         date,
         value: dailyEngagement.has(dateKey) ? 1 : 0,
@@ -553,13 +617,21 @@ class EnhancedLearningAnalytics {
     return trend;
   }
 
-  private calculateEngagementTrend(sessions: LearningSession[]): Array<{ date: Date; value: number }> {
+  private calculateEngagementTrend(
+    sessions: LearningSession[],
+  ): Array<{ date: Date; value: number }> {
     const dailyEngagement = new Map<string, number>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       const dateKey = session.startTime.toDateString();
-      const engagement = (session.accuracy / 100) * (session.duration / 10) * (session.wordsLearned / 5);
-      dailyEngagement.set(dateKey, (dailyEngagement.get(dateKey) || 0) + engagement);
+      const engagement =
+        (session.accuracy / 100) *
+        (session.duration / 10) *
+        (session.wordsLearned / 5);
+      dailyEngagement.set(
+        dateKey,
+        (dailyEngagement.get(dateKey) || 0) + engagement,
+      );
     });
 
     return Array.from(dailyEngagement.entries()).map(([dateKey, value]) => ({
@@ -573,31 +645,43 @@ class EnhancedLearningAnalytics {
     completedOverTime: Array<{ date: Date; count: number }>;
   }> {
     const difficulties = ["easy", "medium", "hard"];
-    
-    return difficulties.map(difficulty => {
-      const difficultySessions = sessions.filter(s => s.difficulty === difficulty);
+
+    return difficulties.map((difficulty) => {
+      const difficultySessions = sessions.filter(
+        (s) => s.difficulty === difficulty,
+      );
       const dailyCounts = new Map<string, number>();
-      
-      difficultySessions.forEach(session => {
+
+      difficultySessions.forEach((session) => {
         const dateKey = session.startTime.toDateString();
         dailyCounts.set(dateKey, (dailyCounts.get(dateKey) || 0) + 1);
       });
 
-      const completedOverTime = Array.from(dailyCounts.entries()).map(([dateKey, count]) => ({
-        date: new Date(dateKey),
-        count,
-      }));
+      const completedOverTime = Array.from(dailyCounts.entries()).map(
+        ([dateKey, count]) => ({
+          date: new Date(dateKey),
+          count,
+        }),
+      );
 
       return { difficulty, completedOverTime };
     });
   }
 
-  private detectLearningStyle(sessions: LearningSession[]): "visual" | "auditory" | "kinesthetic" | "mixed" {
+  private detectLearningStyle(
+    sessions: LearningSession[],
+  ): "visual" | "auditory" | "kinesthetic" | "mixed" {
     // Analyze game types and performance to detect learning style
-    const gameTypePerformance = new Map<string, { total: number; count: number }>();
-    
-    sessions.forEach(session => {
-      const existing = gameTypePerformance.get(session.gameType) || { total: 0, count: 0 };
+    const gameTypePerformance = new Map<
+      string,
+      { total: number; count: number }
+    >();
+
+    sessions.forEach((session) => {
+      const existing = gameTypePerformance.get(session.gameType) || {
+        total: 0,
+        count: 0,
+      };
       existing.total += session.accuracy;
       existing.count += 1;
       gameTypePerformance.set(session.gameType, existing);
@@ -606,7 +690,7 @@ class EnhancedLearningAnalytics {
     // Simple heuristic based on game type performance
     let bestGameType = "";
     let bestPerformance = 0;
-    
+
     gameTypePerformance.forEach((stats, gameType) => {
       const avgPerformance = stats.total / stats.count;
       if (avgPerformance > bestPerformance) {
@@ -634,17 +718,19 @@ class EnhancedLearningAnalytics {
   } {
     const hourPerformance = new Map<number, { total: number; count: number }>();
     const dayPerformance = new Map<string, { total: number; count: number }>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       const hour = session.startTime.getHours();
-      const day = session.startTime.toLocaleDateString("en-US", { weekday: "long" });
-      
+      const day = session.startTime.toLocaleDateString("en-US", {
+        weekday: "long",
+      });
+
       // Hour analysis
       const hourStats = hourPerformance.get(hour) || { total: 0, count: 0 };
       hourStats.total += session.accuracy;
       hourStats.count += 1;
       hourPerformance.set(hour, hourStats);
-      
+
       // Day analysis
       const dayStats = dayPerformance.get(day) || { total: 0, count: 0 };
       dayStats.total += session.accuracy;
@@ -675,7 +761,8 @@ class EnhancedLearningAnalytics {
     });
 
     // Calculate optimal duration
-    const avgDuration = sessions.reduce((sum, s) => sum + s.duration, 0) / sessions.length;
+    const avgDuration =
+      sessions.reduce((sum, s) => sum + s.duration, 0) / sessions.length;
 
     return {
       hour: bestHour,
@@ -686,8 +773,8 @@ class EnhancedLearningAnalytics {
 
   private identifyStrengths(sessions: LearningSession[]): string[] {
     const categoryPerformance = new Map<string, number>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       const existing = categoryPerformance.get(session.category) || 0;
       categoryPerformance.set(session.category, existing + session.accuracy);
     });
@@ -700,8 +787,8 @@ class EnhancedLearningAnalytics {
 
   private identifyWeaknesses(sessions: LearningSession[]): string[] {
     const categoryPerformance = new Map<string, number>();
-    
-    sessions.forEach(session => {
+
+    sessions.forEach((session) => {
       const existing = categoryPerformance.get(session.category) || 0;
       categoryPerformance.set(session.category, existing + session.accuracy);
     });
@@ -714,14 +801,18 @@ class EnhancedLearningAnalytics {
 
   private analyzeMotivationalFactors(sessions: LearningSession[]): string[] {
     const factors = [];
-    
+
     const recentSessions = sessions.slice(-10);
-    const avgAccuracy = recentSessions.reduce((sum, s) => sum + s.accuracy, 0) / recentSessions.length;
-    
+    const avgAccuracy =
+      recentSessions.reduce((sum, s) => sum + s.accuracy, 0) /
+      recentSessions.length;
+
     if (avgAccuracy > 85) factors.push("High Achievement");
-    if (recentSessions.some(s => s.perfectScore)) factors.push("Perfect Scores");
-    if (recentSessions.some(s => s.streakMaintained)) factors.push("Streak Maintenance");
-    
+    if (recentSessions.some((s) => s.perfectScore))
+      factors.push("Perfect Scores");
+    if (recentSessions.some((s) => s.streakMaintained))
+      factors.push("Streak Maintenance");
+
     return factors;
   }
 
@@ -732,10 +823,12 @@ class EnhancedLearningAnalytics {
     reasoning: string;
   }> {
     const goals = [];
-    
-    const avgWordsPerSession = sessions.reduce((sum, s) => sum + s.wordsLearned, 0) / sessions.length;
-    const avgAccuracy = sessions.reduce((sum, s) => sum + s.accuracy, 0) / sessions.length;
-    
+
+    const avgWordsPerSession =
+      sessions.reduce((sum, s) => sum + s.wordsLearned, 0) / sessions.length;
+    const avgAccuracy =
+      sessions.reduce((sum, s) => sum + s.accuracy, 0) / sessions.length;
+
     if (avgAccuracy < 90) {
       goals.push({
         type: "Accuracy Improvement",
@@ -744,7 +837,7 @@ class EnhancedLearningAnalytics {
         reasoning: "Focus on accuracy to build confidence",
       });
     }
-    
+
     if (avgWordsPerSession < 10) {
       goals.push({
         type: "Words Per Session",
@@ -753,7 +846,7 @@ class EnhancedLearningAnalytics {
         reasoning: "Increase learning volume gradually",
       });
     }
-    
+
     return goals;
   }
 
@@ -763,9 +856,10 @@ class EnhancedLearningAnalytics {
     priority: "high" | "medium" | "low";
   }> {
     const recommendations = [];
-    
-    const recentAccuracy = sessions.slice(-5).reduce((sum, s) => sum + s.accuracy, 0) / 5;
-    
+
+    const recentAccuracy =
+      sessions.slice(-5).reduce((sum, s) => sum + s.accuracy, 0) / 5;
+
     if (recentAccuracy < 70) {
       recommendations.push({
         action: "Switch to easier difficulty",
@@ -773,7 +867,7 @@ class EnhancedLearningAnalytics {
         priority: "high" as const,
       });
     }
-    
+
     if (sessions.length > 0 && sessions[sessions.length - 1].duration > 20) {
       recommendations.push({
         action: "Take shorter sessions",
@@ -781,7 +875,7 @@ class EnhancedLearningAnalytics {
         priority: "medium" as const,
       });
     }
-    
+
     return recommendations;
   }
 
@@ -795,32 +889,36 @@ class EnhancedLearningAnalytics {
   }
 
   private calculateNextLevelProgress(): number {
-    const totalWords = this.sessions.reduce((sum, s) => sum + s.wordsLearned, 0);
+    const totalWords = this.sessions.reduce(
+      (sum, s) => sum + s.wordsLearned,
+      0,
+    );
     const currentLevel = this.calculateHeroLevel(totalWords);
     const wordsForNextLevel = currentLevel * 10;
-    const progressToNext = totalWords - ((currentLevel - 1) * 10);
+    const progressToNext = totalWords - (currentLevel - 1) * 10;
     return (progressToNext / 10) * 100;
   }
 
   private getCurrentStreak(): number {
     let streak = 0;
     const today = new Date();
-    
+
     for (let i = 0; i < 365; i++) {
       const checkDate = new Date(today);
       checkDate.setDate(today.getDate() - i);
-      
-      const hasSession = this.sessions.some(session => 
-        session.startTime.toDateString() === checkDate.toDateString()
+
+      const hasSession = this.sessions.some(
+        (session) =>
+          session.startTime.toDateString() === checkDate.toDateString(),
       );
-      
+
       if (hasSession) {
         streak++;
       } else {
         break;
       }
     }
-    
+
     return streak;
   }
 
@@ -840,15 +938,17 @@ class EnhancedLearningAnalytics {
   }
 
   private getVisitedAreas(): string[] {
-    return [...new Set(this.sessions.map(s => s.category))];
+    return [...new Set(this.sessions.map((s) => s.category))];
   }
 
   private getCompletedQuests(): string[] {
-    return this.sessions.filter(s => s.perfectScore).map(s => `Perfect ${s.category} Quest`);
+    return this.sessions
+      .filter((s) => s.perfectScore)
+      .map((s) => `Perfect ${s.category} Quest`);
   }
 
   private getDiscoveredSecrets(): number {
-    return this.sessions.filter(s => s.accuracy > 95).length;
+    return this.sessions.filter((s) => s.accuracy > 95).length;
   }
 
   private getRescuedCreatures(): number {
@@ -857,8 +957,10 @@ class EnhancedLearningAnalytics {
 
   private calculateEngagementLevel(): "high" | "medium" | "low" {
     const recentSessions = this.sessions.slice(-10);
-    const avgDuration = recentSessions.reduce((sum, s) => sum + s.duration, 0) / recentSessions.length;
-    
+    const avgDuration =
+      recentSessions.reduce((sum, s) => sum + s.duration, 0) /
+      recentSessions.length;
+
     if (avgDuration > 15) return "high";
     if (avgDuration > 8) return "medium";
     return "low";
@@ -867,28 +969,34 @@ class EnhancedLearningAnalytics {
   private calculateConsistencyRating(): number {
     const last7Days = [];
     const today = new Date();
-    
+
     for (let i = 0; i < 7; i++) {
       const checkDate = new Date(today);
       checkDate.setDate(today.getDate() - i);
-      
-      const hasSession = this.sessions.some(session => 
-        session.startTime.toDateString() === checkDate.toDateString()
+
+      const hasSession = this.sessions.some(
+        (session) =>
+          session.startTime.toDateString() === checkDate.toDateString(),
       );
-      
+
       last7Days.push(hasSession ? 1 : 0);
     }
-    
+
     return (last7Days.reduce((sum, day) => sum + day, 0) / 7) * 100;
   }
 
-  private calculateProgressVelocity(): "accelerating" | "steady" | "needs_support" {
+  private calculateProgressVelocity():
+    | "accelerating"
+    | "steady"
+    | "needs_support" {
     const recent = this.sessions.slice(-10);
     const older = this.sessions.slice(-20, -10);
-    
-    const recentAvgWords = recent.reduce((sum, s) => sum + s.wordsLearned, 0) / recent.length;
-    const olderAvgWords = older.reduce((sum, s) => sum + s.wordsLearned, 0) / older.length;
-    
+
+    const recentAvgWords =
+      recent.reduce((sum, s) => sum + s.wordsLearned, 0) / recent.length;
+    const olderAvgWords =
+      older.reduce((sum, s) => sum + s.wordsLearned, 0) / older.length;
+
     if (recentAvgWords > olderAvgWords * 1.2) return "accelerating";
     if (recentAvgWords > olderAvgWords * 0.8) return "steady";
     return "needs_support";
@@ -896,18 +1004,18 @@ class EnhancedLearningAnalytics {
 
   private generateParentalRecommendations(): string[] {
     const recommendations = [];
-    
+
     const engagementLevel = this.calculateEngagementLevel();
     const consistencyRating = this.calculateConsistencyRating();
-    
+
     if (engagementLevel === "low") {
       recommendations.push("Consider shorter, more frequent sessions");
     }
-    
+
     if (consistencyRating < 50) {
       recommendations.push("Establish a regular learning routine");
     }
-    
+
     return recommendations;
   }
 
@@ -917,8 +1025,8 @@ class EnhancedLearningAnalytics {
   }
 
   public getSessionsByDateRange(start: Date, end: Date): LearningSession[] {
-    return this.sessions.filter(session => 
-      session.startTime >= start && session.startTime <= end
+    return this.sessions.filter(
+      (session) => session.startTime >= start && session.startTime <= end,
     );
   }
 

@@ -8,7 +8,13 @@ export interface EnhancedAchievement {
   name: string;
   description: string;
   icon: string;
-  category: "learning" | "streak" | "quiz" | "exploration" | "social" | "mastery";
+  category:
+    | "learning"
+    | "streak"
+    | "quiz"
+    | "exploration"
+    | "social"
+    | "mastery";
   difficulty: "bronze" | "silver" | "gold" | "diamond" | "legendary";
   requirements: {
     type: string;
@@ -19,7 +25,13 @@ export interface EnhancedAchievement {
   unlocked: boolean;
   dateUnlocked?: Date;
   reward: {
-    type: "avatar_accessory" | "theme" | "sound_effect" | "title" | "points" | "badge";
+    type:
+      | "avatar_accessory"
+      | "theme"
+      | "sound_effect"
+      | "title"
+      | "points"
+      | "badge";
     item: string;
     value: number;
     rarity: "common" | "rare" | "epic" | "legendary";
@@ -340,7 +352,11 @@ class EnhancedAchievementSystem {
         category: "words_learned",
         rewards: [
           { type: "points", value: 50, description: "Starter points" },
-          { type: "encouragement", value: 1, description: "You're doing great!" },
+          {
+            type: "encouragement",
+            value: 1,
+            description: "You're doing great!",
+          },
         ],
         isReached: false,
       },
@@ -392,16 +408,16 @@ class EnhancedAchievementSystem {
       // Get data from existing trackers
       const enhancedProgress = EnhancedAchievementTracker.getJourneyProgress();
       const achievements = this.getAchievements();
-      const progressData = await goalProgressTracker.fetchSystematicProgress(userId);
+      const progressData =
+        await goalProgressTracker.fetchSystematicProgress(userId);
 
       // Calculate weekly and monthly progress
       const weeklyProgress = this.calculateWeeklyProgress(userId);
       const monthlyProgress = this.calculateMonthlyProgress(userId);
 
       // Calculate level and experience
-      const { level, experience, nextLevelThreshold } = this.calculateLevelProgress(
-        enhancedProgress.wordsLearned || 0
-      );
+      const { level, experience, nextLevelThreshold } =
+        this.calculateLevelProgress(enhancedProgress.wordsLearned || 0);
 
       this.userProgress = {
         totalWordsLearned: enhancedProgress.wordsLearned || 0,
@@ -409,17 +425,17 @@ class EnhancedAchievementSystem {
         totalAccuracy: enhancedProgress.totalAccuracy || 85,
         categoriesCompleted: this.getCategoriesCompleted(),
         difficultyLevels: {
-          easy: { 
+          easy: {
             completed: enhancedProgress.difficultyStats?.easy?.completed || 0,
-            accuracy: enhancedProgress.difficultyStats?.easy?.accuracy || 0
+            accuracy: enhancedProgress.difficultyStats?.easy?.accuracy || 0,
           },
-          medium: { 
+          medium: {
             completed: enhancedProgress.difficultyStats?.medium?.completed || 0,
-            accuracy: enhancedProgress.difficultyStats?.medium?.accuracy || 0
+            accuracy: enhancedProgress.difficultyStats?.medium?.accuracy || 0,
           },
-          hard: { 
+          hard: {
             completed: enhancedProgress.difficultyStats?.hard?.completed || 0,
-            accuracy: enhancedProgress.difficultyStats?.hard?.accuracy || 0
+            accuracy: enhancedProgress.difficultyStats?.hard?.accuracy || 0,
           },
         },
         weeklyProgress,
@@ -446,7 +462,7 @@ class EnhancedAchievementSystem {
   } {
     // Experience formula: words learned * 10 + bonus for milestones
     let experience = wordsLearned * 10;
-    
+
     // Bonus experience for milestones
     if (wordsLearned >= 10) experience += 50;
     if (wordsLearned >= 25) experience += 100;
@@ -471,7 +487,7 @@ class EnhancedAchievementSystem {
 
   // Get achievements with current progress
   public getAchievements(): EnhancedAchievement[] {
-    return this.achievements.map(achievement => {
+    return this.achievements.map((achievement) => {
       const progress = this.calculateAchievementProgress(achievement);
       return {
         ...achievement,
@@ -525,7 +541,8 @@ class EnhancedAchievementSystem {
   // Get completed categories
   private getCategoriesCompleted(): string[] {
     try {
-      const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+      const completionHistory =
+        CategoryCompletionTracker.getCompletionHistory();
       const completedCategories = new Set<string>();
 
       completionHistory.forEach((record: any) => {
@@ -552,7 +569,9 @@ class EnhancedAchievementSystem {
       const dateKey = date.toISOString().split("T")[0];
 
       try {
-        const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+        const dailyData = localStorage.getItem(
+          `daily_progress_${userId}_${dateKey}`,
+        );
         if (dailyData) {
           const parsed = JSON.parse(dailyData);
           weeklyData.push(parsed.words || 0);
@@ -578,7 +597,9 @@ class EnhancedAchievementSystem {
       const dateKey = date.toISOString().split("T")[0];
 
       try {
-        const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+        const dailyData = localStorage.getItem(
+          `daily_progress_${userId}_${dateKey}`,
+        );
         if (dailyData) {
           const parsed = JSON.parse(dailyData);
           monthlyData.push(parsed.words || 0);
@@ -597,16 +618,19 @@ class EnhancedAchievementSystem {
   public getProgressMilestones(): ProgressMilestone[] {
     if (!this.userProgress) return this.milestones;
 
-    return this.milestones.map(milestone => ({
+    return this.milestones.map((milestone) => ({
       ...milestone,
       isReached: this.userProgress!.totalWordsLearned >= milestone.threshold,
-      reachedAt: this.userProgress!.totalWordsLearned >= milestone.threshold ? new Date() : undefined,
+      reachedAt:
+        this.userProgress!.totalWordsLearned >= milestone.threshold
+          ? new Date()
+          : undefined,
     }));
   }
 
   // Unlock achievement
   public unlockAchievement(achievementId: string): boolean {
-    const achievement = this.achievements.find(a => a.id === achievementId);
+    const achievement = this.achievements.find((a) => a.id === achievementId);
     if (!achievement) return false;
 
     achievement.unlocked = true;
@@ -642,17 +666,17 @@ class EnhancedAchievementSystem {
 
   // Get achievement by ID
   public getAchievementById(id: string): EnhancedAchievement | null {
-    return this.achievements.find(a => a.id === id) || null;
+    return this.achievements.find((a) => a.id === id) || null;
   }
 
   // Get achievements by category
   public getAchievementsByCategory(category: string): EnhancedAchievement[] {
-    return this.getAchievements().filter(a => a.category === category);
+    return this.getAchievements().filter((a) => a.category === category);
   }
 
   // Get unlocked achievements
   public getUnlockedAchievements(): EnhancedAchievement[] {
-    return this.getAchievements().filter(a => a.unlocked);
+    return this.getAchievements().filter((a) => a.unlocked);
   }
 
   // Calculate total achievement points

@@ -161,7 +161,8 @@ export function DesktopKidNav({
                       >
                         {/* Kid-friendly custom image design for all icons */}
                         <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 flex items-center justify-center">
-                          {tab.image.startsWith('/') || tab.image.startsWith('http') ? (
+                          {tab.image.startsWith("/") ||
+                          tab.image.startsWith("http") ? (
                             <img
                               src={tab.image}
                               alt={tab.label}

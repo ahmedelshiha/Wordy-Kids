@@ -39,17 +39,12 @@ import { enhancedAchievementSystem } from "@/lib/enhancedAchievementSystem";
 import { enhancedBadgeSystem } from "@/lib/enhancedBadgeSystem";
 import { enhancedLearningAnalytics } from "@/lib/enhancedLearningAnalytics";
 import { enhancedRewardCelebration } from "@/lib/enhancedRewardCelebration";
-import type { 
-  EnhancedAchievement, 
-  LearningJourney 
+import type {
+  EnhancedAchievement,
+  LearningJourney,
 } from "@/lib/enhancedAchievementSystem";
-import type { 
-  EnhancedBadge, 
-  BadgeCollection 
-} from "@/lib/enhancedBadgeSystem";
-import type { 
-  JungleProgressReport 
-} from "@/lib/enhancedLearningAnalytics";
+import type { EnhancedBadge, BadgeCollection } from "@/lib/enhancedBadgeSystem";
+import type { JungleProgressReport } from "@/lib/enhancedLearningAnalytics";
 
 interface EnhancedAchievementsPageProps {
   onBack?: () => void;
@@ -91,13 +86,18 @@ const getTierColor = (tier: string) => {
   }
 };
 
-export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPageProps) {
+export function EnhancedAchievementsPage({
+  onBack,
+}: EnhancedAchievementsPageProps) {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isLoading, setIsLoading] = useState(true);
-  const [learningJourney, setLearningJourney] = useState<LearningJourney | null>(null);
-  const [badgeCollection, setBadgeCollection] = useState<BadgeCollection | null>(null);
-  const [progressReport, setProgressReport] = useState<JungleProgressReport | null>(null);
+  const [learningJourney, setLearningJourney] =
+    useState<LearningJourney | null>(null);
+  const [badgeCollection, setBadgeCollection] =
+    useState<BadgeCollection | null>(null);
+  const [progressReport, setProgressReport] =
+    useState<JungleProgressReport | null>(null);
   const [achievements, setAchievements] = useState<EnhancedAchievement[]>([]);
   const [badges, setBadges] = useState<EnhancedBadge[]>([]);
 
@@ -106,27 +106,27 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
     const loadData = async () => {
       try {
         setIsLoading(true);
-        
+
         // Load learning journey
-        const journey = await enhancedAchievementSystem.getLearningJourney("current_user");
+        const journey =
+          await enhancedAchievementSystem.getLearningJourney("current_user");
         setLearningJourney(journey);
-        
+
         // Load achievements
         const achievementsList = enhancedAchievementSystem.getAchievements();
         setAchievements(achievementsList);
-        
+
         // Load badge collection
         const collection = enhancedBadgeSystem.getBadgeCollection();
         setBadgeCollection(collection);
-        
+
         // Load all badges
         const allBadges = enhancedBadgeSystem.getAllBadges();
         setBadges(allBadges);
-        
+
         // Load progress report
         const report = enhancedLearningAnalytics.getJungleProgressReport();
         setProgressReport(report);
-        
       } catch (error) {
         console.error("Error loading achievements data:", error);
       } finally {
@@ -146,19 +146,23 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
     { id: "mastery", name: "Mastery", icon: "👑" },
   ];
 
-  const filteredAchievements = selectedCategory === "all" 
-    ? achievements 
-    : achievements.filter(a => a.category === selectedCategory);
+  const filteredAchievements =
+    selectedCategory === "all"
+      ? achievements
+      : achievements.filter((a) => a.category === selectedCategory);
 
-  const unlockedAchievements = achievements.filter(a => a.unlocked);
-  const totalAchievementPoints = enhancedAchievementSystem.getTotalAchievementPoints();
+  const unlockedAchievements = achievements.filter((a) => a.unlocked);
+  const totalAchievementPoints =
+    enhancedAchievementSystem.getTotalAchievementPoints();
 
   if (isLoading) {
     return (
       <div className="min-h-screen jungle-pattern-bg jungle-mobile-optimized flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-jungle mx-auto mb-4"></div>
-          <p className="text-jungle-dark font-semibold">Loading your jungle adventure...</p>
+          <p className="text-jungle-dark font-semibold">
+            Loading your jungle adventure...
+          </p>
         </div>
       </div>
     );
@@ -192,7 +196,7 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                 </p>
               </div>
             </div>
-            
+
             {/* Level Badge */}
             {learningJourney && (
               <div className="jungle-card p-3 text-center">
@@ -200,8 +204,12 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                   Level {learningJourney.level}
                 </div>
                 <div className="text-xs text-jungle-dark/70">Jungle Hero</div>
-                <Progress 
-                  value={(learningJourney.experience / learningJourney.nextLevelThreshold) * 100} 
+                <Progress
+                  value={
+                    (learningJourney.experience /
+                      learningJourney.nextLevelThreshold) *
+                    100
+                  }
                   className="h-2 mt-1 bg-jungle/20"
                 />
               </div>
@@ -327,9 +335,20 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                 <CardContent>
                   <div className="grid grid-cols-7 gap-1 h-32 mb-4">
                     {learningJourney?.weeklyProgress.map((value, index) => {
-                      const maxValue = Math.max(...(learningJourney?.weeklyProgress || [1]));
-                      const height = maxValue > 0 ? (value / maxValue) * 100 : 0;
-                      const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                      const maxValue = Math.max(
+                        ...(learningJourney?.weeklyProgress || [1]),
+                      );
+                      const height =
+                        maxValue > 0 ? (value / maxValue) * 100 : 0;
+                      const days = [
+                        "Mon",
+                        "Tue",
+                        "Wed",
+                        "Thu",
+                        "Fri",
+                        "Sat",
+                        "Sun",
+                      ];
                       const emojis = ["🌱", "🌿", "🍃", "🌳", "🦋", "🌺", "🏆"];
 
                       return (
@@ -343,9 +362,13 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                               transition={{ delay: index * 0.1, duration: 0.8 }}
                             />
                           </div>
-                          <p className="text-xs text-jungle-dark/70 mt-1">{days[index]}</p>
+                          <p className="text-xs text-jungle-dark/70 mt-1">
+                            {days[index]}
+                          </p>
                           <p className="text-lg">{emojis[index]}</p>
-                          <p className="text-xs font-bold text-jungle-dark">{value}</p>
+                          <p className="text-xs font-bold text-jungle-dark">
+                            {value}
+                          </p>
                         </div>
                       );
                     })}
@@ -365,33 +388,37 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {unlockedAchievements.slice(0, 4).map((achievement, index) => (
-                    <motion.div
-                      key={achievement.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-3 p-2 rounded-lg bg-white/20 backdrop-blur-sm"
-                    >
-                      <div className="text-2xl">{achievement.icon}</div>
-                      <div className="flex-1">
-                        <div className="font-semibold text-jungle-dark text-sm">
-                          {achievement.name}
+                  {unlockedAchievements
+                    .slice(0, 4)
+                    .map((achievement, index) => (
+                      <motion.div
+                        key={achievement.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center gap-3 p-2 rounded-lg bg-white/20 backdrop-blur-sm"
+                      >
+                        <div className="text-2xl">{achievement.icon}</div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-jungle-dark text-sm">
+                            {achievement.name}
+                          </div>
+                          <div className="text-xs text-jungle-dark/70">
+                            {achievement.description}
+                          </div>
                         </div>
-                        <div className="text-xs text-jungle-dark/70">
-                          {achievement.description}
-                        </div>
-                      </div>
-                      <Badge className="bg-jungle text-white text-xs">
-                        {achievement.difficulty}
-                      </Badge>
-                    </motion.div>
-                  ))}
-                  
+                        <Badge className="bg-jungle text-white text-xs">
+                          {achievement.difficulty}
+                        </Badge>
+                      </motion.div>
+                    ))}
+
                   {unlockedAchievements.length === 0 && (
                     <div className="text-center text-jungle-dark/70 py-4">
                       <Leaf className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                      <p className="text-sm">Start your jungle adventure to unlock achievements!</p>
+                      <p className="text-sm">
+                        Start your jungle adventure to unlock achievements!
+                      </p>
                     </div>
                   )}
                 </CardContent>
@@ -405,13 +432,17 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
             <div className="flex justify-center gap-4 mb-6">
               <Card className="jungle-card bg-gradient-to-r from-jungle to-sunshine text-white hover:scale-105 transition-all">
                 <CardContent className="p-4 text-center">
-                  <div className="text-xl font-bold">{unlockedAchievements.length}</div>
+                  <div className="text-xl font-bold">
+                    {unlockedAchievements.length}
+                  </div>
                   <div className="text-xs opacity-90">Unlocked</div>
                 </CardContent>
               </Card>
               <Card className="jungle-card bg-gradient-to-r from-sunshine to-jungle text-white hover:scale-105 transition-all">
                 <CardContent className="p-4 text-center">
-                  <div className="text-xl font-bold">{totalAchievementPoints}</div>
+                  <div className="text-xl font-bold">
+                    {totalAchievementPoints}
+                  </div>
                   <div className="text-xs opacity-90">Points</div>
                 </CardContent>
               </Card>
@@ -422,14 +453,16 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
               {categories.map((category) => (
                 <Button
                   key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  variant={
+                    selectedCategory === category.id ? "default" : "outline"
+                  }
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
                   className={cn(
                     "hover:scale-105 transition-all text-xs px-3 py-2",
-                    selectedCategory === category.id 
+                    selectedCategory === category.id
                       ? "bg-jungle text-white hover:bg-jungle-dark"
-                      : "jungle-card text-jungle-dark hover:bg-jungle/10"
+                      : "jungle-card text-jungle-dark hover:bg-jungle/10",
                   )}
                 >
                   <span className="mr-1">{category.icon}</span>
@@ -443,8 +476,10 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
               <AnimatePresence mode="popLayout">
                 {filteredAchievements.map((achievement, index) => {
                   const progressPercentage = Math.min(
-                    (achievement.currentProgress / achievement.requirements.threshold) * 100,
-                    100
+                    (achievement.currentProgress /
+                      achievement.requirements.threshold) *
+                      100,
+                    100,
                   );
 
                   return (
@@ -461,7 +496,7 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                           "jungle-card cursor-pointer transition-all duration-300 hover:scale-105",
                           achievement.unlocked
                             ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
-                            : "bg-gradient-to-br from-jungle/5 to-sunshine/5 border-dashed border-jungle/30"
+                            : "bg-gradient-to-br from-jungle/5 to-sunshine/5 border-dashed border-jungle/30",
                         )}
                       >
                         <CardContent className="p-4">
@@ -478,26 +513,37 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                             </div>
                           </div>
 
-                          <h3 className={cn(
-                            "font-bold text-sm mb-2",
-                            achievement.unlocked ? "text-white" : "text-jungle-dark"
-                          )}>
+                          <h3
+                            className={cn(
+                              "font-bold text-sm mb-2",
+                              achievement.unlocked
+                                ? "text-white"
+                                : "text-jungle-dark",
+                            )}
+                          >
                             {achievement.name}
                           </h3>
 
-                          <p className={cn(
-                            "text-xs mb-3 leading-tight",
-                            achievement.unlocked ? "text-white/90" : "text-jungle-dark/70"
-                          )}>
+                          <p
+                            className={cn(
+                              "text-xs mb-3 leading-tight",
+                              achievement.unlocked
+                                ? "text-white/90"
+                                : "text-jungle-dark/70",
+                            )}
+                          >
                             {achievement.description}
                           </p>
 
                           {!achievement.unlocked && (
                             <div className="space-y-2">
                               <div className="flex justify-between text-xs">
-                                <span className="text-jungle-dark/70">Progress</span>
+                                <span className="text-jungle-dark/70">
+                                  Progress
+                                </span>
                                 <span className="font-semibold text-jungle-dark">
-                                  {achievement.currentProgress}/{achievement.requirements.threshold}
+                                  {achievement.currentProgress}/
+                                  {achievement.requirements.threshold}
                                 </span>
                               </div>
                               <Progress
@@ -534,7 +580,9 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
             {filteredAchievements.length === 0 && (
               <div className="text-center py-12">
                 <TreePine className="w-16 h-16 mx-auto mb-4 text-jungle/50" />
-                <p className="text-jungle-dark/70">No achievements found in this category.</p>
+                <p className="text-jungle-dark/70">
+                  No achievements found in this category.
+                </p>
               </div>
             )}
           </TabsContent>
@@ -554,7 +602,7 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                       "jungle-card transition-all duration-300 hover:scale-105",
                       badge.earned
                         ? `${getTierColor(badge.tier)} border-2`
-                        : "bg-gradient-to-br from-jungle/5 to-sunshine/5 opacity-60"
+                        : "bg-gradient-to-br from-jungle/5 to-sunshine/5 opacity-60",
                     )}
                   >
                     <CardContent className="p-4 text-center">
@@ -564,7 +612,7 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                             "w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl",
                             badge.earned
                               ? "bg-gradient-to-r from-sunshine to-jungle"
-                              : "bg-jungle/20"
+                              : "bg-jungle/20",
                           )}
                         >
                           {badge.earned ? badge.icon : "🔒"}
@@ -577,17 +625,25 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                         )}
                       </div>
 
-                      <h3 className={cn(
-                        "text-sm font-bold mb-2",
-                        badge.earned ? "text-jungle-dark" : "text-jungle-dark/50"
-                      )}>
+                      <h3
+                        className={cn(
+                          "text-sm font-bold mb-2",
+                          badge.earned
+                            ? "text-jungle-dark"
+                            : "text-jungle-dark/50",
+                        )}
+                      >
                         {badge.name}
                       </h3>
 
-                      <p className={cn(
-                        "text-xs mb-3",
-                        badge.earned ? "text-jungle-dark/70" : "text-jungle-dark/40"
-                      )}>
+                      <p
+                        className={cn(
+                          "text-xs mb-3",
+                          badge.earned
+                            ? "text-jungle-dark/70"
+                            : "text-jungle-dark/40",
+                        )}
+                      >
                         {badge.description}
                       </p>
 
@@ -596,11 +652,15 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                           variant="outline"
                           className={cn(
                             "text-xs capitalize",
-                            badge.tier === "bronze" ? "border-orange-400 text-orange-600" :
-                            badge.tier === "silver" ? "border-gray-400 text-gray-600" :
-                            badge.tier === "gold" ? "border-yellow-400 text-yellow-600" :
-                            badge.tier === "platinum" ? "border-purple-400 text-purple-600" :
-                            "border-cyan-400 text-cyan-600"
+                            badge.tier === "bronze"
+                              ? "border-orange-400 text-orange-600"
+                              : badge.tier === "silver"
+                                ? "border-gray-400 text-gray-600"
+                                : badge.tier === "gold"
+                                  ? "border-yellow-400 text-yellow-600"
+                                  : badge.tier === "platinum"
+                                    ? "border-purple-400 text-purple-600"
+                                    : "border-cyan-400 text-cyan-600",
                           )}
                         >
                           {badge.tier}
@@ -613,25 +673,44 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                       {/* Progress Bar */}
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
-                          <span className={badge.earned ? "text-jungle" : "text-jungle-dark/50"}>
+                          <span
+                            className={
+                              badge.earned
+                                ? "text-jungle"
+                                : "text-jungle-dark/50"
+                            }
+                          >
                             {badge.earned ? "Completed!" : "Progress"}
                           </span>
-                          <span className={badge.earned ? "text-jungle" : "text-jungle-dark/50"}>
-                            {badge.currentProgress}/{badge.requirements.threshold}
+                          <span
+                            className={
+                              badge.earned
+                                ? "text-jungle"
+                                : "text-jungle-dark/50"
+                            }
+                          >
+                            {badge.currentProgress}/
+                            {badge.requirements.threshold}
                           </span>
                         </div>
                         <Progress
-                          value={(badge.currentProgress / badge.requirements.threshold) * 100}
+                          value={
+                            (badge.currentProgress /
+                              badge.requirements.threshold) *
+                            100
+                          }
                           className={cn(
                             "h-2",
-                            badge.earned ? "bg-jungle/20" : "bg-jungle/10"
+                            badge.earned ? "bg-jungle/20" : "bg-jungle/10",
                           )}
                         />
                       </div>
 
                       {/* Rewards */}
                       <div className="mt-3 pt-3 border-t border-jungle/20">
-                        <div className="text-xs text-jungle-dark/70 mb-1">Rewards</div>
+                        <div className="text-xs text-jungle-dark/70 mb-1">
+                          Rewards
+                        </div>
                         <div className="flex justify-center gap-3 text-xs">
                           <div className="flex items-center gap-1">
                             <span className="text-sunshine">🪙</span>
@@ -666,30 +745,47 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center">
                         <div className="text-2xl font-bold text-jungle-dark">
-                          {progressReport.jungleExplorationMap.visitedAreas.length}
+                          {
+                            progressReport.jungleExplorationMap.visitedAreas
+                              .length
+                          }
                         </div>
-                        <div className="text-sm text-jungle-dark/70">Areas Explored</div>
+                        <div className="text-sm text-jungle-dark/70">
+                          Areas Explored
+                        </div>
                       </div>
                       <div className="text-center">
                         <div className="text-2xl font-bold text-jungle-dark">
-                          {progressReport.jungleExplorationMap.completedQuests.length}
+                          {
+                            progressReport.jungleExplorationMap.completedQuests
+                              .length
+                          }
                         </div>
-                        <div className="text-sm text-jungle-dark/70">Quests Completed</div>
+                        <div className="text-sm text-jungle-dark/70">
+                          Quests Completed
+                        </div>
                       </div>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center">
                         <div className="text-2xl font-bold text-jungle-dark">
-                          {progressReport.jungleExplorationMap.discoveredSecrets}
+                          {
+                            progressReport.jungleExplorationMap
+                              .discoveredSecrets
+                          }
                         </div>
-                        <div className="text-sm text-jungle-dark/70">Secrets Found</div>
+                        <div className="text-sm text-jungle-dark/70">
+                          Secrets Found
+                        </div>
                       </div>
                       <div className="text-center">
                         <div className="text-2xl font-bold text-jungle-dark">
                           {progressReport.jungleExplorationMap.rescuedCreatures}
                         </div>
-                        <div className="text-sm text-jungle-dark/70">Words Rescued</div>
+                        <div className="text-sm text-jungle-dark/70">
+                          Words Rescued
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -708,21 +804,33 @@ export function EnhancedAchievementsPage({ onBack }: EnhancedAchievementsPagePro
                       <div className="text-lg font-semibold text-jungle-dark capitalize">
                         {progressReport.parentalInsights.engagementLevel}
                       </div>
-                      <div className="text-sm text-jungle-dark/70">Engagement Level</div>
+                      <div className="text-sm text-jungle-dark/70">
+                        Engagement Level
+                      </div>
                     </div>
-                    
+
                     <div className="text-center">
                       <div className="text-lg font-semibold text-jungle-dark">
-                        {Math.round(progressReport.parentalInsights.consistencyRating)}%
+                        {Math.round(
+                          progressReport.parentalInsights.consistencyRating,
+                        )}
+                        %
                       </div>
-                      <div className="text-sm text-jungle-dark/70">Consistency</div>
+                      <div className="text-sm text-jungle-dark/70">
+                        Consistency
+                      </div>
                     </div>
-                    
+
                     <div className="text-center">
                       <div className="text-lg font-semibold text-jungle-dark capitalize">
-                        {progressReport.parentalInsights.progressVelocity.replace('_', ' ')}
+                        {progressReport.parentalInsights.progressVelocity.replace(
+                          "_",
+                          " ",
+                        )}
                       </div>
-                      <div className="text-sm text-jungle-dark/70">Progress Pace</div>
+                      <div className="text-sm text-jungle-dark/70">
+                        Progress Pace
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
