@@ -34,7 +34,11 @@
 
   /* Simplify gradients on mobile for better performance */
   .jungle-achievement-card.unlocked {
-    background: linear-gradient(135deg, var(--jungle-green), var(--jungle-green-dark)) !important;
+    background: linear-gradient(
+      135deg,
+      var(--jungle-green),
+      var(--jungle-green-dark)
+    ) !important;
   }
 
   /* Reduce shadow complexity on mobile */
@@ -79,7 +83,7 @@
   }
 
   /* Slightly reduce animation complexity on tablets */
-  .jungle-particles .jungle-particle:nth-child(n+4) {
+  .jungle-particles .jungle-particle:nth-child(n + 4) {
     display: none;
   }
 }

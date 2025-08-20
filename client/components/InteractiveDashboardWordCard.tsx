@@ -402,7 +402,7 @@ export function InteractiveDashboardWordCard({
 
             console.error(
               `Speech synthesis failed for word: ${currentWord.word}`,
-              errorInfo
+              errorInfo,
             );
             setIsPlaying(false);
 
@@ -482,7 +482,7 @@ export function InteractiveDashboardWordCard({
 
               console.error(
                 `Fallback speech synthesis also failed for word: ${currentWord.word}`,
-                catchErrorInfo
+                catchErrorInfo,
               );
               setIsPlaying(false);
             }
@@ -507,7 +507,7 @@ export function InteractiveDashboardWordCard({
 
         console.error(
           `Main speech synthesis failed for word: ${currentWord.word}`,
-          mainErrorInfo
+          mainErrorInfo,
         );
         setIsPlaying(false);
       }

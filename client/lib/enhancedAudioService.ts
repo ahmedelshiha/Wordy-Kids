@@ -367,18 +367,28 @@ export class EnhancedAudioService {
     } = {},
   ): void {
     // Input validation
-    if (typeof word !== 'string') {
-      console.error('Enhanced audio service: word parameter must be a string, received:', typeof word, word);
+    if (typeof word !== "string") {
+      console.error(
+        "Enhanced audio service: word parameter must be a string, received:",
+        typeof word,
+        word,
+      );
       if (options.onError) {
-        options.onError(new Error(`Invalid word parameter: expected string, got ${typeof word}`));
+        options.onError(
+          new Error(
+            `Invalid word parameter: expected string, got ${typeof word}`,
+          ),
+        );
       }
       return;
     }
 
-    if (!word || word.trim() === '') {
-      console.error('Enhanced audio service: word parameter is empty or undefined');
+    if (!word || word.trim() === "") {
+      console.error(
+        "Enhanced audio service: word parameter is empty or undefined",
+      );
       if (options.onError) {
-        options.onError(new Error('Word parameter is empty or undefined'));
+        options.onError(new Error("Word parameter is empty or undefined"));
       }
       return;
     }
@@ -476,16 +486,20 @@ export class EnhancedAudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error(`Speech synthesis error for word "${word}":`, event.error || 'Unknown error', {
-          error: event.error,
-          message: event.message,
-          word: word,
-          voiceType: voiceType,
-          voice: voice?.name,
-          rate: rate,
-          pitch: pitch,
-          volume: volume,
-        });
+        console.error(
+          `Speech synthesis error for word "${word}":`,
+          event.error || "Unknown error",
+          {
+            error: event.error,
+            message: event.message,
+            word: word,
+            voiceType: voiceType,
+            voice: voice?.name,
+            rate: rate,
+            pitch: pitch,
+            volume: volume,
+          },
+        );
         try {
           const errorDetails = {
             error: event.error,

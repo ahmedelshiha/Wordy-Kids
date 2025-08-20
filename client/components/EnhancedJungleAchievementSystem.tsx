@@ -42,7 +42,10 @@ import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
 import { useAuth } from "@/hooks/useAuth";
-import { useOptimizedMobilePerformance, useAnimationPreferences } from "@/hooks/use-optimized-mobile-performance";
+import {
+  useOptimizedMobilePerformance,
+  useAnimationPreferences,
+} from "@/hooks/use-optimized-mobile-performance";
 import { cn } from "@/lib/utils";
 
 // Jungle-themed achievement interface
@@ -59,7 +62,12 @@ interface JungleAchievement {
   unlocked: boolean;
   dateUnlocked?: Date;
   reward?: {
-    type: "jungle_companion" | "magic_item" | "special_power" | "treasure" | "badge";
+    type:
+      | "jungle_companion"
+      | "magic_item"
+      | "special_power"
+      | "treasure"
+      | "badge";
     item: string;
     value?: number;
     icon?: string;
@@ -71,7 +79,12 @@ interface JungleAchievement {
 interface JungleUnlockable {
   id: string;
   name: string;
-  type: "companion" | "magical_item" | "jungle_theme" | "special_effect" | "treasure";
+  type:
+    | "companion"
+    | "magical_item"
+    | "jungle_theme"
+    | "special_effect"
+    | "treasure";
   description: string;
   icon: string;
   jungleIcon: string;
@@ -119,7 +132,9 @@ const getWeeklyAdventureData = (userId: string): number[] => {
     const dateKey = date.toISOString().split("T")[0];
 
     try {
-      const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+      const dailyData = localStorage.getItem(
+        `daily_progress_${userId}_${dateKey}`,
+      );
       if (dailyData) {
         const parsed = JSON.parse(dailyData);
         weeklyData.push(parsed.words || 0);
@@ -134,8 +149,14 @@ const getWeeklyAdventureData = (userId: string): number[] => {
   return weeklyData;
 };
 
-const getAdventureMapData = (userId: string): Array<{ date: string; explored: boolean; discoveries: number }> => {
-  const mapData: Array<{ date: string; explored: boolean; discoveries: number }> = [];
+const getAdventureMapData = (
+  userId: string,
+): Array<{ date: string; explored: boolean; discoveries: number }> => {
+  const mapData: Array<{
+    date: string;
+    explored: boolean;
+    discoveries: number;
+  }> = [];
   const today = new Date();
 
   for (let i = 29; i >= 0; i--) {
@@ -144,7 +165,9 @@ const getAdventureMapData = (userId: string): Array<{ date: string; explored: bo
     const dateKey = date.toISOString().split("T")[0];
 
     try {
-      const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+      const dailyData = localStorage.getItem(
+        `daily_progress_${userId}_${dateKey}`,
+      );
       if (dailyData) {
         const parsed = JSON.parse(dailyData);
         mapData.push({
@@ -183,7 +206,8 @@ const jungleUnlockables: JungleUnlockable[] = [
     unlocked: false,
     unlockedBy: "word_explorer",
     rarity: "common",
-    jungleStory: "Found swinging through the treetops, this wise monkey loves sharing knowledge!"
+    jungleStory:
+      "Found swinging through the treetops, this wise monkey loves sharing knowledge!",
   },
   {
     id: "golden_leaf",
@@ -195,7 +219,7 @@ const jungleUnlockables: JungleUnlockable[] = [
     unlocked: false,
     unlockedBy: "vocabulary_guardian",
     rarity: "rare",
-    jungleStory: "Legend says this leaf fell from the Ancient Tree of Wisdom!"
+    jungleStory: "Legend says this leaf fell from the Ancient Tree of Wisdom!",
   },
   {
     id: "jungle_crown",
@@ -207,7 +231,8 @@ const jungleUnlockables: JungleUnlockable[] = [
     unlocked: false,
     unlockedBy: "jungle_master",
     rarity: "legendary",
-    jungleStory: "Only the greatest jungle explorers can claim this magnificent crown!"
+    jungleStory:
+      "Only the greatest jungle explorers can claim this magnificent crown!",
   },
   {
     id: "firefly_trail",
@@ -219,7 +244,7 @@ const jungleUnlockables: JungleUnlockable[] = [
     unlocked: false,
     unlockedBy: "streak_master",
     rarity: "epic",
-    jungleStory: "These mystical fireflies are drawn to dedicated learners!"
+    jungleStory: "These mystical fireflies are drawn to dedicated learners!",
   },
 ];
 
@@ -231,35 +256,35 @@ const getDifficultyJungleStyle = (difficulty: string) => {
         gradient: "from-green-400 to-green-600",
         icon: "🌱",
         bgGlow: "shadow-green-500/20",
-        borderGlow: "border-green-400/30"
+        borderGlow: "border-green-400/30",
       };
     case "growing":
       return {
-        gradient: "from-emerald-400 to-emerald-600", 
+        gradient: "from-emerald-400 to-emerald-600",
         icon: "🌿",
         bgGlow: "shadow-emerald-500/20",
-        borderGlow: "border-emerald-400/30"
+        borderGlow: "border-emerald-400/30",
       };
     case "mighty":
       return {
         gradient: "from-jungle to-jungle-dark",
         icon: "🌳",
         bgGlow: "shadow-jungle/20",
-        borderGlow: "border-jungle/30"
+        borderGlow: "border-jungle/30",
       };
     case "ancient":
       return {
         gradient: "from-yellow-400 via-jungle to-emerald-600",
         icon: "🏛️",
         bgGlow: "shadow-yellow-500/20",
-        borderGlow: "border-yellow-400/30"
+        borderGlow: "border-yellow-400/30",
       };
     default:
       return {
         gradient: "from-gray-400 to-gray-600",
         icon: "🌱",
         bgGlow: "shadow-gray-500/20",
-        borderGlow: "border-gray-400/30"
+        borderGlow: "border-gray-400/30",
       };
   }
 };
@@ -270,31 +295,31 @@ const getRarityStyle = (rarity: string) => {
       return {
         gradient: "from-gray-400 to-gray-600",
         glow: "shadow-gray-500/20",
-        border: "border-gray-400/30"
+        border: "border-gray-400/30",
       };
     case "rare":
       return {
         gradient: "from-blue-400 to-blue-600",
-        glow: "shadow-blue-500/20", 
-        border: "border-blue-400/30"
+        glow: "shadow-blue-500/20",
+        border: "border-blue-400/30",
       };
     case "epic":
       return {
         gradient: "from-purple-400 to-purple-600",
         glow: "shadow-purple-500/20",
-        border: "border-purple-400/30"
+        border: "border-purple-400/30",
       };
     case "legendary":
       return {
         gradient: "from-yellow-400 via-orange-400 to-red-500",
         glow: "shadow-orange-500/30",
-        border: "border-orange-400/50"
+        border: "border-orange-400/50",
       };
     default:
       return {
         gradient: "from-gray-400 to-gray-600",
         glow: "shadow-gray-500/20",
-        border: "border-gray-400/30"
+        border: "border-gray-400/30",
       };
   }
 };
@@ -315,9 +340,15 @@ const EnhancedJungleAchievementSystemComponent = ({
   const [showUnlockables, setShowUnlockables] = useState(false);
   const [activeTab, setActiveTab] = useState("achievements");
   const [isLoading, setIsLoading] = useState(true);
-  const [jungleStats, setJungleStats] = useState<JungleLearningStats | null>(null);
-  const [jungleAchievements, setJungleAchievements] = useState<JungleAchievement[]>([]);
-  const [celebrating, setCelebrating] = useState<JungleAchievement | null>(null);
+  const [jungleStats, setJungleStats] = useState<JungleLearningStats | null>(
+    null,
+  );
+  const [jungleAchievements, setJungleAchievements] = useState<
+    JungleAchievement[]
+  >([]);
+  const [celebrating, setCelebrating] = useState<JungleAchievement | null>(
+    null,
+  );
 
   // Load real data on component mount
   useEffect(() => {
@@ -337,7 +368,9 @@ const EnhancedJungleAchievementSystemComponent = ({
         }
 
         // Transform achievements to jungle theme
-        const transformedAchievements: JungleAchievement[] = (achievements || []).map(achievement => ({
+        const transformedAchievements: JungleAchievement[] = (
+          achievements || []
+        ).map((achievement) => ({
           ...achievement,
           jungleIcon: getJungleIcon(achievement.category),
           category: mapToJungleCategory(achievement.category),
@@ -346,27 +379,37 @@ const EnhancedJungleAchievementSystemComponent = ({
         }));
 
         // Get category completion data
-        const categoryStats = CategoryCompletionTracker.getCurrentCategoryStats();
-        const completionHistory = CategoryCompletionTracker.getCompletionHistory();
+        const categoryStats =
+          CategoryCompletionTracker.getCurrentCategoryStats();
+        const completionHistory =
+          CategoryCompletionTracker.getCompletionHistory();
 
         // Build jungle regions from real data
         let jungleRegions = [];
         if (categoryStats && typeof categoryStats === "object") {
-          jungleRegions = [{
-            region: "Current Expedition",
-            wordsDiscovered: categoryStats.wordsReviewed || 0,
-            treasuresFound: Math.floor((categoryStats.wordsReviewed || 0) / 5),
-            timeSpent: categoryStats.timeSpent || 0,
-            icon: "🗺️"
-          }];
+          jungleRegions = [
+            {
+              region: "Current Expedition",
+              wordsDiscovered: categoryStats.wordsReviewed || 0,
+              treasuresFound: Math.floor(
+                (categoryStats.wordsReviewed || 0) / 5,
+              ),
+              timeSpent: categoryStats.timeSpent || 0,
+              icon: "🗺️",
+            },
+          ];
         } else {
           const regionMap = new Map();
           completionHistory.forEach((record: any) => {
-            const regionName = getJungleRegionName(record.categoryId || "Unknown");
+            const regionName = getJungleRegionName(
+              record.categoryId || "Unknown",
+            );
             if (regionMap.has(regionName)) {
               const existing = regionMap.get(regionName);
               existing.wordsDiscovered += record.wordsReviewed || 0;
-              existing.treasuresFound += Math.floor((record.wordsReviewed || 0) / 5);
+              existing.treasuresFound += Math.floor(
+                (record.wordsReviewed || 0) / 5,
+              );
               existing.timeSpent += record.timeSpent || 0;
             } else {
               regionMap.set(regionName, {
@@ -381,19 +424,24 @@ const EnhancedJungleAchievementSystemComponent = ({
 
           jungleRegions = Array.from(regionMap.values());
           if (jungleRegions.length === 0) {
-            jungleRegions = [{
-              region: "Starting Grove",
-              wordsDiscovered: 0,
-              treasuresFound: 0,
-              timeSpent: 0,
-              icon: "🌱"
-            }];
+            jungleRegions = [
+              {
+                region: "Starting Grove",
+                wordsDiscovered: 0,
+                treasuresFound: 0,
+                timeSpent: 0,
+                icon: "🌱",
+              },
+            ];
           }
         }
 
         // Calculate jungle learning stats
         const weeklyAdventures = getWeeklyAdventureData(userId);
-        const totalWeeklyDiscoveries = weeklyAdventures.reduce((sum, count) => sum + count, 0);
+        const totalWeeklyDiscoveries = weeklyAdventures.reduce(
+          (sum, count) => sum + count,
+          0,
+        );
         const avgDiscoveriesPerDay = totalWeeklyDiscoveries / 7;
         const explorationSpeed = avgDiscoveriesPerDay * 2;
 
@@ -404,17 +452,20 @@ const EnhancedJungleAchievementSystemComponent = ({
           difficultyTrails: [
             {
               difficulty: "easy",
-              pathsCompleted: journeyProgress?.difficultyStats?.easy?.completed || 0,
+              pathsCompleted:
+                journeyProgress?.difficultyStats?.easy?.completed || 0,
               totalPaths: 50,
             },
             {
-              difficulty: "medium", 
-              pathsCompleted: journeyProgress?.difficultyStats?.medium?.completed || 0,
+              difficulty: "medium",
+              pathsCompleted:
+                journeyProgress?.difficultyStats?.medium?.completed || 0,
               totalPaths: 50,
             },
             {
               difficulty: "hard",
-              pathsCompleted: journeyProgress?.difficultyStats?.hard?.completed || 0,
+              pathsCompleted:
+                journeyProgress?.difficultyStats?.hard?.completed || 0,
               totalPaths: 30,
             },
           ],
@@ -430,7 +481,8 @@ const EnhancedJungleAchievementSystemComponent = ({
         console.log("Jungle Achievement System loaded:", {
           totalExplored: jungleLearningStats.totalWordsExplored,
           achievementsCount: transformedAchievements.length,
-          unlockedCount: transformedAchievements.filter(a => a.unlocked).length,
+          unlockedCount: transformedAchievements.filter((a) => a.unlocked)
+            .length,
         });
       } catch (error) {
         console.error("Error loading jungle data:", error);
@@ -470,10 +522,15 @@ const EnhancedJungleAchievementSystemComponent = ({
     return iconMap[category] || "🌳";
   };
 
-  const mapToJungleCategory = (category: string): "exploration" | "gathering" | "wisdom" | "adventure" | "friendship" => {
-    const categoryMap: Record<string, "exploration" | "gathering" | "wisdom" | "adventure" | "friendship"> = {
+  const mapToJungleCategory = (
+    category: string,
+  ): "exploration" | "gathering" | "wisdom" | "adventure" | "friendship" => {
+    const categoryMap: Record<
+      string,
+      "exploration" | "gathering" | "wisdom" | "adventure" | "friendship"
+    > = {
       learning: "gathering",
-      streak: "adventure", 
+      streak: "adventure",
       quiz: "wisdom",
       exploration: "exploration",
       social: "friendship",
@@ -481,10 +538,15 @@ const EnhancedJungleAchievementSystemComponent = ({
     return categoryMap[category] || "exploration";
   };
 
-  const mapToJungleDifficulty = (difficulty: string): "sapling" | "growing" | "mighty" | "ancient" => {
-    const difficultyMap: Record<string, "sapling" | "growing" | "mighty" | "ancient"> = {
+  const mapToJungleDifficulty = (
+    difficulty: string,
+  ): "sapling" | "growing" | "mighty" | "ancient" => {
+    const difficultyMap: Record<
+      string,
+      "sapling" | "growing" | "mighty" | "ancient"
+    > = {
       bronze: "sapling",
-      silver: "growing", 
+      silver: "growing",
       gold: "mighty",
       diamond: "ancient",
     };
@@ -493,12 +555,19 @@ const EnhancedJungleAchievementSystemComponent = ({
 
   const getJungleStory = (achievementId: string): string => {
     const stories: Record<string, string> = {
-      word_collector: "Deep in the jungle, you've discovered amazing words hidden in ancient trees!",
-      vocabulary_master: "The jungle animals whisper your name as the great word master!",
-      streak_starter: "Your dedication lights up the jungle path like magical fireflies!",
-      dedication_champion: "The entire jungle celebrates your incredible learning journey!"
+      word_collector:
+        "Deep in the jungle, you've discovered amazing words hidden in ancient trees!",
+      vocabulary_master:
+        "The jungle animals whisper your name as the great word master!",
+      streak_starter:
+        "Your dedication lights up the jungle path like magical fireflies!",
+      dedication_champion:
+        "The entire jungle celebrates your incredible learning journey!",
     };
-    return stories[achievementId] || "Your jungle adventure continues to grow stronger!";
+    return (
+      stories[achievementId] ||
+      "Your jungle adventure continues to grow stronger!"
+    );
   };
 
   const getJungleRegionName = (categoryId: string): string => {
@@ -510,7 +579,10 @@ const EnhancedJungleAchievementSystemComponent = ({
       numbers: "Crystal Caves",
       family: "Village of Friends",
     };
-    return regionNames[categoryId] || `${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Territory`;
+    return (
+      regionNames[categoryId] ||
+      `${categoryId.charAt(0).toUpperCase() + categoryId.slice(1)} Territory`
+    );
   };
 
   const getRegionIcon = (regionName: string): string => {
@@ -526,46 +598,65 @@ const EnhancedJungleAchievementSystemComponent = ({
   };
 
   // Play jungle sound effects
-  const playJungleSound = useCallback((type: 'unlock' | 'click' | 'explore') => {
-    try {
-      switch (type) {
-        case 'unlock':
-          enhancedAudioService.playSuccessSound();
-          break;
-        case 'click':
-          audioService.playCheerSound();
-          break;
-        case 'explore':
-          // Play exploration sound
-          break;
+  const playJungleSound = useCallback(
+    (type: "unlock" | "click" | "explore") => {
+      try {
+        switch (type) {
+          case "unlock":
+            enhancedAudioService.playSuccessSound();
+            break;
+          case "click":
+            audioService.playCheerSound();
+            break;
+          case "explore":
+            // Play exploration sound
+            break;
+        }
+      } catch (error) {
+        console.log("Jungle sound not available:", error);
       }
-    } catch (error) {
-      console.log("Jungle sound not available:", error);
-    }
-  }, []);
+    },
+    [],
+  );
 
   // Show loading state with jungle theme
   if (isLoading || !jungleStats) {
     return (
-      <div className={cn(
-        "flex items-center justify-center min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl",
-        "jungle-loading"
-      )}>
+      <div
+        className={cn(
+          "flex items-center justify-center min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl",
+          "jungle-loading",
+        )}
+      >
         <motion.div
           className="text-center"
-          initial={!mobilePerf.reducedMotion ? { opacity: 0, y: 20 } : { opacity: 1 }}
+          initial={
+            !mobilePerf.reducedMotion ? { opacity: 0, y: 20 } : { opacity: 1 }
+          }
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: animPrefs.getTransitionDuration(600) }}
         >
-          <div className={cn(
-            "rounded-full h-16 w-16 border-4 border-jungle/20 border-t-jungle mx-auto mb-6",
-            mobilePerf.reducedMotion ? "jungle-loading-spinner" : "animate-spin"
-          )} />
-          <div className={cn(
-            "text-4xl mb-4",
-            !mobilePerf.reducedMotion && animPrefs.maxAnimationComplexity !== 'low' && "animate-bounce"
-          )}>🌳</div>
-          <p className="text-jungle-dark font-semibold">Exploring the jungle of learning...</p>
+          <div
+            className={cn(
+              "rounded-full h-16 w-16 border-4 border-jungle/20 border-t-jungle mx-auto mb-6",
+              mobilePerf.reducedMotion
+                ? "jungle-loading-spinner"
+                : "animate-spin",
+            )}
+          />
+          <div
+            className={cn(
+              "text-4xl mb-4",
+              !mobilePerf.reducedMotion &&
+                animPrefs.maxAnimationComplexity !== "low" &&
+                "animate-bounce",
+            )}
+          >
+            🌳
+          </div>
+          <p className="text-jungle-dark font-semibold">
+            Exploring the jungle of learning...
+          </p>
         </motion.div>
       </div>
     );
@@ -580,31 +671,39 @@ const EnhancedJungleAchievementSystemComponent = ({
     { id: "friendship", name: "Jungle Friends", icon: "🐾", jungleIcon: "🦋" },
   ];
 
-  const filteredAchievements = selectedCategory === "all"
-    ? jungleAchievements
-    : jungleAchievements.filter(a => a.category === selectedCategory);
+  const filteredAchievements =
+    selectedCategory === "all"
+      ? jungleAchievements
+      : jungleAchievements.filter((a) => a.category === selectedCategory);
 
-  const unlockedAchievements = jungleAchievements.filter(a => a.unlocked);
+  const unlockedAchievements = jungleAchievements.filter((a) => a.unlocked);
   const totalTreasurePoints = unlockedAchievements.reduce((sum, a) => {
-    const points = a.difficulty === "sapling" ? 10
-      : a.difficulty === "growing" ? 25
-      : a.difficulty === "mighty" ? 50
-      : 100;
+    const points =
+      a.difficulty === "sapling"
+        ? 10
+        : a.difficulty === "growing"
+          ? 25
+          : a.difficulty === "mighty"
+            ? 50
+            : 100;
     return sum + points;
   }, 0);
 
   const handleJungleAchievementClick = (achievement: JungleAchievement) => {
     if (achievement.unlocked) {
       setCelebrating(achievement);
-      playJungleSound('unlock');
+      playJungleSound("unlock");
       setTimeout(() => setCelebrating(null), 4000);
     } else {
-      playJungleSound('click');
+      playJungleSound("click");
     }
   };
 
   const getProgressPercentage = (achievement: JungleAchievement) => {
-    return Math.min((achievement.currentProgress / achievement.requirements) * 100, 100);
+    return Math.min(
+      (achievement.currentProgress / achievement.requirements) * 100,
+      100,
+    );
   };
 
   // Jungle-themed progress overview
@@ -612,14 +711,11 @@ const EnhancedJungleAchievementSystemComponent = ({
     <div className="space-y-6">
       {/* Jungle Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 px-2 md:px-0">
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Card className="bg-gradient-to-br from-jungle to-jungle-dark text-white shadow-xl border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-transparent" />
             <CardContent className="p-4 text-center relative z-10">
-              <motion.div 
+              <motion.div
                 className="text-3xl mb-2"
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -634,14 +730,11 @@ const EnhancedJungleAchievementSystemComponent = ({
           </Card>
         </motion.div>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Card className="bg-gradient-to-br from-sunshine to-sunshine-dark text-white shadow-xl border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-transparent" />
             <CardContent className="p-4 text-center relative z-10">
-              <motion.div 
+              <motion.div
                 className="text-3xl mb-2"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -649,21 +742,21 @@ const EnhancedJungleAchievementSystemComponent = ({
                 ⚡
               </motion.div>
               <div className="text-2xl md:text-3xl font-bold mb-1">
-                <AnimatedCounter value={jungleStats.explorationSpeed} suffix="/hr" />
+                <AnimatedCounter
+                  value={jungleStats.explorationSpeed}
+                  suffix="/hr"
+                />
               </div>
               <p className="text-sm opacity-90">Exploration Speed!</p>
             </CardContent>
           </Card>
         </motion.div>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Card className="bg-gradient-to-br from-sky to-sky-dark text-white shadow-xl border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent" />
             <CardContent className="p-4 text-center relative z-10">
-              <motion.div 
+              <motion.div
                 className="text-3xl mb-2"
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -678,14 +771,11 @@ const EnhancedJungleAchievementSystemComponent = ({
           </Card>
         </motion.div>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Card className="bg-gradient-to-br from-playful-purple to-purple-600 text-white shadow-xl border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-transparent" />
             <CardContent className="p-4 text-center relative z-10">
-              <motion.div 
+              <motion.div
                 className="text-3xl mb-2"
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -710,7 +800,7 @@ const EnhancedJungleAchievementSystemComponent = ({
         <Card className="bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5 border-jungle/20 shadow-xl mx-2 md:mx-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-jungle-dark text-xl">
-              <motion.div 
+              <motion.div
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
@@ -722,14 +812,16 @@ const EnhancedJungleAchievementSystemComponent = ({
           <CardContent>
             <div className="grid grid-cols-7 gap-2 h-32 md:h-40 mb-4">
               {jungleStats.weeklyAdventures.map((discoveries, index) => {
-                const maxDiscoveries = Math.max(...jungleStats.weeklyAdventures) || 1;
-                const height = maxDiscoveries > 0 ? (discoveries / maxDiscoveries) * 100 : 0;
+                const maxDiscoveries =
+                  Math.max(...jungleStats.weeklyAdventures) || 1;
+                const height =
+                  maxDiscoveries > 0 ? (discoveries / maxDiscoveries) * 100 : 0;
                 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
                 const jungleEmojis = ["🌱", "🌿", "🍃", "🌳", "🦋", "🌺", "🦜"];
 
                 return (
-                  <motion.div 
-                    key={index} 
+                  <motion.div
+                    key={index}
                     className="flex flex-col items-center"
                     whileHover={{ scale: 1.1 }}
                     initial={{ opacity: 0, y: 20 }}
@@ -745,15 +837,23 @@ const EnhancedJungleAchievementSystemComponent = ({
                         transition={{ duration: 1, delay: index * 0.1 }}
                       />
                     </div>
-                    <p className="text-xs text-jungle mt-1 font-medium">{days[index]}</p>
-                    <motion.p 
+                    <p className="text-xs text-jungle mt-1 font-medium">
+                      {days[index]}
+                    </p>
+                    <motion.p
                       className="text-lg"
                       animate={{ rotate: [0, 10, -10, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: index * 0.2,
+                      }}
                     >
                       {jungleEmojis[index]}
                     </motion.p>
-                    <p className="text-sm font-bold text-jungle-dark">{discoveries}</p>
+                    <p className="text-sm font-bold text-jungle-dark">
+                      {discoveries}
+                    </p>
                   </motion.div>
                 );
               })}
@@ -778,7 +878,7 @@ const EnhancedJungleAchievementSystemComponent = ({
         <Card className="bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50 border-sunshine/20 shadow-xl mx-2 md:mx-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-sunshine-dark text-xl">
-              <motion.div 
+              <motion.div
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
               >
@@ -801,8 +901,8 @@ const EnhancedJungleAchievementSystemComponent = ({
                 const gradientClass = colors[index % colors.length];
 
                 return (
-                  <motion.div 
-                    key={region.region} 
+                  <motion.div
+                    key={region.region}
                     className="space-y-3"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -819,18 +919,22 @@ const EnhancedJungleAchievementSystemComponent = ({
                           <span className="text-xl">{region.icon}</span>
                         </motion.div>
                         <div>
-                          <span className="font-bold text-gray-800 text-lg">{region.region}</span>
-                          <p className="text-sm text-gray-600">A magical place of discovery! ✨</p>
+                          <span className="font-bold text-gray-800 text-lg">
+                            {region.region}
+                          </span>
+                          <p className="text-sm text-gray-600">
+                            A magical place of discovery! ✨
+                          </p>
                         </div>
                       </div>
                       <div className="flex flex-col md:flex-row gap-2 text-sm">
-                        <motion.span 
+                        <motion.span
                           className="bg-jungle/20 px-3 py-1 rounded-full text-jungle font-semibold"
                           whileHover={{ scale: 1.05 }}
                         >
                           {region.wordsDiscovered} words!
                         </motion.span>
-                        <motion.span 
+                        <motion.span
                           className="bg-sunshine/20 px-3 py-1 rounded-full text-sunshine-dark font-semibold"
                           whileHover={{ scale: 1.05 }}
                         >
@@ -842,7 +946,9 @@ const EnhancedJungleAchievementSystemComponent = ({
                       <motion.div
                         className={`h-full bg-gradient-to-r ${gradientClass} rounded-full shadow-lg`}
                         initial={{ width: 0 }}
-                        animate={{ width: `${(region.wordsDiscovered / jungleStats.totalWordsExplored) * 100}%` }}
+                        animate={{
+                          width: `${(region.wordsDiscovered / jungleStats.totalWordsExplored) * 100}%`,
+                        }}
                         transition={{ duration: 1, delay: index * 0.2 }}
                       />
                     </div>
@@ -867,7 +973,7 @@ const EnhancedJungleAchievementSystemComponent = ({
         <Card className="bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 border-sky/20 shadow-xl mx-1 md:mx-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-sky-dark text-lg">
-              <motion.div 
+              <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
@@ -885,7 +991,8 @@ const EnhancedJungleAchievementSystemComponent = ({
               <div className="grid grid-cols-10 gap-1 justify-center">
                 {jungleStats.adventureMap.map((day, index) => {
                   const trailEmojis = ["🥾", "🌿", "🦋", "🌺", "🍃"];
-                  const randomEmoji = trailEmojis[Math.floor(Math.random() * trailEmojis.length)];
+                  const randomEmoji =
+                    trailEmojis[Math.floor(Math.random() * trailEmojis.length)];
 
                   return (
                     <motion.div
@@ -898,7 +1005,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                             : day.discoveries > 4
                               ? "bg-gradient-to-br from-sky to-sky-dark text-white shadow-md"
                               : "bg-gradient-to-br from-sunshine to-sunshine-dark text-white shadow-sm"
-                          : "bg-gray-100 text-gray-400 hover:bg-gray-200"
+                          : "bg-gray-100 text-gray-400 hover:bg-gray-200",
                       )}
                       title={`${day.date}: ${day.explored ? `${day.discoveries} discoveries! ${randomEmoji}` : "Unexplored territory 😴"}`}
                       whileHover={{ scale: 1.2, zIndex: 10 }}
@@ -921,22 +1028,55 @@ const EnhancedJungleAchievementSystemComponent = ({
 
               <div className="grid grid-cols-2 md:flex md:justify-center gap-3 text-sm">
                 {[
-                  { icon: "💤", bg: "bg-gray-100", label: "Resting", color: "text-gray-600" },
-                  { icon: "✨", bg: "bg-sunshine", label: "Exploring", color: "text-white" },
-                  { icon: "⭐", bg: "bg-sky", label: "Great Day", color: "text-white" },
-                  { icon: "🏆", bg: "bg-jungle", label: "Epic Adventure!", color: "text-white" }
+                  {
+                    icon: "💤",
+                    bg: "bg-gray-100",
+                    label: "Resting",
+                    color: "text-gray-600",
+                  },
+                  {
+                    icon: "✨",
+                    bg: "bg-sunshine",
+                    label: "Exploring",
+                    color: "text-white",
+                  },
+                  {
+                    icon: "⭐",
+                    bg: "bg-sky",
+                    label: "Great Day",
+                    color: "text-white",
+                  },
+                  {
+                    icon: "🏆",
+                    bg: "bg-jungle",
+                    label: "Epic Adventure!",
+                    color: "text-white",
+                  },
                 ].map((item, index) => (
-                  <motion.div 
+                  <motion.div
                     key={item.label}
                     className="flex items-center gap-2"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
-                    <div className={`w-5 h-5 ${item.bg} rounded-md flex items-center justify-center text-xs ${item.color}`}>
+                    <div
+                      className={`w-5 h-5 ${item.bg} rounded-md flex items-center justify-center text-xs ${item.color}`}
+                    >
                       {item.icon}
                     </div>
-                    <span className={item.color.replace('text-white', 'text-gray-700')} style={{color: item.color === 'text-white' ? '#374151' : undefined}}>{item.label}</span>
+                    <span
+                      className={item.color.replace(
+                        "text-white",
+                        "text-gray-700",
+                      )}
+                      style={{
+                        color:
+                          item.color === "text-white" ? "#374151" : undefined,
+                      }}
+                    >
+                      {item.label}
+                    </span>
                   </motion.div>
                 ))}
               </div>
@@ -948,29 +1088,31 @@ const EnhancedJungleAchievementSystemComponent = ({
   );
 
   return (
-    <div className={cn(
-      "min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5",
-      "jungle-achievement-system",
-      animPrefs.getAnimationClass('high')
-    )}>
+    <div
+      className={cn(
+        "min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5",
+        "jungle-achievement-system",
+        animPrefs.getAnimationClass("high"),
+      )}
+    >
       <div className="space-y-6 relative">
         {/* Decorative jungle elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <motion.div 
+          <motion.div
             className="absolute top-10 left-10 text-4xl opacity-20"
             animate={{ rotate: [0, 10, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
             🌿
           </motion.div>
-          <motion.div 
+          <motion.div
             className="absolute top-20 right-20 text-3xl opacity-20"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
             🦋
           </motion.div>
-          <motion.div 
+          <motion.div
             className="absolute bottom-20 left-20 text-5xl opacity-10"
             animate={{ rotate: [0, -5, 5, 0] }}
             transition={{ duration: 5, repeat: Infinity }}
@@ -980,20 +1122,20 @@ const EnhancedJungleAchievementSystemComponent = ({
         </div>
 
         {/* Jungle-themed Header */}
-        <motion.div 
+        <motion.div
           className="text-center px-4 relative z-10"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.h2 
+          <motion.h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-jungle via-sunshine to-sky bg-clip-text text-transparent mb-4 leading-tight"
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             🏆 Your Jungle Learning Adventure! 🌳
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-gray-700 mb-6 text-lg px-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -1005,13 +1147,37 @@ const EnhancedJungleAchievementSystemComponent = ({
 
         {/* Enhanced Jungle Tabs */}
         <div className="relative z-10">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 bg-gradient-to-r from-jungle/10 via-sunshine/10 to-sky/10 h-auto p-2 rounded-2xl">
               {[
-                { value: "achievements", icon: "🏆", label: "Trophies", gradient: "from-jungle to-jungle-dark" },
-                { value: "progress", icon: "📊", label: "Progress", gradient: "from-sky to-sky-dark" },
-                { value: "regions", icon: "🗺️", label: "Regions", gradient: "from-sunshine to-sunshine-dark" },
-                { value: "adventures", icon: "🧭", label: "Adventures", gradient: "from-playful-purple to-purple-600" }
+                {
+                  value: "achievements",
+                  icon: "🏆",
+                  label: "Trophies",
+                  gradient: "from-jungle to-jungle-dark",
+                },
+                {
+                  value: "progress",
+                  icon: "📊",
+                  label: "Progress",
+                  gradient: "from-sky to-sky-dark",
+                },
+                {
+                  value: "regions",
+                  icon: "🗺️",
+                  label: "Regions",
+                  gradient: "from-sunshine to-sunshine-dark",
+                },
+                {
+                  value: "adventures",
+                  icon: "🧭",
+                  label: "Adventures",
+                  gradient: "from-playful-purple to-purple-600",
+                },
               ].map((tab) => (
                 <TabsTrigger
                   key={tab.value}
@@ -1019,14 +1185,16 @@ const EnhancedJungleAchievementSystemComponent = ({
                   className={cn(
                     "flex flex-col md:flex-row items-center gap-2 transition-all duration-300",
                     "data-[state=active]:text-white text-sm py-3 px-3 rounded-xl",
-                    activeTab === tab.value 
-                      ? `bg-gradient-to-r ${tab.gradient} shadow-lg scale-105` 
-                      : "hover:scale-105"
+                    activeTab === tab.value
+                      ? `bg-gradient-to-r ${tab.gradient} shadow-lg scale-105`
+                      : "hover:scale-105",
                   )}
                 >
-                  <motion.span 
+                  <motion.span
                     className="text-lg"
-                    animate={activeTab === tab.value ? { rotate: [0, 10, -10, 0] } : {}}
+                    animate={
+                      activeTab === tab.value ? { rotate: [0, 10, -10, 0] } : {}
+                    }
                     transition={{ duration: 2, repeat: Infinity }}
                   >
                     {tab.icon}
@@ -1058,7 +1226,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                   >
                     <Card className="bg-gradient-to-r from-jungle to-jungle-dark text-white shadow-xl border-0">
                       <CardContent className="p-4 text-center">
-                        <motion.div 
+                        <motion.div
                           className="text-3xl font-bold mb-1"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
@@ -1066,7 +1234,9 @@ const EnhancedJungleAchievementSystemComponent = ({
                         >
                           {unlockedAchievements.length}
                         </motion.div>
-                        <div className="text-sm opacity-90">🏆 Jungle Trophies!</div>
+                        <div className="text-sm opacity-90">
+                          🏆 Jungle Trophies!
+                        </div>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -1077,15 +1247,21 @@ const EnhancedJungleAchievementSystemComponent = ({
                   >
                     <Card className="bg-gradient-to-r from-sunshine to-sunshine-dark text-white shadow-xl border-0">
                       <CardContent className="p-4 text-center">
-                        <motion.div 
+                        <motion.div
                           className="text-3xl font-bold mb-1"
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
-                          transition={{ duration: 0.5, delay: 0.1, type: "spring" }}
+                          transition={{
+                            duration: 0.5,
+                            delay: 0.1,
+                            type: "spring",
+                          }}
                         >
                           {totalTreasurePoints}
                         </motion.div>
-                        <div className="text-sm opacity-90">💎 Treasure Points!</div>
+                        <div className="text-sm opacity-90">
+                          💎 Treasure Points!
+                        </div>
                       </CardContent>
                     </Card>
                   </motion.div>
@@ -1100,17 +1276,21 @@ const EnhancedJungleAchievementSystemComponent = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <Button
-                        variant={selectedCategory === category.id ? "default" : "outline"}
+                        variant={
+                          selectedCategory === category.id
+                            ? "default"
+                            : "outline"
+                        }
                         size="sm"
                         onClick={() => {
                           setSelectedCategory(category.id);
-                          playJungleSound('click');
+                          playJungleSound("click");
                         }}
                         className={cn(
                           "flex items-center gap-2 transition-all text-sm px-4 py-2 rounded-xl",
                           selectedCategory === category.id
                             ? "bg-gradient-to-r from-jungle to-jungle-dark text-white shadow-lg"
-                            : "hover:bg-jungle/10 hover:border-jungle/30"
+                            : "hover:bg-jungle/10 hover:border-jungle/30",
                         )}
                       >
                         <span>{category.jungleIcon}</span>
@@ -1127,13 +1307,13 @@ const EnhancedJungleAchievementSystemComponent = ({
                       size="sm"
                       onClick={() => {
                         setShowUnlockables(!showUnlockables);
-                        playJungleSound('explore');
+                        playJungleSound("explore");
                       }}
                       className={cn(
                         "flex items-center gap-2 transition-all text-sm px-4 py-2 rounded-xl",
                         showUnlockables
                           ? "bg-gradient-to-r from-playful-purple to-purple-600 text-white shadow-lg"
-                          : "hover:bg-purple-100 hover:border-purple-300"
+                          : "hover:bg-purple-100 hover:border-purple-300",
                       )}
                     >
                       <Gift className="w-4 h-4" />
@@ -1147,9 +1327,12 @@ const EnhancedJungleAchievementSystemComponent = ({
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2 md:px-0">
                     <AnimatePresence>
                       {filteredAchievements.map((achievement, index) => {
-                        const progressPercentage = getProgressPercentage(achievement);
+                        const progressPercentage =
+                          getProgressPercentage(achievement);
                         const isComplete = progressPercentage >= 100;
-                        const difficultyStyle = getDifficultyJungleStyle(achievement.difficulty);
+                        const difficultyStyle = getDifficultyJungleStyle(
+                          achievement.difficulty,
+                        );
 
                         return (
                           <motion.div
@@ -1164,64 +1347,96 @@ const EnhancedJungleAchievementSystemComponent = ({
                             <Card
                               className={cn(
                                 "cursor-pointer border-2 overflow-hidden relative jungle-achievement-card",
-                                !mobilePerf.isMobile && "transition-all duration-300",
+                                !mobilePerf.isMobile &&
+                                  "transition-all duration-300",
                                 achievement.unlocked
                                   ? `bg-gradient-to-br ${difficultyStyle.gradient} text-white shadow-2xl ${difficultyStyle.bgGlow} border-transparent unlocked`
                                   : `bg-white hover:bg-green-50 border-dashed ${difficultyStyle.borderGlow} hover:border-jungle/30 hover:shadow-lg`,
-                                mobilePerf.reducedMotion && "motion-reduce"
+                                mobilePerf.reducedMotion && "motion-reduce",
                               )}
-                              onClick={() => handleJungleAchievementClick(achievement)}
+                              onClick={() =>
+                                handleJungleAchievementClick(achievement)
+                              }
                             >
                               {/* Magical particles for unlocked achievements - optimized for performance */}
-                              {achievement.unlocked && !mobilePerf.isMobile && animPrefs.maxAnimationComplexity === 'high' && (
-                                <div className="absolute inset-0 jungle-particles">
-                                  {[...Array(mobilePerf.isLowEndDevice ? 2 : 5)].map((_, i) => (
-                                    <motion.div
-                                      key={i}
-                                      className="absolute w-1 h-1 bg-white/30 rounded-full jungle-particle"
-                                      style={{
-                                        left: `${20 + i * 15}%`,
-                                        top: `${20 + i * 10}%`,
-                                      }}
-                                      animate={!mobilePerf.reducedMotion ? {
-                                        y: [0, -10, 0],
-                                        opacity: [0.3, 1, 0.3],
-                                      } : {}}
-                                      transition={{
-                                        duration: animPrefs.getTransitionDuration(2000),
-                                        repeat: Infinity,
-                                        delay: i * 0.2,
-                                      }}
-                                    />
-                                  ))}
-                                </div>
-                              )}
+                              {achievement.unlocked &&
+                                !mobilePerf.isMobile &&
+                                animPrefs.maxAnimationComplexity === "high" && (
+                                  <div className="absolute inset-0 jungle-particles">
+                                    {[
+                                      ...Array(
+                                        mobilePerf.isLowEndDevice ? 2 : 5,
+                                      ),
+                                    ].map((_, i) => (
+                                      <motion.div
+                                        key={i}
+                                        className="absolute w-1 h-1 bg-white/30 rounded-full jungle-particle"
+                                        style={{
+                                          left: `${20 + i * 15}%`,
+                                          top: `${20 + i * 10}%`,
+                                        }}
+                                        animate={
+                                          !mobilePerf.reducedMotion
+                                            ? {
+                                                y: [0, -10, 0],
+                                                opacity: [0.3, 1, 0.3],
+                                              }
+                                            : {}
+                                        }
+                                        transition={{
+                                          duration:
+                                            animPrefs.getTransitionDuration(
+                                              2000,
+                                            ),
+                                          repeat: Infinity,
+                                          delay: i * 0.2,
+                                        }}
+                                      />
+                                    ))}
+                                  </div>
+                                )}
 
                               <CardHeader className="pb-3">
                                 <div className="flex items-center justify-between mb-2">
                                   <div className="flex items-center gap-2">
-                                    <motion.div 
+                                    <motion.div
                                       className="text-4xl"
-                                      animate={achievement.unlocked ? { rotate: [0, 10, -10, 0] } : {}}
-                                      transition={{ duration: 2, repeat: Infinity }}
+                                      animate={
+                                        achievement.unlocked
+                                          ? { rotate: [0, 10, -10, 0] }
+                                          : {}
+                                      }
+                                      transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                      }}
                                     >
                                       {achievement.icon}
                                     </motion.div>
-                                    <motion.div 
+                                    <motion.div
                                       className="text-2xl"
                                       animate={{ scale: [1, 1.2, 1] }}
-                                      transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                                      transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        delay: 0.5,
+                                      }}
                                     >
                                       {achievement.jungleIcon}
                                     </motion.div>
                                   </div>
                                   <div className="flex items-center gap-2">
-                                    <span className="text-2xl">{difficultyStyle.icon}</span>
+                                    <span className="text-2xl">
+                                      {difficultyStyle.icon}
+                                    </span>
                                     {achievement.unlocked && (
                                       <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        transition={{ type: "spring", duration: 0.5 }}
+                                        transition={{
+                                          type: "spring",
+                                          duration: 0.5,
+                                        }}
                                       >
                                         <Check className="w-5 h-5 text-green-300" />
                                       </motion.div>
@@ -1229,7 +1444,10 @@ const EnhancedJungleAchievementSystemComponent = ({
                                     {!achievement.unlocked && isComplete && (
                                       <motion.div
                                         animate={{ rotate: [0, 360] }}
-                                        transition={{ duration: 2, repeat: Infinity }}
+                                        transition={{
+                                          duration: 2,
+                                          repeat: Infinity,
+                                        }}
                                       >
                                         <Sparkles className="w-5 h-5 text-yellow-500" />
                                       </motion.div>
@@ -1239,29 +1457,37 @@ const EnhancedJungleAchievementSystemComponent = ({
                                     )}
                                   </div>
                                 </div>
-                                <CardTitle className={cn(
-                                  "text-lg leading-tight",
-                                  achievement.unlocked ? "text-white" : "text-gray-800"
-                                )}>
+                                <CardTitle
+                                  className={cn(
+                                    "text-lg leading-tight",
+                                    achievement.unlocked
+                                      ? "text-white"
+                                      : "text-gray-800",
+                                  )}
+                                >
                                   {achievement.name}
                                 </CardTitle>
                               </CardHeader>
 
                               <CardContent className="space-y-4">
-                                <p className={cn(
-                                  "text-sm leading-relaxed",
-                                  achievement.unlocked ? "text-white/90" : "text-gray-600"
-                                )}>
+                                <p
+                                  className={cn(
+                                    "text-sm leading-relaxed",
+                                    achievement.unlocked
+                                      ? "text-white/90"
+                                      : "text-gray-600",
+                                  )}
+                                >
                                   {achievement.description}
                                 </p>
 
                                 {achievement.jungleStory && (
-                                  <motion.div 
+                                  <motion.div
                                     className={cn(
                                       "text-xs italic p-2 rounded-lg",
-                                      achievement.unlocked 
-                                        ? "bg-white/20 text-white/80" 
-                                        : "bg-green-50 text-green-700"
+                                      achievement.unlocked
+                                        ? "bg-white/20 text-white/80"
+                                        : "bg-green-50 text-green-700",
                                     )}
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -1274,28 +1500,42 @@ const EnhancedJungleAchievementSystemComponent = ({
                                 {!achievement.unlocked && (
                                   <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
-                                      <span className="text-gray-600">Progress</span>
+                                      <span className="text-gray-600">
+                                        Progress
+                                      </span>
                                       <span className="font-semibold text-gray-800">
-                                        {achievement.currentProgress}/{achievement.requirements}
+                                        {achievement.currentProgress}/
+                                        {achievement.requirements}
                                       </span>
                                     </div>
                                     <div className="relative">
-                                      <Progress value={progressPercentage} className="h-3" />
+                                      <Progress
+                                        value={progressPercentage}
+                                        className="h-3"
+                                      />
                                       {progressPercentage > 0 && (
                                         <motion.div
                                           className="absolute top-0 left-0 h-3 bg-gradient-to-r from-jungle/20 to-transparent rounded-full"
                                           initial={{ width: 0 }}
-                                          animate={{ width: `${progressPercentage}%` }}
-                                          transition={{ duration: 1, delay: 0.5 }}
+                                          animate={{
+                                            width: `${progressPercentage}%`,
+                                          }}
+                                          transition={{
+                                            duration: 1,
+                                            delay: 0.5,
+                                          }}
                                         />
                                       )}
                                     </div>
                                     {isComplete && (
-                                      <motion.div 
+                                      <motion.div
                                         className="text-center"
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        transition={{ type: "spring", duration: 0.5 }}
+                                        transition={{
+                                          type: "spring",
+                                          duration: 0.5,
+                                        }}
                                       >
                                         <Badge className="bg-jungle text-white animate-pulse shadow-lg">
                                           Ready to Unlock! ����
@@ -1306,7 +1546,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                                 )}
 
                                 {achievement.unlocked && achievement.reward && (
-                                  <motion.div 
+                                  <motion.div
                                     className="bg-white/20 rounded-lg p-3"
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -1317,18 +1557,22 @@ const EnhancedJungleAchievementSystemComponent = ({
                                     </div>
                                     <div className="text-sm text-white flex items-center gap-2">
                                       {achievement.reward.icon && (
-                                        <span className="text-lg">{achievement.reward.icon}</span>
+                                        <span className="text-lg">
+                                          {achievement.reward.icon}
+                                        </span>
                                       )}
                                       {achievement.reward.item}
                                     </div>
                                   </motion.div>
                                 )}
 
-                                {achievement.unlocked && achievement.dateUnlocked && (
-                                  <div className="text-xs text-white/70">
-                                    🗓️ Discovered: {achievement.dateUnlocked.toLocaleDateString()}
-                                  </div>
-                                )}
+                                {achievement.unlocked &&
+                                  achievement.dateUnlocked && (
+                                    <div className="text-xs text-white/70">
+                                      🗓️ Discovered:{" "}
+                                      {achievement.dateUnlocked.toLocaleDateString()}
+                                    </div>
+                                  )}
                               </CardContent>
                             </Card>
                           </motion.div>
@@ -1340,14 +1584,14 @@ const EnhancedJungleAchievementSystemComponent = ({
 
                 {/* Jungle Unlockables */}
                 {showUnlockables && (
-                  <motion.div 
+                  <motion.div
                     className="space-y-6"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
                   >
                     <div className="text-center">
-                      <motion.h3 
+                      <motion.h3
                         className="text-3xl font-bold text-jungle-dark mb-4"
                         initial={{ y: -20 }}
                         animate={{ y: 0 }}
@@ -1355,20 +1599,21 @@ const EnhancedJungleAchievementSystemComponent = ({
                       >
                         🎁 Magical Jungle Treasures
                       </motion.h3>
-                      <motion.p 
+                      <motion.p
                         className="text-gray-600 text-lg"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
                       >
-                        Complete adventures to unlock these amazing jungle treasures! ✨
+                        Complete adventures to unlock these amazing jungle
+                        treasures! ✨
                       </motion.p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-2 md:px-0">
                       {jungleUnlockables.map((treasure, index) => {
                         const rarityStyle = getRarityStyle(treasure.rarity);
-                        
+
                         return (
                           <motion.div
                             key={treasure.id}
@@ -1378,12 +1623,14 @@ const EnhancedJungleAchievementSystemComponent = ({
                             whileHover={{ scale: 1.05, y: -10 }}
                             whileTap={{ scale: 0.95 }}
                           >
-                            <Card className={cn(
-                              "text-center transition-all duration-300 border-2 overflow-hidden relative",
-                              treasure.unlocked
-                                ? `bg-gradient-to-br ${rarityStyle.gradient} text-white shadow-2xl ${rarityStyle.glow}`
-                                : `bg-white hover:bg-green-50 border-dashed ${rarityStyle.border} hover:shadow-lg`
-                            )}>
+                            <Card
+                              className={cn(
+                                "text-center transition-all duration-300 border-2 overflow-hidden relative",
+                                treasure.unlocked
+                                  ? `bg-gradient-to-br ${rarityStyle.gradient} text-white shadow-2xl ${rarityStyle.glow}`
+                                  : `bg-white hover:bg-green-50 border-dashed ${rarityStyle.border} hover:shadow-lg`,
+                              )}
+                            >
                               {/* Treasure sparkles */}
                               {treasure.unlocked && (
                                 <div className="absolute inset-0">
@@ -1411,55 +1658,78 @@ const EnhancedJungleAchievementSystemComponent = ({
 
                               <CardContent className="p-5 relative z-10">
                                 <div className="flex items-center justify-center gap-2 mb-3">
-                                  <motion.div 
+                                  <motion.div
                                     className="text-5xl"
-                                    animate={treasure.unlocked ? { rotate: [0, 10, -10, 0] } : {}}
-                                    transition={{ duration: 2, repeat: Infinity }}
+                                    animate={
+                                      treasure.unlocked
+                                        ? { rotate: [0, 10, -10, 0] }
+                                        : {}
+                                    }
+                                    transition={{
+                                      duration: 2,
+                                      repeat: Infinity,
+                                    }}
                                   >
                                     {treasure.icon}
                                   </motion.div>
-                                  <motion.div 
+                                  <motion.div
                                     className="text-3xl"
                                     animate={{ y: [0, -5, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                                    transition={{
+                                      duration: 2,
+                                      repeat: Infinity,
+                                      delay: 0.5,
+                                    }}
                                   >
                                     {treasure.jungleIcon}
                                   </motion.div>
                                 </div>
 
-                                <Badge 
+                                <Badge
                                   className={cn(
                                     "mb-3 text-xs px-2 py-1",
-                                    treasure.rarity === "legendary" && "bg-gradient-to-r from-yellow-400 to-orange-500 text-white animate-pulse",
-                                    treasure.rarity === "epic" && "bg-gradient-to-r from-purple-500 to-purple-700 text-white",
-                                    treasure.rarity === "rare" && "bg-gradient-to-r from-blue-500 to-blue-700 text-white",
-                                    treasure.rarity === "common" && "bg-gray-500 text-white"
+                                    treasure.rarity === "legendary" &&
+                                      "bg-gradient-to-r from-yellow-400 to-orange-500 text-white animate-pulse",
+                                    treasure.rarity === "epic" &&
+                                      "bg-gradient-to-r from-purple-500 to-purple-700 text-white",
+                                    treasure.rarity === "rare" &&
+                                      "bg-gradient-to-r from-blue-500 to-blue-700 text-white",
+                                    treasure.rarity === "common" &&
+                                      "bg-gray-500 text-white",
                                   )}
                                 >
                                   {treasure.rarity.toUpperCase()}
                                 </Badge>
 
-                                <h4 className={cn(
-                                  "font-bold mb-3 text-lg",
-                                  treasure.unlocked ? "text-white" : "text-gray-800"
-                                )}>
+                                <h4
+                                  className={cn(
+                                    "font-bold mb-3 text-lg",
+                                    treasure.unlocked
+                                      ? "text-white"
+                                      : "text-gray-800",
+                                  )}
+                                >
                                   {treasure.name}
                                 </h4>
 
-                                <p className={cn(
-                                  "text-sm mb-4 leading-relaxed",
-                                  treasure.unlocked ? "text-white/90" : "text-gray-600"
-                                )}>
+                                <p
+                                  className={cn(
+                                    "text-sm mb-4 leading-relaxed",
+                                    treasure.unlocked
+                                      ? "text-white/90"
+                                      : "text-gray-600",
+                                  )}
+                                >
                                   {treasure.description}
                                 </p>
 
                                 {treasure.jungleStory && (
-                                  <motion.div 
+                                  <motion.div
                                     className={cn(
                                       "text-xs italic p-2 rounded-lg mb-4",
-                                      treasure.unlocked 
-                                        ? "bg-white/20 text-white/80" 
-                                        : "bg-green-50 text-green-700"
+                                      treasure.unlocked
+                                        ? "bg-white/20 text-white/80"
+                                        : "bg-green-50 text-green-700",
                                     )}
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -1470,11 +1740,16 @@ const EnhancedJungleAchievementSystemComponent = ({
                                 )}
 
                                 {!treasure.unlocked && treasure.unlockedBy && (
-                                  <Badge variant="outline" className="text-xs mb-2">
+                                  <Badge
+                                    variant="outline"
+                                    className="text-xs mb-2"
+                                  >
                                     <Lock className="w-3 h-3 mr-1" />
-                                    Complete "{
-                                      jungleAchievements.find(a => a.id === treasure.unlockedBy)?.name || "Mystery Quest"
-                                    }"
+                                    Complete "
+                                    {jungleAchievements.find(
+                                      (a) => a.id === treasure.unlockedBy,
+                                    )?.name || "Mystery Quest"}
+                                    "
                                   </Badge>
                                 )}
 
@@ -1482,7 +1757,10 @@ const EnhancedJungleAchievementSystemComponent = ({
                                   <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    transition={{ type: "spring", duration: 0.5 }}
+                                    transition={{
+                                      type: "spring",
+                                      duration: 0.5,
+                                    }}
                                   >
                                     <Badge className="bg-white/20 text-white border-white/30">
                                       <Check className="w-3 h-3 mr-1" />
@@ -1544,7 +1822,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                   ))}
                 </div>
 
-                <motion.div 
+                <motion.div
                   className="text-8xl mb-4"
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 1, repeat: Infinity }}
@@ -1552,7 +1830,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                   {celebrating.icon}
                 </motion.div>
 
-                <motion.h3 
+                <motion.h3
                   className="text-2xl font-bold mb-4"
                   initial={{ y: 20 }}
                   animate={{ y: 0 }}
@@ -1561,7 +1839,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                   🎉 Achievement Unlocked! 🎉
                 </motion.h3>
 
-                <motion.p 
+                <motion.p
                   className="text-xl font-semibold mb-2"
                   initial={{ y: 20 }}
                   animate={{ y: 0 }}
@@ -1570,7 +1848,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                   {celebrating.name}
                 </motion.p>
 
-                <motion.p 
+                <motion.p
                   className="text-white/90 mb-6"
                   initial={{ y: 20 }}
                   animate={{ y: 0 }}
@@ -1580,13 +1858,15 @@ const EnhancedJungleAchievementSystemComponent = ({
                 </motion.p>
 
                 {celebrating.reward && (
-                  <motion.div 
+                  <motion.div
                     className="bg-white/20 rounded-lg p-4 mb-4"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.6, type: "spring" }}
                   >
-                    <div className="text-sm font-semibold mb-1">🎁 Jungle Reward:</div>
+                    <div className="text-sm font-semibold mb-1">
+                      🎁 Jungle Reward:
+                    </div>
                     <div className="text-lg">{celebrating.reward.item}</div>
                   </motion.div>
                 )}
@@ -1612,4 +1892,6 @@ const EnhancedJungleAchievementSystemComponent = ({
 };
 
 // Memoize the component for better performance
-export const EnhancedJungleAchievementSystem = React.memo(EnhancedJungleAchievementSystemComponent);
+export const EnhancedJungleAchievementSystem = React.memo(
+  EnhancedJungleAchievementSystemComponent,
+);
