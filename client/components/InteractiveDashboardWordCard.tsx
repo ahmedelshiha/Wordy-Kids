@@ -826,7 +826,7 @@ export function InteractiveDashboardWordCard({
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
-        journeyAchievements: allSessionAchievements.length,
+        sessionAchievements: allSessionAchievements.length,
         totalWordsCompleted,
       });
       return;
