@@ -2978,7 +2978,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       ) {
                                                         return (
                                                           <div className="text-xs text-orange-600 font-medium">
-                                                            📚 Review
+                                                            ��� Review
                                                           </div>
                                                         );
                                                       } else {
@@ -3704,12 +3704,12 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
 
                             <TabsContent value="progress">
-                              <AchievementSystem
+                              <EnhancedJungleAchievementSystem
                                 onUnlock={(achievement) => {
                                   setFeedback({
                                     type: "celebration",
-                                    title: "Achievement Unlocked! 🏆",
-                                    message: `You earned: ${achievement.name}`,
+                                    title: "🌟 Jungle Achievement Unlocked! 🏆",
+                                    message: `You discovered: ${achievement.name} in the magical jungle!`,
                                     onContinue: () => setFeedback(null),
                                   });
                                 }}
