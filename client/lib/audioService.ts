@@ -332,12 +332,12 @@ export class AudioService {
     if (!this.isSupported || !this.speechSynthesis) {
       console.warn("Speech synthesis not supported or available");
       const supportError = {
-        type: 'unsupported_browser',
+        type: "unsupported_browser",
         word: word,
         isSupported: this.isSupported,
         hasSpeechSynthesis: !!this.speechSynthesis,
         userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       options.onError?.(supportError);
       return;
@@ -467,28 +467,34 @@ export class AudioService {
       } catch (speakError) {
         console.error("Error calling speak:", speakError);
         const speakCallError = {
-          type: 'speak_call_error',
+          type: "speak_call_error",
           word: word,
-          originalError: speakError instanceof Error ? {
-            name: speakError.name,
-            message: speakError.message,
-            stack: speakError.stack
-          } : speakError,
-          timestamp: new Date().toISOString()
+          originalError:
+            speakError instanceof Error
+              ? {
+                  name: speakError.name,
+                  message: speakError.message,
+                  stack: speakError.stack,
+                }
+              : speakError,
+          timestamp: new Date().toISOString(),
         };
         onError?.(speakCallError);
       }
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       const generalError = {
-        type: 'general_error',
+        type: "general_error",
         word: word,
-        originalError: error instanceof Error ? {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        } : error,
-        timestamp: new Date().toISOString()
+        originalError:
+          error instanceof Error
+            ? {
+                name: error.name,
+                message: error.message,
+                stack: error.stack,
+              }
+            : error,
+        timestamp: new Date().toISOString(),
       };
       options.onError?.(generalError);
     }
@@ -552,7 +558,7 @@ export class AudioService {
           type: event.type,
           timeStamp: event.timeStamp,
           word: word,
-          voice: voice?.name || 'default',
+          voice: voice?.name || "default",
           voiceURI: voice?.voiceURI,
           speechState: {
             speaking: this.speechSynthesis.speaking,

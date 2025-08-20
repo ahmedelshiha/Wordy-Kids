@@ -369,9 +369,9 @@ export class EnhancedAudioService {
     if (!this.isEnabled) {
       console.log("Audio service is disabled");
       const disabledError = {
-        type: 'service_disabled',
+        type: "service_disabled",
         word: word,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       options.onError?.(disabledError);
       return;
@@ -381,12 +381,12 @@ export class EnhancedAudioService {
     if (!("speechSynthesis" in window) || !this.speechSynthesis) {
       console.error("Speech synthesis not supported in this browser");
       const supportError = {
-        type: 'unsupported_browser',
+        type: "unsupported_browser",
         word: word,
         userAgent: navigator.userAgent,
-        hasWindow: typeof window !== 'undefined',
-        hasSpeechSynthesis: 'speechSynthesis' in window,
-        timestamp: new Date().toISOString()
+        hasWindow: typeof window !== "undefined",
+        hasSpeechSynthesis: "speechSynthesis" in window,
+        timestamp: new Date().toISOString(),
       };
       options.onError?.(supportError);
       return;
@@ -396,11 +396,11 @@ export class EnhancedAudioService {
     if (!word || typeof word !== "string" || word.trim().length === 0) {
       console.error("Invalid word provided for pronunciation:", word);
       const validationError = {
-        type: 'invalid_input',
+        type: "invalid_input",
         word: word,
         wordType: typeof word,
         wordLength: word ? word.length : 0,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
       options.onError?.(validationError);
       return;
@@ -476,7 +476,7 @@ export class EnhancedAudioService {
             word: word,
             voiceType: voiceType,
             voice: voice?.name,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           };
           // Record error for debugging
           speechSynthesisDebugger.recordError(errorDetails);
@@ -502,7 +502,7 @@ export class EnhancedAudioService {
           this.speechSynthesis.cancel();
           try {
             const timeoutError = {
-              type: 'timeout',
+              type: "timeout",
               word: word,
               duration: timeoutDuration,
               speechState: {
@@ -510,7 +510,7 @@ export class EnhancedAudioService {
                 pending: this.speechSynthesis.pending,
                 paused: this.speechSynthesis.paused,
               },
-              timestamp: new Date().toISOString()
+              timestamp: new Date().toISOString(),
             };
             onError?.(timeoutError);
           } catch (error) {
@@ -522,14 +522,17 @@ export class EnhancedAudioService {
       console.error("Error in pronounceWord:", error);
       try {
         const generalError = {
-          type: 'general_error',
+          type: "general_error",
           word: word,
-          originalError: error instanceof Error ? {
-            name: error.name,
-            message: error.message,
-            stack: error.stack
-          } : error,
-          timestamp: new Date().toISOString()
+          originalError:
+            error instanceof Error
+              ? {
+                  name: error.name,
+                  message: error.message,
+                  stack: error.stack,
+                }
+              : error,
+          timestamp: new Date().toISOString(),
         };
         onError?.(generalError);
       } catch (callbackError) {
