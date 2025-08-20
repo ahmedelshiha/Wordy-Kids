@@ -505,9 +505,31 @@ export function AchievementsSystemMap() {
                     onClick={() => setSelectedModule(selectedModule === module.id ? null : module.id)}
                   >
                     <div className="p-6">
-                      {/* Module Header */}
+                      {/* Module Header - Treasure Chest Style */}
                       <div className="flex items-center justify-between mb-4">
-                        <div className="text-3xl">{module.icon}</div>
+                        <motion.div
+                          className="text-4xl relative"
+                          animate={{
+                            rotateY: selectedModule === module.id ? [0, 15, -15, 0] : 0,
+                            scale: selectedModule === module.id ? 1.1 : 1
+                          }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <div className="relative">
+                            {module.icon}
+                            {/* Treasure glow effect */}
+                            <motion.div
+                              className="absolute inset-0 text-yellow-300 opacity-30"
+                              animate={{
+                                scale: [1, 1.2, 1],
+                                opacity: [0.3, 0.6, 0.3]
+                              }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                            >
+                              {module.icon}
+                            </motion.div>
+                          </div>
+                        </motion.div>
                         <Badge className={getStatusColor(module.status)}>
                           {getStatusIcon(module.status)}
                           <span className="ml-1 capitalize">{module.status}</span>
