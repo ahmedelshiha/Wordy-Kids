@@ -23,11 +23,9 @@ export { WordMatchRace } from "./WordMatchRace";
 // Enhanced Systems
 export {
   PowerUpSystem,
-  AchievementSystem,
   ScoringSystem,
   GameSessionManager,
   type PowerUp,
-  type Achievement,
   type GameSession,
   type ScoringConfig,
 } from "@/lib/enhancedGameplayMechanics";
@@ -76,7 +74,6 @@ export class EnhancedJungleQuizAdventureSystem {
 
   // Game systems
   public readonly powerUps = PowerUpSystem;
-  public readonly achievements = AchievementSystem;
   public readonly scoring = ScoringSystem;
   public readonly sessions = GameSessionManager;
 
@@ -465,7 +462,7 @@ export class EnhancedJungleQuizAdventureSystem {
   public async cleanup(): Promise<void> {
     if (!this.isInitialized) return;
 
-    console.log("🧹 Cleaning up Enhanced Jungle Quiz Adventure System...");
+    console.log("���� Cleaning up Enhanced Jungle Quiz Adventure System...");
 
     try {
       // Cleanup systems
