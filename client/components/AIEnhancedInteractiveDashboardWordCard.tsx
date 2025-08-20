@@ -1781,11 +1781,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
         </Card>
       </motion.div>
 
-      {/* Enhanced Achievement Popup for journey achievements */}
-      <EnhancedAchievementPopup
-        achievements={journeyAchievements}
-        onClose={() => setJourneyAchievements([])}
-      />
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
     </div>
   );
 }
