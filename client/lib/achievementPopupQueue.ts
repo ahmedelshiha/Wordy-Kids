@@ -158,40 +158,6 @@ class AchievementPopupQueue {
     };
   }
 
-  /**
-   * Manually trigger an achievement (for testing)
-   */
-  public triggerTestAchievement(): void {
-    const testAchievement: EnhancedAchievement = {
-      id: "test_achievement",
-      name: "Test Explorer!",
-      description: "You found the test achievement!",
-      icon: "🧪",
-      category: "exploration",
-      difficulty: "bronze",
-      requirements: {
-        type: "test",
-        threshold: 1,
-      },
-      currentProgress: 1,
-      unlocked: true,
-      dateUnlocked: new Date(),
-      reward: {
-        type: "badge",
-        item: "Test Badge",
-        value: 10,
-        rarity: "common",
-      },
-      jungleTheme: {
-        glowColor: "#4CAF50",
-        particleEffect: "leaves",
-        celebrationSound: "cheer",
-        backgroundGradient: "linear-gradient(135deg, #2e7d32, #4caf50)",
-      },
-    };
-
-    this.addToQueue(testAchievement);
-  }
 
   /**
    * Utility method for delays
