@@ -1270,18 +1270,9 @@
   }
 }
 
-/* AI Card responsive backgrounds */
+/* AI Card responsive backgrounds - transparent without overlay */
 .ai-card-background {
-  background-image:
-    linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.3) 25%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgba(0, 0, 0, 0.3) 75%,
-      rgba(0, 0, 0, 0.4) 100%
-    ),
-    url("/images/ai-card-desktop-bg.webp");
+  background-image: url("/images/ai-card-desktop-bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1290,37 +1281,17 @@
 /* Mobile AI card background */
 @media (max-width: 640px) {
   .ai-card-background {
-    background-image:
-      linear-gradient(
-        135deg,
-        rgba(0, 0, 0, 0.4) 0%,
-        rgba(0, 0, 0, 0.3) 25%,
-        rgba(0, 0, 0, 0.5) 50%,
-        rgba(0, 0, 0, 0.3) 75%,
-        rgba(0, 0, 0, 0.4) 100%
-      ),
-      url("/images/ai-card-mobile-bg.webp") !important;
+    background-image: url("/images/ai-card-mobile-bg.webp") !important;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    /* Debug: Add subtle border to verify mobile styles are applied */
-    border: 2px solid rgba(255, 0, 0, 0.1) !important;
   }
 }
 
 /* Tablet AI card background */
 @media (min-width: 641px) and (max-width: 1024px) {
   .ai-card-background {
-    background-image:
-      linear-gradient(
-        135deg,
-        rgba(0, 0, 0, 0.4) 0%,
-        rgba(0, 0, 0, 0.3) 25%,
-        rgba(0, 0, 0, 0.5) 50%,
-        rgba(0, 0, 0, 0.3) 75%,
-        rgba(0, 0, 0, 0.4) 100%
-      ),
-      url("/images/ai-card-tablet-bg.webp") !important;
+    background-image: url("/images/ai-card-tablet-bg.webp") !important;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
