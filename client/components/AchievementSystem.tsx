@@ -674,12 +674,12 @@ export function AchievementSystem({
         </Card>
       </div>
 
-      {/* Fun Weekly Progress - Mobile Optimized */}
-      <Card className="bg-gradient-to-br from-blue-50 to-purple-50 mx-2 md:mx-0">
+      {/* Jungle Adventure Weekly Progress - Mobile Optimized */}
+      <Card className="jungle-achievement-card bg-gradient-to-br from-green-50 to-emerald-100 mx-2 md:mx-0 shadow-lg border border-jungle/20">
         <CardHeader className="pb-3 md:pb-6">
-          <CardTitle className="flex items-center gap-2 text-educational-blue text-lg md:text-xl">
-            <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
-            🌟 Your Amazing Week!
+          <CardTitle className="flex items-center gap-2 text-jungle text-lg md:text-xl">
+            <Map className="w-5 h-5 md:w-6 md:h-6 animate-jungle-float" />
+            🗺️ Your Adventure Map!
           </CardTitle>
         </CardHeader>
         <CardContent className="px-3 md:px-6">
