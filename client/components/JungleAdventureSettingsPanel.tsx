@@ -1414,6 +1414,24 @@ export const JungleAdventureSettingsPanel: React.FC<
                               }}
                             />
                           </div>
+
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <label className="font-medium text-jungle-dark">
+                                Interactive Jungle Map
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Enable immersive map & timeline features
+                              </p>
+                            </div>
+                            <Switch
+                              checked={jungleMapEnabled}
+                              onCheckedChange={(checked) => {
+                                setJungleMapEnabled(checked);
+                                setUnsavedChanges(true);
+                              }}
+                            />
+                          </div>
                         </CardContent>
                       </Card>
                     </motion.div>
