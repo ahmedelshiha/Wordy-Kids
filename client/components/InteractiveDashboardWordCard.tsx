@@ -803,13 +803,15 @@ export function InteractiveDashboardWordCard({
         ...enhancedSessionAchievements,
       ];
 
-      // Add all session achievements to the display queue
+      // Trigger session achievements through new lightweight popup system
       if (allSessionAchievements.length > 0) {
         setTimeout(() => {
-          setJourneyAchievements((prev) => [
-            ...prev,
-            ...allSessionAchievements,
-          ]);
+          allSessionAchievements.forEach(achievement => {
+            const event = new CustomEvent('milestoneUnlocked', {
+              detail: { achievement }
+            });
+            window.dispatchEvent(event);
+          });
         }, 3000); // Show after session completion celebration
       }
 
@@ -1504,7 +1506,7 @@ export function InteractiveDashboardWordCard({
                     const jungleExplorers = {
                       easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
                       medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
-                      hard: ["🐲", "🦅", "🐺", "🐆", "🦌"],
+                      hard: ["🐲", "🦅", "🐺", "🐆", "����"],
                     };
 
                     // Category-specific prompts
