@@ -872,15 +872,42 @@ export function AchievementSystem({
   );
 
   return (
-    <div className="space-y-6">
-      {/* Kid-Friendly Header - Mobile Optimized */}
-      <div className="text-center px-4">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-educational-blue via-educational-purple to-educational-pink bg-clip-text text-transparent mb-2 leading-tight">
-          🏆 Your Learning Journey! 🌟
+    <div className="space-y-6 jungle-achievement-system bg-gradient-to-br from-green-50/30 to-emerald-50/30"
+      style={{
+        backgroundImage: `
+          radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 40% 60%, rgba(33, 150, 243, 0.05) 0%, transparent 50%)
+        `,
+      }}
+    >
+      {/* Jungle Adventure Header - Mobile Optimized */}
+      <div className="text-center px-4 relative">
+        {/* Decorative jungle elements */}
+        <div className="absolute top-0 left-1/4 w-8 h-8 text-2xl animate-jungle-sway">🌿</div>
+        <div className="absolute top-0 right-1/4 w-8 h-8 text-2xl animate-jungle-float">🌳</div>
+
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-jungle via-jungle-light to-sunshine bg-clip-text text-transparent mb-2 leading-tight">
+          🌿 Your Jungle Adventure! 🏆
         </h2>
-        <p className="text-gray-600 mb-4 text-sm md:text-lg px-2">
-          See how amazing you are at learning new words! 🎉
+        <p className="text-jungle/80 mb-4 text-sm md:text-lg px-2 font-medium">
+          Explore magical realms and unlock amazing achievements! 🗺️✨
         </p>
+
+        {/* Floating jungle particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-jungle/20 rounded-full animate-pulse"
+              style={{
+                left: `${20 + i * 15}%`,
+                top: `${10 + i * 12}%`,
+                animationDelay: `${i * 0.8}s`,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Fun Tabs */}
