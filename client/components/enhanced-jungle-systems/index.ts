@@ -6,25 +6,11 @@ export { EnhancedJungleBadgeSystem } from "../EnhancedJungleBadgeSystem";
 export { EnhancedJungleLearningAnalytics } from "../EnhancedJungleLearningAnalytics";
 export { default as EnhancedJungleRewardCelebration } from "../EnhancedJungleRewardCelebration";
 
-// Type exports for convenience
-export type {
-  Achievement,
-  UnlockableContent,
-  LearningStats,
-} from "../EnhancedJungleAchievementSystem";
-
-export type {
-  BadgeSystemProps,
-} from "../EnhancedJungleBadgeSystem";
-
-export type {
-  LearningData,
-  JungleLearningAnalyticsProps,
-} from "../EnhancedJungleLearningAnalytics";
-
-export type {
-  JungleRewardCelebrationProps,
-} from "../EnhancedJungleRewardCelebration";
+// Re-export original components for backward compatibility
+export { AchievementSystem } from "../AchievementSystem";
+export { BadgeSystem } from "../BadgeSystem";
+export { LearningAnalytics } from "../LearningAnalytics";
+export { default as RewardCelebration } from "../RewardCelebration";
 
 /*
  * Enhanced Jungle Adventure Theme Features:
