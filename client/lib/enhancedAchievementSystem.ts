@@ -87,6 +87,7 @@ class EnhancedAchievementSystem {
   constructor() {
     this.initializeAchievements();
     this.initializeMilestones();
+    this.initialize();
   }
 
   // Initialize comprehensive achievement system
