@@ -153,11 +153,27 @@ const sampleEvents: TimelineEvent[] = [
 
 export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProps> = ({
   className,
-  events = sampleEvents,
+  events,
   onEventClick,
 }) => {
   const [filter, setFilter] = useState<"all" | "achievements" | "milestones">("all");
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>(sampleEvents);
+
+  // Load events from unified storage on mount
+  useEffect(() => {
+    const storedEvents = JungleAdventureStorage.getTimelineEvents();
+    if (storedEvents.length > 0) {
+      setTimelineEvents(storedEvents);
+    } else {
+      // Initialize with sample data and save to storage
+      JungleAdventureStorage.updateSettings({ timelineEvents: sampleEvents });
+      setTimelineEvents(sampleEvents);
+    }
+  }, []);
+
+  // Use provided events or loaded events
+  const displayEvents = events || timelineEvents;
 
   const filteredEvents = events.filter((event) => {
     if (filter === "all") return true;
