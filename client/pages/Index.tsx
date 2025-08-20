@@ -3813,16 +3813,17 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Achievement Popup */}
-          {achievementPopup.length > 0 && (
-            <EnhancedAchievementPopup
-              achievements={achievementPopup}
-              onClose={() => setAchievementPopup([])}
+          {/* Enhanced Achievement Dialog */}
+          {showEnhancedDialog && (
+            <EnhancedAchievementDialog
+              achievements={enhancedAchievements}
+              onClose={closeEnhancedDialog}
               onAchievementClaim={(achievement) => {
-                console.log("Achievement claimed:", achievement);
-                // Could add additional reward logic here like updating user points
+                console.log("Enhanced achievement claimed:", achievement);
+                claimEnhancedAchievement(achievement);
+                // Additional reward logic can be added here
               }}
-              autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
+              autoCloseDelay={8000} // Auto-close after 8 seconds for better UX
             />
           )}
 
