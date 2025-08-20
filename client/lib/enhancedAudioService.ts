@@ -472,7 +472,7 @@ export class EnhancedAudioService {
 
       // Set a timeout as fallback in case the speech gets stuck
       const timeoutDuration = Math.max(5000, word.length * 200); // Minimum 5s, or 200ms per character
-      let timeoutId: NodeJS.Timeout | null = null;
+      let timeoutId: number | null = null;
 
       // Set up event handlers with error protection
       utterance.onstart = () => {
