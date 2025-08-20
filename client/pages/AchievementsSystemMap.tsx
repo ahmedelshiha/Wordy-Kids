@@ -434,19 +434,57 @@ export function AchievementsSystemMap() {
               className="relative"
               style={{ transform: `scale(${zoomLevel})`, transformOrigin: "center top" }}
             >
-              {/* Central Hub */}
+              {/* Central Hub - Treasure Chest Style */}
               <div className="flex justify-center mb-8">
                 <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="jungle-card bg-gradient-to-br from-jungle to-jungle-dark text-white p-6 rounded-2xl text-center relative overflow-hidden"
+                  initial={{ opacity: 0, scale: 0, rotateY: -180 }}
+                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                  transition={{ duration: 1, type: "spring", bounce: 0.5 }}
+                  className="jungle-card bg-gradient-to-br from-jungle to-jungle-dark text-white p-8 rounded-2xl text-center relative overflow-hidden shadow-2xl"
+                  style={{
+                    background: "linear-gradient(135deg, #4CAF50 0%, #388E3C 50%, #2E7D32 100%)",
+                    boxShadow: "0 20px 40px rgba(76, 175, 80, 0.3), inset 0 1px 20px rgba(255, 255, 255, 0.2)"
+                  }}
                 >
+                  {/* Animated fireflies */}
+                  <motion.div
+                    className="absolute top-2 right-2 text-yellow-300"
+                    animate={{
+                      opacity: [0.4, 1, 0.4],
+                      x: [0, 10, 0],
+                      y: [0, -5, 0]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    ✨
+                  </motion.div>
+                  <motion.div
+                    className="absolute bottom-2 left-2 text-yellow-400"
+                    animate={{
+                      opacity: [1, 0.4, 1],
+                      x: [0, -8, 0],
+                      y: [0, -3, 0]
+                    }}
+                    transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
+                  >
+                    ✨
+                  </motion.div>
+
                   <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
                   <div className="relative z-10">
-                    <div className="text-4xl mb-3">🌳</div>
-                    <h2 className="text-xl font-bold mb-2">Enhanced Jungle</h2>
-                    <h2 className="text-xl font-bold mb-2">Achievements System</h2>
-                    <p className="text-sm opacity-90">Core Integration Hub</p>
+                    <motion.div
+                      className="text-5xl mb-4"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      🗝️
+                    </motion.div>
+                    <h2 className="text-2xl font-bold mb-1">Enhanced Jungle</h2>
+                    <h2 className="text-2xl font-bold mb-3">Achievements System</h2>
+                    <p className="text-sm opacity-90 mb-2">🌿 Core Integration Hub 🌿</p>
+                    <div className="flex justify-center gap-2 text-xs opacity-75">
+                      <span>🏆</span><span>🎖️</span><span>📊</span><span>🎉</span>
+                    </div>
                   </div>
                 </motion.div>
               </div>
