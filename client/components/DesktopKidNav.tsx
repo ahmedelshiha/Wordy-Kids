@@ -62,6 +62,14 @@ const kidNavTabs: NavTab[] = [
     shadowColor: "shadow-green-300",
   },
   {
+    id: "achievements",
+    image: "/images/icons/trophy.png",
+    label: "Awards",
+    color: "from-yellow-400 via-amber-400 to-orange-400",
+    hoverColor: "from-yellow-500 via-amber-500 to-orange-500",
+    shadowColor: "shadow-yellow-300",
+  },
+  {
     id: "progress",
     image: "/images/icons/map.png",
     label: "Map",
