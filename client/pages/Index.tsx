@@ -1097,6 +1097,14 @@ export default function Index({ initialProfile }: IndexProps) {
     });
   }, [learningMode, selectedCategory]);
 
+  // Legacy tab redirect: handle any cached references to old "progress" tab
+  useEffect(() => {
+    if (activeTab === "progress") {
+      console.log("Redirecting from legacy 'progress' tab to 'achievements' tab");
+      setActiveTab("achievements");
+    }
+  }, [activeTab]);
+
   // Enhanced navigation with keyboard support
   useEffect(() => {
     const handleKeyNavigation = (e: KeyboardEvent) => {
@@ -1504,7 +1512,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🗺���";
+        achievementIcon = "🗺�����";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -2860,7 +2868,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   completionResult.title,
-                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
+                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                     20 +
@@ -3063,7 +3071,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               <p className="text-sm text-jungle-dark mt-1">
                                                 Your personal jungle companion
                                                 creates adventures just for you!
-                                                🧙‍♂️✨
+                                                🧙‍♂��✨
                                               </p>
                                             </div>
                                           </div>
