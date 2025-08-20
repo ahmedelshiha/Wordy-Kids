@@ -1,4 +1,6 @@
 // Enhanced Audio service with improved voice detection and preview functionality
+import { speechSynthesisDebugger } from "./speechSynthesisDebugger";
+
 export type VoiceType = "man" | "woman" | "kid";
 
 export class EnhancedAudioService {
