@@ -309,6 +309,8 @@ export function EnhancedJungleAchievementSystem({
   onRefresh,
 }: EnhancedJungleAchievementSystemProps) {
   const { user } = useAuth();
+  const mobilePerf = useOptimizedMobilePerformance();
+  const animPrefs = useAnimationPreferences();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showUnlockables, setShowUnlockables] = useState(false);
   const [activeTab, setActiveTab] = useState("achievements");
