@@ -310,7 +310,7 @@ export const JungleAdventureWordCard: React.FC<
                 animationDuration: `${2 + Math.random() * 1}s`, // Faster animation
               }}
             >
-              {["���", "🌟"][i % 2]} {/* Only sparkles, no large emojis */}
+              {["✨", "🌟"][i % 2]} {/* Only sparkles, no large emojis */}
             </div>
           ))}
         </div>
