@@ -1284,24 +1284,13 @@ export function InteractiveDashboardWordCard({
           className={cn(
             "w-[320px] h-[460px] sm:w-[380px] sm:h-[480px] md:w-[420px] md:h-[480px] lg:w-[460px] lg:h-[500px] xl:w-[480px] xl:h-[520px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
+            "ai-card-background",
             "shadow-lg hover:shadow-xl border-0 rounded-3xl sm:rounded-[2rem]",
             "backdrop-blur-sm ring-1 ring-black/5",
-            "bg-transparent",
             celebrationEffect &&
               "jungle-celebration-glow animate-pulse shadow-2xl",
           )}
           style={{
-            background: `
-              linear-gradient(
-                135deg,
-                rgba(0, 0, 0, 0.4) 0%,
-                rgba(0, 0, 0, 0.3) 25%,
-                rgba(0, 0, 0, 0.5) 50%,
-                rgba(0, 0, 0, 0.3) 75%,
-                rgba(0, 0, 0, 0.4) 100%
-              ),
-              url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000&auto=format&fit=crop") center/cover
-            `,
             boxShadow: `
               0 25px 50px rgba(0, 0, 0, 0.3),
               0 0 30px rgba(255, 215, 0, 0.2),
@@ -1546,7 +1535,7 @@ export function InteractiveDashboardWordCard({
                         return "🎉 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "🌟 Almost there, superstar!";
+                        return "���� Almost there, superstar!";
                       if (percentage >= 75) return "🚀 You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
