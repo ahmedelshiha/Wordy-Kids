@@ -715,13 +715,57 @@ export const JungleAdventureParentDashboard: React.FC<
                   </p>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <InteractiveJungleMap
-                    className="w-full"
-                    onMarkerClick={(marker) => {
-                      console.log("Marker clicked:", marker);
-                      // Future: Show detailed progress modal
-                    }}
-                  />
+                  {(isJungleMapEnabled && userMapPreference) ? (
+                    <div className="relative">
+                      {mapError ? (
+                        <JungleGuideFallback
+                          error={mapError}
+                          onRetry={() => {
+                            setMapError(null);
+                            if (isAnalyticsEnabled) {
+                              parentDashboardAnalytics.trackFeatureUsage('jungle-map', 'retry_after_error');
+                            }
+                          }}
+                          retryText="Reload Map"
+                          showBasicStats={true}
+                        />
+                      ) : (
+                        <div
+                          onError={(error) => {
+                            const errorMessage = error instanceof Error ? error.message : 'Map failed to load';
+                            setMapError(errorMessage);
+                            if (isAnalyticsEnabled) {
+                              parentDashboardAnalytics.trackError('map', errorMessage);
+                            }
+                          }}
+                        >
+                          <InteractiveJungleMap
+                            className="w-full"
+                            onMarkerClick={(marker) => {
+                              if (isAnalyticsEnabled) {
+                                parentDashboardAnalytics.trackMapInteraction('marker_click', {
+                                  markerId: marker.id,
+                                  markerType: marker.type
+                                });
+                              }
+                              console.log("Marker clicked:", marker);
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <JungleGuideFallback
+                      error={!userMapPreference ? "Interactive map disabled in settings" : "Map feature not available"}
+                      onRetry={!userMapPreference ? undefined : () => {
+                        if (isAnalyticsEnabled) {
+                          parentDashboardAnalytics.trackFeatureUsage('jungle-map', 'enable_attempt');
+                        }
+                      }}
+                      retryText={!userMapPreference ? undefined : "Enable Map"}
+                      showBasicStats={true}
+                    />
+                  )}
                 </CardContent>
               </Card>
 
