@@ -643,32 +643,29 @@ export function AchievementSystem({
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-educational-green to-educational-blue text-white hover:scale-105 transition-all">
+        <Card className="jungle-achievement-card bg-gradient-to-br from-sunshine to-sunshine-light text-jungle-dark hover:scale-105 transition-all animate-jungle-sparkle">
           <CardContent className="p-3 md:p-6 text-center">
-            <Zap className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-bounce" />
+            <Compass className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin" style={{ animationDuration: '3s' }} />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.learningSpeed} suffix="/hr" />
             </div>
-            <p className="text-xs md:text-sm opacity-90">Learning Speed! ⚡</p>
+            <p className="text-xs md:text-sm opacity-90">Exploration Speed! 🧭</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-educational-orange to-educational-pink text-white hover:scale-105 transition-all">
+        <Card className="jungle-achievement-card bg-gradient-to-br from-sky-blue to-sky-light text-white hover:scale-105 transition-all animate-jungle-float">
           <CardContent className="p-3 md:p-6 text-center">
-            <Target
-              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin"
-              style={{ animationDuration: "3s" }}
-            />
+            <Binoculars className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-jungle-float" />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.currentAccuracy} suffix="%" />
             </div>
-            <p className="text-xs md:text-sm opacity-90">Accuracy! 🎪</p>
+            <p className="text-xs md:text-sm opacity-90">Discovery Rate! 🔍</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-educational-purple to-educational-pink text-white hover:scale-105 transition-all">
+        <Card className="jungle-achievement-card bg-gradient-to-br from-playful-purple to-coral-red text-white hover:scale-105 transition-all animate-jungle-celebration">
           <CardContent className="p-3 md:p-6 text-center">
-            <Trophy className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-pulse" />
+            <Trophy className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-bounce" />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={unlockedAchievements.length} />
             </div>
