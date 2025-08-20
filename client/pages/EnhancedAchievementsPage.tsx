@@ -102,6 +102,7 @@ export function EnhancedAchievementsPage({
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isLoading, setIsLoading] = useState(true);
   const [showSystemMap, setShowSystemMap] = useState(false);
+  const isDeveloperMode = process.env.NODE_ENV === "development";
   const [learningJourney, setLearningJourney] =
     useState<LearningJourney | null>(null);
   const [badgeCollection, setBadgeCollection] =
@@ -225,17 +226,19 @@ export function EnhancedAchievementsPage({
               </div>
             )}
 
-            {/* System Map Access Button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowSystemMap(true)}
-              className="jungle-card text-jungle-dark hover:bg-jungle/10 text-xs border-jungle/30 hover:border-jungle/50"
-              title="View Interactive System Architecture Map"
-            >
-              <Map className="w-4 h-4 mr-1" />
-              🗺️ System Map
-            </Button>
+            {/* System Map Access Button - Developer Mode Only */}
+            {isDeveloperMode && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowSystemMap(true)}
+                className="jungle-card text-jungle-dark hover:bg-jungle/10 text-xs border-jungle/30 hover:border-jungle/50"
+                title="View Interactive System Architecture Map (Dev Mode)"
+              >
+                <Map className="w-4 h-4 mr-1" />
+                🗺️ System Map
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -862,32 +865,34 @@ export function EnhancedAchievementsPage({
         </Tabs>
       </div>
 
-      {/* System Map Modal */}
-      <Dialog open={showSystemMap} onOpenChange={setShowSystemMap}>
-        <DialogContent className="max-w-7xl w-[95vw] h-[90vh] p-0 overflow-hidden">
-          <DialogHeader className="p-6 pb-0">
-            <DialogTitle className="text-jungle-dark flex items-center gap-2">
-              <TreePine className="w-6 h-6 text-jungle" />
-              Enhanced Jungle Adventure Achievements System Map
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSystemMap(false)}
-                className="ml-auto"
-              >
-                Close
-              </Button>
-            </DialogTitle>
-            <DialogDescription className="text-jungle-dark/70">
-              Interactive visualization of the complete achievements system
-              architecture, integration status, and module connections.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex-1 overflow-auto p-6 pt-0">
-            <AchievementsSystemMap />
-          </div>
-        </DialogContent>
-      </Dialog>
+      {/* System Map Modal - Developer Mode Only */}
+      {isDeveloperMode && (
+        <Dialog open={showSystemMap} onOpenChange={setShowSystemMap}>
+          <DialogContent className="max-w-7xl w-[95vw] h-[90vh] p-0 overflow-hidden">
+            <DialogHeader className="p-6 pb-0">
+              <DialogTitle className="text-jungle-dark flex items-center gap-2">
+                <TreePine className="w-6 h-6 text-jungle" />
+                Enhanced Jungle Adventure Achievements System Map (Dev Mode)
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowSystemMap(false)}
+                  className="ml-auto"
+                >
+                  Close
+                </Button>
+              </DialogTitle>
+              <DialogDescription className="text-jungle-dark/70">
+                Interactive visualization of the complete achievements system
+                architecture, integration status, and module connections.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex-1 overflow-auto p-6 pt-0">
+              <AchievementsSystemMap />
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
