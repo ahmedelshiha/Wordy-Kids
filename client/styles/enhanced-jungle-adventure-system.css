@@ -8,35 +8,35 @@
   --jungle-green-dark: 122 47% 25%;
   --jungle-green-light: 122 47% 55%;
   --jungle-green-bright: 122 47% 65%;
-  
+
   --sunshine-yellow: 45 100% 51%;
   --sunshine-yellow-dark: 45 100% 41%;
   --sunshine-yellow-light: 45 100% 71%;
-  
+
   --sky-blue: 207 90% 54%;
   --sky-blue-dark: 207 90% 44%;
   --sky-blue-light: 207 90% 74%;
-  
+
   --playful-purple: 259 94% 51%;
   --coral-red: 14 100% 57%;
-  
+
   /* Adventure Theme Colors */
   --canopy-green: 120 60% 35%;
   --forest-brown: 30 40% 25%;
   --river-blue: 200 80% 45%;
   --mountain-gray: 220 20% 40%;
   --clearing-gold: 50 90% 55%;
-  
+
   /* Animation Durations */
   --jungle-animation-fast: 0.3s;
   --jungle-animation-normal: 0.6s;
   --jungle-animation-slow: 1.2s;
-  
+
   /* Layout Variables */
   --jungle-border-radius: 12px;
   --jungle-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   --jungle-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
-  
+
   /* Mobile Breakpoints */
   --mobile-sm: 320px;
   --mobile-md: 375px;
@@ -49,7 +49,8 @@
 .jungle-achievement-system {
   contain: layout style paint;
   will-change: transform;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* Mobile-First Responsive Grid */
@@ -95,12 +96,12 @@
   .jungle-achievement-card {
     transform: none !important;
   }
-  
+
   .jungle-achievement-card:hover {
     transform: scale(1.01) !important;
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
   }
-  
+
   .jungle-achievement-card:active {
     transform: scale(0.98) !important;
   }
@@ -108,7 +109,11 @@
 
 /* Unlocked Achievement States */
 .jungle-achievement-card.unlocked {
-  background: linear-gradient(135deg, hsl(var(--jungle-green)) 0%, hsl(var(--jungle-green-light)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--jungle-green)) 0%,
+    hsl(var(--jungle-green-light)) 100%
+  );
   color: white;
   animation: jungle-glow 3s ease-in-out infinite;
 }
@@ -152,7 +157,7 @@
 }
 
 .jungle-achievement-card.rarity-epic::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   border-radius: var(--jungle-border-radius);
@@ -169,7 +174,7 @@
 }
 
 .jungle-achievement-card.rarity-legendary::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -3px;
   border-radius: var(--jungle-border-radius);
@@ -194,10 +199,15 @@
 }
 
 .jungle-adventure-badge::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
   transform: translateX(-100%);
   transition: transform var(--jungle-animation-normal) ease;
 }
@@ -212,13 +222,26 @@
 }
 
 .jungle-sparkle-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
-              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
-              radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.8) 2px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 255, 255, 0.6) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(255, 255, 255, 0.4) 1px,
+      transparent 1px
+    );
   animation: jungle-sparkle-twinkle 2s ease-in-out infinite;
   pointer-events: none;
 }
@@ -233,12 +256,17 @@
 }
 
 .jungle-progress-bar::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  background: linear-gradient(90deg, hsl(var(--jungle-green)) 0%, hsl(var(--jungle-green-light)) 50%, hsl(var(--jungle-green-bright)) 100%);
+  background: linear-gradient(
+    90deg,
+    hsl(var(--jungle-green)) 0%,
+    hsl(var(--jungle-green-light)) 50%,
+    hsl(var(--jungle-green-bright)) 100%
+  );
   border-radius: 4px;
   transition: width var(--jungle-animation-slow) cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
@@ -283,7 +311,7 @@
   .jungle-region-card {
     min-height: 100px;
   }
-  
+
   .jungle-region-card:hover {
     transform: translateY(-2px);
   }
@@ -373,7 +401,11 @@
 
 /* Tab System */
 .jungle-tab-list {
-  background: linear-gradient(90deg, rgba(34, 197, 94, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(34, 197, 94, 0.1) 0%,
+    rgba(245, 158, 11, 0.1) 100%
+  );
   border-radius: var(--jungle-border-radius);
   padding: 0.25rem;
   display: grid;
@@ -402,19 +434,28 @@
 }
 
 .jungle-tab-trigger.active {
-  background: linear-gradient(135deg, hsl(var(--jungle-green)), hsl(var(--jungle-green-light)));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--jungle-green)),
+    hsl(var(--jungle-green-light))
+  );
   color: white;
   transform: scale(1.02);
 }
 
 .jungle-tab-trigger::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left var(--jungle-animation-normal) ease;
 }
 
@@ -474,7 +515,7 @@
   .jungle-loading-title {
     font-size: 1.25rem;
   }
-  
+
   .jungle-loading-subtitle {
     font-size: 0.875rem;
   }
@@ -482,7 +523,8 @@
 
 /* Animations */
 @keyframes jungle-glow {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.3));
   }
   50% {
@@ -491,7 +533,8 @@
 }
 
 @keyframes jungle-ancient-glow {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
   }
   50% {
@@ -500,7 +543,8 @@
 }
 
 @keyframes jungle-legendary-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.5));
   }
@@ -532,7 +576,8 @@
 }
 
 @keyframes jungle-sparkle-twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
   }
   50% {
@@ -541,7 +586,8 @@
 }
 
 @keyframes jungle-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
   33% {
@@ -576,7 +622,7 @@
   .jungle-achievement-card {
     border: 2px solid currentColor;
   }
-  
+
   .jungle-achievement-card.unlocked {
     background: #2d5016 !important;
     color: #ffffff !important;
@@ -600,13 +646,13 @@
     --jungle-green-dark: 122 47% 45%;
     --jungle-green-light: 122 47% 75%;
   }
-  
+
   .jungle-achievement-card {
     background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
     color: #f9fafb;
     border: 1px solid #4b5563;
   }
-  
+
   .jungle-loading-container {
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
   }
@@ -617,23 +663,23 @@
   .jungle-achievement-card:hover {
     transform: none;
   }
-  
+
   .jungle-achievement-card:active {
     transform: scale(0.98);
   }
-  
+
   .jungle-timeline-day:hover {
     transform: none;
   }
-  
+
   .jungle-timeline-day:active {
     transform: scale(1.1);
   }
-  
+
   .jungle-region-card:hover {
     transform: none;
   }
-  
+
   .jungle-region-card:active {
     transform: scale(0.98);
   }
@@ -645,13 +691,13 @@
     background: none !important;
     color: black !important;
   }
-  
+
   .jungle-achievement-card {
     border: 1px solid black !important;
     box-shadow: none !important;
     animation: none !important;
   }
-  
+
   .jungle-loading-spinner {
     display: none !important;
   }
@@ -689,7 +735,7 @@
     grid-template-columns: 1fr;
     gap: 0.5rem;
   }
-  
+
   .jungle-achievement-card {
     padding: 0.75rem;
   }
@@ -707,7 +753,11 @@
 }
 
 .jungle-gradient-text {
-  background: linear-gradient(135deg, hsl(var(--jungle-green)), hsl(var(--sunshine-yellow)));
+  background: linear-gradient(
+    135deg,
+    hsl(var(--jungle-green)),
+    hsl(var(--sunshine-yellow))
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -715,8 +765,18 @@
 }
 
 /* Animation Delays for Staggered Effects */
-.jungle-stagger-1 { animation-delay: 0.1s; }
-.jungle-stagger-2 { animation-delay: 0.2s; }
-.jungle-stagger-3 { animation-delay: 0.3s; }
-.jungle-stagger-4 { animation-delay: 0.4s; }
-.jungle-stagger-5 { animation-delay: 0.5s; }
+.jungle-stagger-1 {
+  animation-delay: 0.1s;
+}
+.jungle-stagger-2 {
+  animation-delay: 0.2s;
+}
+.jungle-stagger-3 {
+  animation-delay: 0.3s;
+}
+.jungle-stagger-4 {
+  animation-delay: 0.4s;
+}
+.jungle-stagger-5 {
+  animation-delay: 0.5s;
+}

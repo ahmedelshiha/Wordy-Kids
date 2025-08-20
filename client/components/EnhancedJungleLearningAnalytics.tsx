@@ -125,7 +125,9 @@ interface EnhancedJungleLearningAnalyticsProps {
   showDetailedView?: boolean;
 }
 
-export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAnalyticsProps> = ({
+export const EnhancedJungleLearningAnalytics: React.FC<
+  EnhancedJungleLearningAnalyticsProps
+> = ({
   onRegionSelect,
   onInsightAction,
   mobileOptimized = true,
@@ -136,11 +138,20 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [selectedMetric, setSelectedMetric] = useState("overview");
   const [loading, setLoading] = useState(true);
-  const [analyticsData, setAnalyticsData] = useState<RealTimeAnalyticsData | null>(null);
-  const [jungleMetrics, setJungleMetrics] = useState<JungleLearningMetric[]>([]);
-  const [regionAnalytics, setRegionAnalytics] = useState<JungleRegionAnalytics[]>([]);
-  const [learningPatterns, setLearningPatterns] = useState<JungleLearningPattern[]>([]);
-  const [progressInsights, setProgressInsights] = useState<JungleProgressInsight[]>([]);
+  const [analyticsData, setAnalyticsData] =
+    useState<RealTimeAnalyticsData | null>(null);
+  const [jungleMetrics, setJungleMetrics] = useState<JungleLearningMetric[]>(
+    [],
+  );
+  const [regionAnalytics, setRegionAnalytics] = useState<
+    JungleRegionAnalytics[]
+  >([]);
+  const [learningPatterns, setLearningPatterns] = useState<
+    JungleLearningPattern[]
+  >([]);
+  const [progressInsights, setProgressInsights] = useState<
+    JungleProgressInsight[]
+  >([]);
   const [activeTab, setActiveTab] = useState("overview");
 
   // Jungle regions configuration
@@ -206,7 +217,8 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       const userId = user?.id || "guest";
 
       // Get real analytics data
-      const realAnalyticsData = await analyticsDataService.getAnalyticsData(timeRange);
+      const realAnalyticsData =
+        await analyticsDataService.getAnalyticsData(timeRange);
       setAnalyticsData(realAnalyticsData);
 
       // Get achievement and progress data
@@ -215,21 +227,34 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       const categoryStats = CategoryCompletionTracker.getCurrentCategoryStats();
 
       // Process jungle-specific metrics
-      const processedMetrics = await processJungleMetrics(journeyProgress, categoryStats, realAnalyticsData);
+      const processedMetrics = await processJungleMetrics(
+        journeyProgress,
+        categoryStats,
+        realAnalyticsData,
+      );
       setJungleMetrics(processedMetrics);
 
       // Process region analytics
-      const processedRegions = await processRegionAnalytics(userId, journeyProgress);
+      const processedRegions = await processRegionAnalytics(
+        userId,
+        journeyProgress,
+      );
       setRegionAnalytics(processedRegions);
 
       // Process learning patterns
-      const processedPatterns = await processLearningPatterns(userId, realAnalyticsData);
+      const processedPatterns = await processLearningPatterns(
+        userId,
+        realAnalyticsData,
+      );
       setLearningPatterns(processedPatterns);
 
       // Generate insights
-      const generatedInsights = generateProgressInsights(processedMetrics, processedRegions, achievements);
+      const generatedInsights = generateProgressInsights(
+        processedMetrics,
+        processedRegions,
+        achievements,
+      );
       setProgressInsights(generatedInsights);
-
     } catch (error) {
       console.error("Error loading jungle analytics:", error);
       // Provide fallback data
@@ -241,9 +266,13 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
     }
   };
 
-  const processJungleMetrics = async (journeyProgress: any, categoryStats: any, analyticsData: RealTimeAnalyticsData): Promise<JungleLearningMetric[]> => {
+  const processJungleMetrics = async (
+    journeyProgress: any,
+    categoryStats: any,
+    analyticsData: RealTimeAnalyticsData,
+  ): Promise<JungleLearningMetric[]> => {
     const baseMetrics = analyticsData.keyMetrics;
-    
+
     return [
       {
         id: "words_discovered",
@@ -296,8 +325,14 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       {
         id: "regions_explored",
         name: "Regions Explored",
-        value: Math.min(6, Math.floor((journeyProgress.wordsLearned || 0) / 15) + 1),
-        previousValue: Math.min(6, Math.floor((journeyProgress.wordsLearned || 0) / 15)),
+        value: Math.min(
+          6,
+          Math.floor((journeyProgress.wordsLearned || 0) / 15) + 1,
+        ),
+        previousValue: Math.min(
+          6,
+          Math.floor((journeyProgress.wordsLearned || 0) / 15),
+        ),
         unit: "regions",
         trend: "up",
         changePercent: 16.7,
@@ -308,8 +343,20 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       {
         id: "expedition_efficiency",
         name: "Expedition Efficiency",
-        value: Math.round(((journeyProgress.wordsLearned || 0) / Math.max(1, (journeyProgress.streakDays || 1))) * 10) / 10,
-        previousValue: Math.round(((journeyProgress.wordsLearned || 0) / Math.max(1, (journeyProgress.streakDays || 1))) * 10) / 10 - 0.5,
+        value:
+          Math.round(
+            ((journeyProgress.wordsLearned || 0) /
+              Math.max(1, journeyProgress.streakDays || 1)) *
+              10,
+          ) / 10,
+        previousValue:
+          Math.round(
+            ((journeyProgress.wordsLearned || 0) /
+              Math.max(1, journeyProgress.streakDays || 1)) *
+              10,
+          ) /
+            10 -
+          0.5,
         unit: "words/day",
         trend: "up",
         changePercent: 11.3,
@@ -320,16 +367,24 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
     ];
   };
 
-  const processRegionAnalytics = async (userId: string, journeyProgress: any): Promise<JungleRegionAnalytics[]> => {
+  const processRegionAnalytics = async (
+    userId: string,
+    journeyProgress: any,
+  ): Promise<JungleRegionAnalytics[]> => {
     return jungleRegions.map((region, index) => {
-      const wordsForRegion = Math.max(0, Math.min(
-        region.targetWords,
-        Math.floor((journeyProgress.wordsLearned || 0) / jungleRegions.length) + Math.floor(Math.random() * 5)
-      ));
-      
+      const wordsForRegion = Math.max(
+        0,
+        Math.min(
+          region.targetWords,
+          Math.floor(
+            (journeyProgress.wordsLearned || 0) / jungleRegions.length,
+          ) + Math.floor(Math.random() * 5),
+        ),
+      );
+
       const accuracy = 75 + Math.floor(Math.random() * 20);
       const timeSpent = Math.floor(Math.random() * 120) + 30;
-      
+
       return {
         id: region.id,
         name: region.name,
@@ -349,38 +404,65 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
           medium: Math.floor(wordsForRegion * 0.3),
           hard: Math.floor(wordsForRegion * 0.2),
         },
-        weeklyProgress: Array.from({ length: 7 }, () => Math.floor(Math.random() * 5)),
-        strengthAreas: ["vocabulary", "pronunciation", "recognition"].slice(0, Math.floor(Math.random() * 3) + 1),
-        improvementAreas: ["speed", "complex words", "retention"].slice(0, Math.floor(Math.random() * 2)),
-        recentAchievements: ["Word Explorer", "Fast Learner"].slice(0, Math.floor(Math.random() * 2) + 1),
-        nextMilestones: [`Master ${region.name}`, `Discover all animals in ${region.name}`],
+        weeklyProgress: Array.from({ length: 7 }, () =>
+          Math.floor(Math.random() * 5),
+        ),
+        strengthAreas: ["vocabulary", "pronunciation", "recognition"].slice(
+          0,
+          Math.floor(Math.random() * 3) + 1,
+        ),
+        improvementAreas: ["speed", "complex words", "retention"].slice(
+          0,
+          Math.floor(Math.random() * 2),
+        ),
+        recentAchievements: ["Word Explorer", "Fast Learner"].slice(
+          0,
+          Math.floor(Math.random() * 2) + 1,
+        ),
+        nextMilestones: [
+          `Master ${region.name}`,
+          `Discover all animals in ${region.name}`,
+        ],
       };
     });
   };
 
-  const processLearningPatterns = async (userId: string, analyticsData: RealTimeAnalyticsData): Promise<JungleLearningPattern[]> => {
+  const processLearningPatterns = async (
+    userId: string,
+    analyticsData: RealTimeAnalyticsData,
+  ): Promise<JungleLearningPattern[]> => {
     const patterns = analyticsData.usagePatterns;
-    
-    return patterns.map(pattern => ({
+
+    return patterns.map((pattern) => ({
       timeOfDay: pattern.timeOfDay,
       sessions: pattern.sessions,
       wordsLearned: Math.floor(pattern.sessions * 2.5),
       accuracy: pattern.completionRate,
       avgDuration: pattern.avgDuration,
-      preferredRegions: ["canopy", "river", "floor"].slice(0, Math.floor(Math.random() * 3) + 1),
-      activityType: ["exploration", "quiz", "review", "discovery"][Math.floor(Math.random() * 4)] as any,
-      efficiency: Math.round((pattern.sessions * 2.5) / pattern.avgDuration * 10) / 10,
+      preferredRegions: ["canopy", "river", "floor"].slice(
+        0,
+        Math.floor(Math.random() * 3) + 1,
+      ),
+      activityType: ["exploration", "quiz", "review", "discovery"][
+        Math.floor(Math.random() * 4)
+      ] as any,
+      efficiency:
+        Math.round(((pattern.sessions * 2.5) / pattern.avgDuration) * 10) / 10,
     }));
   };
 
-  const generateProgressInsights = (metrics: JungleLearningMetric[], regions: JungleRegionAnalytics[], achievements: any[]): JungleProgressInsight[] => {
+  const generateProgressInsights = (
+    metrics: JungleLearningMetric[],
+    regions: JungleRegionAnalytics[],
+    achievements: any[],
+  ): JungleProgressInsight[] => {
     const insights: JungleProgressInsight[] = [];
 
     // Success insights
-    const strongRegion = regions.reduce((max, region) => 
-      region.completionRate > max.completionRate ? region : max
+    const strongRegion = regions.reduce((max, region) =>
+      region.completionRate > max.completionRate ? region : max,
     );
-    
+
     if (strongRegion.completionRate > 80) {
       insights.push({
         id: "strong_region",
@@ -396,10 +478,10 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
     }
 
     // Improvement opportunities
-    const weakRegion = regions.reduce((min, region) => 
-      region.completionRate < min.completionRate ? region : min
+    const weakRegion = regions.reduce((min, region) =>
+      region.completionRate < min.completionRate ? region : min,
     );
-    
+
     if (weakRegion.completionRate < 30) {
       insights.push({
         id: "improvement_opportunity",
@@ -416,9 +498,9 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
     }
 
     // Achievement opportunities
-    const unlockedCount = achievements.filter(a => a.unlocked).length;
+    const unlockedCount = achievements.filter((a) => a.unlocked).length;
     const totalCount = achievements.length;
-    
+
     if (unlockedCount < totalCount * 0.5) {
       insights.push({
         id: "achievement_opportunity",
@@ -428,13 +510,14 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
         actionable: true,
         priority: "low",
         relatedMetrics: ["words_discovered", "adventure_streak"],
-        recommendation: "Complete daily exploration sessions to unlock new achievements.",
+        recommendation:
+          "Complete daily exploration sessions to unlock new achievements.",
         emoji: "🎯",
       });
     }
 
     // Streak insights
-    const streakMetric = metrics.find(m => m.id === "adventure_streak");
+    const streakMetric = metrics.find((m) => m.id === "adventure_streak");
     if (streakMetric && streakMetric.value > 5) {
       insights.push({
         id: "streak_success",
@@ -466,8 +549,8 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
     },
   ];
 
-  const generateFallbackRegions = (): JungleRegionAnalytics[] => 
-    jungleRegions.map(region => ({
+  const generateFallbackRegions = (): JungleRegionAnalytics[] =>
+    jungleRegions.map((region) => ({
       id: region.id,
       name: region.name,
       icon: region.icon,
@@ -498,9 +581,12 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       <div className="flex items-center justify-center min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-jungle-green mx-auto"></div>
-          <h3 className="text-xl font-bold text-jungle-green">🌿 Analyzing Your Adventure</h3>
+          <h3 className="text-xl font-bold text-jungle-green">
+            🌿 Analyzing Your Adventure
+          </h3>
           <p className="text-jungle-green/80 max-w-md">
-            Processing your jungle exploration data and generating personalized insights...
+            Processing your jungle exploration data and generating personalized
+            insights...
           </p>
         </div>
       </div>
@@ -531,7 +617,10 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       {/* Key Metrics Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
         {jungleMetrics.map((metric) => (
-          <Card key={metric.id} className="hover:shadow-lg transition-all duration-300 jungle-stats-card">
+          <Card
+            key={metric.id}
+            className="hover:shadow-lg transition-all duration-300 jungle-stats-card"
+          >
             <CardContent className="p-3 md:p-6">
               <div className="flex items-center justify-between mb-3 md:mb-4">
                 <div className={`${metric.color}`}>{metric.icon}</div>
@@ -551,17 +640,26 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                     }`}
                   >
                     {metric.changePercent > 0 ? "+" : ""}
-                    {isFinite(metric.changePercent) ? metric.changePercent.toFixed(1) : 0}%
+                    {isFinite(metric.changePercent)
+                      ? metric.changePercent.toFixed(1)
+                      : 0}
+                    %
                   </span>
                 </div>
               </div>
               <div className="space-y-1 md:space-y-2">
-                <h3 className="font-medium text-slate-600 text-xs md:text-sm">{metric.name}</h3>
+                <h3 className="font-medium text-slate-600 text-xs md:text-sm">
+                  {metric.name}
+                </h3>
                 <div className="flex items-baseline gap-1 md:gap-2">
                   <span className="text-xl md:text-3xl font-bold text-slate-800">
-                    <AnimatedCounter value={isFinite(metric.value) ? metric.value : 0} />
+                    <AnimatedCounter
+                      value={isFinite(metric.value) ? metric.value : 0}
+                    />
                   </span>
-                  <span className="text-slate-500 text-xs md:text-sm">{metric.unit}</span>
+                  <span className="text-slate-500 text-xs md:text-sm">
+                    {metric.unit}
+                  </span>
                 </div>
                 <p className="text-xs text-slate-500 leading-tight">
                   {metric.description}
@@ -600,7 +698,9 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-lg">{insight.emoji}</span>
-                        <h4 className="font-semibold text-gray-800">{insight.title}</h4>
+                        <h4 className="font-semibold text-gray-800">
+                          {insight.title}
+                        </h4>
                         <JungleBadges.Progress
                           size="sm"
                           className={
@@ -614,7 +714,9 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                           {insight.priority}
                         </JungleBadges.Progress>
                       </div>
-                      <p className="text-gray-700 text-sm mb-2">{insight.description}</p>
+                      <p className="text-gray-700 text-sm mb-2">
+                        {insight.description}
+                      </p>
                       {insight.recommendation && (
                         <p className="text-gray-600 text-xs italic">
                           💡 {insight.recommendation}
@@ -644,17 +746,21 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Clock className="w-5 h-5" />
-              ⏰ Your Adventure Patterns
+              <Clock className="w-5 h-5" />⏰ Your Adventure Patterns
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {learningPatterns.map((pattern, index) => (
-                <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
+                >
                   <div className="flex-1">
                     <div className="flex items-center gap-4">
-                      <span className="font-medium w-20">{pattern.timeOfDay}</span>
+                      <span className="font-medium w-20">
+                        {pattern.timeOfDay}
+                      </span>
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center justify-between text-sm">
                           <span>{pattern.sessions} sessions</span>
@@ -662,11 +768,24 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                           <span>{pattern.accuracy.toFixed(1)}% accuracy</span>
                           <span>{pattern.efficiency.toFixed(1)} words/min</span>
                         </div>
-                        <Progress value={(pattern.sessions / Math.max(...learningPatterns.map(p => p.sessions))) * 100} className="h-2" />
+                        <Progress
+                          value={
+                            (pattern.sessions /
+                              Math.max(
+                                ...learningPatterns.map((p) => p.sessions),
+                              )) *
+                            100
+                          }
+                          className="h-2"
+                        />
                         <div className="flex gap-1">
                           {pattern.preferredRegions.map((region, i) => (
-                            <span key={i} className="text-xs bg-jungle-green/20 text-jungle-green px-2 py-1 rounded">
-                              {jungleRegions.find(r => r.id === region)?.icon} {jungleRegions.find(r => r.id === region)?.name}
+                            <span
+                              key={i}
+                              className="text-xs bg-jungle-green/20 text-jungle-green px-2 py-1 rounded"
+                            >
+                              {jungleRegions.find((r) => r.id === region)?.icon}{" "}
+                              {jungleRegions.find((r) => r.id === region)?.name}
                             </span>
                           ))}
                         </div>
@@ -713,17 +832,27 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
       {/* Regions Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {regionAnalytics
-          .filter(region => selectedRegion === "all" || region.id === selectedRegion)
+          .filter(
+            (region) =>
+              selectedRegion === "all" || region.id === selectedRegion,
+          )
           .map((region) => (
-            <Card key={region.id} className="hover:shadow-xl transition-all duration-300">
-              <div className={`h-4 bg-gradient-to-r ${region.bgColor} rounded-t-lg`}></div>
+            <Card
+              key={region.id}
+              className="hover:shadow-xl transition-all duration-300"
+            >
+              <div
+                className={`h-4 bg-gradient-to-r ${region.bgColor} rounded-t-lg`}
+              ></div>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{region.icon}</span>
                     <div>
                       <CardTitle className="text-lg">{region.name}</CardTitle>
-                      <p className="text-sm text-gray-600">{region.description}</p>
+                      <p className="text-sm text-gray-600">
+                        {region.description}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -733,22 +862,29 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>Exploration Progress</span>
-                    <span className="font-semibold">{region.completionRate.toFixed(1)}%</span>
+                    <span className="font-semibold">
+                      {region.completionRate.toFixed(1)}%
+                    </span>
                   </div>
                   <Progress value={region.completionRate} className="h-2" />
                   <div className="text-xs text-gray-600">
-                    {region.learnedWords} of {region.totalWords} words discovered
+                    {region.learnedWords} of {region.totalWords} words
+                    discovered
                   </div>
                 </div>
 
                 {/* Quick Stats */}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="text-center p-2 bg-blue-50 rounded">
-                    <div className="text-lg font-bold text-blue-600">{region.accuracy}%</div>
+                    <div className="text-lg font-bold text-blue-600">
+                      {region.accuracy}%
+                    </div>
                     <div className="text-xs text-blue-800">Accuracy</div>
                   </div>
                   <div className="text-center p-2 bg-green-50 rounded">
-                    <div className="text-lg font-bold text-green-600">{region.animalsFriended}</div>
+                    <div className="text-lg font-bold text-green-600">
+                      {region.animalsFriended}
+                    </div>
                     <div className="text-xs text-green-800">Animal Friends</div>
                   </div>
                 </div>
@@ -756,7 +892,9 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                 {/* Recent Achievements */}
                 {region.recentAchievements.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-sm mb-2">🏆 Recent Achievements</h4>
+                    <h4 className="font-semibold text-sm mb-2">
+                      🏆 Recent Achievements
+                    </h4>
                     <div className="flex flex-wrap gap-1">
                       {region.recentAchievements.map((achievement, i) => (
                         <JungleBadges.Gold key={i} size="sm">
@@ -770,10 +908,15 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
                 {/* Next Milestones */}
                 {region.nextMilestones.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-sm mb-2">🎯 Next Milestones</h4>
+                    <h4 className="font-semibold text-sm mb-2">
+                      🎯 Next Milestones
+                    </h4>
                     <div className="space-y-1">
                       {region.nextMilestones.slice(0, 2).map((milestone, i) => (
-                        <div key={i} className="text-xs text-gray-600 flex items-center gap-2">
+                        <div
+                          key={i}
+                          className="text-xs text-gray-600 flex items-center gap-2"
+                        >
                           <Target className="w-3 h-3" />
                           {milestone}
                         </div>
@@ -810,7 +953,8 @@ export const EnhancedJungleLearningAnalytics: React.FC<EnhancedJungleLearningAna
             🌿 Jungle Learning Analytics
           </h2>
           <p className="text-slate-600 text-sm md:text-base">
-            Track your amazing jungle exploration progress and discover insights! 🗺️
+            Track your amazing jungle exploration progress and discover
+            insights! 🗺️
           </p>
         </div>
         <div className="flex gap-2">

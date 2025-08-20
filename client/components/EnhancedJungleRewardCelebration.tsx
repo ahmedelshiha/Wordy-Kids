@@ -79,7 +79,9 @@ interface FloatingElement {
   duration: number;
 }
 
-export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationProps> = ({
+export const EnhancedJungleRewardCelebration: React.FC<
+  JungleRewardCelebrationProps
+> = ({
   isVisible,
   type = "achievement",
   title,
@@ -92,9 +94,13 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
   animalFriend,
 }) => {
   const [particles, setParticles] = useState<JungleParticle[]>([]);
-  const [floatingElements, setFloatingElements] = useState<FloatingElement[]>([]);
+  const [floatingElements, setFloatingElements] = useState<FloatingElement[]>(
+    [],
+  );
   const [showContent, setShowContent] = useState(false);
-  const [currentPhase, setCurrentPhase] = useState<"entrance" | "celebration" | "story" | "exit">("entrance");
+  const [currentPhase, setCurrentPhase] = useState<
+    "entrance" | "celebration" | "story" | "exit"
+  >("entrance");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
 
@@ -118,8 +124,15 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
       soundEffect: "animal_roar",
     },
     achievement: {
-      title: title || achievement?.storyline?.unlockText || "🏆 Achievement Unlocked!",
-      message: message || achievement?.storyline?.celebrationText || achievement?.name || "You earned a jungle achievement!",
+      title:
+        title ||
+        achievement?.storyline?.unlockText ||
+        "🏆 Achievement Unlocked!",
+      message:
+        message ||
+        achievement?.storyline?.celebrationText ||
+        achievement?.name ||
+        "You earned a jungle achievement!",
       emojis: ["🏆", "👑", "⭐", "💎", "🎉"],
       colors: ["#8b5cf6", "#a855f7", "#c084fc", "#d8b4fe", "#e9d5ff"],
       particleCount: 60,
@@ -207,7 +220,10 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
     const phaseTimer1 = setTimeout(() => setShowContent(true), 300);
     const phaseTimer2 = setTimeout(() => setCurrentPhase("celebration"), 800);
     const phaseTimer3 = setTimeout(() => setCurrentPhase("story"), 2500);
-    const phaseTimer4 = setTimeout(() => setCurrentPhase("exit"), duration - 1000);
+    const phaseTimer4 = setTimeout(
+      () => setCurrentPhase("exit"),
+      duration - 1000,
+    );
 
     // Generate initial particles
     generateParticles();
@@ -256,7 +272,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
         opacity: 1,
         life: 0,
         maxLife: 180 + Math.random() * 120,
-        type: ["leaf", "sparkle", "animal", "flower", "butterfly"][Math.floor(Math.random() * 5)] as any,
+        type: ["leaf", "sparkle", "animal", "flower", "butterfly"][
+          Math.floor(Math.random() * 5)
+        ] as any,
       });
     }
 
@@ -292,9 +310,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
     if (particles.length === 0) return;
 
     const animate = () => {
-      setParticles(prev =>
+      setParticles((prev) =>
         prev
-          .map(particle => ({
+          .map((particle) => ({
             ...particle,
             x: particle.x + particle.vx,
             y: particle.y + particle.vy,
@@ -302,13 +320,14 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
             vy: particle.vy + 0.2, // gravity
             vx: particle.vx * 0.99, // air resistance
             life: particle.life + 1,
-            opacity: Math.max(0, 1 - (particle.life / particle.maxLife)),
+            opacity: Math.max(0, 1 - particle.life / particle.maxLife),
           }))
-          .filter(particle => 
-            particle.life < particle.maxLife && 
-            particle.y < window.innerHeight + 100 &&
-            particle.opacity > 0.1
-          )
+          .filter(
+            (particle) =>
+              particle.life < particle.maxLife &&
+              particle.y < window.innerHeight + 100 &&
+              particle.opacity > 0.1,
+          ),
       );
 
       animationRef.current = requestAnimationFrame(animate);
@@ -328,11 +347,13 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${config.bgGradient} opacity-95 animate-pulse`} />
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${config.bgGradient} opacity-95 animate-pulse`}
+      />
       <div className="absolute inset-0 bg-black/10 backdrop-blur-sm" />
 
       {/* Floating Elements */}
-      {floatingElements.map(element => (
+      {floatingElements.map((element) => (
         <div
           key={element.id}
           className="absolute text-6xl pointer-events-none opacity-80"
@@ -348,7 +369,7 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
       ))}
 
       {/* Particles */}
-      {particles.map(particle => (
+      {particles.map((particle) => (
         <div
           key={particle.id}
           className="absolute pointer-events-none"
@@ -357,9 +378,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
             top: particle.y,
             transform: `rotate(${particle.rotation}deg) scale(${particle.size})`,
             opacity: particle.opacity,
-            fontSize: '2rem',
+            fontSize: "2rem",
             color: particle.color,
-            textShadow: '0 0 10px currentColor',
+            textShadow: "0 0 10px currentColor",
           }}
         >
           {particle.emoji}
@@ -368,27 +389,40 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
 
       {/* Main Celebration Card */}
       {showContent && (
-        <div className={`relative transform transition-all duration-1000 ${
-          currentPhase === "entrance" ? "scale-50 opacity-0" :
-          currentPhase === "exit" ? "scale-110 opacity-50" :
-          "scale-100 opacity-100"
-        }`}>
+        <div
+          className={`relative transform transition-all duration-1000 ${
+            currentPhase === "entrance"
+              ? "scale-50 opacity-0"
+              : currentPhase === "exit"
+                ? "scale-110 opacity-50"
+                : "scale-100 opacity-100"
+          }`}
+        >
           <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border-4 border-white/50 p-8 mx-4 max-w-lg relative overflow-hidden">
-            
             {/* Magical border animation */}
             <div className="absolute inset-0 rounded-3xl">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
             </div>
 
             {/* Floating corner decorations */}
-            <div className="absolute -top-6 -left-6 text-4xl animate-bounce">✨</div>
-            <div className="absolute -top-4 -right-8 text-3xl animate-pulse animation-delay-300">🌟</div>
-            <div className="absolute -bottom-6 -left-4 text-3xl animate-spin animation-delay-600" style={{ animationDuration: '3s' }}>💫</div>
-            <div className="absolute -bottom-4 -right-6 text-4xl animate-bounce animation-delay-900">⭐</div>
+            <div className="absolute -top-6 -left-6 text-4xl animate-bounce">
+              ✨
+            </div>
+            <div className="absolute -top-4 -right-8 text-3xl animate-pulse animation-delay-300">
+              🌟
+            </div>
+            <div
+              className="absolute -bottom-6 -left-4 text-3xl animate-spin animation-delay-600"
+              style={{ animationDuration: "3s" }}
+            >
+              💫
+            </div>
+            <div className="absolute -bottom-4 -right-6 text-4xl animate-bounce animation-delay-900">
+              ⭐
+            </div>
 
             {/* Content */}
             <div className="relative text-center space-y-6">
-              
               {/* Achievement Icon */}
               {(achievement?.icon || region?.icon || animalFriend?.emoji) && (
                 <div className="text-8xl animate-bounce mb-4">
@@ -418,23 +452,37 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
               {/* Achievement Details */}
               {achievement && currentPhase === "story" && (
                 <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 mb-6 text-left animate-slideIn">
-                  <h3 className="font-bold text-lg text-purple-800 mb-2">🏆 Achievement Details</h3>
-                  <p className="text-purple-700 mb-3">{achievement.description}</p>
-                  
+                  <h3 className="font-bold text-lg text-purple-800 mb-2">
+                    🏆 Achievement Details
+                  </h3>
+                  <p className="text-purple-700 mb-3">
+                    {achievement.description}
+                  </p>
+
                   {achievement.reward && (
                     <div className="bg-white/70 rounded-lg p-3 mb-3">
-                      <span className="font-semibold text-purple-800">🎁 Reward: </span>
-                      <span className="text-purple-700">{achievement.reward.item}</span>
+                      <span className="font-semibold text-purple-800">
+                        🎁 Reward:{" "}
+                      </span>
+                      <span className="text-purple-700">
+                        {achievement.reward.item}
+                      </span>
                       {achievement.reward.preview && (
-                        <p className="text-sm text-purple-600 mt-1">{achievement.reward.preview}</p>
+                        <p className="text-sm text-purple-600 mt-1">
+                          {achievement.reward.preview}
+                        </p>
                       )}
                     </div>
                   )}
 
                   {achievement.storyline?.nextHint && (
                     <div className="bg-yellow-100 rounded-lg p-3">
-                      <span className="font-semibold text-yellow-800">💡 Next Adventure: </span>
-                      <span className="text-yellow-700">{achievement.storyline.nextHint}</span>
+                      <span className="font-semibold text-yellow-800">
+                        💡 Next Adventure:{" "}
+                      </span>
+                      <span className="text-yellow-700">
+                        {achievement.storyline.nextHint}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -443,14 +491,22 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
               {/* Region Details */}
               {region && currentPhase === "story" && (
                 <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-6 mb-6 text-left animate-slideIn">
-                  <h3 className="font-bold text-lg text-green-800 mb-2">🗺️ New Region Unlocked</h3>
+                  <h3 className="font-bold text-lg text-green-800 mb-2">
+                    🗺️ New Region Unlocked
+                  </h3>
                   <p className="text-green-700 mb-3">{region.description}</p>
-                  
+
                   <div className="bg-white/70 rounded-lg p-3">
-                    <span className="font-semibold text-green-800">🐾 Meet the locals: </span>
+                    <span className="font-semibold text-green-800">
+                      🐾 Meet the locals:{" "}
+                    </span>
                     <div className="flex gap-2 mt-2">
                       {region.animals.map((animal, index) => (
-                        <span key={index} className="text-2xl animate-bounce" style={{ animationDelay: `${index * 200}ms` }}>
+                        <span
+                          key={index}
+                          className="text-2xl animate-bounce"
+                          style={{ animationDelay: `${index * 200}ms` }}
+                        >
                           {animal}
                         </span>
                       ))}
@@ -462,19 +518,28 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
               {/* Animal Friend Details */}
               {animalFriend && currentPhase === "story" && (
                 <div className="bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-6 mb-6 text-left animate-slideIn">
-                  <h3 className="font-bold text-lg text-pink-800 mb-2">🐾 New Animal Friend</h3>
-                  <p className="text-pink-700 mb-3">{animalFriend.description}</p>
-                  
-                  {animalFriend.abilities && animalFriend.abilities.length > 0 && (
-                    <div className="bg-white/70 rounded-lg p-3">
-                      <span className="font-semibold text-pink-800">✨ Special Abilities: </span>
-                      <ul className="list-disc list-inside text-pink-700 mt-1">
-                        {animalFriend.abilities.map((ability, index) => (
-                          <li key={index} className="text-sm">{ability}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <h3 className="font-bold text-lg text-pink-800 mb-2">
+                    🐾 New Animal Friend
+                  </h3>
+                  <p className="text-pink-700 mb-3">
+                    {animalFriend.description}
+                  </p>
+
+                  {animalFriend.abilities &&
+                    animalFriend.abilities.length > 0 && (
+                      <div className="bg-white/70 rounded-lg p-3">
+                        <span className="font-semibold text-pink-800">
+                          ✨ Special Abilities:{" "}
+                        </span>
+                        <ul className="list-disc list-inside text-pink-700 mt-1">
+                          {animalFriend.abilities.map((ability, index) => (
+                            <li key={index} className="text-sm">
+                              {ability}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                 </div>
               )}
 
@@ -496,7 +561,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
                 onClick={onComplete}
                 className={`bg-gradient-to-r ${config.bgGradient} text-white font-bold py-4 px-8 rounded-2xl shadow-xl transform transition-all duration-300 hover:scale-105 active:scale-95 animate-pulse`}
               >
-                {currentPhase === "story" ? "Continue Adventure! 🚀" : "Amazing! 🌟"}
+                {currentPhase === "story"
+                  ? "Continue Adventure! 🚀"
+                  : "Amazing! 🌟"}
               </button>
             </div>
           </div>

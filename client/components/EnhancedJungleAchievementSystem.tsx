@@ -51,16 +51,34 @@ interface JungleAchievement {
   name: string;
   description: string;
   icon: string;
-  category: "learning" | "streak" | "quiz" | "exploration" | "social" | "jungle_adventure";
+  category:
+    | "learning"
+    | "streak"
+    | "quiz"
+    | "exploration"
+    | "social"
+    | "jungle_adventure";
   difficulty: "sapling" | "growing" | "mighty" | "ancient" | "legendary";
   rarity: "common" | "rare" | "epic" | "legendary";
   requirements: number;
   currentProgress: number;
   unlocked: boolean;
   dateUnlocked?: Date;
-  region?: "canopy" | "floor" | "undergrowth" | "river" | "mountain" | "clearing";
+  region?:
+    | "canopy"
+    | "floor"
+    | "undergrowth"
+    | "river"
+    | "mountain"
+    | "clearing";
   reward?: {
-    type: "avatar_accessory" | "jungle_theme" | "sound_effect" | "title" | "points" | "animal_companion";
+    type:
+      | "avatar_accessory"
+      | "jungle_theme"
+      | "sound_effect"
+      | "title"
+      | "points"
+      | "animal_companion";
     item: string;
     value?: number;
     preview?: string;
@@ -145,9 +163,14 @@ export function EnhancedJungleAchievementSystem({
   const [activeTab, setActiveTab] = useState("achievements");
   const [isLoading, setIsLoading] = useState(true);
   const [realStats, setRealStats] = useState<JungleLearningStats | null>(null);
-  const [realAchievements, setRealAchievements] = useState<JungleAchievement[]>([]);
-  const [exploration, setExploration] = useState<JungleExploration | null>(null);
-  const [celebratingAchievement, setCelebratingAchievement] = useState<JungleAchievement | null>(null);
+  const [realAchievements, setRealAchievements] = useState<JungleAchievement[]>(
+    [],
+  );
+  const [exploration, setExploration] = useState<JungleExploration | null>(
+    null,
+  );
+  const [celebratingAchievement, setCelebratingAchievement] =
+    useState<JungleAchievement | null>(null);
   const [recentUnlocks, setRecentUnlocks] = useState<JungleAchievement[]>([]);
   const achievementRef = useRef<HTMLDivElement>(null);
 
@@ -230,8 +253,10 @@ export function EnhancedJungleAchievementSystem({
         preview: "A cute baby monkey will follow you on adventures!",
       },
       storyline: {
-        unlockText: "Welcome to the jungle, young explorer! Your adventure has just begun!",
-        celebrationText: "🌟 Amazing! You've taken your first steps into this magical world!",
+        unlockText:
+          "Welcome to the jungle, young explorer! Your adventure has just begun!",
+        celebrationText:
+          "🌟 Amazing! You've taken your first steps into this magical world!",
         nextHint: "Keep exploring to meet more animal friends!",
       },
     },
@@ -254,7 +279,8 @@ export function EnhancedJungleAchievementSystem({
       },
       storyline: {
         unlockText: "The birds welcome you to their high kingdom!",
-        celebrationText: "🦜 Fantastic! You're now a friend of the canopy creatures!",
+        celebrationText:
+          "🦜 Fantastic! You're now a friend of the canopy creatures!",
         nextHint: "Try exploring the forest floor next!",
       },
     },
@@ -356,7 +382,8 @@ export function EnhancedJungleAchievementSystem({
     {
       id: "jungle_master",
       name: "Master of All Realms",
-      description: "Explore every region and learn 200+ words to become the ultimate jungle master!",
+      description:
+        "Explore every region and learn 200+ words to become the ultimate jungle master!",
       icon: "👑",
       category: "jungle_adventure",
       difficulty: "legendary",
@@ -395,59 +422,95 @@ export function EnhancedJungleAchievementSystem({
         }
 
         // Merge with jungle achievements
-        const jungleAchievements = enhancedJungleAchievements.map(ja => {
-          const existingAchievement = achievements.find(a => a.id === ja.id);
+        const jungleAchievements = enhancedJungleAchievements.map((ja) => {
+          const existingAchievement = achievements.find((a) => a.id === ja.id);
           return existingAchievement ? { ...ja, ...existingAchievement } : ja;
         });
 
         // Update progress based on real data
-        jungleAchievements.forEach(achievement => {
+        jungleAchievements.forEach((achievement) => {
           switch (achievement.id) {
             case "first_jungle_steps":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
             case "canopy_discoverer":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
             case "river_navigator":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
             case "jungle_protector":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
             case "mountain_climber":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
             case "jungle_sage":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
             case "jungle_master":
-              achievement.currentProgress = Math.min(journeyProgress.wordsLearned, achievement.requirements);
+              achievement.currentProgress = Math.min(
+                journeyProgress.wordsLearned,
+                achievement.requirements,
+              );
               break;
           }
 
           // Auto-unlock if progress meets requirements
-          if (achievement.currentProgress >= achievement.requirements && !achievement.unlocked) {
+          if (
+            achievement.currentProgress >= achievement.requirements &&
+            !achievement.unlocked
+          ) {
             achievement.unlocked = true;
             achievement.dateUnlocked = new Date();
-            setRecentUnlocks(prev => [...prev, achievement]);
+            setRecentUnlocks((prev) => [...prev, achievement]);
           }
         });
 
         // Create exploration data
         const explorationData: JungleExploration = {
-          regions: jungleRegions.map(region => ({
+          regions: jungleRegions.map((region) => ({
             ...region,
-            unlocked: journeyProgress.wordsLearned >= (region.id === "clearing" ? 0 : 10),
+            unlocked:
+              journeyProgress.wordsLearned >=
+              (region.id === "clearing" ? 0 : 10),
             progress: Math.min((journeyProgress.wordsLearned / 50) * 100, 100),
             discoveries: Math.floor(journeyProgress.wordsLearned / 10),
           })),
-          totalExplored: Math.min((journeyProgress.wordsLearned / 200) * 100, 100),
-          currentRegion: journeyProgress.wordsLearned < 10 ? "clearing" : 
-                        journeyProgress.wordsLearned < 30 ? "canopy" :
-                        journeyProgress.wordsLearned < 60 ? "floor" :
-                        journeyProgress.wordsLearned < 100 ? "river" :
-                        journeyProgress.wordsLearned < 150 ? "mountain" : "clearing",
+          totalExplored: Math.min(
+            (journeyProgress.wordsLearned / 200) * 100,
+            100,
+          ),
+          currentRegion:
+            journeyProgress.wordsLearned < 10
+              ? "clearing"
+              : journeyProgress.wordsLearned < 30
+                ? "canopy"
+                : journeyProgress.wordsLearned < 60
+                  ? "floor"
+                  : journeyProgress.wordsLearned < 100
+                    ? "river"
+                    : journeyProgress.wordsLearned < 150
+                      ? "mountain"
+                      : "clearing",
           discoveries: [],
           animalFriends: [],
         };
@@ -457,20 +520,38 @@ export function EnhancedJungleAchievementSystem({
         const jungleStats: JungleLearningStats = {
           totalWordsLearned: journeyProgress.wordsLearned,
           weeklyProgress: weeklyData,
-          regionBreakdown: jungleRegions.map(region => ({
+          regionBreakdown: jungleRegions.map((region) => ({
             region: region.name,
-            wordsLearned: Math.floor(journeyProgress.wordsLearned / jungleRegions.length),
+            wordsLearned: Math.floor(
+              journeyProgress.wordsLearned / jungleRegions.length,
+            ),
             accuracy: journeyProgress.totalAccuracy || 85,
             timeSpent: Math.floor(Math.random() * 60) + 20,
             discoveries: Math.floor(journeyProgress.wordsLearned / 20),
           })),
           difficultyProgress: [
-            { difficulty: "easy", completed: journeyProgress.difficultyStats?.easy?.completed || 0, total: 50 },
-            { difficulty: "medium", completed: journeyProgress.difficultyStats?.medium?.completed || 0, total: 50 },
-            { difficulty: "hard", completed: journeyProgress.difficultyStats?.hard?.completed || 0, total: 30 },
+            {
+              difficulty: "easy",
+              completed: journeyProgress.difficultyStats?.easy?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "medium",
+              completed:
+                journeyProgress.difficultyStats?.medium?.completed || 0,
+              total: 50,
+            },
+            {
+              difficulty: "hard",
+              completed: journeyProgress.difficultyStats?.hard?.completed || 0,
+              total: 30,
+            },
           ],
           adventureMap: getAdventureMapData(userId),
-          expeditionSpeed: Math.max(weeklyData.reduce((sum, count) => sum + count, 0) / 7 * 2, 1),
+          expeditionSpeed: Math.max(
+            (weeklyData.reduce((sum, count) => sum + count, 0) / 7) * 2,
+            1,
+          ),
           explorationAccuracy: journeyProgress.totalAccuracy || 85,
           animalEncounters: Math.floor(journeyProgress.wordsLearned / 5),
           secretsFound: Math.floor(journeyProgress.wordsLearned / 15),
@@ -479,7 +560,6 @@ export function EnhancedJungleAchievementSystem({
         setRealStats(jungleStats);
         setRealAchievements(jungleAchievements);
         setExploration(explorationData);
-        
       } catch (error) {
         console.error("Error loading jungle data:", error);
         // Fallback data
@@ -513,10 +593,10 @@ export function EnhancedJungleAchievementSystem({
       const achievement = recentUnlocks[0];
       setCelebratingAchievement(achievement);
       audioService.playCheerSound();
-      
+
       setTimeout(() => {
         setCelebratingAchievement(null);
-        setRecentUnlocks(prev => prev.slice(1));
+        setRecentUnlocks((prev) => prev.slice(1));
       }, 4000);
     }
   }, [recentUnlocks]);
@@ -532,7 +612,9 @@ export function EnhancedJungleAchievementSystem({
       const dateKey = date.toISOString().split("T")[0];
 
       try {
-        const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+        const dailyData = localStorage.getItem(
+          `daily_progress_${userId}_${dateKey}`,
+        );
         if (dailyData) {
           const parsed = JSON.parse(dailyData);
           weeklyData.push(parsed.words || 0);
@@ -557,7 +639,9 @@ export function EnhancedJungleAchievementSystem({
       const dateKey = date.toISOString().split("T")[0];
 
       try {
-        const dailyData = localStorage.getItem(`daily_progress_${userId}_${dateKey}`);
+        const dailyData = localStorage.getItem(
+          `daily_progress_${userId}_${dateKey}`,
+        );
         if (dailyData) {
           const parsed = JSON.parse(dailyData);
           mapData.push({
@@ -601,22 +685,33 @@ export function EnhancedJungleAchievementSystem({
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "sapling": return "from-green-300 to-green-500";
-      case "growing": return "from-green-500 to-emerald-600";
-      case "mighty": return "from-emerald-600 to-green-800";
-      case "ancient": return "from-amber-500 to-orange-600";
-      case "legendary": return "from-purple-500 to-pink-600 via-yellow-500";
-      default: return "from-gray-400 to-gray-600";
+      case "sapling":
+        return "from-green-300 to-green-500";
+      case "growing":
+        return "from-green-500 to-emerald-600";
+      case "mighty":
+        return "from-emerald-600 to-green-800";
+      case "ancient":
+        return "from-amber-500 to-orange-600";
+      case "legendary":
+        return "from-purple-500 to-pink-600 via-yellow-500";
+      default:
+        return "from-gray-400 to-gray-600";
     }
   };
 
   const getRarityBorder = (rarity: string) => {
     switch (rarity) {
-      case "common": return "border-gray-300";
-      case "rare": return "border-blue-400 shadow-blue-200";
-      case "epic": return "border-purple-400 shadow-purple-200";
-      case "legendary": return "border-yellow-400 shadow-yellow-200 animate-pulse";
-      default: return "border-gray-300";
+      case "common":
+        return "border-gray-300";
+      case "rare":
+        return "border-blue-400 shadow-blue-200";
+      case "epic":
+        return "border-purple-400 shadow-purple-200";
+      case "legendary":
+        return "border-yellow-400 shadow-yellow-200 animate-pulse";
+      default:
+        return "border-gray-300";
     }
   };
 
@@ -631,7 +726,7 @@ export function EnhancedJungleAchievementSystem({
 
   const regions = [
     { id: "all", name: "All Regions", icon: "🌍" },
-    ...jungleRegions.map(r => ({ id: r.id, name: r.name, icon: r.icon })),
+    ...jungleRegions.map((r) => ({ id: r.id, name: r.name, icon: r.icon })),
   ];
 
   if (isLoading) {
@@ -639,7 +734,9 @@ export function EnhancedJungleAchievementSystem({
       <div className="jungle-loading min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-100">
         <div className="flex flex-col items-center justify-center h-full p-8">
           <div className="jungle-loading-spinner mb-6"></div>
-          <h3 className="text-2xl font-bold text-jungle-green mb-2">🌿 Loading Your Jungle Adventure</h3>
+          <h3 className="text-2xl font-bold text-jungle-green mb-2">
+            🌿 Loading Your Jungle Adventure
+          </h3>
           <p className="text-jungle-green/80 text-center max-w-md">
             Preparing your amazing journey through the magical jungle realms...
           </p>
@@ -651,13 +748,14 @@ export function EnhancedJungleAchievementSystem({
   const stats = realStats!;
   const achievements = realAchievements;
 
-  const filteredAchievements = achievements.filter(a => {
-    const categoryMatch = selectedCategory === "all" || a.category === selectedCategory;
+  const filteredAchievements = achievements.filter((a) => {
+    const categoryMatch =
+      selectedCategory === "all" || a.category === selectedCategory;
     const regionMatch = selectedRegion === "all" || a.region === selectedRegion;
     return categoryMatch && regionMatch;
   });
 
-  const unlockedAchievements = achievements.filter(a => a.unlocked);
+  const unlockedAchievements = achievements.filter((a) => a.unlocked);
 
   const renderJungleOverview = () => (
     <div className="space-y-6">
@@ -669,13 +767,18 @@ export function EnhancedJungleAchievementSystem({
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.totalWordsLearned} />
             </div>
-            <p className="text-xs md:text-sm opacity-90">Words Discovered! 🌿</p>
+            <p className="text-xs md:text-sm opacity-90">
+              Words Discovered! 🌿
+            </p>
           </CardContent>
         </Card>
 
         <Card className="bg-gradient-to-br from-sunshine-yellow to-sunshine-light text-jungle-dark hover:scale-105 transition-all">
           <CardContent className="p-3 md:p-6 text-center">
-            <Compass className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 animate-spin" style={{ animationDuration: "4s" }} />
+            <Compass
+              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 animate-spin"
+              style={{ animationDuration: "4s" }}
+            />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.animalEncounters} />
             </div>
@@ -719,27 +822,44 @@ export function EnhancedJungleAchievementSystem({
                 <div
                   key={region.id}
                   className={`relative p-4 rounded-xl bg-gradient-to-br ${region.bgColor} text-white transform transition-all hover:scale-105 ${
-                    region.unlocked ? 'cursor-pointer shadow-lg' : 'opacity-60 cursor-not-allowed'
+                    region.unlocked
+                      ? "cursor-pointer shadow-lg"
+                      : "opacity-60 cursor-not-allowed"
                   }`}
                 >
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl mb-2">{region.icon}</div>
-                    <h3 className="font-bold text-sm md:text-base mb-1">{region.name}</h3>
-                    <p className="text-xs opacity-90 mb-3">{region.description}</p>
-                    
+                    <div className="text-3xl md:text-4xl mb-2">
+                      {region.icon}
+                    </div>
+                    <h3 className="font-bold text-sm md:text-base mb-1">
+                      {region.name}
+                    </h3>
+                    <p className="text-xs opacity-90 mb-3">
+                      {region.description}
+                    </p>
+
                     {region.unlocked ? (
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
                           <span>Explored</span>
                           <span>{Math.round(region.progress)}%</span>
                         </div>
-                        <Progress value={region.progress} className="h-2 bg-white/20" />
+                        <Progress
+                          value={region.progress}
+                          className="h-2 bg-white/20"
+                        />
                         <div className="flex justify-center gap-1">
-                          {region.animals.slice(0, region.discoveries).map((animal, i) => (
-                            <span key={i} className="text-lg animate-bounce" style={{ animationDelay: `${i * 200}ms` }}>
-                              {animal}
-                            </span>
-                          ))}
+                          {region.animals
+                            .slice(0, region.discoveries)
+                            .map((animal, i) => (
+                              <span
+                                key={i}
+                                className="text-lg animate-bounce"
+                                style={{ animationDelay: `${i * 200}ms` }}
+                              >
+                                {animal}
+                              </span>
+                            ))}
                         </div>
                       </div>
                     ) : (
@@ -751,7 +871,9 @@ export function EnhancedJungleAchievementSystem({
 
                   {region.unlocked && region.progress === 100 && (
                     <div className="absolute -top-2 -right-2">
-                      <JungleBadges.Completed size="sm">Complete!</JungleBadges.Completed>
+                      <JungleBadges.Completed size="sm">
+                        Complete!
+                      </JungleBadges.Completed>
                     </div>
                   )}
                 </div>
@@ -777,13 +899,15 @@ export function EnhancedJungleAchievementSystem({
 
             <div className="grid grid-cols-10 gap-1 justify-center max-w-lg mx-auto">
               {stats.adventureMap.slice(-30).map((day, index) => {
-                const regionData = jungleRegions.find(r => r.id === day.region);
+                const regionData = jungleRegions.find(
+                  (r) => r.id === day.region,
+                );
                 const regionIcon = regionData?.icon || "🌿";
 
                 return (
                   <div
                     key={index}
-                    className={`adventure-day ${day.active ? 'explored' : ''} ${
+                    className={`adventure-day ${day.active ? "explored" : ""} ${
                       day.active
                         ? day.wordsLearned > 8
                           ? "bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-lg"
@@ -792,7 +916,7 @@ export function EnhancedJungleAchievementSystem({
                             : "bg-gradient-to-br from-yellow-400 to-orange-500 text-white shadow-sm"
                         : "bg-gray-100 text-gray-400"
                     }`}
-                    title={`${day.date}: ${day.active ? `${day.wordsLearned} words in ${regionData?.name || 'Unknown Region'} ${regionIcon}` : "Rest day 😴"}`}
+                    title={`${day.date}: ${day.active ? `${day.wordsLearned} words in ${regionData?.name || "Unknown Region"} ${regionIcon}` : "Rest day 😴"}`}
                   >
                     {day.active ? regionIcon : "💤"}
                   </div>
@@ -802,19 +926,27 @@ export function EnhancedJungleAchievementSystem({
 
             <div className="grid grid-cols-2 md:flex md:justify-center gap-2 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gray-100 rounded-sm flex items-center justify-center">💤</div>
+                <div className="w-4 h-4 bg-gray-100 rounded-sm flex items-center justify-center">
+                  💤
+                </div>
                 <span className="text-gray-600">Rest</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-yellow-400 rounded-sm flex items-center justify-center text-white">🌿</div>
+                <div className="w-4 h-4 bg-yellow-400 rounded-sm flex items-center justify-center text-white">
+                  🌿
+                </div>
                 <span className="text-orange-600">Exploring</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-400 rounded-sm flex items-center justify-center text-white">🌳</div>
+                <div className="w-4 h-4 bg-green-400 rounded-sm flex items-center justify-center text-white">
+                  🌳
+                </div>
                 <span className="text-green-600">Great Day</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-emerald-500 rounded-sm flex items-center justify-center text-white">🏆</div>
+                <div className="w-4 h-4 bg-emerald-500 rounded-sm flex items-center justify-center text-white">
+                  🏆
+                </div>
                 <span className="text-emerald-600">Epic Adventure!</span>
               </div>
             </div>
@@ -849,7 +981,7 @@ export function EnhancedJungleAchievementSystem({
       {/* Category and Region Filters */}
       <div className="space-y-3">
         <div className="flex justify-center gap-1 md:gap-2 flex-wrap">
-          {categories.map(category => (
+          {categories.map((category) => (
             <Button
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
@@ -864,7 +996,7 @@ export function EnhancedJungleAchievementSystem({
         </div>
 
         <div className="flex justify-center gap-1 md:gap-2 flex-wrap">
-          {regions.map(region => (
+          {regions.map((region) => (
             <Button
               key={region.id}
               variant={selectedRegion === region.id ? "default" : "outline"}
@@ -881,10 +1013,10 @@ export function EnhancedJungleAchievementSystem({
 
       {/* Achievements Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredAchievements.map(achievement => {
+        {filteredAchievements.map((achievement) => {
           const progressPercentage = Math.min(
             (achievement.currentProgress / achievement.requirements) * 100,
-            100
+            100,
           );
           const isComplete = progressPercentage >= 100;
 
@@ -901,7 +1033,9 @@ export function EnhancedJungleAchievementSystem({
               {/* Rarity indicator */}
               {achievement.rarity !== "common" && (
                 <div className="absolute top-2 right-2">
-                  <JungleBadges.Diamond size="sm">{achievement.rarity}</JungleBadges.Diamond>
+                  <JungleBadges.Diamond size="sm">
+                    {achievement.rarity}
+                  </JungleBadges.Diamond>
                 </div>
               )}
 
@@ -909,18 +1043,28 @@ export function EnhancedJungleAchievementSystem({
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-4xl">{achievement.icon}</div>
                   <div className="flex items-center gap-1">
-                    {achievement.unlocked && <Check className="w-5 h-5 text-green-300" />}
-                    {!achievement.unlocked && isComplete && <Sparkles className="w-5 h-5 text-yellow-500 animate-pulse" />}
-                    {!achievement.unlocked && !isComplete && <Lock className="w-5 h-5 text-gray-400" />}
+                    {achievement.unlocked && (
+                      <Check className="w-5 h-5 text-green-300" />
+                    )}
+                    {!achievement.unlocked && isComplete && (
+                      <Sparkles className="w-5 h-5 text-yellow-500 animate-pulse" />
+                    )}
+                    {!achievement.unlocked && !isComplete && (
+                      <Lock className="w-5 h-5 text-gray-400" />
+                    )}
                   </div>
                 </div>
-                <CardTitle className={`text-lg ${achievement.unlocked ? "text-white" : "text-gray-800"}`}>
+                <CardTitle
+                  className={`text-lg ${achievement.unlocked ? "text-white" : "text-gray-800"}`}
+                >
                   {achievement.name}
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-3">
-                <p className={`text-sm ${achievement.unlocked ? "text-white/90" : "text-gray-600"}`}>
+                <p
+                  className={`text-sm ${achievement.unlocked ? "text-white/90" : "text-gray-600"}`}
+                >
                   {achievement.description}
                 </p>
 
@@ -929,7 +1073,8 @@ export function EnhancedJungleAchievementSystem({
                   <div className="flex items-center gap-2">
                     <span className="text-xs opacity-75">Region:</span>
                     <JungleBadges.Explorer size="sm">
-                      {jungleRegions.find(r => r.id === achievement.region)?.name || achievement.region}
+                      {jungleRegions.find((r) => r.id === achievement.region)
+                        ?.name || achievement.region}
                     </JungleBadges.Explorer>
                   </div>
                 )}
@@ -937,17 +1082,30 @@ export function EnhancedJungleAchievementSystem({
                 {!achievement.unlocked && (
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className={achievement.unlocked ? "text-white/80" : "text-gray-600"}>
+                      <span
+                        className={
+                          achievement.unlocked
+                            ? "text-white/80"
+                            : "text-gray-600"
+                        }
+                      >
                         Progress
                       </span>
-                      <span className={`font-semibold ${achievement.unlocked ? "text-white" : "text-gray-800"}`}>
+                      <span
+                        className={`font-semibold ${achievement.unlocked ? "text-white" : "text-gray-800"}`}
+                      >
                         {achievement.currentProgress}/{achievement.requirements}
                       </span>
                     </div>
-                    <Progress value={progressPercentage} className="h-2 jungle-progress-bar" />
+                    <Progress
+                      value={progressPercentage}
+                      className="h-2 jungle-progress-bar"
+                    />
                     {isComplete && (
                       <div className="text-center">
-                        <JungleBadges.NewUnlock>Ready to Unlock! 🎉</JungleBadges.NewUnlock>
+                        <JungleBadges.NewUnlock>
+                          Ready to Unlock! 🎉
+                        </JungleBadges.NewUnlock>
                       </div>
                     )}
                   </div>
@@ -997,8 +1155,14 @@ export function EnhancedJungleAchievementSystem({
         <RewardCelebration
           isVisible={true}
           type="achievement"
-          title={celebratingAchievement.storyline?.unlockText || "🏆 Achievement Unlocked!"}
-          message={celebratingAchievement.storyline?.celebrationText || celebratingAchievement.name}
+          title={
+            celebratingAchievement.storyline?.unlockText ||
+            "🏆 Achievement Unlocked!"
+          }
+          message={
+            celebratingAchievement.storyline?.celebrationText ||
+            celebratingAchievement.name
+          }
           points={50}
           onComplete={() => setCelebratingAchievement(null)}
           duration={4000}
@@ -1024,7 +1188,11 @@ export function EnhancedJungleAchievementSystem({
           >
             <Map className="w-4 h-4" />
             <span className="hidden md:inline">🗺️ Overview</span>
-            <span className="md:hidden text-center">🗺️<br />Overview</span>
+            <span className="md:hidden text-center">
+              🗺️
+              <br />
+              Overview
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="achievements"
@@ -1032,7 +1200,11 @@ export function EnhancedJungleAchievementSystem({
           >
             <Trophy className="w-4 h-4" />
             <span className="hidden md:inline">🏆 Achievements</span>
-            <span className="md:hidden text-center">🏆<br />Achievements</span>
+            <span className="md:hidden text-center">
+              🏆
+              <br />
+              Achievements
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="exploration"
@@ -1040,7 +1212,11 @@ export function EnhancedJungleAchievementSystem({
           >
             <Compass className="w-4 h-4" />
             <span className="hidden md:inline">🧭 Exploration</span>
-            <span className="md:hidden text-center">🧭<br />Exploration</span>
+            <span className="md:hidden text-center">
+              🧭
+              <br />
+              Exploration
+            </span>
           </TabsTrigger>
         </TabsList>
 

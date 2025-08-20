@@ -15,28 +15,44 @@ const enhancedBadgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
         outline: "text-foreground",
         // Jungle Adventure Variants
-        jungle: "border-transparent bg-gradient-to-r from-jungle-green to-jungle-light text-white hover:from-jungle-dark hover:to-jungle-green shadow-lg hover:shadow-xl transform hover:scale-105",
-        safari: "border-transparent bg-gradient-to-r from-sunshine-yellow to-sunshine-light text-jungle-dark hover:from-sunshine-dark hover:to-sunshine-yellow shadow-lg hover:shadow-xl transform hover:scale-105",
-        explorer: "border-transparent bg-gradient-to-r from-sky-blue to-sky-light text-white hover:from-sky-dark hover:to-sky-blue shadow-lg hover:shadow-xl transform hover:scale-105",
-        adventure: "border-transparent bg-gradient-to-r from-playful-purple to-coral-red text-white hover:opacity-90 shadow-lg hover:shadow-xl transform hover:scale-105",
+        jungle:
+          "border-transparent bg-gradient-to-r from-jungle-green to-jungle-light text-white hover:from-jungle-dark hover:to-jungle-green shadow-lg hover:shadow-xl transform hover:scale-105",
+        safari:
+          "border-transparent bg-gradient-to-r from-sunshine-yellow to-sunshine-light text-jungle-dark hover:from-sunshine-dark hover:to-sunshine-yellow shadow-lg hover:shadow-xl transform hover:scale-105",
+        explorer:
+          "border-transparent bg-gradient-to-r from-sky-blue to-sky-light text-white hover:from-sky-dark hover:to-sky-blue shadow-lg hover:shadow-xl transform hover:scale-105",
+        adventure:
+          "border-transparent bg-gradient-to-r from-playful-purple to-coral-red text-white hover:opacity-90 shadow-lg hover:shadow-xl transform hover:scale-105",
         // Achievement Rarity Variants
-        bronze: "border-2 border-amber-400 bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow-lg animate-gentle-bounce",
-        silver: "border-2 border-gray-400 bg-gradient-to-r from-gray-400 to-gray-600 text-white shadow-lg animate-gentle-float",
+        bronze:
+          "border-2 border-amber-400 bg-gradient-to-r from-amber-400 to-amber-600 text-white shadow-lg animate-gentle-bounce",
+        silver:
+          "border-2 border-gray-400 bg-gradient-to-r from-gray-400 to-gray-600 text-white shadow-lg animate-gentle-float",
         gold: "border-2 border-yellow-400 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white shadow-xl animate-jungle-glow",
-        diamond: "border-2 border-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-600 text-white shadow-2xl animate-jungle-sparkle",
-        legendary: "border-2 border-purple-400 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white shadow-2xl animate-jungle-celebration",
+        diamond:
+          "border-2 border-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-600 text-white shadow-2xl animate-jungle-sparkle",
+        legendary:
+          "border-2 border-purple-400 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white shadow-2xl animate-jungle-celebration",
         // Activity Variants
-        learning: "border-transparent bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-transform",
-        streak: "border-transparent bg-gradient-to-r from-orange-500 to-red-500 text-white hover:scale-105 transition-transform animate-pulse",
+        learning:
+          "border-transparent bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-transform",
+        streak:
+          "border-transparent bg-gradient-to-r from-orange-500 to-red-500 text-white hover:scale-105 transition-transform animate-pulse",
         quiz: "border-transparent bg-gradient-to-r from-educational-green to-educational-blue text-white hover:scale-105 transition-transform",
-        exploration: "border-transparent bg-gradient-to-r from-educational-purple to-educational-pink text-white hover:scale-105 transition-transform",
+        exploration:
+          "border-transparent bg-gradient-to-r from-educational-purple to-educational-pink text-white hover:scale-105 transition-transform",
         // Progress Variants
-        completed: "border-transparent bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg",
-        inProgress: "border-transparent bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md animate-pulse",
-        locked: "border-2 border-dashed border-gray-300 bg-gray-100 text-gray-500",
+        completed:
+          "border-transparent bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg",
+        inProgress:
+          "border-transparent bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md animate-pulse",
+        locked:
+          "border-2 border-dashed border-gray-300 bg-gray-100 text-gray-500",
         // Special Variants
-        newUnlock: "border-2 border-yellow-400 bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-xl animate-bounce",
-        perfectScore: "border-2 border-purple-400 bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl animate-jungle-sparkle",
+        newUnlock:
+          "border-2 border-yellow-400 bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-xl animate-bounce",
+        perfectScore:
+          "border-2 border-purple-400 bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl animate-jungle-sparkle",
       },
       size: {
         sm: "px-2 py-0.5 text-xs",
@@ -172,8 +188,11 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
-  SafariGuide: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
+
+  SafariGuide: ({
+    children,
+    ...props
+  }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="safari"
       icon="🦁"
@@ -185,7 +204,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   JungleHero: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="jungle"
@@ -198,8 +217,11 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
-  AdventureMaster: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
+
+  AdventureMaster: ({
+    children,
+    ...props
+  }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="adventure"
       icon="👑"
@@ -212,7 +234,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   // Achievement rarity badges
   Bronze: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
@@ -225,7 +247,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   Silver: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="silver"
@@ -238,7 +260,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   Gold: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="gold"
@@ -251,7 +273,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   Diamond: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="diamond"
@@ -265,7 +287,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   Legendary: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="legendary"
@@ -280,7 +302,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   // Progress badges
   Progress: ({ progress = 0, children, ...props }: EnhancedBadgeProps) => (
     <EnhancedBadge
@@ -292,7 +314,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   Completed: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="completed"
@@ -303,7 +325,7 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
+
   NewUnlock: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="newUnlock"
@@ -317,8 +339,11 @@ export const JungleBadges = {
       {children}
     </EnhancedBadge>
   ),
-  
-  PerfectScore: ({ children, ...props }: Omit<EnhancedBadgeProps, "variant">) => (
+
+  PerfectScore: ({
+    children,
+    ...props
+  }: Omit<EnhancedBadgeProps, "variant">) => (
     <EnhancedBadge
       variant="perfectScore"
       icon="✨"
