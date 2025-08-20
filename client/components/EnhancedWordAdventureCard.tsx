@@ -408,7 +408,6 @@ export const EnhancedWordAdventureCard: React.FC<
             : ""
         }`}
         style={{
-          transformStyle: "preserve-3d",
           touchAction: "manipulation",
           WebkitTouchCallout: "none",
           WebkitUserSelect: "none",
