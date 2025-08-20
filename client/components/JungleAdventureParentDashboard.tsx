@@ -3,7 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveJungleMap } from "./InteractiveJungleMap";
 import { FamilyAchievementsTimeline } from "./FamilyAchievementsTimeline";
 import { JungleGuideFallback } from "./JungleGuideFallback";
-import { parentDashboardAnalytics, withPerformanceTracking } from "@/lib/parentDashboardAnalytics";
+import {
+  parentDashboardAnalytics,
+  withPerformanceTracking,
+} from "@/lib/parentDashboardAnalytics";
 import { featureFlags } from "@/lib/featureFlags";
 import { JungleAdventureStorage } from "@/lib/jungleAdventureStorage";
 import { useAuth } from "@/hooks/useAuth";
@@ -115,12 +118,22 @@ export const JungleAdventureParentDashboard: React.FC<
   // Error handling and feature flags
   const [mapError, setMapError] = useState<string | null>(null);
   const [timelineError, setTimelineError] = useState<string | null>(null);
-  const [dashboardLoadTime, setDashboardLoadTime] = useState<number | null>(null);
+  const [dashboardLoadTime, setDashboardLoadTime] = useState<number | null>(
+    null,
+  );
 
   // Get feature flag states
-  const isJungleMapEnabled = featureFlags.isFeatureEnabled('jungle-map-enhanced', { userRole: 'parent' });
-  const isTimelineEnabled = featureFlags.isFeatureEnabled('family-achievements-timeline', { userRole: 'parent' });
-  const isAnalyticsEnabled = featureFlags.isFeatureEnabled('performance-monitoring');
+  const isJungleMapEnabled = featureFlags.isFeatureEnabled(
+    "jungle-map-enhanced",
+    { userRole: "parent" },
+  );
+  const isTimelineEnabled = featureFlags.isFeatureEnabled(
+    "family-achievements-timeline",
+    { userRole: "parent" },
+  );
+  const isAnalyticsEnabled = featureFlags.isFeatureEnabled(
+    "performance-monitoring",
+  );
 
   // Get user preference for jungle map (from parental controls)
   const userSettings = JungleAdventureStorage.getSettings();
@@ -715,7 +728,7 @@ export const JungleAdventureParentDashboard: React.FC<
                   </p>
                 </CardHeader>
                 <CardContent className="p-0">
-                  {(isJungleMapEnabled && userMapPreference) ? (
+                  {isJungleMapEnabled && userMapPreference ? (
                     <div className="relative">
                       {mapError ? (
                         <JungleGuideFallback
@@ -723,7 +736,10 @@ export const JungleAdventureParentDashboard: React.FC<
                           onRetry={() => {
                             setMapError(null);
                             if (isAnalyticsEnabled) {
-                              parentDashboardAnalytics.trackFeatureUsage('jungle-map', 'retry_after_error');
+                              parentDashboardAnalytics.trackFeatureUsage(
+                                "jungle-map",
+                                "retry_after_error",
+                              );
                             }
                           }}
                           retryText="Reload Map"
@@ -732,10 +748,16 @@ export const JungleAdventureParentDashboard: React.FC<
                       ) : (
                         <div
                           onError={(error) => {
-                            const errorMessage = error instanceof Error ? error.message : 'Map failed to load';
+                            const errorMessage =
+                              error instanceof Error
+                                ? error.message
+                                : "Map failed to load";
                             setMapError(errorMessage);
                             if (isAnalyticsEnabled) {
-                              parentDashboardAnalytics.trackError('map', errorMessage);
+                              parentDashboardAnalytics.trackError(
+                                "map",
+                                errorMessage,
+                              );
                             }
                           }}
                         >
@@ -743,10 +765,13 @@ export const JungleAdventureParentDashboard: React.FC<
                             className="w-full"
                             onMarkerClick={(marker) => {
                               if (isAnalyticsEnabled) {
-                                parentDashboardAnalytics.trackMapInteraction('marker_click', {
-                                  markerId: marker.id,
-                                  markerType: marker.type
-                                });
+                                parentDashboardAnalytics.trackMapInteraction(
+                                  "marker_click",
+                                  {
+                                    markerId: marker.id,
+                                    markerType: marker.type,
+                                  },
+                                );
                               }
                               console.log("Marker clicked:", marker);
                             }}
@@ -756,12 +781,23 @@ export const JungleAdventureParentDashboard: React.FC<
                     </div>
                   ) : (
                     <JungleGuideFallback
-                      error={!userMapPreference ? "Interactive map disabled in settings" : "Map feature not available"}
-                      onRetry={!userMapPreference ? undefined : () => {
-                        if (isAnalyticsEnabled) {
-                          parentDashboardAnalytics.trackFeatureUsage('jungle-map', 'enable_attempt');
-                        }
-                      }}
+                      error={
+                        !userMapPreference
+                          ? "Interactive map disabled in settings"
+                          : "Map feature not available"
+                      }
+                      onRetry={
+                        !userMapPreference
+                          ? undefined
+                          : () => {
+                              if (isAnalyticsEnabled) {
+                                parentDashboardAnalytics.trackFeatureUsage(
+                                  "jungle-map",
+                                  "enable_attempt",
+                                );
+                              }
+                            }
+                      }
                       retryText={!userMapPreference ? undefined : "Enable Map"}
                       showBasicStats={true}
                     />
@@ -830,7 +866,10 @@ export const JungleAdventureParentDashboard: React.FC<
                     onRetry={() => {
                       setTimelineError(null);
                       if (isAnalyticsEnabled) {
-                        parentDashboardAnalytics.trackFeatureUsage('timeline', 'retry_after_error');
+                        parentDashboardAnalytics.trackFeatureUsage(
+                          "timeline",
+                          "retry_after_error",
+                        );
                       }
                     }}
                     retryText="Reload Timeline"
@@ -839,10 +878,16 @@ export const JungleAdventureParentDashboard: React.FC<
                 ) : (
                   <div
                     onError={(error) => {
-                      const errorMessage = error instanceof Error ? error.message : 'Timeline failed to load';
+                      const errorMessage =
+                        error instanceof Error
+                          ? error.message
+                          : "Timeline failed to load";
                       setTimelineError(errorMessage);
                       if (isAnalyticsEnabled) {
-                        parentDashboardAnalytics.trackError('timeline', errorMessage);
+                        parentDashboardAnalytics.trackError(
+                          "timeline",
+                          errorMessage,
+                        );
                       }
                     }}
                   >
@@ -850,10 +895,13 @@ export const JungleAdventureParentDashboard: React.FC<
                       className="w-full"
                       onEventClick={(event) => {
                         if (isAnalyticsEnabled) {
-                          parentDashboardAnalytics.trackTimelineEventClick(event.type, {
-                            eventId: event.id,
-                            category: event.category,
-                          });
+                          parentDashboardAnalytics.trackTimelineEventClick(
+                            event.type,
+                            {
+                              eventId: event.id,
+                              category: event.category,
+                            },
+                          );
                         }
                         console.log("Timeline event clicked:", event);
                       }}
@@ -864,7 +912,8 @@ export const JungleAdventureParentDashboard: React.FC<
                 <Card className="jungle-card">
                   <CardContent className="p-8 text-center">
                     <p className="text-jungle-dark/70">
-                      🌟 Family Timeline feature coming soon! Keep exploring your learning adventure.
+                      🌟 Family Timeline feature coming soon! Keep exploring
+                      your learning adventure.
                     </p>
                   </CardContent>
                 </Card>

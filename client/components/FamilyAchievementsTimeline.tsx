@@ -252,7 +252,10 @@ export const FamilyAchievementsTimeline: React.FC<
               const newFilter = value as "all" | "achievements" | "milestones";
               setFilter(newFilter);
               // Track filter usage
-              parentDashboardAnalytics.trackTimelineFilter(newFilter, filteredEvents.length);
+              parentDashboardAnalytics.trackTimelineFilter(
+                newFilter,
+                filteredEvents.length,
+              );
             }}
             className="w-auto"
           >
