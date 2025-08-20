@@ -478,6 +478,8 @@ export class EnhancedAudioService {
             voice: voice?.name,
             timestamp: new Date().toISOString()
           };
+          // Record error for debugging
+          speechSynthesisDebugger.recordError(errorDetails);
           onError?.(errorDetails);
         } catch (error) {
           console.error("Error in onError callback:", error);
