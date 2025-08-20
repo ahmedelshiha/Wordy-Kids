@@ -42,8 +42,7 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
-import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
-import { useEnhancedAchievementDialog } from "@/hooks/use-enhanced-achievement-dialog";
+// Old achievement dialog system removed - now using LightweightAchievementProvider
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -254,14 +253,7 @@ export default function Index({ initialProfile }: IndexProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
-  // Enhanced Achievement Dialog System
-  const {
-    achievements: enhancedAchievements,
-    showDialog: showEnhancedDialog,
-    closeDialog: closeEnhancedDialog,
-    trackProgress: trackEnhancedProgress,
-    claimAchievement: claimEnhancedAchievement,
-  } = useEnhancedAchievementDialog();
+  // Enhanced achievement dialog removed - now handled by LightweightAchievementProvider
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
@@ -1536,7 +1528,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "🎓🌟";
+        achievementIcon = "��🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 🌟✨";
@@ -3839,19 +3831,7 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Achievement Dialog */}
-          {showEnhancedDialog && (
-            <EnhancedAchievementDialog
-              achievements={enhancedAchievements}
-              onClose={closeEnhancedDialog}
-              onAchievementClaim={(achievement) => {
-                console.log("Enhanced achievement claimed:", achievement);
-                claimEnhancedAchievement(achievement);
-                // Additional reward logic can be added here
-              }}
-              autoCloseDelay={8000} // Auto-close after 8 seconds for better UX
-            />
-          )}
+          {/* Achievement dialogs now handled by LightweightAchievementProvider */}
 
           {/* Kid-Friendly Floating Mascot */}
           {userRole === "child" && mascotEnabled && (
