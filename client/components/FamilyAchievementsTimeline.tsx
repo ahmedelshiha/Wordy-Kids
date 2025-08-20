@@ -175,7 +175,7 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
   // Use provided events or loaded events
   const displayEvents = events || timelineEvents;
 
-  const filteredEvents = events.filter((event) => {
+  const filteredEvents = displayEvents.filter((event) => {
     if (filter === "all") return true;
     if (filter === "achievements") return event.type === "achievement";
     if (filter === "milestones") return event.type === "milestone";
