@@ -100,6 +100,7 @@ export function EnhancedAchievementsPage({
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isLoading, setIsLoading] = useState(true);
+  const [showSystemMap, setShowSystemMap] = useState(false);
   const [learningJourney, setLearningJourney] =
     useState<LearningJourney | null>(null);
   const [badgeCollection, setBadgeCollection] =
