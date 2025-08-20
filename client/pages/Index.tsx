@@ -1644,6 +1644,14 @@ export default function Index({ initialProfile }: IndexProps) {
         timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1, // Convert to minutes
       });
 
+      // Also track in enhanced achievement system
+      trackEnhancedProgress({
+        wordsLearned: status === "remembered" ? rememberedWords.size + 1 : rememberedWords.size,
+        streakDays: learningStats.currentStreak,
+        totalAccuracy: currentProgress.accuracy,
+        categoriesCompleted: [selectedCategory].filter(Boolean),
+      });
+
       // Update session tracking
       if (status === "remembered" || status === "needs_practice") {
         setDailySessionCount((prev) => prev + 1);
