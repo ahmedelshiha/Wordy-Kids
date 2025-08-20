@@ -1480,13 +1480,15 @@ export function InteractiveDashboardWordCard({
                 }}
                 className="relative"
               >
-                {/* Jungle Adventure Background Glow */}
-                <motion.div
-                  initial={{ scale: 0, opacity: 0.8 }}
-                  animate={{ scale: 1.5, opacity: 0 }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="absolute inset-0 bg-gradient-to-r from-jungle/20 via-sunshine/30 to-jungle/20 rounded-3xl blur-xl"
-                />
+                {/* Simplified Background Glow - Only if motion allowed */}
+                {!prefersReducedMotion && (
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0.8 }}
+                    animate={{ scale: 1.2, opacity: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="absolute inset-0 bg-gradient-to-r from-jungle/15 via-sunshine/20 to-jungle/15 rounded-3xl blur-lg"
+                  />
+                )}
 
                 {/* Dynamic Jungle Explorer Prompt */}
                 <motion.h1
