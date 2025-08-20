@@ -340,6 +340,7 @@ export const JungleAdventureSettingsPanel: React.FC<
         dailyTimeLimit: dailyTimeLimit[0],
         contentFiltering,
         progressSharing,
+        jungleMapEnabled,
       },
       accessibility: {
         screenReader,
