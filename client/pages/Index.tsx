@@ -1961,7 +1961,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🗺��� My Journey",
+                      label: "🗺️ My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
@@ -3715,6 +3715,12 @@ export default function Index({ initialProfile }: IndexProps) {
                                 }}
                               />
                             </TabsContent>
+
+                            <TabsContent value="achievements">
+                              <EnhancedAchievementsPage
+                                onBack={() => setActiveTab("dashboard")}
+                              />
+                            </TabsContent>
                           </Tabs>
                         </div>
                       </div>
@@ -3827,7 +3833,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["����", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
