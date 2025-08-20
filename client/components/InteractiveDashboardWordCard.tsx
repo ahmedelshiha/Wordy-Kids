@@ -899,7 +899,7 @@ export function InteractiveDashboardWordCard({
               stiffness: 300,
               damping: 20,
             }}
-            className={`w-48 h-36 ml-2 flex flex-col items-center justify-center relative`}
+            className={`w-48 h-36 ml-2 mt-4 flex flex-col items-center justify-center relative`}
           >
             {/* Celebration background effect */}
             {feedbackType === "remembered" && (
@@ -1006,7 +1006,7 @@ export function InteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-48 h-36 ml-2 flex items-center justify-center cursor-pointer group relative"
+          className="w-48 h-36 ml-2 mt-4 flex items-center justify-center cursor-pointer group relative"
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
