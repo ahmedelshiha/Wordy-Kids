@@ -53,7 +53,10 @@ import type {
 } from "@/lib/enhancedAchievementSystem";
 import type { EnhancedBadge, BadgeCollection } from "@/lib/enhancedBadgeSystem";
 import type { JungleProgressReport } from "@/lib/enhancedLearningAnalytics";
-import AchievementsSystemMap from "./AchievementsSystemMap";
+// Conditional import for developer mode only
+const AchievementsSystemMap = process.env.NODE_ENV === 'development'
+  ? (await import("./AchievementsSystemMap")).default
+  : null;
 
 interface EnhancedAchievementsPageProps {
   onBack?: () => void;
