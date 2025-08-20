@@ -1298,7 +1298,7 @@ const EnhancedJungleAchievementSystemComponent = ({
                                         transition={{ type: "spring", duration: 0.5 }}
                                       >
                                         <Badge className="bg-jungle text-white animate-pulse shadow-lg">
-                                          Ready to Unlock! 🎉
+                                          Ready to Unlock! ����
                                         </Badge>
                                       </motion.div>
                                     )}
@@ -1609,4 +1609,7 @@ const EnhancedJungleAchievementSystemComponent = ({
       </div>
     </div>
   );
-}
+};
+
+// Memoize the component for better performance
+export const EnhancedJungleAchievementSystem = React.memo(EnhancedJungleAchievementSystemComponent);
