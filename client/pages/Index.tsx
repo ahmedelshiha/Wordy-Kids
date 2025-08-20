@@ -254,6 +254,8 @@ export default function Index({ initialProfile }: IndexProps) {
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
   // Enhanced achievement dialog removed - now handled by LightweightAchievementProvider
+  // Keep only the tracking function from the old system
+  const { trackProgress: trackEnhancedProgress } = useEnhancedAchievementDialog();
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
@@ -1528,7 +1530,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
-        achievementIcon = "��🌟";
+        achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
         achievementTitle = "Category Scholar! 🌟✨";
