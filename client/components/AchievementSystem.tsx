@@ -998,7 +998,7 @@ export function AchievementSystem({
               </Card>
             </div>
 
-            {/* Category Filters - Mobile Optimized */}
+            {/* Jungle Adventure Category Filters - Mobile Optimized */}
             <div className="flex justify-center gap-1 md:gap-2 flex-wrap px-2 md:px-0">
               {categories.map((category) => (
                 <Button
@@ -1008,9 +1008,13 @@ export function AchievementSystem({
                   }
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className="flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
+                  className={`flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 ${
+                    selectedCategory === category.id
+                      ? 'bg-jungle hover:bg-jungle-dark text-white shadow-lg'
+                      : 'border-jungle/30 text-jungle hover:bg-jungle/10'
+                  }`}
                 >
-                  <span>{category.icon}</span>
+                  <span className="animate-bounce" style={{ animationDelay: `${Math.random() * 2}s` }}>{category.icon}</span>
                   {category.name}
                 </Button>
               ))}
@@ -1018,10 +1022,14 @@ export function AchievementSystem({
                 variant={showUnlockables ? "default" : "outline"}
                 size="sm"
                 onClick={() => setShowUnlockables(!showUnlockables)}
-                className="flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2"
+                className={`flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 ${
+                  showUnlockables
+                    ? 'bg-sunshine hover:bg-sunshine-dark text-jungle-dark shadow-lg'
+                    : 'border-sunshine/30 text-sunshine hover:bg-sunshine/10'
+                }`}
               >
-                <Gift className="w-4 h-4" />
-                🎁 Rewards
+                <Gift className="w-4 h-4 animate-pulse" />
+                🎁 Treasures
               </Button>
             </div>
 
