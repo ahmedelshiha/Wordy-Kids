@@ -439,12 +439,14 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
+        const errorType = event.error || "unknown";
+        const errorMessage = event.message || "No message provided";
+
         console.error(
-          `Speech synthesis error for word "${word}":`,
-          event.error || "Unknown error",
+          `Speech synthesis error for word "${word}": ${errorType}`,
           {
-            error: event.error,
-            message: event.message,
+            error: errorType,
+            message: errorMessage,
             eventType: event.type,
             word: word,
             voice: voice?.name,
@@ -468,7 +470,14 @@ export class AudioService {
         );
 
         try {
-          onError?.();
+          const errorDetails = {
+            type: "speech_synthesis_error",
+            error: errorType,
+            message: errorMessage,
+            word: word,
+            timestamp: new Date().toISOString(),
+          };
+          onError?.(errorDetails);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }
