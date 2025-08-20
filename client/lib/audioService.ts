@@ -609,17 +609,18 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
+        const errorType = event.error || "unknown";
+        const errorMessage = event.message || "No message provided";
+
         console.error(
-          `Speech synthesis error (default voice) for word "${word}":`,
-          event.error || "Unknown error",
+          `Speech synthesis error (default voice) for word "${word}": ${errorType}`,
           {
-            error: event.error,
-            message: event.message,
+            error: errorType,
+            message: errorMessage,
             type: event.type,
             timeStamp: event.timeStamp,
             word: word,
-            voice: voice?.name || "default",
-            voiceURI: voice?.voiceURI,
+            voice: "default",
             speechState: {
               speaking: this.speechSynthesis.speaking,
               pending: this.speechSynthesis.pending,
@@ -629,7 +630,14 @@ export class AudioService {
           },
         );
         try {
-          options.onError?.();
+          const errorDetails = {
+            type: "speech_synthesis_error",
+            error: errorType,
+            message: errorMessage,
+            word: word,
+            timestamp: new Date().toISOString(),
+          };
+          options.onError?.(errorDetails);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }
