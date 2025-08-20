@@ -490,7 +490,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // Initialize dashboard words on component mount
     initializeDashboardWords();
-  }, [currentDashboardWords.length, generateDashboardWords]); // Include dependencies for proper updates
+  }, [currentDashboardWords.length]); // generateDashboardWords is stable due to useCallback
 
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
