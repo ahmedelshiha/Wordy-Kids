@@ -90,14 +90,27 @@
   );
 }
 
+/* Enhanced Accessibility Features */
+
 /* High contrast mode accessibility */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: high), .high-contrast {
   .jungle-card {
     background: rgba(255, 255, 255, 0.95);
     color: #000;
     border: 2px solid #000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  .jungle-achievement-badge {
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+  }
+
+  .jungle-progress-bar {
+    background: #000;
+    border: 2px solid #000;
   }
 
   .jungle-pattern-bg {
@@ -114,6 +127,103 @@
 
   .text-sunshine {
     color: #f57f17 !important;
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce), .reduced-motion {
+  .jungle-card,
+  .jungle-shimmer,
+  .jungle-celebration-particle,
+  .jungle-float,
+  .firefly-glow {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .jungle-card:hover {
+    transform: none;
+  }
+}
+
+/* Large text mode */
+.large-text {
+  font-size: 125%;
+}
+
+.large-text .jungle-card {
+  padding: 1.5rem;
+}
+
+.large-text .jungle-achievement-title {
+  font-size: 1.5rem;
+}
+
+/* Performance optimizations */
+.optimized-blur .jungle-card {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.reduced-animations .jungle-card {
+  transition: transform 0.2s ease;
+}
+
+.reduced-particles .jungle-celebration-particle {
+  display: none;
+}
+
+/* Focus management for keyboard navigation */
+.jungle-card:focus,
+.jungle-achievement-card:focus {
+  outline: 3px solid #4CAF50;
+  outline-offset: 2px;
+}
+
+.jungle-card:focus-visible {
+  outline: 3px solid #FFC107;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(255, 193, 7, 0.3);
+}
+
+/* Screen reader optimizations */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ARIA live regions */
+.jungle-achievement-notification[aria-live] {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Touch target optimization */
+@media (pointer: coarse) {
+  .jungle-card,
+  .jungle-achievement-button {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* Print styles */
+@media print {
+  .jungle-card {
+    background: white;
+    color: black;
+    border: 1px solid black;
+    backdrop-filter: none;
+    box-shadow: none;
   }
 }
 
