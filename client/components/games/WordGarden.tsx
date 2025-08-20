@@ -172,7 +172,7 @@ const PLANT_TYPES = [
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
-  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
+  ["🌱", "🌳", "���"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
@@ -601,7 +601,7 @@ function JungleGameCompletionDialog({
             </div>
             <div className="flex-1">
               <div className="text-3xl">
-                {accuracy >= 90 ? "��" : accuracy >= 75 ? "🏖️" : "🌟"}
+                {accuracy >= 90 ? "🏆" : accuracy >= 75 ? "🏖️" : "🌟"}
               </div>
               <div className="text-lg font-bold text-white">{accuracy}%</div>
               <div className="text-xs text-emerald-200">Adventure Score</div>
@@ -1326,7 +1326,7 @@ export default function WordGarden({
                         🔍
                       </span>
                       <div className="text-white font-bold text-xs md:text-sm mt-1 md:mt-2 drop-shadow-lg bg-coral-red/50 rounded-full px-2 md:px-3 py-1">
-                        <span className="mr-2">🗺���</span>Keep exploring!
+                        <span className="mr-2">🗺️</span>Keep exploring!
                       </div>
                     </div>
                   </div>
