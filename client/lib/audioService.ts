@@ -315,7 +315,7 @@ export class AudioService {
     }
   }
 
-  public pronounceWord(
+  public async pronounceWord(
     word: string,
     options: {
       rate?: number;
@@ -325,7 +325,7 @@ export class AudioService {
       onEnd?: () => void;
       onError?: (errorDetails?: any) => void;
     } = {},
-  ): void {
+  ): Promise<void> {
     // Input validation
     if (typeof word !== "string") {
       console.error(
