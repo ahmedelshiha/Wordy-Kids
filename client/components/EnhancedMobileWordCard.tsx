@@ -232,8 +232,14 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         });
 
         if (pronunciationAchievements.length > 0) {
+          // Trigger achievements through new event system
           setTimeout(() => {
-            setWordAchievements(pronunciationAchievements);
+            pronunciationAchievements.forEach(achievement => {
+              const event = new CustomEvent('milestoneUnlocked', {
+                detail: { achievement }
+              });
+              window.dispatchEvent(event);
+            });
           }, 1000);
         }
       },
