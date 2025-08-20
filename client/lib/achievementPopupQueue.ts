@@ -158,7 +158,6 @@ class AchievementPopupQueue {
     };
   }
 
-
   /**
    * Utility method for delays
    */

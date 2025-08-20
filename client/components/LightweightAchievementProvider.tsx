@@ -12,11 +12,8 @@ interface LightweightAchievementProviderProps {
 export function LightweightAchievementProvider({
   children,
 }: LightweightAchievementProviderProps) {
-  const {
-    isVisible,
-    achievement,
-    popupProps,
-  } = useLightweightAchievementPopup();
+  const { isVisible, achievement, popupProps } =
+    useLightweightAchievementPopup();
 
   /**
    * Convert achievement icon string to React component
@@ -62,10 +59,8 @@ export function LightweightAchievementProvider({
           )}
         />
       )}
-
     </LightweightAchievementContext.Provider>
   );
 }
-
 
 export default LightweightAchievementProvider;

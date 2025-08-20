@@ -78,7 +78,6 @@ export function useLightweightAchievementPopup() {
     };
   }, [popupState.achievement, hidePopup]);
 
-
   return {
     // State
     isVisible: popupState.isVisible,
