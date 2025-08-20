@@ -201,7 +201,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
       <div
         ref={cardRef}
         className={cn(
-          "relative w-full transition-all duration-700 transform-gpu preserve-3d",
+          "relative w-full transition-all duration-700 transform-gpu",
           "h-[380px] xs:h-[400px] sm:h-[380px] md:h-[420px] lg:h-[440px]",
           "touch-target-large mobile-optimized",
           "active:scale-98 hover:scale-[1.02] transition-transform",
@@ -209,8 +209,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
           isPressed && "scale-98",
         )}
         style={{
-          transformStyle: "preserve-3d",
-          perspective: "1000px",
+          willChange: "transform",
         }}
         onClick={handleFlip}
         onTouchStart={handleTouchStart}

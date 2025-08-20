@@ -992,9 +992,9 @@ export function InteractiveDashboardWordCard({
       return (
         <motion.div
           key={`emoji-normal-${currentWordIndex}`}
-          initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
-          animate={{ scale: 1, opacity: 1, rotateY: 0 }}
-          exit={{ scale: 0.9, opacity: 0, rotateY: 15 }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
           transition={{
             duration: 0.6,
             type: "spring",
@@ -1003,7 +1003,6 @@ export function InteractiveDashboardWordCard({
           }}
           whileHover={{
             scale: 1.05,
-            rotateY: 5,
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
@@ -1191,7 +1190,7 @@ export function InteractiveDashboardWordCard({
                           if (wordsLearned >= goal * 2)
                             return "⭐ SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
-                            return "�� Beyond awesome! Keep going!";
+                            return "🚀 Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
@@ -1285,8 +1284,9 @@ export function InteractiveDashboardWordCard({
             "w-[320px] h-[460px] sm:w-[380px] sm:h-[480px] md:w-[420px] md:h-[480px] lg:w-[460px] lg:h-[500px] xl:w-[480px] xl:h-[520px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
             "ai-card-background",
+            "bg-transparent", // Override default Card white background
             "shadow-lg hover:shadow-xl border-0 rounded-3xl sm:rounded-[2rem]",
-            "backdrop-blur-sm ring-1 ring-black/5",
+            "", // Removed backdrop-blur and ring for non-glossy appearance
             celebrationEffect &&
               "jungle-celebration-glow animate-pulse shadow-2xl",
           )}
@@ -1294,8 +1294,7 @@ export function InteractiveDashboardWordCard({
             boxShadow: `
               0 25px 50px rgba(0, 0, 0, 0.3),
               0 0 30px rgba(255, 215, 0, 0.2),
-              0 0 60px rgba(34, 197, 94, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.15)
+              0 0 60px rgba(34, 197, 94, 0.1)
             `,
           }}
         >
@@ -1368,19 +1367,7 @@ export function InteractiveDashboardWordCard({
               🌺
             </motion.div>
 
-            {/* Jungle Mist Effect */}
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.2, 0.4, 0.2],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-yellow-900/10 rounded-3xl"
-            />
+            {/* Jungle Mist Effect - Removed for non-glossy appearance */}
           </div>
 
           {/* Enhanced Celebration Sparkles */}
@@ -1474,21 +1461,8 @@ export function InteractiveDashboardWordCard({
           )}
 
           <CardContent className="p-3 sm:p-4 md:p-4 lg:p-5 xl:p-6 relative z-10">
-            {/* Jungle Adventure Surface Glow */}
-            <motion.div
-              animate={{
-                opacity: [0.2, 0.4, 0.2],
-                scale: [1, 1.02, 1],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-2 bg-gradient-to-br from-yellow-400/20 via-transparent to-green-400/15 rounded-3xl pointer-events-none"
-            />
-            {/* Jungle Photo Texture Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-900/5 to-green-900/10 rounded-3xl pointer-events-none" />
+            {/* Jungle Adventure Surface Glow - Removed for non-glossy appearance */}
+            {/* Jungle Photo Texture Overlay - Removed for non-glossy appearance */}
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
@@ -1535,7 +1509,7 @@ export function InteractiveDashboardWordCard({
                         return "🎉 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "���� Almost there, superstar!";
+                        return "🌟 Almost there, superstar!";
                       if (percentage >= 75) return "🚀 You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
@@ -1621,7 +1595,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "���� What creature lives in our jungle?",
+                          "🐸 What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
@@ -1658,7 +1632,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Food: {
                         easy: [
-                          "�� What jungle snack is this?",
+                          "🍌 What jungle snack is this?",
                           "🥥 Which jungle treat do you see?",
                           "🍯 Can you name this jungle delight?",
                           "🫐 What jungle berry is this?",
@@ -1667,7 +1641,7 @@ export function InteractiveDashboardWordCard({
                           "🥭 What exotic jungle fruit is this?",
                           "🍍 Which tropical jungle treasure awaits?",
                           "🥑 Can you identify this jungle nutrition?",
-                          "🌰 What jungle harvest is this?",
+                          "🌾 What jungle harvest is this?",
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
@@ -1793,7 +1767,7 @@ export function InteractiveDashboardWordCard({
                     }}
                     className="absolute -top-1 -right-6 text-sm opacity-50"
                   >
-                    🦋
+                    🌸
                   </motion.div>
 
                   <motion.div
@@ -1893,7 +1867,7 @@ export function InteractiveDashboardWordCard({
                     const categoryEmojis = {
                       Animals: "🐵",
                       Nature: "🌿",
-                      Food: "🍌",
+                      Food: "🍎",
                       Objects: "🔍",
                       Colors: "🌈",
                       Body: "👤",
@@ -2447,7 +2421,7 @@ export function InteractiveDashboardWordCard({
                             : "filter drop-shadow-md"
                         }`}
                       >
-                        {particle.type === "success" ? "⭐" : "���"}
+                        {particle.type === "success" ? "⭐" : "✨"}
                       </div>
                     </motion.div>
                   ))}

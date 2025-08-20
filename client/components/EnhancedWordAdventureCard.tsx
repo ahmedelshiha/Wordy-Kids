@@ -408,7 +408,6 @@ export const EnhancedWordAdventureCard: React.FC<
             : ""
         }`}
         style={{
-          transformStyle: "preserve-3d",
           touchAction: "manipulation",
           WebkitTouchCallout: "none",
           WebkitUserSelect: "none",
@@ -431,7 +430,7 @@ export const EnhancedWordAdventureCard: React.FC<
         {/* FRONT OF CARD - Kid-Friendly Design */}
         <CardContent
           className={`absolute inset-0 w-full h-full ${getCategoryColor(word.category)} rounded-xl p-4 flex flex-col text-white`}
-          style={{ backfaceVisibility: "hidden" }}
+          style={{ willChange: "transform" }}
         >
           {/* Header with Badges and Stars */}
           <div className="flex items-start justify-between mb-3">
@@ -608,8 +607,7 @@ export const EnhancedWordAdventureCard: React.FC<
         <CardContent
           className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 rounded-xl p-4 flex flex-col text-white overflow-hidden"
           style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
+            transform: "scale(-1, 1)",
           }}
         >
           {/* Back Navigation */}

@@ -891,9 +891,9 @@ export function AIEnhancedInteractiveDashboardWordCard({
       return (
         <motion.div
           key={`emoji-normal-${currentWordIndex}`}
-          initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
-          animate={{ scale: 1, opacity: 1, rotateY: 0 }}
-          exit={{ scale: 0.9, opacity: 0, rotateY: 15 }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
           transition={{
             duration: 0.6,
             type: "spring",
@@ -902,7 +902,6 @@ export function AIEnhancedInteractiveDashboardWordCard({
           }}
           whileHover={{
             scale: 1.05,
-            rotateY: 5,
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}

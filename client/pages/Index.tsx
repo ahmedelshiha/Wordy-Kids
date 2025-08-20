@@ -1012,7 +1012,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "category-explorer",
         name: "Category Explorer",
-        icon: "���️",
+        icon: "🗺️",
         earned: rememberedWords.size >= 10,
         description: "Explored 5+ categories",
       },
@@ -2322,7 +2322,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   🌿
                                                 </div>
                                                 <div className="absolute -top-0.5 right-1 text-sm animate-gentle-bounce animation-delay-300">
-                                                  ���
+                                                  🌟
                                                 </div>
 
                                                 {/* Category Title */}
@@ -2921,7 +2921,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               I Remember!
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Awesome! ���
+                                                              Awesome! 🎉
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3024,7 +3024,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      ���
+                                      🌿
                                     </div>
                                     <div className="jungle-leaves-float">
                                       🍃
@@ -3222,7 +3222,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           className="jungle-quiz-button"
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Begin Garden Quest! 🌱
+                                          Begin Garden Quest! 🌿
                                         </button>
                                       </div>
 

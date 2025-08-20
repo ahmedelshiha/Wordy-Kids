@@ -330,7 +330,7 @@ export const JungleAdventureWordCard: React.FC<
       <div
         ref={cardRef}
         className={cn(
-          "relative w-full transition-all duration-700 transform-gpu preserve-3d",
+          "relative w-full transition-all duration-700 transform-gpu",
           "h-[360px] xs:h-[380px] sm:h-[360px] md:h-[380px] lg:h-[390px] xl:h-[400px]",
           "jungle-adventure-touch-target",
           "hover:scale-[1.02] transition-transform",
@@ -339,8 +339,7 @@ export const JungleAdventureWordCard: React.FC<
           isPressed && "jungle-pressed",
         )}
         style={{
-          transformStyle: "preserve-3d",
-          perspective: "1200px",
+          willChange: "transform",
         }}
         onClick={handleFlip}
         onTouchStart={handleTouchStart}

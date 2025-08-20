@@ -484,7 +484,7 @@ function JungleGameCompletionDialog({
               >
                 <span className="animate-jungle-sway drop-shadow-lg">
                   {
-                    ["🌿", "🍃", "🌱", "🌾", "🪴"][
+                    ["✨", "🍃", "🌱", "🌾", "🪴"][
                       Math.floor(Math.random() * 5)
                     ]
                   }
@@ -601,7 +601,7 @@ function JungleGameCompletionDialog({
             </div>
             <div className="flex-1">
               <div className="text-3xl">
-                {accuracy >= 90 ? "��" : accuracy >= 75 ? "🏖️" : "🌟"}
+                {accuracy >= 90 ? "🏆" : accuracy >= 75 ? "🏖️" : "🌟"}
               </div>
               <div className="text-lg font-bold text-white">{accuracy}%</div>
               <div className="text-xs text-emerald-200">Adventure Score</div>
@@ -1159,7 +1159,7 @@ export default function WordGarden({
           <div className="flex items-center gap-3">
             <div className="relative">
               <span className="text-5xl md:text-6xl animate-jungle-float">
-                🐒
+                🌵
               </span>
               <div className="absolute -top-1 -right-1 text-lg animate-bounce">
                 <span>🍌</span>
@@ -1326,7 +1326,7 @@ export default function WordGarden({
                         🔍
                       </span>
                       <div className="text-white font-bold text-xs md:text-sm mt-1 md:mt-2 drop-shadow-lg bg-coral-red/50 rounded-full px-2 md:px-3 py-1">
-                        <span className="mr-2">🗺���</span>Keep exploring!
+                        <span className="mr-2">🗺️</span>Keep exploring!
                       </div>
                     </div>
                   </div>

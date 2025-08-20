@@ -441,7 +441,6 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
               : "shadow-xl hover:shadow-2xl"
         } ${isGesturing ? "scale-[1.02]" : "hover:scale-[1.01]"}`}
         style={{
-          transformStyle: "preserve-3d",
           touchAction: enableGestures ? "pan-y" : "auto",
         }}
         onClick={handleCardFlip}
@@ -461,7 +460,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         {/* Front of card - Enhanced Mobile Design */}
         <CardContent
           className={`absolute inset-0 w-full h-full bg-gradient-to-br ${getCategoryColor(word.category)} rounded-xl p-4 sm:p-5 flex flex-col text-white`}
-          style={{ backfaceVisibility: "hidden" }}
+          style={{ willChange: "transform" }}
         >
           {/* Enhanced Header with Better Mobile Layout */}
           <div className="flex items-start justify-between mb-4">
@@ -716,8 +715,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         <CardContent
           className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl p-4 sm:p-5 flex flex-col text-white"
           style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
+            transform: "scale(-1, 1)",
           }}
         >
           {/* Enhanced Back Header */}

@@ -265,9 +265,6 @@ export class EnhancedJungleQuizOptimizer {
       .jungle-parallax-layer-1,
       .jungle-parallax-layer-2,
       .jungle-parallax-layer-3 {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        perspective: 1000px;
         will-change: transform;
       }
       
