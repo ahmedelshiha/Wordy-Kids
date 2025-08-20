@@ -1299,7 +1299,10 @@
         rgba(0, 0, 0, 0.3) 75%,
         rgba(0, 0, 0, 0.4) 100%
       ),
-      url("/images/ai-card-mobile-bg.webp");
+      url("/images/ai-card-mobile-bg.webp") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
 }
 
