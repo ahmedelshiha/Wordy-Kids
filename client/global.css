@@ -32,6 +32,11 @@
 @import "./styles/jungle-achievement-theme.css";
 @import "./styles/enhanced-jungle-achievement-dialog.css";
 
+/* Import Jungle Adventure Desktop Styles */
+@import "./styles/jungle-adventure-parent-dashboard.css";
+@import "./styles/jungle-adventure-settings.css";
+@import "./styles/jungle-adventure-desktop-layout.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
