@@ -1100,7 +1100,9 @@ export default function Index({ initialProfile }: IndexProps) {
   // Legacy tab redirect: handle any cached references to old "progress" tab
   useEffect(() => {
     if (activeTab === "progress") {
-      console.log("Redirecting from legacy 'progress' tab to 'achievements' tab");
+      console.log(
+        "Redirecting from legacy 'progress' tab to 'achievements' tab",
+      );
       setActiveTab("achievements");
     }
   }, [activeTab]);
