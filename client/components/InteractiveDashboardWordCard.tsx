@@ -366,7 +366,10 @@ export function InteractiveDashboardWordCard({
 
       // Pronounce word with enhanced error handling
       try {
-        if (!enhancedAudioService || typeof enhancedAudioService.pronounceWord !== 'function') {
+        if (
+          !enhancedAudioService ||
+          typeof enhancedAudioService.pronounceWord !== "function"
+        ) {
           throw new Error("Enhanced audio service not available");
         }
 
@@ -385,15 +388,16 @@ export function InteractiveDashboardWordCard({
               word: currentWord.word,
               service: "enhancedAudioService",
               timestamp: new Date().toISOString(),
-              errorDetails: errorDetails instanceof Error
-                ? {
-                    name: errorDetails.name,
-                    message: errorDetails.message,
-                    stack: errorDetails.stack,
-                  }
-                : typeof errorDetails === 'object' && errorDetails !== null
-                ? JSON.stringify(errorDetails)
-                : String(errorDetails || "No error details provided"),
+              errorDetails:
+                errorDetails instanceof Error
+                  ? {
+                      name: errorDetails.name,
+                      message: errorDetails.message,
+                      stack: errorDetails.stack,
+                    }
+                  : typeof errorDetails === "object" && errorDetails !== null
+                    ? JSON.stringify(errorDetails)
+                    : String(errorDetails || "No error details provided"),
             };
 
             console.error("Speech synthesis failed for word:", errorInfo);
@@ -401,7 +405,10 @@ export function InteractiveDashboardWordCard({
 
             // Fallback: try with basic audioService
             try {
-              if (!audioService || typeof audioService.pronounceWord !== 'function') {
+              if (
+                !audioService ||
+                typeof audioService.pronounceWord !== "function"
+              ) {
                 throw new Error("Basic audio service not available");
               }
 
@@ -429,18 +436,26 @@ export function InteractiveDashboardWordCard({
                     word: currentWord.word,
                     service: "basicAudioService",
                     timestamp: new Date().toISOString(),
-                    errorDetails: fallbackErrorDetails instanceof Error
-                      ? {
-                          name: fallbackErrorDetails.name,
-                          message: fallbackErrorDetails.message,
-                          stack: fallbackErrorDetails.stack,
-                        }
-                      : typeof fallbackErrorDetails === 'object' && fallbackErrorDetails !== null
-                      ? JSON.stringify(fallbackErrorDetails)
-                      : String(fallbackErrorDetails || "No error details provided"),
+                    errorDetails:
+                      fallbackErrorDetails instanceof Error
+                        ? {
+                            name: fallbackErrorDetails.name,
+                            message: fallbackErrorDetails.message,
+                            stack: fallbackErrorDetails.stack,
+                          }
+                        : typeof fallbackErrorDetails === "object" &&
+                            fallbackErrorDetails !== null
+                          ? JSON.stringify(fallbackErrorDetails)
+                          : String(
+                              fallbackErrorDetails ||
+                                "No error details provided",
+                            ),
                   };
 
-                  console.error("Fallback audioService also failed for word:", fallbackErrorInfo);
+                  console.error(
+                    "Fallback audioService also failed for word:",
+                    fallbackErrorInfo,
+                  );
                   setIsPlaying(false);
                 },
               });
@@ -449,18 +464,23 @@ export function InteractiveDashboardWordCard({
                 word: currentWord.word,
                 service: "fallbackCatch",
                 timestamp: new Date().toISOString(),
-                error: fallbackError instanceof Error
-                  ? {
-                      name: fallbackError.name,
-                      message: fallbackError.message,
-                      stack: fallbackError.stack,
-                    }
-                  : typeof fallbackError === 'object' && fallbackError !== null
-                  ? JSON.stringify(fallbackError)
-                  : String(fallbackError),
+                error:
+                  fallbackError instanceof Error
+                    ? {
+                        name: fallbackError.name,
+                        message: fallbackError.message,
+                        stack: fallbackError.stack,
+                      }
+                    : typeof fallbackError === "object" &&
+                        fallbackError !== null
+                      ? JSON.stringify(fallbackError)
+                      : String(fallbackError),
               };
 
-              console.error("Fallback speech synthesis also failed:", catchErrorInfo);
+              console.error(
+                "Fallback speech synthesis also failed:",
+                catchErrorInfo,
+              );
               setIsPlaying(false);
             }
           },
@@ -470,15 +490,16 @@ export function InteractiveDashboardWordCard({
           word: currentWord.word,
           service: "mainCatch",
           timestamp: new Date().toISOString(),
-          error: mainError instanceof Error
-            ? {
-                name: mainError.name,
-                message: mainError.message,
-                stack: mainError.stack,
-              }
-            : typeof mainError === 'object' && mainError !== null
-            ? JSON.stringify(mainError)
-            : String(mainError),
+          error:
+            mainError instanceof Error
+              ? {
+                  name: mainError.name,
+                  message: mainError.message,
+                  stack: mainError.stack,
+                }
+              : typeof mainError === "object" && mainError !== null
+                ? JSON.stringify(mainError)
+                : String(mainError),
         };
 
         console.error("Main speech synthesis failed:", mainErrorInfo);
@@ -1092,12 +1113,13 @@ export function InteractiveDashboardWordCard({
             }}
             className="text-9xl relative z-10"
             style={{
-              filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.4))",
-              textShadow: "0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5)"
+              filter:
+                "drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.4))",
+              textShadow:
+                "0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5)",
             }}
           >
             {currentWord.emoji}
-
 
             {/* Jungle Adventure Glow Ring */}
             <motion.div
@@ -2161,10 +2183,12 @@ export function InteractiveDashboardWordCard({
                               )}
                               aria-label="Listen to word pronunciation"
                             >
-                              <Volume2 className={cn(
-                                "w-4 h-4 sm:w-5 sm:h-5",
-                                isPlaying && "animate-bounce"
-                              )} />
+                              <Volume2
+                                className={cn(
+                                  "w-4 h-4 sm:w-5 sm:h-5",
+                                  isPlaying && "animate-bounce",
+                                )}
+                              />
                             </Button>
                           </motion.div>
                         </motion.div>
