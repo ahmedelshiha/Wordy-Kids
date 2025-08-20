@@ -13,6 +13,9 @@
 /* Import enhanced jungle achievement system */
 @import "./styles/enhanced-jungle-achievement-system.css";
 
+/* Import jungle achievement mobile optimizations */
+@import "./styles/jungle-achievement-mobile-optimizations.css";
+
 /* Import AI card mobile enhancements */
 @import "./styles/ai-card-mobile-enhancements.css";
 
