@@ -422,7 +422,7 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", {
+        console.error(`Speech synthesis error for word "${word}":`, event.error || 'Unknown error', {
           error: event.error,
           message: event.message,
           eventType: event.type,
@@ -552,7 +552,7 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error (default voice):", {
+        console.error(`Speech synthesis error (default voice) for word "${word}":`, event.error || 'Unknown error', {
           error: event.error,
           message: event.message,
           type: event.type,
