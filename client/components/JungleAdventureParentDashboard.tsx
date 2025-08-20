@@ -193,6 +193,9 @@ export const JungleAdventureParentDashboard: React.FC<
   >([]);
 
   useEffect(() => {
+    const loadStartTime = performance.now();
+
+    // Initialize floating elements
     const elements = [
       { id: 1, emoji: "🦋", x: 10, y: 20, delay: 0 },
       { id: 2, emoji: "🌿", x: 80, y: 40, delay: 1 },
@@ -201,7 +204,15 @@ export const JungleAdventureParentDashboard: React.FC<
       { id: 5, emoji: "🍃", x: 60, y: 85, delay: 4 },
     ];
     setFloatingElements(elements);
-  }, []);
+
+    // Track dashboard load performance
+    const loadTime = performance.now() - loadStartTime;
+    setDashboardLoadTime(loadTime);
+
+    if (isAnalyticsEnabled) {
+      parentDashboardAnalytics.trackDashboardLoad(loadTime);
+    }
+  }, [isAnalyticsEnabled]);
 
   const quickActions = [
     { icon: Settings, label: "Family Settings", color: "bg-jungle" },
