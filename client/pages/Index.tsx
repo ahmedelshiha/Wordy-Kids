@@ -3495,7 +3495,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         title:
                                           "Epic Adventure Complete! 🏆👑✨",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
-🎯 Accuracy: ${stats.accuracy || 0}%
+��� Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
 💎 Gems Earned: ${stats.gems || 0}
 🏆 Level Reached: ${stats.level || 1}
@@ -3721,6 +3721,10 @@ export default function Index({ initialProfile }: IndexProps) {
                               <EnhancedAchievementsPage
                                 onBack={() => setActiveTab("dashboard")}
                               />
+                            </TabsContent>
+
+                            <TabsContent value="system-map">
+                              <AchievementsSystemMap />
                             </TabsContent>
                           </Tabs>
                         </div>
