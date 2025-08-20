@@ -1493,20 +1493,14 @@ export function InteractiveDashboardWordCard({
                 {/* Dynamic Jungle Explorer Prompt */}
                 <motion.h1
                   initial={{ scale: 0.8 }}
-                  animate={{
-                    scale: [1, 1.05, 1],
-                    textShadow: [
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
-                      "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(76, 175, 80, 0.6)",
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 3,
+                  animate={!prefersReducedMotion ? {
+                    scale: [1, 1.02, 1],
+                  } : { scale: 1 }}
+                  transition={!prefersReducedMotion ? {
+                    duration: 4,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    times: [0, 0.5, 1],
-                  }}
+                  } : { duration: 0 }}
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   style={{
                     textShadow:
