@@ -1368,92 +1368,33 @@ export function InteractiveDashboardWordCard({
             </div>
           )}
 
-          {/* Enhanced Celebration Sparkles */}
-          {celebrationEffect && (
+          {/* Simplified Celebration Effects - Only 2 elements */}
+          {celebrationEffect && !prefersReducedMotion && (
             <div className="absolute inset-0 z-20 pointer-events-none">
               <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: [0, 1.2, 1, 1.1, 1],
-                  opacity: [0, 1, 0.8, 0.9, 0],
-                  rotate: [0, 180, 360, 540, 720],
-                  y: [0, -20, -10, -15, -30],
+                  scale: [0, 1.2, 0],
+                  opacity: [0, 1, 0],
+                  y: [0, -30],
                 }}
-                transition={{ duration: 2, ease: "easeOut" }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
                 className="absolute top-4 left-4 text-2xl text-sunshine"
               >
                 ✨
               </motion.div>
 
               <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: [0, 1.5, 1.2, 1.3, 1],
-                  opacity: [0, 1, 0.7, 0.8, 0],
-                  rotate: [0, -90, -180, -270, -360],
-                  y: [0, -15, -25, -20, -40],
+                  scale: [0, 1.3, 0],
+                  opacity: [0, 1, 0],
+                  y: [0, -35],
                 }}
-                transition={{ duration: 2.5, ease: "easeOut", delay: 0.2 }}
+                transition={{ duration: 1.8, ease: "easeOut", delay: 0.3 }}
                 className="absolute top-6 right-6 text-3xl text-jungle-light"
               >
                 🌟
-              </motion.div>
-
-              <motion.div
-                initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
-                animate={{
-                  scale: [0, 1, 1.2, 1.1, 0.8],
-                  opacity: [0, 1, 0.9, 0.7, 0],
-                  x: [0, -10, -5, -8, -20],
-                  y: [0, -10, -20, -15, -35],
-                }}
-                transition={{ duration: 2.2, ease: "easeOut", delay: 0.4 }}
-                className="absolute bottom-4 left-6 text-2xl text-sunshine"
-              >
-                🎊
-              </motion.div>
-
-              <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: 0 }}
-                animate={{
-                  scale: [0, 1.3, 1, 1.4, 0.9],
-                  opacity: [0, 1, 0.8, 0.9, 0],
-                  rotate: [0, 45, 90, 135, 180],
-                  y: [0, -12, -8, -18, -30],
-                }}
-                transition={{ duration: 2.8, ease: "easeOut", delay: 0.6 }}
-                className="absolute bottom-6 right-4 text-2xl text-jungle-light"
-              >
-                💫
-              </motion.div>
-
-              {/* Additional Jungle Celebration Elements */}
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [0, 0.8, 1.2, 1, 0.6],
-                  opacity: [0, 0.6, 1, 0.8, 0],
-                  rotate: [0, 120, 240, 360],
-                  y: [0, -25, -15, -30, -50],
-                }}
-                transition={{ duration: 3, ease: "easeOut", delay: 0.8 }}
-                className="absolute top-1/2 left-8 text-lg text-sunshine"
-              >
-                🦋
-              </motion.div>
-
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [0, 1.1, 0.9, 1.3, 0.7],
-                  opacity: [0, 0.8, 1, 0.6, 0],
-                  rotate: [0, -60, -120, -180],
-                  y: [0, -18, -28, -22, -45],
-                }}
-                transition={{ duration: 2.6, ease: "easeOut", delay: 1 }}
-                className="absolute top-1/2 right-8 text-lg text-jungle-light"
-              >
-                🌿
               </motion.div>
             </div>
           )}
@@ -1582,7 +1523,7 @@ export function InteractiveDashboardWordCard({
                     // Jungle Explorer Characters
                     const jungleExplorers = {
                       easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
-                      medium: ["🦁", "🐯", "��", "🦓", "🦏"],
+                      medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
                       hard: ["🐲", "🦅", "🐺", "🐆", "🦌"],
                     };
 
