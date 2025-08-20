@@ -797,7 +797,7 @@ const EnhancedJungleAchievementSystemComponent = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <Card className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50/30 border-blue-200 shadow-xl mx-2 md:mx-0">
+        <Card className="bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5 border-jungle/20 shadow-xl mx-2 md:mx-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-jungle-dark text-xl">
               <motion.div
