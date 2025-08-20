@@ -131,7 +131,7 @@ class AchievementPopupQueue {
   }
 
   /**
-   * Clear the queue (useful for testing or interruptions)
+   * Clear the queue (useful for interruptions or navigation)
    */
   public clearQueue(): void {
     this.queue = [];
