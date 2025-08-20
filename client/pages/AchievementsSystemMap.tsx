@@ -26,7 +26,11 @@ import {
   Compass,
   Search,
   RefreshCw,
+  ClipboardCheck,
+  TrendingUp,
+  FileText,
 } from "lucide-react";
+import { finalIntegrationReportGenerator, type FinalIntegrationReport } from "@/lib/finalIntegrationReport";
 import { cn } from "@/lib/utils";
 
 interface SystemModule {
