@@ -43,6 +43,7 @@ import {
   Settings,
   Calendar,
   TrendingUp,
+  Map,
   Award,
   Shield,
   Clock,
@@ -438,8 +439,8 @@ export const JungleAdventureParentDashboard: React.FC<
                 value="progress"
                 className="jungle-tab data-[state=active]:bg-profile-purple data-[state=active]:text-white"
               >
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Progress
+                <Map className="w-4 h-4 mr-2" />
+                Adventure Map
               </TabsTrigger>
               <TabsTrigger
                 value="settings"
