@@ -20,8 +20,7 @@ import {
   Crown,
   Zap,
 } from "lucide-react";
-import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
+import { enhancedAchievementSystem } from "@/lib/enhancedAchievementSystem";
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -73,7 +72,7 @@ export function VowelRescue({
   const [attempts, setAttempts] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameComplete, setGameComplete] = useState(false);
-  const [newAchievements, setNewAchievements] = useState<any[]>([]);
+  // Achievement tracking now handled by enhanced system
   const [showMainCelebration, setShowMainCelebration] = useState(false);
   const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
   const [sparkleCount, setSparkleCount] = useState(0);
@@ -323,17 +322,13 @@ export function VowelRescue({
     // Calculate final accuracy
     const accuracy = Math.round((score / (gameQuestions.length * 10)) * 100);
 
-    // Track vowel rescue completion and check for achievements
-    const unlockedAchievements = AchievementTracker.trackActivity({
-      type: "vowelRescue",
-      accuracy,
-      timeSpent: isTimedMode ? 60 - timeLeft : undefined,
+    // Track progress in enhanced achievement system
+    enhancedAchievementSystem.trackProgress({
+      quizScore: score,
+      totalAccuracy: accuracy,
+      wordsLearned: score, // Each correct answer represents learning
+      sessionCount: 1,
     });
-
-    // Show achievement popup if any achievements were unlocked
-    if (unlockedAchievements.length > 0) {
-      setNewAchievements(unlockedAchievements);
-    }
 
     setTimeout(() => {
       onComplete(score, gameQuestions.length * 10);
@@ -846,18 +841,7 @@ export function VowelRescue({
           )}
         </AnimatePresence>
 
-        {/* Enhanced Achievement Popup */}
-        {newAchievements.length > 0 && (
-          <EnhancedAchievementDialog
-            achievements={newAchievements}
-            onClose={() => setNewAchievements([])}
-            onAchievementClaim={(achievement) => {
-              console.log("Achievement claimed:", achievement);
-              // Could add additional reward logic here
-            }}
-            autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
-          />
-        )}
+        {/* Achievements are now handled by the main enhanced system in Index.tsx */}
 
         {/* Main Celebration Effect */}
         <CelebrationEffect
