@@ -37,7 +37,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { EMOJI_CONSTANTS } from "@/lib/emojiUtils";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
 import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   useAIWordRecommendations,
@@ -781,7 +781,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
           {imageError && (
             <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-4xl mb-2">{currentWord.emoji || "📚"}</div>
+                <div className="text-4xl mb-2">{currentWord.emoji || "����"}</div>
                 <span className="text-xs text-gray-500">
                   Image not available
                 </span>
@@ -1782,7 +1782,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
       </motion.div>
 
       {/* Enhanced Achievement Popup for journey achievements */}
-      <EnhancedAchievementPopup
+      <EnhancedAchievementDialog
         achievements={journeyAchievements}
         onClose={() => setJourneyAchievements([])}
       />
