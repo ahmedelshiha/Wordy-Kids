@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { EnhancedAchievementPopup } from "./EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { CompactAchievementToast } from "./CompactAchievementToast";
 import { useAchievementNotifications } from "@/hooks/use-achievement-notifications";
 
@@ -129,14 +129,18 @@ export function MobileAchievementManager({
           />
         )}
 
-      {/* Popup Notifications */}
+      {/* Popup Notifications now handled by LightweightAchievementProvider */}
       {selectedType === "popup" && activePopup.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={activePopup}
-          onClose={handlePopupClose}
-          onAchievementClaim={handleAchievementClaim}
-          autoCloseDelay={currentAutoCloseDelay}
-        />
+        <div style={{ display: 'none' }}>
+          {/* Trigger achievements through event system */}
+          {activePopup.forEach(achievement => {
+            const event = new CustomEvent('milestoneUnlocked', {
+              detail: { achievement }
+            });
+            window.dispatchEvent(event);
+          })}
+          {(() => { handlePopupClose(); return null; })()}
+        </div>
       )}
     </>
   );
