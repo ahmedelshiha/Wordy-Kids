@@ -1,28 +1,22 @@
 /* Enhanced Mobile Word Card Styles */
 
-/* Hardware-accelerated base styles */
+/* Hardware-accelerated base styles - Compatible version */
 .word-card-container {
-  transform: translateZ(0);
   will-change: transform;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
 }
 
-/* Enhanced flip animation with better mobile performance */
+/* Enhanced flip animation with better mobile performance - Compatible version */
 .word-card-flip {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
 }
 
 .word-card-flip.flipped {
-  transform: rotateY(180deg);
+  transform: scale(-1, 1);
 }
 
-/* Mobile touch feedback animations */
+/* Mobile touch feedback animations - Compatible version */
 .word-card-touch-active {
-  transform: scale(0.98) translateZ(0);
+  transform: scale(0.98);
   transition: transform 0.1s ease-out;
 }
 
