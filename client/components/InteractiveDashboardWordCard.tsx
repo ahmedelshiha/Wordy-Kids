@@ -2061,18 +2061,18 @@ export function InteractiveDashboardWordCard({
                         style={{
                           background: `
                             linear-gradient(135deg,
-                              rgba(255, 255, 255, 0.3) 0%,
-                              rgba(248, 250, 252, 0.2) 50%,
-                              rgba(240, 253, 244, 0.25) 100%
+                              rgba(255, 255, 255, 0.2) 0%,
+                              rgba(248, 250, 252, 0.15) 50%,
+                              rgba(240, 253, 244, 0.18) 100%
                             )
                           `,
                           backdropFilter: "blur(12px)",
-                          border: "1px solid rgba(76, 175, 80, 0.4)",
+                          border: "1px solid rgba(76, 175, 80, 0.2)",
                           borderRadius: "1rem",
                           padding: "0.75rem",
                           boxShadow: `
-                            0 4px 20px rgba(34, 139, 34, 0.1),
-                            inset 0 1px 1px rgba(255, 255, 255, 0.2)
+                            0 4px 20px rgba(34, 139, 34, 0.08),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.15)
                           `,
                         }}
                       >
@@ -2081,9 +2081,9 @@ export function InteractiveDashboardWordCard({
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.4 }}
-                          className="flex items-center justify-between"
+                          className="flex items-center justify-between bg-white/85 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/40"
                         >
-                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-jungle-dark flex-1">
+                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 flex-1">
                             {currentWord.word}
                           </p>
 
