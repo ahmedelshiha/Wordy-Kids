@@ -3757,7 +3757,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                 onBack={() => setActiveTab("dashboard")}
                               />
                             </TabsContent>
-
                           </Tabs>
                         </div>
                       </div>
