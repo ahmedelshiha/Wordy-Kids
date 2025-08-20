@@ -1102,7 +1102,7 @@ export function AchievementSystem({
                                 </div>
                                 <Progress
                                   value={progressPercentage}
-                                  className="h-1.5"
+                                  className="h-1.5 jungle-progress-bar"
                                 />
                                 {isComplete && (
                                   <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
