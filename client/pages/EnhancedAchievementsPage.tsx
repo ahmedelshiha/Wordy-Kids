@@ -40,6 +40,7 @@ import {
   TreePine,
   Sun,
   Moon,
+  Map,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { enhancedAchievementSystem } from "@/lib/enhancedAchievementSystem";
