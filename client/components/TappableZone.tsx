@@ -73,18 +73,17 @@ export const TappableZone: React.FC<TappableZoneProps> = ({
             ? {
                 scale: [1, 1.1, 1],
                 rotate: [0, 5, -5, 0],
-                filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"],
               }
-            : { scale: 1, rotate: 0, filter: "brightness(1)" },
+            : { scale: 1, rotate: 0 },
         };
       case "rainbow":
         return {
           animate: isAnimating
             ? {
                 scale: [1, 1.05, 1],
-                hue: [0, 180, 360],
+                rotate: [0, 360],
               }
-            : { scale: 1, hue: 0 },
+            : { scale: 1, rotate: 0 },
         };
       default:
         return {
