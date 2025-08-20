@@ -151,14 +151,17 @@ const sampleEvents: TimelineEvent[] = [
   },
 ];
 
-export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProps> = ({
-  className,
-  events,
-  onEventClick,
-}) => {
-  const [filter, setFilter] = useState<"all" | "achievements" | "milestones">("all");
-  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
-  const [timelineEvents, setTimelineEvents] = useState<TimelineEvent[]>(sampleEvents);
+export const FamilyAchievementsTimeline: React.FC<
+  FamilyAchievementsTimelineProps
+> = ({ className, events, onEventClick }) => {
+  const [filter, setFilter] = useState<"all" | "achievements" | "milestones">(
+    "all",
+  );
+  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(
+    null,
+  );
+  const [timelineEvents, setTimelineEvents] =
+    useState<TimelineEvent[]>(sampleEvents);
 
   // Load events from unified storage on mount
   useEffect(() => {
@@ -225,7 +228,7 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
     const now = new Date();
     const diff = now.getTime() - date.getTime();
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    
+
     if (days === 0) return "Today";
     if (days === 1) return "Yesterday";
     if (days < 7) return `${days} days ago`;
@@ -240,9 +243,13 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
             <Calendar className="w-5 h-5 text-profile-purple" />
             🌟 Family Achievements Timeline
           </CardTitle>
-          
+
           {/* Filter Tabs */}
-          <Tabs value={filter} onValueChange={(value) => setFilter(value as any)} className="w-auto">
+          <Tabs
+            value={filter}
+            onValueChange={(value) => setFilter(value as any)}
+            className="w-auto"
+          >
             <TabsList className="bg-white/50 backdrop-blur-sm border border-jungle/20">
               <TabsTrigger value="all" className="text-xs">
                 <Filter className="w-3 h-3 mr-1" />
@@ -260,7 +267,8 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
           </Tabs>
         </div>
         <p className="text-sm text-jungle-dark/70">
-          Celebrate your family's learning journey through the magical jungle! 🌿
+          Celebrate your family's learning journey through the magical jungle!
+          🌿
         </p>
       </CardHeader>
 
@@ -296,12 +304,12 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
                     <div
                       className={cn(
                         "w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-200 group-hover:scale-110",
-                        getEventColor(event)
+                        getEventColor(event),
                       )}
                     >
                       {getEventIcon(event)}
                     </div>
-                    
+
                     {/* Footprint */}
                     <div className="absolute -bottom-2 -right-1 text-xs opacity-70">
                       🐾
@@ -317,30 +325,42 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-xl">{event.emoji}</span>
-                          <h3 className="font-semibold text-jungle-dark">{event.title}</h3>
+                          <h3 className="font-semibold text-jungle-dark">
+                            {event.title}
+                          </h3>
                           {event.child && (
-                            <Badge variant="outline" className="text-xs bg-jungle/10">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-jungle/10"
+                            >
                               {event.child}
                             </Badge>
                           )}
                         </div>
-                        <p className="text-sm text-jungle-dark/70 mb-2">{event.description}</p>
-                        
+                        <p className="text-sm text-jungle-dark/70 mb-2">
+                          {event.description}
+                        </p>
+
                         {/* Event metadata */}
                         <div className="flex items-center gap-3 text-xs">
                           <span className="text-jungle-dark/60 flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             {formatTimeAgo(event.date)}
                           </span>
-                          
+
                           <Badge variant="outline" className="text-xs">
                             {event.category}
                           </Badge>
-                          
-                          <Badge className={cn("text-xs", getDifficultyColor(event.difficulty))}>
+
+                          <Badge
+                            className={cn(
+                              "text-xs",
+                              getDifficultyColor(event.difficulty),
+                            )}
+                          >
                             {event.difficulty}
                           </Badge>
-                          
+
                           {event.points && (
                             <span className="text-jungle-dark/60 flex items-center gap-1">
                               <Zap className="w-3 h-3" />
@@ -380,7 +400,8 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
             </div>
             <div className="flex-1 bg-gradient-to-r from-jungle/5 to-sunshine/5 rounded-lg border border-jungle/10 p-4">
               <p className="text-sm text-jungle-dark/70 text-center">
-                🌟 The adventure continues... More amazing achievements await! 🌟
+                🌟 The adventure continues... More amazing achievements await!
+                🌟
               </p>
             </div>
           </div>
@@ -410,33 +431,47 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
                       {selectedEvent.title}
                     </h3>
                     <p className="text-sm text-jungle-dark/70">
-                      {selectedEvent.child} • {formatTimeAgo(selectedEvent.date)}
+                      {selectedEvent.child} •{" "}
+                      {formatTimeAgo(selectedEvent.date)}
                     </p>
                   </div>
                 </div>
 
-                <p className="text-jungle-dark/80 mb-4">{selectedEvent.description}</p>
+                <p className="text-jungle-dark/80 mb-4">
+                  {selectedEvent.description}
+                </p>
 
                 {selectedEvent.analytics && (
                   <div className="grid grid-cols-3 gap-3 mb-4">
                     <div className="text-center p-3 bg-blue-50 rounded-lg">
                       <p className="text-xs text-gray-600">Time Spent</p>
-                      <p className="font-semibold">⏱️ {selectedEvent.analytics.timeSpent}m</p>
+                      <p className="font-semibold">
+                        ⏱️ {selectedEvent.analytics.timeSpent}m
+                      </p>
                     </div>
                     <div className="text-center p-3 bg-green-50 rounded-lg">
                       <p className="text-xs text-gray-600">Accuracy</p>
-                      <p className="font-semibold">⭐ {selectedEvent.analytics.accuracyScore}%</p>
+                      <p className="font-semibold">
+                        ⭐ {selectedEvent.analytics.accuracyScore}%
+                      </p>
                     </div>
                     <div className="text-center p-3 bg-orange-50 rounded-lg">
                       <p className="text-xs text-gray-600">Attempts</p>
-                      <p className="font-semibold">🔄 {selectedEvent.analytics.attempts}</p>
+                      <p className="font-semibold">
+                        🔄 {selectedEvent.analytics.attempts}
+                      </p>
                     </div>
                   </div>
                 )}
 
                 <div className="flex items-center justify-between">
                   <div className="flex gap-2">
-                    <Badge className={cn("text-xs", getDifficultyColor(selectedEvent.difficulty))}>
+                    <Badge
+                      className={cn(
+                        "text-xs",
+                        getDifficultyColor(selectedEvent.difficulty),
+                      )}
+                    >
                       {selectedEvent.difficulty}
                     </Badge>
                     <Badge variant="outline" className="text-xs">
@@ -446,7 +481,9 @@ export const FamilyAchievementsTimeline: React.FC<FamilyAchievementsTimelineProp
                   {selectedEvent.points && (
                     <div className="flex items-center gap-1 text-jungle-dark/70">
                       <Zap className="w-4 h-4" />
-                      <span className="font-semibold">{selectedEvent.points} points</span>
+                      <span className="font-semibold">
+                        {selectedEvent.points} points
+                      </span>
                     </div>
                   )}
                 </div>

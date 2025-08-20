@@ -7,7 +7,7 @@ export interface JungleAdventureSettings {
   // Map & Timeline Data
   mapMarkers?: any[];
   timelineEvents?: any[];
-  
+
   // User Settings
   backgroundAnimations?: boolean;
   accessibilitySettings?: {
@@ -21,7 +21,7 @@ export interface JungleAdventureSettings {
   uiInteractionSounds?: boolean;
   voiceNarration?: boolean;
   hapticFeedback?: boolean;
-  
+
   // Parent Dashboard Data
   parentDashboardChildren?: any[];
   categoryProgress?: Record<string, number>;
@@ -30,13 +30,13 @@ export interface JungleAdventureSettings {
     vocabulary?: number;
     comprehension?: number;
   };
-  
+
   // Analytics & Progress
   childProgress?: Record<string, any>;
   achievements?: any[];
   milestones?: any[];
   learningStats?: Record<string, any>;
-  
+
   // Metadata
   lastUpdated?: string;
   version?: string;
@@ -53,7 +53,7 @@ export class JungleAdventureStorage {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (!stored) return { version: CURRENT_VERSION };
-      
+
       const settings = JSON.parse(stored);
       return {
         version: CURRENT_VERSION,
@@ -77,7 +77,7 @@ export class JungleAdventureStorage {
         lastUpdated: new Date().toISOString(),
         version: CURRENT_VERSION,
       };
-      
+
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     } catch (error) {
       console.error("Failed to update jungle adventure settings:", error);
@@ -216,11 +216,11 @@ export class JungleAdventureStorage {
   } {
     const timelineEvents = this.getTimelineEvents();
     const mapMarkers = this.getMapMarkers();
-    
+
     let totalTimeSpent = 0;
     let totalAccuracy = 0;
     let accuracyCount = 0;
-    
+
     // Calculate from timeline events
     timelineEvents.forEach((event: any) => {
       if (event.analytics) {
@@ -231,7 +231,7 @@ export class JungleAdventureStorage {
         }
       }
     });
-    
+
     // Calculate from map markers
     mapMarkers.forEach((marker: any) => {
       if (marker.analytics) {
@@ -242,12 +242,18 @@ export class JungleAdventureStorage {
         }
       }
     });
-    
+
     return {
       totalTimeSpent,
-      averageAccuracy: accuracyCount > 0 ? Math.round(totalAccuracy / accuracyCount) : 0,
-      totalAchievements: timelineEvents.filter((e: any) => e.type === "achievement").length,
-      currentStreak: Math.max(...timelineEvents.map((e: any) => e.analytics?.streak || 0), 0),
+      averageAccuracy:
+        accuracyCount > 0 ? Math.round(totalAccuracy / accuracyCount) : 0,
+      totalAchievements: timelineEvents.filter(
+        (e: any) => e.type === "achievement",
+      ).length,
+      currentStreak: Math.max(
+        ...timelineEvents.map((e: any) => e.analytics?.streak || 0),
+        0,
+      ),
     };
   }
 }

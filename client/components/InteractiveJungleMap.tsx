@@ -460,7 +460,9 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                           <span className="text-base">⏱️</span>
                           <div>
                             <p className="text-xs text-gray-600">Time</p>
-                            <p className="text-sm font-semibold">{selectedMarker.analytics.timeSpent}m</p>
+                            <p className="text-sm font-semibold">
+                              {selectedMarker.analytics.timeSpent}m
+                            </p>
                           </div>
                         </div>
 
@@ -469,7 +471,9 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                           <span className="text-base">⭐</span>
                           <div>
                             <p className="text-xs text-gray-600">Accuracy</p>
-                            <p className="text-sm font-semibold">{selectedMarker.analytics.accuracyScore}%</p>
+                            <p className="text-sm font-semibold">
+                              {selectedMarker.analytics.accuracyScore}%
+                            </p>
                           </div>
                         </div>
 
@@ -478,7 +482,9 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                           <span className="text-base">🎯</span>
                           <div>
                             <p className="text-xs text-gray-600">Streak</p>
-                            <p className="text-sm font-semibold">{selectedMarker.analytics.streak} days</p>
+                            <p className="text-sm font-semibold">
+                              {selectedMarker.analytics.streak} days
+                            </p>
                           </div>
                         </div>
 
@@ -487,7 +493,9 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                           <div className="flex items-center gap-2 bg-purple-50 p-2 rounded-lg">
                             <span className="text-base">📅</span>
                             <div>
-                              <p className="text-xs text-gray-600">Last Active</p>
+                              <p className="text-xs text-gray-600">
+                                Last Active
+                              </p>
                               <p className="text-sm font-semibold">
                                 {selectedMarker.analytics.lastActive.toLocaleDateString()}
                               </p>
@@ -497,13 +505,18 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                       </div>
 
                       {/* Additional Stats */}
-                      {(selectedMarker.analytics.attempts > 1 || selectedMarker.analytics.hintsUsed > 0) && (
+                      {(selectedMarker.analytics.attempts > 1 ||
+                        selectedMarker.analytics.hintsUsed > 0) && (
                         <div className="flex gap-4 text-xs text-gray-600 border-t pt-2">
                           {selectedMarker.analytics.attempts > 1 && (
-                            <span>🔄 {selectedMarker.analytics.attempts} attempts</span>
+                            <span>
+                              🔄 {selectedMarker.analytics.attempts} attempts
+                            </span>
                           )}
                           {selectedMarker.analytics.hintsUsed > 0 && (
-                            <span>💡 {selectedMarker.analytics.hintsUsed} hints used</span>
+                            <span>
+                              💡 {selectedMarker.analytics.hintsUsed} hints used
+                            </span>
                           )}
                         </div>
                       )}
