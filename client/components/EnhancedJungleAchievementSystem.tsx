@@ -663,7 +663,7 @@ const EnhancedJungleAchievementSystemComponent = ({
   }
 
   const jungleCategories = [
-    { id: "all", name: "All Adventures", icon: "🌍", jungleIcon: "��️" },
+    { id: "all", name: "All Adventures", icon: "🌍", jungleIcon: "🗺️" },
     { id: "exploration", name: "Exploration", icon: "🗺️", jungleIcon: "🧭" },
     { id: "gathering", name: "Word Gathering", icon: "📚", jungleIcon: "🌿" },
     { id: "wisdom", name: "Ancient Wisdom", icon: "🧠", jungleIcon: "🦉" },
@@ -970,7 +970,7 @@ const EnhancedJungleAchievementSystemComponent = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Card className="bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 border-sky/20 shadow-xl mx-1 md:mx-0">
+        <Card className="bg-gradient-to-br from-pink-50 via-blue-50 to-purple-50 border-pink-200 shadow-xl mx-1 md:mx-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-sky-dark text-lg">
               <motion.div
