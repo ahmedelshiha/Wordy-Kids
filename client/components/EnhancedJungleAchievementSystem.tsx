@@ -619,7 +619,7 @@ export function EnhancedJungleAchievementSystem({
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                ��
+                🌳
               </motion.div>
               <div className="text-2xl md:text-3xl font-bold mb-1">
                 <AnimatedCounter value={jungleStats.totalWordsExplored} />
@@ -1167,23 +1167,23 @@ export function EnhancedJungleAchievementSystem({
                               )}
                               onClick={() => handleJungleAchievementClick(achievement)}
                             >
-                              {/* Magical particles for unlocked achievements */}
-                              {achievement.unlocked && (
-                                <div className="absolute inset-0">
-                                  {[...Array(5)].map((_, i) => (
+                              {/* Magical particles for unlocked achievements - optimized for performance */}
+                              {achievement.unlocked && !mobilePerf.isMobile && animPrefs.maxAnimationComplexity === 'high' && (
+                                <div className="absolute inset-0 jungle-particles">
+                                  {[...Array(mobilePerf.isLowEndDevice ? 2 : 5)].map((_, i) => (
                                     <motion.div
                                       key={i}
-                                      className="absolute w-1 h-1 bg-white/30 rounded-full"
+                                      className="absolute w-1 h-1 bg-white/30 rounded-full jungle-particle"
                                       style={{
                                         left: `${20 + i * 15}%`,
                                         top: `${20 + i * 10}%`,
                                       }}
-                                      animate={{
+                                      animate={!mobilePerf.reducedMotion ? {
                                         y: [0, -10, 0],
                                         opacity: [0.3, 1, 0.3],
-                                      }}
+                                      } : {}}
                                       transition={{
-                                        duration: 2,
+                                        duration: animPrefs.getTransitionDuration(2000),
                                         repeat: Infinity,
                                         delay: i * 0.2,
                                       }}
