@@ -910,7 +910,6 @@ export class GameSessionManager {
 
 export default {
   PowerUpSystem,
-  AchievementSystem,
   ScoringSystem,
   GameSessionManager,
 };
