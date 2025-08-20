@@ -586,23 +586,23 @@
 
 @keyframes jungle-celebration {
   0% {
-    transform: scale(1) rotateY(0deg);
+    transform: scale(1) rotate(0deg);
     background-position: 0% 50%;
   }
   25% {
-    transform: scale(1.1) rotateY(5deg);
+    transform: scale(1.1) rotate(5deg);
     background-position: 25% 50%;
   }
   50% {
-    transform: scale(1.05) rotateY(-3deg);
+    transform: scale(1.05) rotate(-3deg);
     background-position: 50% 50%;
   }
   75% {
-    transform: scale(1.08) rotateY(2deg);
+    transform: scale(1.08) rotate(2deg);
     background-position: 75% 50%;
   }
   100% {
-    transform: scale(1) rotateY(0deg);
+    transform: scale(1) rotate(0deg);
     background-position: 100% 50%;
   }
 }
