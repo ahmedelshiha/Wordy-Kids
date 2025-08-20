@@ -766,11 +766,10 @@
   }
 
   .treasure-option-card:hover {
-    transform: translateY(-8px) rotateX(3deg) rotateY(3deg) scale(1.02);
+    transform: translateY(-8px) scale(1.02);
   }
 
   .jungle-treasure-card {
-    perspective: 900px;
     margin-bottom: 1.5rem;
   }
 
