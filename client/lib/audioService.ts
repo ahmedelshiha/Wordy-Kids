@@ -326,6 +326,15 @@ export class AudioService {
       onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
+    // Input validation
+    if (typeof word !== 'string') {
+      console.error('Audio service: word parameter must be a string, received:', typeof word, word);
+      if (options.onError) {
+        options.onError(new Error(`Invalid word parameter: expected string, got ${typeof word}`));
+      }
+      return;
+    }
+
     if (!this.isEnabled || !word?.trim()) return;
 
     // Check if speech synthesis is supported and available
