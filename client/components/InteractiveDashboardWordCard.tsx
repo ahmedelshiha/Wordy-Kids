@@ -991,19 +991,23 @@ export function InteractiveDashboardWordCard({
 
             <motion.div
               key={`feedback-emoji-${currentWordIndex}-${feedbackType}`}
-              animate={{
-                y: [0, -10, 0],
-                rotate:
-                  feedbackType === "remembered"
-                    ? [0, 15, -15, 0]
-                    : [0, -5, 5, 0],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: feedbackType === "remembered" ? 0.8 : 1.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              animate={
+                !prefersReducedMotion
+                  ? {
+                      y: [0, -5, 0],
+                      scale: [1, 1.1, 1],
+                    }
+                  : {}
+              }
+              transition={
+                !prefersReducedMotion
+                  ? {
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+                  : { duration: 0 }
+              }
               className="text-4xl mb-1 relative z-10"
             >
               {feedbackEmoji}
@@ -1019,48 +1023,24 @@ export function InteractiveDashboardWordCard({
               {feedbackMessage}
             </motion.div>
 
-            {/* Extra sparkles for success */}
-            {feedbackType === "remembered" && (
-              <>
-                <motion.div
-                  key={`feedback-sparkle-1-${currentWordIndex}`}
-                  initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
-                  animate={{
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0],
-                    x: -30,
-                    y: -20,
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: 0.2,
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                  }}
-                  className="absolute text-yellow-300 text-sm"
-                >
-                  ✨
-                </motion.div>
-                <motion.div
-                  key={`feedback-sparkle-2-${currentWordIndex}`}
-                  initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
-                  animate={{
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0],
-                    x: 30,
-                    y: -20,
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: 0.5,
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                  }}
-                  className="absolute text-blue-300 text-xs"
-                >
-                  ⭐
-                </motion.div>
-              </>
+            {/* Single sparkle for success - Only if motion allowed */}
+            {feedbackType === "remembered" && !prefersReducedMotion && (
+              <motion.div
+                key={`feedback-sparkle-${currentWordIndex}`}
+                initial={{ opacity: 0, scale: 0, y: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                  y: -25,
+                }}
+                transition={{
+                  duration: 1.2,
+                  ease: "easeOut",
+                }}
+                className="absolute text-yellow-300 text-sm top-0 left-1/2 transform -translate-x-1/2"
+              >
+                ✨
+              </motion.div>
             )}
           </motion.div>
         );
@@ -1092,52 +1072,42 @@ export function InteractiveDashboardWordCard({
             🔊
           </div>
 
-          {/* Main emoji with enhanced animation */}
+          {/* Main emoji with simplified animation */}
           <motion.div
             key={`emoji-inner-${currentWordIndex}`}
-            animate={{
-              y: [0, -8, 0],
-              rotate: [0, 2, -2, 0],
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.5, 1],
-            }}
-            whileHover={{
-              y: -5,
-              scale: 1.1,
-              transition: { duration: 0.2 },
-            }}
+            animate={
+              !prefersReducedMotion
+                ? {
+                    y: [0, -5, 0],
+                    scale: [1, 1.02, 1],
+                  }
+                : {}
+            }
+            transition={
+              !prefersReducedMotion
+                ? {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }
+                : { duration: 0 }
+            }
+            whileHover={
+              !prefersReducedMotion
+                ? {
+                    y: -3,
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }
+                : {}
+            }
             className="text-9xl relative z-10"
             style={{
-              filter:
-                "drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.4))",
-              textShadow:
-                "0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5)",
+              filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))",
+              textShadow: "0 0 10px rgba(255, 255, 255, 0.7)",
             }}
           >
             {currentWord.emoji}
-
-            {/* Jungle Adventure Glow Ring */}
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.6, 0.3],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute inset-0 rounded-full border-2 border-jungle/30"
-              style={{
-                boxShadow: "0 0 20px rgba(76, 175, 80, 0.3)",
-              }}
-            />
           </motion.div>
 
           {/* Jungle Adventure Background Pattern */}
@@ -1348,164 +1318,53 @@ export function InteractiveDashboardWordCard({
             `,
           }}
         >
-          {/* Jungle Adventure Background Elements */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-            {/* Animated Jungle Vines */}
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-                rotate: [0, 5, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute -top-10 -left-5 text-4xl opacity-20 text-jungle-light"
-            >
-              🌿
-            </motion.div>
+          {/* Simplified Jungle Background Elements - Only if animation enabled */}
+          {!prefersReducedMotion && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+              {/* Single subtle vine animation */}
+              <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute -top-10 -left-5 text-3xl opacity-15 text-jungle-light"
+              >
+                🌿
+              </motion.div>
+            </div>
+          )}
 
-            <motion.div
-              animate={{
-                y: [0, -25, 0],
-                rotate: [0, -8, 0],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-              className="absolute -top-8 -right-8 text-3xl opacity-15 text-jungle-light"
-            >
-              🍃
-            </motion.div>
-
-            {/* Floating Jungle Particles */}
-            <motion.div
-              animate={{
-                y: [0, -30, 0],
-                x: [0, 10, 0],
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.7, 0.3],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-              className="absolute top-1/4 right-4 text-lg text-sunshine"
-            >
-              ✨
-            </motion.div>
-
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-                x: [0, -15, 0],
-                rotate: [0, 360, 0],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute bottom-1/3 left-6 text-sm opacity-40 text-sunshine"
-            >
-              🌺
-            </motion.div>
-
-            {/* Jungle Mist Effect - Removed for non-glossy appearance */}
-          </div>
-
-          {/* Enhanced Celebration Sparkles */}
-          {celebrationEffect && (
+          {/* Simplified Celebration Effects - Only 2 elements */}
+          {celebrationEffect && !prefersReducedMotion && (
             <div className="absolute inset-0 z-20 pointer-events-none">
               <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: [0, 1.2, 1, 1.1, 1],
-                  opacity: [0, 1, 0.8, 0.9, 0],
-                  rotate: [0, 180, 360, 540, 720],
-                  y: [0, -20, -10, -15, -30],
+                  scale: [0, 1.2, 0],
+                  opacity: [0, 1, 0],
+                  y: [0, -30],
                 }}
-                transition={{ duration: 2, ease: "easeOut" }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
                 className="absolute top-4 left-4 text-2xl text-sunshine"
               >
                 ✨
               </motion.div>
 
               <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: [0, 1.5, 1.2, 1.3, 1],
-                  opacity: [0, 1, 0.7, 0.8, 0],
-                  rotate: [0, -90, -180, -270, -360],
-                  y: [0, -15, -25, -20, -40],
+                  scale: [0, 1.3, 0],
+                  opacity: [0, 1, 0],
+                  y: [0, -35],
                 }}
-                transition={{ duration: 2.5, ease: "easeOut", delay: 0.2 }}
+                transition={{ duration: 1.8, ease: "easeOut", delay: 0.3 }}
                 className="absolute top-6 right-6 text-3xl text-jungle-light"
               >
                 🌟
-              </motion.div>
-
-              <motion.div
-                initial={{ scale: 0, opacity: 0, x: 0, y: 0 }}
-                animate={{
-                  scale: [0, 1, 1.2, 1.1, 0.8],
-                  opacity: [0, 1, 0.9, 0.7, 0],
-                  x: [0, -10, -5, -8, -20],
-                  y: [0, -10, -20, -15, -35],
-                }}
-                transition={{ duration: 2.2, ease: "easeOut", delay: 0.4 }}
-                className="absolute bottom-4 left-6 text-2xl text-sunshine"
-              >
-                🎊
-              </motion.div>
-
-              <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: 0 }}
-                animate={{
-                  scale: [0, 1.3, 1, 1.4, 0.9],
-                  opacity: [0, 1, 0.8, 0.9, 0],
-                  rotate: [0, 45, 90, 135, 180],
-                  y: [0, -12, -8, -18, -30],
-                }}
-                transition={{ duration: 2.8, ease: "easeOut", delay: 0.6 }}
-                className="absolute bottom-6 right-4 text-2xl text-jungle-light"
-              >
-                💫
-              </motion.div>
-
-              {/* Additional Jungle Celebration Elements */}
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [0, 0.8, 1.2, 1, 0.6],
-                  opacity: [0, 0.6, 1, 0.8, 0],
-                  rotate: [0, 120, 240, 360],
-                  y: [0, -25, -15, -30, -50],
-                }}
-                transition={{ duration: 3, ease: "easeOut", delay: 0.8 }}
-                className="absolute top-1/2 left-8 text-lg text-sunshine"
-              >
-                🦋
-              </motion.div>
-
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [0, 1.1, 0.9, 1.3, 0.7],
-                  opacity: [0, 0.8, 1, 0.6, 0],
-                  rotate: [0, -60, -120, -180],
-                  y: [0, -18, -28, -22, -45],
-                }}
-                transition={{ duration: 2.6, ease: "easeOut", delay: 1 }}
-                className="absolute top-1/2 right-8 text-lg text-jungle-light"
-              >
-                🌿
               </motion.div>
             </div>
           )}
@@ -1591,31 +1450,35 @@ export function InteractiveDashboardWordCard({
                 }}
                 className="relative"
               >
-                {/* Jungle Adventure Background Glow */}
-                <motion.div
-                  initial={{ scale: 0, opacity: 0.8 }}
-                  animate={{ scale: 1.5, opacity: 0 }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="absolute inset-0 bg-gradient-to-r from-jungle/20 via-sunshine/30 to-jungle/20 rounded-3xl blur-xl"
-                />
+                {/* Simplified Background Glow - Only if motion allowed */}
+                {!prefersReducedMotion && (
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0.8 }}
+                    animate={{ scale: 1.2, opacity: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="absolute inset-0 bg-gradient-to-r from-jungle/15 via-sunshine/20 to-jungle/15 rounded-3xl blur-lg"
+                  />
+                )}
 
                 {/* Dynamic Jungle Explorer Prompt */}
                 <motion.h1
                   initial={{ scale: 0.8 }}
-                  animate={{
-                    scale: [1, 1.05, 1],
-                    textShadow: [
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
-                      "0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(76, 175, 80, 0.6)",
-                      "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    times: [0, 0.5, 1],
-                  }}
+                  animate={
+                    !prefersReducedMotion
+                      ? {
+                          scale: [1, 1.02, 1],
+                        }
+                      : { scale: 1 }
+                  }
+                  transition={
+                    !prefersReducedMotion
+                      ? {
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }
+                      : { duration: 0 }
+                  }
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   style={{
                     textShadow:
@@ -1747,7 +1610,7 @@ export function InteractiveDashboardWordCard({
                     // Progress-based encouragement
                     const progressPrompts = {
                       0: "🚀 Ready for a jungle adventure?",
-                      25: "🌟 You're exploring well, jungle explorer!",
+                      25: "��� You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
                       90: "👑 Final jungle challenges await!",
@@ -1784,76 +1647,25 @@ export function InteractiveDashboardWordCard({
                   })()}
                 </motion.h1>
 
-                {/* Floating Jungle Elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <motion.div
-                    animate={{
-                      y: [0, -10, 0],
-                      x: [0, 5, 0],
-                      rotate: [0, 5, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0,
-                    }}
-                    className="absolute -top-2 -left-4 text-sm opacity-60"
-                  >
-                    🌿
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      y: [0, -15, 0],
-                      x: [0, -3, 0],
-                      rotate: [0, -10, 0],
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 1,
-                    }}
-                    className="absolute -top-1 -right-6 text-sm opacity-50"
-                  >
-                    🌸
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      y: [0, -8, 0],
-                      scale: [1, 1.1, 1],
-                      opacity: [0.4, 0.8, 0.4],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 2,
-                    }}
-                    className="absolute top-0 right-2 text-xs"
-                  >
-                    ✨
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      y: [0, -12, 0],
-                      x: [0, 8, 0],
-                      rotate: [0, 15, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0.5,
-                    }}
-                    className="absolute -bottom-2 left-2 text-xs opacity-70"
-                  >
-                    🍃
-                  </motion.div>
-                </div>
+                {/* Single Floating Element - Only if motion allowed */}
+                {!prefersReducedMotion && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    <motion.div
+                      animate={{
+                        y: [0, -8, 0],
+                        opacity: [0.4, 0.7, 0.4],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute top-0 right-2 text-xs"
+                    >
+                      ✨
+                    </motion.div>
+                  </div>
+                )}
               </motion.div>
             </header>
 
@@ -2063,35 +1875,22 @@ export function InteractiveDashboardWordCard({
                   >
                     {/* Jungle Canopy Background */}
                     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                      {/* Simplified Jungle Elements */}
-                      <motion.div
-                        animate={{
-                          y: [0, -8, 0],
-                          rotate: [0, 5, 0],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
-                      >
-                        🌿
-                      </motion.div>
-                      <motion.div
-                        animate={{
-                          y: [0, -6, 0],
-                          rotate: [0, 360, 0],
-                        }}
-                        transition={{
-                          duration: 6,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="absolute -bottom-1 -right-2 text-sm opacity-20 text-sunshine"
-                      >
-                        🦋
-                      </motion.div>
+                      {/* Single Jungle Element - Only if motion allowed */}
+                      {!prefersReducedMotion && (
+                        <motion.div
+                          animate={{
+                            opacity: [0.2, 0.4, 0.2],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
+                        >
+                          ����
+                        </motion.div>
+                      )}
                     </div>
 
                     {/* Compact Exit Button */}
@@ -2305,43 +2104,23 @@ export function InteractiveDashboardWordCard({
                       </motion.div>
                     )}
 
-                    {/* Floating success elements */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        y: [20, -10, -30],
-                        x: [0, 10, -10, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: 3,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute top-2 right-4 text-yellow-400 text-sm"
-                    >
-                      ⭐
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        y: [20, -15, -35],
-                        x: [0, -15, 10, 0],
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        repeatDelay: 4,
-                        delay: 1,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute top-4 left-4 text-green-400 text-xs"
-                    >
-                      ✨
-                    </motion.div>
+                    {/* Single success element - Only if motion allowed */}
+                    {!prefersReducedMotion && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          y: [10, -20],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          ease: "easeOut",
+                        }}
+                        className="absolute top-2 right-4 text-yellow-400 text-sm"
+                      >
+                        ⭐
+                      </motion.div>
+                    )}
                   </motion.div>
 
                   {/* Hint/Definition Display */}
