@@ -402,12 +402,20 @@ export function AchievementsSystemMap() {
 
               {/* Summary Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { label: "Complete", count: integrationChecks.filter(c => c.status === "complete").length, color: "jungle", icon: "✅" },
-                  { label: "Partial", count: integrationChecks.filter(c => c.status === "partial").length, color: "sunshine", icon: "⚠️" },
-                  { label: "Missing", count: integrationChecks.filter(c => c.status === "missing").length, color: "red-500", icon: "❌" },
-                  { label: "Total", count: integrationChecks.length, color: "jungle-dark", icon: "📊" }
-                ].map((stat, index) => (
+                {(() => {
+                  const completeCount = integrationChecks.filter(c => c.status === "complete").length;
+                  const partialCount = integrationChecks.filter(c => c.status === "partial").length;
+                  const missingCount = integrationChecks.filter(c => c.status === "missing").length;
+                  const totalCount = integrationChecks.length;
+                  const integrationPercentage = Math.round(((completeCount + partialCount * 0.5) / totalCount) * 100);
+
+                  return [
+                    { label: "Complete", count: completeCount, color: "jungle", icon: "✅" },
+                    { label: "Partial", count: partialCount, color: "sunshine", icon: "⚠️" },
+                    { label: "Missing", count: missingCount, color: "red-500", icon: "❌" },
+                    { label: `${integrationPercentage}% Ready`, count: totalCount, color: "jungle-dark", icon: "📊" }
+                  ];
+                })().map((stat, index) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, y: 20 }}
