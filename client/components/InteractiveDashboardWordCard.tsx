@@ -991,15 +991,23 @@ export function InteractiveDashboardWordCard({
 
             <motion.div
               key={`feedback-emoji-${currentWordIndex}-${feedbackType}`}
-              animate={!prefersReducedMotion ? {
-                y: [0, -5, 0],
-                scale: [1, 1.1, 1],
-              } : {}}
-              transition={!prefersReducedMotion ? {
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              } : { duration: 0 }}
+              animate={
+                !prefersReducedMotion
+                  ? {
+                      y: [0, -5, 0],
+                      scale: [1, 1.1, 1],
+                    }
+                  : {}
+              }
+              transition={
+                !prefersReducedMotion
+                  ? {
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+                  : { duration: 0 }
+              }
               className="text-4xl mb-1 relative z-10"
             >
               {feedbackEmoji}
@@ -1067,20 +1075,32 @@ export function InteractiveDashboardWordCard({
           {/* Main emoji with simplified animation */}
           <motion.div
             key={`emoji-inner-${currentWordIndex}`}
-            animate={!prefersReducedMotion ? {
-              y: [0, -5, 0],
-              scale: [1, 1.02, 1],
-            } : {}}
-            transition={!prefersReducedMotion ? {
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            } : { duration: 0 }}
-            whileHover={!prefersReducedMotion ? {
-              y: -3,
-              scale: 1.05,
-              transition: { duration: 0.2 },
-            } : {}}
+            animate={
+              !prefersReducedMotion
+                ? {
+                    y: [0, -5, 0],
+                    scale: [1, 1.02, 1],
+                  }
+                : {}
+            }
+            transition={
+              !prefersReducedMotion
+                ? {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }
+                : { duration: 0 }
+            }
+            whileHover={
+              !prefersReducedMotion
+                ? {
+                    y: -3,
+                    scale: 1.05,
+                    transition: { duration: 0.2 },
+                  }
+                : {}
+            }
             className="text-9xl relative z-10"
             style={{
               filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))",
@@ -1443,14 +1463,22 @@ export function InteractiveDashboardWordCard({
                 {/* Dynamic Jungle Explorer Prompt */}
                 <motion.h1
                   initial={{ scale: 0.8 }}
-                  animate={!prefersReducedMotion ? {
-                    scale: [1, 1.02, 1],
-                  } : { scale: 1 }}
-                  transition={!prefersReducedMotion ? {
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  } : { duration: 0 }}
+                  animate={
+                    !prefersReducedMotion
+                      ? {
+                          scale: [1, 1.02, 1],
+                        }
+                      : { scale: 1 }
+                  }
+                  transition={
+                    !prefersReducedMotion
+                      ? {
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }
+                      : { duration: 0 }
+                  }
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   style={{
                     textShadow:
