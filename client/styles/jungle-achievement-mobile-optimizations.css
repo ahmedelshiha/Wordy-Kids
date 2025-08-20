@@ -1,0 +1,322 @@
+/* Mobile-specific optimizations for Jungle Achievement System */
+/* Ensures fast and smooth performance on mobile devices */
+
+/* Touch-friendly target sizes for mobile */
+@media (max-width: 768px) {
+  /* Ensure minimum touch target size of 44px */
+  .jungle-achievement-system button,
+  .jungle-achievement-system [role="button"],
+  .jungle-achievement-card {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Optimize tab sizes for mobile */
+  .jungle-achievement-system [role="tablist"] button {
+    padding: 12px 8px;
+    font-size: 0.75rem;
+  }
+
+  /* Reduce spacing on mobile to fit more content */
+  .jungle-achievement-system .space-y-6 > * + * {
+    margin-top: 1rem;
+  }
+
+  .jungle-achievement-system .space-y-4 > * + * {
+    margin-top: 0.75rem;
+  }
+
+  /* Optimize achievement cards for mobile */
+  .jungle-achievement-card {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+  }
+
+  /* Simplify gradients on mobile for better performance */
+  .jungle-achievement-card.unlocked {
+    background: linear-gradient(135deg, var(--jungle-green), var(--jungle-green-dark)) !important;
+  }
+
+  /* Reduce shadow complexity on mobile */
+  .jungle-achievement-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .jungle-achievement-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* Optimize animation performance */
+  .jungle-achievement-card * {
+    animation-duration: 0.3s !important;
+  }
+
+  /* Simplify particles on mobile */
+  .jungle-particles {
+    display: none;
+  }
+
+  /* Mobile-optimized adventure map */
+  .adventure-map {
+    gap: 2px;
+    max-width: 100%;
+  }
+
+  .adventure-day {
+    min-height: 20px;
+    font-size: 0.625rem;
+  }
+}
+
+/* Tablet-specific optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .jungle-achievement-system {
+    padding: 1rem;
+  }
+
+  .jungle-achievement-card {
+    padding: 1rem;
+  }
+
+  /* Slightly reduce animation complexity on tablets */
+  .jungle-particles .jungle-particle:nth-child(n+4) {
+    display: none;
+  }
+}
+
+/* Ultra-mobile devices (small phones) */
+@media (max-width: 375px) {
+  .jungle-achievement-system {
+    padding: 0.5rem;
+  }
+
+  /* Further reduce achievement card content */
+  .jungle-achievement-card h3 {
+    font-size: 0.875rem;
+    line-height: 1.2;
+  }
+
+  .jungle-achievement-card p {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  /* Stack stats cards vertically on very small screens */
+  .jungle-stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem;
+  }
+
+  /* Simplify tabs for very small screens */
+  .jungle-achievement-system [role="tablist"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.25rem;
+  }
+
+  .jungle-achievement-system [role="tablist"] button {
+    padding: 8px 4px;
+    font-size: 0.625rem;
+  }
+}
+
+/* High-density screens optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .jungle-achievement-card {
+    /* Use more efficient rendering on high-DPI screens */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Low-end device optimizations */
+@media (max-device-width: 768px) and (max-device-height: 1024px) {
+  /* Reduce complexity for potentially slower devices */
+  .jungle-achievement-system .bg-gradient-to-br {
+    background: var(--jungle-green) !important;
+  }
+
+  .jungle-achievement-system .backdrop-blur-sm {
+    backdrop-filter: none !important;
+  }
+
+  /* Disable complex animations on low-end devices */
+  .jungle-achievement-system [class*="animate-"] {
+    animation: none !important;
+  }
+
+  /* Simplify shadows */
+  .jungle-achievement-system [class*="shadow-"] {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* Network-aware optimizations */
+@media (prefers-reduced-data: reduce) {
+  /* Disable decorative background images */
+  .jungle-achievement-system::before,
+  .jungle-achievement-system::after {
+    display: none;
+  }
+
+  /* Simplify backgrounds */
+  .jungle-achievement-system .bg-gradient-to-br {
+    background: #f0fdf4 !important;
+  }
+
+  /* Reduce visual complexity */
+  .jungle-particles,
+  .jungle-loading-spinner {
+    display: none;
+  }
+}
+
+/* Focus management for keyboard navigation */
+.jungle-achievement-system button:focus-visible,
+.jungle-achievement-card:focus-visible {
+  outline: 2px solid var(--jungle-green);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Improve readability in bright environments */
+@media (prefers-contrast: more) {
+  .jungle-achievement-card {
+    border: 2px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .jungle-achievement-card.unlocked {
+    background: #2d5016 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+  }
+}
+
+/* Optimize for portrait orientation on mobile */
+@media (max-width: 768px) and (orientation: portrait) {
+  .jungle-achievement-system {
+    padding-bottom: 2rem; /* Extra space for mobile keyboards */
+  }
+
+  /* Single column layout for portrait mobile */
+  .jungle-achievement-system .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Optimize for landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .jungle-achievement-system {
+    padding: 0.5rem;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Compact header in landscape */
+  .jungle-achievement-system h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .jungle-achievement-system p {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Ensure smooth scrolling on mobile */
+.jungle-achievement-system {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Optimize text rendering */
+.jungle-achievement-system {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce layout thrashing */
+.jungle-achievement-card,
+.jungle-stats-card {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* GPU layer promotion for critical elements */
+.jungle-achievement-card:hover,
+.jungle-achievement-card:focus,
+.jungle-achievement-card.unlocked {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize for one-handed usage on mobile */
+@media (max-width: 480px) {
+  /* Place important actions within thumb reach */
+  .jungle-achievement-system [role="tablist"] {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem;
+    border-radius: 1rem 1rem 0 0;
+    z-index: 10;
+  }
+
+  /* Ensure content doesn't hide behind sticky tabs */
+  .jungle-achievement-system .space-y-6:last-child {
+    padding-bottom: 4rem;
+  }
+}
+
+/* Battery optimization hints */
+.jungle-achievement-system.battery-low .jungle-particles,
+.jungle-achievement-system.battery-low [class*="animate-"],
+.jungle-achievement-system.battery-low .jungle-loading-spinner {
+  display: none !important;
+}
+
+.jungle-achievement-system.battery-low {
+  background: #f9fafb !important;
+  color: #111827 !important;
+}
+
+/* Memory optimization */
+.jungle-achievement-card:not(.unlocked) .jungle-particles {
+  display: none;
+}
+
+/* Reduce repaints by using transform instead of changing layout properties */
+.jungle-achievement-card:hover {
+  transform: translateY(-2px) scale(1.01);
+  will-change: transform;
+}
+
+/* iOS Safari specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  .jungle-achievement-system {
+    /* Fix iOS Safari viewport issues */
+    min-height: -webkit-fill-available;
+  }
+
+  /* Optimize for iOS momentum scrolling */
+  .jungle-achievement-system {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent zoom on input focus */
+  .jungle-achievement-system button {
+    font-size: 16px;
+  }
+}
+
+/* Android specific optimizations */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .jungle-achievement-system {
+    /* Optimize for Android's rendering engine */
+    transform: translateZ(0);
+  }
+}
