@@ -1610,7 +1610,7 @@ export function InteractiveDashboardWordCard({
                     // Progress-based encouragement
                     const progressPrompts = {
                       0: "🚀 Ready for a jungle adventure?",
-                      25: "🌟 You're exploring well, jungle explorer!",
+                      25: "��� You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
                       90: "👑 Final jungle challenges await!",
@@ -1875,35 +1875,22 @@ export function InteractiveDashboardWordCard({
                   >
                     {/* Jungle Canopy Background */}
                     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                      {/* Simplified Jungle Elements */}
-                      <motion.div
-                        animate={{
-                          y: [0, -8, 0],
-                          rotate: [0, 5, 0],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
-                      >
-                        🌿
-                      </motion.div>
-                      <motion.div
-                        animate={{
-                          y: [0, -6, 0],
-                          rotate: [0, 360, 0],
-                        }}
-                        transition={{
-                          duration: 6,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="absolute -bottom-1 -right-2 text-sm opacity-20 text-sunshine"
-                      >
-                        🦋
-                      </motion.div>
+                      {/* Single Jungle Element - Only if motion allowed */}
+                      {!prefersReducedMotion && (
+                        <motion.div
+                          animate={{
+                            opacity: [0.2, 0.4, 0.2],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
+                        >
+                          🌿
+                        </motion.div>
+                      )}
                     </div>
 
                     {/* Compact Exit Button */}
