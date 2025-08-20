@@ -138,11 +138,11 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
   const mapRef = useRef<HTMLDivElement>(null);
 
   const handleZoomIn = () => {
-    setZoom(prev => Math.min(prev + 0.2, 2));
+    setZoom((prev) => Math.min(prev + 0.2, 2));
   };
 
   const handleZoomOut = () => {
-    setZoom(prev => Math.max(prev - 0.2, 0.5));
+    setZoom((prev) => Math.max(prev - 0.2, 0.5));
   };
 
   const handleReset = () => {
@@ -179,7 +179,11 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
   const getMarkerIcon = (marker: MapMarker) => {
     switch (marker.type) {
       case "milestone":
-        return marker.completed ? <Star className="w-4 h-4" /> : <Target className="w-4 h-4" />;
+        return marker.completed ? (
+          <Star className="w-4 h-4" />
+        ) : (
+          <Target className="w-4 h-4" />
+        );
       case "achievement":
         return <Trophy className="w-4 h-4" />;
       case "treasure":
@@ -199,7 +203,12 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
   };
 
   return (
-    <Card className={cn("relative overflow-hidden bg-gradient-to-br from-green-50 to-blue-50", className)}>
+    <Card
+      className={cn(
+        "relative overflow-hidden bg-gradient-to-br from-green-50 to-blue-50",
+        className,
+      )}
+    >
       <CardContent className="p-0">
         {/* Map Controls */}
         <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
@@ -272,14 +281,32 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
             {/* Jungle Elements */}
             <div className="absolute inset-0">
               {/* Trees */}
-              <TreePine className="absolute w-8 h-8 text-green-600 opacity-60" style={{ left: "15%", top: "25%" }} />
-              <TreePine className="absolute w-6 h-6 text-green-500 opacity-50" style={{ left: "50%", top: "60%" }} />
-              <TreePine className="absolute w-10 h-10 text-green-700 opacity-70" style={{ left: "80%", top: "40%" }} />
-              
+              <TreePine
+                className="absolute w-8 h-8 text-green-600 opacity-60"
+                style={{ left: "15%", top: "25%" }}
+              />
+              <TreePine
+                className="absolute w-6 h-6 text-green-500 opacity-50"
+                style={{ left: "50%", top: "60%" }}
+              />
+              <TreePine
+                className="absolute w-10 h-10 text-green-700 opacity-70"
+                style={{ left: "80%", top: "40%" }}
+              />
+
               {/* Flowers */}
-              <Flower className="absolute w-4 h-4 text-pink-400 opacity-60" style={{ left: "30%", top: "70%" }} />
-              <Flower className="absolute w-3 h-3 text-purple-400 opacity-50" style={{ left: "65%", top: "80%" }} />
-              <Flower className="absolute w-5 h-5 text-yellow-400 opacity-60" style={{ left: "20%", top: "45%" }} />
+              <Flower
+                className="absolute w-4 h-4 text-pink-400 opacity-60"
+                style={{ left: "30%", top: "70%" }}
+              />
+              <Flower
+                className="absolute w-3 h-3 text-purple-400 opacity-50"
+                style={{ left: "65%", top: "80%" }}
+              />
+              <Flower
+                className="absolute w-5 h-5 text-yellow-400 opacity-60"
+                style={{ left: "20%", top: "45%" }}
+              />
             </div>
 
             {/* Progress Markers */}
@@ -301,11 +328,11 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                     "relative w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow-lg border-2 border-white transition-all duration-200",
                     getMarkerColor(marker),
                     marker.locked && "opacity-50 cursor-not-allowed",
-                    selectedMarker?.id === marker.id && "ring-4 ring-white/70"
+                    selectedMarker?.id === marker.id && "ring-4 ring-white/70",
                   )}
                 >
                   {getMarkerIcon(marker)}
-                  
+
                   {/* Progress Ring */}
                   {marker.progress > 0 && !marker.completed && (
                     <svg className="absolute inset-0 w-full h-full -rotate-90">
@@ -339,7 +366,13 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                 {/* Marker Label */}
                 <div className="absolute top-10 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
                   <Badge
-                    variant={marker.completed ? "default" : marker.locked ? "secondary" : "outline"}
+                    variant={
+                      marker.completed
+                        ? "default"
+                        : marker.locked
+                          ? "secondary"
+                          : "outline"
+                    }
                     className="text-xs px-2 py-1 bg-white/90 backdrop-blur-sm shadow-sm"
                   >
                     {marker.title}
@@ -365,14 +398,18 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl">{selectedMarker.emoji}</span>
                     <div>
-                      <h3 className="font-semibold text-lg">{selectedMarker.title}</h3>
+                      <h3 className="font-semibold text-lg">
+                        {selectedMarker.title}
+                      </h3>
                       <Badge variant="outline" className="text-xs">
                         {selectedMarker.category}
                       </Badge>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{selectedMarker.description}</p>
-                  
+                  <p className="text-sm text-gray-600 mb-2">
+                    {selectedMarker.description}
+                  </p>
+
                   {/* Progress Bar */}
                   {selectedMarker.progress > 0 && !selectedMarker.completed && (
                     <div className="space-y-1">
@@ -395,7 +432,7 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                     </div>
                   )}
                 </div>
-                
+
                 <Button
                   variant="ghost"
                   size="sm"

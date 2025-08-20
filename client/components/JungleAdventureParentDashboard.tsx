@@ -680,7 +680,8 @@ export const JungleAdventureParentDashboard: React.FC<
                     🗺️ Interactive Adventure Map
                   </CardTitle>
                   <p className="text-sm text-jungle-dark/70 mt-2">
-                    Explore your child's learning journey through the magical jungle! Click on markers to see progress details.
+                    Explore your child's learning journey through the magical
+                    jungle! Click on markers to see progress details.
                   </p>
                 </CardHeader>
                 <CardContent className="p-0">
@@ -704,7 +705,9 @@ export const JungleAdventureParentDashboard: React.FC<
                       </div>
                       <div>
                         <p className="text-sm text-jungle-dark/70">Completed</p>
-                        <p className="text-lg font-semibold text-jungle-dark">3 Milestones</p>
+                        <p className="text-lg font-semibold text-jungle-dark">
+                          3 Milestones
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -717,8 +720,12 @@ export const JungleAdventureParentDashboard: React.FC<
                         <Target className="w-4 h-4 text-white" />
                       </div>
                       <div>
-                        <p className="text-sm text-jungle-dark/70">In Progress</p>
-                        <p className="text-lg font-semibold text-jungle-dark">1 Challenge</p>
+                        <p className="text-sm text-jungle-dark/70">
+                          In Progress
+                        </p>
+                        <p className="text-lg font-semibold text-jungle-dark">
+                          1 Challenge
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -732,7 +739,9 @@ export const JungleAdventureParentDashboard: React.FC<
                       </div>
                       <div>
                         <p className="text-sm text-jungle-dark/70">Unlocked</p>
-                        <p className="text-lg font-semibold text-jungle-dark">2 Areas</p>
+                        <p className="text-lg font-semibold text-jungle-dark">
+                          2 Areas
+                        </p>
                       </div>
                     </div>
                   </CardContent>

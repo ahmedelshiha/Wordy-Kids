@@ -68,7 +68,7 @@ const App = () => {
       "categoryProgress",
       "systematic_progress_reading",
       "systematic_progress_vocabulary",
-      "systematic_progress_comprehension"
+      "systematic_progress_comprehension",
     ];
     const jungleKey = "jungleAdventureSettings";
 
