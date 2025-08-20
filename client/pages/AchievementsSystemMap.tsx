@@ -746,22 +746,24 @@ export function AchievementsSystemMap() {
               <Gift className="w-6 h-6 text-jungle" />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div className="jungle-card p-3">
-                <div className="text-jungle font-bold">4/4</div>
-                <div className="text-jungle-dark/70">Modules Active</div>
-              </div>
-              <div className="jungle-card p-3">
-                <div className="text-jungle font-bold">5/6</div>
-                <div className="text-jungle-dark/70">Integration Complete</div>
-              </div>
-              <div className="jungle-card p-3">
-                <div className="text-sunshine font-bold">✓</div>
-                <div className="text-jungle-dark/70">Mobile Ready</div>
-              </div>
-              <div className="jungle-card p-3">
-                <div className="text-jungle font-bold">✓</div>
-                <div className="text-jungle-dark/70">Navigation Ready</div>
-              </div>
+              {(() => {
+                const completeCount = integrationChecks.filter(c => c.status === "complete").length;
+                const partialCount = integrationChecks.filter(c => c.status === "partial").length;
+                const totalCount = integrationChecks.length;
+                const integrationPercentage = Math.round(((completeCount + partialCount * 0.5) / totalCount) * 100);
+
+                return [
+                  { value: "4/4", label: "Modules Active", color: "jungle" },
+                  { value: `${integrationPercentage}%`, label: "Integration Complete", color: integrationPercentage >= 95 ? "jungle" : "sunshine" },
+                  { value: "✓", label: "Mobile Ready", color: "jungle" },
+                  { value: "✓", label: "Navigation Ready", color: "jungle" }
+                ];
+              })().map((item, index) => (
+                <div key={index} className="jungle-card p-3">
+                  <div className={`text-${item.color} font-bold`}>{item.value}</div>
+                  <div className="text-jungle-dark/70">{item.label}</div>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
