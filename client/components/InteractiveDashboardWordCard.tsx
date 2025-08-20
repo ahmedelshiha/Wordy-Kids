@@ -754,8 +754,14 @@ export function InteractiveDashboardWordCard({
 
       // Show enhanced achievements if any were unlocked
       if (allNewAchievements.length > 0) {
+        // Trigger achievements through new lightweight popup system
         setTimeout(() => {
-          setJourneyAchievements(allNewAchievements);
+          allNewAchievements.forEach(achievement => {
+            const event = new CustomEvent('milestoneUnlocked', {
+              detail: { achievement }
+            });
+            window.dispatchEvent(event);
+          });
         }, 1500); // Show after feedback animation
       }
     } catch (error) {
@@ -1733,7 +1739,7 @@ export function InteractiveDashboardWordCard({
                       Objects: "🔍",
                       Colors: "🌈",
                       Body: "👤",
-                      Family: "👨‍��‍👧‍👦",
+                      Family: "👨‍👩‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
                       Clothes: "👕",
