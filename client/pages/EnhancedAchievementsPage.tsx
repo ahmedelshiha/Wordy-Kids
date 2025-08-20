@@ -228,17 +228,11 @@ export function EnhancedAchievementsPage({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => {
-                // Navigate to system map in the main app
-                if (onBack) {
-                  // Set the tab to system-map if we have a way to do it
-                  const event = new CustomEvent('navigate-to-system-map');
-                  window.dispatchEvent(event);
-                }
-              }}
-              className="jungle-card text-jungle-dark hover:bg-jungle/10 text-xs"
-              title="View System Architecture Map"
+              onClick={() => setShowSystemMap(true)}
+              className="jungle-card text-jungle-dark hover:bg-jungle/10 text-xs border-jungle/30 hover:border-jungle/50"
+              title="View Interactive System Architecture Map"
             >
+              <Map className="w-4 h-4 mr-1" />
               🗺️ System Map
             </Button>
           </div>
