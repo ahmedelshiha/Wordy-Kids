@@ -636,24 +636,91 @@ export function AchievementsSystemMap() {
                 ))}
               </div>
 
-              {/* Connection Visualization */}
-              <div className="relative h-40 jungle-card bg-gradient-to-br from-jungle/5 to-sunshine/5 rounded-lg overflow-hidden">
+              {/* Connection Visualization - Jungle Vine Network */}
+              <div className="relative h-48 jungle-card bg-gradient-to-br from-jungle/5 to-sunshine/5 rounded-lg overflow-hidden">
+                {/* Background jungle pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute top-2 left-4 text-jungle text-2xl">🌿</div>
+                  <div className="absolute top-8 right-6 text-jungle text-xl">🍃</div>
+                  <div className="absolute bottom-4 left-8 text-jungle text-2xl">🌱</div>
+                  <div className="absolute bottom-2 right-4 text-jungle text-xl">🌿</div>
+                  <div className="absolute top-1/2 left-1/4 text-jungle text-lg">🍃</div>
+                  <div className="absolute top-1/3 right-1/3 text-jungle text-lg">🌱</div>
+                </div>
+
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <h3 className="text-lg font-bold text-jungle-dark mb-2">
-                      🌿 System Connections
-                    </h3>
-                    <p className="text-sm text-jungle-dark/70">
-                      Click modules above to explore their connections
+                  <div className="text-center z-10">
+                    <motion.h3
+                      className="text-lg font-bold text-jungle-dark mb-2"
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      🌿 Jungle Connection Network 🌿
+                    </motion.h3>
+                    <p className="text-sm text-jungle-dark/70 mb-2">
+                      {selectedModule ? "Exploring connections..." : "Click modules above to see vine connections"}
                     </p>
+                    {selectedModule && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-xs text-jungle font-semibold"
+                      >
+                        🗺️ {systemModules.find(m => m.id === selectedModule)?.name} Network Active
+                      </motion.div>
+                    )}
                   </div>
                 </div>
-                
+
+                {/* Vine-like connections */}
                 {selectedModule && (() => {
                   const module = systemModules.find(m => m.id === selectedModule);
-                  return module?.connections.map((connectionId, index) => 
-                    renderConnection(selectedModule, connectionId, index)
-                  );
+                  return module?.connections.map((connectionId, index) => {
+                    const connectedModule = systemModules.find(m => m.id === connectionId);
+                    if (!connectedModule) return null;
+
+                    return (
+                      <motion.div
+                        key={`${selectedModule}-${connectionId}`}
+                        initial={{ opacity: 0, scale: 0, rotate: -90 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        transition={{ delay: index * 0.2, duration: 0.8 }}
+                        className="absolute jungle-card bg-gradient-to-r from-jungle/20 to-sunshine/20 backdrop-blur-sm border border-jungle/30 rounded-xl p-3 z-20"
+                        style={{
+                          left: `${15 + (index % 3) * 30}%`,
+                          top: `${25 + Math.floor(index / 3) * 20}%`,
+                          transform: `scale(${zoomLevel}) rotate(${index * 5}deg)`,
+                        }}
+                      >
+                        <div className="flex items-center gap-2 text-sm">
+                          <motion.span
+                            className="text-2xl"
+                            animate={{ rotate: [0, 10, -10, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                          >
+                            {module.emoji}
+                          </motion.span>
+                          <motion.div
+                            animate={{ x: [0, 3, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            className="text-jungle-dark font-bold"
+                          >
+                            🌿→
+                          </motion.div>
+                          <motion.span
+                            className="text-2xl"
+                            animate={{ rotate: [0, -10, 10, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                          >
+                            {connectedModule.emoji}
+                          </motion.span>
+                        </div>
+                        <div className="text-xs text-jungle-dark/70 mt-1 text-center">
+                          {connectedModule.name}
+                        </div>
+                      </motion.div>
+                    );
+                  });
                 })()}
               </div>
             </motion.div>
