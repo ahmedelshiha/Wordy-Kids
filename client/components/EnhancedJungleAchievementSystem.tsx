@@ -304,10 +304,10 @@ interface EnhancedJungleAchievementSystemProps {
   onRefresh?: () => void;
 }
 
-export function EnhancedJungleAchievementSystem({
+const EnhancedJungleAchievementSystemComponent = ({
   onUnlock,
   onRefresh,
-}: EnhancedJungleAchievementSystemProps) {
+}: EnhancedJungleAchievementSystemProps) => {
   const { user } = useAuth();
   const mobilePerf = useOptimizedMobilePerformance();
   const animPrefs = useAnimationPreferences();
@@ -725,7 +725,7 @@ export function EnhancedJungleAchievementSystem({
                 const maxDiscoveries = Math.max(...jungleStats.weeklyAdventures) || 1;
                 const height = maxDiscoveries > 0 ? (discoveries / maxDiscoveries) * 100 : 0;
                 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-                const jungleEmojis = ["🌱", "���", "🍃", "🌳", "🦋", "🌺", "🦜"];
+                const jungleEmojis = ["🌱", "🌿", "🍃", "🌳", "🦋", "🌺", "🦜"];
 
                 return (
                   <motion.div 
