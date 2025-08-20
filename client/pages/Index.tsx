@@ -43,6 +43,7 @@ import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 // Old achievement dialog system removed - now using LightweightAchievementProvider
+import { useEnhancedAchievementDialog } from "@/hooks/use-enhanced-achievement-dialog";
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
