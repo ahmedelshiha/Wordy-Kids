@@ -486,28 +486,37 @@ export class EnhancedAudioService {
       };
 
       utterance.onerror = (event) => {
+        const errorType = event.error || "unknown";
+        const errorMessage = event.message || "No message provided";
+
         console.error(
-          `Speech synthesis error for word "${word}":`,
-          event.error || "Unknown error",
+          `Speech synthesis error for word "${word}": ${errorType}`,
           {
-            error: event.error,
-            message: event.message,
+            error: errorType,
+            message: errorMessage,
             word: word,
             voiceType: voiceType,
             voice: voice?.name,
             rate: rate,
             pitch: pitch,
             volume: volume,
+            eventType: event.type,
+            timeStamp: event.timeStamp,
           },
         );
         try {
           const errorDetails = {
-            error: event.error,
-            message: event.message,
+            type: "speech_synthesis_error",
+            error: errorType,
+            message: errorMessage,
             word: word,
             voiceType: voiceType,
             voice: voice?.name,
             timestamp: new Date().toISOString(),
+            eventDetails: {
+              type: event.type,
+              timeStamp: event.timeStamp,
+            },
           };
           // Record error for debugging
           speechSynthesisDebugger.recordError(errorDetails);
