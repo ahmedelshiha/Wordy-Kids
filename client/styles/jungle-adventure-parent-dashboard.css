@@ -3,19 +3,36 @@
 /* Base Jungle Adventure Enhancements */
 .jungle-pattern-bg {
   background-image:
-    radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(76, 175, 80, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 60% 60%, rgba(33, 150, 243, 0.04) 0%, transparent 50%);
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(76, 175, 80, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 193, 7, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(76, 175, 80, 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 60% 60%,
+      rgba(33, 150, 243, 0.04) 0%,
+      transparent 50%
+    );
   animation: jungle-pattern-float 20s ease-in-out infinite;
 }
 
 @keyframes jungle-pattern-float {
-  0%, 100% { 
-    transform: translateY(0px) scale(1); 
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
   }
-  50% { 
-    transform: translateY(-10px) scale(1.02); 
+  50% {
+    transform: translateY(-10px) scale(1.02);
   }
 }
 
@@ -36,10 +53,12 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, 
-    rgba(76, 175, 80, 0.8) 0%, 
-    rgba(255, 193, 7, 0.8) 50%, 
-    rgba(76, 175, 80, 0.8) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(76, 175, 80, 0.8) 0%,
+    rgba(255, 193, 7, 0.8) 50%,
+    rgba(76, 175, 80, 0.8) 100%
+  );
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -50,7 +69,7 @@
 
 .jungle-card:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(76, 175, 80, 0.15),
     0 0 0 1px rgba(76, 175, 80, 0.1),
     0 0 20px rgba(255, 193, 7, 0.1);
@@ -59,7 +78,7 @@
 
 /* Jungle Button Styles */
 .jungle-button {
-  background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+  background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
   border: none;
   color: white;
   font-weight: 600;
@@ -76,10 +95,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.25), 
-    transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 
@@ -89,7 +110,7 @@
 
 .jungle-button:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(76, 175, 80, 0.4),
     0 0 0 1px rgba(76, 175, 80, 0.2);
 }
@@ -112,9 +133,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, 
-    rgba(76, 175, 80, 0.1) 0%, 
-    rgba(255, 193, 7, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.1) 0%,
+    rgba(255, 193, 7, 0.1) 100%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -138,7 +161,7 @@
 }
 
 .jungle-progress-bar > div {
-  background: linear-gradient(90deg, #4CAF50, #8BC34A, #FFC107);
+  background: linear-gradient(90deg, #4caf50, #8bc34a, #ffc107);
   position: relative;
   overflow: hidden;
 }
@@ -150,21 +173,27 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(45deg, 
-    rgba(255, 255, 255, 0.2) 25%, 
-    transparent 25%, 
-    transparent 50%, 
-    rgba(255, 255, 255, 0.2) 50%, 
-    rgba(255, 255, 255, 0.2) 75%, 
-    transparent 75%, 
-    transparent);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
   background-size: 12px 12px;
   animation: jungle-progress-shine 2s linear infinite;
 }
 
 @keyframes jungle-progress-shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Floating Elements Animation */
@@ -174,7 +203,8 @@
 }
 
 @keyframes jungle-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 0.6;
   }
@@ -194,7 +224,7 @@
 
 /* Badge Enhancements */
 .jungle-badge {
-  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
@@ -204,9 +234,11 @@
 /* Stats Card Animations */
 .stats-card {
   position: relative;
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.9) 0%, 
-    rgba(255, 255, 255, 0.95) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
   transition: all 0.3s ease;
 }
 
@@ -214,10 +246,12 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, 
-    transparent 48%, 
-    rgba(76, 175, 80, 0.1) 50%, 
-    transparent 52%);
+  background: linear-gradient(
+    45deg,
+    transparent 48%,
+    rgba(76, 175, 80, 0.1) 50%,
+    transparent 52%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -229,8 +263,12 @@
 }
 
 @keyframes jungle-shine {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(200%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(45deg);
+  }
 }
 
 /* Quick Actions Panel */
@@ -239,7 +277,7 @@
   backdrop-filter: blur(16px);
   border: 1px solid rgba(76, 175, 80, 0.2);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.1),
     0 0 0 1px rgba(255, 255, 255, 0.5);
   position: relative;
@@ -253,10 +291,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, 
-    #4CAF50 0%, 
-    #FFC107 50%, 
-    #4CAF50 100%);
+  background: linear-gradient(90deg, #4caf50 0%, #ffc107 50%, #4caf50 100%);
 }
 
 /* Activity Timeline */
@@ -271,10 +306,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, 
-    #4CAF50 0%, 
-    #8BC34A 50%, 
-    #FFC107 100%);
+  background: linear-gradient(to bottom, #4caf50 0%, #8bc34a 50%, #ffc107 100%);
   opacity: 0.3;
 }
 
@@ -292,7 +324,7 @@
   transform: translateY(-50%);
   width: 12px;
   height: 12px;
-  background: #4CAF50;
+  background: #4caf50;
   border: 3px solid white;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
@@ -333,10 +365,12 @@
   }
 
   .jungle-card::before {
-    background: linear-gradient(90deg, 
-      rgba(76, 175, 80, 0.6) 0%, 
-      rgba(255, 193, 7, 0.6) 50%, 
-      rgba(76, 175, 80, 0.6) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(76, 175, 80, 0.6) 0%,
+      rgba(255, 193, 7, 0.6) 50%,
+      rgba(76, 175, 80, 0.6) 100%
+    );
   }
 
   .quick-actions-panel {
@@ -345,9 +379,11 @@
   }
 
   .stats-card {
-    background: linear-gradient(135deg, 
-      rgba(30, 41, 59, 0.9) 0%, 
-      rgba(30, 41, 59, 0.95) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.9) 0%,
+      rgba(30, 41, 59, 0.95) 100%
+    );
   }
 }
 
@@ -355,17 +391,17 @@
 @media (prefers-contrast: high) {
   .jungle-card {
     border-width: 2px;
-    border-color: #4CAF50;
+    border-color: #4caf50;
   }
 
   .jungle-button {
-    background: #4CAF50;
-    border: 2px solid #388E3C;
+    background: #4caf50;
+    border: 2px solid #388e3c;
   }
 
   .jungle-tab[data-state="active"] {
-    background: #4CAF50;
-    border: 2px solid #388E3C;
+    background: #4caf50;
+    border: 2px solid #388e3c;
   }
 }
 
@@ -393,7 +429,7 @@
 .jungle-card:focus-visible,
 .jungle-button:focus-visible,
 .jungle-tab:focus-visible {
-  outline: 3px solid #4CAF50;
+  outline: 3px solid #4caf50;
   outline-offset: 2px;
   border-radius: 8px;
 }
@@ -408,17 +444,24 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, 
-    rgba(76, 175, 80, 0.1) 0%, 
-    rgba(76, 175, 80, 0.3) 50%, 
-    rgba(76, 175, 80, 0.1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(76, 175, 80, 0.1) 0%,
+    rgba(76, 175, 80, 0.3) 50%,
+    rgba(76, 175, 80, 0.1) 100%
+  );
   border-radius: inherit;
   animation: jungle-loading 1.5s ease-in-out infinite;
 }
 
 @keyframes jungle-loading {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Micro-interactions */
@@ -444,23 +487,23 @@
 
 /* Achievement Celebration Effect */
 @keyframes jungle-achievement-celebration {
-  0% { 
+  0% {
     transform: scale(1) rotate(0deg);
     filter: hue-rotate(0deg);
   }
-  25% { 
+  25% {
     transform: scale(1.1) rotate(5deg);
     filter: hue-rotate(90deg);
   }
-  50% { 
+  50% {
     transform: scale(1.2) rotate(0deg);
     filter: hue-rotate(180deg);
   }
-  75% { 
+  75% {
     transform: scale(1.1) rotate(-5deg);
     filter: hue-rotate(270deg);
   }
-  100% { 
+  100% {
     transform: scale(1) rotate(0deg);
     filter: hue-rotate(360deg);
   }
@@ -472,7 +515,7 @@
 
 /* Gradient Text Effects */
 .jungle-gradient-text {
-  background: linear-gradient(135deg, #4CAF50, #8BC34A, #FFC107);
+  background: linear-gradient(135deg, #4caf50, #8bc34a, #ffc107);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -490,13 +533,13 @@
 }
 
 .jungle-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .jungle-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #388E3C, #689F38);
+  background: linear-gradient(135deg, #388e3c, #689f38);
 }
 
 /* Print Styles */

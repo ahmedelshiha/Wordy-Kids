@@ -3,11 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Tooltip,
   TooltipContent,
@@ -83,68 +79,78 @@ interface FloatingElement {
   scale: number;
 }
 
-export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayoutProps> = ({
+export const JungleAdventureDesktopLayout: React.FC<
+  JungleAdventureDesktopLayoutProps
+> = ({
   children,
   activeSection = "dashboard",
   onSectionChange,
   userRole = "child",
-  className
+  className,
 }) => {
   const { user } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showFamilyZone, setShowFamilyZone] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [floatingElements, setFloatingElements] = useState<FloatingElement[]>([]);
-  const [weatherEffect, setWeatherEffect] = useState<"sunny" | "rainy" | "windy" | null>("sunny");
-  const [timeOfDay, setTimeOfDay] = useState<"morning" | "day" | "evening" | "night">("day");
+  const [floatingElements, setFloatingElements] = useState<FloatingElement[]>(
+    [],
+  );
+  const [weatherEffect, setWeatherEffect] = useState<
+    "sunny" | "rainy" | "windy" | null
+  >("sunny");
+  const [timeOfDay, setTimeOfDay] = useState<
+    "morning" | "day" | "evening" | "night"
+  >("day");
   const [jungleAmbience, setJungleAmbience] = useState(true);
 
   // Navigation items for the jungle adventure
   const navigationItems = [
-    { 
-      id: "dashboard", 
-      label: "🏠 Adventure Home", 
-      icon: Home, 
+    {
+      id: "dashboard",
+      label: "🏠 Adventure Home",
+      icon: Home,
       color: "jungle",
-      description: "Your jungle basecamp"
+      description: "Your jungle basecamp",
     },
-    { 
-      id: "learn", 
-      label: "📚 Word Library", 
-      icon: BookOpen, 
+    {
+      id: "learn",
+      label: "📚 Word Library",
+      icon: BookOpen,
       color: "sunshine",
-      description: "Discover new vocabulary treasures"
+      description: "Discover new vocabulary treasures",
     },
-    { 
-      id: "games", 
-      label: "🎮 Jungle Games", 
-      icon: Gamepad2, 
+    {
+      id: "games",
+      label: "🎮 Jungle Games",
+      icon: Gamepad2,
       color: "profile-purple",
-      description: "Fun learning adventures"
+      description: "Fun learning adventures",
     },
-    { 
-      id: "progress", 
-      label: "📊 Adventure Map", 
-      icon: Map, 
+    {
+      id: "progress",
+      label: "📊 Adventure Map",
+      icon: Map,
       color: "sky",
-      description: "Track your learning journey"
+      description: "Track your learning journey",
     },
-    { 
-      id: "achievements", 
-      label: "🏆 Treasure Collection", 
-      icon: Trophy, 
+    {
+      id: "achievements",
+      label: "🏆 Treasure Collection",
+      icon: Trophy,
       color: "coral-red",
-      description: "Your earned badges and rewards"
+      description: "Your earned badges and rewards",
     },
-    ...(userRole === "parent" ? [
-      { 
-        id: "family", 
-        label: "👨‍👩‍👧‍👦 Family Zone", 
-        icon: Users, 
-        color: "playful-purple",
-        description: "Family dashboard and controls"
-      }
-    ] : []),
+    ...(userRole === "parent"
+      ? [
+          {
+            id: "family",
+            label: "👨‍👩‍👧‍👦 Family Zone",
+            icon: Users,
+            color: "playful-purple",
+            description: "Family dashboard and controls",
+          },
+        ]
+      : []),
   ];
 
   // Quick action items
@@ -161,26 +167,134 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
   useEffect(() => {
     const elements: FloatingElement[] = [
       // Butterflies
-      { id: 1, type: "butterfly", emoji: "🦋", x: 15, y: 20, delay: 0, duration: 12, scale: 1 },
-      { id: 2, type: "butterfly", emoji: "🦋", x: 85, y: 60, delay: 3, duration: 15, scale: 0.8 },
-      
+      {
+        id: 1,
+        type: "butterfly",
+        emoji: "🦋",
+        x: 15,
+        y: 20,
+        delay: 0,
+        duration: 12,
+        scale: 1,
+      },
+      {
+        id: 2,
+        type: "butterfly",
+        emoji: "🦋",
+        x: 85,
+        y: 60,
+        delay: 3,
+        duration: 15,
+        scale: 0.8,
+      },
+
       // Leaves
-      { id: 3, type: "leaf", emoji: "🍃", x: 25, y: 10, delay: 1, duration: 8, scale: 1.2 },
-      { id: 4, type: "leaf", emoji: "🍃", x: 75, y: 80, delay: 4, duration: 10, scale: 0.9 },
-      { id: 5, type: "leaf", emoji: "🌿", x: 50, y: 30, delay: 6, duration: 14, scale: 1.1 },
-      
+      {
+        id: 3,
+        type: "leaf",
+        emoji: "🍃",
+        x: 25,
+        y: 10,
+        delay: 1,
+        duration: 8,
+        scale: 1.2,
+      },
+      {
+        id: 4,
+        type: "leaf",
+        emoji: "🍃",
+        x: 75,
+        y: 80,
+        delay: 4,
+        duration: 10,
+        scale: 0.9,
+      },
+      {
+        id: 5,
+        type: "leaf",
+        emoji: "🌿",
+        x: 50,
+        y: 30,
+        delay: 6,
+        duration: 14,
+        scale: 1.1,
+      },
+
       // Flowers
-      { id: 6, type: "flower", emoji: "🌺", x: 10, y: 70, delay: 2, duration: 20, scale: 1 },
-      { id: 7, type: "flower", emoji: "🌸", x: 90, y: 25, delay: 8, duration: 18, scale: 0.8 },
-      
+      {
+        id: 6,
+        type: "flower",
+        emoji: "🌺",
+        x: 10,
+        y: 70,
+        delay: 2,
+        duration: 20,
+        scale: 1,
+      },
+      {
+        id: 7,
+        type: "flower",
+        emoji: "🌸",
+        x: 90,
+        y: 25,
+        delay: 8,
+        duration: 18,
+        scale: 0.8,
+      },
+
       // Birds
-      { id: 8, type: "bird", emoji: "🦜", x: 30, y: 15, delay: 5, duration: 16, scale: 1.3 },
-      { id: 9, type: "bird", emoji: "🐦", x: 70, y: 50, delay: 9, duration: 12, scale: 1 },
-      
+      {
+        id: 8,
+        type: "bird",
+        emoji: "🦜",
+        x: 30,
+        y: 15,
+        delay: 5,
+        duration: 16,
+        scale: 1.3,
+      },
+      {
+        id: 9,
+        type: "bird",
+        emoji: "🐦",
+        x: 70,
+        y: 50,
+        delay: 9,
+        duration: 12,
+        scale: 1,
+      },
+
       // Sparkles
-      { id: 10, type: "sparkle", emoji: "✨", x: 20, y: 45, delay: 1.5, duration: 6, scale: 0.7 },
-      { id: 11, type: "sparkle", emoji: "⭐", x: 80, y: 35, delay: 7, duration: 8, scale: 0.9 },
-      { id: 12, type: "sparkle", emoji: "💫", x: 60, y: 65, delay: 4.5, duration: 7, scale: 0.8 },
+      {
+        id: 10,
+        type: "sparkle",
+        emoji: "✨",
+        x: 20,
+        y: 45,
+        delay: 1.5,
+        duration: 6,
+        scale: 0.7,
+      },
+      {
+        id: 11,
+        type: "sparkle",
+        emoji: "⭐",
+        x: 80,
+        y: 35,
+        delay: 7,
+        duration: 8,
+        scale: 0.9,
+      },
+      {
+        id: 12,
+        type: "sparkle",
+        emoji: "💫",
+        x: 60,
+        y: 65,
+        delay: 4.5,
+        duration: 7,
+        scale: 0.8,
+      },
     ];
     setFloatingElements(elements);
   }, []);
@@ -232,30 +346,38 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
 
   const getWeatherIcon = () => {
     switch (weatherEffect) {
-      case "sunny": return <Sun className="w-5 h-5 text-sunshine animate-spin-slow" />;
-      case "rainy": return <CloudRain className="w-5 h-5 text-sky animate-bounce" />;
-      case "windy": return <Wind className="w-5 h-5 text-jungle animate-pulse" />;
-      default: return <Compass className="w-5 h-5 text-profile-purple" />;
+      case "sunny":
+        return <Sun className="w-5 h-5 text-sunshine animate-spin-slow" />;
+      case "rainy":
+        return <CloudRain className="w-5 h-5 text-sky animate-bounce" />;
+      case "windy":
+        return <Wind className="w-5 h-5 text-jungle animate-pulse" />;
+      default:
+        return <Compass className="w-5 h-5 text-profile-purple" />;
     }
   };
 
   return (
-    <div className={cn(
-      "min-h-screen bg-gradient-to-br relative overflow-hidden jungle-desktop-layout",
-      getTimeBasedGradient(),
-      className
-    )}>
+    <div
+      className={cn(
+        "min-h-screen bg-gradient-to-br relative overflow-hidden jungle-desktop-layout",
+        getTimeBasedGradient(),
+        className,
+      )}
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 jungle-pattern-bg opacity-40" />
-      
+
       {/* Weather Effects Overlay */}
       {weatherEffect && (
-        <div className={cn(
-          "absolute inset-0 pointer-events-none",
-          weatherEffect === "rainy" && "jungle-rain-effect",
-          weatherEffect === "windy" && "jungle-wind-effect",
-          weatherEffect === "sunny" && "jungle-sun-rays"
-        )} />
+        <div
+          className={cn(
+            "absolute inset-0 pointer-events-none",
+            weatherEffect === "rainy" && "jungle-rain-effect",
+            weatherEffect === "windy" && "jungle-wind-effect",
+            weatherEffect === "sunny" && "jungle-sun-rays",
+          )}
+        />
       )}
 
       {/* Floating Jungle Elements */}
@@ -270,24 +392,25 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
               fontSize: `${element.scale * 1.5}rem`,
             }}
             initial={{ opacity: 0, scale: 0 }}
-            animate={{ 
+            animate={{
               opacity: [0.4, 0.8, 0.4],
-              scale: [element.scale * 0.8, element.scale * 1.2, element.scale * 0.8],
-              y: element.type === "butterfly" || element.type === "bird" 
-                ? [-20, 20, -20] 
-                : [-10, 10, -10],
-              x: element.type === "leaf" 
-                ? [-15, 15, -15] 
-                : [-5, 5, -5],
-              rotate: element.type === "sparkle" 
-                ? [0, 360, 0] 
-                : [0, 10, 0],
+              scale: [
+                element.scale * 0.8,
+                element.scale * 1.2,
+                element.scale * 0.8,
+              ],
+              y:
+                element.type === "butterfly" || element.type === "bird"
+                  ? [-20, 20, -20]
+                  : [-10, 10, -10],
+              x: element.type === "leaf" ? [-15, 15, -15] : [-5, 5, -5],
+              rotate: element.type === "sparkle" ? [0, 360, 0] : [0, 10, 0],
             }}
             transition={{
               duration: element.duration,
               repeat: Infinity,
               delay: element.delay,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
           >
             {element.emoji}
@@ -301,23 +424,25 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
         <motion.aside
           className={cn(
             "bg-gradient-to-b from-white/95 to-white/90 backdrop-blur-xl border-r border-jungle/20 shadow-2xl transition-all duration-300",
-            sidebarCollapsed ? "w-16" : "w-72"
+            sidebarCollapsed ? "w-16" : "w-72",
           )}
           initial={false}
           animate={{ width: sidebarCollapsed ? 64 : 288 }}
         >
           {/* Sidebar Header */}
           <div className="p-4 border-b border-jungle/20">
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3"
               initial={false}
-              animate={{ justifyContent: sidebarCollapsed ? "center" : "flex-start" }}
+              animate={{
+                justifyContent: sidebarCollapsed ? "center" : "flex-start",
+              }}
             >
               <div className="relative">
                 <TreePine className="w-8 h-8 text-jungle animate-jungle-sway" />
                 <Sparkles className="w-3 h-3 text-sunshine absolute -top-1 -right-1 animate-pulse" />
               </div>
-              
+
               <AnimatePresence>
                 {!sidebarCollapsed && (
                   <motion.div
@@ -335,7 +460,7 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                   </motion.div>
                 )}
               </AnimatePresence>
-              
+
               <Button
                 variant="ghost"
                 size="sm"
@@ -368,7 +493,7 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                       "w-full text-left p-3 rounded-lg transition-all duration-300 flex items-center gap-3 jungle-nav-item",
                       activeSection === item.id
                         ? `bg-${item.color} text-white shadow-lg`
-                        : "hover:bg-jungle/10 text-jungle-dark"
+                        : "hover:bg-jungle/10 text-jungle-dark",
                     )}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -377,7 +502,7 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                     whileTap={{ scale: 0.98 }}
                   >
                     <item.icon className="w-5 h-5 flex-shrink-0" />
-                    
+
                     <AnimatePresence>
                       {!sidebarCollapsed && (
                         <motion.div
@@ -401,7 +526,11 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                         className="w-2 h-2 bg-white rounded-full"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30,
+                        }}
                       />
                     )}
                   </motion.button>
@@ -423,11 +552,13 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                   onClick={() => setShowSettings(true)}
                   className={cn(
                     "w-full jungle-hover-effect",
-                    sidebarCollapsed ? "justify-center" : "justify-start"
+                    sidebarCollapsed ? "justify-center" : "justify-start",
                   )}
                 >
                   <Settings className="w-4 h-4" />
-                  {!sidebarCollapsed && <span className="ml-2">Adventure Settings</span>}
+                  {!sidebarCollapsed && (
+                    <span className="ml-2">Adventure Settings</span>
+                  )}
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right">
@@ -500,14 +631,14 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                 <div className="flex items-center gap-2">
                   <Star className="w-5 h-5 text-sunshine" />
                   <span className="font-medium text-jungle-dark">
-                    {new Date().toLocaleDateString('en-US', { 
-                      weekday: 'long', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    {new Date().toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </span>
                 </div>
-                
+
                 <Badge className="bg-jungle/10 text-jungle">
                   🔥 3 day streak!
                 </Badge>
@@ -524,7 +655,7 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                           size="sm"
                           className={cn(
                             "jungle-hover-effect text-white",
-                            action.color
+                            action.color,
                           )}
                         >
                           <action.icon className="w-4 h-4" />
@@ -546,7 +677,7 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                       onClick={() => setJungleAmbience(!jungleAmbience)}
                       className={cn(
                         "jungle-hover-effect",
-                        jungleAmbience ? "bg-jungle text-white" : ""
+                        jungleAmbience ? "bg-jungle text-white" : "",
                       )}
                     >
                       <Volume2 className="w-4 h-4" />
@@ -560,7 +691,11 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
                 {/* Notification Bell */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="sm" className="jungle-hover-effect relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="jungle-hover-effect relative"
+                    >
                       <Bell className="w-4 h-4" />
                       <span className="absolute -top-1 -right-1 w-3 h-3 bg-coral-red text-white text-xs rounded-full flex items-center justify-center">
                         2
@@ -594,7 +729,7 @@ export const JungleAdventureDesktopLayout: React.FC<JungleAdventureDesktopLayout
       {/* Family Zone Dialog */}
       <Dialog open={showFamilyZone} onOpenChange={setShowFamilyZone}>
         <DialogContent className="max-w-7xl w-[95vw] h-[90vh] p-0">
-          <JungleAdventureParentDashboard 
+          <JungleAdventureParentDashboard
             onBack={() => setShowFamilyZone(false)}
             className="h-full"
           />

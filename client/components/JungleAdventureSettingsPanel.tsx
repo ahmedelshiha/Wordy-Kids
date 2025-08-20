@@ -120,99 +120,128 @@ interface JungleAdventureSettingsPanelProps {
 
 // Jungle ambient sounds
 const jungleAmbientSounds = [
-  { id: "birds", name: "🐦 Tropical Birds", emoji: "🐦", file: "/sounds/jungle-birds.mp3" },
-  { id: "rain", name: "🌧️ Gentle Rain", emoji: "🌧️", file: "/sounds/jungle-rain.mp3" },
-  { id: "wind", name: "🌬️ Rustling Leaves", emoji: "🌬️", file: "/sounds/jungle-wind.mp3" },
-  { id: "waterfall", name: "💧 Waterfall", emoji: "💧", file: "/sounds/jungle-waterfall.mp3" },
-  { id: "insects", name: "🦗 Night Crickets", emoji: "🦗", file: "/sounds/jungle-insects.mp3" },
+  {
+    id: "birds",
+    name: "🐦 Tropical Birds",
+    emoji: "🐦",
+    file: "/sounds/jungle-birds.mp3",
+  },
+  {
+    id: "rain",
+    name: "🌧️ Gentle Rain",
+    emoji: "🌧️",
+    file: "/sounds/jungle-rain.mp3",
+  },
+  {
+    id: "wind",
+    name: "🌬️ Rustling Leaves",
+    emoji: "🌬️",
+    file: "/sounds/jungle-wind.mp3",
+  },
+  {
+    id: "waterfall",
+    name: "💧 Waterfall",
+    emoji: "💧",
+    file: "/sounds/jungle-waterfall.mp3",
+  },
+  {
+    id: "insects",
+    name: "🦗 Night Crickets",
+    emoji: "🦗",
+    file: "/sounds/jungle-insects.mp3",
+  },
 ];
 
 // Jungle themes
 const jungleThemes = [
-  { 
-    id: "classic", 
-    name: "🌿 Classic Jungle", 
+  {
+    id: "classic",
+    name: "🌿 Classic Jungle",
     emoji: "🌿",
     colors: ["#4CAF50", "#8BC34A", "#CDDC39"],
-    description: "Traditional green jungle vibes"
+    description: "Traditional green jungle vibes",
   },
-  { 
-    id: "sunset", 
-    name: "🌅 Sunset Safari", 
+  {
+    id: "sunset",
+    name: "🌅 Sunset Safari",
     emoji: "🌅",
     colors: ["#FF9800", "#FFC107", "#4CAF50"],
-    description: "Warm sunset through the trees"
+    description: "Warm sunset through the trees",
   },
-  { 
-    id: "mystical", 
-    name: "✨ Mystical Forest", 
+  {
+    id: "mystical",
+    name: "✨ Mystical Forest",
     emoji: "✨",
     colors: ["#4CAF50", "#6366F1", "#9C27B0"],
-    description: "Magical purple-tinted adventure"
+    description: "Magical purple-tinted adventure",
   },
-  { 
-    id: "ocean", 
-    name: "🌊 Jungle Beach", 
+  {
+    id: "ocean",
+    name: "🌊 Jungle Beach",
     emoji: "🌊",
     colors: ["#2196F3", "#4CAF50", "#00BCD4"],
-    description: "Where jungle meets the ocean"
+    description: "Where jungle meets the ocean",
   },
-  { 
-    id: "autumn", 
-    name: "🍂 Autumn Jungle", 
+  {
+    id: "autumn",
+    name: "🍂 Autumn Jungle",
     emoji: "🍂",
     colors: ["#FF5722", "#FF9800", "#8BC34A"],
-    description: "Warm autumn colors"
+    description: "Warm autumn colors",
   },
 ];
 
 // Voice characters for jungle adventure
 const jungleVoiceCharacters = [
-  { 
-    id: "explorer", 
-    name: "🏕️ Adventure Guide", 
+  {
+    id: "explorer",
+    name: "🏕️ Adventure Guide",
     emoji: "🏕️",
     voice: "woman" as VoiceType,
-    description: "Friendly expedition leader"
+    description: "Friendly expedition leader",
   },
-  { 
-    id: "parrot", 
-    name: "🦜 Chatty Parrot", 
+  {
+    id: "parrot",
+    name: "🦜 Chatty Parrot",
     emoji: "🦜",
     voice: "man" as VoiceType,
-    description: "Colorful jungle companion"
+    description: "Colorful jungle companion",
   },
-  { 
-    id: "wise_owl", 
-    name: "🦉 Wise Owl", 
+  {
+    id: "wise_owl",
+    name: "🦉 Wise Owl",
     emoji: "🦉",
     voice: "woman" as VoiceType,
-    description: "Knowledgeable forest teacher"
+    description: "Knowledgeable forest teacher",
   },
-  { 
-    id: "monkey", 
-    name: "🐵 Playful Monkey", 
+  {
+    id: "monkey",
+    name: "🐵 Playful Monkey",
     emoji: "🐵",
     voice: "child" as VoiceType,
-    description: "Fun-loving jungle friend"
+    description: "Fun-loving jungle friend",
   },
 ];
 
-export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanelProps> = ({
-  isOpen,
-  onClose,
-  userRole = "child"
-}) => {
+export const JungleAdventureSettingsPanel: React.FC<
+  JungleAdventureSettingsPanelProps
+> = ({ isOpen, onClose, userRole = "child" }) => {
   const isMobile = useMobileDevice();
-  
+
   // Audio settings
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
-  const [uiInteractionSounds, setUiInteractionSounds] = useState(isUIInteractionSoundsEnabled());
-  const [selectedVoiceCharacter, setSelectedVoiceCharacter] = useState(jungleVoiceCharacters[0]);
+  const [uiInteractionSounds, setUiInteractionSounds] = useState(
+    isUIInteractionSoundsEnabled(),
+  );
+  const [selectedVoiceCharacter, setSelectedVoiceCharacter] = useState(
+    jungleVoiceCharacters[0],
+  );
   const [speechRate, setSpeechRate] = useState([1]);
   const [volume, setVolume] = useState([80]);
   const [ambientSounds, setAmbientSounds] = useState(false);
-  const [selectedAmbientSound, setSelectedAmbientSound] = useState(jungleAmbientSounds[0]);
+  const [selectedAmbientSound, setSelectedAmbientSound] = useState(
+    jungleAmbientSounds[0],
+  );
   const [ambientVolume, setAmbientVolume] = useState([30]);
 
   // Appearance settings
@@ -255,7 +284,9 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
   const [showResetDialog, setShowResetDialog] = useState(false);
 
   // Jungle ambient elements
-  const [floatingElements, setFloatingElements] = useState<Array<{ id: number; emoji: string; x: number; y: number; delay: number }>>([]);
+  const [floatingElements, setFloatingElements] = useState<
+    Array<{ id: number; emoji: string; x: number; y: number; delay: number }>
+  >([]);
 
   useEffect(() => {
     if (isOpen) {
@@ -271,7 +302,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
   const handleSave = async () => {
     setIsLoading(true);
-    
+
     // Save settings to localStorage or API
     const settings = {
       audio: {
@@ -318,31 +349,40 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
       },
     };
 
-    localStorage.setItem('jungleAdventureSettings', JSON.stringify(settings));
-    
+    localStorage.setItem("jungleAdventureSettings", JSON.stringify(settings));
+
     // Apply sound settings
     setSoundEnabled(soundOn);
     setUIInteractionSoundsEnabled(uiInteractionSounds);
 
     // Apply theme
     if (selectedTheme) {
-      document.documentElement.style.setProperty('--jungle-primary', selectedTheme.colors[0]);
-      document.documentElement.style.setProperty('--jungle-secondary', selectedTheme.colors[1]);
-      document.documentElement.style.setProperty('--jungle-accent', selectedTheme.colors[2]);
+      document.documentElement.style.setProperty(
+        "--jungle-primary",
+        selectedTheme.colors[0],
+      );
+      document.documentElement.style.setProperty(
+        "--jungle-secondary",
+        selectedTheme.colors[1],
+      );
+      document.documentElement.style.setProperty(
+        "--jungle-accent",
+        selectedTheme.colors[2],
+      );
     }
 
     // Apply accessibility settings
     if (darkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
 
     setTimeout(() => {
       setIsLoading(false);
       setUnsavedChanges(false);
-      playSoundIfEnabled('/sounds/ui/settings-saved.mp3');
-      if (hapticFeedback) triggerHapticFeedback('success');
+      playSoundIfEnabled("/sounds/ui/settings-saved.mp3");
+      if (hapticFeedback) triggerHapticFeedback("success");
     }, 1000);
   };
 
@@ -357,18 +397,23 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
     setBackgroundAnimations(true);
     setDailyGoal([10]);
     setDifficulty("medium");
-    
+
     setShowResetDialog(false);
     setUnsavedChanges(true);
-    
-    playSoundIfEnabled('/sounds/ui/settings-reset.mp3');
-    if (hapticFeedback) triggerHapticFeedback('light');
+
+    playSoundIfEnabled("/sounds/ui/settings-reset.mp3");
+    if (hapticFeedback) triggerHapticFeedback("light");
   };
 
   const previewVoice = () => {
     const sampleText = `Hello! I'm your ${selectedVoiceCharacter.name}. Let's explore the jungle together and discover amazing words!`;
-    audioService.speak(sampleText, selectedVoiceCharacter.voice, speechRate[0], volume[0] / 100);
-    playSoundIfEnabled('/sounds/ui/voice-preview.mp3');
+    audioService.speak(
+      sampleText,
+      selectedVoiceCharacter.voice,
+      speechRate[0],
+      volume[0] / 100,
+    );
+    playSoundIfEnabled("/sounds/ui/voice-preview.mp3");
   };
 
   const previewAmbientSound = () => {
@@ -393,7 +438,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                 top: `${element.y}%`,
               }}
               initial={{ opacity: 0, scale: 0 }}
-              animate={{ 
+              animate={{
                 opacity: [0.3, 0.6, 0.3],
                 scale: [0.8, 1.2, 0.8],
                 rotate: [0, 180, 360],
@@ -402,7 +447,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                 duration: 8,
                 repeat: Infinity,
                 delay: element.delay,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
               {element.emoji}
@@ -411,7 +456,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
         </AnimatePresence>
 
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="bg-gradient-to-r from-jungle to-sunshine p-6 text-white relative overflow-hidden"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -432,7 +477,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                 </DialogDescription>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3">
               {unsavedChanges && (
                 <Badge className="bg-sunshine text-white animate-pulse">
@@ -458,27 +503,59 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
             <ScrollArea className="h-full">
               <div className="space-y-2">
                 {[
-                  { id: "audio", label: "🔊 Sound & Voice", icon: Volume2, color: "jungle" },
-                  { id: "appearance", label: "🎨 Jungle Themes", icon: Palette, color: "sunshine" },
-                  { id: "learning", label: "📚 Learning Style", icon: GraduationCap, color: "profile-purple" },
-                  ...(userRole === "parent" ? [
-                    { id: "family", label: "👨‍👩‍👧‍👦 Family Controls", icon: Users, color: "coral-red" }
-                  ] : []),
-                  { id: "accessibility", label: "♿ Accessibility", icon: Eye, color: "playful-purple" },
-                  { id: "advanced", label: "⚡ Advanced", icon: Settings, color: "bright-orange" },
+                  {
+                    id: "audio",
+                    label: "🔊 Sound & Voice",
+                    icon: Volume2,
+                    color: "jungle",
+                  },
+                  {
+                    id: "appearance",
+                    label: "🎨 Jungle Themes",
+                    icon: Palette,
+                    color: "sunshine",
+                  },
+                  {
+                    id: "learning",
+                    label: "📚 Learning Style",
+                    icon: GraduationCap,
+                    color: "profile-purple",
+                  },
+                  ...(userRole === "parent"
+                    ? [
+                        {
+                          id: "family",
+                          label: "👨‍👩‍👧‍👦 Family Controls",
+                          icon: Users,
+                          color: "coral-red",
+                        },
+                      ]
+                    : []),
+                  {
+                    id: "accessibility",
+                    label: "♿ Accessibility",
+                    icon: Eye,
+                    color: "playful-purple",
+                  },
+                  {
+                    id: "advanced",
+                    label: "⚡ Advanced",
+                    icon: Settings,
+                    color: "bright-orange",
+                  },
                 ].map((tab, index) => (
                   <motion.button
                     key={tab.id}
                     onClick={() => {
                       setActiveTab(tab.id);
                       setUnsavedChanges(true);
-                      if (hapticFeedback) triggerHapticFeedback('light');
+                      if (hapticFeedback) triggerHapticFeedback("light");
                     }}
                     className={cn(
                       "w-full text-left p-3 rounded-lg transition-all duration-200 flex items-center gap-3",
                       activeTab === tab.id
                         ? `bg-${tab.color} text-white shadow-lg`
-                        : "hover:bg-white/50 text-jungle-dark"
+                        : "hover:bg-white/50 text-jungle-dark",
                     )}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -521,8 +598,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                               <div className="flex items-center gap-3">
                                 <Volume2 className="w-5 h-5 text-jungle" />
                                 <div>
-                                  <label className="font-medium text-jungle-dark">Master Volume</label>
-                                  <p className="text-sm text-jungle-dark/70">Overall sound level</p>
+                                  <label className="font-medium text-jungle-dark">
+                                    Master Volume
+                                  </label>
+                                  <p className="text-sm text-jungle-dark/70">
+                                    Overall sound level
+                                  </p>
                                 </div>
                               </div>
                               <Switch
@@ -542,8 +623,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                               >
                                 <div>
                                   <div className="flex items-center justify-between mb-2">
-                                    <span className="text-sm font-medium">Volume Level</span>
-                                    <span className="text-sm text-jungle-dark/70">{volume[0]}%</span>
+                                    <span className="text-sm font-medium">
+                                      Volume Level
+                                    </span>
+                                    <span className="text-sm text-jungle-dark/70">
+                                      {volume[0]}%
+                                    </span>
                                   </div>
                                   <Slider
                                     value={volume}
@@ -559,8 +644,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                                 <div className="flex items-center justify-between">
                                   <div>
-                                    <label className="font-medium text-jungle-dark">UI Sound Effects</label>
-                                    <p className="text-sm text-jungle-dark/70">Button clicks and interactions</p>
+                                    <label className="font-medium text-jungle-dark">
+                                      UI Sound Effects
+                                    </label>
+                                    <p className="text-sm text-jungle-dark/70">
+                                      Button clicks and interactions
+                                    </p>
                                   </div>
                                   <Switch
                                     checked={uiInteractionSounds}
@@ -592,7 +681,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                     "p-4 rounded-lg border-2 cursor-pointer transition-all",
                                     selectedVoiceCharacter.id === character.id
                                       ? "border-jungle bg-jungle/10"
-                                      : "border-jungle/20 hover:border-jungle/40 hover:bg-jungle/5"
+                                      : "border-jungle/20 hover:border-jungle/40 hover:bg-jungle/5",
                                   )}
                                   onClick={() => {
                                     setSelectedVoiceCharacter(character);
@@ -602,13 +691,20 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                   whileTap={{ scale: 0.98 }}
                                 >
                                   <div className="flex items-center gap-3 mb-2">
-                                    <div className="text-2xl">{character.emoji}</div>
+                                    <div className="text-2xl">
+                                      {character.emoji}
+                                    </div>
                                     <div>
-                                      <h4 className="font-medium text-jungle-dark">{character.name}</h4>
-                                      <p className="text-sm text-jungle-dark/70">{character.description}</p>
+                                      <h4 className="font-medium text-jungle-dark">
+                                        {character.name}
+                                      </h4>
+                                      <p className="text-sm text-jungle-dark/70">
+                                        {character.description}
+                                      </p>
                                     </div>
                                   </div>
-                                  {selectedVoiceCharacter.id === character.id && (
+                                  {selectedVoiceCharacter.id ===
+                                    character.id && (
                                     <Button
                                       size="sm"
                                       onClick={(e) => {
@@ -628,8 +724,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                             <div className="space-y-4">
                               <div>
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm font-medium">Speech Speed</span>
-                                  <span className="text-sm text-jungle-dark/70">{speechRate[0]}x</span>
+                                  <span className="text-sm font-medium">
+                                    Speech Speed
+                                  </span>
+                                  <span className="text-sm text-jungle-dark/70">
+                                    {speechRate[0]}x
+                                  </span>
                                 </div>
                                 <Slider
                                   value={speechRate}
@@ -658,8 +758,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                           <CardContent className="space-y-4">
                             <div className="flex items-center justify-between">
                               <div>
-                                <label className="font-medium text-jungle-dark">Background Sounds</label>
-                                <p className="text-sm text-jungle-dark/70">Relaxing jungle ambience</p>
+                                <label className="font-medium text-jungle-dark">
+                                  Background Sounds
+                                </label>
+                                <p className="text-sm text-jungle-dark/70">
+                                  Relaxing jungle ambience
+                                </p>
                               </div>
                               <Switch
                                 checked={ambientSounds}
@@ -677,7 +781,9 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                 className="space-y-4"
                               >
                                 <div>
-                                  <label className="text-sm font-medium mb-2 block">Choose Your Soundscape</label>
+                                  <label className="text-sm font-medium mb-2 block">
+                                    Choose Your Soundscape
+                                  </label>
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {jungleAmbientSounds.map((sound) => (
                                       <div
@@ -686,7 +792,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                           "p-3 rounded-lg border cursor-pointer transition-all",
                                           selectedAmbientSound.id === sound.id
                                             ? "border-jungle bg-jungle/10"
-                                            : "border-jungle/20 hover:border-jungle/40"
+                                            : "border-jungle/20 hover:border-jungle/40",
                                         )}
                                         onClick={() => {
                                           setSelectedAmbientSound(sound);
@@ -694,8 +800,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                         }}
                                       >
                                         <div className="flex items-center gap-2">
-                                          <span className="text-lg">{sound.emoji}</span>
-                                          <span className="text-sm font-medium">{sound.name}</span>
+                                          <span className="text-lg">
+                                            {sound.emoji}
+                                          </span>
+                                          <span className="text-sm font-medium">
+                                            {sound.name}
+                                          </span>
                                         </div>
                                       </div>
                                     ))}
@@ -705,8 +815,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                 <div className="flex items-center gap-4">
                                   <div className="flex-1">
                                     <div className="flex items-center justify-between mb-2">
-                                      <span className="text-sm font-medium">Ambient Volume</span>
-                                      <span className="text-sm text-jungle-dark/70">{ambientVolume[0]}%</span>
+                                      <span className="text-sm font-medium">
+                                        Ambient Volume
+                                      </span>
+                                      <span className="text-sm text-jungle-dark/70">
+                                        {ambientVolume[0]}%
+                                      </span>
                                     </div>
                                     <Slider
                                       value={ambientVolume}
@@ -766,7 +880,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                   "relative p-4 rounded-lg border-2 cursor-pointer transition-all overflow-hidden",
                                   selectedTheme.id === theme.id
                                     ? "border-jungle shadow-lg"
-                                    : "border-jungle/20 hover:border-jungle/40"
+                                    : "border-jungle/20 hover:border-jungle/40",
                                 )}
                                 onClick={() => {
                                   setSelectedTheme(theme);
@@ -775,18 +889,24 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                               >
-                                <div 
+                                <div
                                   className="absolute inset-0 opacity-20"
                                   style={{
-                                    background: `linear-gradient(135deg, ${theme.colors.join(', ')})`
+                                    background: `linear-gradient(135deg, ${theme.colors.join(", ")})`,
                                   }}
                                 />
                                 <div className="relative z-10">
                                   <div className="flex items-center gap-3 mb-2">
-                                    <span className="text-2xl">{theme.emoji}</span>
+                                    <span className="text-2xl">
+                                      {theme.emoji}
+                                    </span>
                                     <div>
-                                      <h4 className="font-medium text-jungle-dark">{theme.name}</h4>
-                                      <p className="text-sm text-jungle-dark/70">{theme.description}</p>
+                                      <h4 className="font-medium text-jungle-dark">
+                                        {theme.name}
+                                      </h4>
+                                      <p className="text-sm text-jungle-dark/70">
+                                        {theme.description}
+                                      </p>
                                     </div>
                                   </div>
                                   <div className="flex gap-1 mt-3">
@@ -821,8 +941,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Background Animations</label>
-                              <p className="text-sm text-jungle-dark/70">Floating leaves, butterflies, etc.</p>
+                              <label className="font-medium text-jungle-dark">
+                                Background Animations
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Floating leaves, butterflies, etc.
+                              </p>
                             </div>
                             <Switch
                               checked={backgroundAnimations}
@@ -835,8 +959,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Particle Effects</label>
-                              <p className="text-sm text-jungle-dark/70">Sparkles, stars, magical effects</p>
+                              <label className="font-medium text-jungle-dark">
+                                Particle Effects
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Sparkles, stars, magical effects
+                              </p>
                             </div>
                             <Switch
                               checked={particleEffects}
@@ -854,8 +982,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                             >
                               <div>
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm font-medium">Animation Speed</span>
-                                  <span className="text-sm text-jungle-dark/70">{animationSpeed[0]}x</span>
+                                  <span className="text-sm font-medium">
+                                    Animation Speed
+                                  </span>
+                                  <span className="text-sm text-jungle-dark/70">
+                                    {animationSpeed[0]}x
+                                  </span>
                                 </div>
                                 <Slider
                                   value={animationSpeed}
@@ -885,8 +1017,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">High Contrast Mode</label>
-                              <p className="text-sm text-jungle-dark/70">Better visibility for all users</p>
+                              <label className="font-medium text-jungle-dark">
+                                High Contrast Mode
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Better visibility for all users
+                              </p>
                             </div>
                             <Switch
                               checked={highContrast}
@@ -899,8 +1035,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Large Text</label>
-                              <p className="text-sm text-jungle-dark/70">Bigger text for easier reading</p>
+                              <label className="font-medium text-jungle-dark">
+                                Large Text
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Bigger text for easier reading
+                              </p>
                             </div>
                             <Switch
                               checked={largeText}
@@ -913,8 +1053,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Reduced Motion</label>
-                              <p className="text-sm text-jungle-dark/70">Minimal animations</p>
+                              <label className="font-medium text-jungle-dark">
+                                Reduced Motion
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Minimal animations
+                              </p>
                             </div>
                             <Switch
                               checked={reducedMotion}
@@ -927,8 +1071,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Color Blind Support</label>
-                              <p className="text-sm text-jungle-dark/70">Alternative color indicators</p>
+                              <label className="font-medium text-jungle-dark">
+                                Color Blind Support
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Alternative color indicators
+                              </p>
                             </div>
                             <Switch
                               checked={colorBlindSupport}
@@ -968,8 +1116,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="space-y-4">
                           <div>
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium">Daily Word Goal</span>
-                              <span className="text-sm text-jungle-dark/70">{dailyGoal[0]} words</span>
+                              <span className="text-sm font-medium">
+                                Daily Word Goal
+                              </span>
+                              <span className="text-sm text-jungle-dark/70">
+                                {dailyGoal[0]} words
+                              </span>
                             </div>
                             <Slider
                               value={dailyGoal}
@@ -985,7 +1137,9 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium mb-2 block">Difficulty Level</label>
+                            <label className="text-sm font-medium mb-2 block">
+                              Difficulty Level
+                            </label>
                             <Select
                               value={difficulty}
                               onValueChange={(value) => {
@@ -997,10 +1151,18 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="easy">🌱 Easy Explorer</SelectItem>
-                                <SelectItem value="medium">🌿 Jungle Adventurer</SelectItem>
-                                <SelectItem value="hard">🌳 Expert Guide</SelectItem>
-                                <SelectItem value="adaptive">🎯 Adaptive Challenge</SelectItem>
+                                <SelectItem value="easy">
+                                  🌱 Easy Explorer
+                                </SelectItem>
+                                <SelectItem value="medium">
+                                  🌿 Jungle Adventurer
+                                </SelectItem>
+                                <SelectItem value="hard">
+                                  🌳 Expert Guide
+                                </SelectItem>
+                                <SelectItem value="adaptive">
+                                  🎯 Adaptive Challenge
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -1018,8 +1180,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Auto-play Word Audio</label>
-                              <p className="text-sm text-jungle-dark/70">Hear words automatically</p>
+                              <label className="font-medium text-jungle-dark">
+                                Auto-play Word Audio
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Hear words automatically
+                              </p>
                             </div>
                             <Switch
                               checked={autoPlay}
@@ -1032,8 +1198,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Show Hints</label>
-                              <p className="text-sm text-jungle-dark/70">Helpful clues during games</p>
+                              <label className="font-medium text-jungle-dark">
+                                Show Hints
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Helpful clues during games
+                              </p>
                             </div>
                             <Switch
                               checked={showHints}
@@ -1046,8 +1216,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Repeat on Mistakes</label>
-                              <p className="text-sm text-jungle-dark/70">Extra practice for difficult words</p>
+                              <label className="font-medium text-jungle-dark">
+                                Repeat on Mistakes
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Extra practice for difficult words
+                              </p>
                             </div>
                             <Switch
                               checked={repeatOnMistake}
@@ -1059,7 +1233,9 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium mb-2 block">Celebration Style</label>
+                            <label className="text-sm font-medium mb-2 block">
+                              Celebration Style
+                            </label>
                             <Select
                               value={celebrationStyle}
                               onValueChange={(value) => {
@@ -1071,16 +1247,26 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="minimal">🌿 Subtle</SelectItem>
-                                <SelectItem value="standard">🎉 Standard</SelectItem>
-                                <SelectItem value="full">🎊 Full Celebration</SelectItem>
-                                <SelectItem value="magical">✨ Magical Effects</SelectItem>
+                                <SelectItem value="minimal">
+                                  🌿 Subtle
+                                </SelectItem>
+                                <SelectItem value="standard">
+                                  🎉 Standard
+                                </SelectItem>
+                                <SelectItem value="full">
+                                  🎊 Full Celebration
+                                </SelectItem>
+                                <SelectItem value="magical">
+                                  ✨ Magical Effects
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
 
                           <div>
-                            <label className="text-sm font-medium mb-2 block">Encouragement Level</label>
+                            <label className="text-sm font-medium mb-2 block">
+                              Encouragement Level
+                            </label>
                             <Select
                               value={encouragementLevel}
                               onValueChange={(value) => {
@@ -1093,9 +1279,15 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="low">🌱 Gentle</SelectItem>
-                                <SelectItem value="medium">🌿 Encouraging</SelectItem>
-                                <SelectItem value="high">🎉 Enthusiastic</SelectItem>
-                                <SelectItem value="adaptive">🎯 Adaptive</SelectItem>
+                                <SelectItem value="medium">
+                                  🌿 Encouraging
+                                </SelectItem>
+                                <SelectItem value="high">
+                                  🎉 Enthusiastic
+                                </SelectItem>
+                                <SelectItem value="adaptive">
+                                  🎯 Adaptive
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -1128,8 +1320,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Time Restrictions</label>
-                              <p className="text-sm text-jungle-dark/70">Set daily learning limits</p>
+                              <label className="font-medium text-jungle-dark">
+                                Time Restrictions
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Set daily learning limits
+                              </p>
                             </div>
                             <Switch
                               checked={timeRestrictions}
@@ -1147,8 +1343,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                             >
                               <div>
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm font-medium">Daily Time Limit</span>
-                                  <span className="text-sm text-jungle-dark/70">{dailyTimeLimit[0]} minutes</span>
+                                  <span className="text-sm font-medium">
+                                    Daily Time Limit
+                                  </span>
+                                  <span className="text-sm text-jungle-dark/70">
+                                    {dailyTimeLimit[0]} minutes
+                                  </span>
                                 </div>
                                 <Slider
                                   value={dailyTimeLimit}
@@ -1166,7 +1366,9 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                           )}
 
                           <div>
-                            <label className="text-sm font-medium mb-2 block">Content Filtering</label>
+                            <label className="text-sm font-medium mb-2 block">
+                              Content Filtering
+                            </label>
                             <Select
                               value={contentFiltering}
                               onValueChange={(value) => {
@@ -1178,18 +1380,30 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="strict">🔒 Strict (Age 3-4)</SelectItem>
-                                <SelectItem value="age-appropriate">✅ Age Appropriate (Age 4-5)</SelectItem>
-                                <SelectItem value="relaxed">🌟 Relaxed (Age 5+)</SelectItem>
-                                <SelectItem value="custom">⚙️ Custom Settings</SelectItem>
+                                <SelectItem value="strict">
+                                  🔒 Strict (Age 3-4)
+                                </SelectItem>
+                                <SelectItem value="age-appropriate">
+                                  ✅ Age Appropriate (Age 4-5)
+                                </SelectItem>
+                                <SelectItem value="relaxed">
+                                  🌟 Relaxed (Age 5+)
+                                </SelectItem>
+                                <SelectItem value="custom">
+                                  ⚙️ Custom Settings
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Progress Sharing</label>
-                              <p className="text-sm text-jungle-dark/70">Share achievements with teachers</p>
+                              <label className="font-medium text-jungle-dark">
+                                Progress Sharing
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Share achievements with teachers
+                              </p>
                             </div>
                             <Switch
                               checked={progressSharing}
@@ -1222,8 +1436,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="p-6 space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Screen Reader Support</label>
-                              <p className="text-sm text-jungle-dark/70">Voice descriptions of interface</p>
+                              <label className="font-medium text-jungle-dark">
+                                Screen Reader Support
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Voice descriptions of interface
+                              </p>
                             </div>
                             <Switch
                               checked={screenReader}
@@ -1236,8 +1454,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Keyboard Navigation</label>
-                              <p className="text-sm text-jungle-dark/70">Navigate without mouse</p>
+                              <label className="font-medium text-jungle-dark">
+                                Keyboard Navigation
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Navigate without mouse
+                              </p>
                             </div>
                             <Switch
                               checked={keyboardNavigation}
@@ -1250,8 +1472,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Haptic Feedback</label>
-                              <p className="text-sm text-jungle-dark/70">Touch vibration on mobile</p>
+                              <label className="font-medium text-jungle-dark">
+                                Haptic Feedback
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Touch vibration on mobile
+                              </p>
                             </div>
                             <Switch
                               checked={hapticFeedback}
@@ -1264,8 +1490,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
 
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Enhanced Focus Indicators</label>
-                              <p className="text-sm text-jungle-dark/70">Clearer focus outlines</p>
+                              <label className="font-medium text-jungle-dark">
+                                Enhanced Focus Indicators
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Clearer focus outlines
+                              </p>
                             </div>
                             <Switch
                               checked={focusIndicators}
@@ -1298,8 +1528,12 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                         <CardContent className="p-6 space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
-                              <label className="font-medium text-jungle-dark">Dark Mode</label>
-                              <p className="text-sm text-jungle-dark/70">Dark jungle theme</p>
+                              <label className="font-medium text-jungle-dark">
+                                Dark Mode
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Dark jungle theme
+                              </p>
                             </div>
                             <Switch
                               checked={darkMode}
@@ -1318,11 +1552,17 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                               Data Management
                             </h4>
                             <div className="grid gap-2">
-                              <Button variant="outline" className="jungle-button-outline justify-start">
+                              <Button
+                                variant="outline"
+                                className="jungle-button-outline justify-start"
+                              >
                                 <Download className="w-4 h-4 mr-2" />
                                 Export Settings
                               </Button>
-                              <Button variant="outline" className="jungle-button-outline justify-start">
+                              <Button
+                                variant="outline"
+                                className="jungle-button-outline justify-start"
+                              >
                                 <Upload className="w-4 h-4 mr-2" />
                                 Import Settings
                               </Button>
@@ -1356,7 +1596,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
         </div>
 
         {/* Footer */}
-        <motion.div 
+        <motion.div
           className="border-t border-jungle/20 p-6 bg-gradient-to-r from-jungle/5 to-sunshine/5"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1368,7 +1608,7 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                 <span>Jungle Adventure Settings</span>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"
@@ -1407,8 +1647,8 @@ export const JungleAdventureSettingsPanel: React.FC<JungleAdventureSettingsPanel
                 Reset All Settings?
               </DialogTitle>
               <DialogDescription>
-                This will reset all your jungle adventure settings to their default values. 
-                This action cannot be undone.
+                This will reset all your jungle adventure settings to their
+                default values. This action cannot be undone.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>

@@ -38,7 +38,7 @@ interface JungleAdventureDemoProps {
 }
 
 export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
-  className
+  className,
 }) => {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [userRole] = useState<"child" | "parent">("parent");
@@ -62,9 +62,10 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                 <Sparkles className="w-8 h-8 text-sunshine animate-pulse" />
               </div>
               <p className="text-lg text-jungle-dark/70 max-w-2xl mx-auto">
-                🌿 Experience the most immersive learning environment for children aged 3-5. 
-                Our jungle-themed desktop interface brings learning to life with beautiful animations, 
-                interactive elements, and comprehensive family controls.
+                🌿 Experience the most immersive learning environment for
+                children aged 3-5. Our jungle-themed desktop interface brings
+                learning to life with beautiful animations, interactive
+                elements, and comprehensive family controls.
               </p>
             </motion.div>
 
@@ -74,39 +75,45 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                 {
                   icon: Palette,
                   title: "🎨 Immersive Themes",
-                  description: "5 jungle themes with dynamic weather effects and time-based ambience",
-                  color: "jungle"
+                  description:
+                    "5 jungle themes with dynamic weather effects and time-based ambience",
+                  color: "jungle",
                 },
                 {
                   icon: Volume2,
                   title: "🔊 Adventure Audio",
-                  description: "4 voice characters, ambient jungle sounds, and interactive feedback",
-                  color: "sunshine"
+                  description:
+                    "4 voice characters, ambient jungle sounds, and interactive feedback",
+                  color: "sunshine",
                 },
                 {
                   icon: Users,
                   title: "👨‍👩‍👧‍👦 Family Zone",
-                  description: "Comprehensive parent dashboard with progress tracking and controls",
-                  color: "profile-purple"
+                  description:
+                    "Comprehensive parent dashboard with progress tracking and controls",
+                  color: "profile-purple",
                 },
                 {
                   icon: Settings,
                   title: "⚙️ Smart Settings",
-                  description: "Adaptive accessibility features and learning customization",
-                  color: "coral-red"
+                  description:
+                    "Adaptive accessibility features and learning customization",
+                  color: "coral-red",
                 },
                 {
                   icon: Trophy,
                   title: "🏆 Achievement System",
-                  description: "Engaging rewards system with celebration animations",
-                  color: "playful-purple"
+                  description:
+                    "Engaging rewards system with celebration animations",
+                  color: "playful-purple",
                 },
                 {
                   icon: Shield,
                   title: "🛡️ Safe Learning",
-                  description: "Age-appropriate content filtering and time management tools",
-                  color: "bright-orange"
-                }
+                  description:
+                    "Age-appropriate content filtering and time management tools",
+                  color: "bright-orange",
+                },
               ].map((feature, index) => (
                 <motion.div
                   key={feature.title}
@@ -117,24 +124,34 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                   <Card className="jungle-card hover:scale-105 transition-transform cursor-pointer">
                     <CardHeader>
                       <div className="flex items-center gap-3">
-                        <div className={cn(
-                          "p-2 rounded-lg",
-                          feature.color === "jungle" && "bg-jungle/10",
-                          feature.color === "sunshine" && "bg-sunshine/10",
-                          feature.color === "profile-purple" && "bg-profile-purple/10",
-                          feature.color === "coral-red" && "bg-coral-red/10",
-                          feature.color === "playful-purple" && "bg-playful-purple/10",
-                          feature.color === "bright-orange" && "bg-bright-orange/10"
-                        )}>
-                          <feature.icon className={cn(
-                            "w-5 h-5",
-                            feature.color === "jungle" && "text-jungle",
-                            feature.color === "sunshine" && "text-sunshine",
-                            feature.color === "profile-purple" && "text-profile-purple",
-                            feature.color === "coral-red" && "text-coral-red",
-                            feature.color === "playful-purple" && "text-playful-purple",
-                            feature.color === "bright-orange" && "text-bright-orange"
-                          )} />
+                        <div
+                          className={cn(
+                            "p-2 rounded-lg",
+                            feature.color === "jungle" && "bg-jungle/10",
+                            feature.color === "sunshine" && "bg-sunshine/10",
+                            feature.color === "profile-purple" &&
+                              "bg-profile-purple/10",
+                            feature.color === "coral-red" && "bg-coral-red/10",
+                            feature.color === "playful-purple" &&
+                              "bg-playful-purple/10",
+                            feature.color === "bright-orange" &&
+                              "bg-bright-orange/10",
+                          )}
+                        >
+                          <feature.icon
+                            className={cn(
+                              "w-5 h-5",
+                              feature.color === "jungle" && "text-jungle",
+                              feature.color === "sunshine" && "text-sunshine",
+                              feature.color === "profile-purple" &&
+                                "text-profile-purple",
+                              feature.color === "coral-red" && "text-coral-red",
+                              feature.color === "playful-purple" &&
+                                "text-playful-purple",
+                              feature.color === "bright-orange" &&
+                                "text-bright-orange",
+                            )}
+                          />
                         </div>
                         <CardTitle className="text-lg text-jungle-dark">
                           {feature.title}
@@ -166,12 +183,16 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                   { label: "Animated Elements", value: "12+", icon: "🦋" },
                   { label: "Theme Options", value: "5", icon: "🎨" },
                   { label: "Voice Characters", value: "4", icon: "🎭" },
-                  { label: "Ambient Sounds", value: "5", icon: "🎵" }
+                  { label: "Ambient Sounds", value: "5", icon: "🎵" },
                 ].map((stat, index) => (
                   <div key={stat.label} className="text-center">
                     <div className="text-3xl mb-2">{stat.icon}</div>
-                    <div className="text-3xl font-bold text-jungle">{stat.value}</div>
-                    <div className="text-sm text-jungle-dark/70">{stat.label}</div>
+                    <div className="text-3xl font-bold text-jungle">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm text-jungle-dark/70">
+                      {stat.label}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -191,18 +212,44 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                 📚 Word Library Adventure
               </h2>
               <p className="text-lg text-jungle-dark/70">
-                Discover vocabulary treasures in our immersive learning environment
+                Discover vocabulary treasures in our immersive learning
+                environment
               </p>
             </motion.div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { category: "Animals", icon: "🦁", count: 45, color: "jungle" },
-                { category: "Nature", icon: "🌿", count: 38, color: "sunshine" },
-                { category: "Adventure", icon: "🗺️", count: 29, color: "profile-purple" },
-                { category: "Colors", icon: "🌈", count: 12, color: "coral-red" },
-                { category: "Shapes", icon: "⭐", count: 15, color: "playful-purple" },
-                { category: "Numbers", icon: "🔢", count: 10, color: "bright-orange" }
+                {
+                  category: "Nature",
+                  icon: "🌿",
+                  count: 38,
+                  color: "sunshine",
+                },
+                {
+                  category: "Adventure",
+                  icon: "🗺️",
+                  count: 29,
+                  color: "profile-purple",
+                },
+                {
+                  category: "Colors",
+                  icon: "🌈",
+                  count: 12,
+                  color: "coral-red",
+                },
+                {
+                  category: "Shapes",
+                  icon: "⭐",
+                  count: 15,
+                  color: "playful-purple",
+                },
+                {
+                  category: "Numbers",
+                  icon: "🔢",
+                  count: 10,
+                  color: "bright-orange",
+                },
               ].map((category, index) => (
                 <motion.div
                   key={category.category}
@@ -213,16 +260,23 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                   <Card className="jungle-card hover:scale-105 transition-transform cursor-pointer">
                     <CardContent className="p-6 text-center">
                       <div className="text-4xl mb-3">{category.icon}</div>
-                      <h3 className="font-bold text-jungle-dark mb-2">{category.category}</h3>
-                      <Badge className={cn(
-                        "text-white",
-                        category.color === "jungle" && "bg-jungle",
-                        category.color === "sunshine" && "bg-sunshine",
-                        category.color === "profile-purple" && "bg-profile-purple",
-                        category.color === "coral-red" && "bg-coral-red",
-                        category.color === "playful-purple" && "bg-playful-purple",
-                        category.color === "bright-orange" && "bg-bright-orange"
-                      )}>
+                      <h3 className="font-bold text-jungle-dark mb-2">
+                        {category.category}
+                      </h3>
+                      <Badge
+                        className={cn(
+                          "text-white",
+                          category.color === "jungle" && "bg-jungle",
+                          category.color === "sunshine" && "bg-sunshine",
+                          category.color === "profile-purple" &&
+                            "bg-profile-purple",
+                          category.color === "coral-red" && "bg-coral-red",
+                          category.color === "playful-purple" &&
+                            "bg-playful-purple",
+                          category.color === "bright-orange" &&
+                            "bg-bright-orange",
+                        )}
+                      >
                         {category.count} words
                       </Badge>
                     </CardContent>
@@ -241,12 +295,17 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <div className="text-6xl">{
-                activeSection === "games" ? "🎮" :
-                activeSection === "progress" ? "📊" :
-                activeSection === "achievements" ? "🏆" :
-                activeSection === "family" ? "👨‍👩‍👧‍👦" : "🌿"
-              }</div>
+              <div className="text-6xl">
+                {activeSection === "games"
+                  ? "🎮"
+                  : activeSection === "progress"
+                    ? "📊"
+                    : activeSection === "achievements"
+                      ? "🏆"
+                      : activeSection === "family"
+                        ? "👨‍👩‍👧‍👦"
+                        : "🌿"}
+              </div>
               <h2 className="text-3xl font-bold text-jungle-dark capitalize">
                 {activeSection === "games" && "Jungle Games Adventure"}
                 {activeSection === "progress" && "Adventure Progress Map"}
@@ -254,55 +313,65 @@ export const JungleAdventureDemo: React.FC<JungleAdventureDemoProps> = ({
                 {activeSection === "family" && "Family Adventure Zone"}
               </h2>
               <p className="text-lg text-jungle-dark/70 max-w-2xl mx-auto">
-                {activeSection === "games" && "Interactive learning games with jungle characters and immersive sound effects."}
-                {activeSection === "progress" && "Visual progress tracking with animated charts and milestone celebrations."}
-                {activeSection === "achievements" && "Unlock badges, trophies, and special rewards for learning milestones."}
-                {activeSection === "family" && "Comprehensive parent dashboard with detailed analytics and family controls."}
+                {activeSection === "games" &&
+                  "Interactive learning games with jungle characters and immersive sound effects."}
+                {activeSection === "progress" &&
+                  "Visual progress tracking with animated charts and milestone celebrations."}
+                {activeSection === "achievements" &&
+                  "Unlock badges, trophies, and special rewards for learning milestones."}
+                {activeSection === "family" &&
+                  "Comprehensive parent dashboard with detailed analytics and family controls."}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-                {activeSection === "games" && [
-                  "🎯 Word Target Practice",
-                  "🧩 Vocabulary Puzzles", 
-                  "🎵 Rhythm & Rhyme Games",
-                  "🏃‍♂️ Adventure Races"
-                ].map((game, index) => (
-                  <Card key={index} className="jungle-card p-4">
-                    <p className="font-medium text-jungle-dark">{game}</p>
-                  </Card>
-                ))}
-                
-                {activeSection === "progress" && [
-                  "📈 Learning Analytics",
-                  "🎯 Goal Tracking",
-                  "📅 Daily Progress",
-                  "🏆 Milestone Rewards"
-                ].map((feature, index) => (
-                  <Card key={index} className="jungle-card p-4">
-                    <p className="font-medium text-jungle-dark">{feature}</p>
-                  </Card>
-                ))}
+                {activeSection === "games" &&
+                  [
+                    "🎯 Word Target Practice",
+                    "🧩 Vocabulary Puzzles",
+                    "🎵 Rhythm & Rhyme Games",
+                    "🏃‍♂️ Adventure Races",
+                  ].map((game, index) => (
+                    <Card key={index} className="jungle-card p-4">
+                      <p className="font-medium text-jungle-dark">{game}</p>
+                    </Card>
+                  ))}
 
-                {activeSection === "achievements" && [
-                  "🥉 Bronze Explorer",
-                  "🥈 Silver Adventurer", 
-                  "🥇 Gold Champion",
-                  "👑 Jungle Master"
-                ].map((achievement, index) => (
-                  <Card key={index} className="jungle-card p-4">
-                    <p className="font-medium text-jungle-dark">{achievement}</p>
-                  </Card>
-                ))}
+                {activeSection === "progress" &&
+                  [
+                    "📈 Learning Analytics",
+                    "🎯 Goal Tracking",
+                    "📅 Daily Progress",
+                    "🏆 Milestone Rewards",
+                  ].map((feature, index) => (
+                    <Card key={index} className="jungle-card p-4">
+                      <p className="font-medium text-jungle-dark">{feature}</p>
+                    </Card>
+                  ))}
 
-                {activeSection === "family" && [
-                  "📊 Child Progress Reports",
-                  "⏰ Time Management Tools",
-                  "🛡️ Safety Controls",
-                  "🎯 Learning Goals Setup"
-                ].map((tool, index) => (
-                  <Card key={index} className="jungle-card p-4">
-                    <p className="font-medium text-jungle-dark">{tool}</p>
-                  </Card>
-                ))}
+                {activeSection === "achievements" &&
+                  [
+                    "🥉 Bronze Explorer",
+                    "🥈 Silver Adventurer",
+                    "🥇 Gold Champion",
+                    "👑 Jungle Master",
+                  ].map((achievement, index) => (
+                    <Card key={index} className="jungle-card p-4">
+                      <p className="font-medium text-jungle-dark">
+                        {achievement}
+                      </p>
+                    </Card>
+                  ))}
+
+                {activeSection === "family" &&
+                  [
+                    "📊 Child Progress Reports",
+                    "⏰ Time Management Tools",
+                    "🛡️ Safety Controls",
+                    "🎯 Learning Goals Setup",
+                  ].map((tool, index) => (
+                    <Card key={index} className="jungle-card p-4">
+                      <p className="font-medium text-jungle-dark">{tool}</p>
+                    </Card>
+                  ))}
               </div>
             </motion.div>
           </div>
