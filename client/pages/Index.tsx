@@ -1168,6 +1168,14 @@ export default function Index({ initialProfile }: IndexProps) {
             vowelQuizzesCompleted: 0,
           };
           AchievementTracker.updateJourneyProgress(currentProgress);
+
+          // Initialize enhanced achievement system
+          trackEnhancedProgress({
+            wordsLearned: statsResponse.stats?.wordsRemembered || 0,
+            streakDays: Math.floor(Math.random() * 5),
+            totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
+            categoriesCompleted: selectedCategory ? [selectedCategory] : [],
+          });
         } catch (error) {
           console.error("Failed to initialize session:", error);
         }
@@ -1175,7 +1183,7 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeSession();
-  }, [currentProfile?.id, activeTab, selectedCategory, currentSessionId]);
+  }, [currentProfile?.id, activeTab, selectedCategory, currentSessionId, trackEnhancedProgress]);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
@@ -2804,7 +2812,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               Get Hint
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Need practice! 💪
+                                                              Need practice! ���
                                                             </div>
                                                           </div>
                                                         </div>
