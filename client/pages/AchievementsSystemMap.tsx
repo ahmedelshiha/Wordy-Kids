@@ -181,12 +181,12 @@ const integrationChecks: IntegrationCheck[] = [
       "enhancedAchievementSystem, enhancedBadgeSystem, enhancedLearningAnalytics, enhancedRewardCelebration",
   },
   {
-    component: "✅ Legacy System Migration",
+    component: "✅ Legacy System Retirement",
     status: "complete",
     details:
-      "Legacy AchievementSystem successfully retired and replaced with EnhancedAchievementsPage in both 'progress' and 'achievements' tabs",
+      "Legacy AchievementSystem completely retired. Old 'progress' tab removed from navigation. Only EnhancedAchievementsPage active via 'achievements' tab",
     location:
-      "client/pages/Index.tsx - Legacy system removed, enhanced system deployed",
+      "client/pages/Index.tsx - Legacy system removed, navigation simplified, enhanced system is the only achievement interface",
   },
   {
     component: "📱 Mobile Responsiveness",
