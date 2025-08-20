@@ -42,6 +42,7 @@ import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import { CategoryCompletionTracker } from "@/lib/categoryCompletionTracker";
 import { useAuth } from "@/hooks/useAuth";
+import { useOptimizedMobilePerformance, useAnimationPreferences } from "@/hooks/use-optimized-mobile-performance";
 import { cn } from "@/lib/utils";
 
 // Jungle-themed achievement interface
