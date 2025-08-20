@@ -34,6 +34,14 @@ interface MapMarker {
   progress: number; // 0-100
   emoji: string;
   date?: Date;
+  analytics?: {
+    timeSpent: number; // minutes
+    accuracyScore: number; // percentage
+    streak: number; // consecutive days
+    lastActive?: Date;
+    attempts: number;
+    hintsUsed: number;
+  };
 }
 
 interface InteractiveJungleMapProps {
