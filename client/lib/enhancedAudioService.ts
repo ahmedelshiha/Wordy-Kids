@@ -1,4 +1,6 @@
 // Enhanced Audio service with improved voice detection and preview functionality
+import { speechSynthesisDebugger } from "./speechSynthesisDebugger";
+
 export type VoiceType = "man" | "woman" | "kid";
 
 export class EnhancedAudioService {
@@ -361,26 +363,46 @@ export class EnhancedAudioService {
       voiceType?: VoiceType;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     if (!this.isEnabled) {
       console.log("Audio service is disabled");
-      options.onError?.();
+      const disabledError = {
+        type: "service_disabled",
+        word: word,
+        timestamp: new Date().toISOString(),
+      };
+      options.onError?.(disabledError);
       return;
     }
 
     // Check browser support
     if (!("speechSynthesis" in window) || !this.speechSynthesis) {
       console.error("Speech synthesis not supported in this browser");
-      options.onError?.();
+      const supportError = {
+        type: "unsupported_browser",
+        word: word,
+        userAgent: navigator.userAgent,
+        hasWindow: typeof window !== "undefined",
+        hasSpeechSynthesis: "speechSynthesis" in window,
+        timestamp: new Date().toISOString(),
+      };
+      options.onError?.(supportError);
       return;
     }
 
     // Validate input
     if (!word || typeof word !== "string" || word.trim().length === 0) {
       console.error("Invalid word provided for pronunciation:", word);
-      options.onError?.();
+      const validationError = {
+        type: "invalid_input",
+        word: word,
+        wordType: typeof word,
+        wordLength: word ? word.length : 0,
+        timestamp: new Date().toISOString(),
+      };
+      options.onError?.(validationError);
       return;
     }
 
@@ -448,7 +470,17 @@ export class EnhancedAudioService {
           volume: volume,
         });
         try {
-          onError?.();
+          const errorDetails = {
+            error: event.error,
+            message: event.message,
+            word: word,
+            voiceType: voiceType,
+            voice: voice?.name,
+            timestamp: new Date().toISOString(),
+          };
+          // Record error for debugging
+          speechSynthesisDebugger.recordError(errorDetails);
+          onError?.(errorDetails);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }
@@ -469,7 +501,18 @@ export class EnhancedAudioService {
           console.warn("Speech synthesis timeout, canceling...");
           this.speechSynthesis.cancel();
           try {
-            onError?.();
+            const timeoutError = {
+              type: "timeout",
+              word: word,
+              duration: timeoutDuration,
+              speechState: {
+                speaking: this.speechSynthesis.speaking,
+                pending: this.speechSynthesis.pending,
+                paused: this.speechSynthesis.paused,
+              },
+              timestamp: new Date().toISOString(),
+            };
+            onError?.(timeoutError);
           } catch (error) {
             console.error("Error in timeout onError callback:", error);
           }
@@ -478,7 +521,20 @@ export class EnhancedAudioService {
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       try {
-        onError?.();
+        const generalError = {
+          type: "general_error",
+          word: word,
+          originalError:
+            error instanceof Error
+              ? {
+                  name: error.name,
+                  message: error.message,
+                  stack: error.stack,
+                }
+              : error,
+          timestamp: new Date().toISOString(),
+        };
+        onError?.(generalError);
       } catch (callbackError) {
         console.error("Error in error callback:", callbackError);
       }
@@ -711,7 +767,7 @@ export class EnhancedAudioService {
       voiceType?: VoiceType;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     this.pronounceWord(text, options);

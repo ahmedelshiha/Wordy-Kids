@@ -323,7 +323,7 @@ export class AudioService {
       volume?: number;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     if (!this.isEnabled || !word?.trim()) return;
@@ -331,7 +331,15 @@ export class AudioService {
     // Check if speech synthesis is supported and available
     if (!this.isSupported || !this.speechSynthesis) {
       console.warn("Speech synthesis not supported or available");
-      options.onError?.();
+      const supportError = {
+        type: "unsupported_browser",
+        word: word,
+        isSupported: this.isSupported,
+        hasSpeechSynthesis: !!this.speechSynthesis,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+      };
+      options.onError?.(supportError);
       return;
     }
 
@@ -458,11 +466,37 @@ export class AudioService {
         this.speechSynthesis.speak(utterance);
       } catch (speakError) {
         console.error("Error calling speak:", speakError);
-        onError?.();
+        const speakCallError = {
+          type: "speak_call_error",
+          word: word,
+          originalError:
+            speakError instanceof Error
+              ? {
+                  name: speakError.name,
+                  message: speakError.message,
+                  stack: speakError.stack,
+                }
+              : speakError,
+          timestamp: new Date().toISOString(),
+        };
+        onError?.(speakCallError);
       }
     } catch (error) {
       console.error("Error in pronounceWord:", error);
-      options.onError?.();
+      const generalError = {
+        type: "general_error",
+        word: word,
+        originalError:
+          error instanceof Error
+            ? {
+                name: error.name,
+                message: error.message,
+                stack: error.stack,
+              }
+            : error,
+        timestamp: new Date().toISOString(),
+      };
+      options.onError?.(generalError);
     }
   }
 
@@ -474,7 +508,7 @@ export class AudioService {
       volume?: number;
       onStart?: () => void;
       onEnd?: () => void;
-      onError?: () => void;
+      onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
     try {
@@ -518,7 +552,21 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error (default voice):", event);
+        console.error("Speech synthesis error (default voice):", {
+          error: event.error,
+          message: event.message,
+          type: event.type,
+          timeStamp: event.timeStamp,
+          word: word,
+          voice: voice?.name || "default",
+          voiceURI: voice?.voiceURI,
+          speechState: {
+            speaking: this.speechSynthesis.speaking,
+            pending: this.speechSynthesis.pending,
+            paused: this.speechSynthesis.paused,
+          },
+          timestamp: new Date().toISOString(),
+        });
         try {
           options.onError?.();
         } catch (error) {
