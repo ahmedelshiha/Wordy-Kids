@@ -1043,11 +1043,11 @@ export function AchievementSystem({
                   return (
                     <Card
                       key={achievement.id}
-                      className={`cursor-pointer transition-all duration-300 md:hover:scale-105 ${
+                      className={`jungle-achievement-card cursor-pointer transition-all duration-300 md:hover:scale-105 relative overflow-hidden ${
                         achievement.unlocked
-                          ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg`
-                          : "bg-white border-2 border-dashed border-gray-300 hover:border-educational-blue"
-                      }`}
+                          ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg unlocked animate-jungle-glow`
+                          : "bg-white border-2 border-dashed border-jungle/30 hover:border-jungle hover:shadow-lg"
+                      } ${achievement.rarity ? `rarity-${achievement.rarity}` : ''}`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
                       {/* Mobile Compact Layout */}
