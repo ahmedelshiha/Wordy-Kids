@@ -441,7 +441,6 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
               : "shadow-xl hover:shadow-2xl"
         } ${isGesturing ? "scale-[1.02]" : "hover:scale-[1.01]"}`}
         style={{
-          transformStyle: "preserve-3d",
           touchAction: enableGestures ? "pan-y" : "auto",
         }}
         onClick={handleCardFlip}
