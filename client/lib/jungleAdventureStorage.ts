@@ -43,7 +43,29 @@ export interface JungleAdventureSettings {
 }
 
 const STORAGE_KEY = "jungleAdventureSettings";
-const CURRENT_VERSION = "1.0.0";
+const CURRENT_VERSION = "2.0.0"; // Updated for post-migration features
+
+// Version migration handlers
+const MIGRATION_HANDLERS: Record<string, (data: any) => any> = {
+  "1.0.0_to_2.0.0": (data: any) => {
+    // Migration from v1 to v2: Add new parental controls and analytics settings
+    return {
+      ...data,
+      family: {
+        ...data.family,
+        jungleMapEnabled: true, // Default to enabled
+        analyticsEnabled: true, // Default to enabled
+      },
+      analytics: {
+        parentDashboardMetrics: data.analytics?.parentDashboardMetrics || {},
+        lastMigration: new Date().toISOString(),
+      },
+      version: "2.0.0",
+    };
+  },
+  // Future migrations can be added here
+  // "2.0.0_to_3.0.0": (data: any) => { ... },
+};
 
 export class JungleAdventureStorage {
   /**
