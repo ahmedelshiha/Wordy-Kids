@@ -1669,76 +1669,25 @@ export function InteractiveDashboardWordCard({
                   })()}
                 </motion.h1>
 
-                {/* Floating Jungle Elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <motion.div
-                    animate={{
-                      y: [0, -10, 0],
-                      x: [0, 5, 0],
-                      rotate: [0, 5, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0,
-                    }}
-                    className="absolute -top-2 -left-4 text-sm opacity-60"
-                  >
-                    🌿
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      y: [0, -15, 0],
-                      x: [0, -3, 0],
-                      rotate: [0, -10, 0],
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 1,
-                    }}
-                    className="absolute -top-1 -right-6 text-sm opacity-50"
-                  >
-                    🌸
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      y: [0, -8, 0],
-                      scale: [1, 1.1, 1],
-                      opacity: [0.4, 0.8, 0.4],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 2,
-                    }}
-                    className="absolute top-0 right-2 text-xs"
-                  >
-                    ✨
-                  </motion.div>
-
-                  <motion.div
-                    animate={{
-                      y: [0, -12, 0],
-                      x: [0, 8, 0],
-                      rotate: [0, 15, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0.5,
-                    }}
-                    className="absolute -bottom-2 left-2 text-xs opacity-70"
-                  >
-                    🍃
-                  </motion.div>
-                </div>
+                {/* Single Floating Element - Only if motion allowed */}
+                {!prefersReducedMotion && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    <motion.div
+                      animate={{
+                        y: [0, -8, 0],
+                        opacity: [0.4, 0.7, 0.4],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute top-0 right-2 text-xs"
+                    >
+                      ✨
+                    </motion.div>
+                  </div>
+                )}
               </motion.div>
             </header>
 
