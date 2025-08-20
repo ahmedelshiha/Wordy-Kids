@@ -748,6 +748,15 @@ export const JungleAdventureParentDashboard: React.FC<
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Family Achievements Timeline */}
+              <FamilyAchievementsTimeline
+                className="w-full"
+                onEventClick={(event) => {
+                  console.log("Timeline event clicked:", event);
+                  // Future: Show detailed event analytics modal
+                }}
+              />
             </motion.div>
           </TabsContent>
 
