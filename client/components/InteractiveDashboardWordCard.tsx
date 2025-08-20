@@ -884,7 +884,7 @@ export function InteractiveDashboardWordCard({
     // Reset all session state
     setShowSessionComplete(false);
     setSessionAchievements([]);
-    setJourneyAchievements([]);
+    // journeyAchievements state removed - now using event-based system
     setCurrentWordIndex(0);
     setIsAnswered(false);
     setFeedbackType(null);
