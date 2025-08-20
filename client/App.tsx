@@ -29,6 +29,7 @@ import AIWordRecommendationDemo from "./pages/AIWordRecommendationDemo";
 import AISystemTest from "./pages/AISystemTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
+import { LightweightAchievementProvider } from "./components/LightweightAchievementProvider";
 
 const queryClient = new QueryClient();
 
