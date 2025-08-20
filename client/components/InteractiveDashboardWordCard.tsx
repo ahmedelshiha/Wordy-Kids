@@ -756,9 +756,9 @@ export function InteractiveDashboardWordCard({
       if (allNewAchievements.length > 0) {
         // Trigger achievements through new lightweight popup system
         setTimeout(() => {
-          allNewAchievements.forEach(achievement => {
-            const event = new CustomEvent('milestoneUnlocked', {
-              detail: { achievement }
+          allNewAchievements.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
             });
             window.dispatchEvent(event);
           });
@@ -806,9 +806,9 @@ export function InteractiveDashboardWordCard({
       // Trigger session achievements through new lightweight popup system
       if (allSessionAchievements.length > 0) {
         setTimeout(() => {
-          allSessionAchievements.forEach(achievement => {
-            const event = new CustomEvent('milestoneUnlocked', {
-              detail: { achievement }
+          allSessionAchievements.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
             });
             window.dispatchEvent(event);
           });

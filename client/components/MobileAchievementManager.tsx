@@ -131,15 +131,18 @@ export function MobileAchievementManager({
 
       {/* Popup Notifications now handled by LightweightAchievementProvider */}
       {selectedType === "popup" && activePopup.length > 0 && (
-        <div style={{ display: 'none' }}>
+        <div style={{ display: "none" }}>
           {/* Trigger achievements through event system */}
-          {activePopup.forEach(achievement => {
-            const event = new CustomEvent('milestoneUnlocked', {
-              detail: { achievement }
+          {activePopup.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
             });
             window.dispatchEvent(event);
           })}
-          {(() => { handlePopupClose(); return null; })()}
+          {(() => {
+            handlePopupClose();
+            return null;
+          })()}
         </div>
       )}
     </>

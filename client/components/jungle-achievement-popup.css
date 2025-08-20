@@ -23,8 +23,8 @@
   width: 320px;
   max-width: 80vw;
   color: white;
-  font-family: 'Comic Sans MS', 'Fredoka One', cursive, sans-serif;
-  box-shadow: 
+  font-family: "Comic Sans MS", "Fredoka One", cursive, sans-serif;
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 20px rgba(255, 215, 0, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.2);
@@ -47,7 +47,7 @@
 .achievement-popup--bronze {
   background: linear-gradient(135deg, #8d4a00 0%, #cd7f32 50%, #daa520 100%);
   border-color: #cd7f32;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 20px rgba(205, 127, 50, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.2);
@@ -57,7 +57,7 @@
   background: linear-gradient(135deg, #707070 0%, #c0c0c0 50%, #e8e8e8 100%);
   border-color: #c0c0c0;
   color: #2c2c2c;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 20px rgba(192, 192, 192, 0.4),
     inset 0 2px 0 rgba(255, 255, 255, 0.3);
@@ -67,7 +67,7 @@
   background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #ffed4e 100%);
   border-color: #ffd700;
   color: #2c2c2c;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 25px rgba(255, 215, 0, 0.6),
     inset 0 2px 0 rgba(255, 255, 255, 0.3);
@@ -76,24 +76,26 @@
 .achievement-popup--diamond {
   background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 50%, #90caf9 100%);
   border-color: #42a5f5;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 25px rgba(66, 165, 245, 0.5),
     inset 0 2px 0 rgba(255, 255, 255, 0.2);
 }
 
 .achievement-popup--rainbow {
-  background: linear-gradient(135deg, 
-    #ff6b6b 0%, 
-    #feca57 16.66%, 
-    #48ca4e 33.33%, 
-    #0abde3 50%, 
-    #6c5ce7 66.66%, 
-    #a55eea 83.33%, 
-    #ff6b6b 100%);
+  background: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #feca57 16.66%,
+    #48ca4e 33.33%,
+    #0abde3 50%,
+    #6c5ce7 66.66%,
+    #a55eea 83.33%,
+    #ff6b6b 100%
+  );
   border-color: #ffd700;
   animation: rainbow-glow 3s ease-in-out infinite;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 30px rgba(255, 215, 0, 0.6),
     inset 0 2px 0 rgba(255, 255, 255, 0.3);
@@ -229,11 +231,11 @@
   .popup-title {
     font-size: 1.5rem;
   }
-  
+
   .popup-message {
     font-size: 1rem;
   }
-  
+
   .difficulty-badge {
     font-size: 18px;
     top: -6px;
@@ -303,7 +305,11 @@
   left: -20px;
   right: -20px;
   bottom: -20px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.15) 0%,
+    transparent 70%
+  );
   border-radius: 50px;
   z-index: -1;
   animation: soft-pulse 3s ease-in-out infinite;
@@ -311,100 +317,106 @@
 
 /* Animations */
 @keyframes vine-sway {
-  0%, 100% { 
-    transform: rotate(0deg) scale(1); 
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
   }
-  25% { 
-    transform: rotate(3deg) scale(1.05); 
+  25% {
+    transform: rotate(3deg) scale(1.05);
   }
-  75% { 
-    transform: rotate(-3deg) scale(0.95); 
+  75% {
+    transform: rotate(-3deg) scale(0.95);
   }
 }
 
 @keyframes firefly-dance {
-  0%, 100% { 
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
     opacity: 0.6;
   }
-  25% { 
+  25% {
     transform: translate(10px, -8px) scale(1.1);
     opacity: 1;
   }
-  50% { 
+  50% {
     transform: translate(-5px, 5px) scale(0.9);
     opacity: 0.8;
   }
-  75% { 
+  75% {
     transform: translate(8px, -3px) scale(1.05);
     opacity: 0.9;
   }
 }
 
 @keyframes badge-bounce {
-  0%, 100% { 
-    transform: scale(1) rotate(0deg); 
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
   }
-  50% { 
-    transform: scale(1.1) rotate(5deg); 
+  50% {
+    transform: scale(1.1) rotate(5deg);
   }
 }
 
 @keyframes star-twinkle {
-  0%, 100% { 
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
   }
-  50% { 
+  50% {
     transform: scale(1.2) rotate(180deg);
     opacity: 0.8;
   }
 }
 
 @keyframes soft-pulse {
-  0%, 100% { 
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(0.95);
   }
-  50% { 
+  50% {
     opacity: 0.5;
     transform: scale(1.05);
   }
 }
 
 @keyframes rainbow-glow {
-  0%, 100% { 
-    box-shadow: 
+  0%,
+  100% {
+    box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.3),
       0 0 30px rgba(255, 107, 107, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
-  16.66% { 
-    box-shadow: 
+  16.66% {
+    box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.3),
       0 0 30px rgba(254, 202, 87, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
-  33.33% { 
-    box-shadow: 
+  33.33% {
+    box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.3),
       0 0 30px rgba(72, 202, 78, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
-  50% { 
-    box-shadow: 
+  50% {
+    box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.3),
       0 0 30px rgba(10, 189, 227, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
-  66.66% { 
-    box-shadow: 
+  66.66% {
+    box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.3),
       0 0 30px rgba(108, 92, 231, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
-  83.33% { 
-    box-shadow: 
+  83.33% {
+    box-shadow:
       0 10px 30px rgba(0, 0, 0, 0.3),
       0 0 30px rgba(165, 94, 234, 0.4),
       inset 0 2px 0 rgba(255, 255, 255, 0.3);
@@ -421,7 +433,7 @@
   .soft-glow {
     animation: none !important;
   }
-  
+
   .confetti-container {
     display: none;
   }
@@ -433,7 +445,7 @@
     border-width: 6px;
     box-shadow: 0 0 0 2px white;
   }
-  
+
   .popup-title,
   .popup-message {
     text-shadow: 0 0 4px black;

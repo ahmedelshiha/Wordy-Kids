@@ -256,7 +256,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Enhanced achievement dialog removed - now handled by LightweightAchievementProvider
   // Keep only the tracking function from the old system
-  const { trackProgress: trackEnhancedProgress } = useEnhancedAchievementDialog();
+  const { trackProgress: trackEnhancedProgress } =
+    useEnhancedAchievementDialog();
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);

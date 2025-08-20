@@ -156,9 +156,9 @@ export const EnhancedWordAdventureCard: React.FC<
       if (starAchievements.length > 0) {
         // Trigger achievements through new lightweight popup system
         setTimeout(() => {
-          starAchievements.forEach(achievement => {
-            const event = new CustomEvent('milestoneUnlocked', {
-              detail: { achievement }
+          starAchievements.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
             });
             window.dispatchEvent(event);
           });

@@ -10,7 +10,7 @@ interface PopupState {
 export function useLightweightAchievementPopup() {
   const [popupState, setPopupState] = useState<PopupState>({
     isVisible: false,
-    achievement: null
+    achievement: null,
   });
 
   /**
@@ -20,7 +20,7 @@ export function useLightweightAchievementPopup() {
     console.log(`🎉 Showing lightweight popup for: ${achievement.name}`);
     setPopupState({
       isVisible: true,
-      achievement
+      achievement,
     });
   }, []);
 
@@ -31,9 +31,9 @@ export function useLightweightAchievementPopup() {
     console.log("🎯 Hiding lightweight popup");
     setPopupState({
       isVisible: false,
-      achievement: null
+      achievement: null,
     });
-    
+
     // Notify queue that popup closed
     achievementPopupQueue.onPopupClose();
   }, []);
@@ -60,21 +60,21 @@ export function useLightweightAchievementPopup() {
     }
 
     const achievement = popupState.achievement;
-    
+
     // Convert achievement icon (string) to React element if needed
     const icon = achievement.icon;
-    
+
     // Get kid-friendly title and message
     const title = getKidFriendlyTitle(achievement);
     const message = getKidFriendlyMessage(achievement);
-    
+
     return {
       title,
       message,
       icon,
       difficulty: achievement.difficulty,
       onClose: hidePopup,
-      autoCloseDelay: 3000 // 3 seconds auto-close
+      autoCloseDelay: 3000, // 3 seconds auto-close
     };
   }, [popupState.achievement, hidePopup]);
 
@@ -104,13 +104,13 @@ export function useLightweightAchievementPopup() {
     // State
     isVisible: popupState.isVisible,
     achievement: popupState.achievement,
-    
+
     // Actions
     showPopup,
     hidePopup,
     triggerTestPopup,
     clearQueue,
-    
+
     // Computed
     popupProps: getPopupProps(),
     queueStatus: getQueueStatus(),
@@ -122,7 +122,7 @@ export function useLightweightAchievementPopup() {
  */
 function getKidFriendlyTitle(achievement: EnhancedAchievement): string {
   const excitementLevel = getDifficultyExcitement(achievement.difficulty);
-  
+
   const titles = [
     `You did it${excitementLevel}`,
     `Amazing work${excitementLevel}`,
@@ -131,9 +131,9 @@ function getKidFriendlyTitle(achievement: EnhancedAchievement): string {
     `Fantastic${excitementLevel}`,
     `You're awesome${excitementLevel}`,
     `Great job${excitementLevel}`,
-    `Incredible${excitementLevel}`
+    `Incredible${excitementLevel}`,
   ];
-  
+
   return titles[Math.floor(Math.random() * titles.length)];
 }
 
@@ -142,7 +142,7 @@ function getKidFriendlyTitle(achievement: EnhancedAchievement): string {
  */
 function getKidFriendlyMessage(achievement: EnhancedAchievement): string {
   const difficultyEmoji = getDifficultyEmoji(achievement.difficulty);
-  
+
   const messages = [
     `New badge unlocked! ${difficultyEmoji}`,
     `You earned a treasure! ${difficultyEmoji}`,
@@ -151,9 +151,9 @@ function getKidFriendlyMessage(achievement: EnhancedAchievement): string {
     `Mission accomplished! ${difficultyEmoji}`,
     `You're a star! ${difficultyEmoji}`,
     `Level up! ${difficultyEmoji}`,
-    `Victory achieved! ${difficultyEmoji}`
+    `Victory achieved! ${difficultyEmoji}`,
   ];
-  
+
   return messages[Math.floor(Math.random() * messages.length)];
 }
 

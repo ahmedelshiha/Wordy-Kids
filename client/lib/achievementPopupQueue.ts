@@ -10,7 +10,8 @@ class AchievementPopupQueue {
   private queue: QueuedAchievement[] = [];
   private isDisplaying: boolean = false;
   private currentDisplayCallback: (() => void) | null = null;
-  private onShowPopup: ((achievement: EnhancedAchievement) => void) | null = null;
+  private onShowPopup: ((achievement: EnhancedAchievement) => void) | null =
+    null;
 
   constructor() {
     this.bindEventListeners();
@@ -38,7 +39,7 @@ class AchievementPopupQueue {
    */
   public addToQueue(achievement: EnhancedAchievement): void {
     // Prevent duplicate achievements in queue
-    if (this.queue.find(item => item.achievement.id === achievement.id)) {
+    if (this.queue.find((item) => item.achievement.id === achievement.id)) {
       console.log(`Achievement ${achievement.id} already in queue, skipping`);
       return;
     }
@@ -46,11 +47,13 @@ class AchievementPopupQueue {
     const queuedItem: QueuedAchievement = {
       id: achievement.id,
       achievement,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     this.queue.push(queuedItem);
-    console.log(`🎯 Achievement queued: ${achievement.name} (Queue length: ${this.queue.length})`);
+    console.log(
+      `🎯 Achievement queued: ${achievement.name} (Queue length: ${this.queue.length})`,
+    );
 
     // Start processing if not already displaying
     if (!this.isDisplaying) {
@@ -73,10 +76,10 @@ class AchievementPopupQueue {
       if (!queuedItem) break;
 
       console.log(`🎊 Displaying achievement: ${queuedItem.achievement.name}`);
-      
+
       // Show the popup
       await this.displayAchievement(queuedItem.achievement);
-      
+
       // Wait a brief moment between achievements
       if (this.queue.length > 0) {
         await this.delay(500);
@@ -121,7 +124,9 @@ class AchievementPopupQueue {
   /**
    * Set the callback for showing popups
    */
-  public setPopupDisplayCallback(callback: (achievement: EnhancedAchievement) => void): void {
+  public setPopupDisplayCallback(
+    callback: (achievement: EnhancedAchievement) => void,
+  ): void {
     this.onShowPopup = callback;
   }
 
@@ -149,7 +154,7 @@ class AchievementPopupQueue {
     return {
       queueLength: this.queue.length,
       isDisplaying: this.isDisplaying,
-      nextAchievement: this.queue[0]?.achievement
+      nextAchievement: this.queue[0]?.achievement,
     };
   }
 
@@ -166,7 +171,7 @@ class AchievementPopupQueue {
       difficulty: "bronze",
       requirements: {
         type: "test",
-        threshold: 1
+        threshold: 1,
       },
       currentProgress: 1,
       unlocked: true,
@@ -175,14 +180,14 @@ class AchievementPopupQueue {
         type: "badge",
         item: "Test Badge",
         value: 10,
-        rarity: "common"
+        rarity: "common",
       },
       jungleTheme: {
         glowColor: "#4CAF50",
         particleEffect: "leaves",
         celebrationSound: "cheer",
-        backgroundGradient: "linear-gradient(135deg, #2e7d32, #4caf50)"
-      }
+        backgroundGradient: "linear-gradient(135deg, #2e7d32, #4caf50)",
+      },
     };
 
     this.addToQueue(testAchievement);
@@ -192,7 +197,7 @@ class AchievementPopupQueue {
    * Utility method for delays
    */
   private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**
@@ -207,7 +212,7 @@ class AchievementPopupQueue {
     return {
       totalProcessed: 0,
       averageDisplayTime: 3000,
-      queueWaitTimes: []
+      queueWaitTimes: [],
     };
   }
 }

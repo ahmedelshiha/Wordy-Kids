@@ -9,20 +9,23 @@ interface LightweightAchievementContextType {
   queueStatus: any;
 }
 
-const LightweightAchievementContext = createContext<LightweightAchievementContextType | null>(null);
+const LightweightAchievementContext =
+  createContext<LightweightAchievementContextType | null>(null);
 
 interface LightweightAchievementProviderProps {
   children: ReactNode;
 }
 
-export function LightweightAchievementProvider({ children }: LightweightAchievementProviderProps) {
+export function LightweightAchievementProvider({
+  children,
+}: LightweightAchievementProviderProps) {
   const {
     isVisible,
     achievement,
     popupProps,
     triggerTestPopup,
     clearQueue,
-    queueStatus
+    queueStatus,
   } = useLightweightAchievementPopup();
 
   /**
@@ -36,7 +39,7 @@ export function LightweightAchievementProvider({ children }: LightweightAchievem
 
     // Map difficulty to appropriate Lucide icon
     const iconClass = "w-12 h-12 text-yellow-400";
-    
+
     switch (difficulty) {
       case "bronze":
         return <Award className={iconClass} />;
@@ -56,20 +59,20 @@ export function LightweightAchievementProvider({ children }: LightweightAchievem
   const contextValue: LightweightAchievementContextType = {
     triggerTestPopup,
     clearQueue,
-    queueStatus
+    queueStatus,
   };
 
   return (
     <LightweightAchievementContext.Provider value={contextValue}>
       {children}
-      
+
       {/* Render popup when visible */}
       {isVisible && popupProps && (
         <AchievementPopup
           {...popupProps}
           icon={getIconComponent(
             achievement?.icon || "🏆",
-            achievement?.difficulty || "bronze"
+            achievement?.difficulty || "bronze",
           )}
         />
       )}
@@ -86,7 +89,9 @@ export function LightweightAchievementProvider({ children }: LightweightAchievem
 export function useLightweightAchievement() {
   const context = useContext(LightweightAchievementContext);
   if (!context) {
-    throw new Error("useLightweightAchievement must be used within LightweightAchievementProvider");
+    throw new Error(
+      "useLightweightAchievement must be used within LightweightAchievementProvider",
+    );
   }
   return context;
 }
@@ -95,7 +100,8 @@ export function useLightweightAchievement() {
  * Test component for debugging (can be removed in production)
  */
 export function AchievementTestControls() {
-  const { triggerTestPopup, clearQueue, queueStatus } = useLightweightAchievement();
+  const { triggerTestPopup, clearQueue, queueStatus } =
+    useLightweightAchievement();
 
   // Only show in development
   if (process.env.NODE_ENV !== "development") {
@@ -119,8 +125,8 @@ export function AchievementTestControls() {
           🧹 Clear Queue
         </button>
         <div className="text-xs text-gray-600">
-          Queue: {queueStatus.queueLength} | 
-          Status: {queueStatus.isDisplaying ? "Showing" : "Idle"}
+          Queue: {queueStatus.queueLength} | Status:{" "}
+          {queueStatus.isDisplaying ? "Showing" : "Idle"}
         </div>
       </div>
     </div>

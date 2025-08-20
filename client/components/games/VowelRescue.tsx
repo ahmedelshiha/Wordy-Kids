@@ -333,9 +333,9 @@ export function VowelRescue({
     // Show achievement popup if any achievements were unlocked
     if (unlockedAchievements.length > 0) {
       // Trigger achievements through new lightweight popup system
-      unlockedAchievements.forEach(achievement => {
-        const event = new CustomEvent('milestoneUnlocked', {
-          detail: { achievement }
+      unlockedAchievements.forEach((achievement) => {
+        const event = new CustomEvent("milestoneUnlocked", {
+          detail: { achievement },
         });
         window.dispatchEvent(event);
       });
