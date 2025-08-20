@@ -36,7 +36,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
@@ -985,17 +985,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         </CardContent>
       </Card>
 
-      {/* Achievement Popup */}
-      {wordAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={wordAchievements}
-          onClose={() => setWordAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log("Word mastery achievement claimed:", achievement);
-          }}
-          autoCloseDelay={2000}
-        />
-      )}
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
 
       {/* Screen reader live region */}
       <div
