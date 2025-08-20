@@ -269,6 +269,7 @@ export const JungleAdventureSettingsPanel: React.FC<
   const [dailyTimeLimit, setDailyTimeLimit] = useState([60]);
   const [contentFiltering, setContentFiltering] = useState("age-appropriate");
   const [progressSharing, setProgressSharing] = useState(false);
+  const [jungleMapEnabled, setJungleMapEnabled] = useState(true);
 
   // Accessibility settings
   const [screenReader, setScreenReader] = useState(false);
