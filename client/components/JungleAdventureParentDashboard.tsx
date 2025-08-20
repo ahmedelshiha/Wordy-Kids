@@ -823,13 +823,52 @@ export const JungleAdventureParentDashboard: React.FC<
               </div>
 
               {/* Family Achievements Timeline */}
-              <FamilyAchievementsTimeline
-                className="w-full"
-                onEventClick={(event) => {
-                  console.log("Timeline event clicked:", event);
-                  // Future: Show detailed event analytics modal
-                }}
-              />
+              {isTimelineEnabled ? (
+                timelineError ? (
+                  <JungleGuideFallback
+                    error={timelineError}
+                    onRetry={() => {
+                      setTimelineError(null);
+                      if (isAnalyticsEnabled) {
+                        parentDashboardAnalytics.trackFeatureUsage('timeline', 'retry_after_error');
+                      }
+                    }}
+                    retryText="Reload Timeline"
+                    showBasicStats={false}
+                  />
+                ) : (
+                  <div
+                    onError={(error) => {
+                      const errorMessage = error instanceof Error ? error.message : 'Timeline failed to load';
+                      setTimelineError(errorMessage);
+                      if (isAnalyticsEnabled) {
+                        parentDashboardAnalytics.trackError('timeline', errorMessage);
+                      }
+                    }}
+                  >
+                    <FamilyAchievementsTimeline
+                      className="w-full"
+                      onEventClick={(event) => {
+                        if (isAnalyticsEnabled) {
+                          parentDashboardAnalytics.trackTimelineEventClick(event.type, {
+                            eventId: event.id,
+                            category: event.category,
+                          });
+                        }
+                        console.log("Timeline event clicked:", event);
+                      }}
+                    />
+                  </div>
+                )
+              ) : (
+                <Card className="jungle-card">
+                  <CardContent className="p-8 text-center">
+                    <p className="text-jungle-dark/70">
+                      🌟 Family Timeline feature coming soon! Keep exploring your learning adventure.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
             </motion.div>
           </TabsContent>
 
