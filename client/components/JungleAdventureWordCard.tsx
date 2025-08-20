@@ -339,8 +339,7 @@ export const JungleAdventureWordCard: React.FC<
           isPressed && "jungle-pressed",
         )}
         style={{
-          transformStyle: "preserve-3d",
-          perspective: "1200px",
+          willChange: "transform",
         }}
         onClick={handleFlip}
         onTouchStart={handleTouchStart}
