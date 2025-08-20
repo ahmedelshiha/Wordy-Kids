@@ -2388,7 +2388,7 @@ export function InteractiveDashboardWordCard({
       {/* Enhanced Achievement Popup for Journey Achievements */}
       {journeyAchievements.length > 0 && (
         <EnhancedAchievementDialog
-        achievements={journeyAchievements}
+          achievements={journeyAchievements}
           onClose={() => setJourneyAchievements([])}
           onAchievementClaim={(achievement) => {
             console.log(

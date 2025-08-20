@@ -988,7 +988,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
       {/* Achievement Popup */}
       {wordAchievements.length > 0 && (
         <EnhancedAchievementDialog
-        achievements={wordAchievements}
+          achievements={wordAchievements}
           onClose={() => setWordAchievements([])}
           onAchievementClaim={(achievement) => {
             console.log("Word mastery achievement claimed:", achievement);

@@ -1443,7 +1443,15 @@ export default function Index({ initialProfile }: IndexProps) {
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
     }
-  }, [selectedCategory, userWordHistory, rememberedWords, forgottenWords, excludedWordIds, childStats, sessionNumber]);
+  }, [
+    selectedCategory,
+    userWordHistory,
+    rememberedWords,
+    forgottenWords,
+    excludedWordIds,
+    childStats,
+    sessionNumber,
+  ]);
 
   const generateDashboardWords = useCallback(() => {
     console.log("Generating systematic dashboard words...");

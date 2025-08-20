@@ -811,7 +811,7 @@ export const EnhancedWordAdventureCard: React.FC<
       {/* Achievement Popup */}
       {wordAchievements.length > 0 && (
         <EnhancedAchievementDialog
-        achievements={wordAchievements}
+          achievements={wordAchievements}
           onClose={() => setWordAchievements([])}
           onAchievementClaim={(achievement) => {
             console.log("Word adventure achievement claimed:", achievement);
