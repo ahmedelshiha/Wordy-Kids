@@ -49,16 +49,34 @@ interface Achievement {
   name: string;
   description: string;
   icon: string;
-  category: "learning" | "streak" | "quiz" | "exploration" | "social" | "jungle_adventure";
+  category:
+    | "learning"
+    | "streak"
+    | "quiz"
+    | "exploration"
+    | "social"
+    | "jungle_adventure";
   difficulty: "sapling" | "growing" | "mighty" | "ancient" | "legendary";
   rarity?: "common" | "rare" | "epic" | "legendary";
   requirements: number;
   currentProgress: number;
   unlocked: boolean;
   dateUnlocked?: Date;
-  region?: "canopy" | "floor" | "undergrowth" | "river" | "mountain" | "clearing";
+  region?:
+    | "canopy"
+    | "floor"
+    | "undergrowth"
+    | "river"
+    | "mountain"
+    | "clearing";
   reward?: {
-    type: "avatar_accessory" | "jungle_theme" | "sound_effect" | "title" | "points" | "animal_companion";
+    type:
+      | "avatar_accessory"
+      | "jungle_theme"
+      | "sound_effect"
+      | "title"
+      | "points"
+      | "animal_companion";
     item: string;
     value?: number;
     preview?: string;
@@ -639,17 +657,24 @@ export function AchievementSystem({
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.totalWordsLearned} />
             </div>
-            <p className="text-xs md:text-sm opacity-90">Words Discovered! 🌿</p>
+            <p className="text-xs md:text-sm opacity-90">
+              Words Discovered! 🌿
+            </p>
           </CardContent>
         </Card>
 
         <Card className="jungle-achievement-card bg-gradient-to-br from-sunshine to-sunshine-light text-jungle-dark hover:scale-105 transition-all animate-jungle-sparkle">
           <CardContent className="p-3 md:p-6 text-center">
-            <Compass className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin" style={{ animationDuration: '3s' }} />
+            <Compass
+              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin"
+              style={{ animationDuration: "3s" }}
+            />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.learningSpeed} suffix="/hr" />
             </div>
-            <p className="text-xs md:text-sm opacity-90">Exploration Speed! 🧭</p>
+            <p className="text-xs md:text-sm opacity-90">
+              Exploration Speed! 🧭
+            </p>
           </CardContent>
         </Card>
 
@@ -699,7 +724,12 @@ export function AchievementSystem({
                     />
                   </div>
                   <p className="text-xs text-jungle/70 mt-1">{days[index]}</p>
-                  <p className="text-sm md:text-lg animate-bounce" style={{ animationDelay: `${index * 0.1}s` }}>{jungleEmojis[index]}</p>
+                  <p
+                    className="text-sm md:text-lg animate-bounce"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    {jungleEmojis[index]}
+                  </p>
                   <p className="text-xs md:text-sm font-bold text-jungle">
                     {value}
                   </p>
@@ -869,7 +899,8 @@ export function AchievementSystem({
   );
 
   return (
-    <div className="space-y-6 jungle-achievement-system bg-gradient-to-br from-green-50/30 to-emerald-50/30"
+    <div
+      className="space-y-6 jungle-achievement-system bg-gradient-to-br from-green-50/30 to-emerald-50/30"
       style={{
         backgroundImage: `
           radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
@@ -881,8 +912,12 @@ export function AchievementSystem({
       {/* Jungle Adventure Header - Mobile Optimized */}
       <div className="text-center px-4 relative">
         {/* Decorative jungle elements */}
-        <div className="absolute top-0 left-1/4 w-8 h-8 text-2xl animate-jungle-sway">🌿</div>
-        <div className="absolute top-0 right-1/4 w-8 h-8 text-2xl animate-jungle-float">🌳</div>
+        <div className="absolute top-0 left-1/4 w-8 h-8 text-2xl animate-jungle-sway">
+          🌿
+        </div>
+        <div className="absolute top-0 right-1/4 w-8 h-8 text-2xl animate-jungle-float">
+          🌳
+        </div>
 
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-jungle via-jungle-light to-sunshine bg-clip-text text-transparent mb-2 leading-tight">
           🌿 Your Jungle Adventure! 🏆
@@ -950,7 +985,10 @@ export function AchievementSystem({
             value="streaks"
             className="jungle-tab-trigger flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-coral-red data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3 hover:bg-coral-red/20 transition-all duration-300"
           >
-            <Compass className="w-4 h-4 md:w-4 md:h-4 animate-spin" style={{ animationDuration: '4s' }} />
+            <Compass
+              className="w-4 h-4 md:w-4 md:h-4 animate-spin"
+              style={{ animationDuration: "4s" }}
+            />
             <span className="hidden md:inline">🧭 Exploration</span>
             <span className="md:hidden text-center">
               🧭
@@ -1010,11 +1048,16 @@ export function AchievementSystem({
                   onClick={() => setSelectedCategory(category.id)}
                   className={`flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 ${
                     selectedCategory === category.id
-                      ? 'bg-jungle hover:bg-jungle-dark text-white shadow-lg'
-                      : 'border-jungle/30 text-jungle hover:bg-jungle/10'
+                      ? "bg-jungle hover:bg-jungle-dark text-white shadow-lg"
+                      : "border-jungle/30 text-jungle hover:bg-jungle/10"
                   }`}
                 >
-                  <span className="animate-bounce" style={{ animationDelay: `${Math.random() * 2}s` }}>{category.icon}</span>
+                  <span
+                    className="animate-bounce"
+                    style={{ animationDelay: `${Math.random() * 2}s` }}
+                  >
+                    {category.icon}
+                  </span>
                   {category.name}
                 </Button>
               ))}
@@ -1024,8 +1067,8 @@ export function AchievementSystem({
                 onClick={() => setShowUnlockables(!showUnlockables)}
                 className={`flex items-center gap-1 md:gap-2 hover:scale-105 transition-all text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 ${
                   showUnlockables
-                    ? 'bg-sunshine hover:bg-sunshine-dark text-jungle-dark shadow-lg'
-                    : 'border-sunshine/30 text-sunshine hover:bg-sunshine/10'
+                    ? "bg-sunshine hover:bg-sunshine-dark text-jungle-dark shadow-lg"
+                    : "border-sunshine/30 text-sunshine hover:bg-sunshine/10"
                 }`}
               >
                 <Gift className="w-4 h-4 animate-pulse" />
@@ -1047,7 +1090,7 @@ export function AchievementSystem({
                         achievement.unlocked
                           ? `bg-gradient-to-br ${getDifficultyColor(achievement.difficulty)} text-white shadow-lg unlocked animate-jungle-glow`
                           : "bg-white border-2 border-dashed border-jungle/30 hover:border-jungle hover:shadow-lg"
-                      } ${achievement.rarity ? `rarity-${achievement.rarity}` : ''}`}
+                      } ${achievement.rarity ? `rarity-${achievement.rarity}` : ""}`}
                       onClick={() => handleAchievementClick(achievement)}
                     >
                       {/* Mobile Compact Layout */}

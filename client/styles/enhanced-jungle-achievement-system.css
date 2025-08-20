@@ -464,10 +464,26 @@
 /* Jungle Adventure Background Patterns */
 .jungle-adventure-bg {
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 60%, rgba(33, 150, 243, 0.05) 0%, transparent 50%),
-    linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(236, 253, 245, 0.9) 100%);
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(76, 175, 80, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 193, 7, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 60%,
+      rgba(33, 150, 243, 0.05) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(248, 250, 252, 0.9) 0%,
+      rgba(236, 253, 245, 0.9) 100%
+    );
 }
 
 /* Enhanced Card Hover Effects */
@@ -646,7 +662,8 @@
 }
 
 @keyframes jungle-mystical-flow {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
