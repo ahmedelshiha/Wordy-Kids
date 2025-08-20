@@ -688,19 +688,19 @@ export function AchievementSystem({
               const maxValue = Math.max(...stats.weeklyProgress) || 1; // Prevent division by zero
               const height = maxValue > 0 ? (value / maxValue) * 100 : 0;
               const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-              const emojis = ["🌟", "⭐", "✨", "🎯", "🔥", "🎉", "🚀"];
+              const jungleEmojis = ["🌿", "🌳", "🦜", "🐒", "🌺", "🦋", "🏞️"];
 
               return (
                 <div key={index} className="flex flex-col items-center">
                   <div className="flex-1 flex flex-col justify-end">
                     <div
-                      className="bg-gradient-to-t from-educational-blue to-educational-purple rounded-t-lg min-h-[8px] transition-all duration-1000 ease-bounce hover:scale-110"
+                      className="bg-gradient-to-t from-jungle to-jungle-light rounded-t-lg min-h-[8px] transition-all duration-1000 ease-bounce hover:scale-110 shadow-md"
                       style={{ height: `${height}%` }}
                     />
                   </div>
-                  <p className="text-xs text-slate-600 mt-1">{days[index]}</p>
-                  <p className="text-sm md:text-lg">{emojis[index]}</p>
-                  <p className="text-xs md:text-sm font-bold text-educational-blue">
+                  <p className="text-xs text-jungle/70 mt-1">{days[index]}</p>
+                  <p className="text-sm md:text-lg animate-bounce" style={{ animationDelay: `${index * 0.1}s` }}>{jungleEmojis[index]}</p>
+                  <p className="text-xs md:text-sm font-bold text-jungle">
                     {value}
                   </p>
                 </div>
