@@ -1,0 +1,441 @@
+/* Enhanced Jungle Achievement System Styles */
+/* Optimized for performance and mobile responsiveness */
+
+/* Base jungle theme variables */
+:root {
+  --jungle-green: 122 47% 35%;
+  --jungle-green-dark: 122 47% 25%;
+  --jungle-green-light: 122 47% 55%;
+  --sunshine-yellow: 45 100% 51%;
+  --sunshine-yellow-dark: 45 100% 41%;
+  --sunshine-yellow-light: 45 100% 71%;
+  --sky-blue: 207 90% 54%;
+  --sky-blue-dark: 207 90% 44%;
+  --sky-blue-light: 207 90% 74%;
+  --playful-purple: 259 94% 51%;
+  --coral-red: 14 100% 57%;
+}
+
+/* Performance optimizations */
+.jungle-achievement-system {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+.jungle-achievement-card {
+  contain: layout style paint;
+  transform: translateZ(0); /* Enable hardware acceleration */
+}
+
+/* Smooth animations with reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-achievement-system *,
+  .jungle-achievement-system *::before,
+  .jungle-achievement-system *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Optimized jungle animations */
+@keyframes jungle-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(76, 175, 80, 0.6));
+  }
+}
+
+@keyframes jungle-float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+
+@keyframes jungle-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes jungle-sparkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes jungle-celebration {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  40% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  60% {
+    transform: scale(1.15) rotate(8deg);
+  }
+  80% {
+    transform: scale(1.05) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes jungle-level-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.2) translateY(-10px);
+  }
+  40% {
+    transform: scale(0.9) translateY(5px);
+  }
+  60% {
+    transform: scale(1.1) translateY(-5px);
+  }
+  80% {
+    transform: scale(0.95) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+}
+
+/* Jungle achievement card styles */
+.jungle-achievement-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.jungle-achievement-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.jungle-achievement-card.unlocked {
+  animation: jungle-glow 3s ease-in-out infinite;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .jungle-achievement-card {
+    transform: none !important; /* Disable complex transforms on mobile */
+  }
+
+  .jungle-achievement-card:hover {
+    transform: scale(1.02) !important;
+  }
+
+  /* Reduce animation complexity on mobile */
+  .jungle-achievement-system [class*="animate-"] {
+    animation-duration: 0.5s;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .jungle-achievement-card {
+    border: 2px solid currentColor;
+    box-shadow: none;
+  }
+
+  .jungle-achievement-card.unlocked {
+    background: #2d5016 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Jungle particle effects */
+.jungle-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.jungle-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.8) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: jungle-sparkle 2s ease-in-out infinite;
+}
+
+/* Jungle difficulty indicators */
+.difficulty-sapling {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
+}
+
+.difficulty-growing {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+}
+
+.difficulty-mighty {
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3);
+}
+
+.difficulty-ancient {
+  background: linear-gradient(135deg, #f59e0b, #059669, #10b981);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+  animation: jungle-glow 2s ease-in-out infinite;
+}
+
+/* Rarity indicators */
+.rarity-common {
+  border: 2px solid #6b7280;
+}
+
+.rarity-rare {
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+
+.rarity-epic {
+  border: 2px solid #8b5cf6;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+.rarity-legendary {
+  border: 2px solid #f59e0b;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  animation: jungle-celebration 3s ease-in-out infinite;
+}
+
+/* Progress animations */
+.jungle-progress-bar {
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, #4ade80, #22c55e, #16a34a);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Adventure map styling */
+.adventure-map {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.adventure-day {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-height: 24px;
+}
+
+@media (min-width: 768px) {
+  .adventure-day {
+    min-height: 32px;
+    font-size: 0.875rem;
+  }
+}
+
+.adventure-day:hover {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+.adventure-day.explored {
+  animation: jungle-float 4s ease-in-out infinite;
+}
+
+/* Jungle stats cards */
+.jungle-stats-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.jungle-stats-card:hover {
+  transform: translateY(-4px);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Tab animations */
+.jungle-tab {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.jungle-tab::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.jungle-tab:hover::before {
+  left: 100%;
+}
+
+.jungle-tab.active {
+  transform: scale(1.05);
+}
+
+/* Loading animation */
+.jungle-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+}
+
+.jungle-loading-spinner {
+  width: 64px;
+  height: 64px;
+  border: 4px solid rgba(34, 197, 94, 0.1);
+  border-top: 4px solid #22c55e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Accessibility improvements */
+.jungle-achievement-system button:focus,
+.jungle-achievement-system [role="button"]:focus {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+.jungle-achievement-system [aria-pressed="true"] {
+  background-color: #16a34a !important;
+  color: white !important;
+}
+
+/* Print styles */
+@media print {
+  .jungle-achievement-system {
+    background: none !important;
+    color: black !important;
+  }
+
+  .jungle-achievement-card {
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+
+  .jungle-particles,
+  .jungle-loading-spinner {
+    display: none !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .jungle-achievement-system {
+    --jungle-green: 122 47% 45%;
+    --jungle-green-dark: 122 47% 35%;
+    --jungle-green-light: 122 47% 65%;
+  }
+
+  .jungle-stats-card {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .jungle-achievement-card:hover {
+    transform: none;
+  }
+
+  .jungle-achievement-card:active {
+    transform: scale(0.98);
+  }
+
+  .adventure-day:hover {
+    transform: none;
+  }
+
+  .adventure-day:active {
+    transform: scale(1.1);
+  }
+}
+
+/* Safari optimizations */
+@supports (-webkit-backdrop-filter: blur(10px)) {
+  .jungle-stats-card {
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* Performance hint for complex animations */
+.jungle-complex-animation {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* GPU acceleration for smooth animations */
+.jungle-gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

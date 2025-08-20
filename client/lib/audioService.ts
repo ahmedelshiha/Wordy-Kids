@@ -326,6 +326,23 @@ export class AudioService {
       onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
+    // Input validation
+    if (typeof word !== "string") {
+      console.error(
+        "Audio service: word parameter must be a string, received:",
+        typeof word,
+        word,
+      );
+      if (options.onError) {
+        options.onError(
+          new Error(
+            `Invalid word parameter: expected string, got ${typeof word}`,
+          ),
+        );
+      }
+      return;
+    }
+
     if (!this.isEnabled || !word?.trim()) return;
 
     // Check if speech synthesis is supported and available
@@ -422,29 +439,33 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", {
-          error: event.error,
-          message: event.message,
-          eventType: event.type,
-          word: word,
-          voice: voice?.name,
-          voiceURI: voice?.voiceURI,
-          rate,
-          pitch,
-          volume,
-          timestamp: new Date().toISOString(),
-          userAgent: navigator.userAgent.substring(0, 100),
-          speechState: {
-            speaking: this.speechSynthesis.speaking,
-            pending: this.speechSynthesis.pending,
-            paused: this.speechSynthesis.paused,
+        console.error(
+          `Speech synthesis error for word "${word}":`,
+          event.error || "Unknown error",
+          {
+            error: event.error,
+            message: event.message,
+            eventType: event.type,
+            word: word,
+            voice: voice?.name,
+            voiceURI: voice?.voiceURI,
+            rate,
+            pitch,
+            volume,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent.substring(0, 100),
+            speechState: {
+              speaking: this.speechSynthesis.speaking,
+              pending: this.speechSynthesis.pending,
+              paused: this.speechSynthesis.paused,
+            },
+            voiceInfo: {
+              voicesCount: this.voices.length,
+              voicesLoaded: this.voicesLoaded,
+              selectedVoiceType: this.selectedVoiceType,
+            },
           },
-          voiceInfo: {
-            voicesCount: this.voices.length,
-            voicesLoaded: this.voicesLoaded,
-            selectedVoiceType: this.selectedVoiceType,
-          },
-        });
+        );
 
         try {
           onError?.();
@@ -511,6 +532,33 @@ export class AudioService {
       onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
+    // Input validation
+    if (typeof word !== "string") {
+      console.error(
+        "Audio service (default voice): word parameter must be a string, received:",
+        typeof word,
+        word,
+      );
+      if (options.onError) {
+        options.onError(
+          new Error(
+            `Invalid word parameter: expected string, got ${typeof word}`,
+          ),
+        );
+      }
+      return;
+    }
+
+    if (!word || word.trim() === "") {
+      console.error(
+        "Audio service (default voice): word parameter is empty or undefined",
+      );
+      if (options.onError) {
+        options.onError(new Error("Word parameter is empty or undefined"));
+      }
+      return;
+    }
+
     try {
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
@@ -552,21 +600,25 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error (default voice):", {
-          error: event.error,
-          message: event.message,
-          type: event.type,
-          timeStamp: event.timeStamp,
-          word: word,
-          voice: voice?.name || "default",
-          voiceURI: voice?.voiceURI,
-          speechState: {
-            speaking: this.speechSynthesis.speaking,
-            pending: this.speechSynthesis.pending,
-            paused: this.speechSynthesis.paused,
+        console.error(
+          `Speech synthesis error (default voice) for word "${word}":`,
+          event.error || "Unknown error",
+          {
+            error: event.error,
+            message: event.message,
+            type: event.type,
+            timeStamp: event.timeStamp,
+            word: word,
+            voice: voice?.name || "default",
+            voiceURI: voice?.voiceURI,
+            speechState: {
+              speaking: this.speechSynthesis.speaking,
+              pending: this.speechSynthesis.pending,
+              paused: this.speechSynthesis.paused,
+            },
+            timestamp: new Date().toISOString(),
           },
-          timestamp: new Date().toISOString(),
-        });
+        );
         try {
           options.onError?.();
         } catch (error) {

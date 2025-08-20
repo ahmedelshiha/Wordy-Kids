@@ -400,7 +400,10 @@ export function InteractiveDashboardWordCard({
                     : String(errorDetails || "No error details provided"),
             };
 
-            console.error("Speech synthesis failed for word:", errorInfo);
+            console.error(
+              `Speech synthesis failed for word: ${currentWord.word}`,
+              errorInfo,
+            );
             setIsPlaying(false);
 
             // Fallback: try with basic audioService
@@ -478,7 +481,7 @@ export function InteractiveDashboardWordCard({
               };
 
               console.error(
-                "Fallback speech synthesis also failed:",
+                `Fallback speech synthesis also failed for word: ${currentWord.word}`,
                 catchErrorInfo,
               );
               setIsPlaying(false);
@@ -502,7 +505,10 @@ export function InteractiveDashboardWordCard({
                 : String(mainError),
         };
 
-        console.error("Main speech synthesis failed:", mainErrorInfo);
+        console.error(
+          `Main speech synthesis failed for word: ${currentWord.word}`,
+          mainErrorInfo,
+        );
         setIsPlaying(false);
       }
     }
@@ -1301,7 +1307,7 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-[320px] h-[500px] sm:w-[380px] sm:h-[520px] md:w-[420px] md:h-[520px] lg:w-[460px] lg:h-[540px] xl:w-[480px] xl:h-[560px] mx-auto relative overflow-hidden",
+            "w-[340px] h-[500px] sm:w-[380px] sm:h-[520px] md:w-[420px] md:h-[520px] lg:w-[460px] lg:h-[540px] xl:w-[480px] xl:h-[560px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
             "ai-card-background",
             "bg-transparent", // Override default Card white background
