@@ -36,7 +36,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
@@ -92,7 +92,7 @@ export const EnhancedWordAdventureCard: React.FC<
   const [showSparkles, setShowSparkles] = useState(false);
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
-  const [wordAchievements, setWordAchievements] = useState<any[]>([]);
+  // wordAchievements state removed - now using event-based system
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
     null,
   );
@@ -154,7 +154,15 @@ export const EnhancedWordAdventureCard: React.FC<
       });
 
       if (starAchievements.length > 0) {
-        setTimeout(() => setWordAchievements(starAchievements), 1500);
+        // Trigger achievements through new lightweight popup system
+        setTimeout(() => {
+          starAchievements.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
+            });
+            window.dispatchEvent(event);
+          });
+        }, 1500);
       }
     }
   }, [
@@ -808,17 +816,7 @@ export const EnhancedWordAdventureCard: React.FC<
         </CardContent>
       </Card>
 
-      {/* Achievement Popup */}
-      {wordAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={wordAchievements}
-          onClose={() => setWordAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log("Word adventure achievement claimed:", achievement);
-          }}
-          autoCloseDelay={2000}
-        />
-      )}
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
 
       {/* Swipe Direction Visual Feedback */}
       {isGesturing && swipeDirection && (

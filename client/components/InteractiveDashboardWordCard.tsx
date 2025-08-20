@@ -23,7 +23,7 @@ import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   DashboardWordGenerator,
@@ -192,7 +192,7 @@ export function InteractiveDashboardWordCard({
   const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
     [],
   );
-  const [journeyAchievements, setJourneyAchievements] = useState<any[]>([]);
+  // journeyAchievements state removed - now using event-based system
 
   // UI States
   const [showWordDetails, setShowWordDetails] = useState(false);
@@ -754,8 +754,14 @@ export function InteractiveDashboardWordCard({
 
       // Show enhanced achievements if any were unlocked
       if (allNewAchievements.length > 0) {
+        // Trigger achievements through new lightweight popup system
         setTimeout(() => {
-          setJourneyAchievements(allNewAchievements);
+          allNewAchievements.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
+            });
+            window.dispatchEvent(event);
+          });
         }, 1500); // Show after feedback animation
       }
     } catch (error) {
@@ -797,13 +803,15 @@ export function InteractiveDashboardWordCard({
         ...enhancedSessionAchievements,
       ];
 
-      // Add all session achievements to the display queue
+      // Trigger session achievements through new lightweight popup system
       if (allSessionAchievements.length > 0) {
         setTimeout(() => {
-          setJourneyAchievements((prev) => [
-            ...prev,
-            ...allSessionAchievements,
-          ]);
+          allSessionAchievements.forEach((achievement) => {
+            const event = new CustomEvent("milestoneUnlocked", {
+              detail: { achievement },
+            });
+            window.dispatchEvent(event);
+          });
         }, 3000); // Show after session completion celebration
       }
 
@@ -818,7 +826,7 @@ export function InteractiveDashboardWordCard({
       console.log("Session completed!", {
         stats: newStats,
         achievements: achievements.map((a) => a.title),
-        journeyAchievements: allSessionAchievements.length,
+        sessionAchievements: allSessionAchievements.length,
         totalWordsCompleted,
       });
       return;
@@ -876,7 +884,7 @@ export function InteractiveDashboardWordCard({
     // Reset all session state
     setShowSessionComplete(false);
     setSessionAchievements([]);
-    setJourneyAchievements([]);
+    // journeyAchievements state removed - now using event-based system
     setCurrentWordIndex(0);
     setIsAnswered(false);
     setFeedbackType(null);
@@ -1498,7 +1506,7 @@ export function InteractiveDashboardWordCard({
                     const jungleExplorers = {
                       easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
                       medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
-                      hard: ["🐲", "🦅", "🐺", "🐆", "🦌"],
+                      hard: ["🐲", "🦅", "🐺", "🐆", "����"],
                     };
 
                     // Category-specific prompts
@@ -2385,21 +2393,7 @@ export function InteractiveDashboardWordCard({
         </div>
       </div> */}
 
-      {/* Enhanced Achievement Popup for Journey Achievements */}
-      {journeyAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={journeyAchievements}
-          onClose={() => setJourneyAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log(
-              "Journey achievement claimed in dashboard:",
-              achievement,
-            );
-            // Could add additional reward logic here
-          }}
-          autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
-        />
-      )}
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
     </div>
   );
 }

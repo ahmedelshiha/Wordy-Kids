@@ -1,0 +1,459 @@
+/* Jungle Achievement Popup - Lightweight & Kid-Friendly */
+
+.achievement-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.achievement-popup {
+  position: relative;
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%);
+  border: 4px solid #ffd700;
+  border-radius: 24px;
+  padding: 20px 24px;
+  text-align: center;
+  width: 320px;
+  max-width: 80vw;
+  color: white;
+  font-family: "Comic Sans MS", "Fredoka One", cursive, sans-serif;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  pointer-events: auto;
+  transform-origin: center center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .achievement-popup {
+    width: 280px;
+    max-width: 85vw;
+    padding: 16px 20px;
+    border-radius: 20px;
+  }
+}
+
+/* Difficulty-specific styling */
+.achievement-popup--bronze {
+  background: linear-gradient(135deg, #8d4a00 0%, #cd7f32 50%, #daa520 100%);
+  border-color: #cd7f32;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(205, 127, 50, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.achievement-popup--silver {
+  background: linear-gradient(135deg, #707070 0%, #c0c0c0 50%, #e8e8e8 100%);
+  border-color: #c0c0c0;
+  color: #2c2c2c;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(192, 192, 192, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.achievement-popup--gold {
+  background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #ffed4e 100%);
+  border-color: #ffd700;
+  color: #2c2c2c;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(255, 215, 0, 0.6),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+.achievement-popup--diamond {
+  background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 50%, #90caf9 100%);
+  border-color: #42a5f5;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(66, 165, 245, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+.achievement-popup--rainbow {
+  background: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #feca57 16.66%,
+    #48ca4e 33.33%,
+    #0abde3 50%,
+    #6c5ce7 66.66%,
+    #a55eea 83.33%,
+    #ff6b6b 100%
+  );
+  border-color: #ffd700;
+  animation: rainbow-glow 3s ease-in-out infinite;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(255, 215, 0, 0.6),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Jungle Vines Frame */
+.jungle-vines-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.vine {
+  position: absolute;
+  font-size: 24px;
+  z-index: 1;
+  animation: vine-sway 4s ease-in-out infinite;
+}
+
+.vine--top-left {
+  top: -8px;
+  left: -4px;
+  animation-delay: 0s;
+}
+
+.vine--top-right {
+  top: -8px;
+  right: -4px;
+  animation-delay: 1s;
+}
+
+.vine--bottom-left {
+  bottom: -8px;
+  left: -4px;
+  animation-delay: 2s;
+}
+
+.vine--bottom-right {
+  bottom: -8px;
+  right: -4px;
+  animation-delay: 3s;
+}
+
+/* Fireflies Animation */
+.fireflies {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.firefly {
+  position: absolute;
+  font-size: 14px;
+  animation: firefly-dance 6s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+.firefly--1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.firefly--2 {
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.firefly--3 {
+  bottom: 25%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+/* Main Content */
+.popup-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Icon Container */
+.popup-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.popup-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.difficulty-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 20px;
+  z-index: 2;
+  animation: badge-bounce 2s ease-in-out infinite;
+}
+
+/* Text Styling */
+.popup-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.2;
+}
+
+.popup-message {
+  font-size: 1.1rem;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+/* Mobile text sizing */
+@media (max-width: 768px) {
+  .popup-title {
+    font-size: 1.5rem;
+  }
+
+  .popup-message {
+    font-size: 1rem;
+  }
+
+  .difficulty-badge {
+    font-size: 18px;
+    top: -6px;
+    right: -6px;
+  }
+}
+
+/* Celebration Stars */
+.celebration-stars {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.star {
+  font-size: 18px;
+  animation: star-twinkle 2s ease-in-out infinite;
+}
+
+.star--1 {
+  animation-delay: 0s;
+}
+
+.star--2 {
+  animation-delay: 0.3s;
+}
+
+.star--3 {
+  animation-delay: 0.6s;
+}
+
+/* Confetti System */
+.confetti-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.confetti {
+  position: absolute;
+  font-size: 16px;
+}
+
+.confetti--1 {
+  font-size: 14px;
+}
+
+.confetti--2 {
+  font-size: 18px;
+}
+
+.confetti--3 {
+  font-size: 16px;
+}
+
+.confetti--4 {
+  font-size: 15px;
+}
+
+/* Soft Glow Effect */
+.soft-glow {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50px;
+  z-index: -1;
+  animation: soft-pulse 3s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes vine-sway {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(3deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(-3deg) scale(0.95);
+  }
+}
+
+@keyframes firefly-dance {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translate(10px, -8px) scale(1.1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-5px, 5px) scale(0.9);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(8px, -3px) scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+@keyframes badge-bounce {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes rainbow-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(255, 107, 107, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
+  16.66% {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(254, 202, 87, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
+  33.33% {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(72, 202, 78, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(10, 189, 227, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
+  66.66% {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(108, 92, 231, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
+  83.33% {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(165, 94, 234, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Accessibility & Performance */
+@media (prefers-reduced-motion: reduce) {
+  .achievement-popup,
+  .vine,
+  .firefly,
+  .star,
+  .difficulty-badge,
+  .soft-glow {
+    animation: none !important;
+  }
+
+  .confetti-container {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .achievement-popup {
+    border-width: 6px;
+    box-shadow: 0 0 0 2px white;
+  }
+
+  .popup-title,
+  .popup-message {
+    text-shadow: 0 0 4px black;
+  }
+}
+
+/* Focus and interaction states for accessibility */
+.achievement-popup:focus-within {
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}

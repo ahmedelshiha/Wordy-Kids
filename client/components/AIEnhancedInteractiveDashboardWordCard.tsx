@@ -37,7 +37,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { EMOJI_CONSTANTS } from "@/lib/emojiUtils";
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { AchievementTeaser } from "@/components/AchievementTeaser";
 import {
   useAIWordRecommendations,
@@ -1781,11 +1781,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
         </Card>
       </motion.div>
 
-      {/* Enhanced Achievement Popup for journey achievements */}
-      <EnhancedAchievementPopup
-        achievements={journeyAchievements}
-        onClose={() => setJourneyAchievements([])}
-      />
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
     </div>
   );
 }

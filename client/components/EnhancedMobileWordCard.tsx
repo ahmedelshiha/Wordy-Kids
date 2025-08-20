@@ -36,7 +36,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
@@ -88,7 +88,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
   const [showSparkles, setShowSparkles] = useState(false);
   const [adventureStatus, setAdventureStatus] =
     useState<WordAdventureStatus | null>(null);
-  const [wordAchievements, setWordAchievements] = useState<any[]>([]);
+  // wordAchievements state removed - now using event-based system
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(
     null,
   );
@@ -232,8 +232,14 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         });
 
         if (pronunciationAchievements.length > 0) {
+          // Trigger achievements through new event system
           setTimeout(() => {
-            setWordAchievements(pronunciationAchievements);
+            pronunciationAchievements.forEach((achievement) => {
+              const event = new CustomEvent("milestoneUnlocked", {
+                detail: { achievement },
+              });
+              window.dispatchEvent(event);
+            });
           }, 1000);
         }
       },
@@ -985,17 +991,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         </CardContent>
       </Card>
 
-      {/* Achievement Popup */}
-      {wordAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={wordAchievements}
-          onClose={() => setWordAchievements([])}
-          onAchievementClaim={(achievement) => {
-            console.log("Word mastery achievement claimed:", achievement);
-          }}
-          autoCloseDelay={2000}
-        />
-      )}
+      {/* Achievement popups now handled by LightweightAchievementProvider */}
 
       {/* Screen reader live region */}
       <div

@@ -42,7 +42,7 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
-import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
+// Old achievement dialog system removed - now using LightweightAchievementProvider
 import { useEnhancedAchievementDialog } from "@/hooks/use-enhanced-achievement-dialog";
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
@@ -254,14 +254,10 @@ export default function Index({ initialProfile }: IndexProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
 
-  // Enhanced Achievement Dialog System
-  const {
-    achievements: enhancedAchievements,
-    showDialog: showEnhancedDialog,
-    closeDialog: closeEnhancedDialog,
-    trackProgress: trackEnhancedProgress,
-    claimAchievement: claimEnhancedAchievement,
-  } = useEnhancedAchievementDialog();
+  // Enhanced achievement dialog removed - now handled by LightweightAchievementProvider
+  // Keep only the tracking function from the old system
+  const { trackProgress: trackEnhancedProgress } =
+    useEnhancedAchievementDialog();
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
@@ -3839,19 +3835,7 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Achievement Dialog */}
-          {showEnhancedDialog && (
-            <EnhancedAchievementDialog
-              achievements={enhancedAchievements}
-              onClose={closeEnhancedDialog}
-              onAchievementClaim={(achievement) => {
-                console.log("Enhanced achievement claimed:", achievement);
-                claimEnhancedAchievement(achievement);
-                // Additional reward logic can be added here
-              }}
-              autoCloseDelay={8000} // Auto-close after 8 seconds for better UX
-            />
-          )}
+          {/* Achievement dialogs now handled by LightweightAchievementProvider */}
 
           {/* Kid-Friendly Floating Mascot */}
           {userRole === "child" && mascotEnabled && (
