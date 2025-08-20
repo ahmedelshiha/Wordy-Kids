@@ -1197,7 +1197,14 @@ export default function Index({ initialProfile }: IndexProps) {
         setFeedback(null);
         // Show achievements after feedback is closed
         if (unlockedAchievements.length > 0) {
-          setAchievementPopup(unlockedAchievements);
+          // Convert legacy achievements to enhanced format and track them
+          unlockedAchievements.forEach(achievement => {
+            trackEnhancedProgress({
+              wordsLearned: rememberedWords.size,
+              streakDays: learningStats.currentStreak,
+              totalAccuracy: currentProgress.accuracy,
+            });
+          });
         }
       },
     });
