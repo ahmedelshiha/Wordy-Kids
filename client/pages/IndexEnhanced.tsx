@@ -20,7 +20,7 @@ import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
-import { ParentDashboard } from "@/components/ParentDashboard";
+import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
 import { WordCreator } from "@/components/WordCreator";
 import { LearningAnalytics } from "@/components/LearningAnalytics";
 import {
@@ -374,10 +374,9 @@ export default function IndexEnhanced() {
       <main className="flex min-h-screen">
         {userRole === "parent" ? (
           <div className="w-full p-8">
-            <ParentDashboard
-              children={undefined}
-              sessions={undefined}
-              onNavigateBack={() => setUserRole("child")}
+            <JungleAdventureParentDashboard
+              onBack={() => setUserRole("child")}
+              className="min-h-screen"
             />
           </div>
         ) : (

@@ -68,7 +68,7 @@ import {
 import { getSessionPersistenceService } from "@/lib/sessionPersistenceService";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
-import { ParentDashboard } from "@/components/ParentDashboard";
+import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
@@ -2076,11 +2076,9 @@ export default function Index({ initialProfile }: IndexProps) {
           <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
-                <ParentDashboard
-                  children={getRealChildrenData()}
-                  sessions={getRealSessionsData()}
-                  onNavigateBack={() => setUserRole("child")}
-                  showMobileBackButton={false}
+                <JungleAdventureParentDashboard
+                  onBack={() => setUserRole("child")}
+                  className="min-h-screen"
                 />
               </div>
             ) : (
