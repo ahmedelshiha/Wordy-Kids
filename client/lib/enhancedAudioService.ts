@@ -459,7 +459,7 @@ export class EnhancedAudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", {
+        console.error(`Speech synthesis error for word "${word}":`, event.error || 'Unknown error', {
           error: event.error,
           message: event.message,
           word: word,
