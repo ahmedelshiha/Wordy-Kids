@@ -97,10 +97,10 @@ export function useLightweightAchievement() {
 export function AchievementTestControls() {
   const { triggerTestPopup, clearQueue, queueStatus } = useLightweightAchievement();
 
-  // Only show in development
-  if (process.env.NODE_ENV !== "development") {
-    return null;
-  }
+  // Temporarily show in all environments for testing
+  // if (process.env.NODE_ENV !== "development") {
+  //   return null;
+  // }
 
   return (
     <div className="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border">
