@@ -395,6 +395,14 @@ export class EnhancedAudioService {
       return;
     }
 
+    // Debouncing to prevent rapid calls that can cause interruptions
+    const now = Date.now();
+    if (now - this.lastSpeechTime < this.minSpeechInterval) {
+      console.log(`Speech call debounced for "${word}" - too soon after last call`);
+      return;
+    }
+    this.lastSpeechTime = now;
+
     if (!this.isEnabled) {
       console.log("Audio service is disabled");
       const disabledError = {
