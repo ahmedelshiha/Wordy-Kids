@@ -365,69 +365,146 @@ export function InteractiveDashboardWordCard({
       }
 
       // Pronounce word with enhanced error handling
-      enhancedAudioService.pronounceWord(currentWord.word, {
-        onStart: () => {
-          console.log("Speech started successfully");
-          setIsPlaying(true);
-        },
-        onEnd: () => {
-          console.log("Speech completed successfully");
-          setIsPlaying(false);
-        },
-        onError: (errorDetails) => {
-          console.error("Speech synthesis failed for word:", {
-            word: currentWord.word,
-            service: "enhancedAudioService",
-            timestamp: new Date().toISOString(),
-            errorDetails: errorDetails || "No error details provided",
-          });
-          setIsPlaying(false);
-          // Fallback: try with basic audioService
-          try {
-            console.log(
-              "Attempting fallback to basic audioService for word:",
-              currentWord.word,
-            );
-            audioService.pronounceWord(currentWord.word, {
-              onStart: () => {
-                console.log(
-                  "Fallback audioService started successfully for:",
-                  currentWord.word,
-                );
-                setIsPlaying(true);
-              },
-              onEnd: () => {
-                console.log(
-                  "Fallback audioService completed successfully for:",
-                  currentWord.word,
-                );
-                setIsPlaying(false);
-              },
-              onError: () => {
-                console.error("Fallback audioService also failed for word:", {
-                  word: currentWord.word,
-                  service: "basicAudioService",
-                  timestamp: new Date().toISOString(),
-                });
-                setIsPlaying(false);
-              },
-            });
-          } catch (fallbackError) {
-            console.error("Fallback speech synthesis also failed:", {
+      try {
+        if (
+          !enhancedAudioService ||
+          typeof enhancedAudioService.pronounceWord !== "function"
+        ) {
+          throw new Error("Enhanced audio service not available");
+        }
+
+        enhancedAudioService.pronounceWord(currentWord.word, {
+          onStart: () => {
+            console.log("Speech started successfully");
+            setIsPlaying(true);
+          },
+          onEnd: () => {
+            console.log("Speech completed successfully");
+            setIsPlaying(false);
+          },
+          onError: (errorDetails) => {
+            // Proper error handling and logging
+            const errorInfo = {
               word: currentWord.word,
-              error:
-                fallbackError instanceof Error
-                  ? {
-                      name: fallbackError.name,
-                      message: fallbackError.message,
-                      stack: fallbackError.stack,
-                    }
-                  : fallbackError,
+              service: "enhancedAudioService",
               timestamp: new Date().toISOString(),
-            });
-          }
-        },
-      });
+              errorDetails:
+                errorDetails instanceof Error
+                  ? {
+                      name: errorDetails.name,
+                      message: errorDetails.message,
+                      stack: errorDetails.stack,
+                    }
+                  : typeof errorDetails === "object" && errorDetails !== null
+                    ? JSON.stringify(errorDetails)
+                    : String(errorDetails || "No error details provided"),
+            };
+
+            console.error("Speech synthesis failed for word:", errorInfo);
+            setIsPlaying(false);
+
+            // Fallback: try with basic audioService
+            try {
+              if (
+                !audioService ||
+                typeof audioService.pronounceWord !== "function"
+              ) {
+                throw new Error("Basic audio service not available");
+              }
+
+              console.log(
+                "Attempting fallback to basic audioService for word:",
+                currentWord.word,
+              );
+              audioService.pronounceWord(currentWord.word, {
+                onStart: () => {
+                  console.log(
+                    "Fallback audioService started successfully for:",
+                    currentWord.word,
+                  );
+                  setIsPlaying(true);
+                },
+                onEnd: () => {
+                  console.log(
+                    "Fallback audioService completed successfully for:",
+                    currentWord.word,
+                  );
+                  setIsPlaying(false);
+                },
+                onError: (fallbackErrorDetails) => {
+                  const fallbackErrorInfo = {
+                    word: currentWord.word,
+                    service: "basicAudioService",
+                    timestamp: new Date().toISOString(),
+                    errorDetails:
+                      fallbackErrorDetails instanceof Error
+                        ? {
+                            name: fallbackErrorDetails.name,
+                            message: fallbackErrorDetails.message,
+                            stack: fallbackErrorDetails.stack,
+                          }
+                        : typeof fallbackErrorDetails === "object" &&
+                            fallbackErrorDetails !== null
+                          ? JSON.stringify(fallbackErrorDetails)
+                          : String(
+                              fallbackErrorDetails ||
+                                "No error details provided",
+                            ),
+                  };
+
+                  console.error(
+                    "Fallback audioService also failed for word:",
+                    fallbackErrorInfo,
+                  );
+                  setIsPlaying(false);
+                },
+              });
+            } catch (fallbackError) {
+              const catchErrorInfo = {
+                word: currentWord.word,
+                service: "fallbackCatch",
+                timestamp: new Date().toISOString(),
+                error:
+                  fallbackError instanceof Error
+                    ? {
+                        name: fallbackError.name,
+                        message: fallbackError.message,
+                        stack: fallbackError.stack,
+                      }
+                    : typeof fallbackError === "object" &&
+                        fallbackError !== null
+                      ? JSON.stringify(fallbackError)
+                      : String(fallbackError),
+              };
+
+              console.error(
+                "Fallback speech synthesis also failed:",
+                catchErrorInfo,
+              );
+              setIsPlaying(false);
+            }
+          },
+        });
+      } catch (mainError) {
+        const mainErrorInfo = {
+          word: currentWord.word,
+          service: "mainCatch",
+          timestamp: new Date().toISOString(),
+          error:
+            mainError instanceof Error
+              ? {
+                  name: mainError.name,
+                  message: mainError.message,
+                  stack: mainError.stack,
+                }
+              : typeof mainError === "object" && mainError !== null
+                ? JSON.stringify(mainError)
+                : String(mainError),
+        };
+
+        console.error("Main speech synthesis failed:", mainErrorInfo);
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -899,7 +976,7 @@ export function InteractiveDashboardWordCard({
               stiffness: 300,
               damping: 20,
             }}
-            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg hover:shadow-xl border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} relative overflow-hidden`}
+            className={`w-48 h-36 ml-2 mt-4 flex flex-col items-center justify-center relative`}
           >
             {/* Celebration background effect */}
             {feedbackType === "remembered" && (
@@ -1006,7 +1083,7 @@ export function InteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-48 h-32 mx-auto flex items-center justify-center rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-48 h-36 ml-2 mt-4 flex items-center justify-center cursor-pointer group relative"
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
@@ -1034,42 +1111,15 @@ export function InteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-8xl filter drop-shadow-lg relative z-10"
+            className="text-9xl relative z-10"
+            style={{
+              filter:
+                "drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.4))",
+              textShadow:
+                "0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5)",
+            }}
           >
             {currentWord.emoji}
-
-            {/* Sparkle effects on hover */}
-            <AnimatePresence>
-              <motion.div
-                key={`sparkle-1-${currentWordIndex}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 3,
-                  ease: "easeInOut",
-                }}
-                className="absolute -top-2 -right-2 text-yellow-400 text-sm"
-              >
-                ✨
-              </motion.div>
-              <motion.div
-                key={`sparkle-2-${currentWordIndex}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 4,
-                  delay: 1,
-                  ease: "easeInOut",
-                }}
-                className="absolute -bottom-1 -left-1 text-blue-400 text-xs"
-              >
-                ⭐
-              </motion.div>
-            </AnimatePresence>
 
             {/* Jungle Adventure Glow Ring */}
             <motion.div
@@ -1281,7 +1331,7 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-[320px] h-[460px] sm:w-[380px] sm:h-[480px] md:w-[420px] md:h-[480px] lg:w-[460px] lg:h-[500px] xl:w-[480px] xl:h-[520px] mx-auto relative overflow-hidden",
+            "w-[320px] h-[500px] sm:w-[380px] sm:h-[520px] md:w-[420px] md:h-[520px] lg:w-[460px] lg:h-[540px] xl:w-[480px] xl:h-[560px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
             "ai-card-background",
             "bg-transparent", // Override default Card white background
@@ -1506,7 +1556,7 @@ export function InteractiveDashboardWordCard({
                           return "⭐ SUPERSTAR! Amazing effort!";
                         if (wordsLearned >= goal * 1.5)
                           return "🚀 Beyond awesome! Keep going!";
-                        return "🎉 Goal achieved! You're incredible!";
+                        return "��� Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
                         return "🌟 Almost there, superstar!";
@@ -1652,7 +1702,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Objects: {
                         easy: [
-                          "🔍 What jungle tool is this?",
+                          "��� What jungle tool is this?",
                           "🎒 Which jungle gear do you see?",
                           "🧭 Can you name this jungle helper?",
                           "⛺ What jungle shelter is this?",
@@ -1987,140 +2037,180 @@ export function InteractiveDashboardWordCard({
                   aria-label="Word hint revealed"
                   aria-live="polite"
                 >
-                  {/* Transparent Hint Card */}
+                  {/* Jungle Adventure Hint Card */}
                   <motion.div
                     initial={{
                       backdropFilter: "blur(0px)",
-                      backgroundColor: "rgba(255, 255, 255, 0)",
+                      backgroundColor: "rgba(34, 139, 34, 0)",
                     }}
                     animate={{
-                      backdropFilter: "blur(8px)",
-                      backgroundColor: "rgba(255, 255, 255, 0.85)",
+                      backdropFilter: "blur(12px)",
+                      backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-[240px] sm:max-w-[280px] p-1.5 sm:p-2 md:p-3 rounded-lg border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[220px] sm:max-w-[260px] md:max-w-[280px] p-1.5 sm:p-2 md:p-2.5 rounded-xl sm:rounded-2xl border border-jungle/15 shadow-lg relative overflow-hidden"
+                    style={{
+                      background: `
+                        radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(255, 193, 7, 0.15) 0%, transparent 50%),
+                        linear-gradient(135deg, rgba(34, 139, 34, 0.1), rgba(76, 175, 80, 0.2), rgba(255, 193, 7, 0.1))
+                      `,
+                      boxShadow: `
+                        0 20px 40px rgba(34, 139, 34, 0.3),
+                        0 0 30px rgba(255, 193, 7, 0.2),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.3)
+                      `,
+                    }}
                   >
-                    {/* Exit Button */}
+                    {/* Jungle Canopy Background */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      {/* Simplified Jungle Elements */}
+                      <motion.div
+                        animate={{
+                          y: [0, -8, 0],
+                          rotate: [0, 5, 0],
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
+                      >
+                        🌿
+                      </motion.div>
+                      <motion.div
+                        animate={{
+                          y: [0, -6, 0],
+                          rotate: [0, 360, 0],
+                        }}
+                        transition={{
+                          duration: 6,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="absolute -bottom-1 -right-2 text-sm opacity-20 text-sunshine"
+                      >
+                        🦋
+                      </motion.div>
+                    </div>
+
+                    {/* Compact Exit Button */}
                     <motion.button
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8, duration: 0.3 }}
+                      transition={{ delay: 0.6, duration: 0.3 }}
                       onClick={() => setShowHint(false)}
-                      className="absolute top-2 right-2 w-6 h-6 bg-orange-500/80 hover:bg-orange-600 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20"
+                      className="absolute top-1 right-1 w-5 h-5 sm:w-6 sm:h-6 bg-coral-red/80 hover:bg-coral-red text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20 shadow-md"
                       aria-label="Close hint"
                     >
                       <span className="text-xs font-bold">×</span>
                     </motion.button>
 
-                    {/* Hint background glow */}
+                    {/* Magical Jungle Glow */}
                     <motion.div
-                      initial={{ scale: 0, opacity: 0.6 }}
-                      animate={{ scale: 2, opacity: 0 }}
-                      transition={{ duration: 1.2, ease: "easeOut" }}
-                      className="absolute inset-0 bg-gradient-to-r from-yellow-200/40 to-orange-200/40 rounded-2xl"
+                      initial={{ scale: 0, opacity: 0.8 }}
+                      animate={{ scale: 2.5, opacity: 0 }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="absolute inset-0 bg-gradient-to-r from-jungle/20 via-sunshine/15 to-jungle/20 rounded-3xl"
                     />
 
                     <div className="text-center relative z-10">
+                      {/* Compact Explorer Icon */}
                       <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
+                        initial={{ scale: 0, rotate: -90 }}
                         animate={{ scale: 1, rotate: 0 }}
                         transition={{
                           delay: 0.2,
-                          duration: 0.6,
+                          duration: 0.5,
                           type: "spring",
-                          stiffness: 200,
                         }}
-                        className="text-lg md:text-xl mb-0.5"
+                        className="text-lg sm:text-xl mb-1"
                         aria-hidden="true"
                       >
                         💡
                       </motion.div>
 
+                      {/* Jungle Adventure Hint Container */}
                       <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.4, duration: 0.5 }}
-                        className="bg-white/60 rounded-lg p-1.5 sm:p-2 border border-yellow-200/80 shadow-inner"
+                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                        className="relative"
+                        style={{
+                          background: `
+                            linear-gradient(135deg,
+                              rgba(255, 255, 255, 0.2) 0%,
+                              rgba(248, 250, 252, 0.15) 50%,
+                              rgba(240, 253, 244, 0.18) 100%
+                            )
+                          `,
+                          backdropFilter: "blur(12px)",
+                          border: "1px solid rgba(76, 175, 80, 0.2)",
+                          borderRadius: "1rem",
+                          padding: "0.75rem",
+                          boxShadow: `
+                            0 4px 20px rgba(34, 139, 34, 0.08),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.15)
+                          `,
+                        }}
                       >
-                        <div className="text-xl sm:text-2xl md:text-3xl mb-1">
-                          {currentWord.emoji}
-                        </div>
-                        <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-800 tracking-wide">
-                          {currentWord.word}
-                        </p>
-
-                        {/* Speaker button inside hint card */}
+                        {/* Large Word Display with Speaker */}
                         <motion.div
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.6, duration: 0.4 }}
-                          className="mt-1.5 sm:mt-2 flex justify-center"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: 0.4, duration: 0.4 }}
+                          className="flex items-center justify-between bg-white/85 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/40"
                         >
-                          <Button
-                            onClick={playPronunciation}
-                            disabled={isPlaying}
-                            size="sm"
-                            className={cn(
-                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
-                              "ring-2 ring-orange-200/30 hover:ring-orange-300/50",
-                              "backdrop-blur-sm",
-                              isPlaying &&
-                                "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
-                              "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
-                            )}
-                            aria-label="🔊 Play pronunciation - Hear how to say this word!"
+                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 flex-1">
+                            {currentWord.word}
+                          </p>
+
+                          {/* Speaker Button on Right */}
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.6, duration: 0.3 }}
+                            className="ml-3"
                           >
-                            <Volume2
+                            <Button
+                              onClick={playPronunciation}
+                              disabled={isPlaying}
+                              size="sm"
                               className={cn(
-                                "w-3 h-3 sm:w-4 sm:h-4 mr-1",
-                                "drop-shadow-lg",
-                                isPlaying &&
-                                  "animate-bounce text-yellow-100 scale-110",
+                                "bg-gradient-to-br from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md",
+                                isPlaying && "animate-pulse scale-105",
+                                "disabled:opacity-50",
                               )}
-                            />
-                            <span className="text-xs font-medium">
-                              {isPlaying ? "Playing..." : "Listen"}
-                            </span>
-                            {isPlaying && (
-                              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
-                            )}
-                          </Button>
+                              aria-label="Listen to word pronunciation"
+                            >
+                              <Volume2
+                                className={cn(
+                                  "w-4 h-4 sm:w-5 sm:h-5",
+                                  isPlaying && "animate-bounce",
+                                )}
+                              />
+                            </Button>
+                          </motion.div>
                         </motion.div>
                       </motion.div>
 
-                      {/* Floating hint elements */}
+                      {/* Single Floating Element */}
                       <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0 }}
                         animate={{
                           opacity: [0, 1, 0],
-                          y: [20, -10, -30],
-                          x: [-20, 20, -20],
+                          y: [0, -15, -25],
+                          x: [0, 5, -5],
                         }}
                         transition={{
                           duration: 3,
                           repeat: Infinity,
                           ease: "easeInOut",
-                          delay: 0.8,
+                          delay: 1,
                         }}
-                        className="absolute -top-2 -right-2 text-yellow-400 text-sm"
+                        className="absolute -top-2 -right-2 text-sunshine text-sm"
                       >
                         ⭐
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{
-                          opacity: [0, 1, 0],
-                          y: [20, -10, -30],
-                          x: [20, -20, 20],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1.5,
-                        }}
-                        className="absolute -bottom-2 -left-2 text-orange-400 text-xs"
-                      >
-                        ✨
                       </motion.div>
                     </div>
                   </motion.div>
