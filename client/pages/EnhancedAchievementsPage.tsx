@@ -52,6 +52,7 @@ import type {
 } from "@/lib/enhancedAchievementSystem";
 import type { EnhancedBadge, BadgeCollection } from "@/lib/enhancedBadgeSystem";
 import type { JungleProgressReport } from "@/lib/enhancedLearningAnalytics";
+import AchievementsSystemMap from "./AchievementsSystemMap";
 
 interface EnhancedAchievementsPageProps {
   onBack?: () => void;
