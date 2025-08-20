@@ -73,6 +73,7 @@ import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { DesktopKidNav } from "@/components/DesktopKidNav";
+import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import {
@@ -1960,7 +1961,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🗺️ My Journey",
+                      label: "🗺��� My Journey",
                       color: "yellow",
                     },
                   ].map(({ id, icon: Icon, label, color }) => (
