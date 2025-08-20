@@ -1756,7 +1756,12 @@ export default function Index({ initialProfile }: IndexProps) {
       // Add journey achievements to notifications
       if (newAchievements.length > 0) {
         setTimeout(() => {
-          setAchievementPopup(newAchievements);
+          // Track journey achievements in enhanced system
+          trackEnhancedProgress({
+            wordsLearned: rememberedWords.size + (status === "remembered" ? 1 : 0),
+            streakDays: learningStats.currentStreak,
+            totalAccuracy: currentProgress.accuracy,
+          });
         }, 1000); // Show after a short delay
       }
 
