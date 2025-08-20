@@ -1666,7 +1666,7 @@ export function InteractiveDashboardWordCard({
                           "🥭 What exotic jungle fruit is this?",
                           "🍍 Which tropical jungle treasure awaits?",
                           "🥑 Can you identify this jungle nutrition?",
-                          "��� What jungle harvest is this?",
+                          "🌾 What jungle harvest is this?",
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
@@ -1892,7 +1892,7 @@ export function InteractiveDashboardWordCard({
                     const categoryEmojis = {
                       Animals: "🐵",
                       Nature: "🌿",
-                      Food: "🍌",
+                      Food: "��",
                       Objects: "🔍",
                       Colors: "🌈",
                       Body: "👤",
