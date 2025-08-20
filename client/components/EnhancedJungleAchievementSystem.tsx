@@ -547,19 +547,24 @@ export function EnhancedJungleAchievementSystem({
   // Show loading state with jungle theme
   if (isLoading || !jungleStats) {
     return (
-      <div className="flex items-center justify-center min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl">
-        <motion.div 
+      <div className={cn(
+        "flex items-center justify-center min-h-[400px] bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl",
+        "jungle-loading"
+      )}>
+        <motion.div
           className="text-center"
-          initial={{ opacity: 0, y: 20 }}
+          initial={!mobilePerf.reducedMotion ? { opacity: 0, y: 20 } : { opacity: 1 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: animPrefs.getTransitionDuration(600) }}
         >
-          <motion.div 
-            className="animate-spin rounded-full h-16 w-16 border-4 border-jungle/20 border-t-jungle mx-auto mb-6"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div className="text-4xl mb-4 animate-bounce">🌳</motion.div>
+          <div className={cn(
+            "rounded-full h-16 w-16 border-4 border-jungle/20 border-t-jungle mx-auto mb-6",
+            mobilePerf.reducedMotion ? "jungle-loading-spinner" : "animate-spin"
+          )} />
+          <div className={cn(
+            "text-4xl mb-4",
+            !mobilePerf.reducedMotion && animPrefs.maxAnimationComplexity !== 'low' && "animate-bounce"
+          )}>🌳</div>
           <p className="text-jungle-dark font-semibold">Exploring the jungle of learning...</p>
         </motion.div>
       </div>
@@ -720,7 +725,7 @@ export function EnhancedJungleAchievementSystem({
                 const maxDiscoveries = Math.max(...jungleStats.weeklyAdventures) || 1;
                 const height = maxDiscoveries > 0 ? (discoveries / maxDiscoveries) * 100 : 0;
                 const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-                const jungleEmojis = ["🌱", "🌿", "🍃", "🌳", "🦋", "🌺", "🦜"];
+                const jungleEmojis = ["🌱", "���", "🍃", "🌳", "🦋", "🌺", "🦜"];
 
                 return (
                   <motion.div 
