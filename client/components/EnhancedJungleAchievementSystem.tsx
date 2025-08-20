@@ -239,7 +239,7 @@ const jungleUnlockables: JungleUnlockable[] = [
     name: "Magical Firefly Trail",
     type: "special_effect",
     description: "Fireflies follow you as you learn, lighting up your path!",
-    icon: "✨",
+    icon: "���",
     jungleIcon: "🌙",
     unlocked: false,
     unlockedBy: "streak_master",
@@ -1090,7 +1090,7 @@ const EnhancedJungleAchievementSystemComponent = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5",
+        "min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50",
         "jungle-achievement-system",
         animPrefs.getAnimationClass("high"),
       )}
