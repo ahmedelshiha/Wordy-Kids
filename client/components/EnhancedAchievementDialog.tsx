@@ -78,7 +78,7 @@ const JungleVines = React.memo(() => (
     >
       🍃
     </motion.div>
-    
+
     {/* Side Vines */}
     <motion.div
       className="absolute left-0 top-1/4 w-6 h-16 text-green-500 text-lg"
@@ -109,7 +109,7 @@ const JungleVines = React.memo(() => (
     >
       🌿
     </motion.div>
-    
+
     {/* Bottom Vines */}
     <motion.div
       className="absolute -bottom-1 left-8 w-14 h-6 text-green-500 text-xl"
@@ -130,34 +130,42 @@ const JungleVines = React.memo(() => (
 ));
 
 // Treasure Chest Component - Opens when achievement unlocks
-const TreasureChest = React.memo(({ isOpen, onAnimationComplete }: { isOpen: boolean; onAnimationComplete?: () => void }) => (
-  <motion.div
-    className="relative text-6xl"
-    initial={{ scale: 0.8, rotate: -10 }}
-    animate={{ 
-      scale: isOpen ? [0.8, 1.2, 1] : 0.8,
-      rotate: isOpen ? [0, 5, 0] : 0,
-    }}
-    transition={{
-      duration: 0.8,
-      type: "spring",
-      damping: 10,
-    }}
-    onAnimationComplete={onAnimationComplete}
-  >
-    {isOpen ? (
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.4 }}
-      >
-        📦✨
-      </motion.div>
-    ) : (
-      "📦"
-    )}
-  </motion.div>
-));
+const TreasureChest = React.memo(
+  ({
+    isOpen,
+    onAnimationComplete,
+  }: {
+    isOpen: boolean;
+    onAnimationComplete?: () => void;
+  }) => (
+    <motion.div
+      className="relative text-6xl"
+      initial={{ scale: 0.8, rotate: -10 }}
+      animate={{
+        scale: isOpen ? [0.8, 1.2, 1] : 0.8,
+        rotate: isOpen ? [0, 5, 0] : 0,
+      }}
+      transition={{
+        duration: 0.8,
+        type: "spring",
+        damping: 10,
+      }}
+      onAnimationComplete={onAnimationComplete}
+    >
+      {isOpen ? (
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          📦✨
+        </motion.div>
+      ) : (
+        "📦"
+      )}
+    </motion.div>
+  ),
+);
 
 // Firefly Particle Effects
 const FireflyParticles = React.memo(() => (
@@ -224,13 +232,15 @@ const JungleCelebrationConfetti = React.memo(() => (
     {Array.from({ length: 15 }, (_, i) => {
       const emojis = ["🍃", "🌿", "⭐", "✨", "🏆", "🎊", "🌟"];
       const emoji = emojis[i % emojis.length];
-      
+
       return (
         <motion.div
           key={i}
           className="absolute text-lg"
           initial={{
-            x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 400),
+            x:
+              Math.random() *
+              (typeof window !== "undefined" ? window.innerWidth : 400),
             y: -50,
             rotate: 0,
             opacity: 1,
@@ -311,7 +321,7 @@ export function EnhancedAchievementDialog({
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -319,7 +329,9 @@ export function EnhancedAchievementDialog({
 
   // Memoized computed values
   const difficultyColor = useMemo(
-    () => DIFFICULTY_COLORS[currentAchievement?.difficulty] || DIFFICULTY_COLORS.bronze,
+    () =>
+      DIFFICULTY_COLORS[currentAchievement?.difficulty] ||
+      DIFFICULTY_COLORS.bronze,
     [currentAchievement?.difficulty],
   );
 
@@ -345,7 +357,7 @@ export function EnhancedAchievementDialog({
   const handleTreasureAnimationComplete = useCallback(() => {
     setShowCanopyLight(true);
     setShowReward(true);
-    
+
     // Trigger enhanced reward celebration
     if (currentAchievement) {
       enhancedRewardCelebration.triggerCelebration({
@@ -361,17 +373,19 @@ export function EnhancedAchievementDialog({
           background: "jungle_canopy",
           sound: "jungle_triumph",
         },
-        colors: currentAchievement.jungleTheme ? {
-          primary: currentAchievement.jungleTheme.glowColor,
-          secondary: "#4CAF50",
-          accent: "#FFD700",
-          glow: currentAchievement.jungleTheme.glowColor,
-        } : {
-          primary: "#FFD700",
-          secondary: "#4CAF50",
-          accent: "#FF6B35",
-          glow: "#FFD700",
-        },
+        colors: currentAchievement.jungleTheme
+          ? {
+              primary: currentAchievement.jungleTheme.glowColor,
+              secondary: "#4CAF50",
+              accent: "#FFD700",
+              glow: currentAchievement.jungleTheme.glowColor,
+            }
+          : {
+              primary: "#FFD700",
+              secondary: "#4CAF50",
+              accent: "#FF6B35",
+              glow: "#FFD700",
+            },
         effects: {
           shake: false,
           zoom: true,
@@ -386,7 +400,12 @@ export function EnhancedAchievementDialog({
 
   // Auto-close timer management
   useEffect(() => {
-    if (achievements.length > 0 && !isClosing && !isPaused && autoCloseDelay > 0) {
+    if (
+      achievements.length > 0 &&
+      !isClosing &&
+      !isPaused &&
+      autoCloseDelay > 0
+    ) {
       setTimeRemaining(autoCloseDelay);
 
       const startTime = Date.now();
@@ -406,7 +425,14 @@ export function EnhancedAchievementDialog({
 
       return () => clearInterval(interval);
     }
-  }, [achievements.length, currentIndex, isClosing, isPaused, autoCloseDelay, onClose]);
+  }, [
+    achievements.length,
+    currentIndex,
+    isClosing,
+    isPaused,
+    autoCloseDelay,
+    onClose,
+  ]);
 
   // Pause/resume handlers
   const handleMouseEnter = useCallback(() => setIsPaused(true), []);
@@ -417,12 +443,12 @@ export function EnhancedAchievementDialog({
     if (currentAchievement && !claimed.has(currentAchievement.id)) {
       setIsPaused(true);
       setClaimed((prev) => new Set(prev).add(currentAchievement.id));
-      
+
       // Save to enhanced achievement system
       enhancedAchievementSystem.claimAchievement(currentAchievement.id);
-      
+
       onAchievementClaim?.(currentAchievement);
-      
+
       // Play celebration sound
       enhancedAudioService.playGameSound?.("treasure-found");
 
@@ -434,7 +460,7 @@ export function EnhancedAchievementDialog({
           setShowReward(false);
           setShowCanopyLight(false);
           setIsPaused(false);
-          
+
           // Start next achievement animation
           setTimeout(() => setShowTreasure(true), 300);
         }, 1500);
@@ -445,7 +471,14 @@ export function EnhancedAchievementDialog({
         }, 2000);
       }
     }
-  }, [currentAchievement, claimed, currentIndex, achievements.length, onAchievementClaim, onClose]);
+  }, [
+    currentAchievement,
+    claimed,
+    currentIndex,
+    achievements.length,
+    onAchievementClaim,
+    onClose,
+  ]);
 
   // Navigation handlers
   const handleNext = useCallback(() => {
@@ -455,7 +488,7 @@ export function EnhancedAchievementDialog({
       setShowTreasure(false);
       setShowReward(false);
       setShowCanopyLight(false);
-      
+
       setTimeout(() => {
         setShowTreasure(true);
         setIsPaused(false);
@@ -495,13 +528,13 @@ export function EnhancedAchievementDialog({
         >
           {/* Jungle Background Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-green-900/80 via-emerald-800/70 to-teal-900/80 backdrop-blur-md" />
-          
+
           {/* Firefly particles */}
           <FireflyParticles />
-          
+
           {/* Celebration confetti */}
           {showReward && <JungleCelebrationConfetti />}
-          
+
           {/* Jungle canopy light effect */}
           <JungleCanopyLight show={showCanopyLight} />
 
@@ -517,9 +550,7 @@ export function EnhancedAchievementDialog({
               stiffness: 100,
             }}
             className={`relative ${
-              isMobile 
-                ? "w-full max-w-sm mx-auto" 
-                : "w-full max-w-lg mx-auto"
+              isMobile ? "w-full max-w-sm mx-auto" : "w-full max-w-lg mx-auto"
             }`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -529,9 +560,11 @@ export function EnhancedAchievementDialog({
             {/* Jungle vines frame */}
             <JungleVines />
 
-            <Card className={`bg-gradient-to-br ${difficultyColor} border-4 border-yellow-400/50 shadow-2xl overflow-hidden ${
-              isMobile ? "rounded-3xl" : "rounded-4xl"
-            }`}>
+            <Card
+              className={`bg-gradient-to-br ${difficultyColor} border-4 border-yellow-400/50 shadow-2xl overflow-hidden ${
+                isMobile ? "rounded-3xl" : "rounded-4xl"
+              }`}
+            >
               {/* Close Button */}
               <Button
                 onClick={handleClose}
@@ -543,7 +576,9 @@ export function EnhancedAchievementDialog({
                 <X className="w-4 h-4" />
               </Button>
 
-              <CardContent className={`text-center relative ${isMobile ? "p-6" : "p-8"} text-white`}>
+              <CardContent
+                className={`text-center relative ${isMobile ? "p-6" : "p-8"} text-white`}
+              >
                 {/* Header with trophy icon */}
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
@@ -551,11 +586,17 @@ export function EnhancedAchievementDialog({
                   transition={{ delay: 0.2 }}
                   className="flex items-center justify-center gap-2 mb-4"
                 >
-                  <Trophy className={`text-yellow-300 ${isMobile ? "w-6 h-6" : "w-8 h-8"}`} />
-                  <h1 className={`font-bold text-yellow-200 ${isMobile ? "text-lg" : "text-2xl"}`}>
+                  <Trophy
+                    className={`text-yellow-300 ${isMobile ? "w-6 h-6" : "w-8 h-8"}`}
+                  />
+                  <h1
+                    className={`font-bold text-yellow-200 ${isMobile ? "text-lg" : "text-2xl"}`}
+                  >
                     🎉 Achievement Unlocked! 🎉
                   </h1>
-                  <TreePine className={`text-green-300 ${isMobile ? "w-6 h-6" : "w-8 h-8"}`} />
+                  <TreePine
+                    className={`text-green-300 ${isMobile ? "w-6 h-6" : "w-8 h-8"}`}
+                  />
                 </motion.div>
 
                 {/* Treasure chest with achievement icon */}
@@ -565,21 +606,21 @@ export function EnhancedAchievementDialog({
                   transition={{ delay: 0.1, type: "spring", duration: 0.5 }}
                   className={`relative flex flex-col items-center ${isMobile ? "mb-4" : "mb-6"}`}
                 >
-                  <TreasureChest 
-                    isOpen={showTreasure} 
+                  <TreasureChest
+                    isOpen={showTreasure}
                     onAnimationComplete={handleTreasureAnimationComplete}
                   />
-                  
+
                   {/* Achievement icon emerges from chest */}
                   <AnimatePresence>
                     {showReward && (
                       <motion.div
                         initial={{ scale: 0, y: 20 }}
                         animate={{ scale: 1, y: -10 }}
-                        transition={{ 
-                          type: "spring", 
+                        transition={{
+                          type: "spring",
                           duration: 0.6,
-                          delay: 0.3 
+                          delay: 0.3,
                         }}
                         className={`absolute ${isMobile ? "text-4xl" : "text-6xl"} z-10`}
                       >
@@ -600,12 +641,16 @@ export function EnhancedAchievementDialog({
                       className="space-y-4"
                     >
                       {/* Achievement name */}
-                      <h2 className={`font-bold text-yellow-200 ${isMobile ? "text-xl" : "text-3xl"}`}>
+                      <h2
+                        className={`font-bold text-yellow-200 ${isMobile ? "text-xl" : "text-3xl"}`}
+                      >
                         {currentAchievement.name}
                       </h2>
 
                       {/* Achievement description */}
-                      <p className={`text-white/90 leading-relaxed ${isMobile ? "text-sm px-2" : "text-lg px-4"}`}>
+                      <p
+                        className={`text-white/90 leading-relaxed ${isMobile ? "text-sm px-2" : "text-lg px-4"}`}
+                      >
                         {getDescription(currentAchievement)}
                       </p>
 
@@ -630,12 +675,15 @@ export function EnhancedAchievementDialog({
                             Jungle Treasure Reward!
                             <Leaf className="w-5 h-5" />
                           </div>
-                          <div className={`text-white font-semibold ${isMobile ? "text-sm" : "text-lg"}`}>
+                          <div
+                            className={`text-white font-semibold ${isMobile ? "text-sm" : "text-lg"}`}
+                          >
                             {currentAchievement.reward.item}
                           </div>
                           {currentAchievement.reward.value > 0 && (
                             <div className="text-yellow-300 text-sm mt-1">
-                              +{currentAchievement.reward.value} Adventure Points!
+                              +{currentAchievement.reward.value} Adventure
+                              Points!
                             </div>
                           )}
                         </motion.div>
@@ -648,7 +696,9 @@ export function EnhancedAchievementDialog({
                             <div
                               key={index}
                               className={`w-2 h-2 rounded-full transition-colors ${
-                                index === currentIndex ? "bg-yellow-300" : "bg-white/30"
+                                index === currentIndex
+                                  ? "bg-yellow-300"
+                                  : "bg-white/30"
                               }`}
                             />
                           ))}
@@ -658,22 +708,23 @@ export function EnhancedAchievementDialog({
                       {/* Action buttons */}
                       <div className="space-y-3 pt-2">
                         {/* Claim button */}
-                        {currentAchievement.reward && !claimed.has(currentAchievement.id) && (
-                          <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.8 }}
-                          >
-                            <Button
-                              onClick={handleClaimReward}
-                              className="w-full bg-yellow-500 hover:bg-yellow-400 text-yellow-900 font-bold py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105"
+                        {currentAchievement.reward &&
+                          !claimed.has(currentAchievement.id) && (
+                            <motion.div
+                              initial={{ scale: 0.9, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ delay: 0.8 }}
                             >
-                              <Zap className="w-5 h-5 mr-2" />
-                              Claim Jungle Treasure!
-                              <Sparkles className="w-5 h-5 ml-2" />
-                            </Button>
-                          </motion.div>
-                        )}
+                              <Button
+                                onClick={handleClaimReward}
+                                className="w-full bg-yellow-500 hover:bg-yellow-400 text-yellow-900 font-bold py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105"
+                              >
+                                <Zap className="w-5 h-5 mr-2" />
+                                Claim Jungle Treasure!
+                                <Sparkles className="w-5 h-5 ml-2" />
+                              </Button>
+                            </motion.div>
+                          )}
 
                         {/* Navigation buttons */}
                         <div className="flex gap-3">
@@ -688,14 +739,15 @@ export function EnhancedAchievementDialog({
                           )}
 
                           <Button
-                            onClick={achievements.length > 1 ? handleNext : handleClose}
+                            onClick={
+                              achievements.length > 1 ? handleNext : handleClose
+                            }
                             variant="outline"
                             className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25"
                           >
-                            {currentIndex < achievements.length - 1 
-                              ? "Next Adventure →" 
-                              : "Continue Journey! 🚀"
-                            }
+                            {currentIndex < achievements.length - 1
+                              ? "Next Adventure →"
+                              : "Continue Journey! 🚀"}
                           </Button>
                         </div>
                       </div>
@@ -713,7 +765,9 @@ export function EnhancedAchievementDialog({
                             <motion.div
                               className="bg-yellow-400/80 h-1 rounded-full"
                               initial={{ scaleX: 1 }}
-                              animate={{ scaleX: timeRemaining / autoCloseDelay }}
+                              animate={{
+                                scaleX: timeRemaining / autoCloseDelay,
+                              }}
                               transition={{ duration: 0.1, ease: "linear" }}
                               style={{ transformOrigin: "left" }}
                             />
@@ -724,7 +778,8 @@ export function EnhancedAchievementDialog({
                       {/* Achievement counter */}
                       {achievements.length > 1 && (
                         <div className="text-sm text-white/70">
-                          Achievement {currentIndex + 1} of {achievements.length}
+                          Achievement {currentIndex + 1} of{" "}
+                          {achievements.length}
                         </div>
                       )}
                     </motion.div>

@@ -1183,7 +1183,13 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeSession();
-  }, [currentProfile?.id, activeTab, selectedCategory, currentSessionId, trackEnhancedProgress]);
+  }, [
+    currentProfile?.id,
+    activeTab,
+    selectedCategory,
+    currentSessionId,
+    trackEnhancedProgress,
+  ]);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
@@ -1206,7 +1212,7 @@ export default function Index({ initialProfile }: IndexProps) {
         // Show achievements after feedback is closed
         if (unlockedAchievements.length > 0) {
           // Convert legacy achievements to enhanced format and track them
-          unlockedAchievements.forEach(achievement => {
+          unlockedAchievements.forEach((achievement) => {
             trackEnhancedProgress({
               wordsLearned: rememberedWords.size,
               streakDays: learningStats.currentStreak,
@@ -1654,7 +1660,10 @@ export default function Index({ initialProfile }: IndexProps) {
 
       // Also track in enhanced achievement system
       trackEnhancedProgress({
-        wordsLearned: status === "remembered" ? rememberedWords.size + 1 : rememberedWords.size,
+        wordsLearned:
+          status === "remembered"
+            ? rememberedWords.size + 1
+            : rememberedWords.size,
         streakDays: learningStats.currentStreak,
         totalAccuracy: currentProgress.accuracy,
         categoriesCompleted: [selectedCategory].filter(Boolean),
@@ -1774,7 +1783,8 @@ export default function Index({ initialProfile }: IndexProps) {
         setTimeout(() => {
           // Track journey achievements in enhanced system
           trackEnhancedProgress({
-            wordsLearned: rememberedWords.size + (status === "remembered" ? 1 : 0),
+            wordsLearned:
+              rememberedWords.size + (status === "remembered" ? 1 : 0),
             streakDays: learningStats.currentStreak,
             totalAccuracy: currentProgress.accuracy,
           });
