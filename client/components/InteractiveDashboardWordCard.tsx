@@ -1649,7 +1649,7 @@ export function InteractiveDashboardWordCard({
                       easy: [
                         "🌟 What jungle discovery is this?",
                         "🦋 Which jungle wonder do you see?",
-                        "�� Can you name this jungle magic?",
+                        "🌈 Can you name this jungle magic?",
                         "✨ What sparkles in our jungle?",
                       ],
                       medium: [
@@ -1969,7 +1969,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(12px)",
                       backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-[220px] sm:max-w-[260px] md:max-w-[280px] p-1.5 sm:p-2 md:p-2.5 rounded-xl sm:rounded-2xl border-2 border-jungle/30 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[220px] sm:max-w-[260px] md:max-w-[280px] p-1.5 sm:p-2 md:p-2.5 rounded-xl sm:rounded-2xl border border-jungle/15 shadow-lg relative overflow-hidden"
                     style={{
                       background: `
                         radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
