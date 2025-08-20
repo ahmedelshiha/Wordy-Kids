@@ -1892,7 +1892,7 @@ export function InteractiveDashboardWordCard({
                     const categoryEmojis = {
                       Animals: "🐵",
                       Nature: "🌿",
-                      Food: "��",
+                      Food: "🍎",
                       Objects: "🔍",
                       Colors: "🌈",
                       Body: "👤",
