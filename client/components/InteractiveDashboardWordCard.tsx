@@ -1649,7 +1649,7 @@ export function InteractiveDashboardWordCard({
                       easy: [
                         "🌟 What jungle discovery is this?",
                         "🦋 Which jungle wonder do you see?",
-                        "🌈 Can you name this jungle magic?",
+                        "�� Can you name this jungle magic?",
                         "✨ What sparkles in our jungle?",
                       ],
                       medium: [
@@ -2061,59 +2061,56 @@ export function InteractiveDashboardWordCard({
                         style={{
                           background: `
                             linear-gradient(135deg,
-                              rgba(255, 255, 255, 0.9) 0%,
-                              rgba(248, 250, 252, 0.9) 50%,
-                              rgba(240, 253, 244, 0.9) 100%
+                              rgba(255, 255, 255, 0.3) 0%,
+                              rgba(248, 250, 252, 0.2) 50%,
+                              rgba(240, 253, 244, 0.25) 100%
                             )
                           `,
-                          backdropFilter: "blur(8px)",
-                          border: "2px solid rgba(76, 175, 80, 0.3)",
+                          backdropFilter: "blur(12px)",
+                          border: "1px solid rgba(76, 175, 80, 0.4)",
                           borderRadius: "1rem",
-                          padding: "1rem",
+                          padding: "0.75rem",
                           boxShadow: `
-                            0 8px 32px rgba(34, 139, 34, 0.15),
-                            inset 0 1px 2px rgba(255, 255, 255, 0.5)
+                            0 4px 20px rgba(34, 139, 34, 0.1),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.2)
                           `,
                         }}
                       >
-                        {/* Compact Word Display */}
+                        {/* Large Word Display with Speaker */}
                         <motion.div
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.4 }}
-                          className="mb-2"
+                          className="flex items-center justify-between"
                         >
-                          <div className="text-2xl sm:text-3xl mb-1">
-                            {currentWord.emoji}
-                          </div>
-                          <p className="text-lg sm:text-xl font-bold text-jungle-dark">
+                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-jungle-dark flex-1">
                             {currentWord.word}
                           </p>
-                        </motion.div>
 
-                        {/* Compact Listen Button */}
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.6, duration: 0.3 }}
-                          className="flex justify-center"
-                        >
-                          <Button
-                            onClick={playPronunciation}
-                            disabled={isPlaying}
-                            size="sm"
-                            className={cn(
-                              "bg-gradient-to-br from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md",
-                              isPlaying && "animate-pulse scale-105",
-                              "disabled:opacity-50",
-                            )}
-                            aria-label="Listen to word pronunciation"
+                          {/* Speaker Button on Right */}
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.6, duration: 0.3 }}
+                            className="ml-3"
                           >
-                            <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                            <span className="text-xs sm:text-sm font-medium">
-                              {isPlaying ? "Playing" : "Listen"}
-                            </span>
-                          </Button>
+                            <Button
+                              onClick={playPronunciation}
+                              disabled={isPlaying}
+                              size="sm"
+                              className={cn(
+                                "bg-gradient-to-br from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md",
+                                isPlaying && "animate-pulse scale-105",
+                                "disabled:opacity-50",
+                              )}
+                              aria-label="Listen to word pronunciation"
+                            >
+                              <Volume2 className={cn(
+                                "w-4 h-4 sm:w-5 sm:h-5",
+                                isPlaying && "animate-bounce"
+                              )} />
+                            </Button>
+                          </motion.div>
                         </motion.div>
                       </motion.div>
 
