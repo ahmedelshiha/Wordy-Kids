@@ -64,33 +64,54 @@
     scrollbar-color: #d1d5db transparent;
   }
 
-  /* Responsive background images */
+  /* Responsive background images - Optimized for performance and visual quality */
   .bg-responsive-dashboard {
     background-image: url("/images/bg_desktop.webp");
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    /* Smooth transitions for better UX */
+    transition: background-image 0.3s ease;
   }
 
-  /* Mobile background */
+  /* Mobile background - Optimized for mobile performance */
   @media (max-width: 768px) {
     .bg-responsive-dashboard {
       background-image: url("/images/bg_mobile.webp");
+      background-position: center top; /* Better for mobile scroll behavior */
+      background-attachment: scroll; /* Prevents mobile Safari rendering issues */
+      /* Optimize for touch devices */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: transform;
     }
   }
 
-  /* Tablet background */
+  /* Tablet background - Balanced approach */
   @media (min-width: 769px) and (max-width: 1024px) {
     .bg-responsive-dashboard {
       background-image: url("/images/bg_tablet.webp");
+      background-position: center center;
+      background-attachment: scroll; /* Better for tablet scrolling */
     }
   }
 
-  /* Desktop background */
+  /* Desktop background - Full parallax experience */
   @media (min-width: 1025px) {
     .bg-responsive-dashboard {
       background-image: url("/images/bg_desktop.webp");
+      background-position: center center;
+      background-attachment: fixed; /* Parallax effect for desktop */
+    }
+  }
+
+  /* High DPI displays optimization */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .bg-responsive-dashboard {
+      /* Ensure crisp images on retina displays */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
     }
   }
 
