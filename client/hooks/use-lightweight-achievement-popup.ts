@@ -78,27 +78,6 @@ export function useLightweightAchievementPopup() {
     };
   }, [popupState.achievement, hidePopup]);
 
-  /**
-   * Manual trigger for testing
-   */
-  const triggerTestPopup = useCallback(() => {
-    achievementPopupQueue.triggerTestAchievement();
-  }, []);
-
-  /**
-   * Clear all queued achievements
-   */
-  const clearQueue = useCallback(() => {
-    achievementPopupQueue.clearQueue();
-    hidePopup();
-  }, [hidePopup]);
-
-  /**
-   * Get queue status for debugging
-   */
-  const getQueueStatus = useCallback(() => {
-    return achievementPopupQueue.getQueueStatus();
-  }, []);
 
   return {
     // State
@@ -108,12 +87,9 @@ export function useLightweightAchievementPopup() {
     // Actions
     showPopup,
     hidePopup,
-    triggerTestPopup,
-    clearQueue,
 
     // Computed
     popupProps: getPopupProps(),
-    queueStatus: getQueueStatus(),
   };
 }
 
