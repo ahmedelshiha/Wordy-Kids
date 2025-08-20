@@ -1445,7 +1445,7 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [selectedCategory, userWordHistory, rememberedWords, forgottenWords, excludedWordIds, childStats, sessionNumber]);
 
-  const generateDashboardWords = () => {
+  const generateDashboardWords = useCallback(() => {
     console.log("Generating systematic dashboard words...");
 
     try {
@@ -1496,7 +1496,7 @@ export default function Index({ initialProfile }: IndexProps) {
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
     }
-  };
+  }, [rememberedWords, forgottenWords, dashboardSessionNumber]);
 
   const checkCategoryCompletion = (
     displayWords: any[],
