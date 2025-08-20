@@ -1092,52 +1092,30 @@ export function InteractiveDashboardWordCard({
             🔊
           </div>
 
-          {/* Main emoji with enhanced animation */}
+          {/* Main emoji with simplified animation */}
           <motion.div
             key={`emoji-inner-${currentWordIndex}`}
-            animate={{
-              y: [0, -8, 0],
-              rotate: [0, 2, -2, 0],
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 3,
+            animate={!prefersReducedMotion ? {
+              y: [0, -5, 0],
+              scale: [1, 1.02, 1],
+            } : {}}
+            transition={!prefersReducedMotion ? {
+              duration: 4,
               repeat: Infinity,
               ease: "easeInOut",
-              times: [0, 0.5, 1],
-            }}
-            whileHover={{
-              y: -5,
-              scale: 1.1,
+            } : { duration: 0 }}
+            whileHover={!prefersReducedMotion ? {
+              y: -3,
+              scale: 1.05,
               transition: { duration: 0.2 },
-            }}
+            } : {}}
             className="text-9xl relative z-10"
             style={{
-              filter:
-                "drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 24px rgba(255, 255, 255, 0.4))",
-              textShadow:
-                "0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5)",
+              filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))",
+              textShadow: "0 0 10px rgba(255, 255, 255, 0.7)",
             }}
           >
             {currentWord.emoji}
-
-            {/* Jungle Adventure Glow Ring */}
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.6, 0.3],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute inset-0 rounded-full border-2 border-jungle/30"
-              style={{
-                boxShadow: "0 0 20px rgba(76, 175, 80, 0.3)",
-              }}
-            />
           </motion.div>
 
           {/* Jungle Adventure Background Pattern */}
