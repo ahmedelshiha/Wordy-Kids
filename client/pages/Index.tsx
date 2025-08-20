@@ -75,7 +75,6 @@ import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { DesktopKidNav } from "@/components/DesktopKidNav";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
-import AchievementsSystemMap from "./AchievementsSystemMap";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
 import {
@@ -1528,7 +1527,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
-        achievementIcon = "����";
+        achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
@@ -3327,7 +3326,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Explore ancient jungle temples and
                                           decode mysterious picture scrolls!
                                           Each image holds the key to incredible
-                                          word treasures! 🏛️💎
+                                          word treasures! 🏛��💎
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
