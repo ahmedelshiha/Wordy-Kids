@@ -802,7 +802,7 @@ export class EnhancedAudioService {
   }
 
   // Alias method for compatibility
-  public speakText(
+  public async speakText(
     text: string,
     options: {
       rate?: number;
@@ -813,8 +813,8 @@ export class EnhancedAudioService {
       onEnd?: () => void;
       onError?: (errorDetails?: any) => void;
     } = {},
-  ): void {
-    this.pronounceWord(text, options);
+  ): Promise<void> {
+    return this.pronounceWord(text, options);
   }
 }
 
