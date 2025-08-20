@@ -21,7 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -848,7 +848,7 @@ export function VowelRescue({
 
         {/* Enhanced Achievement Popup */}
         {newAchievements.length > 0 && (
-          <EnhancedAchievementPopup
+          <EnhancedAchievementDialog
             achievements={newAchievements}
             onClose={() => setNewAchievements([])}
             onAchievementClaim={(achievement) => {
