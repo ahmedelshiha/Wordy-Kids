@@ -22,7 +22,7 @@ import {
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
-import { AchievementSystem } from "@/components/AchievementSystem";
+// Legacy AchievementSystem removed - now using EnhancedAchievementsPage
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
@@ -1097,6 +1097,16 @@ export default function Index({ initialProfile }: IndexProps) {
     });
   }, [learningMode, selectedCategory]);
 
+  // Legacy tab redirect: handle any cached references to old "progress" tab
+  useEffect(() => {
+    if (activeTab === "progress") {
+      console.log(
+        "Redirecting from legacy 'progress' tab to 'achievements' tab",
+      );
+      setActiveTab("achievements");
+    }
+  }, [activeTab]);
+
   // Enhanced navigation with keyboard support
   useEffect(() => {
     const handleKeyNavigation = (e: KeyboardEvent) => {
@@ -1504,7 +1514,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🗺️";
+        achievementIcon = "🗺�����";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -2860,7 +2870,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   completionResult.title,
-                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
+                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                     20 +
@@ -3063,7 +3073,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               <p className="text-sm text-jungle-dark mt-1">
                                                 Your personal jungle companion
                                                 creates adventures just for you!
-                                                🧙‍♂️✨
+                                                🧙‍♂��✨
                                               </p>
                                             </div>
                                           </div>
@@ -3240,7 +3250,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Follow ancient jungle sounds to hidden
                                           treasures! Listen carefully to
                                           nature's magical symphony and discover
-                                          secret word treasures! 🎵🗺️
+                                          secret word treasures! ����🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3701,19 +3711,6 @@ export default function Index({ initialProfile }: IndexProps) {
                                   ],
                                   hint: `This word starts with "${word.word.charAt(0)}" and relates to ${word.category}`,
                                 }))}
-                              />
-                            </TabsContent>
-
-                            <TabsContent value="progress">
-                              <AchievementSystem
-                                onUnlock={(achievement) => {
-                                  setFeedback({
-                                    type: "celebration",
-                                    title: "Achievement Unlocked! 🏆",
-                                    message: `You earned: ${achievement.name}`,
-                                    onContinue: () => setFeedback(null),
-                                  });
-                                }}
                               />
                             </TabsContent>
 
