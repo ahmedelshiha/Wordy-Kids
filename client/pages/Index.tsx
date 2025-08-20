@@ -1742,16 +1742,12 @@ export default function Index({ initialProfile }: IndexProps) {
         (goal) => goal.type === "daily" && goal.isActive,
       );
       if (dailyGoal && updatedWordsLearned >= dailyGoal.target) {
-        setAchievementPopup((prev) => [
-          ...prev,
-          {
-            id: `daily-goal-${Date.now()}`,
-            title: "Daily Goal Achieved!",
-            description: `Amazing! You've learned ${dailyGoal.target} words today!`,
-            emoji: "🏆",
-            unlocked: true,
-          },
-        ]);
+        // Track daily goal achievement in enhanced system
+        trackEnhancedProgress({
+          wordsLearned: updatedWordsLearned,
+          streakDays: learningStats.currentStreak,
+          totalAccuracy: currentProgress.accuracy,
+        });
       }
 
       // Show achievement notifications in sequence
