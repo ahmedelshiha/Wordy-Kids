@@ -1038,38 +1038,6 @@ export function InteractiveDashboardWordCard({
           >
             {currentWord.emoji}
 
-            {/* Sparkle effects on hover */}
-            <AnimatePresence>
-              <motion.div
-                key={`sparkle-1-${currentWordIndex}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 3,
-                  ease: "easeInOut",
-                }}
-                className="absolute -top-2 -right-2 text-yellow-400 text-sm"
-              >
-                ✨
-              </motion.div>
-              <motion.div
-                key={`sparkle-2-${currentWordIndex}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 4,
-                  delay: 1,
-                  ease: "easeInOut",
-                }}
-                className="absolute -bottom-1 -left-1 text-blue-400 text-xs"
-              >
-                ⭐
-              </motion.div>
-            </AnimatePresence>
 
             {/* Jungle Adventure Glow Ring */}
             <motion.div
@@ -1868,7 +1836,7 @@ export function InteractiveDashboardWordCard({
                       Animals: "🐵",
                       Nature: "🌿",
                       Food: "🍎",
-                      Objects: "🔍",
+                      Objects: "����",
                       Colors: "🌈",
                       Body: "👤",
                       Family: "👨‍👩‍👧‍👦",
