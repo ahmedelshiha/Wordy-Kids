@@ -450,8 +450,12 @@ export class EnhancedAudioService {
     const { onStart, onEnd, onError } = options;
 
     try {
-      // Cancel any ongoing speech safely
-      this.speechSynthesis.cancel();
+      // Cancel any ongoing speech safely with a small delay to prevent interruption errors
+      if (this.speechSynthesis.speaking || this.speechSynthesis.pending) {
+        this.speechSynthesis.cancel();
+        // Wait a brief moment for cancellation to complete
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
 
       const utterance = new SpeechSynthesisUtterance(word.trim());
       utterance.rate = rate;
