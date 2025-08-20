@@ -133,10 +133,10 @@ const milestoneAchievements = [
   },
   {
     title: "Legacy System Retirement",
-    description: "Successfully replaced old achievement system",
+    description: "Completely retired old achievement system and simplified navigation",
     icon: "🔄",
     completedAt: new Date().toLocaleDateString(),
-    impact: "Eliminated technical debt and improved maintainability",
+    impact: "Eliminated technical debt, removed user confusion, streamlined to single achievements interface",
   },
   {
     title: "Interactive Map Deployment",
