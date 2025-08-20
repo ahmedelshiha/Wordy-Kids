@@ -2080,43 +2080,23 @@ export function InteractiveDashboardWordCard({
                       </motion.div>
                     )}
 
-                    {/* Floating success elements */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        y: [20, -10, -30],
-                        x: [0, 10, -10, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatDelay: 3,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute top-2 right-4 text-yellow-400 text-sm"
-                    >
-                      ⭐
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        y: [20, -15, -35],
-                        x: [0, -15, 10, 0],
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        repeatDelay: 4,
-                        delay: 1,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute top-4 left-4 text-green-400 text-xs"
-                    >
-                      ✨
-                    </motion.div>
+                    {/* Single success element - Only if motion allowed */}
+                    {!prefersReducedMotion && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          y: [10, -20],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          ease: "easeOut",
+                        }}
+                        className="absolute top-2 right-4 text-yellow-400 text-sm"
+                      >
+                        ⭐
+                      </motion.div>
+                    )}
                   </motion.div>
 
                   {/* Hint/Definition Display */}
