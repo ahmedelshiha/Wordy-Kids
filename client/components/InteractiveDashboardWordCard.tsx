@@ -1291,16 +1291,6 @@ export function InteractiveDashboardWordCard({
               "jungle-celebration-glow animate-pulse shadow-2xl",
           )}
           style={{
-            background: `
-              linear-gradient(
-                135deg,
-                rgba(0, 0, 0, 0.4) 0%,
-                rgba(0, 0, 0, 0.3) 25%,
-                rgba(0, 0, 0, 0.5) 50%,
-                rgba(0, 0, 0, 0.3) 75%,
-                rgba(0, 0, 0, 0.4) 100%
-              )
-            `,
             boxShadow: `
               0 25px 50px rgba(0, 0, 0, 0.3),
               0 0 30px rgba(255, 215, 0, 0.2),
