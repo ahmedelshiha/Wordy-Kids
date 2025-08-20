@@ -1303,6 +1303,8 @@
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
+    /* Debug: Add subtle border to verify mobile styles are applied */
+    border: 2px solid rgba(255, 0, 0, 0.1) !important;
   }
 }
 
