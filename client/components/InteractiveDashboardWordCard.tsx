@@ -899,7 +899,7 @@ export function InteractiveDashboardWordCard({
               stiffness: 300,
               damping: 20,
             }}
-            className={`w-48 h-32 mx-auto flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg hover:shadow-xl border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} relative overflow-hidden`}
+            className={`w-48 h-32 ml-8 flex flex-col items-center justify-center bg-gradient-to-br ${feedbackColor} rounded-2xl shadow-lg hover:shadow-xl border-2 ${feedbackType === "remembered" ? "border-green-300" : "border-orange-300"} relative overflow-hidden`}
           >
             {/* Celebration background effect */}
             {feedbackType === "remembered" && (
@@ -1006,7 +1006,7 @@ export function InteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-48 h-32 mx-auto flex items-center justify-center rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
+          className="w-48 h-32 ml-8 flex items-center justify-center rounded-2xl shadow-lg hover:shadow-xl cursor-pointer group relative overflow-hidden"
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
@@ -1652,7 +1652,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Objects: {
                         easy: [
-                          "🔍 What jungle tool is this?",
+                          "��� What jungle tool is this?",
                           "🎒 Which jungle gear do you see?",
                           "🧭 Can you name this jungle helper?",
                           "⛺ What jungle shelter is this?",
