@@ -631,15 +631,15 @@ export function AchievementSystem({
 
   const renderProgressOverview = () => (
     <div className="space-y-6">
-      {/* Fun Stats Cards - Mobile Optimized */}
+      {/* Jungle Adventure Stats Cards - Mobile Optimized */}
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 px-2 md:px-0">
-        <Card className="bg-gradient-to-br from-educational-blue to-educational-purple text-white hover:scale-105 transition-all">
+        <Card className="jungle-achievement-card bg-gradient-to-br from-jungle to-jungle-light text-white hover:scale-105 transition-all animate-jungle-glow">
           <CardContent className="p-3 md:p-6 text-center">
-            <Brain className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-pulse" />
+            <TreePine className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-jungle-sway" />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.totalWordsLearned} />
             </div>
-            <p className="text-xs md:text-sm opacity-90">Words Learned! 🎯</p>
+            <p className="text-xs md:text-sm opacity-90">Words Discovered! 🌿</p>
           </CardContent>
         </Card>
 
