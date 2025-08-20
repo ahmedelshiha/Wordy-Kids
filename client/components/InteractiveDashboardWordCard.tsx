@@ -1969,7 +1969,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(12px)",
                       backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-[280px] sm:max-w-[320px] md:max-w-[350px] p-2 sm:p-3 md:p-4 rounded-2xl sm:rounded-3xl border-3 border-jungle/40 shadow-2xl relative overflow-hidden"
+                    className="mx-auto max-w-[220px] sm:max-w-[260px] md:max-w-[280px] p-1.5 sm:p-2 md:p-2.5 rounded-xl sm:rounded-2xl border-2 border-jungle/30 shadow-lg relative overflow-hidden"
                     style={{
                       background: `
                         radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
@@ -2283,7 +2283,7 @@ export function InteractiveDashboardWordCard({
                         }}
                         className="absolute top-1/2 -right-4 text-coral-red text-base"
                       >
-                        ��
+                        🌟
                       </motion.div>
                     </div>
                   </motion.div>
