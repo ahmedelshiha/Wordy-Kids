@@ -619,7 +619,7 @@ export function EnhancedJungleAchievementSystem({
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                🌳
+                ��
               </motion.div>
               <div className="text-2xl md:text-3xl font-bold mb-1">
                 <AnimatedCounter value={jungleStats.totalWordsExplored} />
@@ -1158,10 +1158,12 @@ export function EnhancedJungleAchievementSystem({
                           >
                             <Card
                               className={cn(
-                                "cursor-pointer transition-all duration-300 border-2 overflow-hidden relative",
+                                "cursor-pointer border-2 overflow-hidden relative jungle-achievement-card",
+                                !mobilePerf.isMobile && "transition-all duration-300",
                                 achievement.unlocked
-                                  ? `bg-gradient-to-br ${difficultyStyle.gradient} text-white shadow-2xl ${difficultyStyle.bgGlow} border-transparent`
-                                  : `bg-white hover:bg-green-50 border-dashed ${difficultyStyle.borderGlow} hover:border-jungle/30 hover:shadow-lg`
+                                  ? `bg-gradient-to-br ${difficultyStyle.gradient} text-white shadow-2xl ${difficultyStyle.bgGlow} border-transparent unlocked`
+                                  : `bg-white hover:bg-green-50 border-dashed ${difficultyStyle.borderGlow} hover:border-jungle/30 hover:shadow-lg`,
+                                mobilePerf.reducedMotion && "motion-reduce"
                               )}
                               onClick={() => handleJungleAchievementClick(achievement)}
                             >
