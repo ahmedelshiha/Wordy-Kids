@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { InteractiveJungleMap } from "./InteractiveJungleMap";
+import { FamilyAchievementsTimeline } from "./FamilyAchievementsTimeline";
+import { JungleGuideFallback } from "./JungleGuideFallback";
+import {
+  parentDashboardAnalytics,
+  withPerformanceTracking,
+} from "@/lib/parentDashboardAnalytics";
+import { featureFlags } from "@/lib/featureFlags";
+import { JungleAdventureStorage } from "@/lib/jungleAdventureStorage";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -42,6 +51,7 @@ import {
   Settings,
   Calendar,
   TrendingUp,
+  Map,
   Award,
   Shield,
   Clock,
@@ -104,6 +114,30 @@ export const JungleAdventureParentDashboard: React.FC<
   const [isLoading, setIsLoading] = useState(false);
   const [timeframe, setTimeframe] = useState<"week" | "month" | "year">("week");
   const [showQuickActions, setShowQuickActions] = useState(false);
+
+  // Error handling and feature flags
+  const [mapError, setMapError] = useState<string | null>(null);
+  const [timelineError, setTimelineError] = useState<string | null>(null);
+  const [dashboardLoadTime, setDashboardLoadTime] = useState<number | null>(
+    null,
+  );
+
+  // Get feature flag states
+  const isJungleMapEnabled = featureFlags.isFeatureEnabled(
+    "jungle-map-enhanced",
+    { userRole: "parent" },
+  );
+  const isTimelineEnabled = featureFlags.isFeatureEnabled(
+    "family-achievements-timeline",
+    { userRole: "parent" },
+  );
+  const isAnalyticsEnabled = featureFlags.isFeatureEnabled(
+    "performance-monitoring",
+  );
+
+  // Get user preference for jungle map (from parental controls)
+  const userSettings = JungleAdventureStorage.getSettings();
+  const userMapPreference = userSettings.family?.jungleMapEnabled !== false;
 
   // Sample data - replace with real data
   const children: Child[] = [
@@ -172,6 +206,9 @@ export const JungleAdventureParentDashboard: React.FC<
   >([]);
 
   useEffect(() => {
+    const loadStartTime = performance.now();
+
+    // Initialize floating elements
     const elements = [
       { id: 1, emoji: "🦋", x: 10, y: 20, delay: 0 },
       { id: 2, emoji: "🌿", x: 80, y: 40, delay: 1 },
@@ -180,7 +217,15 @@ export const JungleAdventureParentDashboard: React.FC<
       { id: 5, emoji: "🍃", x: 60, y: 85, delay: 4 },
     ];
     setFloatingElements(elements);
-  }, []);
+
+    // Track dashboard load performance
+    const loadTime = performance.now() - loadStartTime;
+    setDashboardLoadTime(loadTime);
+
+    if (isAnalyticsEnabled) {
+      parentDashboardAnalytics.trackDashboardLoad(loadTime);
+    }
+  }, [isAnalyticsEnabled]);
 
   const quickActions = [
     { icon: Settings, label: "Family Settings", color: "bg-jungle" },
@@ -437,8 +482,8 @@ export const JungleAdventureParentDashboard: React.FC<
                 value="progress"
                 className="jungle-tab data-[state=active]:bg-profile-purple data-[state=active]:text-white"
               >
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Progress
+                <Map className="w-4 h-4 mr-2" />
+                Adventure Map
               </TabsTrigger>
               <TabsTrigger
                 value="settings"
@@ -674,102 +719,205 @@ export const JungleAdventureParentDashboard: React.FC<
               <Card className="jungle-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-jungle-dark">
-                    <TrendingUp className="w-5 h-5 text-profile-purple" />
-                    📊 Adventure Progress Analytics
+                    <Map className="w-5 h-5 text-profile-purple" />
+                    🗺️ Interactive Adventure Map
                   </CardTitle>
+                  <p className="text-sm text-jungle-dark/70 mt-2">
+                    Explore your child's learning journey through the magical
+                    jungle! Click on markers to see progress details.
+                  </p>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Weekly Progress Chart */}
-                    <div>
-                      <h4 className="font-medium text-jungle-dark mb-4">
-                        Weekly Word Discovery
-                      </h4>
-                      <div className="space-y-3">
-                        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                          (day, index) => (
-                            <div key={day} className="flex items-center gap-3">
-                              <span className="text-sm w-8 text-jungle-dark/70">
-                                {day}
-                              </span>
-                              <div className="flex-1 bg-jungle/10 rounded-full h-6 relative overflow-hidden">
-                                <motion.div
-                                  className="h-full bg-gradient-to-r from-jungle to-sunshine rounded-full"
-                                  initial={{ width: 0 }}
-                                  animate={{
-                                    width: `${(children[0]?.weeklyProgress[index] || 0) * 10}%`,
-                                  }}
-                                  transition={{
-                                    delay: index * 0.1,
-                                    duration: 0.6,
-                                  }}
-                                />
-                                <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-jungle-dark">
-                                  {children[0]?.weeklyProgress[index] || 0}{" "}
-                                  words
-                                </span>
-                              </div>
-                            </div>
-                          ),
-                        )}
-                      </div>
+                <CardContent className="p-0">
+                  {isJungleMapEnabled && userMapPreference ? (
+                    <div className="relative">
+                      {mapError ? (
+                        <JungleGuideFallback
+                          error={mapError}
+                          onRetry={() => {
+                            setMapError(null);
+                            if (isAnalyticsEnabled) {
+                              parentDashboardAnalytics.trackFeatureUsage(
+                                "jungle-map",
+                                "retry_after_error",
+                              );
+                            }
+                          }}
+                          retryText="Reload Map"
+                          showBasicStats={true}
+                        />
+                      ) : (
+                        <div
+                          onError={(error) => {
+                            const errorMessage =
+                              error instanceof Error
+                                ? error.message
+                                : "Map failed to load";
+                            setMapError(errorMessage);
+                            if (isAnalyticsEnabled) {
+                              parentDashboardAnalytics.trackError(
+                                "map",
+                                errorMessage,
+                              );
+                            }
+                          }}
+                        >
+                          <InteractiveJungleMap
+                            className="w-full"
+                            onMarkerClick={(marker) => {
+                              if (isAnalyticsEnabled) {
+                                parentDashboardAnalytics.trackMapInteraction(
+                                  "marker_click",
+                                  {
+                                    markerId: marker.id,
+                                    markerType: marker.type,
+                                  },
+                                );
+                              }
+                              console.log("Marker clicked:", marker);
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
-
-                    {/* Achievement Timeline */}
-                    <div>
-                      <h4 className="font-medium text-jungle-dark mb-4">
-                        Recent Milestones
-                      </h4>
-                      <div className="space-y-4">
-                        {[
-                          {
-                            date: "Today",
-                            achievement: "Completed Animal Category",
-                            child: "Emma",
-                            icon: "🦋",
-                          },
-                          {
-                            date: "Yesterday",
-                            achievement: "7-day Learning Streak",
-                            child: "Leo",
-                            icon: "🔥",
-                          },
-                          {
-                            date: "2 days ago",
-                            achievement: "100 Words Discovered",
-                            child: "Emma",
-                            icon: "🏆",
-                          },
-                          {
-                            date: "3 days ago",
-                            achievement: "Perfect Pronunciation",
-                            child: "Leo",
-                            icon: "🎯",
-                          },
-                        ].map((milestone, index) => (
-                          <motion.div
-                            key={index}
-                            className="flex items-center gap-3 p-3 bg-gradient-to-r from-jungle/5 to-sunshine/5 rounded-lg"
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                          >
-                            <div className="text-xl">{milestone.icon}</div>
-                            <div className="flex-1">
-                              <p className="text-sm font-medium text-jungle-dark">
-                                {milestone.achievement}
-                              </p>
-                              <p className="text-xs text-jungle-dark/70">
-                                {milestone.child} • {milestone.date}
-                              </p>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  ) : (
+                    <JungleGuideFallback
+                      error={
+                        !userMapPreference
+                          ? "Interactive map disabled in settings"
+                          : "Map feature not available"
+                      }
+                      onRetry={
+                        !userMapPreference
+                          ? undefined
+                          : () => {
+                              if (isAnalyticsEnabled) {
+                                parentDashboardAnalytics.trackFeatureUsage(
+                                  "jungle-map",
+                                  "enable_attempt",
+                                );
+                              }
+                            }
+                      }
+                      retryText={!userMapPreference ? undefined : "Enable Map"}
+                      showBasicStats={true}
+                    />
+                  )}
                 </CardContent>
               </Card>
+
+              {/* Quick Stats Below Map */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card className="jungle-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-green-500 w-8 h-8 rounded-full flex items-center justify-center">
+                        <Trophy className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-jungle-dark/70">Completed</p>
+                        <p className="text-lg font-semibold text-jungle-dark">
+                          3 Milestones
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="jungle-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-yellow-500 w-8 h-8 rounded-full flex items-center justify-center">
+                        <Target className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-jungle-dark/70">
+                          In Progress
+                        </p>
+                        <p className="text-lg font-semibold text-jungle-dark">
+                          1 Challenge
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="jungle-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center">
+                        <Crown className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-jungle-dark/70">Unlocked</p>
+                        <p className="text-lg font-semibold text-jungle-dark">
+                          2 Areas
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Family Achievements Timeline */}
+              {isTimelineEnabled ? (
+                timelineError ? (
+                  <JungleGuideFallback
+                    error={timelineError}
+                    onRetry={() => {
+                      setTimelineError(null);
+                      if (isAnalyticsEnabled) {
+                        parentDashboardAnalytics.trackFeatureUsage(
+                          "timeline",
+                          "retry_after_error",
+                        );
+                      }
+                    }}
+                    retryText="Reload Timeline"
+                    showBasicStats={false}
+                  />
+                ) : (
+                  <div
+                    onError={(error) => {
+                      const errorMessage =
+                        error instanceof Error
+                          ? error.message
+                          : "Timeline failed to load";
+                      setTimelineError(errorMessage);
+                      if (isAnalyticsEnabled) {
+                        parentDashboardAnalytics.trackError(
+                          "timeline",
+                          errorMessage,
+                        );
+                      }
+                    }}
+                  >
+                    <FamilyAchievementsTimeline
+                      className="w-full"
+                      onEventClick={(event) => {
+                        if (isAnalyticsEnabled) {
+                          parentDashboardAnalytics.trackTimelineEventClick(
+                            event.type,
+                            {
+                              eventId: event.id,
+                              category: event.category,
+                            },
+                          );
+                        }
+                        console.log("Timeline event clicked:", event);
+                      }}
+                    />
+                  </div>
+                )
+              ) : (
+                <Card className="jungle-card">
+                  <CardContent className="p-8 text-center">
+                    <p className="text-jungle-dark/70">
+                      🌟 Family Timeline feature coming soon! Keep exploring
+                      your learning adventure.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
             </motion.div>
           </TabsContent>
 

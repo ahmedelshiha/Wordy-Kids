@@ -269,6 +269,7 @@ export const JungleAdventureSettingsPanel: React.FC<
   const [dailyTimeLimit, setDailyTimeLimit] = useState([60]);
   const [contentFiltering, setContentFiltering] = useState("age-appropriate");
   const [progressSharing, setProgressSharing] = useState(false);
+  const [jungleMapEnabled, setJungleMapEnabled] = useState(true);
 
   // Accessibility settings
   const [screenReader, setScreenReader] = useState(false);
@@ -339,6 +340,7 @@ export const JungleAdventureSettingsPanel: React.FC<
         dailyTimeLimit: dailyTimeLimit[0],
         contentFiltering,
         progressSharing,
+        jungleMapEnabled,
       },
       accessibility: {
         screenReader,
@@ -1409,6 +1411,24 @@ export const JungleAdventureSettingsPanel: React.FC<
                               checked={progressSharing}
                               onCheckedChange={(checked) => {
                                 setProgressSharing(checked);
+                                setUnsavedChanges(true);
+                              }}
+                            />
+                          </div>
+
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <label className="font-medium text-jungle-dark">
+                                Interactive Jungle Map
+                              </label>
+                              <p className="text-sm text-jungle-dark/70">
+                                Enable immersive map & timeline features
+                              </p>
+                            </div>
+                            <Switch
+                              checked={jungleMapEnabled}
+                              onCheckedChange={(checked) => {
+                                setJungleMapEnabled(checked);
                                 setUnsavedChanges(true);
                               }}
                             />

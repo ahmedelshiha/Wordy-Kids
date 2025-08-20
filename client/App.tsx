@@ -43,8 +43,59 @@ const App = () => {
     // Ensure we're properly hydrated on the client
     if (typeof window !== "undefined") {
       setIsClient(true);
+
+      // Migrate legacy settings to unified jungle settings
+      migrateLegacySettings();
     }
   }, []);
+
+  // Migration utility to unify storage keys
+  const migrateLegacySettings = () => {
+    const legacyKeys = [
+      "backgroundAnimations",
+      "accessibilitySettings",
+      "soundscape",
+      "voiceCharacter",
+      "soundEnabled",
+      "uiInteractionSounds",
+      "voiceNarration",
+      "hapticFeedback",
+      "highContrastMode",
+      "largeText",
+      "reducedMotion",
+      "parentDashboardSettings",
+      "parentDashboardChildren",
+      "categoryProgress",
+      "systematic_progress_reading",
+      "systematic_progress_vocabulary",
+      "systematic_progress_comprehension",
+    ];
+    const jungleKey = "jungleAdventureSettings";
+
+    // Only migrate if jungle settings don't exist yet
+    if (!localStorage.getItem(jungleKey)) {
+      const newSettings: any = {};
+
+      legacyKeys.forEach((key) => {
+        const val = localStorage.getItem(key);
+        if (val) {
+          try {
+            newSettings[key] = JSON.parse(val);
+          } catch {
+            newSettings[key] = val; // Keep as string if not JSON
+          }
+          // Clean up legacy key
+          localStorage.removeItem(key);
+        }
+      });
+
+      // Save unified settings
+      if (Object.keys(newSettings).length > 0) {
+        localStorage.setItem(jungleKey, JSON.stringify(newSettings));
+        console.log("✅ Migrated legacy settings to unified jungle storage");
+      }
+    }
+  };
 
   // Always render on client side, but show loading during hydration
   if (!isClient) {

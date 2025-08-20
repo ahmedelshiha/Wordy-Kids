@@ -44,7 +44,7 @@ import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 // Old achievement dialog system removed - now using LightweightAchievementProvider
 import { useEnhancedAchievementDialog } from "@/hooks/use-enhanced-achievement-dialog";
-import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
+import { JungleAdventureSettingsPanel } from "@/components/JungleAdventureSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import {
@@ -68,7 +68,7 @@ import {
 import { getSessionPersistenceService } from "@/lib/sessionPersistenceService";
 import { DailyChallenge } from "@/components/DailyChallenge";
 import { ReadingComprehension } from "@/components/ReadingComprehension";
-import { ParentDashboard } from "@/components/ParentDashboard";
+import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
@@ -2076,11 +2076,9 @@ export default function Index({ initialProfile }: IndexProps) {
           <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (
               <div className="w-full p-4 md:p-8 pb-20 lg:pb-8 mobile-parent-dashboard min-h-screen overflow-y-auto">
-                <ParentDashboard
-                  children={getRealChildrenData()}
-                  sessions={getRealSessionsData()}
-                  onNavigateBack={() => setUserRole("child")}
-                  showMobileBackButton={false}
+                <JungleAdventureParentDashboard
+                  onBack={() => setUserRole("child")}
+                  className="min-h-screen"
                 />
               </div>
             ) : (
@@ -2780,7 +2778,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   "Category Review Complete! 📚",
-                                                                message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪📚" : "Amazing work! 🎉"}`,
+                                                                message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪���" : "Amazing work! 🎉"}`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                   10, // Fewer points since words were forgotten
@@ -3563,7 +3561,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      🌱 Word Garden
+                                      ��� Word Garden
                                     </h2>
                                     <Button
                                       onClick={() => setShowExitDialog(true)}
@@ -3784,9 +3782,10 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Settings Panel */}
-          <CompactMobileSettingsPanel
+          <JungleAdventureSettingsPanel
             isOpen={showSettings}
             onClose={() => setShowSettings(false)}
+            userRole="child"
           />
 
           {/* Word Creator */}
