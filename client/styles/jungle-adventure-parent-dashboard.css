@@ -1,0 +1,516 @@
+/* Jungle Adventure Parent Dashboard Styles */
+
+/* Base Jungle Adventure Enhancements */
+.jungle-pattern-bg {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(76, 175, 80, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 60% 60%, rgba(33, 150, 243, 0.04) 0%, transparent 50%);
+  animation: jungle-pattern-float 20s ease-in-out infinite;
+}
+
+@keyframes jungle-pattern-float {
+  0%, 100% { 
+    transform: translateY(0px) scale(1); 
+  }
+  50% { 
+    transform: translateY(-10px) scale(1.02); 
+  }
+}
+
+/* Jungle Card Enhancements */
+.jungle-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(76, 175, 80, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    rgba(76, 175, 80, 0.8) 0%, 
+    rgba(255, 193, 7, 0.8) 50%, 
+    rgba(76, 175, 80, 0.8) 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.jungle-card:hover::before {
+  transform: scaleX(1);
+}
+
+.jungle-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(76, 175, 80, 0.15),
+    0 0 0 1px rgba(76, 175, 80, 0.1),
+    0 0 20px rgba(255, 193, 7, 0.1);
+  border-color: rgba(76, 175, 80, 0.3);
+}
+
+/* Jungle Button Styles */
+.jungle-button {
+  background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.jungle-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.25), 
+    transparent);
+  transition: left 0.5s ease;
+}
+
+.jungle-button:hover::before {
+  left: 100%;
+}
+
+.jungle-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(76, 175, 80, 0.4),
+    0 0 0 1px rgba(76, 175, 80, 0.2);
+}
+
+.jungle-button:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Jungle Tab Styles */
+.jungle-tab {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-tab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(76, 175, 80, 0.1) 0%, 
+    rgba(255, 193, 7, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.jungle-tab:hover::before {
+  opacity: 1;
+}
+
+.jungle-tab[data-state="active"] {
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Progress Bar Enhancements */
+.jungle-progress-bar {
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.jungle-progress-bar > div {
+  background: linear-gradient(90deg, #4CAF50, #8BC34A, #FFC107);
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-progress-bar > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(45deg, 
+    rgba(255, 255, 255, 0.2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.2) 75%, 
+    transparent 75%, 
+    transparent);
+  background-size: 12px 12px;
+  animation: jungle-progress-shine 2s linear infinite;
+}
+
+@keyframes jungle-progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Floating Elements Animation */
+.jungle-floating-element {
+  animation: jungle-float 8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.2));
+}
+
+@keyframes jungle-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-10px) rotate(5deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-10px) rotate(-5deg);
+    opacity: 0.8;
+  }
+}
+
+/* Badge Enhancements */
+.jungle-badge {
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  font-weight: 600;
+}
+
+/* Stats Card Animations */
+.stats-card {
+  position: relative;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9) 0%, 
+    rgba(255, 255, 255, 0.95) 100%);
+  transition: all 0.3s ease;
+}
+
+.stats-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, 
+    transparent 48%, 
+    rgba(76, 175, 80, 0.1) 50%, 
+    transparent 52%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.stats-card:hover::after {
+  opacity: 1;
+  animation: jungle-shine 1.5s ease-in-out;
+}
+
+@keyframes jungle-shine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(200%) rotate(45deg); }
+}
+
+/* Quick Actions Panel */
+.quick-actions-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.quick-actions-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    #4CAF50 0%, 
+    #FFC107 50%, 
+    #4CAF50 100%);
+}
+
+/* Activity Timeline */
+.activity-timeline {
+  position: relative;
+}
+
+.activity-timeline::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, 
+    #4CAF50 0%, 
+    #8BC34A 50%, 
+    #FFC107 100%);
+  opacity: 0.3;
+}
+
+.activity-item {
+  position: relative;
+  padding-left: 48px;
+  margin-bottom: 16px;
+}
+
+.activity-item::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #4CAF50;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  z-index: 1;
+}
+
+/* Responsive Design Enhancements */
+@media (max-width: 768px) {
+  .jungle-card {
+    backdrop-filter: blur(8px);
+    margin-bottom: 16px;
+  }
+
+  .jungle-card:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .jungle-button {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .quick-actions-panel {
+    position: fixed;
+    bottom: 80px;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    transform: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .jungle-card {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(76, 175, 80, 0.2);
+  }
+
+  .jungle-card::before {
+    background: linear-gradient(90deg, 
+      rgba(76, 175, 80, 0.6) 0%, 
+      rgba(255, 193, 7, 0.6) 50%, 
+      rgba(76, 175, 80, 0.6) 100%);
+  }
+
+  .quick-actions-panel {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(76, 175, 80, 0.3);
+  }
+
+  .stats-card {
+    background: linear-gradient(135deg, 
+      rgba(30, 41, 59, 0.9) 0%, 
+      rgba(30, 41, 59, 0.95) 100%);
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .jungle-card {
+    border-width: 2px;
+    border-color: #4CAF50;
+  }
+
+  .jungle-button {
+    background: #4CAF50;
+    border: 2px solid #388E3C;
+  }
+
+  .jungle-tab[data-state="active"] {
+    background: #4CAF50;
+    border: 2px solid #388E3C;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-card,
+  .jungle-button,
+  .jungle-tab,
+  .stats-card,
+  .jungle-floating-element {
+    transition: none;
+    animation: none;
+  }
+
+  .jungle-pattern-bg {
+    animation: none;
+  }
+
+  .jungle-progress-bar > div::before {
+    animation: none;
+  }
+}
+
+/* Focus Management */
+.jungle-card:focus-visible,
+.jungle-button:focus-visible,
+.jungle-tab:focus-visible {
+  outline: 3px solid #4CAF50;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Loading States */
+.jungle-loading {
+  position: relative;
+  color: transparent;
+}
+
+.jungle-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    rgba(76, 175, 80, 0.1) 0%, 
+    rgba(76, 175, 80, 0.3) 50%, 
+    rgba(76, 175, 80, 0.1) 100%);
+  border-radius: inherit;
+  animation: jungle-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes jungle-loading {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Micro-interactions */
+.jungle-sparkle-on-hover {
+  position: relative;
+}
+
+.jungle-sparkle-on-hover::after {
+  content: "✨";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 14px;
+  opacity: 0;
+  transform: scale(0) rotate(0deg);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jungle-sparkle-on-hover:hover::after {
+  opacity: 1;
+  transform: scale(1) rotate(180deg);
+}
+
+/* Achievement Celebration Effect */
+@keyframes jungle-achievement-celebration {
+  0% { 
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  25% { 
+    transform: scale(1.1) rotate(5deg);
+    filter: hue-rotate(90deg);
+  }
+  50% { 
+    transform: scale(1.2) rotate(0deg);
+    filter: hue-rotate(180deg);
+  }
+  75% { 
+    transform: scale(1.1) rotate(-5deg);
+    filter: hue-rotate(270deg);
+  }
+  100% { 
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(360deg);
+  }
+}
+
+.jungle-achievement-celebration {
+  animation: jungle-achievement-celebration 2s ease-in-out;
+}
+
+/* Gradient Text Effects */
+.jungle-gradient-text {
+  background: linear-gradient(135deg, #4CAF50, #8BC34A, #FFC107);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Custom Scrollbar */
+.jungle-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jungle-scrollbar::-webkit-scrollbar-track {
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 4px;
+}
+
+.jungle-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.jungle-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #388E3C, #689F38);
+}
+
+/* Print Styles */
+@media print {
+  .jungle-pattern-bg,
+  .jungle-floating-element,
+  .quick-actions-panel {
+    display: none;
+  }
+
+  .jungle-card {
+    background: white;
+    border: 1px solid #333;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+}
