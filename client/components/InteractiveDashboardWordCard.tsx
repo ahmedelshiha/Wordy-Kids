@@ -991,19 +991,15 @@ export function InteractiveDashboardWordCard({
 
             <motion.div
               key={`feedback-emoji-${currentWordIndex}-${feedbackType}`}
-              animate={{
-                y: [0, -10, 0],
-                rotate:
-                  feedbackType === "remembered"
-                    ? [0, 15, -15, 0]
-                    : [0, -5, 5, 0],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: feedbackType === "remembered" ? 0.8 : 1.2,
+              animate={!prefersReducedMotion ? {
+                y: [0, -5, 0],
+                scale: [1, 1.1, 1],
+              } : {}}
+              transition={!prefersReducedMotion ? {
+                duration: 1.5,
                 repeat: Infinity,
                 ease: "easeInOut",
-              }}
+              } : { duration: 0 }}
               className="text-4xl mb-1 relative z-10"
             >
               {feedbackEmoji}
