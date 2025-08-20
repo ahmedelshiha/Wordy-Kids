@@ -28,6 +28,9 @@
 /* Import Desktop Quiz Optimization Styles */
 @import "./styles/desktop-quiz-optimization.css";
 
+/* Import Jungle Achievement Theme Styles */
+@import "./styles/jungle-achievement-theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -2571,6 +2574,10 @@
 
 .border-jungle-light {
   border: 1px solid hsl(var(--jungle-green-light));
+}
+
+.text-jungle-dark {
+  color: hsl(var(--jungle-green-dark));
 }
 
 .shadow-jungle {

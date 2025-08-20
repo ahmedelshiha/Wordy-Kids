@@ -62,6 +62,14 @@ const kidNavTabs: NavTab[] = [
     shadowColor: "shadow-green-300",
   },
   {
+    id: "achievements",
+    image: "🏆",
+    label: "Achievements",
+    color: "from-yellow-400 via-amber-400 to-orange-400",
+    hoverColor: "from-yellow-500 via-amber-500 to-orange-500",
+    shadowColor: "shadow-yellow-300",
+  },
+  {
     id: "progress",
     image: "/images/icons/map.png",
     label: "Map",
@@ -153,11 +161,18 @@ export function DesktopKidNav({
                       >
                         {/* Kid-friendly custom image design for all icons */}
                         <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 flex items-center justify-center">
-                          <img
-                            src={tab.image}
-                            alt={tab.label}
-                            className="relative z-10 w-full h-full object-contain filter drop-shadow-2xl"
-                          />
+                          {tab.image.startsWith("/") ||
+                          tab.image.startsWith("http") ? (
+                            <img
+                              src={tab.image}
+                              alt={tab.label}
+                              className="relative z-10 w-full h-full object-contain filter drop-shadow-2xl"
+                            />
+                          ) : (
+                            <div className="relative z-10 text-4xl lg:text-5xl xl:text-6xl filter drop-shadow-2xl">
+                              {tab.image}
+                            </div>
+                          )}
                           {/* Magical sparkles around any active icon */}
                           {activeTab === tab.id && (
                             <>
