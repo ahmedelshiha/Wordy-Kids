@@ -688,7 +688,7 @@ export function AchievementSystem({
               const maxValue = Math.max(...stats.weeklyProgress) || 1; // Prevent division by zero
               const height = maxValue > 0 ? (value / maxValue) * 100 : 0;
               const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-              const jungleEmojis = ["🌿", "🌳", "🦜", "🐒", "🌺", "🦋", "🏞️"];
+              const jungleEmojis = ["🌿", "🌳", "🦜", "🐒", "🌺", "🦋", "��️"];
 
               return (
                 <div key={index} className="flex flex-col items-center">
@@ -1105,8 +1105,8 @@ export function AchievementSystem({
                                   className="h-1.5 jungle-progress-bar"
                                 />
                                 {isComplete && (
-                                  <Badge className="bg-educational-green text-white text-xs px-1 py-0.5">
-                                    Ready! 🎉
+                                  <Badge className="bg-jungle text-white text-xs px-1 py-0.5 animate-jungle-sparkle">
+                                    Ready to Explore! 🎉
                                   </Badge>
                                 )}
                               </div>
