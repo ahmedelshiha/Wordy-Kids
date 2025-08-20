@@ -3703,7 +3703,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               />
                             </TabsContent>
 
-
                             <TabsContent value="achievements">
                               <EnhancedAchievementsPage
                                 onBack={() => setActiveTab("dashboard")}

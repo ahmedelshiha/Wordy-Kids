@@ -3,9 +3,9 @@
  * Migrates user progress from old achievement system to Enhanced Achievement System
  */
 
-import { enhancedAchievementSystem } from './enhancedAchievementSystem';
-import { enhancedBadgeSystem } from './enhancedBadgeSystem';
-import { enhancedLearningAnalytics } from './enhancedLearningAnalytics';
+import { enhancedAchievementSystem } from "./enhancedAchievementSystem";
+import { enhancedBadgeSystem } from "./enhancedBadgeSystem";
+import { enhancedLearningAnalytics } from "./enhancedLearningAnalytics";
 
 interface LegacyAchievement {
   id: string;
@@ -52,7 +52,7 @@ class AchievementDataMigration {
    */
   async migrateUserData(): Promise<MigrationResult> {
     this.migrationLogs = [];
-    this.log('🔄 Starting Achievement Data Migration...');
+    this.log("🔄 Starting Achievement Data Migration...");
 
     const result: MigrationResult = {
       success: false,
@@ -60,7 +60,7 @@ class AchievementDataMigration {
       migratedProgress: false,
       migratedBadges: 0,
       errors: [],
-      details: []
+      details: [],
     };
 
     try {
@@ -68,20 +68,26 @@ class AchievementDataMigration {
       const legacyData = this.detectLegacyData();
 
       if (!legacyData) {
-        this.log('✅ No legacy data found - initializing with defaults');
+        this.log("✅ No legacy data found - initializing with defaults");
         await this.initializeDefaultData();
         result.success = true;
-        result.details.push('Initialized fresh enhanced achievement system');
+        result.details.push("Initialized fresh enhanced achievement system");
         return result;
       }
 
-      this.log(`📊 Found legacy data - migrating ${legacyData.achievements?.length || 0} achievements`);
+      this.log(
+        `📊 Found legacy data - migrating ${legacyData.achievements?.length || 0} achievements`,
+      );
 
       // 2. Migrate achievements
-      result.migratedAchievements = await this.migrateAchievements(legacyData.achievements || []);
+      result.migratedAchievements = await this.migrateAchievements(
+        legacyData.achievements || [],
+      );
 
       // 3. Migrate progress data
-      result.migratedProgress = await this.migrateProgressData(legacyData.progress);
+      result.migratedProgress = await this.migrateProgressData(
+        legacyData.progress,
+      );
 
       // 4. Migrate badges and rewards
       result.migratedBadges = await this.migrateBadges(legacyData);
@@ -98,10 +104,10 @@ class AchievementDataMigration {
       result.success = true;
       result.details = [...this.migrationLogs];
 
-      this.log('✅ Migration completed successfully!');
-
+      this.log("✅ Migration completed successfully!");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       this.log(`❌ Migration failed: ${errorMessage}`);
       result.errors.push(errorMessage);
       result.details = [...this.migrationLogs];
@@ -116,11 +122,11 @@ class AchievementDataMigration {
   private detectLegacyData(): LegacyUserData | null {
     try {
       // Check for old achievement tracker data
-      const oldAchievements = localStorage.getItem('achievementTracker');
-      const oldProgress = localStorage.getItem('userProgress');
-      const oldWordHistory = localStorage.getItem('userWordHistory');
-      const oldChildStats = localStorage.getItem('childStats');
-      const oldLearningGoals = localStorage.getItem('learningGoals');
+      const oldAchievements = localStorage.getItem("achievementTracker");
+      const oldProgress = localStorage.getItem("userProgress");
+      const oldWordHistory = localStorage.getItem("userWordHistory");
+      const oldChildStats = localStorage.getItem("childStats");
+      const oldLearningGoals = localStorage.getItem("learningGoals");
 
       if (!oldAchievements && !oldProgress && !oldWordHistory) {
         return null; // No legacy data found
@@ -129,12 +135,15 @@ class AchievementDataMigration {
       return {
         achievements: oldAchievements ? JSON.parse(oldAchievements) : [],
         progress: oldProgress ? JSON.parse(oldProgress) : null,
-        userWordHistory: oldWordHistory ? new Map(JSON.parse(oldWordHistory)) : new Map(),
+        userWordHistory: oldWordHistory
+          ? new Map(JSON.parse(oldWordHistory))
+          : new Map(),
         childStats: oldChildStats ? JSON.parse(oldChildStats) : null,
         learningGoals: oldLearningGoals ? JSON.parse(oldLearningGoals) : [],
-        dailySessionCount: parseInt(localStorage.getItem('dailySessionCount') || '0')
+        dailySessionCount: parseInt(
+          localStorage.getItem("dailySessionCount") || "0",
+        ),
       };
-
     } catch (error) {
       this.log(`⚠️ Error detecting legacy data: ${error}`);
       return null;
@@ -144,7 +153,9 @@ class AchievementDataMigration {
   /**
    * Migrate achievements from old system to enhanced system
    */
-  private async migrateAchievements(legacyAchievements: LegacyAchievement[]): Promise<number> {
+  private async migrateAchievements(
+    legacyAchievements: LegacyAchievement[],
+  ): Promise<number> {
     let migratedCount = 0;
 
     try {
@@ -152,22 +163,28 @@ class AchievementDataMigration {
         if (legacy.unlocked) {
           // Map legacy achievement to enhanced system
           const enhancedAchievement = this.mapLegacyToEnhanced(legacy);
-          
+
           if (enhancedAchievement) {
-            await enhancedAchievementSystem.unlockAchievement(enhancedAchievement.id, {
-              silent: true, // Don't trigger celebrations during migration
-              migratedDate: legacy.dateUnlocked ? new Date(legacy.dateUnlocked) : new Date()
-            });
-            
+            await enhancedAchievementSystem.unlockAchievement(
+              enhancedAchievement.id,
+              {
+                silent: true, // Don't trigger celebrations during migration
+                migratedDate: legacy.dateUnlocked
+                  ? new Date(legacy.dateUnlocked)
+                  : new Date(),
+              },
+            );
+
             migratedCount++;
-            this.log(`✅ Migrated achievement: ${legacy.name} → ${enhancedAchievement.id}`);
+            this.log(
+              `✅ Migrated achievement: ${legacy.name} → ${enhancedAchievement.id}`,
+            );
           }
         }
       }
 
       this.log(`📊 Migrated ${migratedCount} achievements`);
       return migratedCount;
-
     } catch (error) {
       this.log(`❌ Error migrating achievements: ${error}`);
       throw error;
@@ -177,9 +194,11 @@ class AchievementDataMigration {
   /**
    * Migrate progress data to enhanced analytics
    */
-  private async migrateProgressData(legacyProgress: LegacyProgress | null): Promise<boolean> {
+  private async migrateProgressData(
+    legacyProgress: LegacyProgress | null,
+  ): Promise<boolean> {
     if (!legacyProgress) {
-      this.log('ℹ️ No legacy progress data found');
+      this.log("ℹ️ No legacy progress data found");
       return false;
     }
 
@@ -191,12 +210,13 @@ class AchievementDataMigration {
         accuracy: legacyProgress.accuracy || 0,
         streak: legacyProgress.currentStreak || 0,
         level: legacyProgress.level || 1,
-        totalPoints: legacyProgress.totalPoints || 0
+        totalPoints: legacyProgress.totalPoints || 0,
       });
 
-      this.log(`✅ Migrated progress: ${legacyProgress.wordsLearned} words, ${legacyProgress.sessionCount} sessions`);
+      this.log(
+        `✅ Migrated progress: ${legacyProgress.wordsLearned} words, ${legacyProgress.sessionCount} sessions`,
+      );
       return true;
-
     } catch (error) {
       this.log(`❌ Error migrating progress: ${error}`);
       throw error;
@@ -216,34 +236,41 @@ class AchievementDataMigration {
 
         // Word learning badges
         if (progress.wordsLearned >= 1) {
-          await enhancedBadgeSystem.unlockBadge('first-word', { silent: true });
+          await enhancedBadgeSystem.unlockBadge("first-word", { silent: true });
           migratedCount++;
         }
         if (progress.wordsLearned >= 10) {
-          await enhancedBadgeSystem.unlockBadge('word-explorer', { silent: true });
+          await enhancedBadgeSystem.unlockBadge("word-explorer", {
+            silent: true,
+          });
           migratedCount++;
         }
         if (progress.wordsLearned >= 25) {
-          await enhancedBadgeSystem.unlockBadge('vocabulary-builder', { silent: true });
+          await enhancedBadgeSystem.unlockBadge("vocabulary-builder", {
+            silent: true,
+          });
           migratedCount++;
         }
 
         // Accuracy badges
         if (progress.accuracy >= 80) {
-          await enhancedBadgeSystem.unlockBadge('accuracy-expert', { silent: true });
+          await enhancedBadgeSystem.unlockBadge("accuracy-expert", {
+            silent: true,
+          });
           migratedCount++;
         }
 
         // Streak badges
         if (progress.currentStreak >= 3) {
-          await enhancedBadgeSystem.unlockBadge('streak-starter', { silent: true });
+          await enhancedBadgeSystem.unlockBadge("streak-starter", {
+            silent: true,
+          });
           migratedCount++;
         }
       }
 
       this.log(`✅ Migrated ${migratedCount} badges`);
       return migratedCount;
-
     } catch (error) {
       this.log(`❌ Error migrating badges: ${error}`);
       throw error;
@@ -253,22 +280,23 @@ class AchievementDataMigration {
   /**
    * Migrate learning analytics data
    */
-  private async migrateLearningAnalytics(legacyData: LegacyUserData): Promise<void> {
+  private async migrateLearningAnalytics(
+    legacyData: LegacyUserData,
+  ): Promise<void> {
     try {
       // Create weekly progress entry for current week
       if (legacyData.progress && legacyData.progress.wordsLearned > 0) {
         const currentWeek = this.getCurrentWeekKey();
-        
+
         await enhancedLearningAnalytics.recordWeeklyProgress(currentWeek, {
           wordsLearned: legacyData.progress.wordsLearned,
           accuracy: legacyData.progress.accuracy || 0,
           sessionCount: legacyData.progress.sessionCount || 0,
-          timeSpent: (legacyData.progress.sessionCount || 0) * 15
+          timeSpent: (legacyData.progress.sessionCount || 0) * 15,
         });
 
         this.log(`✅ Migrated learning analytics for week ${currentWeek}`);
       }
-
     } catch (error) {
       this.log(`❌ Error migrating analytics: ${error}`);
       throw error;
@@ -285,8 +313,7 @@ class AchievementDataMigration {
       await enhancedBadgeSystem.initialize();
       await enhancedLearningAnalytics.initialize();
 
-      this.log('✅ Initialized enhanced achievement systems');
-
+      this.log("✅ Initialized enhanced achievement systems");
     } catch (error) {
       this.log(`❌ Error initializing defaults: ${error}`);
       throw error;
@@ -296,14 +323,16 @@ class AchievementDataMigration {
   /**
    * Map legacy achievement to enhanced achievement ID
    */
-  private mapLegacyToEnhanced(legacy: LegacyAchievement): { id: string } | null {
+  private mapLegacyToEnhanced(
+    legacy: LegacyAchievement,
+  ): { id: string } | null {
     const mapping: Record<string, string> = {
-      'first-word': 'jungle-first-steps',
-      'streak-starter': 'jungle-consistency',
-      'category-explorer': 'jungle-explorer',
-      'science-star': 'category-science-master',
-      'quiz-master': 'quiz-perfectionist',
-      'vocabulary-champion': 'jungle-vocabulary-champion'
+      "first-word": "jungle-first-steps",
+      "streak-starter": "jungle-consistency",
+      "category-explorer": "jungle-explorer",
+      "science-star": "category-science-master",
+      "quiz-master": "quiz-perfectionist",
+      "vocabulary-champion": "jungle-vocabulary-champion",
     };
 
     const enhancedId = mapping[legacy.id];
@@ -318,12 +347,11 @@ class AchievementDataMigration {
       const backup = {
         timestamp: new Date().toISOString(),
         legacyData,
-        migrationVersion: '1.0.0'
+        migrationVersion: "1.0.0",
       };
 
-      localStorage.setItem('legacyAchievementBackup', JSON.stringify(backup));
-      this.log('✅ Created legacy data backup');
-
+      localStorage.setItem("legacyAchievementBackup", JSON.stringify(backup));
+      this.log("✅ Created legacy data backup");
     } catch (error) {
       this.log(`⚠️ Failed to create backup: ${error}`);
     }
@@ -333,16 +361,16 @@ class AchievementDataMigration {
    * Mark migration as complete
    */
   private markMigrationComplete(): void {
-    localStorage.setItem('achievementMigrationComplete', 'true');
-    localStorage.setItem('achievementMigrationDate', new Date().toISOString());
-    this.log('✅ Migration marked as complete');
+    localStorage.setItem("achievementMigrationComplete", "true");
+    localStorage.setItem("achievementMigrationDate", new Date().toISOString());
+    this.log("✅ Migration marked as complete");
   }
 
   /**
    * Check if migration has already been completed
    */
   static isMigrationComplete(): boolean {
-    return localStorage.getItem('achievementMigrationComplete') === 'true';
+    return localStorage.getItem("achievementMigrationComplete") === "true";
   }
 
   /**

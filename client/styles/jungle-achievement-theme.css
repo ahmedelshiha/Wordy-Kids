@@ -177,12 +177,12 @@
 /* Focus management for keyboard navigation */
 .jungle-card:focus,
 .jungle-achievement-card:focus {
-  outline: 3px solid #4CAF50;
+  outline: 3px solid #4caf50;
   outline-offset: 2px;
 }
 
 .jungle-card:focus-visible {
-  outline: 3px solid #FFC107;
+  outline: 3px solid #ffc107;
   outline-offset: 2px;
   box-shadow: 0 0 0 6px rgba(255, 193, 7, 0.3);
 }

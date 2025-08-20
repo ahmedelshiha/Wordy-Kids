@@ -52,17 +52,21 @@ class AccessibilityValidator {
     const result: ValidationResult = {
       accessibility: this.validateAccessibility(),
       performance: this.validatePerformance(),
-      compliance: this.validateCompliance()
+      compliance: this.validateCompliance(),
     };
 
-    console.log('🔍 Accessibility Validation Results:', result);
+    console.log("🔍 Accessibility Validation Results:", result);
     return result;
   }
 
   /**
    * Validate accessibility features
    */
-  private validateAccessibility(): { score: number; issues: string[]; recommendations: string[] } {
+  private validateAccessibility(): {
+    score: number;
+    issues: string[];
+    recommendations: string[];
+  } {
     const issues: string[] = [];
     const recommendations: string[] = [];
     let score = 100;
@@ -73,38 +77,44 @@ class AccessibilityValidator {
       if (contrastIssue) {
         issues.push(contrastIssue);
         score -= 10;
-        recommendations.push('Enable high contrast mode for better visibility');
+        recommendations.push("Enable high contrast mode for better visibility");
       }
     }
 
     // Check motion preferences
     if (!this.settings.reducedMotion) {
       if (this.hasIntensiveAnimations()) {
-        issues.push('Intensive animations detected without reduced motion preference');
+        issues.push(
+          "Intensive animations detected without reduced motion preference",
+        );
         score -= 15;
-        recommendations.push('Implement reduced motion alternatives');
+        recommendations.push("Implement reduced motion alternatives");
       }
     }
 
     // Check keyboard navigation
     if (!this.validateKeyboardNavigation()) {
-      issues.push('Some interactive elements not keyboard accessible');
+      issues.push("Some interactive elements not keyboard accessible");
       score -= 20;
-      recommendations.push('Add proper keyboard navigation and focus indicators');
+      recommendations.push(
+        "Add proper keyboard navigation and focus indicators",
+      );
     }
 
     // Check screen reader support
     if (!this.validateScreenReaderSupport()) {
-      issues.push('Missing ARIA labels and semantic markup');
+      issues.push("Missing ARIA labels and semantic markup");
       score -= 15;
-      recommendations.push('Add comprehensive ARIA labels and landmarks');
+      recommendations.push("Add comprehensive ARIA labels and landmarks");
     }
 
     // Check text scaling
     if (!this.validateTextScaling()) {
-      issues.push('Layout breaks at large text sizes');
+      issues.push("Layout breaks at large text sizes");
       score -= 10;
-      recommendations.push('Ensure responsive design supports text scaling up to 200%');
+      recommendations.push(
+        "Ensure responsive design supports text scaling up to 200%",
+      );
     }
 
     return { score: Math.max(0, score), issues, recommendations };
@@ -113,7 +123,11 @@ class AccessibilityValidator {
   /**
    * Validate performance optimizations
    */
-  private validatePerformance(): { score: number; issues: string[]; optimizations: string[] } {
+  private validatePerformance(): {
+    score: number;
+    issues: string[];
+    optimizations: string[];
+  } {
     const issues: string[] = [];
     const optimizations: string[] = [];
     let score = 100;
@@ -121,35 +135,35 @@ class AccessibilityValidator {
     // Check mobile blur effects
     if (!this.performance.optimizedBlur) {
       if (this.hasHeavyBlurEffects()) {
-        issues.push('Heavy blur effects on mobile devices');
+        issues.push("Heavy blur effects on mobile devices");
         score -= 20;
-        optimizations.push('Reduce backdrop-filter blur values on mobile');
+        optimizations.push("Reduce backdrop-filter blur values on mobile");
       }
     }
 
     // Check animation performance
     if (!this.performance.reducedAnimations) {
       if (this.hasPerformanceIntensiveAnimations()) {
-        issues.push('Performance-intensive animations without optimization');
+        issues.push("Performance-intensive animations without optimization");
         score -= 15;
-        optimizations.push('Disable complex animations on lower-end devices');
+        optimizations.push("Disable complex animations on lower-end devices");
       }
     }
 
     // Check particle effects
     if (!this.performance.reducedParticles) {
       if (this.hasHeavyParticleEffects()) {
-        issues.push('Heavy particle effects may impact performance');
+        issues.push("Heavy particle effects may impact performance");
         score -= 10;
-        optimizations.push('Reduce particle count on mobile devices');
+        optimizations.push("Reduce particle count on mobile devices");
       }
     }
 
     // Check responsive images
     if (!this.validateResponsiveImages()) {
-      issues.push('Non-optimized images for different screen sizes');
+      issues.push("Non-optimized images for different screen sizes");
       score -= 15;
-      optimizations.push('Implement responsive image loading');
+      optimizations.push("Implement responsive image loading");
     }
 
     return { score: Math.max(0, score), issues, optimizations };
@@ -158,11 +172,15 @@ class AccessibilityValidator {
   /**
    * Validate compliance with standards
    */
-  private validateCompliance(): { wcag: boolean; mobile: boolean; keyboard: boolean } {
+  private validateCompliance(): {
+    wcag: boolean;
+    mobile: boolean;
+    keyboard: boolean;
+  } {
     return {
       wcag: this.validateWCAGCompliance(),
       mobile: this.validateMobileCompliance(),
-      keyboard: this.validateKeyboardCompliance()
+      keyboard: this.validateKeyboardCompliance(),
     };
   }
 
@@ -172,15 +190,15 @@ class AccessibilityValidator {
   private checkColorContrast(): string | null {
     // Simulate contrast checking for jungle theme colors
     const contrastRatios = [
-      { element: 'jungle-text-on-green', ratio: 4.8 },
-      { element: 'sunshine-text-on-yellow', ratio: 3.2 },
-      { element: 'button-text', ratio: 5.1 }
+      { element: "jungle-text-on-green", ratio: 4.8 },
+      { element: "sunshine-text-on-yellow", ratio: 3.2 },
+      { element: "button-text", ratio: 5.1 },
     ];
 
-    const failedElements = contrastRatios.filter(item => item.ratio < 4.5);
-    
+    const failedElements = contrastRatios.filter((item) => item.ratio < 4.5);
+
     if (failedElements.length > 0) {
-      return `Low contrast detected: ${failedElements.map(e => e.element).join(', ')}`;
+      return `Low contrast detected: ${failedElements.map((e) => e.element).join(", ")}`;
     }
 
     return null;
@@ -192,10 +210,10 @@ class AccessibilityValidator {
   private hasIntensiveAnimations(): boolean {
     // Check for CSS animations that could trigger vestibular disorders
     const intensiveAnimations = [
-      'continuous-rotation',
-      'rapid-scaling',
-      'fast-parallax',
-      'strobe-effects'
+      "continuous-rotation",
+      "rapid-scaling",
+      "fast-parallax",
+      "strobe-effects",
     ];
 
     // In a real implementation, this would scan the DOM
@@ -208,10 +226,10 @@ class AccessibilityValidator {
   private validateKeyboardNavigation(): boolean {
     // Check if all interactive elements are keyboard accessible
     const interactiveElements = [
-      'achievement-cards',
-      'navigation-tabs',
-      'modal-dialogs',
-      'badge-collection'
+      "achievement-cards",
+      "navigation-tabs",
+      "modal-dialogs",
+      "badge-collection",
     ];
 
     // All achievement system elements have proper tabindex and focus handling
@@ -225,10 +243,10 @@ class AccessibilityValidator {
     // Check for proper ARIA labels and semantic markup
     const requiredARIA = [
       'role="tablist"',
-      'aria-label',
-      'aria-labelledby',
-      'aria-describedby',
-      'role="region"'
+      "aria-label",
+      "aria-labelledby",
+      "aria-describedby",
+      'role="region"',
     ];
 
     // Enhanced achievement system includes comprehensive ARIA support
@@ -288,10 +306,10 @@ class AccessibilityValidator {
       this.checkColorContrast() === null,
       this.validateKeyboardNavigation(),
       this.validateScreenReaderSupport(),
-      this.validateTextScaling()
+      this.validateTextScaling(),
     ];
 
-    return criteria.every(criterion => criterion);
+    return criteria.every((criterion) => criterion);
   }
 
   /**
@@ -301,10 +319,10 @@ class AccessibilityValidator {
     const mobileCriteria = [
       this.validateTouchTargets(),
       this.validateResponsiveDesign(),
-      this.validateMobilePerformance()
+      this.validateMobilePerformance(),
     ];
 
-    return mobileCriteria.every(criterion => criterion);
+    return mobileCriteria.every((criterion) => criterion);
   }
 
   /**
@@ -369,12 +387,12 @@ class AccessibilityValidator {
    */
   private loadAccessibilitySettings(): AccessibilitySettings {
     try {
-      const saved = localStorage.getItem('accessibilitySettings');
+      const saved = localStorage.getItem("accessibilitySettings");
       if (saved) {
         return JSON.parse(saved);
       }
     } catch (error) {
-      console.warn('Failed to load accessibility settings:', error);
+      console.warn("Failed to load accessibility settings:", error);
     }
 
     // Default settings with accessibility features enabled
@@ -383,7 +401,7 @@ class AccessibilityValidator {
       reducedMotion: this.prefersReducedMotion(),
       largeText: false,
       keyboardNavigation: true,
-      screenReader: this.detectScreenReader()
+      screenReader: this.detectScreenReader(),
     };
   }
 
@@ -392,12 +410,12 @@ class AccessibilityValidator {
    */
   private loadPerformanceSettings(): PerformanceSettings {
     try {
-      const saved = localStorage.getItem('performanceSettings');
+      const saved = localStorage.getItem("performanceSettings");
       if (saved) {
         return JSON.parse(saved);
       }
     } catch (error) {
-      console.warn('Failed to load performance settings:', error);
+      console.warn("Failed to load performance settings:", error);
     }
 
     // Default performance optimizations
@@ -405,7 +423,7 @@ class AccessibilityValidator {
       reducedAnimations: this.isMobileDevice(),
       optimizedBlur: this.isMobileDevice(),
       reducedParticles: this.isMobileDevice(),
-      compactLayout: this.isMobileDevice()
+      compactLayout: this.isMobileDevice(),
     };
   }
 
@@ -413,8 +431,8 @@ class AccessibilityValidator {
    * Detect if user prefers reduced motion
    */
   private prefersReducedMotion(): boolean {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof window !== "undefined" && window.matchMedia) {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     }
     return false;
   }
@@ -424,18 +442,24 @@ class AccessibilityValidator {
    */
   private detectScreenReader(): boolean {
     // Simple heuristic - in production, use more sophisticated detection
-    return typeof window !== 'undefined' && 
-           ('speechSynthesis' in window || navigator.userAgent.includes('NVDA'));
+    return (
+      typeof window !== "undefined" &&
+      ("speechSynthesis" in window || navigator.userAgent.includes("NVDA"))
+    );
   }
 
   /**
    * Detect if device is mobile
    */
   private isMobileDevice(): boolean {
-    if (typeof window === 'undefined') return false;
-    
-    return window.innerWidth <= 768 || 
-           /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (typeof window === "undefined") return false;
+
+    return (
+      window.innerWidth <= 768 ||
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      )
+    );
   }
 
   /**
@@ -443,18 +467,18 @@ class AccessibilityValidator {
    */
   applyAccessibilityEnhancements(): void {
     if (this.settings.highContrast) {
-      document.documentElement.classList.add('high-contrast');
+      document.documentElement.classList.add("high-contrast");
     }
 
     if (this.settings.reducedMotion) {
-      document.documentElement.classList.add('reduced-motion');
+      document.documentElement.classList.add("reduced-motion");
     }
 
     if (this.settings.largeText) {
-      document.documentElement.classList.add('large-text');
+      document.documentElement.classList.add("large-text");
     }
 
-    console.log('✅ Applied accessibility enhancements');
+    console.log("✅ Applied accessibility enhancements");
   }
 
   /**
@@ -462,18 +486,18 @@ class AccessibilityValidator {
    */
   applyPerformanceOptimizations(): void {
     if (this.performance.optimizedBlur) {
-      document.documentElement.classList.add('optimized-blur');
+      document.documentElement.classList.add("optimized-blur");
     }
 
     if (this.performance.reducedAnimations) {
-      document.documentElement.classList.add('reduced-animations');
+      document.documentElement.classList.add("reduced-animations");
     }
 
     if (this.performance.reducedParticles) {
-      document.documentElement.classList.add('reduced-particles');
+      document.documentElement.classList.add("reduced-particles");
     }
 
-    console.log('✅ Applied performance optimizations');
+    console.log("✅ Applied performance optimizations");
   }
 }
 
