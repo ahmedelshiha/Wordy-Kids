@@ -252,8 +252,16 @@ export default function Index({ initialProfile }: IndexProps) {
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [achievementPopup, setAchievementPopup] = useState<any[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+
+  // Enhanced Achievement Dialog System
+  const {
+    achievements: enhancedAchievements,
+    showDialog: showEnhancedDialog,
+    closeDialog: closeEnhancedDialog,
+    trackProgress: trackEnhancedProgress,
+    claimAchievement: claimEnhancedAchievement,
+  } = useEnhancedAchievementDialog();
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
