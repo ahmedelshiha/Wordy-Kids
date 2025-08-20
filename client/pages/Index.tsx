@@ -468,7 +468,7 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeWords();
-  }, [selectedCategory, currentDashboardWords.length, generateFreshWords]); // Include all dependencies
+  }, [selectedCategory, currentDashboardWords.length]); // generateFreshWords is stable due to useCallback
 
   // Initialize dashboard words for systematic learning (independent of category selection)
   useEffect(() => {
