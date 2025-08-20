@@ -254,7 +254,7 @@ const getDifficultyJungleStyle = (difficulty: string) => {
     case "sapling":
       return {
         gradient: "from-green-400 to-green-600",
-        icon: "🌱",
+        icon: "���",
         bgGlow: "shadow-green-500/20",
         borderGlow: "border-green-400/30",
       };
@@ -875,7 +875,7 @@ const EnhancedJungleAchievementSystemComponent = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Card className="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 border-purple-200 shadow-xl mx-2 md:mx-0">
+        <Card className="bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50 border-sunshine/20 shadow-xl mx-2 md:mx-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-sunshine-dark text-xl">
               <motion.div
