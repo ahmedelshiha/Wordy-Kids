@@ -713,7 +713,7 @@ const EnhancedJungleAchievementSystemComponent = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 px-2 md:px-0">
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Card className="bg-gradient-to-br from-jungle to-jungle-dark text-white shadow-xl border-0 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-transparent" />
             <CardContent className="p-4 text-center relative z-10">
               <motion.div
                 className="text-3xl mb-2"
@@ -859,7 +859,7 @@ const EnhancedJungleAchievementSystemComponent = ({
               })}
             </div>
             <p className="text-center text-jungle font-semibold">
-              Keep exploring the jungle of knowledge! 🗺️✨
+              Keep exploring the jungle of knowledge! ��️✨
             </p>
           </CardContent>
         </Card>
