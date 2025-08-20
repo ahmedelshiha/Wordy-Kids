@@ -878,8 +878,8 @@ export function EnhancedAchievementsPage({
               </Button>
             </DialogTitle>
             <DialogDescription className="text-jungle-dark/70">
-              Interactive visualization of the complete achievements system architecture,
-              integration status, and module connections.
+              Interactive visualization of the complete achievements system
+              architecture, integration status, and module connections.
             </DialogDescription>
           </DialogHeader>
           <div className="flex-1 overflow-auto p-6 pt-0">
