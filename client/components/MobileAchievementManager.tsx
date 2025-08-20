@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { EnhancedAchievementPopup } from "./EnhancedAchievementPopup";
+import { EnhancedAchievementDialog } from "./EnhancedAchievementDialog";
 import { CompactAchievementToast } from "./CompactAchievementToast";
 import { useAchievementNotifications } from "@/hooks/use-achievement-notifications";
 
@@ -131,7 +131,7 @@ export function MobileAchievementManager({
 
       {/* Popup Notifications */}
       {selectedType === "popup" && activePopup.length > 0 && (
-        <EnhancedAchievementPopup
+        <EnhancedAchievementDialog
           achievements={activePopup}
           onClose={handlePopupClose}
           onAchievementClaim={handleAchievementClaim}
