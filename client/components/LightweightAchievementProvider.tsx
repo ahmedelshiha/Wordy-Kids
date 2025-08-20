@@ -68,11 +68,14 @@ export function LightweightAchievementProvider({ children }: LightweightAchievem
         <AchievementPopup
           {...popupProps}
           icon={getIconComponent(
-            achievement?.icon || "🏆", 
+            achievement?.icon || "🏆",
             achievement?.difficulty || "bronze"
           )}
         />
       )}
+
+      {/* Test Controls for Development */}
+      <AchievementTestControls />
     </LightweightAchievementContext.Provider>
   );
 }
