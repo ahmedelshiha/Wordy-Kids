@@ -1190,7 +1190,7 @@ export function InteractiveDashboardWordCard({
                           if (wordsLearned >= goal * 2)
                             return "⭐ SUPERSTAR! Amazing effort!";
                           if (wordsLearned >= goal * 1.5)
-                            return "�� Beyond awesome! Keep going!";
+                            return "🚀 Beyond awesome! Keep going!";
                           return "🎉 Goal achieved! You're incredible!";
                         }
                         if (percentage >= 90)
@@ -1534,7 +1534,7 @@ export function InteractiveDashboardWordCard({
                         return "🎉 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "���� Almost there, superstar!";
+                        return "🌟 Almost there, superstar!";
                       if (percentage >= 75) return "🚀 You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
@@ -1620,7 +1620,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "���� What creature lives in our jungle?",
+                          "🐸 What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
@@ -1657,7 +1657,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Food: {
                         easy: [
-                          "�� What jungle snack is this?",
+                          "🍌 What jungle snack is this?",
                           "🥥 Which jungle treat do you see?",
                           "🍯 Can you name this jungle delight?",
                           "🫐 What jungle berry is this?",
@@ -1896,7 +1896,7 @@ export function InteractiveDashboardWordCard({
                       Objects: "🔍",
                       Colors: "🌈",
                       Body: "👤",
-                      Family: "👨‍👩‍👧‍👦",
+                      Family: "����‍👩‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
                       Clothes: "👕",
@@ -2446,7 +2446,7 @@ export function InteractiveDashboardWordCard({
                             : "filter drop-shadow-md"
                         }`}
                       >
-                        {particle.type === "success" ? "⭐" : "���"}
+                        {particle.type === "success" ? "⭐" : "✨"}
                       </div>
                     </motion.div>
                   ))}
