@@ -22,7 +22,6 @@ import {
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
-import { AchievementSystem } from "@/components/AchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
@@ -2860,7 +2859,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   completionResult.title,
-                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! 🎉`,
+                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🏆 Category Achievement Unlocked! ��`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                     20 +
@@ -3704,18 +3703,6 @@ export default function Index({ initialProfile }: IndexProps) {
                               />
                             </TabsContent>
 
-                            <TabsContent value="progress">
-                              <AchievementSystem
-                                onUnlock={(achievement) => {
-                                  setFeedback({
-                                    type: "celebration",
-                                    title: "Achievement Unlocked! 🏆",
-                                    message: `You earned: ${achievement.name}`,
-                                    onContinue: () => setFeedback(null),
-                                  });
-                                }}
-                              />
-                            </TabsContent>
 
                             <TabsContent value="achievements">
                               <EnhancedAchievementsPage
