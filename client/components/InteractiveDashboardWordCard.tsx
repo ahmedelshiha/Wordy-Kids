@@ -899,7 +899,7 @@ export function InteractiveDashboardWordCard({
               stiffness: 300,
               damping: 20,
             }}
-            className={`w-44 h-32 ml-4 flex flex-col items-center justify-center relative`}
+            className={`w-48 h-36 ml-2 flex flex-col items-center justify-center relative`}
           >
             {/* Celebration background effect */}
             {feedbackType === "remembered" && (
@@ -1006,7 +1006,7 @@ export function InteractiveDashboardWordCard({
             transition: { duration: 0.3 },
           }}
           whileTap={{ scale: 0.95 }}
-          className="w-44 h-32 ml-4 flex items-center justify-center cursor-pointer group relative"
+          className="w-48 h-36 ml-2 flex items-center justify-center cursor-pointer group relative"
           onClick={playPronunciation}
         >
           {/* Animated background elements */}
@@ -1034,7 +1034,7 @@ export function InteractiveDashboardWordCard({
               scale: 1.1,
               transition: { duration: 0.2 },
             }}
-            className="text-8xl filter drop-shadow-lg relative z-10"
+            className="text-9xl filter drop-shadow-lg relative z-10"
           >
             {currentWord.emoji}
 
@@ -1568,7 +1568,7 @@ export function InteractiveDashboardWordCard({
                         medium: [
                           "🦁 What majestic jungle animal is this?",
                           "🐯 Which powerful jungle hunter do you see?",
-                          "��� Can you identify this jungle giant?",
+                          "🐘 Can you identify this jungle giant?",
                           "🦓 What striped jungle dweller is this?",
                         ],
                         hard: [
