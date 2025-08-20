@@ -36,7 +36,7 @@ import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { adventureService } from "@/lib/adventureService";
 import { WordAdventureStatus } from "@shared/adventure";
 import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
 
 interface Word {
@@ -987,8 +987,8 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
 
       {/* Achievement Popup */}
       {wordAchievements.length > 0 && (
-        <EnhancedAchievementPopup
-          achievements={wordAchievements}
+        <EnhancedAchievementDialog
+        achievements={wordAchievements}
           onClose={() => setWordAchievements([])}
           onAchievementClaim={(achievement) => {
             console.log("Word mastery achievement claimed:", achievement);
