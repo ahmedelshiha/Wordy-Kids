@@ -248,7 +248,12 @@ export const FamilyAchievementsTimeline: React.FC<
           {/* Filter Tabs */}
           <Tabs
             value={filter}
-            onValueChange={(value) => setFilter(value as any)}
+            onValueChange={(value) => {
+              const newFilter = value as "all" | "achievements" | "milestones";
+              setFilter(newFilter);
+              // Track filter usage
+              parentDashboardAnalytics.trackTimelineFilter(newFilter, filteredEvents.length);
+            }}
             className="w-auto"
           >
             <TabsList className="bg-white/50 backdrop-blur-sm border border-jungle/20">
