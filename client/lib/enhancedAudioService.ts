@@ -398,7 +398,9 @@ export class EnhancedAudioService {
     // Debouncing to prevent rapid calls that can cause interruptions
     const now = Date.now();
     if (now - this.lastSpeechTime < this.minSpeechInterval) {
-      console.log(`Speech call debounced for "${word}" - too soon after last call`);
+      console.log(
+        `Speech call debounced for "${word}" - too soon after last call`,
+      );
       return;
     }
     this.lastSpeechTime = now;
@@ -464,7 +466,7 @@ export class EnhancedAudioService {
       if (this.speechSynthesis.speaking || this.speechSynthesis.pending) {
         this.speechSynthesis.cancel();
         // Wait a brief moment for cancellation to complete
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
 
       const utterance = new SpeechSynthesisUtterance(word.trim());
