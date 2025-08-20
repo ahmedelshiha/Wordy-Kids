@@ -860,6 +860,33 @@ export function EnhancedAchievementsPage({
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* System Map Modal */}
+      <Dialog open={showSystemMap} onOpenChange={setShowSystemMap}>
+        <DialogContent className="max-w-7xl w-[95vw] h-[90vh] p-0 overflow-hidden">
+          <DialogHeader className="p-6 pb-0">
+            <DialogTitle className="text-jungle-dark flex items-center gap-2">
+              <TreePine className="w-6 h-6 text-jungle" />
+              Enhanced Jungle Adventure Achievements System Map
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowSystemMap(false)}
+                className="ml-auto"
+              >
+                Close
+              </Button>
+            </DialogTitle>
+            <DialogDescription className="text-jungle-dark/70">
+              Interactive visualization of the complete achievements system architecture,
+              integration status, and module connections.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex-1 overflow-auto p-6 pt-0">
+            <AchievementsSystemMap />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
