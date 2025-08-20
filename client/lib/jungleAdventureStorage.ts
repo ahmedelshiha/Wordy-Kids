@@ -69,14 +69,24 @@ const MIGRATION_HANDLERS: Record<string, (data: any) => any> = {
 
 export class JungleAdventureStorage {
   /**
-   * Get all jungle adventure settings
+   * Get all jungle adventure settings with auto-migration
    */
   static getSettings(): JungleAdventureSettings {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (!stored) return { version: CURRENT_VERSION };
 
-      const settings = JSON.parse(stored);
+      let settings = JSON.parse(stored);
+
+      // Check if migration is needed
+      const currentVersion = settings.version || "1.0.0";
+      if (currentVersion !== CURRENT_VERSION) {
+        settings = this.migrateSettings(settings, currentVersion);
+        // Save migrated settings
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+        console.log(`✅ Settings migrated from ${currentVersion} to ${CURRENT_VERSION}`);
+      }
+
       return {
         version: CURRENT_VERSION,
         ...settings,
@@ -85,6 +95,44 @@ export class JungleAdventureStorage {
       console.warn("Failed to parse jungle adventure settings:", error);
       return { version: CURRENT_VERSION };
     }
+  }
+
+  /**
+   * Migrate settings from one version to another
+   */
+  private static migrateSettings(settings: any, fromVersion: string): any {
+    let migratedSettings = { ...settings };
+
+    // Apply version-specific migrations in sequence
+    const migrations = this.getMigrationPath(fromVersion, CURRENT_VERSION);
+
+    for (const migrationKey of migrations) {
+      if (MIGRATION_HANDLERS[migrationKey]) {
+        migratedSettings = MIGRATION_HANDLERS[migrationKey](migratedSettings);
+        console.log(`🔄 Applied migration: ${migrationKey}`);
+      }
+    }
+
+    return migratedSettings;
+  }
+
+  /**
+   * Determine migration path between versions
+   */
+  private static getMigrationPath(fromVersion: string, toVersion: string): string[] {
+    const migrations: string[] = [];
+
+    // Simple version progression for now
+    if (fromVersion === "1.0.0" && toVersion === "2.0.0") {
+      migrations.push("1.0.0_to_2.0.0");
+    }
+
+    // Future: More complex version paths can be handled here
+    // if (fromVersion === "1.0.0" && toVersion === "3.0.0") {
+    //   migrations.push("1.0.0_to_2.0.0", "2.0.0_to_3.0.0");
+    // }
+
+    return migrations;
   }
 
   /**
