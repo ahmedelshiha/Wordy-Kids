@@ -87,6 +87,7 @@ class EnhancedAchievementSystem {
   constructor() {
     this.initializeAchievements();
     this.initializeMilestones();
+    this.initialize();
   }
 
   // Initialize comprehensive achievement system
@@ -684,6 +685,154 @@ class EnhancedAchievementSystem {
     return this.getUnlockedAchievements().reduce((total, achievement) => {
       return total + achievement.reward.value;
     }, 0);
+  }
+
+  // Track progress and check for milestone unlocks
+  public trackProgress(progressData: {
+    wordsLearned?: number;
+    streakDays?: number;
+    totalAccuracy?: number;
+    categoriesCompleted?: string[];
+    quizScore?: number;
+    sessionCount?: number;
+  }): EnhancedAchievement[] {
+    const newlyUnlocked: EnhancedAchievement[] = [];
+
+    this.achievements.forEach((achievement) => {
+      if (!achievement.unlocked) {
+        let shouldUnlock = false;
+
+        // Check achievement requirements
+        switch (achievement.requirements.type) {
+          case "words_learned":
+            shouldUnlock =
+              (progressData.wordsLearned || 0) >=
+              achievement.requirements.threshold;
+            achievement.currentProgress = progressData.wordsLearned || 0;
+            break;
+
+          case "streak_days":
+            shouldUnlock =
+              (progressData.streakDays || 0) >=
+              achievement.requirements.threshold;
+            achievement.currentProgress = progressData.streakDays || 0;
+            break;
+
+          case "accuracy":
+            shouldUnlock =
+              (progressData.totalAccuracy || 0) >=
+              achievement.requirements.threshold;
+            achievement.currentProgress = progressData.totalAccuracy || 0;
+            break;
+
+          case "categories_completed":
+            const categoriesCount =
+              progressData.categoriesCompleted?.length || 0;
+            shouldUnlock =
+              categoriesCount >= achievement.requirements.threshold;
+            achievement.currentProgress = categoriesCount;
+            break;
+
+          case "quiz_score":
+            shouldUnlock =
+              (progressData.quizScore || 0) >=
+              achievement.requirements.threshold;
+            achievement.currentProgress = progressData.quizScore || 0;
+            break;
+
+          case "session_count":
+            shouldUnlock =
+              (progressData.sessionCount || 0) >=
+              achievement.requirements.threshold;
+            achievement.currentProgress = progressData.sessionCount || 0;
+            break;
+        }
+
+        if (shouldUnlock) {
+          achievement.unlocked = true;
+          achievement.dateUnlocked = new Date();
+          newlyUnlocked.push(achievement);
+
+          // Trigger milestone unlocked event
+          this.triggerMilestoneUnlocked(achievement);
+        }
+      }
+    });
+
+    // Save progress to localStorage
+    this.saveAchievements();
+
+    return newlyUnlocked;
+  }
+
+  // Trigger milestone unlocked event
+  private triggerMilestoneUnlocked(achievement: EnhancedAchievement): void {
+    const event = new CustomEvent("milestoneUnlocked", {
+      detail: { achievement },
+    });
+    window.dispatchEvent(event);
+  }
+
+  // Claim achievement reward
+  public claimAchievement(achievementId: string): boolean {
+    const achievement = this.getAchievementById(achievementId);
+    if (achievement && achievement.unlocked) {
+      // Mark as claimed (could add a claimed property to track this)
+      // For now, just trigger a claimed event
+      const event = new CustomEvent("achievementClaimed", {
+        detail: { achievement },
+      });
+      window.dispatchEvent(event);
+      return true;
+    }
+    return false;
+  }
+
+  // Save achievements to localStorage
+  private saveAchievements(): void {
+    try {
+      localStorage.setItem(
+        "enhancedAchievements",
+        JSON.stringify(this.achievements),
+      );
+    } catch (error) {
+      console.error("Error saving achievements:", error);
+    }
+  }
+
+  // Load achievements from localStorage
+  private loadAchievements(): void {
+    try {
+      const saved = localStorage.getItem("enhancedAchievements");
+      if (saved) {
+        const savedAchievements = JSON.parse(saved);
+        // Merge saved progress with current achievements
+        this.achievements.forEach((achievement) => {
+          const saved = savedAchievements.find(
+            (s: any) => s.id === achievement.id,
+          );
+          if (saved) {
+            achievement.unlocked = saved.unlocked;
+            achievement.currentProgress = saved.currentProgress;
+            achievement.dateUnlocked = saved.dateUnlocked
+              ? new Date(saved.dateUnlocked)
+              : undefined;
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error loading achievements:", error);
+    }
+  }
+
+  // Initialize system (call this when system starts)
+  public initialize(): void {
+    this.loadAchievements();
+  }
+
+  // Get pending achievements (unlocked but not claimed)
+  public getPendingAchievements(): EnhancedAchievement[] {
+    return this.getUnlockedAchievements(); // For now, all unlocked are "pending"
   }
 }
 

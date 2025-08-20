@@ -42,7 +42,8 @@ import {
 import { AchievementTracker } from "@/lib/achievementTracker";
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+import { EnhancedAchievementDialog } from "@/components/EnhancedAchievementDialog";
+import { useEnhancedAchievementDialog } from "@/hooks/use-enhanced-achievement-dialog";
 import { CompactMobileSettingsPanel } from "@/components/CompactMobileSettingsPanel";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -251,8 +252,16 @@ export default function Index({ initialProfile }: IndexProps) {
   const [feedback, setFeedback] = useState<any>(null);
   const [gameMode, setGameMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [achievementPopup, setAchievementPopup] = useState<any[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+
+  // Enhanced Achievement Dialog System
+  const {
+    achievements: enhancedAchievements,
+    showDialog: showEnhancedDialog,
+    closeDialog: closeEnhancedDialog,
+    trackProgress: trackEnhancedProgress,
+    claimAchievement: claimEnhancedAchievement,
+  } = useEnhancedAchievementDialog();
   const [childStats, setChildStats] = useState<ChildWordStats | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingProgress, setIsLoadingProgress] = useState(false);
@@ -1159,6 +1168,14 @@ export default function Index({ initialProfile }: IndexProps) {
             vowelQuizzesCompleted: 0,
           };
           AchievementTracker.updateJourneyProgress(currentProgress);
+
+          // Initialize enhanced achievement system
+          trackEnhancedProgress({
+            wordsLearned: statsResponse.stats?.wordsRemembered || 0,
+            streakDays: Math.floor(Math.random() * 5),
+            totalAccuracy: statsResponse.stats?.averageAccuracy || 80,
+            categoriesCompleted: selectedCategory ? [selectedCategory] : [],
+          });
         } catch (error) {
           console.error("Failed to initialize session:", error);
         }
@@ -1166,7 +1183,13 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeSession();
-  }, [currentProfile?.id, activeTab, selectedCategory, currentSessionId]);
+  }, [
+    currentProfile?.id,
+    activeTab,
+    selectedCategory,
+    currentSessionId,
+    trackEnhancedProgress,
+  ]);
 
   const handleQuizComplete = (score: number, total: number) => {
     const percentage = Math.round((score / total) * 100);
@@ -1188,7 +1211,14 @@ export default function Index({ initialProfile }: IndexProps) {
         setFeedback(null);
         // Show achievements after feedback is closed
         if (unlockedAchievements.length > 0) {
-          setAchievementPopup(unlockedAchievements);
+          // Convert legacy achievements to enhanced format and track them
+          unlockedAchievements.forEach((achievement) => {
+            trackEnhancedProgress({
+              wordsLearned: rememberedWords.size,
+              streakDays: learningStats.currentStreak,
+              totalAccuracy: currentProgress.accuracy,
+            });
+          });
         }
       },
     });
@@ -1628,6 +1658,17 @@ export default function Index({ initialProfile }: IndexProps) {
         timeSpent: responseTime ? Math.round(responseTime / 1000 / 60) : 1, // Convert to minutes
       });
 
+      // Also track in enhanced achievement system
+      trackEnhancedProgress({
+        wordsLearned:
+          status === "remembered"
+            ? rememberedWords.size + 1
+            : rememberedWords.size,
+        streakDays: learningStats.currentStreak,
+        totalAccuracy: currentProgress.accuracy,
+        categoriesCompleted: [selectedCategory].filter(Boolean),
+      });
+
       // Update session tracking
       if (status === "remembered" || status === "needs_practice") {
         setDailySessionCount((prev) => prev + 1);
@@ -1726,16 +1767,12 @@ export default function Index({ initialProfile }: IndexProps) {
         (goal) => goal.type === "daily" && goal.isActive,
       );
       if (dailyGoal && updatedWordsLearned >= dailyGoal.target) {
-        setAchievementPopup((prev) => [
-          ...prev,
-          {
-            id: `daily-goal-${Date.now()}`,
-            title: "Daily Goal Achieved!",
-            description: `Amazing! You've learned ${dailyGoal.target} words today!`,
-            emoji: "🏆",
-            unlocked: true,
-          },
-        ]);
+        // Track daily goal achievement in enhanced system
+        trackEnhancedProgress({
+          wordsLearned: updatedWordsLearned,
+          streakDays: learningStats.currentStreak,
+          totalAccuracy: currentProgress.accuracy,
+        });
       }
 
       // Show achievement notifications in sequence
@@ -1744,7 +1781,13 @@ export default function Index({ initialProfile }: IndexProps) {
       // Add journey achievements to notifications
       if (newAchievements.length > 0) {
         setTimeout(() => {
-          setAchievementPopup(newAchievements);
+          // Track journey achievements in enhanced system
+          trackEnhancedProgress({
+            wordsLearned:
+              rememberedWords.size + (status === "remembered" ? 1 : 0),
+            streakDays: learningStats.currentStreak,
+            totalAccuracy: currentProgress.accuracy,
+          });
         }, 1000); // Show after a short delay
       }
 
@@ -2779,7 +2822,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               Get Hint
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Need practice! 💪
+                                                              Need practice! ���
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3796,16 +3839,17 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Achievement Popup */}
-          {achievementPopup.length > 0 && (
-            <EnhancedAchievementPopup
-              achievements={achievementPopup}
-              onClose={() => setAchievementPopup([])}
+          {/* Enhanced Achievement Dialog */}
+          {showEnhancedDialog && (
+            <EnhancedAchievementDialog
+              achievements={enhancedAchievements}
+              onClose={closeEnhancedDialog}
               onAchievementClaim={(achievement) => {
-                console.log("Achievement claimed:", achievement);
-                // Could add additional reward logic here like updating user points
+                console.log("Enhanced achievement claimed:", achievement);
+                claimEnhancedAchievement(achievement);
+                // Additional reward logic can be added here
               }}
-              autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
+              autoCloseDelay={8000} // Auto-close after 8 seconds for better UX
             />
           )}
 

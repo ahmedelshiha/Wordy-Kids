@@ -26,7 +26,6 @@ import { WordGarden } from "./WordGarden";
 import { useEnhancedMobileGaming } from "@/hooks/use-enhanced-mobile-gaming";
 import {
   PowerUpSystem,
-  AchievementSystem,
   GameSessionManager,
 } from "@/lib/enhancedGameplayMechanics";
 import "@/styles/enhanced-jungle-quiz-adventure.css";
