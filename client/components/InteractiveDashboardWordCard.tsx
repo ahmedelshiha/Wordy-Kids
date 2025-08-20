@@ -1286,7 +1286,7 @@ export function InteractiveDashboardWordCard({
             "ai-card-background",
             "bg-transparent", // Override default Card white background
             "shadow-lg hover:shadow-xl border-0 rounded-3xl sm:rounded-[2rem]",
-            "backdrop-blur-sm ring-1 ring-black/5",
+            "", // Removed backdrop-blur and ring for non-glossy appearance
             celebrationEffect &&
               "jungle-celebration-glow animate-pulse shadow-2xl",
           )}
@@ -1294,8 +1294,7 @@ export function InteractiveDashboardWordCard({
             boxShadow: `
               0 25px 50px rgba(0, 0, 0, 0.3),
               0 0 30px rgba(255, 215, 0, 0.2),
-              0 0 60px rgba(34, 197, 94, 0.1),
-              inset 0 1px 0 rgba(255, 255, 255, 0.15)
+              0 0 60px rgba(34, 197, 94, 0.1)
             `,
           }}
         >
@@ -1474,21 +1473,8 @@ export function InteractiveDashboardWordCard({
           )}
 
           <CardContent className="p-3 sm:p-4 md:p-4 lg:p-5 xl:p-6 relative z-10">
-            {/* Jungle Adventure Surface Glow */}
-            <motion.div
-              animate={{
-                opacity: [0.2, 0.4, 0.2],
-                scale: [1, 1.02, 1],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-2 bg-gradient-to-br from-yellow-400/20 via-transparent to-green-400/15 rounded-3xl pointer-events-none"
-            />
-            {/* Jungle Photo Texture Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-900/5 to-green-900/10 rounded-3xl pointer-events-none" />
+            {/* Jungle Adventure Surface Glow - Removed for non-glossy appearance */}
+            {/* Jungle Photo Texture Overlay - Removed for non-glossy appearance */}
             {/* Today's Word Quest - Left Corner without container */}
             <div className="absolute top-2 left-2 md:top-3 md:left-3 z-20 mb-4 hidden">
               <div className="flex items-center gap-1 md:gap-2">
