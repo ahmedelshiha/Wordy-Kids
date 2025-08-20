@@ -69,14 +69,6 @@ const kidNavTabs: NavTab[] = [
     hoverColor: "from-yellow-500 via-amber-500 to-orange-500",
     shadowColor: "shadow-yellow-300",
   },
-  {
-    id: "progress",
-    image: "/images/icons/map.png",
-    label: "Map",
-    color: "from-indigo-400 via-purple-400 to-pink-400",
-    hoverColor: "from-indigo-500 via-purple-500 to-pink-500",
-    shadowColor: "shadow-indigo-300",
-  },
 ];
 
 export function DesktopKidNav({
