@@ -1090,7 +1090,7 @@ const EnhancedJungleAchievementSystemComponent = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50",
+        "min-h-screen w-full transition-all duration-300 optimize-for-small-screen jungle-mobile-optimized jungle-pattern-bg bg-responsive-dashboard",
         "jungle-achievement-system",
         animPrefs.getAnimationClass("high"),
       )}
