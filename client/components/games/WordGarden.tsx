@@ -172,7 +172,7 @@ const PLANT_TYPES = [
   ["🌱", "🍃", "🌹"], // rose bush - small leaves to red rose
   ["🌱", "🌾", "🌼"], // daisy field - grain to white daisy
   ["🌱", "💚", "🌷"], // tulip - green heart to pink tulip
-  ["🌱", "🌳", "���"], // cherry tree - tree to cherry blossom
+  ["🌱", "🌳", "🌸"], // cherry tree - tree to cherry blossom
   ["🌱", "🍀", "🌺"], // clover hibiscus - clover to tropical flower
   ["🌱", "🎋", "🏵️"], // bamboo rosette - bamboo to decorative flower
   ["🌱", "🌲", "🍄"], // forest mushroom - pine to mushroom
@@ -185,7 +185,7 @@ const PLANT_TYPES = [
   ["🌱", "🎄", "🌟"], // christmas tree star - evergreen to star
   ["🌱", "🌿", "🌈"], // rainbow plant - leaves to rainbow
   ["🌱", "🍂", "🍁"], // autumn leaves - brown to red maple
-  ["🌱", "🌴", "🥥"], // palm coconut - palm tree to coconut
+  ["🌱", "🌴", "���"], // palm coconut - palm tree to coconut
   ["🌱", "🌵", "🌵"], // growing cactus - small to big cactus
 ] as const;
 
@@ -484,7 +484,7 @@ function JungleGameCompletionDialog({
               >
                 <span className="animate-jungle-sway drop-shadow-lg">
                   {
-                    ["🌿", "🍃", "🌱", "🌾", "🪴"][
+                    ["���", "🍃", "🌱", "🌾", "🪴"][
                       Math.floor(Math.random() * 5)
                     ]
                   }
@@ -1159,7 +1159,7 @@ export default function WordGarden({
           <div className="flex items-center gap-3">
             <div className="relative">
               <span className="text-5xl md:text-6xl animate-jungle-float">
-                🐒
+                ��
               </span>
               <div className="absolute -top-1 -right-1 text-lg animate-bounce">
                 <span>🍌</span>
