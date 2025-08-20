@@ -693,6 +693,51 @@ export const JungleAdventureParentDashboard: React.FC<
                   />
                 </CardContent>
               </Card>
+
+              {/* Quick Stats Below Map */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card className="jungle-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-green-500 w-8 h-8 rounded-full flex items-center justify-center">
+                        <Trophy className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-jungle-dark/70">Completed</p>
+                        <p className="text-lg font-semibold text-jungle-dark">3 Milestones</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="jungle-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-yellow-500 w-8 h-8 rounded-full flex items-center justify-center">
+                        <Target className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-jungle-dark/70">In Progress</p>
+                        <p className="text-lg font-semibold text-jungle-dark">1 Challenge</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="jungle-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center">
+                        <Crown className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-jungle-dark/70">Unlocked</p>
+                        <p className="text-lg font-semibold text-jungle-dark">2 Areas</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </motion.div>
           </TabsContent>
 
