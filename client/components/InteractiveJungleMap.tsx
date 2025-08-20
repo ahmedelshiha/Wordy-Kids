@@ -446,13 +446,72 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                       </Badge>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-gray-600 mb-3">
                     {selectedMarker.description}
                   </p>
 
+                  {/* Analytics Section */}
+                  {selectedMarker.analytics && !selectedMarker.locked && (
+                    <div className="space-y-3 mb-3">
+                      <div className="grid grid-cols-2 gap-3">
+                        {/* Time Spent */}
+                        <div className="flex items-center gap-2 bg-blue-50 p-2 rounded-lg">
+                          <span className="text-base">⏱️</span>
+                          <div>
+                            <p className="text-xs text-gray-600">Time</p>
+                            <p className="text-sm font-semibold">{selectedMarker.analytics.timeSpent}m</p>
+                          </div>
+                        </div>
+
+                        {/* Accuracy Score */}
+                        <div className="flex items-center gap-2 bg-green-50 p-2 rounded-lg">
+                          <span className="text-base">⭐</span>
+                          <div>
+                            <p className="text-xs text-gray-600">Accuracy</p>
+                            <p className="text-sm font-semibold">{selectedMarker.analytics.accuracyScore}%</p>
+                          </div>
+                        </div>
+
+                        {/* Streak */}
+                        <div className="flex items-center gap-2 bg-orange-50 p-2 rounded-lg">
+                          <span className="text-base">🎯</span>
+                          <div>
+                            <p className="text-xs text-gray-600">Streak</p>
+                            <p className="text-sm font-semibold">{selectedMarker.analytics.streak} days</p>
+                          </div>
+                        </div>
+
+                        {/* Last Active */}
+                        {selectedMarker.analytics.lastActive && (
+                          <div className="flex items-center gap-2 bg-purple-50 p-2 rounded-lg">
+                            <span className="text-base">📅</span>
+                            <div>
+                              <p className="text-xs text-gray-600">Last Active</p>
+                              <p className="text-sm font-semibold">
+                                {selectedMarker.analytics.lastActive.toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Additional Stats */}
+                      {(selectedMarker.analytics.attempts > 1 || selectedMarker.analytics.hintsUsed > 0) && (
+                        <div className="flex gap-4 text-xs text-gray-600 border-t pt-2">
+                          {selectedMarker.analytics.attempts > 1 && (
+                            <span>🔄 {selectedMarker.analytics.attempts} attempts</span>
+                          )}
+                          {selectedMarker.analytics.hintsUsed > 0 && (
+                            <span>💡 {selectedMarker.analytics.hintsUsed} hints used</span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {/* Progress Bar */}
                   {selectedMarker.progress > 0 && !selectedMarker.completed && (
-                    <div className="space-y-1">
+                    <div className="space-y-1 mb-3">
                       <div className="flex justify-between text-xs">
                         <span>Progress</span>
                         <span>{selectedMarker.progress}%</span>
@@ -467,8 +526,8 @@ export const InteractiveJungleMap: React.FC<InteractiveJungleMapProps> = ({
                   )}
 
                   {selectedMarker.completed && selectedMarker.date && (
-                    <div className="text-xs text-gray-500 mt-2">
-                      Completed {selectedMarker.date.toLocaleDateString()}
+                    <div className="text-xs text-gray-500 bg-green-50 p-2 rounded-lg">
+                      🎉 Completed {selectedMarker.date.toLocaleDateString()}
                     </div>
                   )}
                 </div>
