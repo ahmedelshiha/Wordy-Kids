@@ -1348,77 +1348,25 @@ export function InteractiveDashboardWordCard({
             `,
           }}
         >
-          {/* Jungle Adventure Background Elements */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-            {/* Animated Jungle Vines */}
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-                rotate: [0, 5, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute -top-10 -left-5 text-4xl opacity-20 text-jungle-light"
-            >
-              🌿
-            </motion.div>
-
-            <motion.div
-              animate={{
-                y: [0, -25, 0],
-                rotate: [0, -8, 0],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-              className="absolute -top-8 -right-8 text-3xl opacity-15 text-jungle-light"
-            >
-              🍃
-            </motion.div>
-
-            {/* Floating Jungle Particles */}
-            <motion.div
-              animate={{
-                y: [0, -30, 0],
-                x: [0, 10, 0],
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.7, 0.3],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-              className="absolute top-1/4 right-4 text-lg text-sunshine"
-            >
-              ✨
-            </motion.div>
-
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-                x: [0, -15, 0],
-                rotate: [0, 360, 0],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute bottom-1/3 left-6 text-sm opacity-40 text-sunshine"
-            >
-              🌺
-            </motion.div>
-
-            {/* Jungle Mist Effect - Removed for non-glossy appearance */}
-          </div>
+          {/* Simplified Jungle Background Elements - Only if animation enabled */}
+          {!prefersReducedMotion && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+              {/* Single subtle vine animation */}
+              <motion.div
+                animate={{
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute -top-10 -left-5 text-3xl opacity-15 text-jungle-light"
+              >
+                🌿
+              </motion.div>
+            </div>
+          )}
 
           {/* Enhanced Celebration Sparkles */}
           {celebrationEffect && (
@@ -1634,7 +1582,7 @@ export function InteractiveDashboardWordCard({
                     // Jungle Explorer Characters
                     const jungleExplorers = {
                       easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
-                      medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
+                      medium: ["🦁", "🐯", "��", "🦓", "🦏"],
                       hard: ["🐲", "🦅", "🐺", "🐆", "🦌"],
                     };
 
