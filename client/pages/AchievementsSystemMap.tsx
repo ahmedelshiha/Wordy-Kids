@@ -212,6 +212,9 @@ const integrationChecks: IntegrationCheck[] = [
 
 export function AchievementsSystemMap() {
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [showIntegrationReport, setShowIntegrationReport] = useState(false);
+  const [integrationReport, setIntegrationReport] = useState<FinalIntegrationReport | null>(null);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [showIntegration, setShowIntegration] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
