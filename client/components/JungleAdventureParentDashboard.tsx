@@ -676,9 +676,12 @@ export const JungleAdventureParentDashboard: React.FC<
               <Card className="jungle-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-jungle-dark">
-                    <TrendingUp className="w-5 h-5 text-profile-purple" />
-                    📊 Adventure Progress Analytics
+                    <Map className="w-5 h-5 text-profile-purple" />
+                    🗺️ Interactive Adventure Map
                   </CardTitle>
+                  <p className="text-sm text-jungle-dark/70 mt-2">
+                    Explore your child's learning journey through the magical jungle! Click on markers to see progress details.
+                  </p>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
