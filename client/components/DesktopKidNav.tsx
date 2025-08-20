@@ -63,7 +63,7 @@ const kidNavTabs: NavTab[] = [
   },
   {
     id: "achievements",
-    image: "/images/icons/trophy.png",
+    image: "🏆",
     label: "Achievements",
     color: "from-yellow-400 via-amber-400 to-orange-400",
     hoverColor: "from-yellow-500 via-amber-500 to-orange-500",
@@ -182,7 +182,7 @@ export function DesktopKidNav({
                                   delay: 0,
                                 }}
                               >
-                                ���
+                                ✨
                               </motion.div>
                               <motion.div
                                 className="absolute -bottom-2 -left-2 text-yellow-300 text-lg"
