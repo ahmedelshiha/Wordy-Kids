@@ -112,6 +112,20 @@ export const JungleAdventureParentDashboard: React.FC<
   const [timeframe, setTimeframe] = useState<"week" | "month" | "year">("week");
   const [showQuickActions, setShowQuickActions] = useState(false);
 
+  // Error handling and feature flags
+  const [mapError, setMapError] = useState<string | null>(null);
+  const [timelineError, setTimelineError] = useState<string | null>(null);
+  const [dashboardLoadTime, setDashboardLoadTime] = useState<number | null>(null);
+
+  // Get feature flag states
+  const isJungleMapEnabled = featureFlags.isFeatureEnabled('jungle-map-enhanced', { userRole: 'parent' });
+  const isTimelineEnabled = featureFlags.isFeatureEnabled('family-achievements-timeline', { userRole: 'parent' });
+  const isAnalyticsEnabled = featureFlags.isFeatureEnabled('performance-monitoring');
+
+  // Get user preference for jungle map (from parental controls)
+  const userSettings = JungleAdventureStorage.getSettings();
+  const userMapPreference = userSettings.family?.jungleMapEnabled !== false;
+
   // Sample data - replace with real data
   const children: Child[] = [
     {
