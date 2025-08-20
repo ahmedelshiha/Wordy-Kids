@@ -683,96 +683,14 @@ export const JungleAdventureParentDashboard: React.FC<
                     Explore your child's learning journey through the magical jungle! Click on markers to see progress details.
                   </p>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Weekly Progress Chart */}
-                    <div>
-                      <h4 className="font-medium text-jungle-dark mb-4">
-                        Weekly Word Discovery
-                      </h4>
-                      <div className="space-y-3">
-                        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                          (day, index) => (
-                            <div key={day} className="flex items-center gap-3">
-                              <span className="text-sm w-8 text-jungle-dark/70">
-                                {day}
-                              </span>
-                              <div className="flex-1 bg-jungle/10 rounded-full h-6 relative overflow-hidden">
-                                <motion.div
-                                  className="h-full bg-gradient-to-r from-jungle to-sunshine rounded-full"
-                                  initial={{ width: 0 }}
-                                  animate={{
-                                    width: `${(children[0]?.weeklyProgress[index] || 0) * 10}%`,
-                                  }}
-                                  transition={{
-                                    delay: index * 0.1,
-                                    duration: 0.6,
-                                  }}
-                                />
-                                <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-jungle-dark">
-                                  {children[0]?.weeklyProgress[index] || 0}{" "}
-                                  words
-                                </span>
-                              </div>
-                            </div>
-                          ),
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Achievement Timeline */}
-                    <div>
-                      <h4 className="font-medium text-jungle-dark mb-4">
-                        Recent Milestones
-                      </h4>
-                      <div className="space-y-4">
-                        {[
-                          {
-                            date: "Today",
-                            achievement: "Completed Animal Category",
-                            child: "Emma",
-                            icon: "🦋",
-                          },
-                          {
-                            date: "Yesterday",
-                            achievement: "7-day Learning Streak",
-                            child: "Leo",
-                            icon: "🔥",
-                          },
-                          {
-                            date: "2 days ago",
-                            achievement: "100 Words Discovered",
-                            child: "Emma",
-                            icon: "🏆",
-                          },
-                          {
-                            date: "3 days ago",
-                            achievement: "Perfect Pronunciation",
-                            child: "Leo",
-                            icon: "🎯",
-                          },
-                        ].map((milestone, index) => (
-                          <motion.div
-                            key={index}
-                            className="flex items-center gap-3 p-3 bg-gradient-to-r from-jungle/5 to-sunshine/5 rounded-lg"
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                          >
-                            <div className="text-xl">{milestone.icon}</div>
-                            <div className="flex-1">
-                              <p className="text-sm font-medium text-jungle-dark">
-                                {milestone.achievement}
-                              </p>
-                              <p className="text-xs text-jungle-dark/70">
-                                {milestone.child} • {milestone.date}
-                              </p>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                <CardContent className="p-0">
+                  <InteractiveJungleMap
+                    className="w-full"
+                    onMarkerClick={(marker) => {
+                      console.log("Marker clicked:", marker);
+                      // Future: Show detailed progress modal
+                    }}
+                  />
                 </CardContent>
               </Card>
             </motion.div>
