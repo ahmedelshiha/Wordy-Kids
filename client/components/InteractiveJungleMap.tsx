@@ -64,6 +64,14 @@ const sampleMarkers: MapMarker[] = [
     progress: 100,
     emoji: "🌟",
     date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+    analytics: {
+      timeSpent: 15,
+      accuracyScore: 95,
+      streak: 7,
+      lastActive: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      attempts: 1,
+      hintsUsed: 0,
+    },
   },
   {
     id: "word-builder",
@@ -78,6 +86,14 @@ const sampleMarkers: MapMarker[] = [
     progress: 100,
     emoji: "🔤",
     date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+    analytics: {
+      timeSpent: 32,
+      accuracyScore: 88,
+      streak: 5,
+      lastActive: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+      attempts: 3,
+      hintsUsed: 2,
+    },
   },
   {
     id: "parrot-friend",
@@ -92,6 +108,14 @@ const sampleMarkers: MapMarker[] = [
     progress: 100,
     emoji: "🦜",
     date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+    analytics: {
+      timeSpent: 8,
+      accuracyScore: 100,
+      streak: 3,
+      lastActive: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+      attempts: 1,
+      hintsUsed: 0,
+    },
   },
   {
     id: "reading-tree",
