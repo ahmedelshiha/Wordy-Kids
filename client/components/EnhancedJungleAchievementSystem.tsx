@@ -943,7 +943,11 @@ export function EnhancedJungleAchievementSystem({
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5">
+    <div className={cn(
+      "min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-jungle/5",
+      "jungle-achievement-system",
+      animPrefs.getAnimationClass('high')
+    )}>
       <div className="space-y-6 relative">
         {/* Decorative jungle elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
