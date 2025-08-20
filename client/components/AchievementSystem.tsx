@@ -974,25 +974,25 @@ export function AchievementSystem({
 
         <TabsContent value="achievements" className="mt-6">
           <div className="space-y-6">
-            {/* Achievement Stats - Mobile Optimized */}
+            {/* Jungle Adventure Stats - Mobile Optimized */}
             <div className="flex justify-center gap-2 md:gap-4 mb-4 md:mb-6 px-2">
-              <Card className="bg-gradient-to-r from-educational-blue to-educational-purple text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
+              <Card className="jungle-achievement-card bg-gradient-to-r from-jungle to-jungle-light text-white hover:scale-105 transition-all flex-1 max-w-[150px] animate-jungle-glow">
                 <CardContent className="p-3 md:p-4 text-center">
                   <div className="text-xl md:text-2xl font-bold">
                     {unlockedAchievements.length}
                   </div>
                   <div className="text-xs md:text-sm opacity-90">
-                    🏆 Trophies Won!
+                    🏆 Adventures Won!
                   </div>
                 </CardContent>
               </Card>
-              <Card className="bg-gradient-to-r from-educational-orange to-educational-pink text-white hover:scale-105 transition-all flex-1 max-w-[150px]">
+              <Card className="jungle-achievement-card bg-gradient-to-r from-sunshine to-sunshine-light text-jungle-dark hover:scale-105 transition-all flex-1 max-w-[150px] animate-jungle-sparkle">
                 <CardContent className="p-3 md:p-4 text-center">
                   <div className="text-xl md:text-2xl font-bold">
                     {totalPoints}
                   </div>
                   <div className="text-xs md:text-sm opacity-90">
-                    ⭐ Trophy Points!
+                    ⭐ Jungle Points!
                   </div>
                 </CardContent>
               </Card>
