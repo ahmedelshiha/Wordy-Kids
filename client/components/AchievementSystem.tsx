@@ -915,50 +915,50 @@ export function AchievementSystem({
         <TabsList className="jungle-tab-list grid w-full grid-cols-2 md:grid-cols-4 gap-1 md:gap-0 bg-gradient-to-r from-jungle/10 to-sunshine/10 h-auto p-1 rounded-xl shadow-lg">
           <TabsTrigger
             value="achievements"
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-blue data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+            className="jungle-tab-trigger flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-jungle data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3 hover:bg-jungle/20 transition-all duration-300"
           >
-            <Trophy className="w-4 h-4 md:w-4 md:h-4" />
-            <span className="hidden md:inline">🏆 Trophies</span>
+            <Trophy className="w-4 h-4 md:w-4 md:h-4 animate-bounce" />
+            <span className="hidden md:inline">🏆 Adventures</span>
             <span className="md:hidden text-center">
               🏆
               <br />
-              Trophies
+              Adventures
             </span>
           </TabsTrigger>
           <TabsTrigger
             value="progress"
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-green data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+            className="jungle-tab-trigger flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-sunshine data-[state=active]:text-jungle-dark text-xs md:text-sm py-2 md:py-3 px-1 md:px-3 hover:bg-sunshine/20 transition-all duration-300"
           >
-            <TrendingUp className="w-4 h-4 md:w-4 md:h-4" />
-            <span className="hidden md:inline">📈 My Stats</span>
+            <TreePine className="w-4 h-4 md:w-4 md:h-4 animate-jungle-sway" />
+            <span className="hidden md:inline">🌳 Progress</span>
             <span className="md:hidden text-center">
-              📈
+              🌳
               <br />
-              Stats
+              Progress
             </span>
           </TabsTrigger>
           <TabsTrigger
             value="categories"
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-orange data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+            className="jungle-tab-trigger flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-sky-blue data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3 hover:bg-sky-blue/20 transition-all duration-300"
           >
-            <PieChart className="w-4 h-4 md:w-4 md:h-4" />
-            <span className="hidden md:inline">🎨 Topics</span>
+            <Map className="w-4 h-4 md:w-4 md:h-4 animate-jungle-float" />
+            <span className="hidden md:inline">🗺️ Regions</span>
             <span className="md:hidden text-center">
-              🎨
+              🗺️
               <br />
-              Topics
+              Regions
             </span>
           </TabsTrigger>
           <TabsTrigger
             value="streaks"
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-educational-purple data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3"
+            className="jungle-tab-trigger flex flex-col md:flex-row items-center gap-1 md:gap-2 data-[state=active]:bg-coral-red data-[state=active]:text-white text-xs md:text-sm py-2 md:py-3 px-1 md:px-3 hover:bg-coral-red/20 transition-all duration-300"
           >
-            <Activity className="w-4 h-4 md:w-4 md:h-4" />
-            <span className="hidden md:inline">🔥 Adventure</span>
+            <Compass className="w-4 h-4 md:w-4 md:h-4 animate-spin" style={{ animationDuration: '4s' }} />
+            <span className="hidden md:inline">🧭 Exploration</span>
             <span className="md:hidden text-center">
-              🔥
+              🧭
               <br />
-              Adventure
+              Exploration
             </span>
           </TabsTrigger>
         </TabsList>
