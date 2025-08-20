@@ -375,13 +375,25 @@ export function InteractiveDashboardWordCard({
           setIsPlaying(false);
         },
         onError: (errorDetails) => {
-          console.error("Speech synthesis failed for word:", {
+          // Proper error handling and logging
+          const errorInfo = {
             word: currentWord.word,
             service: "enhancedAudioService",
             timestamp: new Date().toISOString(),
-            errorDetails: errorDetails || "No error details provided",
-          });
+            errorDetails: errorDetails instanceof Error
+              ? {
+                  name: errorDetails.name,
+                  message: errorDetails.message,
+                  stack: errorDetails.stack,
+                }
+              : typeof errorDetails === 'object' && errorDetails !== null
+              ? JSON.stringify(errorDetails)
+              : String(errorDetails || "No error details provided"),
+          };
+
+          console.error("Speech synthesis failed for word:", errorInfo);
           setIsPlaying(false);
+
           // Fallback: try with basic audioService
           try {
             console.log(
@@ -403,28 +415,44 @@ export function InteractiveDashboardWordCard({
                 );
                 setIsPlaying(false);
               },
-              onError: () => {
-                console.error("Fallback audioService also failed for word:", {
+              onError: (fallbackErrorDetails) => {
+                const fallbackErrorInfo = {
                   word: currentWord.word,
                   service: "basicAudioService",
                   timestamp: new Date().toISOString(),
-                });
+                  errorDetails: fallbackErrorDetails instanceof Error
+                    ? {
+                        name: fallbackErrorDetails.name,
+                        message: fallbackErrorDetails.message,
+                        stack: fallbackErrorDetails.stack,
+                      }
+                    : typeof fallbackErrorDetails === 'object' && fallbackErrorDetails !== null
+                    ? JSON.stringify(fallbackErrorDetails)
+                    : String(fallbackErrorDetails || "No error details provided"),
+                };
+
+                console.error("Fallback audioService also failed for word:", fallbackErrorInfo);
                 setIsPlaying(false);
               },
             });
           } catch (fallbackError) {
-            console.error("Fallback speech synthesis also failed:", {
+            const catchErrorInfo = {
               word: currentWord.word,
-              error:
-                fallbackError instanceof Error
-                  ? {
-                      name: fallbackError.name,
-                      message: fallbackError.message,
-                      stack: fallbackError.stack,
-                    }
-                  : fallbackError,
+              service: "fallbackCatch",
               timestamp: new Date().toISOString(),
-            });
+              error: fallbackError instanceof Error
+                ? {
+                    name: fallbackError.name,
+                    message: fallbackError.message,
+                    stack: fallbackError.stack,
+                  }
+                : typeof fallbackError === 'object' && fallbackError !== null
+                ? JSON.stringify(fallbackError)
+                : String(fallbackError),
+            };
+
+            console.error("Fallback speech synthesis also failed:", catchErrorInfo);
+            setIsPlaying(false);
           }
         },
       });
