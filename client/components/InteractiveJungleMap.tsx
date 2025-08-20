@@ -129,6 +129,14 @@ const sampleMarkers: MapMarker[] = [
     category: "Reading",
     progress: 65,
     emoji: "🌳",
+    analytics: {
+      timeSpent: 18,
+      accuracyScore: 78,
+      streak: 2,
+      lastActive: new Date(),
+      attempts: 5,
+      hintsUsed: 3,
+    },
   },
   {
     id: "treasure-chest",
