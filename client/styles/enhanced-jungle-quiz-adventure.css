@@ -760,8 +760,6 @@
 
 @media (max-width: 768px) {
   .treasure-option-card {
-    transform-style: preserve-3d;
-    perspective: 800px;
     margin-bottom: 1rem;
   }
 
