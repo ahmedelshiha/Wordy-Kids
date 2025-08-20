@@ -365,97 +365,125 @@ export function InteractiveDashboardWordCard({
       }
 
       // Pronounce word with enhanced error handling
-      enhancedAudioService.pronounceWord(currentWord.word, {
-        onStart: () => {
-          console.log("Speech started successfully");
-          setIsPlaying(true);
-        },
-        onEnd: () => {
-          console.log("Speech completed successfully");
-          setIsPlaying(false);
-        },
-        onError: (errorDetails) => {
-          // Proper error handling and logging
-          const errorInfo = {
-            word: currentWord.word,
-            service: "enhancedAudioService",
-            timestamp: new Date().toISOString(),
-            errorDetails: errorDetails instanceof Error
-              ? {
-                  name: errorDetails.name,
-                  message: errorDetails.message,
-                  stack: errorDetails.stack,
-                }
-              : typeof errorDetails === 'object' && errorDetails !== null
-              ? JSON.stringify(errorDetails)
-              : String(errorDetails || "No error details provided"),
-          };
+      try {
+        if (!enhancedAudioService || typeof enhancedAudioService.pronounceWord !== 'function') {
+          throw new Error("Enhanced audio service not available");
+        }
 
-          console.error("Speech synthesis failed for word:", errorInfo);
-          setIsPlaying(false);
-
-          // Fallback: try with basic audioService
-          try {
-            console.log(
-              "Attempting fallback to basic audioService for word:",
-              currentWord.word,
-            );
-            audioService.pronounceWord(currentWord.word, {
-              onStart: () => {
-                console.log(
-                  "Fallback audioService started successfully for:",
-                  currentWord.word,
-                );
-                setIsPlaying(true);
-              },
-              onEnd: () => {
-                console.log(
-                  "Fallback audioService completed successfully for:",
-                  currentWord.word,
-                );
-                setIsPlaying(false);
-              },
-              onError: (fallbackErrorDetails) => {
-                const fallbackErrorInfo = {
-                  word: currentWord.word,
-                  service: "basicAudioService",
-                  timestamp: new Date().toISOString(),
-                  errorDetails: fallbackErrorDetails instanceof Error
-                    ? {
-                        name: fallbackErrorDetails.name,
-                        message: fallbackErrorDetails.message,
-                        stack: fallbackErrorDetails.stack,
-                      }
-                    : typeof fallbackErrorDetails === 'object' && fallbackErrorDetails !== null
-                    ? JSON.stringify(fallbackErrorDetails)
-                    : String(fallbackErrorDetails || "No error details provided"),
-                };
-
-                console.error("Fallback audioService also failed for word:", fallbackErrorInfo);
-                setIsPlaying(false);
-              },
-            });
-          } catch (fallbackError) {
-            const catchErrorInfo = {
+        enhancedAudioService.pronounceWord(currentWord.word, {
+          onStart: () => {
+            console.log("Speech started successfully");
+            setIsPlaying(true);
+          },
+          onEnd: () => {
+            console.log("Speech completed successfully");
+            setIsPlaying(false);
+          },
+          onError: (errorDetails) => {
+            // Proper error handling and logging
+            const errorInfo = {
               word: currentWord.word,
-              service: "fallbackCatch",
+              service: "enhancedAudioService",
               timestamp: new Date().toISOString(),
-              error: fallbackError instanceof Error
+              errorDetails: errorDetails instanceof Error
                 ? {
-                    name: fallbackError.name,
-                    message: fallbackError.message,
-                    stack: fallbackError.stack,
+                    name: errorDetails.name,
+                    message: errorDetails.message,
+                    stack: errorDetails.stack,
                   }
-                : typeof fallbackError === 'object' && fallbackError !== null
-                ? JSON.stringify(fallbackError)
-                : String(fallbackError),
+                : typeof errorDetails === 'object' && errorDetails !== null
+                ? JSON.stringify(errorDetails)
+                : String(errorDetails || "No error details provided"),
             };
 
-            console.error("Fallback speech synthesis also failed:", catchErrorInfo);
+            console.error("Speech synthesis failed for word:", errorInfo);
             setIsPlaying(false);
-          }
-        },
-      });
+
+            // Fallback: try with basic audioService
+            try {
+              if (!audioService || typeof audioService.pronounceWord !== 'function') {
+                throw new Error("Basic audio service not available");
+              }
+
+              console.log(
+                "Attempting fallback to basic audioService for word:",
+                currentWord.word,
+              );
+              audioService.pronounceWord(currentWord.word, {
+                onStart: () => {
+                  console.log(
+                    "Fallback audioService started successfully for:",
+                    currentWord.word,
+                  );
+                  setIsPlaying(true);
+                },
+                onEnd: () => {
+                  console.log(
+                    "Fallback audioService completed successfully for:",
+                    currentWord.word,
+                  );
+                  setIsPlaying(false);
+                },
+                onError: (fallbackErrorDetails) => {
+                  const fallbackErrorInfo = {
+                    word: currentWord.word,
+                    service: "basicAudioService",
+                    timestamp: new Date().toISOString(),
+                    errorDetails: fallbackErrorDetails instanceof Error
+                      ? {
+                          name: fallbackErrorDetails.name,
+                          message: fallbackErrorDetails.message,
+                          stack: fallbackErrorDetails.stack,
+                        }
+                      : typeof fallbackErrorDetails === 'object' && fallbackErrorDetails !== null
+                      ? JSON.stringify(fallbackErrorDetails)
+                      : String(fallbackErrorDetails || "No error details provided"),
+                  };
+
+                  console.error("Fallback audioService also failed for word:", fallbackErrorInfo);
+                  setIsPlaying(false);
+                },
+              });
+            } catch (fallbackError) {
+              const catchErrorInfo = {
+                word: currentWord.word,
+                service: "fallbackCatch",
+                timestamp: new Date().toISOString(),
+                error: fallbackError instanceof Error
+                  ? {
+                      name: fallbackError.name,
+                      message: fallbackError.message,
+                      stack: fallbackError.stack,
+                    }
+                  : typeof fallbackError === 'object' && fallbackError !== null
+                  ? JSON.stringify(fallbackError)
+                  : String(fallbackError),
+              };
+
+              console.error("Fallback speech synthesis also failed:", catchErrorInfo);
+              setIsPlaying(false);
+            }
+          },
+        });
+      } catch (mainError) {
+        const mainErrorInfo = {
+          word: currentWord.word,
+          service: "mainCatch",
+          timestamp: new Date().toISOString(),
+          error: mainError instanceof Error
+            ? {
+                name: mainError.name,
+                message: mainError.message,
+                stack: mainError.stack,
+              }
+            : typeof mainError === 'object' && mainError !== null
+            ? JSON.stringify(mainError)
+            : String(mainError),
+        };
+
+        console.error("Main speech synthesis failed:", mainErrorInfo);
+        setIsPlaying(false);
+      }
     }
   };
 
