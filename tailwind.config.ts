@@ -148,12 +148,6 @@ export default {
         "jungle-celebration": "jungle-celebration 2s ease-in-out",
         "jungle-level-up": "jungle-level-up 3s ease-out",
       },
-      transform: {
-        "preserve-3d": "preserve-3d",
-      },
-      backfaceVisibility: {
-        hidden: "hidden",
-      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
