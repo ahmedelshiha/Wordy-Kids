@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
   TrendingUp,
   Calendar,
   Clock,
@@ -25,10 +25,10 @@ import {
   Star,
   Crown,
   Gem,
-  Heart
-} from 'lucide-react';
-import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { cn } from '@/lib/utils';
+  Heart,
+} from "lucide-react";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { cn } from "@/lib/utils";
 
 interface LearningData {
   totalWordsLearned: number;
@@ -40,7 +40,7 @@ interface LearningData {
     timeSpent: number;
   }>;
   difficultyProgress: Array<{
-    difficulty: 'easy' | 'medium' | 'hard';
+    difficulty: "easy" | "medium" | "hard";
     completed: number;
     total: number;
   }>;
@@ -60,7 +60,7 @@ interface LearningData {
     description: string;
     icon: string;
     unlockedAt: Date;
-    rarity: 'common' | 'rare' | 'epic' | 'legendary';
+    rarity: "common" | "rare" | "epic" | "legendary";
   }>;
   jungleStats?: {
     animalsDiscovered: number;
@@ -75,114 +75,149 @@ const jungleSampleData: LearningData = {
   totalWordsLearned: 127,
   weeklyProgress: [5, 8, 12, 7, 15, 10, 18],
   categoryBreakdown: [
-    { category: 'Jungle Animals', wordsLearned: 35, accuracy: 94, timeSpent: 52 },
-    { category: 'Tropical Plants', wordsLearned: 28, accuracy: 91, timeSpent: 45 },
-    { category: 'Adventure Gear', wordsLearned: 24, accuracy: 88, timeSpent: 38 },
-    { category: 'Weather & Climate', wordsLearned: 21, accuracy: 85, timeSpent: 35 },
-    { category: 'Jungle Sounds', wordsLearned: 19, accuracy: 96, timeSpent: 31 }
+    {
+      category: "Jungle Animals",
+      wordsLearned: 35,
+      accuracy: 94,
+      timeSpent: 52,
+    },
+    {
+      category: "Tropical Plants",
+      wordsLearned: 28,
+      accuracy: 91,
+      timeSpent: 45,
+    },
+    {
+      category: "Adventure Gear",
+      wordsLearned: 24,
+      accuracy: 88,
+      timeSpent: 38,
+    },
+    {
+      category: "Weather & Climate",
+      wordsLearned: 21,
+      accuracy: 85,
+      timeSpent: 35,
+    },
+    {
+      category: "Jungle Sounds",
+      wordsLearned: 19,
+      accuracy: 96,
+      timeSpent: 31,
+    },
   ],
   difficultyProgress: [
-    { difficulty: 'easy', completed: 68, total: 80 },
-    { difficulty: 'medium', completed: 42, total: 70 },
-    { difficulty: 'hard', completed: 17, total: 50 }
+    { difficulty: "easy", completed: 68, total: 80 },
+    { difficulty: "medium", completed: 42, total: 70 },
+    { difficulty: "hard", completed: 17, total: 50 },
   ],
   streakData: Array.from({ length: 30 }, (_, i) => ({
-    date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    date: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .split("T")[0],
     active: Math.random() > 0.25,
-    wordsLearned: Math.floor(Math.random() * 15) + 1
+    wordsLearned: Math.floor(Math.random() * 15) + 1,
   })),
   learningVelocity: [
-    { week: 'Jungle Week 1', wordsPerHour: 3.2, accuracy: 85 },
-    { week: 'Canopy Week 2', wordsPerHour: 4.1, accuracy: 87 },
-    { week: 'River Week 3', wordsPerHour: 4.8, accuracy: 89 },
-    { week: 'Summit Week 4', wordsPerHour: 5.2, accuracy: 91 }
+    { week: "Jungle Week 1", wordsPerHour: 3.2, accuracy: 85 },
+    { week: "Canopy Week 2", wordsPerHour: 4.1, accuracy: 87 },
+    { week: "River Week 3", wordsPerHour: 4.8, accuracy: 89 },
+    { week: "Summit Week 4", wordsPerHour: 5.2, accuracy: 91 },
   ],
   achievements: [
     {
-      id: 'jungle-explorer',
-      title: 'Jungle Explorer',
-      description: 'Discovered 100+ jungle words',
-      icon: '🌿',
+      id: "jungle-explorer",
+      title: "Jungle Explorer",
+      description: "Discovered 100+ jungle words",
+      icon: "🌿",
       unlockedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-      rarity: 'epic'
+      rarity: "epic",
     },
     {
-      id: 'animal-whisperer',
-      title: 'Animal Whisperer',
-      description: 'Perfect score on animal vocabulary',
-      icon: '🐵',
+      id: "animal-whisperer",
+      title: "Animal Whisperer",
+      description: "Perfect score on animal vocabulary",
+      icon: "🐵",
       unlockedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-      rarity: 'rare'
+      rarity: "rare",
     },
     {
-      id: 'canopy-climber',
-      title: 'Canopy Climber',
-      description: 'Reached the treetops with 7-day streak',
-      icon: '🌳',
+      id: "canopy-climber",
+      title: "Canopy Climber",
+      description: "Reached the treetops with 7-day streak",
+      icon: "🌳",
       unlockedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      rarity: 'legendary'
-    }
+      rarity: "legendary",
+    },
   ],
   jungleStats: {
     animalsDiscovered: 23,
     plantsLearned: 18,
     expeditionsCompleted: 12,
     treasuresFound: 8,
-    friendshipLevel: 85
-  }
+    friendshipLevel: 85,
+  },
 };
 
 interface JungleLearningAnalyticsProps {
   data?: LearningData;
-  timeRange?: 'week' | 'month' | 'quarter' | 'year';
+  timeRange?: "week" | "month" | "quarter" | "year";
 }
 
-export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsProps> = ({
-  data = jungleSampleData,
-  timeRange = 'month'
-}) => {
-  const [selectedMetric, setSelectedMetric] = useState<'words' | 'time' | 'accuracy'>('words');
-  const [activeView, setActiveView] = useState<'overview' | 'detailed'>('overview');
+export const EnhancedJungleLearningAnalytics: React.FC<
+  JungleLearningAnalyticsProps
+> = ({ data = jungleSampleData, timeRange = "month" }) => {
+  const [selectedMetric, setSelectedMetric] = useState<
+    "words" | "time" | "accuracy"
+  >("words");
+  const [activeView, setActiveView] = useState<"overview" | "detailed">(
+    "overview",
+  );
 
   const getJungleRarityColor = (rarity: string) => {
     switch (rarity) {
-      case 'common': return 'bg-slate-500';
-      case 'rare': return 'bg-sky-DEFAULT';
-      case 'epic': return 'bg-jungle-DEFAULT';
-      case 'legendary': return 'bg-sunshine-DEFAULT';
-      default: return 'bg-slate-500';
+      case "common":
+        return "bg-slate-500";
+      case "rare":
+        return "bg-sky-DEFAULT";
+      case "epic":
+        return "bg-jungle-DEFAULT";
+      case "legendary":
+        return "bg-sunshine-DEFAULT";
+      default:
+        return "bg-slate-500";
     }
   };
 
   const getDifficultyJungleTheme = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': 
+      case "easy":
         return {
-          name: 'Jungle Floor',
-          icon: '🌱',
-          color: 'from-jungle-DEFAULT to-emerald-400',
-          description: 'Safe ground level exploration'
+          name: "Jungle Floor",
+          icon: "🌱",
+          color: "from-jungle-DEFAULT to-emerald-400",
+          description: "Safe ground level exploration",
         };
-      case 'medium':
+      case "medium":
         return {
-          name: 'Canopy Level',
-          icon: '🌳',
-          color: 'from-sunshine-DEFAULT to-orange-400',
-          description: 'Climbing through the treetops'
+          name: "Canopy Level",
+          icon: "🌳",
+          color: "from-sunshine-DEFAULT to-orange-400",
+          description: "Climbing through the treetops",
         };
-      case 'hard':
+      case "hard":
         return {
-          name: 'Mountain Peak',
-          icon: '⛰️',
-          color: 'from-coral-red to-red-500',
-          description: 'Conquering the highest challenges'
+          name: "Mountain Peak",
+          icon: "⛰️",
+          color: "from-coral-red to-red-500",
+          description: "Conquering the highest challenges",
         };
       default:
         return {
-          name: 'Unknown',
-          icon: '❓',
-          color: 'from-gray-400 to-gray-500',
-          description: 'Unexplored territory'
+          name: "Unknown",
+          icon: "❓",
+          color: "from-gray-400 to-gray-500",
+          description: "Unexplored territory",
         };
     }
   };
@@ -208,8 +243,11 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
           <CardContent className="p-3 md:p-6 text-center relative z-10">
             <Zap className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 animate-bounce" />
             <div className="text-xl md:text-2xl font-bold">
-              <AnimatedCounter 
-                value={data.learningVelocity[data.learningVelocity.length - 1]?.wordsPerHour || 0} 
+              <AnimatedCounter
+                value={
+                  data.learningVelocity[data.learningVelocity.length - 1]
+                    ?.wordsPerHour || 0
+                }
                 suffix="/hr"
               />
             </div>
@@ -221,10 +259,16 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
         <Card className="bg-gradient-to-br from-sky-DEFAULT to-blue-500 text-white hover:scale-105 transition-all duration-300 shadow-xl border-0 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent animate-jungle-sparkle"></div>
           <CardContent className="p-3 md:p-6 text-center relative z-10">
-            <Target className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 animate-spin" style={{ animationDuration: "3s" }} />
+            <Target
+              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 animate-spin"
+              style={{ animationDuration: "3s" }}
+            />
             <div className="text-xl md:text-2xl font-bold">
-              <AnimatedCounter 
-                value={data.learningVelocity[data.learningVelocity.length - 1]?.accuracy || 0}
+              <AnimatedCounter
+                value={
+                  data.learningVelocity[data.learningVelocity.length - 1]
+                    ?.accuracy || 0
+                }
                 suffix="%"
               />
             </div>
@@ -259,27 +303,43 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div className="text-center p-3 bg-white/80 rounded-lg border border-jungle-DEFAULT/20">
                 <div className="text-2xl mb-1">🐵</div>
-                <div className="text-lg font-bold text-jungle-dark">{data.jungleStats.animalsDiscovered}</div>
-                <div className="text-xs text-jungle-DEFAULT/70">Animals Met</div>
+                <div className="text-lg font-bold text-jungle-dark">
+                  {data.jungleStats.animalsDiscovered}
+                </div>
+                <div className="text-xs text-jungle-DEFAULT/70">
+                  Animals Met
+                </div>
               </div>
               <div className="text-center p-3 bg-white/80 rounded-lg border border-jungle-DEFAULT/20">
                 <div className="text-2xl mb-1">🌺</div>
-                <div className="text-lg font-bold text-jungle-dark">{data.jungleStats.plantsLearned}</div>
-                <div className="text-xs text-jungle-DEFAULT/70">Plants Found</div>
+                <div className="text-lg font-bold text-jungle-dark">
+                  {data.jungleStats.plantsLearned}
+                </div>
+                <div className="text-xs text-jungle-DEFAULT/70">
+                  Plants Found
+                </div>
               </div>
               <div className="text-center p-3 bg-white/80 rounded-lg border border-jungle-DEFAULT/20">
                 <div className="text-2xl mb-1">🗺️</div>
-                <div className="text-lg font-bold text-jungle-dark">{data.jungleStats.expeditionsCompleted}</div>
-                <div className="text-xs text-jungle-DEFAULT/70">Expeditions</div>
+                <div className="text-lg font-bold text-jungle-dark">
+                  {data.jungleStats.expeditionsCompleted}
+                </div>
+                <div className="text-xs text-jungle-DEFAULT/70">
+                  Expeditions
+                </div>
               </div>
               <div className="text-center p-3 bg-white/80 rounded-lg border border-jungle-DEFAULT/20">
                 <div className="text-2xl mb-1">💎</div>
-                <div className="text-lg font-bold text-jungle-dark">{data.jungleStats.treasuresFound}</div>
+                <div className="text-lg font-bold text-jungle-dark">
+                  {data.jungleStats.treasuresFound}
+                </div>
                 <div className="text-xs text-jungle-DEFAULT/70">Treasures</div>
               </div>
               <div className="text-center p-3 bg-white/80 rounded-lg border border-jungle-DEFAULT/20">
                 <div className="text-2xl mb-1">❤️</div>
-                <div className="text-lg font-bold text-jungle-dark">{data.jungleStats.friendshipLevel}%</div>
+                <div className="text-lg font-bold text-jungle-dark">
+                  {data.jungleStats.friendshipLevel}%
+                </div>
                 <div className="text-xs text-jungle-DEFAULT/70">Friendship</div>
               </div>
             </div>
@@ -298,35 +358,43 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
         <CardContent>
           <div className="space-y-4">
             <div className="flex justify-center gap-2 md:gap-4 mb-4 flex-wrap">
-              {['words', 'time', 'accuracy'].map((metric) => (
+              {["words", "time", "accuracy"].map((metric) => (
                 <Button
                   key={metric}
-                  variant={selectedMetric === metric ? 'default' : 'outline'}
+                  variant={selectedMetric === metric ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedMetric(metric as any)}
                   className={cn(
                     "capitalize transition-all duration-300",
                     selectedMetric === metric
                       ? "bg-gradient-to-r from-jungle-DEFAULT to-emerald-500 text-white shadow-lg"
-                      : "border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50"
+                      : "border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50",
                   )}
                 >
-                  {metric === 'words' && '🌿 '}
-                  {metric === 'time' && '⏰ '}
-                  {metric === 'accuracy' && '🎯 '}
+                  {metric === "words" && "🌿 "}
+                  {metric === "time" && "⏰ "}
+                  {metric === "accuracy" && "🎯 "}
                   {metric}
                 </Button>
               ))}
             </div>
-            
+
             <div className="grid grid-cols-7 gap-1 md:gap-2 h-32 md:h-40">
               {data.weeklyProgress.map((value, index) => {
                 const maxValue = Math.max(...data.weeklyProgress) || 1;
                 const height = (value / maxValue) * 100;
-                const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                const jungleEmojis = ['🌿', '🦜', '🐵', '🌺', '🦋', '🌴', '🏖️'];
-                const expeditionNames = ['Base Camp', 'River Cross', 'Canopy Climb', 'Valley Trek', 'Peak Ascent', 'Waterfall', 'Summit!'];
-                
+                const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                const jungleEmojis = ["🌿", "🦜", "🐵", "🌺", "🦋", "🌴", "🏖️"];
+                const expeditionNames = [
+                  "Base Camp",
+                  "River Cross",
+                  "Canopy Climb",
+                  "Valley Trek",
+                  "Peak Ascent",
+                  "Waterfall",
+                  "Summit!",
+                ];
+
                 return (
                   <div key={index} className="flex flex-col items-center">
                     <div className="flex-1 flex flex-col justify-end">
@@ -336,8 +404,15 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                         title={`${expeditionNames[index]}: ${value} words discovered!`}
                       />
                     </div>
-                    <p className="text-xs text-jungle-dark/70 mt-1">{days[index]}</p>
-                    <p className="text-sm md:text-lg" title={expeditionNames[index]}>{jungleEmojis[index]}</p>
+                    <p className="text-xs text-jungle-dark/70 mt-1">
+                      {days[index]}
+                    </p>
+                    <p
+                      className="text-sm md:text-lg"
+                      title={expeditionNames[index]}
+                    >
+                      {jungleEmojis[index]}
+                    </p>
                     <p className="text-xs md:text-sm font-bold text-jungle-DEFAULT">
                       {value}
                     </p>
@@ -345,7 +420,7 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                 );
               })}
             </div>
-            
+
             <div className="text-center">
               <p className="text-jungle-dark font-semibold text-sm md:text-base">
                 Your weekly jungle expedition map! 🗺️🌟
@@ -382,12 +457,16 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
               ];
               const jungleIcons = ["🐵", "🌿", "🎒", "🌦️", "🎵"];
               const territoryNames = [
-                "Animal Kingdom", "Plant Paradise", "Explorer's Cache", "Weather Wisdom", "Sound Safari"
+                "Animal Kingdom",
+                "Plant Paradise",
+                "Explorer's Cache",
+                "Weather Wisdom",
+                "Sound Safari",
               ];
               const color = jungleColors[index % jungleColors.length];
               const icon = jungleIcons[index % jungleIcons.length];
               const territory = territoryNames[index] || category.category;
-              
+
               return (
                 <div key={category.category} className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -402,7 +481,8 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                           {territory}
                         </span>
                         <p className="text-xs text-jungle-DEFAULT/70 hidden md:block">
-                          Exploring the {category.category.toLowerCase()} region! 🗺️
+                          Exploring the {category.category.toLowerCase()}{" "}
+                          region! 🗺️
                         </p>
                       </div>
                     </div>
@@ -444,18 +524,23 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
         <CardContent>
           <div className="space-y-6">
             {data.difficultyProgress.map((difficulty) => {
-              const percentage = (difficulty.completed / difficulty.total) * 100;
+              const percentage =
+                (difficulty.completed / difficulty.total) * 100;
               const theme = getDifficultyJungleTheme(difficulty.difficulty);
-              
+
               return (
                 <div key={difficulty.difficulty} className="space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${theme.color} flex items-center justify-center text-white text-xl shadow-lg animate-jungle-sway`}>
+                      <div
+                        className={`w-10 h-10 rounded-full bg-gradient-to-r ${theme.color} flex items-center justify-center text-white text-xl shadow-lg animate-jungle-sway`}
+                      >
                         {theme.icon}
                       </div>
                       <div>
-                        <Badge className={`bg-gradient-to-r ${theme.color} text-white border-0 capitalize text-sm px-3 py-1`}>
+                        <Badge
+                          className={`bg-gradient-to-r ${theme.color} text-white border-0 capitalize text-sm px-3 py-1`}
+                        >
                           {theme.name}
                         </Badge>
                         <p className="text-xs text-jungle-DEFAULT/70 mt-1">
@@ -464,11 +549,15 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                       </div>
                     </div>
                     <span className="text-sm text-jungle-dark font-semibold">
-                      {difficulty.completed}/{difficulty.total} territories conquered
+                      {difficulty.completed}/{difficulty.total} territories
+                      conquered
                     </span>
                   </div>
                   <div className="relative">
-                    <Progress value={percentage} className="h-4 bg-jungle-light/50" />
+                    <Progress
+                      value={percentage}
+                      className="h-4 bg-jungle-light/50"
+                    />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-xs font-bold text-jungle-dark">
                         {Math.round(percentage)}% explored
@@ -505,17 +594,39 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
             <p className="text-sm text-jungle-dark/80 text-center">
               Track your jungle adventures over the past 30 days! 🌿🦜
             </p>
-            
+
             <div className="grid grid-cols-10 gap-1 justify-center">
               {data.streakData.map((day, index) => {
                 const expeditionTypes = [
-                  { threshold: 12, icon: '🏆', name: 'Epic Expedition', color: 'from-sunshine-DEFAULT to-orange-500' },
-                  { threshold: 8, icon: '⭐', name: 'Great Adventure', color: 'from-jungle-DEFAULT to-emerald-500' },
-                  { threshold: 4, icon: '🌿', name: 'Forest Walk', color: 'from-sky-DEFAULT to-blue-500' },
-                  { threshold: 1, icon: '👣', name: 'First Steps', color: 'from-bright-orange to-orange-400' }
+                  {
+                    threshold: 12,
+                    icon: "🏆",
+                    name: "Epic Expedition",
+                    color: "from-sunshine-DEFAULT to-orange-500",
+                  },
+                  {
+                    threshold: 8,
+                    icon: "⭐",
+                    name: "Great Adventure",
+                    color: "from-jungle-DEFAULT to-emerald-500",
+                  },
+                  {
+                    threshold: 4,
+                    icon: "🌿",
+                    name: "Forest Walk",
+                    color: "from-sky-DEFAULT to-blue-500",
+                  },
+                  {
+                    threshold: 1,
+                    icon: "👣",
+                    name: "First Steps",
+                    color: "from-bright-orange to-orange-400",
+                  },
                 ];
-                
-                const expedition = expeditionTypes.find(exp => day.wordsLearned >= exp.threshold);
+
+                const expedition = expeditionTypes.find(
+                  (exp) => day.wordsLearned >= exp.threshold,
+                );
                 const isRestDay = !day.active;
 
                 return (
@@ -525,12 +636,12 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                       "w-5 h-5 md:w-6 md:h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all hover:scale-110 cursor-pointer border-2 relative",
                       isRestDay
                         ? "bg-jungle-light/50 text-jungle-DEFAULT/40 border-jungle-DEFAULT/20 hover:bg-jungle-light/70"
-                        : `bg-gradient-to-br ${expedition?.color || 'from-gray-400 to-gray-500'} text-white border-white shadow-lg animate-jungle-sparkle`
+                        : `bg-gradient-to-br ${expedition?.color || "from-gray-400 to-gray-500"} text-white border-white shadow-lg animate-jungle-sparkle`,
                     )}
                     title={`${day.date}: ${
-                      isRestDay 
-                        ? "Rest day at base camp 🏕️" 
-                        : `${expedition?.name || 'Unknown'}: ${day.wordsLearned} words discovered! 🌟`
+                      isRestDay
+                        ? "Rest day at base camp 🏕️"
+                        : `${expedition?.name || "Unknown"}: ${day.wordsLearned} words discovered! 🌟`
                     }`}
                   >
                     {isRestDay ? "🏕️" : expedition?.icon || "❓"}
@@ -543,7 +654,7 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                 );
               })}
             </div>
-            
+
             <div className="grid grid-cols-2 md:flex md:items-center md:justify-center gap-2 md:gap-4 text-xs md:text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-jungle-light/50 border border-jungle-DEFAULT/20 rounded-sm flex items-center justify-center text-xs">
@@ -555,25 +666,33 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                 <div className="w-4 h-4 bg-gradient-to-br from-bright-orange to-orange-400 rounded-sm flex items-center justify-center text-white text-xs">
                   👣
                 </div>
-                <span className="text-bright-orange font-semibold">First steps</span>
+                <span className="text-bright-orange font-semibold">
+                  First steps
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-gradient-to-br from-sky-DEFAULT to-blue-500 rounded-sm flex items-center justify-center text-white text-xs">
                   🌿
                 </div>
-                <span className="text-sky-DEFAULT font-semibold">Forest walk</span>
+                <span className="text-sky-DEFAULT font-semibold">
+                  Forest walk
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-gradient-to-br from-jungle-DEFAULT to-emerald-500 rounded-sm flex items-center justify-center text-white text-xs">
                   ⭐
                 </div>
-                <span className="text-jungle-DEFAULT font-semibold">Great adventure</span>
+                <span className="text-jungle-DEFAULT font-semibold">
+                  Great adventure
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-gradient-to-br from-sunshine-DEFAULT to-orange-500 rounded-sm flex items-center justify-center text-white text-xs">
                   🏆
                 </div>
-                <span className="text-sunshine-dark font-semibold">Epic expedition!</span>
+                <span className="text-sunshine-dark font-semibold">
+                  Epic expedition!
+                </span>
               </div>
             </div>
           </div>
@@ -591,14 +710,27 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
         <CardContent>
           <div className="space-y-4">
             {data.learningVelocity.map((expedition, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-white/90 rounded-xl border border-sky-DEFAULT/20 hover:shadow-lg transition-all duration-300">
+              <div
+                key={index}
+                className="flex items-center justify-between p-4 bg-white/90 rounded-xl border border-sky-DEFAULT/20 hover:shadow-lg transition-all duration-300"
+              >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-sky-DEFAULT to-blue-500 rounded-full flex items-center justify-center text-white text-lg animate-jungle-float">
-                    {index === 0 ? '🌱' : index === 1 ? '🌿' : index === 2 ? '🌳' : '⛰️'}
+                    {index === 0
+                      ? "🌱"
+                      : index === 1
+                        ? "🌿"
+                        : index === 2
+                          ? "🌳"
+                          : "⛰️"}
                   </div>
                   <div>
-                    <p className="font-bold text-jungle-dark">{expedition.week}</p>
-                    <p className="text-sm text-jungle-DEFAULT/70">Jungle expedition phase</p>
+                    <p className="font-bold text-jungle-dark">
+                      {expedition.week}
+                    </p>
+                    <p className="text-sm text-jungle-DEFAULT/70">
+                      Jungle expedition phase
+                    </p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -616,7 +748,7 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
                           "w-3 h-3",
                           i < Math.floor(expedition.accuracy / 20)
                             ? "text-sunshine-DEFAULT fill-current"
-                            : "text-gray-300"
+                            : "text-gray-300",
                         )}
                       />
                     ))}
@@ -642,21 +774,37 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {data.achievements.map((achievement) => (
-              <Card key={achievement.id} className="bg-gradient-to-r from-jungle-light to-emerald-50 border border-jungle-DEFAULT/30 hover:shadow-lg transition-all duration-300">
+              <Card
+                key={achievement.id}
+                className="bg-gradient-to-r from-jungle-light to-emerald-50 border border-jungle-DEFAULT/30 hover:shadow-lg transition-all duration-300"
+              >
                 <CardContent className="p-4">
                   <div className="flex items-center gap-4">
-                    <div className="text-4xl md:text-5xl animate-jungle-celebration">{achievement.icon}</div>
+                    <div className="text-4xl md:text-5xl animate-jungle-celebration">
+                      {achievement.icon}
+                    </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-bold text-jungle-dark">{achievement.title}</h4>
-                        <Badge className={`${getJungleRarityColor(achievement.rarity)} text-white text-xs border-0 px-2 py-1`}>
+                        <h4 className="font-bold text-jungle-dark">
+                          {achievement.title}
+                        </h4>
+                        <Badge
+                          className={`${getJungleRarityColor(achievement.rarity)} text-white text-xs border-0 px-2 py-1`}
+                        >
                           {achievement.rarity}
                         </Badge>
                       </div>
-                      <p className="text-sm text-jungle-dark/80 mb-2">{achievement.description}</p>
+                      <p className="text-sm text-jungle-dark/80 mb-2">
+                        {achievement.description}
+                      </p>
                       <div className="flex items-center gap-2 text-xs text-jungle-DEFAULT/70">
                         <Calendar className="w-3 h-3" />
-                        <span>Discovered {new Date(achievement.unlockedAt).toLocaleDateString()}</span>
+                        <span>
+                          Discovered{" "}
+                          {new Date(
+                            achievement.unlockedAt,
+                          ).toLocaleDateString()}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -687,11 +835,19 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50"
+          >
             <Filter className="w-4 h-4 mr-2" />
             <span className="hidden md:inline">Filter</span>
           </Button>
-          <Button variant="outline" size="sm" className="border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50"
+          >
             <Download className="w-4 h-4 mr-2" />
             <span className="hidden md:inline">Export</span>
           </Button>
@@ -701,32 +857,32 @@ export const EnhancedJungleLearningAnalytics: React.FC<JungleLearningAnalyticsPr
       {/* Jungle Adventure Tabs */}
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-1 bg-gradient-to-r from-jungle-DEFAULT/10 to-emerald-500/10 p-1 border-2 border-jungle-DEFAULT/20 rounded-xl shadow-lg">
-          <TabsTrigger 
-            value="overview" 
+          <TabsTrigger
+            value="overview"
             className="flex items-center gap-2 data-[state=active]:bg-jungle-DEFAULT data-[state=active]:text-white transition-all duration-300 rounded-lg"
           >
             <TrendingUp className="w-4 h-4" />
             <span className="hidden md:inline">🌟 Overview</span>
             <span className="md:hidden">🌟</span>
           </TabsTrigger>
-          <TabsTrigger 
-            value="territories" 
+          <TabsTrigger
+            value="territories"
             className="flex items-center gap-2 data-[state=active]:bg-sunshine-DEFAULT data-[state=active]:text-white transition-all duration-300 rounded-lg"
           >
             <PieChart className="w-4 h-4" />
             <span className="hidden md:inline">🗺️ Territories</span>
             <span className="md:hidden">🗺️</span>
           </TabsTrigger>
-          <TabsTrigger 
-            value="expeditions" 
+          <TabsTrigger
+            value="expeditions"
             className="flex items-center gap-2 data-[state=active]:bg-sky-DEFAULT data-[state=active]:text-white transition-all duration-300 rounded-lg"
           >
             <Activity className="w-4 h-4" />
             <span className="hidden md:inline">🚀 Expeditions</span>
             <span className="md:hidden">🚀</span>
           </TabsTrigger>
-          <TabsTrigger 
-            value="trophies" 
+          <TabsTrigger
+            value="trophies"
             className="flex items-center gap-2 data-[state=active]:bg-bright-orange data-[state=active]:text-white transition-all duration-300 rounded-lg"
           >
             <Award className="w-4 h-4" />

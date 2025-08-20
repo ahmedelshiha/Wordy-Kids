@@ -80,7 +80,8 @@ const JUNGLE_BADGE_DEFINITIONS = {
     category: "rescue",
     requirements: { type: "words_rescued", threshold: 50 },
     rewards: { coins: 200, xp: 400, jungleCoins: 50 },
-    jungleTheme: "Your name echoes through the jungle as the ultimate word guardian!",
+    jungleTheme:
+      "Your name echoes through the jungle as the ultimate word guardian!",
   },
 
   // Wildlife Expert Badges (Skill)
@@ -231,7 +232,8 @@ const JUNGLE_BADGE_DEFINITIONS = {
     category: "social",
     requirements: { type: "perfect_pronunciation", threshold: 20 },
     rewards: { coins: 200, xp: 300, jungleCoins: 40 },
-    jungleTheme: "The colorful parrots sing your praises throughout the jungle!",
+    jungleTheme:
+      "The colorful parrots sing your praises throughout the jungle!",
   },
   monkey_companion: {
     id: "monkey_companion",
@@ -270,68 +272,68 @@ type JungleBadgeCategory =
 
 const getJungleCategoryInfo = (category: JungleBadgeCategory) => {
   const categoryMap = {
-    rescue: { 
-      name: "Jungle Explorer", 
-      icon: TreePine, 
+    rescue: {
+      name: "Jungle Explorer",
+      icon: TreePine,
       color: "text-jungle-DEFAULT",
       gradient: "from-jungle-DEFAULT to-emerald-500",
-      bgColor: "bg-jungle-light"
+      bgColor: "bg-jungle-light",
     },
-    skill: { 
-      name: "Wildlife Expert", 
-      icon: Target, 
+    skill: {
+      name: "Wildlife Expert",
+      icon: Target,
       color: "text-sunshine-DEFAULT",
       gradient: "from-sunshine-DEFAULT to-orange-500",
-      bgColor: "bg-yellow-50"
+      bgColor: "bg-yellow-50",
     },
-    speed: { 
-      name: "Speed Demon", 
-      icon: Zap, 
+    speed: {
+      name: "Speed Demon",
+      icon: Zap,
       color: "text-bright-orange",
       gradient: "from-bright-orange to-coral-red",
-      bgColor: "bg-orange-50"
+      bgColor: "bg-orange-50",
     },
-    streak: { 
-      name: "Tribal Warrior", 
-      icon: Flame, 
+    streak: {
+      name: "Tribal Warrior",
+      icon: Flame,
       color: "text-coral-red",
       gradient: "from-coral-red to-red-500",
-      bgColor: "bg-red-50"
+      bgColor: "bg-red-50",
     },
-    milestone: { 
-      name: "First Discoveries", 
-      icon: Compass, 
+    milestone: {
+      name: "First Discoveries",
+      icon: Compass,
       color: "text-sky-DEFAULT",
       gradient: "from-sky-DEFAULT to-blue-500",
-      bgColor: "bg-sky-50"
+      bgColor: "bg-sky-50",
     },
-    progression: { 
-      name: "Jungle Climber", 
-      icon: Crown, 
+    progression: {
+      name: "Jungle Climber",
+      icon: Crown,
       color: "text-playful-purple",
       gradient: "from-playful-purple to-profile-purple",
-      bgColor: "bg-purple-50"
+      bgColor: "bg-purple-50",
     },
-    wealth: { 
-      name: "Treasure Hunter", 
-      icon: Trophy, 
+    wealth: {
+      name: "Treasure Hunter",
+      icon: Trophy,
       color: "text-sunshine-dark",
       gradient: "from-sunshine-DEFAULT to-yellow-600",
-      bgColor: "bg-amber-50"
+      bgColor: "bg-amber-50",
     },
-    social: { 
-      name: "Animal Friend", 
-      icon: Heart, 
+    social: {
+      name: "Animal Friend",
+      icon: Heart,
       color: "text-pink-500",
       gradient: "from-pink-500 to-rose-500",
-      bgColor: "bg-pink-50"
+      bgColor: "bg-pink-50",
     },
-    courage: { 
-      name: "Fearless Hero", 
-      icon: Shield, 
+    courage: {
+      name: "Fearless Hero",
+      icon: Shield,
       color: "text-navy-DEFAULT",
       gradient: "from-navy-DEFAULT to-indigo-600",
-      bgColor: "bg-indigo-50"
+      bgColor: "bg-indigo-50",
     },
   };
   return categoryMap[category];
@@ -344,35 +346,35 @@ const getJungleTierColor = (tier: string) => {
         border: "border-amber-500",
         bg: "bg-gradient-to-br from-amber-50 to-orange-100",
         shadow: "shadow-amber-200",
-        glow: "animate-jungle-glow"
+        glow: "animate-jungle-glow",
       };
     case "silver":
       return {
         border: "border-gray-400",
         bg: "bg-gradient-to-br from-gray-50 to-slate-100",
         shadow: "shadow-gray-200",
-        glow: "animate-jungle-sparkle"
+        glow: "animate-jungle-sparkle",
       };
     case "gold":
       return {
         border: "border-yellow-500",
         bg: "bg-gradient-to-br from-yellow-50 to-amber-100",
         shadow: "shadow-yellow-200",
-        glow: "animate-jungle-celebration"
+        glow: "animate-jungle-celebration",
       };
     case "platinum":
       return {
         border: "border-purple-500",
         bg: "bg-gradient-to-br from-purple-50 to-indigo-100",
         shadow: "shadow-purple-200",
-        glow: "animate-jungle-level-up"
+        glow: "animate-jungle-level-up",
       };
     default:
       return {
         border: "border-gray-300",
         bg: "bg-gray-50",
         shadow: "shadow-gray-100",
-        glow: ""
+        glow: "",
       };
   }
 };
@@ -388,7 +390,10 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
 
   // Calculate badge progress
   const calculateBadgeProgress = (badgeId: string) => {
-    const badge = JUNGLE_BADGE_DEFINITIONS[badgeId as keyof typeof JUNGLE_BADGE_DEFINITIONS];
+    const badge =
+      JUNGLE_BADGE_DEFINITIONS[
+        badgeId as keyof typeof JUNGLE_BADGE_DEFINITIONS
+      ];
     if (!badge) return { current: 0, max: 1, earned: false };
 
     const earned = hero.badges.some((b) => b.id === badgeId);
@@ -459,7 +464,10 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
   const earnedBadgesCount = hero.badges.length;
   const totalBadgesCount = Object.keys(JUNGLE_BADGE_DEFINITIONS).length;
   const totalJungleCoins = hero.badges.reduce((sum, badge) => {
-    const badgeDefinition = JUNGLE_BADGE_DEFINITIONS[badge.id as keyof typeof JUNGLE_BADGE_DEFINITIONS];
+    const badgeDefinition =
+      JUNGLE_BADGE_DEFINITIONS[
+        badge.id as keyof typeof JUNGLE_BADGE_DEFINITIONS
+      ];
     return sum + (badgeDefinition?.rewards?.jungleCoins || 0);
   }, 0);
 
@@ -467,15 +475,19 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
     <div className="space-y-6 bg-gradient-to-br from-light-background to-jungle-light/30 min-h-screen p-4 rounded-2xl">
       {/* Jungle Header */}
       <div className="text-center relative">
-        <div className="absolute -top-2 left-1/4 text-2xl animate-jungle-float">🌿</div>
-        <div className="absolute -top-1 right-1/4 text-2xl animate-jungle-sway">🦜</div>
+        <div className="absolute -top-2 left-1/4 text-2xl animate-jungle-float">
+          🌿
+        </div>
+        <div className="absolute -top-1 right-1/4 text-2xl animate-jungle-sway">
+          🦜
+        </div>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-jungle-DEFAULT via-emerald-500 to-sunshine-DEFAULT bg-clip-text text-transparent mb-2 animate-jungle-glow">
           🏆 Jungle Badge Collection 🌟
         </h2>
         <p className="text-jungle-dark/80 mb-4 text-sm md:text-lg">
           Earn amazing badges by exploring the jungle and mastering words! 🐵🌺
         </p>
-        
+
         {/* Progress Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 max-w-4xl mx-auto">
           <Card className="bg-gradient-to-br from-jungle-DEFAULT to-emerald-500 text-white shadow-xl border-0">
@@ -528,34 +540,46 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   "transition-all duration-300",
                   selectedCategory === "all"
                     ? "bg-gradient-to-r from-jungle-DEFAULT to-emerald-500 text-white shadow-lg"
-                    : "hover:bg-jungle-light border-jungle-DEFAULT/30"
+                    : "hover:bg-jungle-light border-jungle-DEFAULT/30",
                 )}
               >
                 🌟 All Adventures
               </Button>
               {Object.keys(badgesByCategory).map((category) => {
-                const categoryInfo = getJungleCategoryInfo(category as JungleBadgeCategory);
+                const categoryInfo = getJungleCategoryInfo(
+                  category as JungleBadgeCategory,
+                );
                 const CategoryIcon = categoryInfo.icon;
-                const earnedInCategory = badgesByCategory[category as JungleBadgeCategory].filter((badge) =>
+                const earnedInCategory = badgesByCategory[
+                  category as JungleBadgeCategory
+                ].filter((badge) =>
                   hero.badges.some((heroB) => heroB.id === badge.id),
                 ).length;
 
                 return (
                   <Button
                     key={category}
-                    onClick={() => setSelectedCategory(category as JungleBadgeCategory)}
-                    variant={selectedCategory === category ? "default" : "outline"}
+                    onClick={() =>
+                      setSelectedCategory(category as JungleBadgeCategory)
+                    }
+                    variant={
+                      selectedCategory === category ? "default" : "outline"
+                    }
                     size="sm"
                     className={cn(
                       "flex items-center gap-2 transition-all duration-300 relative",
                       selectedCategory === category
                         ? `bg-gradient-to-r ${categoryInfo.gradient} text-white shadow-lg`
-                        : "hover:bg-jungle-light border-jungle-DEFAULT/30"
+                        : "hover:bg-jungle-light border-jungle-DEFAULT/30",
                     )}
                   >
                     <CategoryIcon className="w-4 h-4" />
-                    <span className="hidden md:inline">{categoryInfo.name}</span>
-                    <span className="md:hidden">{categoryInfo.name.split(' ')[0]}</span>
+                    <span className="hidden md:inline">
+                      {categoryInfo.name}
+                    </span>
+                    <span className="md:hidden">
+                      {categoryInfo.name.split(" ")[0]}
+                    </span>
                     {earnedInCategory > 0 && (
                       <Badge className="bg-white/20 text-xs px-1 py-0">
                         {earnedInCategory}
@@ -603,7 +627,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredBadges.map((badge) => {
             const progress = calculateBadgeProgress(badge.id);
-            const categoryInfo = getJungleCategoryInfo(badge.category as JungleBadgeCategory);
+            const categoryInfo = getJungleCategoryInfo(
+              badge.category as JungleBadgeCategory,
+            );
             const tierStyles = getJungleTierColor(badge.tier);
             const CategoryIcon = categoryInfo.icon;
 
@@ -614,14 +640,18 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   "transition-all duration-300 hover:scale-105 border-2 shadow-lg relative overflow-hidden",
                   progress.earned
                     ? `${tierStyles.border} ${tierStyles.bg} ${tierStyles.shadow} ${tierStyles.glow}`
-                    : "border-jungle-DEFAULT/30 bg-white/80 opacity-75 hover:opacity-90"
+                    : "border-jungle-DEFAULT/30 bg-white/80 opacity-75 hover:opacity-90",
                 )}
               >
                 {/* Jungle Background Pattern for Earned Badges */}
                 {progress.earned && (
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50">
-                    <div className="absolute top-2 right-2 text-jungle-DEFAULT/20 text-4xl animate-jungle-float">🌿</div>
-                    <div className="absolute bottom-2 left-2 text-jungle-DEFAULT/20 text-3xl animate-jungle-sway">🦋</div>
+                    <div className="absolute top-2 right-2 text-jungle-DEFAULT/20 text-4xl animate-jungle-float">
+                      🌿
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-jungle-DEFAULT/20 text-3xl animate-jungle-sway">
+                      🦋
+                    </div>
                   </div>
                 )}
 
@@ -632,7 +662,7 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                         "w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto text-3xl md:text-4xl border-4 transition-all duration-300",
                         progress.earned
                           ? `bg-gradient-to-r ${categoryInfo.gradient} border-white text-white shadow-2xl ${tierStyles.glow}`
-                          : "bg-jungle-light/50 border-jungle-DEFAULT/30 text-jungle-DEFAULT/60"
+                          : "bg-jungle-light/50 border-jungle-DEFAULT/30 text-jungle-DEFAULT/60",
                       )}
                     >
                       {progress.earned ? badge.icon : "🔒"}
@@ -654,7 +684,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   <h3
                     className={cn(
                       "text-lg md:text-xl font-bold mb-2",
-                      progress.earned ? "text-jungle-dark" : "text-jungle-DEFAULT/60"
+                      progress.earned
+                        ? "text-jungle-dark"
+                        : "text-jungle-DEFAULT/60",
                     )}
                   >
                     {badge.name}
@@ -663,7 +695,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   <p
                     className={cn(
                       "text-sm mb-3",
-                      progress.earned ? "text-jungle-dark/80" : "text-jungle-DEFAULT/50"
+                      progress.earned
+                        ? "text-jungle-dark/80"
+                        : "text-jungle-DEFAULT/50",
                     )}
                   >
                     {badge.description}
@@ -681,7 +715,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   {/* Category and Tier */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-1">
-                      <CategoryIcon className={`w-4 h-4 ${categoryInfo.color}`} />
+                      <CategoryIcon
+                        className={`w-4 h-4 ${categoryInfo.color}`}
+                      />
                       <span className="text-xs text-jungle-DEFAULT/70">
                         {categoryInfo.name}
                       </span>
@@ -690,10 +726,14 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                       variant="outline"
                       className={cn(
                         "text-xs capitalize",
-                        badge.tier === "bronze" && "border-amber-500 text-amber-600",
-                        badge.tier === "silver" && "border-gray-500 text-gray-600",
-                        badge.tier === "gold" && "border-yellow-500 text-yellow-600",
-                        badge.tier === "platinum" && "border-purple-500 text-purple-600"
+                        badge.tier === "bronze" &&
+                          "border-amber-500 text-amber-600",
+                        badge.tier === "silver" &&
+                          "border-gray-500 text-gray-600",
+                        badge.tier === "gold" &&
+                          "border-yellow-500 text-yellow-600",
+                        badge.tier === "platinum" &&
+                          "border-purple-500 text-purple-600",
                       )}
                     >
                       {badge.tier}
@@ -705,14 +745,18 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                     <div className="flex justify-between text-xs">
                       <span
                         className={
-                          progress.earned ? "text-emerald-600 font-semibold" : "text-jungle-DEFAULT/70"
+                          progress.earned
+                            ? "text-emerald-600 font-semibold"
+                            : "text-jungle-DEFAULT/70"
                         }
                       >
                         {progress.earned ? "Achieved!" : "Progress"}
                       </span>
                       <span
                         className={
-                          progress.earned ? "text-emerald-600 font-semibold" : "text-jungle-DEFAULT/70"
+                          progress.earned
+                            ? "text-emerald-600 font-semibold"
+                            : "text-jungle-DEFAULT/70"
                         }
                       >
                         {progress.current}/{progress.max}
@@ -722,26 +766,36 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                       value={(progress.current / progress.max) * 100}
                       className={cn(
                         "h-2",
-                        progress.earned ? "bg-emerald-100" : "bg-jungle-light/50"
+                        progress.earned
+                          ? "bg-emerald-100"
+                          : "bg-jungle-light/50",
                       )}
                     />
                   </div>
 
                   {/* Rewards */}
                   <div className="pt-3 border-t border-jungle-DEFAULT/20">
-                    <div className="text-xs text-jungle-DEFAULT/70 mb-2">Jungle Rewards</div>
+                    <div className="text-xs text-jungle-DEFAULT/70 mb-2">
+                      Jungle Rewards
+                    </div>
                     <div className="flex justify-center gap-3 text-sm">
                       <div className="flex items-center gap-1">
                         <span className="text-sunshine-DEFAULT">🪙</span>
-                        <span className="font-semibold">{badge.rewards.coins}</span>
+                        <span className="font-semibold">
+                          {badge.rewards.coins}
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <TrendingUp className="w-4 h-4 text-sky-DEFAULT" />
-                        <span className="font-semibold">{badge.rewards.xp}</span>
+                        <span className="font-semibold">
+                          {badge.rewards.xp}
+                        </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <span className="text-jungle-DEFAULT">💎</span>
-                        <span className="font-semibold">{badge.rewards.jungleCoins}</span>
+                        <span className="font-semibold">
+                          {badge.rewards.jungleCoins}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -752,7 +806,7 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                       onClick={() => onClaimReward(badge.id)}
                       className={cn(
                         "mt-4 w-full text-white shadow-lg transition-all duration-300 hover:scale-105",
-                        `bg-gradient-to-r ${categoryInfo.gradient} hover:shadow-xl`
+                        `bg-gradient-to-r ${categoryInfo.gradient} hover:shadow-xl`,
                       )}
                       size="sm"
                     >
@@ -770,7 +824,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
         <div className="space-y-3">
           {filteredBadges.map((badge) => {
             const progress = calculateBadgeProgress(badge.id);
-            const categoryInfo = getJungleCategoryInfo(badge.category as JungleBadgeCategory);
+            const categoryInfo = getJungleCategoryInfo(
+              badge.category as JungleBadgeCategory,
+            );
             const CategoryIcon = categoryInfo.icon;
 
             return (
@@ -780,7 +836,7 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   "transition-all duration-300 hover:scale-[1.02] border-2",
                   progress.earned
                     ? `border-jungle-DEFAULT bg-gradient-to-r from-jungle-light to-emerald-50 shadow-lg`
-                    : "border-jungle-DEFAULT/30 bg-white/80"
+                    : "border-jungle-DEFAULT/30 bg-white/80",
                 )}
               >
                 <CardContent className="p-4">
@@ -791,7 +847,7 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                         "w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-2xl md:text-3xl border-2 flex-shrink-0",
                         progress.earned
                           ? `bg-gradient-to-r ${categoryInfo.gradient} border-white text-white shadow-lg`
-                          : "bg-jungle-light/50 border-jungle-DEFAULT/30 text-jungle-DEFAULT/60"
+                          : "bg-jungle-light/50 border-jungle-DEFAULT/30 text-jungle-DEFAULT/60",
                       )}
                     >
                       {progress.earned ? badge.icon : "🔒"}
@@ -803,20 +859,28 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                         <h3
                           className={cn(
                             "text-lg font-bold truncate",
-                            progress.earned ? "text-jungle-dark" : "text-jungle-DEFAULT/60"
+                            progress.earned
+                              ? "text-jungle-dark"
+                              : "text-jungle-DEFAULT/60",
                           )}
                         >
                           {badge.name}
                         </h3>
-                        <CategoryIcon className={`w-4 h-4 ${categoryInfo.color} flex-shrink-0`} />
+                        <CategoryIcon
+                          className={`w-4 h-4 ${categoryInfo.color} flex-shrink-0`}
+                        />
                         <Badge
                           variant="outline"
                           className={cn(
                             "text-xs capitalize",
-                            badge.tier === "bronze" && "border-amber-500 text-amber-600",
-                            badge.tier === "silver" && "border-gray-500 text-gray-600",
-                            badge.tier === "gold" && "border-yellow-500 text-yellow-600",
-                            badge.tier === "platinum" && "border-purple-500 text-purple-600"
+                            badge.tier === "bronze" &&
+                              "border-amber-500 text-amber-600",
+                            badge.tier === "silver" &&
+                              "border-gray-500 text-gray-600",
+                            badge.tier === "gold" &&
+                              "border-yellow-500 text-yellow-600",
+                            badge.tier === "platinum" &&
+                              "border-purple-500 text-purple-600",
                           )}
                         >
                           {badge.tier}
@@ -829,7 +893,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                       <p
                         className={cn(
                           "text-sm mb-2",
-                          progress.earned ? "text-jungle-dark/80" : "text-jungle-DEFAULT/50"
+                          progress.earned
+                            ? "text-jungle-dark/80"
+                            : "text-jungle-DEFAULT/50",
                         )}
                       >
                         {badge.description}
@@ -839,8 +905,15 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                       <div className="flex items-center justify-between gap-4">
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between text-xs mb-1">
-                            <span>{progress.current}/{progress.max}</span>
-                            <span>{Math.round((progress.current / progress.max) * 100)}%</span>
+                            <span>
+                              {progress.current}/{progress.max}
+                            </span>
+                            <span>
+                              {Math.round(
+                                (progress.current / progress.max) * 100,
+                              )}
+                              %
+                            </span>
                           </div>
                           <Progress
                             value={(progress.current / progress.max) * 100}
@@ -894,7 +967,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {Object.entries(badgesByCategory).map(([category, badges]) => {
-              const categoryInfo = getJungleCategoryInfo(category as JungleBadgeCategory);
+              const categoryInfo = getJungleCategoryInfo(
+                category as JungleBadgeCategory,
+              );
               const CategoryIcon = categoryInfo.icon;
               const earnedInCategory = badges.filter((badge) =>
                 hero.badges.some((heroB) => heroB.id === badge.id),
@@ -906,7 +981,9 @@ export const EnhancedJungleBadgeSystem: React.FC<BadgeSystemProps> = ({
                   className={cn(
                     "text-center p-4 rounded-lg border-2 transition-all duration-300 hover:scale-105",
                     categoryInfo.bgColor,
-                    earnedInCategory > 0 ? "border-jungle-DEFAULT/50" : "border-jungle-DEFAULT/20"
+                    earnedInCategory > 0
+                      ? "border-jungle-DEFAULT/50"
+                      : "border-jungle-DEFAULT/20",
                   )}
                 >
                   <CategoryIcon

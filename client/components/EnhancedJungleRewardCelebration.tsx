@@ -50,7 +50,9 @@ interface JungleParticle {
   maxLife: number;
 }
 
-export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationProps> = ({
+export const EnhancedJungleRewardCelebration: React.FC<
+  JungleRewardCelebrationProps
+> = ({
   isVisible,
   type = "word_learned",
   title,
@@ -64,7 +66,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
   const [confetti, setConfetti] = useState<JungleConfetti[]>([]);
   const [particles, setParticles] = useState<JungleParticle[]>([]);
   const [showContent, setShowContent] = useState(false);
-  const [animationPhase, setAnimationPhase] = useState<"enter" | "celebrate" | "exit">("enter");
+  const [animationPhase, setAnimationPhase] = useState<
+    "enter" | "celebrate" | "exit"
+  >("enter");
 
   const jungleCelebrationConfig = {
     word_learned: {
@@ -181,11 +185,16 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
 
   const getIntensityMultiplier = () => {
     switch (intensity) {
-      case "low": return 0.5;
-      case "medium": return 1;
-      case "high": return 1.5;
-      case "epic": return 2;
-      default: return 1;
+      case "low":
+        return 0.5;
+      case "medium":
+        return 1;
+      case "high":
+        return 1.5;
+      case "epic":
+        return 2;
+      default:
+        return 1;
     }
   };
 
@@ -208,8 +217,10 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
 
     // Generate jungle confetti
     const newConfetti: JungleConfetti[] = [];
-    const confettiCount = Math.floor(config.confettiCount * intensityMultiplier);
-    
+    const confettiCount = Math.floor(
+      config.confettiCount * intensityMultiplier,
+    );
+
     for (let i = 0; i < confettiCount; i++) {
       newConfetti.push({
         id: i,
@@ -218,7 +229,10 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
         vx: (Math.random() - 0.5) * 12,
         vy: Math.random() * 6 + 3,
         color: config.colors[Math.floor(Math.random() * config.colors.length)],
-        emoji: config.confettiEmojis[Math.floor(Math.random() * config.confettiEmojis.length)],
+        emoji:
+          config.confettiEmojis[
+            Math.floor(Math.random() * config.confettiEmojis.length)
+          ],
         rotation: Math.random() * 360,
         rotationSpeed: (Math.random() - 0.5) * 15,
         size: Math.random() * 0.5 + 0.8,
@@ -230,8 +244,10 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
 
     // Generate floating particles
     const newParticles: JungleParticle[] = [];
-    const particleCount = Math.floor(config.particleCount * intensityMultiplier);
-    
+    const particleCount = Math.floor(
+      config.particleCount * intensityMultiplier,
+    );
+
     for (let i = 0; i < particleCount; i++) {
       newParticles.push({
         id: i + 1000,
@@ -280,9 +296,10 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
             vy: particle.vy + 0.4, // gravity
             life: particle.life + 1,
           }))
-          .filter((particle) => 
-            particle.y < window.innerHeight + 100 && 
-            particle.life < particle.maxLife
+          .filter(
+            (particle) =>
+              particle.y < window.innerHeight + 100 &&
+              particle.life < particle.maxLife,
           ),
       );
     };
@@ -302,14 +319,16 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
             ...particle,
             x: particle.x + particle.vx,
             y: particle.y + particle.vy,
-            opacity: Math.max(0, 1 - (particle.life / particle.maxLife)),
-            scale: particle.scale * (1 - (particle.life / particle.maxLife) * 0.3),
+            opacity: Math.max(0, 1 - particle.life / particle.maxLife),
+            scale:
+              particle.scale * (1 - (particle.life / particle.maxLife) * 0.3),
             life: particle.life + 1,
           }))
-          .filter((particle) => 
-            particle.y > -100 && 
-            particle.life < particle.maxLife &&
-            particle.opacity > 0.1
+          .filter(
+            (particle) =>
+              particle.y > -100 &&
+              particle.life < particle.maxLife &&
+              particle.opacity > 0.1,
           ),
       );
     };
@@ -323,19 +342,21 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
       {/* Enhanced Backdrop with Jungle Gradient */}
-      <div className={cn(
-        "absolute inset-0 transition-all duration-1000",
-        animationPhase === "enter" && "bg-black/0 backdrop-blur-none",
-        animationPhase === "celebrate" && "bg-black/30 backdrop-blur-sm",
-        animationPhase === "exit" && "bg-black/0 backdrop-blur-none"
-      )} />
+      <div
+        className={cn(
+          "absolute inset-0 transition-all duration-1000",
+          animationPhase === "enter" && "bg-black/0 backdrop-blur-none",
+          animationPhase === "celebrate" && "bg-black/30 backdrop-blur-sm",
+          animationPhase === "exit" && "bg-black/0 backdrop-blur-none",
+        )}
+      />
 
       {/* Jungle Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Animated jungle vines */}
         <div className="absolute top-0 left-1/4 w-2 h-full bg-gradient-to-b from-jungle-DEFAULT/20 to-transparent transform rotate-12 animate-jungle-sway" />
         <div className="absolute top-0 right-1/3 w-2 h-full bg-gradient-to-b from-emerald-500/20 to-transparent transform -rotate-6 animate-jungle-float" />
-        
+
         {/* Floating leaves background */}
         {Array.from({ length: 8 }).map((_, i) => (
           <div
@@ -364,7 +385,7 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
             top: particle.y,
             transform: `rotate(${particle.rotation}deg) scale(${particle.size})`,
             fontSize: "28px",
-            opacity: Math.max(0, 1 - (particle.life / particle.maxLife)),
+            opacity: Math.max(0, 1 - particle.life / particle.maxLife),
           }}
         >
           {particle.emoji}
@@ -390,18 +411,23 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
 
       {/* Main Celebration Card */}
       {showContent && (
-        <div className={cn(
-          "relative bg-gradient-to-br from-white via-jungle-light to-emerald-50 rounded-3xl shadow-2xl border-4 mx-4 max-w-md w-full transition-all duration-700 transform",
-          config.borderColor,
-          animationPhase === "enter" && "scale-50 opacity-0 rotate-12",
-          animationPhase === "celebrate" && "scale-100 opacity-100 rotate-0 animate-jungle-celebration",
-          animationPhase === "exit" && "scale-110 opacity-0"
-        )}>
+        <div
+          className={cn(
+            "relative bg-gradient-to-br from-white via-jungle-light to-emerald-50 rounded-3xl shadow-2xl border-4 mx-4 max-w-md w-full transition-all duration-700 transform",
+            config.borderColor,
+            animationPhase === "enter" && "scale-50 opacity-0 rotate-12",
+            animationPhase === "celebrate" &&
+              "scale-100 opacity-100 rotate-0 animate-jungle-celebration",
+            animationPhase === "exit" && "scale-110 opacity-0",
+          )}
+        >
           {/* Jungle Border Glow Effect */}
-          <div className={cn(
-            "absolute inset-0 rounded-3xl opacity-50 animate-jungle-glow",
-            `bg-gradient-to-r ${config.background}`
-          )} />
+          <div
+            className={cn(
+              "absolute inset-0 rounded-3xl opacity-50 animate-jungle-glow",
+              `bg-gradient-to-r ${config.background}`,
+            )}
+          />
 
           {/* Floating Achievement Icons */}
           <div className="absolute -top-6 -left-6 text-4xl animate-jungle-float animation-delay-0">
@@ -420,20 +446,30 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
           {/* Corner Sparkles */}
           {intensity !== "low" && (
             <>
-              <div className="absolute top-2 left-2 text-sunshine-DEFAULT animate-jungle-sparkle">✨</div>
-              <div className="absolute top-2 right-2 text-sunshine-DEFAULT animate-jungle-sparkle animation-delay-300">⭐</div>
-              <div className="absolute bottom-2 left-2 text-sunshine-DEFAULT animate-jungle-sparkle animation-delay-600">💫</div>
-              <div className="absolute bottom-2 right-2 text-sunshine-DEFAULT animate-jungle-sparkle animation-delay-900">🌟</div>
+              <div className="absolute top-2 left-2 text-sunshine-DEFAULT animate-jungle-sparkle">
+                ✨
+              </div>
+              <div className="absolute top-2 right-2 text-sunshine-DEFAULT animate-jungle-sparkle animation-delay-300">
+                ⭐
+              </div>
+              <div className="absolute bottom-2 left-2 text-sunshine-DEFAULT animate-jungle-sparkle animation-delay-600">
+                💫
+              </div>
+              <div className="absolute bottom-2 right-2 text-sunshine-DEFAULT animate-jungle-sparkle animation-delay-900">
+                🌟
+              </div>
             </>
           )}
 
           {/* Content Container */}
           <div className="relative z-10 p-6 md:p-8 text-center">
             {/* Main Title */}
-            <h2 className={cn(
-              "text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r bg-clip-text text-transparent animate-jungle-glow",
-              config.background
-            )}>
+            <h2
+              className={cn(
+                "text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r bg-clip-text text-transparent animate-jungle-glow",
+                config.background,
+              )}
+            >
               {config.title}
             </h2>
 
@@ -446,10 +482,12 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
             {(points > 0 || jungleCoins > 0) && (
               <div className="space-y-3 mb-6">
                 {points > 0 && (
-                  <div className={cn(
-                    "bg-gradient-to-r text-white rounded-2xl py-3 px-6 shadow-lg animate-jungle-float",
-                    config.background
-                  )}>
+                  <div
+                    className={cn(
+                      "bg-gradient-to-r text-white rounded-2xl py-3 px-6 shadow-lg animate-jungle-float",
+                      config.background,
+                    )}
+                  >
                     <div className="flex items-center justify-center gap-2">
                       <span className="text-2xl">🎯</span>
                       <span className="text-xl md:text-2xl font-bold">
@@ -477,9 +515,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
                 <span
                   key={index}
                   className="text-3xl md:text-4xl animate-jungle-celebration"
-                  style={{ 
+                  style={{
                     animationDelay: `${index * 150}ms`,
-                    animationDuration: `${1.5 + index * 0.2}s`
+                    animationDuration: `${1.5 + index * 0.2}s`,
                   }}
                 >
                   {emoji}
@@ -503,7 +541,9 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
               className={cn(
                 "bg-gradient-to-r text-white font-bold py-3 px-8 rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 active:scale-95",
                 config.background,
-                intensity === "epic" ? "animate-jungle-level-up" : "animate-jungle-glow"
+                intensity === "epic"
+                  ? "animate-jungle-level-up"
+                  : "animate-jungle-glow",
               )}
             >
               <span className="flex items-center gap-2">
@@ -520,16 +560,18 @@ export const EnhancedJungleRewardCelebration: React.FC<JungleRewardCelebrationPr
 
           {/* Pulsing Ring Effect for Epic Rewards */}
           {intensity === "epic" && (
-            <div className={cn(
-              "absolute inset-0 rounded-3xl border-4 animate-ping opacity-30",
-              config.borderColor
-            )} />
+            <div
+              className={cn(
+                "absolute inset-0 rounded-3xl border-4 animate-ping opacity-30",
+                config.borderColor,
+              )}
+            />
           )}
         </div>
       )}
 
       {/* Mobile Touch Area */}
-      <div 
+      <div
         className="absolute inset-0 md:hidden"
         onClick={onComplete}
         onTouchEnd={onComplete}

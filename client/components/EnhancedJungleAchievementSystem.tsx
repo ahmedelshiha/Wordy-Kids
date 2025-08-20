@@ -523,19 +523,48 @@ export function EnhancedJungleAchievementSystem({
       <div className="flex items-center justify-center min-h-[400px] bg-gradient-to-br from-jungle-light to-green-50 rounded-2xl">
         <div className="text-center p-8">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-jungle-DEFAULT border-t-transparent mx-auto mb-6"></div>
-          <div className="text-2xl mb-2">🌿 Loading your jungle adventure...</div>
-          <p className="text-jungle-dark/70">Discovering your achievements in the wild!</p>
+          <div className="text-2xl mb-2">
+            🌿 Loading your jungle adventure...
+          </div>
+          <p className="text-jungle-dark/70">
+            Discovering your achievements in the wild!
+          </p>
         </div>
       </div>
     );
   }
 
   const categories = [
-    { id: "all", name: "All Adventures", icon: "🌟", color: "from-jungle-DEFAULT to-emerald-500" },
-    { id: "learning", name: "Word Discovery", icon: "📚", color: "from-blue-500 to-cyan-500" },
-    { id: "streak", name: "Daily Quests", icon: "🔥", color: "from-orange-500 to-red-500" },
-    { id: "quiz", name: "Brain Challenges", icon: "🧠", color: "from-purple-500 to-pink-500" },
-    { id: "exploration", name: "Jungle Exploration", icon: "🗺️", color: "from-green-500 to-jungle-DEFAULT" },
+    {
+      id: "all",
+      name: "All Adventures",
+      icon: "🌟",
+      color: "from-jungle-DEFAULT to-emerald-500",
+    },
+    {
+      id: "learning",
+      name: "Word Discovery",
+      icon: "📚",
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      id: "streak",
+      name: "Daily Quests",
+      icon: "🔥",
+      color: "from-orange-500 to-red-500",
+    },
+    {
+      id: "quiz",
+      name: "Brain Challenges",
+      icon: "🧠",
+      color: "from-purple-500 to-pink-500",
+    },
+    {
+      id: "exploration",
+      name: "Jungle Exploration",
+      icon: "🗺️",
+      color: "from-green-500 to-jungle-DEFAULT",
+    },
   ];
 
   const filteredAchievements =
@@ -601,7 +630,10 @@ export function EnhancedJungleAchievementSystem({
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent animate-jungle-sparkle"></div>
           <CardContent className="p-3 md:p-6 text-center relative z-10">
             <div className="text-2xl mb-1 animate-jungle-celebration">🎯</div>
-            <Target className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin" style={{ animationDuration: "3s" }} />
+            <Target
+              className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-1 md:mb-2 animate-spin"
+              style={{ animationDuration: "3s" }}
+            />
             <div className="text-xl md:text-3xl font-bold mb-1">
               <AnimatedCounter value={stats.currentAccuracy} suffix="%" />
             </div>
@@ -646,7 +678,9 @@ export function EnhancedJungleAchievementSystem({
                       style={{ height: `${height}%` }}
                     />
                   </div>
-                  <p className="text-xs text-jungle-dark/70 mt-1">{days[index]}</p>
+                  <p className="text-xs text-jungle-dark/70 mt-1">
+                    {days[index]}
+                  </p>
                   <p className="text-sm md:text-lg">{jungleEmojis[index]}</p>
                   <p className="text-xs md:text-sm font-bold text-jungle-DEFAULT">
                     {value}
@@ -743,7 +777,8 @@ export function EnhancedJungleAchievementSystem({
         <CardContent className="px-2 md:px-3 lg:px-6">
           <div className="space-y-2 md:space-y-3">
             <p className="text-center text-jungle-dark font-semibold text-xs md:text-sm">
-              Your learning expedition! Each footprint marks a day of discovery! 🦶🗺️
+              Your learning expedition! Each footprint marks a day of discovery!
+              🦶🗺️
             </p>
 
             <div className="grid grid-cols-10 gap-0.5 justify-center">
@@ -797,9 +832,7 @@ export function EnhancedJungleAchievementSystem({
                 <div className="w-3 h-3 md:w-4 md:h-4 bg-sky-DEFAULT rounded-sm flex items-center justify-center text-white text-xs">
                   ⭐
                 </div>
-                <span className="text-sky-dark font-semibold">
-                  Great trek
-                </span>
+                <span className="text-sky-dark font-semibold">Great trek</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2">
                 <div className="w-3 h-3 md:w-4 md:h-4 bg-jungle-DEFAULT rounded-sm flex items-center justify-center text-white text-xs">
@@ -820,13 +853,18 @@ export function EnhancedJungleAchievementSystem({
     <div className="space-y-6 bg-gradient-to-br from-light-background to-jungle-light/30 min-h-screen p-4 rounded-2xl">
       {/* Jungle Adventure Header */}
       <div className="text-center px-4 relative">
-        <div className="absolute -top-2 left-1/4 text-2xl animate-jungle-float">🌿</div>
-        <div className="absolute -top-1 right-1/4 text-2xl animate-jungle-sway">🦜</div>
+        <div className="absolute -top-2 left-1/4 text-2xl animate-jungle-float">
+          🌿
+        </div>
+        <div className="absolute -top-1 right-1/4 text-2xl animate-jungle-sway">
+          🦜
+        </div>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-jungle-DEFAULT via-emerald-500 to-sky-DEFAULT bg-clip-text text-transparent mb-2 leading-tight animate-jungle-glow">
           🌟 Your Jungle Learning Adventure! 🏆
         </h2>
         <p className="text-jungle-dark/80 mb-4 text-sm md:text-lg px-2">
-          Explore the wild world of words and unlock amazing jungle treasures! 🌺🦋
+          Explore the wild world of words and unlock amazing jungle treasures!
+          🌺🦋
         </p>
         <div className="flex justify-center gap-2 text-xl animate-jungle-celebration">
           <span>🐵</span>
@@ -942,7 +980,7 @@ export function EnhancedJungleAchievementSystem({
                     "flex items-center gap-1 md:gap-2 hover:scale-105 transition-all duration-300 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 rounded-lg shadow-md border-2",
                     selectedCategory === category.id
                       ? `bg-gradient-to-r ${category.color} text-white border-transparent shadow-lg`
-                      : "border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50 bg-white/80 text-jungle-dark"
+                      : "border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50 bg-white/80 text-jungle-dark",
                   )}
                 >
                   <span>{category.icon}</span>
@@ -957,7 +995,7 @@ export function EnhancedJungleAchievementSystem({
                   "flex items-center gap-1 md:gap-2 hover:scale-105 transition-all duration-300 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 rounded-lg shadow-md border-2",
                   showUnlockables
                     ? "bg-gradient-to-r from-playful-purple to-profile-purple text-white border-transparent shadow-lg"
-                    : "border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50 bg-white/80 text-jungle-dark"
+                    : "border-jungle-DEFAULT/30 hover:border-jungle-DEFAULT/50 bg-white/80 text-jungle-dark",
                 )}
               >
                 <Gift className="w-4 h-4" />
@@ -1058,7 +1096,9 @@ export function EnhancedJungleAchievementSystem({
                       <div className="hidden md:block">
                         <CardHeader className="pb-2 px-6 pt-6">
                           <div className="flex items-center justify-between">
-                            <div className="text-4xl animate-jungle-float">{achievement.icon}</div>
+                            <div className="text-4xl animate-jungle-float">
+                              {achievement.icon}
+                            </div>
                             <div className="flex items-center gap-1">
                               {getDifficultyIcon(achievement.difficulty)}
                               {achievement.unlocked && (
@@ -1096,7 +1136,9 @@ export function EnhancedJungleAchievementSystem({
                           {!achievement.unlocked && (
                             <div className="space-y-2">
                               <div className="flex justify-between text-sm">
-                                <span className="text-jungle-DEFAULT/70">Progress</span>
+                                <span className="text-jungle-DEFAULT/70">
+                                  Progress
+                                </span>
                                 <span className="font-semibold text-jungle-dark">
                                   {achievement.currentProgress}/
                                   {achievement.requirements}
@@ -1149,7 +1191,8 @@ export function EnhancedJungleAchievementSystem({
                     🎁 Jungle Treasure Vault
                   </h3>
                   <p className="text-jungle-dark/70">
-                    Complete achievements to unlock these amazing jungle treasures!
+                    Complete achievements to unlock these amazing jungle
+                    treasures!
                   </p>
                 </div>
 
@@ -1176,14 +1219,19 @@ export function EnhancedJungleAchievementSystem({
                         </h4>
                         <p
                           className={`text-xs md:text-sm mb-3 ${
-                            content.unlocked ? "text-white/90" : "text-jungle-dark/70"
+                            content.unlocked
+                              ? "text-white/90"
+                              : "text-jungle-dark/70"
                           }`}
                         >
                           {content.description}
                         </p>
 
                         {!content.unlocked && content.unlockedBy && (
-                          <Badge variant="outline" className="text-xs border-jungle-DEFAULT/50 text-jungle-dark">
+                          <Badge
+                            variant="outline"
+                            className="text-xs border-jungle-DEFAULT/50 text-jungle-dark"
+                          >
                             <Lock className="w-3 h-3 mr-1" />
                             Complete "
                             {
