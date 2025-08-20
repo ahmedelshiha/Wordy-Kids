@@ -23,6 +23,7 @@ import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategor
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { AchievementSystem } from "@/components/AchievementSystem";
+import { EnhancedJungleAchievementSystem } from "@/components/EnhancedJungleAchievementSystem";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
