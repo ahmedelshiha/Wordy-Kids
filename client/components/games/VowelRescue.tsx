@@ -21,7 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import { AchievementTracker } from "@/lib/achievementTracker";
-import { EnhancedAchievementPopup } from "@/components/EnhancedAchievementPopup";
+// EnhancedAchievementPopup removed - now using LightweightAchievementProvider
 import { audioService } from "@/lib/audioService";
 import { playSoundIfEnabled } from "@/lib/soundEffects";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
@@ -73,7 +73,7 @@ export function VowelRescue({
   const [attempts, setAttempts] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameComplete, setGameComplete] = useState(false);
-  const [newAchievements, setNewAchievements] = useState<any[]>([]);
+  // newAchievements state removed - now using event-based system
   const [showMainCelebration, setShowMainCelebration] = useState(false);
   const [showSparkleExplosion, setShowSparkleExplosion] = useState(false);
   const [sparkleCount, setSparkleCount] = useState(0);
@@ -332,7 +332,13 @@ export function VowelRescue({
 
     // Show achievement popup if any achievements were unlocked
     if (unlockedAchievements.length > 0) {
-      setNewAchievements(unlockedAchievements);
+      // Trigger achievements through new lightweight popup system
+      unlockedAchievements.forEach(achievement => {
+        const event = new CustomEvent('milestoneUnlocked', {
+          detail: { achievement }
+        });
+        window.dispatchEvent(event);
+      });
     }
 
     setTimeout(() => {
@@ -846,18 +852,7 @@ export function VowelRescue({
           )}
         </AnimatePresence>
 
-        {/* Enhanced Achievement Popup */}
-        {newAchievements.length > 0 && (
-          <EnhancedAchievementPopup
-            achievements={newAchievements}
-            onClose={() => setNewAchievements([])}
-            onAchievementClaim={(achievement) => {
-              console.log("Achievement claimed:", achievement);
-              // Could add additional reward logic here
-            }}
-            autoCloseDelay={2000} // Auto-close after 2 seconds for mobile optimization
-          />
-        )}
+        {/* Achievement popups now handled by LightweightAchievementProvider */}
 
         {/* Main Celebration Effect */}
         <CelebrationEffect
