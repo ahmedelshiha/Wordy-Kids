@@ -1959,140 +1959,331 @@ export function InteractiveDashboardWordCard({
                   aria-label="Word hint revealed"
                   aria-live="polite"
                 >
-                  {/* Transparent Hint Card */}
+                  {/* Jungle Adventure Hint Card */}
                   <motion.div
                     initial={{
                       backdropFilter: "blur(0px)",
-                      backgroundColor: "rgba(255, 255, 255, 0)",
+                      backgroundColor: "rgba(34, 139, 34, 0)",
                     }}
                     animate={{
-                      backdropFilter: "blur(8px)",
-                      backgroundColor: "rgba(255, 255, 255, 0.85)",
+                      backdropFilter: "blur(12px)",
+                      backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-[240px] sm:max-w-[280px] p-1.5 sm:p-2 md:p-3 rounded-lg border-2 border-yellow-300/60 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-[280px] sm:max-w-[320px] md:max-w-[350px] p-2 sm:p-3 md:p-4 rounded-2xl sm:rounded-3xl border-3 border-jungle/40 shadow-2xl relative overflow-hidden"
+                    style={{
+                      background: `
+                        radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(255, 193, 7, 0.15) 0%, transparent 50%),
+                        linear-gradient(135deg, rgba(34, 139, 34, 0.1), rgba(76, 175, 80, 0.2), rgba(255, 193, 7, 0.1))
+                      `,
+                      boxShadow: `
+                        0 20px 40px rgba(34, 139, 34, 0.3),
+                        0 0 30px rgba(255, 193, 7, 0.2),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.3)
+                      `,
+                    }}
                   >
-                    {/* Exit Button */}
+                    {/* Jungle Canopy Background */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      {/* Animated Jungle Leaves */}
+                      <motion.div
+                        animate={{
+                          y: [0, -15, 0],
+                          rotate: [0, 8, 0],
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 6,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                        className="absolute -top-4 -left-3 text-2xl opacity-30 text-jungle-light"
+                      >
+                        🌿
+                      </motion.div>
+                      <motion.div
+                        animate={{
+                          y: [0, -12, 0],
+                          rotate: [0, -6, 0],
+                          scale: [1, 1.05, 1],
+                        }}
+                        transition={{
+                          duration: 7,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1,
+                        }}
+                        className="absolute -top-3 -right-4 text-xl opacity-25 text-jungle"
+                      >
+                        🍃
+                      </motion.div>
+                      <motion.div
+                        animate={{
+                          y: [0, -10, 0],
+                          x: [0, 5, 0],
+                          scale: [1, 1.2, 1],
+                        }}
+                        transition={{
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 2,
+                        }}
+                        className="absolute -bottom-3 -left-2 text-lg opacity-20 text-sunshine"
+                      >
+                        🌺
+                      </motion.div>
+                      <motion.div
+                        animate={{
+                          y: [0, -8, 0],
+                          x: [0, -3, 0],
+                          rotate: [0, 360, 0],
+                        }}
+                        transition={{
+                          duration: 10,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="absolute -bottom-2 -right-3 text-sm opacity-30 text-jungle-light"
+                      >
+                        🦋
+                      </motion.div>
+                    </div>
+
+                    {/* Jungle Explorer Exit Button */}
                     <motion.button
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8, duration: 0.3 }}
+                      initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.8, duration: 0.4 }}
                       onClick={() => setShowHint(false)}
-                      className="absolute top-2 right-2 w-6 h-6 bg-orange-500/80 hover:bg-orange-600 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20"
-                      aria-label="Close hint"
+                      className="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-coral-red to-bright-orange hover:from-bright-orange hover:to-coral-red text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 z-20 shadow-lg border-2 border-white/30"
+                      aria-label="Close jungle hint"
                     >
-                      <span className="text-xs font-bold">×</span>
+                      <span className="text-sm sm:text-base font-bold">✖️</span>
                     </motion.button>
 
-                    {/* Hint background glow */}
+                    {/* Magical Jungle Glow */}
                     <motion.div
-                      initial={{ scale: 0, opacity: 0.6 }}
-                      animate={{ scale: 2, opacity: 0 }}
-                      transition={{ duration: 1.2, ease: "easeOut" }}
-                      className="absolute inset-0 bg-gradient-to-r from-yellow-200/40 to-orange-200/40 rounded-2xl"
+                      initial={{ scale: 0, opacity: 0.8 }}
+                      animate={{ scale: 2.5, opacity: 0 }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="absolute inset-0 bg-gradient-to-r from-jungle/20 via-sunshine/15 to-jungle/20 rounded-3xl"
                     />
 
                     <div className="text-center relative z-10">
+                      {/* Jungle Explorer Icon */}
                       <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
+                        initial={{ scale: 0, rotate: -180, y: -20 }}
+                        animate={{ scale: 1, rotate: 0, y: 0 }}
                         transition={{
                           delay: 0.2,
-                          duration: 0.6,
+                          duration: 0.8,
                           type: "spring",
                           stiffness: 200,
                         }}
-                        className="text-lg md:text-xl mb-0.5"
+                        className="text-2xl sm:text-3xl md:text-4xl mb-2"
                         aria-hidden="true"
                       >
-                        💡
+                        <motion.span
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 10, -10, 0],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          className="inline-block"
+                        >
+                          🔍
+                        </motion.span>
                       </motion.div>
 
+                      {/* Jungle Adventure Hint Container */}
                       <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.4, duration: 0.5 }}
-                        className="bg-white/60 rounded-lg p-1.5 sm:p-2 border border-yellow-200/80 shadow-inner"
+                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                        className="relative"
+                        style={{
+                          background: `
+                            linear-gradient(135deg,
+                              rgba(255, 255, 255, 0.9) 0%,
+                              rgba(248, 250, 252, 0.9) 50%,
+                              rgba(240, 253, 244, 0.9) 100%
+                            )
+                          `,
+                          backdropFilter: "blur(8px)",
+                          border: "2px solid rgba(76, 175, 80, 0.3)",
+                          borderRadius: "1rem",
+                          padding: "1rem",
+                          boxShadow: `
+                            0 8px 32px rgba(34, 139, 34, 0.15),
+                            inset 0 1px 2px rgba(255, 255, 255, 0.5)
+                          `,
+                        }}
                       >
-                        <div className="text-xl sm:text-2xl md:text-3xl mb-1">
-                          {currentWord.emoji}
-                        </div>
-                        <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-800 tracking-wide">
-                          {currentWord.word}
-                        </p>
+                        {/* Jungle Word Discovery */}
+                        <motion.div
+                          initial={{ scale: 0.5, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: 0.6, duration: 0.5 }}
+                          className="mb-3"
+                        >
+                          <div className="text-3xl sm:text-4xl md:text-5xl mb-2 relative">
+                            <motion.span
+                              animate={{
+                                scale: [1, 1.1, 1],
+                                filter: [
+                                  "drop-shadow(0 0 10px rgba(255, 193, 7, 0.6))",
+                                  "drop-shadow(0 0 20px rgba(255, 193, 7, 0.8))",
+                                  "drop-shadow(0 0 10px rgba(255, 193, 7, 0.6))",
+                                ],
+                              }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                              }}
+                              className="inline-block"
+                            >
+                              {currentWord.emoji}
+                            </motion.span>
+                            {/* Jungle Sparkles */}
+                            <motion.div
+                              animate={{
+                                opacity: [0, 1, 0],
+                                scale: [0.5, 1, 0.5],
+                                x: [0, 15, 0],
+                                y: [0, -10, 0],
+                              }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                              }}
+                              className="absolute -top-2 -right-1 text-sunshine text-lg"
+                            >
+                              ✨
+                            </motion.div>
+                          </div>
+                          <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.8, duration: 0.4 }}
+                            className="text-xl sm:text-2xl md:text-3xl font-bold text-jungle-dark tracking-wide"
+                            style={{
+                              textShadow: "0 2px 4px rgba(34, 139, 34, 0.2)",
+                            }}
+                          >
+                            {currentWord.word}
+                          </motion.p>
+                        </motion.div>
 
-                        {/* Speaker button inside hint card */}
+                        {/* Jungle Explorer Listen Button */}
                         <motion.div
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.6, duration: 0.4 }}
-                          className="mt-1.5 sm:mt-2 flex justify-center"
+                          transition={{ delay: 1, duration: 0.4 }}
+                          className="flex justify-center"
                         >
                           <Button
                             onClick={playPronunciation}
                             disabled={isPlaying}
                             size="sm"
                             className={cn(
-                              "bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:via-orange-600 hover:to-orange-700 text-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-md hover:shadow-lg border border-orange-300/50 hover:border-orange-200",
-                              "ring-2 ring-orange-200/30 hover:ring-orange-300/50",
-                              "backdrop-blur-sm",
+                              "bg-gradient-to-br from-jungle via-jungle-dark to-jungle-light hover:from-jungle-dark hover:via-jungle hover:to-jungle-light text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-lg hover:shadow-xl border-2 border-jungle-light/50 hover:border-sunshine/50",
+                              "ring-2 ring-jungle/30 hover:ring-sunshine/50",
+                              "backdrop-blur-sm relative overflow-hidden",
                               isPlaying &&
-                                "animate-pulse ring-yellow-400/60 shadow-yellow-400/30",
+                                "animate-pulse ring-sunshine/80 shadow-sunshine/40 scale-105",
                               "disabled:opacity-50 disabled:transform-none disabled:hover:scale-100",
                             )}
-                            aria-label="🔊 Play pronunciation - Hear how to say this word!"
+                            aria-label="🔊 Listen to jungle word - Hear the explorer say this word!"
                           >
+                            {/* Jungle Sound Waves Animation */}
+                            {isPlaying && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: [0, 1.5, 0] }}
+                                transition={{
+                                  duration: 1,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                                className="absolute inset-0 rounded-xl bg-gradient-to-r from-sunshine/30 to-jungle-light/30"
+                              />
+                            )}
                             <Volume2
                               className={cn(
-                                "w-3 h-3 sm:w-4 sm:h-4 mr-1",
+                                "w-4 h-4 sm:w-5 sm:h-5 mr-2 relative z-10",
                                 "drop-shadow-lg",
                                 isPlaying &&
-                                  "animate-bounce text-yellow-100 scale-110",
+                                  "animate-bounce text-sunshine scale-110",
                               )}
                             />
-                            <span className="text-xs font-medium">
-                              {isPlaying ? "Playing..." : "Listen"}
+                            <span className="text-sm sm:text-base font-bold relative z-10">
+                              {isPlaying ? "🎵 Playing..." : "🔊 Listen"}
                             </span>
-                            {isPlaying && (
-                              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse" />
-                            )}
                           </Button>
                         </motion.div>
                       </motion.div>
 
-                      {/* Floating hint elements */}
+                      {/* Magical Jungle Creatures Floating Around */}
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{
-                          opacity: [0, 1, 0],
-                          y: [20, -10, -30],
-                          x: [-20, 20, -20],
+                          opacity: [0, 1, 0.8, 1, 0],
+                          y: [20, -15, -25, -35, -50],
+                          x: [-15, 10, -5, 15, -10],
+                          rotate: [0, 180, 360, 540, 720],
                         }}
                         transition={{
-                          duration: 3,
+                          duration: 4,
                           repeat: Infinity,
                           ease: "easeInOut",
-                          delay: 0.8,
+                          delay: 1.2,
                         }}
-                        className="absolute -top-2 -right-2 text-yellow-400 text-sm"
+                        className="absolute -top-3 -right-3 text-sunshine text-lg"
                       >
-                        ⭐
+                        🐝
                       </motion.div>
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{
-                          opacity: [0, 1, 0],
-                          y: [20, -10, -30],
-                          x: [20, -20, 20],
+                          opacity: [0, 1, 0.7, 1, 0],
+                          y: [20, -12, -20, -28, -40],
+                          x: [15, -12, 8, -15, 12],
+                          scale: [0.8, 1.2, 1, 1.1, 0.9],
                         }}
                         transition={{
-                          duration: 3,
+                          duration: 5,
                           repeat: Infinity,
                           ease: "easeInOut",
-                          delay: 1.5,
+                          delay: 2,
                         }}
-                        className="absolute -bottom-2 -left-2 text-orange-400 text-xs"
+                        className="absolute -bottom-3 -left-3 text-jungle-light text-sm"
                       >
-                        ✨
+                        🦜
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{
+                          opacity: [0, 1, 0.6, 1, 0],
+                          scale: [0, 1, 1.3, 1.1, 0],
+                          y: [0, -8, -15, -22, -30],
+                          x: [0, 8, -5, 10, -8],
+                        }}
+                        transition={{
+                          duration: 3.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 2.8,
+                        }}
+                        className="absolute top-1/2 -right-4 text-coral-red text-base"
+                      >
+                        ��
                       </motion.div>
                     </div>
                   </motion.div>
