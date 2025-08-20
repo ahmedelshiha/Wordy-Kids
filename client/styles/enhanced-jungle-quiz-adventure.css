@@ -285,8 +285,6 @@
    ============================== */
 
 .treasure-option-card {
-  transform-style: preserve-3d;
-  perspective: 1000px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   background: linear-gradient(
@@ -302,7 +300,7 @@
 }
 
 .treasure-option-card:hover {
-  transform: translateY(-12px) rotateX(5deg) rotateY(5deg) scale(1.03);
+  transform: translateY(-12px) scale(1.03);
   box-shadow:
     0 25px 50px rgba(76, 175, 80, 0.25),
     0 15px 30px rgba(139, 195, 74, 0.15),
@@ -312,13 +310,11 @@
 }
 
 .treasure-option-card:active {
-  transform: translateY(-8px) rotateX(2deg) rotateY(2deg) scale(0.98);
+  transform: translateY(-8px) scale(0.98);
   transition: all 0.1s ease-out;
 }
 
 .jungle-treasure-card {
-  transform-style: preserve-3d;
-  perspective: 1200px;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   background: linear-gradient(
     135deg,
