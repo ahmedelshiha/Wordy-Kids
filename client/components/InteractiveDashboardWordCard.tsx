@@ -1019,48 +1019,24 @@ export function InteractiveDashboardWordCard({
               {feedbackMessage}
             </motion.div>
 
-            {/* Extra sparkles for success */}
-            {feedbackType === "remembered" && (
-              <>
-                <motion.div
-                  key={`feedback-sparkle-1-${currentWordIndex}`}
-                  initial={{ opacity: 0, scale: 0, x: -20, y: -10 }}
-                  animate={{
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0],
-                    x: -30,
-                    y: -20,
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: 0.2,
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                  }}
-                  className="absolute text-yellow-300 text-sm"
-                >
-                  ✨
-                </motion.div>
-                <motion.div
-                  key={`feedback-sparkle-2-${currentWordIndex}`}
-                  initial={{ opacity: 0, scale: 0, x: 20, y: -10 }}
-                  animate={{
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0],
-                    x: 30,
-                    y: -20,
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: 0.5,
-                    repeat: Infinity,
-                    repeatDelay: 2,
-                  }}
-                  className="absolute text-blue-300 text-xs"
-                >
-                  ⭐
-                </motion.div>
-              </>
+            {/* Single sparkle for success - Only if motion allowed */}
+            {feedbackType === "remembered" && !prefersReducedMotion && (
+              <motion.div
+                key={`feedback-sparkle-${currentWordIndex}`}
+                initial={{ opacity: 0, scale: 0, y: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                  y: -25,
+                }}
+                transition={{
+                  duration: 1.2,
+                  ease: "easeOut",
+                }}
+                className="absolute text-yellow-300 text-sm top-0 left-1/2 transform -translate-x-1/2"
+              >
+                ✨
+              </motion.div>
             )}
           </motion.div>
         );
@@ -1888,7 +1864,7 @@ export function InteractiveDashboardWordCard({
                           }}
                           className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                         >
-                          🌿
+                          ����
                         </motion.div>
                       )}
                     </div>
