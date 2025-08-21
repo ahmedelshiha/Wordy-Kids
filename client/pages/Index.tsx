@@ -4055,7 +4055,6 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }
