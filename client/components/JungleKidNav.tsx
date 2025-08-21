@@ -399,14 +399,8 @@ export function JungleKidNav({
 
           {/* Active indicator */}
           {isActive && (
-            <motion.div
+            <div
               className="jungle-active-indicator"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                duration: animationsSuspended ? 0 : 0.8,
-                ease: "easeOut",
-              }}
             />
           )}
         </button>
