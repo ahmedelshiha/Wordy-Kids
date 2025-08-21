@@ -46,12 +46,13 @@ export const jungleNavPresets: JungleNavPreset[] = [
   {
     id: 'balanced-adventure',
     name: 'Balanced Adventure',
-    description: 'Perfect balance of engagement and calm - moderate animations with occasional magical effects',
+    description: 'Perfect balance of engagement and calm - soft glow effects with occasional magical elements',
     icon: '🌿',
     config: {
       idleSpeed: 'medium',
-      intensity: 'normal', 
+      intensity: 'normal',
       idlePauseDuration: 'medium',
+      animationStyle: 'glow',
       rareEffects: true,
       reducedMotion: false
     },
@@ -66,12 +67,13 @@ export const jungleNavPresets: JungleNavPreset[] = [
   {
     id: 'playful-adventure',
     name: 'Playful Adventure',
-    description: 'High engagement mode - dynamic animations, frequent magical effects, perfect for game-based learning',
+    description: 'High engagement mode - animal micro-movements add character, perfect for interactive learning',
     icon: '🎮',
     config: {
       idleSpeed: 'fast',
       intensity: 'playful',
       idlePauseDuration: 'short',
+      animationStyle: 'micro',
       rareEffects: true,
       reducedMotion: false
     },
@@ -86,12 +88,13 @@ export const jungleNavPresets: JungleNavPreset[] = [
   {
     id: 'accessibility-first',
     name: 'Accessibility First',
-    description: 'Fully accessible mode - respects all motion preferences, high contrast, screen reader optimized',
+    description: 'Fully accessible mode - no animations, high contrast, screen reader optimized',
     icon: '♿',
     config: {
       idleSpeed: 'slow',
       intensity: 'subtle',
       idlePauseDuration: 'long',
+      animationStyle: 'none',
       rareEffects: false,
       reducedMotion: true
     },
