@@ -26,6 +26,7 @@ import {
 import { junglePerformanceOptimizer } from "@/lib/jungleNavPerformance";
 import { useJungleNavAnimations } from "@/hooks/use-jungle-nav-animations";
 import { useAnimationControl } from "@/lib/animationControl";
+import { animationControl } from "@/lib/animationControl";
 import "@/styles/jungle-adventure-nav.css";
 
 // Builder.io compatible props interface
