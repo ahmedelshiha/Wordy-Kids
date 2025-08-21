@@ -3702,7 +3702,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setFeedback({
                                         type: "celebration",
                                         title:
-                                          "Epic Adventure Complete! 🏆👑✨",
+                                          "Epic Adventure Complete! ��👑✨",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
 ��� Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
@@ -3724,7 +3724,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ���� Word Garden
+                                      ��� Word Garden
                                     </h2>
                                     <Button
                                       onClick={() => setShowExitDialog(true)}
@@ -4019,7 +4019,29 @@ export default function Index({ initialProfile }: IndexProps) {
               iconSize={52}
               iconLift={18}
               showParentMenuIcon={true}
-              onParentMenuClick={() => setShowParentGate(true)}
+              parentDialogSections={{
+                dashboard: true,
+                settings: true,
+                signOut: isLoggedIn,
+              }}
+              onParentDashboard={() => {
+                setUserRole("parent");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onParentSettings={() => {
+                setShowSettings(true);
+                if (navigator.vibrate) {
+                  navigator.vibrate(50);
+                }
+              }}
+              onParentSignOut={() => {
+                // Handle logout logic here
+                console.log("Parent sign out clicked");
+              }}
+              onParentRegister={() => {
+                // Handle registration logic here
+                console.log("Parent register clicked");
+              }}
               items={[
                 {
                   id: "dashboard",
