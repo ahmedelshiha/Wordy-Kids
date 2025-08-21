@@ -355,16 +355,17 @@ export function InteractiveDashboardWordCard({
     return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
-  // Automatically pronounce word when hint is shown
+  // Automatically pronounce word when hint is shown (only once per word)
   useEffect(() => {
-    if (showHint && currentWord && !isPlaying) {
+    if (showHint && currentWord && !isPlaying && !audioPlayedForHint) {
       // Small delay to allow hint card animation to start
       const timer = setTimeout(() => {
         playPronunciation();
+        setAudioPlayedForHint(true);
       }, 400);
       return () => clearTimeout(timer);
     }
-  }, [showHint, currentWord]);
+  }, [showHint, currentWord, audioPlayedForHint, isPlaying]);
 
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
@@ -1615,7 +1616,7 @@ export function InteractiveDashboardWordCard({
                           "🍄 What rare jungle delicacy is this?",
                           "🫚 Which ancient jungle spice awaits?",
                           "🌶️ Can you name this fiery jungle flavor?",
-                          "🧄 What powerful jungle ingredient is this?",
+                          "�� What powerful jungle ingredient is this?",
                         ],
                       },
                       Objects: {
@@ -1650,7 +1651,7 @@ export function InteractiveDashboardWordCard({
                       ],
                       medium: [
                         "🔍 What jungle mystery awaits you?",
-                        "��� Which jungle challenge do you see?",
+                        "🎯 Which jungle challenge do you see?",
                         "💎 Can you solve this jungle puzzle?",
                         "🗝️ What jungle secret is this?",
                       ],
