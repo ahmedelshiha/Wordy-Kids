@@ -236,9 +236,9 @@ export function JungleAdventureNav({
           {isActive && (
             <motion.div
               className="jungle-active-indicator"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             />
           )}
         </motion.button>
