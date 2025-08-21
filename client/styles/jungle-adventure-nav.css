@@ -265,7 +265,7 @@
   }
 }
 
-@keyframes gentle-float {
+/* @keyframes gentle-float {
   0%,
   100% {
     transform: translateY(0px);
@@ -273,7 +273,7 @@
   50% {
     transform: translateY(-2px);
   }
-}
+} */
 
 @keyframes gentle-bounce {
   0%,
