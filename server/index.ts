@@ -28,13 +28,24 @@ export function createServer() {
 
   // Middleware
   app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+
+  // Universal UTF-8 configuration
+  app.use(express.json({ limit: '10mb' })); // Increased limit for emoji content
+  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+  // Set UTF-8 headers for all responses
+  app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+    res.setHeader('Accept-Charset', 'UTF-8');
+    next();
+  });
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
+    // Ensure UTF-8 response
+    res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+    res.json({ message: ping, emoji: "🎯" }); // Test emoji support
   });
 
   app.get("/api/demo", handleDemo);
