@@ -515,7 +515,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
     // Initialize dashboard words on component mount
     initializeDashboardWords();
-  }, []); // Run only once on mount
+  }, [generateDashboardWords]); // Include generateDashboardWords since it's called in the effect
 
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
