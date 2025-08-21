@@ -10,6 +10,7 @@ import {
 import { featureFlags } from "@/lib/featureFlags";
 import { JungleAdventureStorage } from "@/lib/jungleAdventureStorage";
 import { useAuth } from "@/hooks/useAuth";
+import { ErrorBoundary } from "./common/ErrorBoundary";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -761,21 +762,26 @@ export const JungleAdventureParentDashboard: React.FC<
                             }
                           }}
                         >
-                          <InteractiveJungleMap
-                            className="w-full"
-                            onMarkerClick={(marker) => {
-                              if (isAnalyticsEnabled) {
-                                parentDashboardAnalytics.trackMapInteraction(
-                                  "marker_click",
-                                  {
-                                    markerId: marker.id,
-                                    markerType: marker.type,
-                                  },
-                                );
-                              }
-                              console.log("Marker clicked:", marker);
-                            }}
-                          />
+                          <ErrorBoundary
+                            fallbackType="kid"
+                            componentName="InteractiveJungleMap"
+                          >
+                            <InteractiveJungleMap
+                              className="w-full"
+                              onMarkerClick={(marker) => {
+                                if (isAnalyticsEnabled) {
+                                  parentDashboardAnalytics.trackMapInteraction(
+                                    "marker_click",
+                                    {
+                                      markerId: marker.id,
+                                      markerType: marker.type,
+                                    },
+                                  );
+                                }
+                                console.log("Marker clicked:", marker);
+                              }}
+                            />
+                          </ErrorBoundary>
                         </div>
                       )}
                     </div>
@@ -891,21 +897,26 @@ export const JungleAdventureParentDashboard: React.FC<
                       }
                     }}
                   >
-                    <FamilyAchievementsTimeline
-                      className="w-full"
-                      onEventClick={(event) => {
-                        if (isAnalyticsEnabled) {
-                          parentDashboardAnalytics.trackTimelineEventClick(
-                            event.type,
-                            {
-                              eventId: event.id,
-                              category: event.category,
-                            },
-                          );
-                        }
-                        console.log("Timeline event clicked:", event);
-                      }}
-                    />
+                    <ErrorBoundary
+                      fallbackType="parent"
+                      componentName="FamilyAchievementsTimeline"
+                    >
+                      <FamilyAchievementsTimeline
+                        className="w-full"
+                        onEventClick={(event) => {
+                          if (isAnalyticsEnabled) {
+                            parentDashboardAnalytics.trackTimelineEventClick(
+                              event.type,
+                              {
+                                eventId: event.id,
+                                category: event.category,
+                              },
+                            );
+                          }
+                          console.log("Timeline event clicked:", event);
+                        }}
+                      />
+                    </ErrorBoundary>
                   </div>
                 )
               ) : (

@@ -22,7 +22,7 @@ import {
   Heart,
   Star,
   Gift,
-  Map,
+  Map as MapIcon,
   Compass,
   Search,
   RefreshCw,
@@ -750,7 +750,7 @@ export function AchievementsSystemMap() {
                             {/* Files */}
                             <div>
                               <h4 className="text-sm font-semibold text-jungle-dark mb-2 flex items-center gap-1">
-                                <Map className="w-3 h-3" /> Files
+                                <MapIcon className="w-3 h-3" /> Files
                               </h4>
                               <div className="space-y-1">
                                 {module.files.map((file, i) => (
@@ -791,7 +791,7 @@ export function AchievementsSystemMap() {
                     🍃
                   </div>
                   <div className="absolute top-1/3 right-1/3 text-jungle text-lg">
-                    🌱
+                    ���
                   </div>
                 </div>
 
