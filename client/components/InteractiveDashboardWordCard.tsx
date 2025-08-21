@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, startTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -347,6 +347,27 @@ export function InteractiveDashboardWordCard({
     });
   }, [sessionStats, currentWordIndex, sessionProgress]);
 
+  // Optimized: Preload next word's audio for faster loading
+  useEffect(() => {
+    // Guard against uninitialized state
+    if (sessionWords.length === 0 || currentWordIndex < 0) return;
+
+    const nextIndex = currentWordIndex + 1;
+    if (nextIndex < sessionWords.length && nextIndex < SESSION_SIZE) {
+      const nextWord = sessionWords[nextIndex];
+      if (nextWord?.word) {
+        // Preload audio for next word in background
+        setTimeout(() => {
+          try {
+            enhancedAudioService.preloadWordAudio(nextWord.word);
+          } catch (error) {
+            // Silent fail - preloading is optional
+          }
+        }, 100);
+      }
+    }
+  }, [currentWordIndex, sessionWords]);
+
   // Reset card state when starting new session
   useEffect(() => {
     if (sessionWords.length > 0 && currentWordIndex >= sessionWords.length) {
@@ -379,7 +400,7 @@ export function InteractiveDashboardWordCard({
   // Debounced pronunciation function to prevent double-play
   const playPronunciationDebounced = (isManual = false) => {
     console.log(
-      `🔊 Audio call: ${isManual ? "Manual" : "Auto"}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`,
+      `��� Audio call: ${isManual ? "Manual" : "Auto"}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`,
     );
 
     // Clear any existing audio timeout
@@ -695,11 +716,14 @@ export function InteractiveDashboardWordCard({
       triggerHapticFeedback("light"); // Light feedback for skip
     }
 
-    console.log(`Word Action: ${currentWord.word} - ${status}`, {
-      wordId: currentWord.id,
-      sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
-      sessionStats,
-    });
+    // Optimized: Reduce console logging in production
+    if (process.env.NODE_ENV === "development") {
+      console.log(`Word Action: ${currentWord.word} - ${status}`, {
+        wordId: currentWord.id,
+        sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
+        sessionStats,
+      });
+    }
 
     // Mark as answered immediately to prevent double-clicks
     setIsAnswered(true);
@@ -741,51 +765,36 @@ export function InteractiveDashboardWordCard({
     if (status === "remembered") {
       setCelebrationEffect(true);
 
-      // Play jungle celebration sound based on difficulty with proper error handling
+      // Optimized: Play jungle celebration sound with faster execution
       try {
         const difficulty = currentWord.difficulty || "medium";
-        switch (difficulty) {
-          case "easy":
-            // Gentle jungle celebration
-            enhancedAudioService.playSuccessSound();
-            setTimeout(() => {
-              try {
-                audioService.playClickSound(); // Additional gentle sound
-              } catch (e) {
-                console.log("Additional sound effect not available");
-              }
-            }, 200);
-            break;
-          case "medium":
-            // Adventure jungle celebration
-            enhancedAudioService.playSuccessSound();
-            setTimeout(() => {
-              try {
-                audioService.playWhooshSound(); // Additional adventure sound
-              } catch (e) {
-                console.log("Additional sound effect not available");
-              }
-            }, 200);
-            break;
-          case "hard":
-            // Epic jungle victory
-            enhancedAudioService.playSuccessSound();
-            setTimeout(() => {
-              try {
-                audioService.playCheerSound(); // Additional victory sound
-              } catch (e) {
-                console.log("Additional sound effect not available");
-              }
-            }, 200);
-            break;
-        }
+        // Play primary sound immediately
+        enhancedAudioService.playSuccessSound();
+
+        // Queue secondary sound without blocking (optimized timing)
+        setTimeout(() => {
+          try {
+            switch (difficulty) {
+              case "easy":
+                audioService.playClickSound();
+                break;
+              case "medium":
+                audioService.playWhooshSound();
+                break;
+              case "hard":
+                audioService.playCheerSound();
+                break;
+            }
+          } catch (e) {
+            // Silent fail for better performance
+          }
+        }, 100); // Reduced from 200ms to 100ms
       } catch (error) {
-        console.log("Primary success sound failed, using basic fallback");
         // Fallback to basic audioService
         try {
           audioService.playSuccessSound();
         } catch (fallbackError) {
-          console.log("All success sounds failed:", fallbackError);
+          // Silent fail for better performance
         }
       }
 
@@ -814,53 +823,60 @@ export function InteractiveDashboardWordCard({
         `Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`,
       );
 
-      // Track journey achievements for word learning activity
-      const newJourneyAchievements = AchievementTracker.trackActivity({
-        type: "wordLearning",
-        wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy:
-          status === "remembered"
-            ? 100
-            : status === "needs_practice"
-              ? 0
-              : undefined,
-        category: currentWord.category,
-        timeSpent: 1, // Assume 1 minute per word on average
-      });
-
-      // Track enhanced achievements with difficulty-based progression
-      const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
-        type: "wordLearning",
-        wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy:
-          status === "remembered"
-            ? 100
-            : status === "needs_practice"
-              ? 0
-              : undefined,
-        category: currentWord.category,
-        difficulty: currentWord.difficulty,
-        timeSpent: 1,
-      });
-
-      // Combine achievements from both systems
-      const allNewAchievements = [
-        ...newJourneyAchievements,
-        ...enhancedAchievements,
-      ];
-
-      // Show enhanced achievements if any were unlocked
-      if (allNewAchievements.length > 0) {
-        // Trigger achievements through new lightweight popup system
-        setTimeout(() => {
-          allNewAchievements.forEach((achievement) => {
-            const event = new CustomEvent("milestoneUnlocked", {
-              detail: { achievement },
-            });
-            window.dispatchEvent(event);
+      // Optimized: Defer achievement tracking to avoid blocking next word loading
+      setTimeout(() => {
+        try {
+          // Track journey achievements for word learning activity
+          const newJourneyAchievements = AchievementTracker.trackActivity({
+            type: "wordLearning",
+            wordsLearned: status === "remembered" ? 1 : 0,
+            accuracy:
+              status === "remembered"
+                ? 100
+                : status === "needs_practice"
+                  ? 0
+                  : undefined,
+            category: currentWord.category,
+            timeSpent: 1, // Assume 1 minute per word on average
           });
-        }, 1500); // Show after feedback animation
-      }
+
+          // Track enhanced achievements with difficulty-based progression
+          const enhancedAchievements = EnhancedAchievementTracker.trackActivity(
+            {
+              type: "wordLearning",
+              wordsLearned: status === "remembered" ? 1 : 0,
+              accuracy:
+                status === "remembered"
+                  ? 100
+                  : status === "needs_practice"
+                    ? 0
+                    : undefined,
+              category: currentWord.category,
+              difficulty: currentWord.difficulty,
+              timeSpent: 1,
+            },
+          );
+
+          // Combine achievements from both systems
+          const allNewAchievements = [
+            ...newJourneyAchievements,
+            ...enhancedAchievements,
+          ];
+
+          // Show enhanced achievements if any were unlocked
+          if (allNewAchievements.length > 0) {
+            // Trigger achievements through new lightweight popup system immediately
+            allNewAchievements.forEach((achievement) => {
+              const event = new CustomEvent("milestoneUnlocked", {
+                detail: { achievement },
+              });
+              window.dispatchEvent(event);
+            });
+          }
+        } catch (error) {
+          console.error("Error in deferred achievement tracking:", error);
+        }
+      }, 50); // Process achievements asynchronously after 50ms
     } catch (error) {
       console.error("Error in word progress callback:", error);
     }
@@ -929,50 +945,57 @@ export function InteractiveDashboardWordCard({
       return;
     }
 
-    // Auto-advance to next word after progress is recorded
+    // Auto-advance to next word after progress is recorded (optimized timing)
     setTimeout(
       () => {
         advanceToNextWord();
       },
-      status === "remembered" ? 1500 : 800,
+      status === "remembered" ? 800 : 400,
     );
   };
 
   const advanceToNextWord = () => {
-    console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
+    // Optimized: Reduce console logging in production
+    if (process.env.NODE_ENV === "development") {
+      console.log(
+        `Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`,
+      );
+    }
 
     // Start transition effect
     setIsTransitioning(true);
 
-    // Brief delay for smooth transition
+    // Optimized: Batch all state resets and reduce delay
     setTimeout(() => {
-      // Reset states for next word
-      setIsAnswered(false);
-      setFeedbackType(null);
-      setCelebrationEffect(false);
-      setShowWordDetails(false);
-      setShowHint(false);
-      setParticles([]);
-      setButtonClickedId(null);
-      setShowSuccessRipple(false);
-      setShowPracticeRipple(false);
-
-      // Simply move to next word in session
+      // Optimized: Use startTransition for non-urgent state updates
       const nextIndex = currentWordIndex + 1;
 
+      // Critical update: Move to next word immediately
       if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
         setCurrentWordIndex(nextIndex);
-        console.log(
-          `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
-        );
-      } else {
+        if (process.env.NODE_ENV === "development") {
+          console.log(
+            `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+          );
+        }
+      } else if (process.env.NODE_ENV === "development") {
         console.log("Reached end of session words");
-        // This shouldn't happen as session completion is handled in handleWordAction
       }
 
-      // End transition effect
-      setTimeout(() => setIsTransitioning(false), 100);
-    }, 300);
+      // Non-critical updates: Batch in startTransition for better performance
+      startTransition(() => {
+        setIsAnswered(false);
+        setFeedbackType(null);
+        setCelebrationEffect(false);
+        setShowWordDetails(false);
+        setShowHint(false);
+        setParticles([]);
+        setButtonClickedId(null);
+        setShowSuccessRipple(false);
+        setShowPracticeRipple(false);
+        setIsTransitioning(false);
+      });
+    }, 150); // Reduced from 300ms to 150ms
   };
 
   const startNewSession = () => {
@@ -1532,7 +1555,7 @@ export function InteractiveDashboardWordCard({
                       }
                       if (percentage >= 90)
                         return "🌟 Almost there, superstar!";
-                      if (percentage >= 75) return "🚀 You're doing great!";
+                      if (percentage >= 75) return "��� You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
                       return "🌟 Ready for an adventure?";
@@ -1599,7 +1622,7 @@ export function InteractiveDashboardWordCard({
                         }
                       : { duration: 0.3, ease: "easeInOut" }
                   }
-                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   aria-live="polite"
                   aria-label="Adventure message"
                   style={{
@@ -1630,7 +1653,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "🐸 What creature lives in our jungle?",
+                          "��� What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
@@ -1659,7 +1682,7 @@ export function InteractiveDashboardWordCard({
                           "🌴 What tropical jungle beauty is this?",
                         ],
                         hard: [
-                          "🌋 What powerful jungle force awaits?",
+                          "���� What powerful jungle force awaits?",
                           "�� Which jungle phenomenon do you see?",
                           "🌊 Can you name this jungle mystery?",
                           "🔥 What fierce jungle element is this?",
@@ -2526,7 +2549,7 @@ export function InteractiveDashboardWordCard({
                     }}
                     disabled={isAnswered}
                     className={cn(
-                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[50px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation flex flex-col items-center justify-center",
+                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-5 min-h-[60px] sm:min-h-[70px] md:min-h-[80px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation flex flex-col items-center justify-center",
                       "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
                       "jungle-button-glow",
                     )}
@@ -2542,7 +2565,7 @@ export function InteractiveDashboardWordCard({
                         {showHint ? "💪" : "💡"}
                       </span>
                       <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base leading-tight">
+                        <div className="font-bold text-sm sm:text-base md:text-lg leading-tight">
                           {showHint ? "Need Practice" : "Get Hint"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
@@ -2558,7 +2581,7 @@ export function InteractiveDashboardWordCard({
                       handleWordAction("remembered");
                     }}
                     disabled={isAnswered}
-                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[50px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow flex flex-col items-center justify-center"
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-5 min-h-[60px] sm:min-h-[70px] md:min-h-[80px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow flex flex-col items-center justify-center"
                     aria-label="Mark word as remembered"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
@@ -2567,7 +2590,7 @@ export function InteractiveDashboardWordCard({
                         😊
                       </span>
                       <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base leading-tight">
+                        <div className="font-bold text-sm sm:text-base md:text-lg leading-tight">
                           I Remember
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">

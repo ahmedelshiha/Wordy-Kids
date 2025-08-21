@@ -678,14 +678,7 @@ export default function Index({ initialProfile }: IndexProps) {
     persistenceService,
   ]);
 
-  // Auto-save whenever important state changes
-  useEffect(() => {
-    const saveTimer = setTimeout(() => {
-      saveSessionData();
-    }, 1000); // Debounce saves
-
-    return () => clearTimeout(saveTimer);
-  }, [saveSessionData]);
+  // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
 
   // Force save on critical actions
   useEffect(() => {
