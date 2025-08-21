@@ -159,6 +159,15 @@ export default {
             opacity: "0.97",
           },
         },
+        // Gentle emoji floating animation
+        "gentle-emoji-float": {
+          "0%, 100%": {
+            transform: "translateY(0) rotate(-2deg)",
+          },
+          "50%": {
+            transform: "translateY(-6px) rotate(2deg)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
