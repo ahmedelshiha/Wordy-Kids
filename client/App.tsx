@@ -196,10 +196,6 @@ const App = () => {
                         element={<AISystemTest />}
                       />
                       <Route
-                        path="/enhanced-magical-menu-demo"
-                        element={<EnhancedMagicalMenuDemo />}
-                      />
-                      <Route
                         path="/jungle-adventure-word-card-demo"
                         element={<JungleAdventureWordCardDemo />}
                       />
