@@ -2123,7 +2123,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     whileTap={{ scale: 0.98 }}
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm">
-                      <span className="text-xl">👨‍👩‍👧‍👦</span>
+                      <span className="text-xl">👨‍👩‍👧���👦</span>
                     </div>
                     <div className="flex-1 text-left">
                       <span className="font-bold text-base block">Parent Dashboard</span>
@@ -3998,6 +3998,8 @@ export default function Index({ initialProfile }: IndexProps) {
               pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
+              showMobileMoreIcon={true}
+              onMobileMoreClick={() => setIsMobileMenuOpen(true)}
               items={[
                 {
                   id: "dashboard",
