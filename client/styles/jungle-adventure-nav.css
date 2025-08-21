@@ -1,0 +1,444 @@
+/**
+ * 🌿 Jungle Adventure Navigation Styles
+ * Cross-platform immersive navigation with jungle theming
+ */
+
+/* ===== JUNGLE NAVIGATION BASE ===== */
+.jungle-nav-container {
+  background: linear-gradient(135deg, 
+    #065f46 0%,     /* Dark green */
+    #047857 25%,    /* Emerald */
+    #059669 50%,    /* Green */
+    #10b981 75%,    /* Emerald light */
+    #34d399 100%    /* Emerald lighter */
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-nav-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at top, rgba(16, 185, 129, 0.1) 0%, transparent 70%),
+    radial-gradient(ellipse at bottom, rgba(6, 95, 70, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Jungle Canopy Effect */
+.jungle-canopy {
+  background: linear-gradient(to bottom,
+    rgba(6, 95, 70, 0.9) 0%,
+    rgba(6, 95, 70, 0.7) 30%,
+    rgba(6, 95, 70, 0.5) 60%,
+    transparent 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== NAVIGATION ITEMS ===== */
+.jungle-nav-item {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.jungle-nav-item:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.jungle-nav-item.active {
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Animal Icon Container */
+.jungle-animal-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+.jungle-animal-icon.active {
+  animation: animal-celebration 2s ease-in-out infinite;
+}
+
+/* Animal-specific animations */
+@keyframes owl-hoot {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-2deg) scale(1.05); }
+  75% { transform: rotate(2deg) scale(1.05); }
+}
+
+@keyframes parrot-dance {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(-5deg); }
+  50% { transform: translateY(-2px) rotate(0deg); }
+  75% { transform: translateY(-4px) rotate(5deg); }
+}
+
+@keyframes monkey-swing {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-8deg) scale(1.1); }
+  50% { transform: rotate(0deg) scale(1.05); }
+  75% { transform: rotate(8deg) scale(1.1); }
+}
+
+@keyframes elephant-celebration {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1) rotateY(10deg); }
+  50% { transform: scale(1.05) rotateY(0deg); }
+  75% { transform: scale(1.1) rotateY(-10deg); }
+}
+
+/* Gentle idle animations */
+@keyframes gentle-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(1deg); }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes gentle-glow {
+  0%, 100% { filter: brightness(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); }
+  50% { filter: brightness(1.1) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.4)); }
+}
+
+/* Apply idle animations */
+.jungle-animal-icon.idle-owl { animation: gentle-sway 4s ease-in-out infinite; }
+.jungle-animal-icon.idle-parrot { animation: gentle-float 3s ease-in-out infinite; }
+.jungle-animal-icon.idle-monkey { animation: gentle-bounce 2.5s ease-in-out infinite; }
+.jungle-animal-icon.idle-elephant { animation: gentle-glow 3.5s ease-in-out infinite; }
+
+/* ===== DECORATIVE ELEMENTS ===== */
+.jungle-vines {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  opacity: 0.6;
+  z-index: 2;
+  animation: vine-sway 4s ease-in-out infinite;
+}
+
+@keyframes vine-sway {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  50% { transform: translateX(-50%) rotate(2deg); }
+}
+
+.jungle-fireflies {
+  position: absolute;
+  font-size: 0.8rem;
+  opacity: 0;
+  animation: firefly-dance 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes firefly-dance {
+  0%, 100% { opacity: 0; transform: translateY(0px) scale(0.5); }
+  25% { opacity: 0.8; transform: translateY(-10px) scale(1); }
+  50% { opacity: 1; transform: translateY(-15px) scale(1.1); }
+  75% { opacity: 0.8; transform: translateY(-8px) scale(1); }
+}
+
+/* Position fireflies around active items */
+.jungle-nav-item.active .jungle-fireflies:nth-child(1) {
+  top: -5px;
+  right: -5px;
+  animation-delay: 0s;
+}
+
+.jungle-nav-item.active .jungle-fireflies:nth-child(2) {
+  bottom: -5px;
+  left: -5px;
+  animation-delay: 1s;
+}
+
+.jungle-nav-item.active .jungle-fireflies:nth-child(3) {
+  top: 50%;
+  right: -10px;
+  animation-delay: 2s;
+}
+
+/* ===== LABELS AND TYPOGRAPHY ===== */
+.jungle-nav-label {
+  color: white;
+  font-weight: 700;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.jungle-nav-label.active {
+  color: #fbbf24;
+  text-shadow: 
+    0 2px 6px rgba(251, 191, 36, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== ACTIVE INDICATORS ===== */
+.jungle-active-indicator {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #fbbf24 0%, #f59e0b 70%, #d97706 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 0 3px rgba(251, 191, 36, 0.3),
+    0 2px 8px rgba(251, 191, 36, 0.4);
+  animation: active-glow 2s ease-in-out infinite;
+}
+
+@keyframes active-glow {
+  0%, 100% { 
+    transform: translateX(-50%) scale(1);
+    box-shadow: 
+      0 0 0 3px rgba(251, 191, 36, 0.3),
+      0 2px 8px rgba(251, 191, 36, 0.4);
+  }
+  50% { 
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 
+      0 0 0 6px rgba(251, 191, 36, 0.2),
+      0 4px 12px rgba(251, 191, 36, 0.6);
+  }
+}
+
+/* ===== RESPONSIVE LAYOUTS ===== */
+
+/* Desktop Navigation - Horizontal */
+@media (min-width: 1024px) {
+  .jungle-nav-desktop {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 40;
+    backdrop-filter: blur(12px);
+    border-top: 2px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .jungle-nav-desktop .jungle-nav-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .jungle-nav-desktop .jungle-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 120px;
+    padding: 1rem;
+  }
+
+  .jungle-nav-desktop .jungle-animal-icon {
+    font-size: 3rem;
+  }
+
+  .jungle-nav-desktop .jungle-nav-label {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet Navigation - Compact Horizontal */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .jungle-nav-tablet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 40;
+    backdrop-filter: blur(8px);
+  }
+
+  .jungle-nav-tablet .jungle-nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0 1rem;
+  }
+
+  .jungle-nav-tablet .jungle-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    min-width: 80px;
+  }
+
+  .jungle-nav-tablet .jungle-animal-icon {
+    font-size: 2.2rem;
+  }
+
+  .jungle-nav-tablet .jungle-nav-label {
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile Navigation - Bottom Bar */
+@media (max-width: 767px) {
+  .jungle-nav-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 40;
+    backdrop-filter: blur(6px);
+  }
+
+  .jungle-nav-mobile .jungle-nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .jungle-nav-mobile .jungle-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.5rem 0.25rem;
+    flex: 1;
+    max-width: 80px;
+  }
+
+  .jungle-nav-mobile .jungle-animal-icon {
+    font-size: 1.8rem;
+  }
+
+  .jungle-nav-mobile .jungle-nav-label {
+    font-size: 0.75rem;
+  }
+
+  /* Simplified animations for mobile */
+  .jungle-nav-mobile .jungle-animal-icon.active {
+    animation: simple-bounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes simple-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+.jungle-nav-item:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  border-radius: 12px;
+}
+
+.jungle-nav-item:focus .jungle-nav-label {
+  color: #60a5fa;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-animal-icon,
+  .jungle-vines,
+  .jungle-fireflies,
+  .jungle-active-indicator {
+    animation: none !important;
+  }
+
+  .jungle-nav-item {
+    transition: none !important;
+  }
+}
+
+/* ===== PARENT GATE STYLING ===== */
+.jungle-parent-gate {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+}
+
+.jungle-parent-gate-button {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.jungle-parent-gate-button:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(16, 185, 129, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+.jungle-nav-container {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+.jungle-animal-icon {
+  will-change: transform;
+  contain: layout;
+}
+
+/* Low-end device fallbacks */
+.jungle-nav-simple .jungle-animal-icon {
+  animation: none !important;
+}
+
+.jungle-nav-simple .jungle-fireflies,
+.jungle-nav-simple .jungle-vines {
+  display: none;
+}
+
+.jungle-nav-simple .jungle-nav-container::before {
+  display: none;
+}
