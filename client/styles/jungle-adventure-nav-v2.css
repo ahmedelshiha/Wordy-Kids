@@ -137,9 +137,9 @@
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 
-/* Hidden on desktop and tablet views */
+/* Hidden on desktop and tablet views UNLESS desktop enabled */
 @media (min-width: 768px) {
-  .jng-parent-menu-btn {
+  .jng-parent-menu-btn:not(.jng-parent-menu-desktop) {
     display: none !important;
   }
 }
