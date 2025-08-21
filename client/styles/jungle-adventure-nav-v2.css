@@ -152,38 +152,24 @@
   }
 }
 
-/* Parent Menu Icon Positioning - Jungle Style */
+/* Parent Menu Icon Positioning - Same as Trophy Grove */
 .parent-icon-totem {
+  /* Use same positioning as regular icons (Trophy Grove style) */
   position: relative;
-  /* Slightly lift above nav bar like other icons */
-  transform: translateY(calc(-1 * var(--jng-icon-lift) / 2));
-  margin-top: calc(-1 * var(--jng-icon-lift) / 2);
-  /* Ensure adequate padding to avoid cropping */
-  padding: 4px;
+  width: var(--jng-icon-size);
+  height: var(--jng-icon-size);
+  display: grid;
+  place-items: center;
+  /* lift the icons visually above the bar (static) - same as Trophy Grove */
+  margin-top: calc(-1 * var(--jng-icon-lift));
+  transform: translateY(calc(-1 * var(--jng-icon-lift)));
 }
 
-/* Parent Menu Emoji - Jungle Wooden Style */
+/* Parent Menu Emoji - Same style as Trophy Grove (🐘) */
 .parent-menu-emoji {
-  display: inline-block;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
-  transform-origin: center;
-  /* Wooden glow effect for visibility */
-  text-shadow:
-    0 0 6px rgba(255, 255, 255, 0.8),
-    0 0 12px rgba(139, 69, 19, 0.6);
-  /* Breathing animation like other jungle icons */
-  animation: jungleBreath 3.5s ease-in-out infinite;
-  /* Match size with other icons */
-  font-size: calc(var(--jng-icon-size) * 0.9);
-  /* Circular jungle-style background */
-  background: radial-gradient(
-    circle,
-    rgba(139, 69, 19, 0.15),
-    rgba(101, 67, 33, 0.1)
-  );
-  border-radius: 50%;
-  padding: 8px;
-  border: 1px solid rgba(139, 69, 19, 0.2);
+  display: block;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.25));
+  /* No additional styling - identical to .jng-emoji */
 }
 
 .jng-btn .jng-label {
