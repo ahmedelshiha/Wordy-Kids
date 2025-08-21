@@ -3221,7 +3221,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🐵
                                     </div>
                                     <div className="jungle-creature jungle-creature-bird">
-                                      🦜
+                                      ��
                                     </div>
                                     <div className="jungle-creature jungle-creature-butterfly">
                                       🦋
@@ -4221,6 +4221,9 @@ export default function Index({ initialProfile }: IndexProps) {
                   setShowParentOptions(false);
                 }}
                 className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                aria-label="Open Jungle Settings - Configure app preferences, safety controls, and adventure options"
+                role="button"
+                tabIndex={0}
                 style={{
                   background: `
                     linear-gradient(135deg,
