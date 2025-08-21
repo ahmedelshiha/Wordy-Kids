@@ -337,14 +337,16 @@ export function JungleKidNav({
               isActive && "active",
               !isActive &&
                 navState.deviceCapabilities.animations &&
+                animationStyle !== "none" &&
                 `idle-${item.animal.name.toLowerCase().replace(" ", "")}`,
-              // Apply animation style classes based on preset
-              animationStyle === "soft-glow" && "with-glow",
-              animationStyle === "micro-movements" && "micro-movements",
-              animationStyle === "full-experience" && "full-experience",
-              // Add animal type class for micro-movements
-              (animationStyle === "micro-movements" || animationStyle === "full-experience") &&
-                item.animal.name.toLowerCase().replace(" ", ""),
+              // Apply animation style classes based on preset (only if animations enabled)
+              navState.deviceCapabilities.animations && animationStyle !== "none" && {
+                "with-glow": animationStyle === "soft-glow",
+                "micro-movements": animationStyle === "micro-movements",
+                "full-experience": animationStyle === "full-experience",
+                [item.animal.name.toLowerCase().replace(" ", "")]:
+                  animationStyle === "micro-movements" || animationStyle === "full-experience"
+              },
             )}
           >
             {item.animal.emoji}
