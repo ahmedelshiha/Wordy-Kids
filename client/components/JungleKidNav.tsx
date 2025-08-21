@@ -385,7 +385,7 @@ export function JungleKidNav({
           {screenSize === "desktop" &&
             theme === "jungle" &&
             navState.deviceCapabilities.backgroundEffects && (
-              <div className="jungle-vines">����</div>
+              <div className="jungle-vines">🌿</div>
             )}
 
           {/* Animal/Icon */}
