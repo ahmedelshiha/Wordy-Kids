@@ -1560,7 +1560,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ����";
+        achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -3144,7 +3144,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       <div className="flex justify-center gap-3 sm:gap-4 text-sm">
                                                         <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            ��
+                                                            ✅
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
@@ -3227,7 +3227,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🦋
                                     </div>
                                     <div className="jungle-creature jungle-creature-frog">
-                                      ��
+                                      🐸
                                     </div>
 
                                     {/* Floating Jungle Leaves */}
@@ -4122,7 +4122,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Parent Options Dialog */}
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
         <DialogContent
-          className="sm:max-w-md max-w-[90vw] mx-4"
+          className="sm:max-w-md max-w-[95vw] w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto"
           style={{
             background: `
               linear-gradient(135deg,
