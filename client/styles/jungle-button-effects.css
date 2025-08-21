@@ -1,0 +1,86 @@
+/* Jungle-themed button glow effects for Interactive Word Card */
+
+.jungle-button-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-button-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.jungle-button-glow:hover::before {
+  left: 100%;
+}
+
+/* Leaf ripple effect on click */
+.jungle-button-glow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(46, 125, 50, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: 1;
+}
+
+.jungle-button-glow:active::after {
+  width: 120%;
+  height: 120%;
+}
+
+/* Enhanced bounce animation for jungle feel */
+@keyframes jungle-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  60% {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+.jungle-button-glow:active {
+  animation: jungle-bounce 0.6s ease;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-button-glow::before,
+  .jungle-button-glow::after {
+    display: none;
+  }
+  
+  .jungle-button-glow:active {
+    animation: none;
+    transform: scale(0.98);
+  }
+}
+
+/* Vine glow effect on hover for jungle theme */
+.jungle-button-glow:hover {
+  box-shadow: 
+    0 0 20px rgba(46, 125, 50, 0.3),
+    0 0 40px rgba(34, 139, 34, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Focus accessibility */
+.jungle-button-glow:focus-visible {
+  outline: 2px solid #4CAF50;
+  outline-offset: 2px;
+}
