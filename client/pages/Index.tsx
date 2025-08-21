@@ -4042,7 +4042,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "achievements",
                   label: "Trophy Grove",
-                  emoji: "🐘",
+                  emoji: "��",
                   ariaLabel: "Achievements",
                 },
               ]}
@@ -4193,6 +4193,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 onClick={() => {
                   setUserRole("parent");
                   setShowParentOptions(false);
+                  // Add smooth scroll to top when switching to parent dashboard
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
                 aria-label="Open Parent Dashboard - View detailed progress, analytics, and manage learning goals"
@@ -4237,6 +4239,10 @@ export default function Index({ initialProfile }: IndexProps) {
                 onClick={() => {
                   setShowSettings(true);
                   setShowParentOptions(false);
+                  // Add haptic feedback for better mobile experience
+                  if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                  }
                 }}
                 className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
                 aria-label="Open Jungle Settings - Configure app preferences, safety controls, and adventure options"
