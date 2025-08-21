@@ -83,65 +83,56 @@
   animation: breathing 4s ease-in-out infinite;
 }
 
-/* Animal-specific animations */
-@keyframes owl-hoot {
+/* Smooth, calming animal-specific animations */
+@keyframes owl-peaceful {
   0%,
   100% {
     transform: rotate(0deg) scale(1);
+    opacity: 1;
   }
-  25% {
-    transform: rotate(-2deg) scale(1.05);
-  }
-  75% {
-    transform: rotate(2deg) scale(1.05);
+  50% {
+    transform: rotate(-0.5deg) scale(1.02);
+    opacity: 0.98;
   }
 }
 
-@keyframes parrot-dance {
+@keyframes parrot-gentle-sway {
   0%,
   100% {
     transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-4px) rotate(-5deg);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-2px) rotate(0deg);
-  }
-  75% {
-    transform: translateY(-4px) rotate(5deg);
+    transform: translateY(-1px) rotate(-1deg);
+    opacity: 0.95;
   }
 }
 
-@keyframes monkey-swing {
+@keyframes monkey-soft-motion {
   0%,
   100% {
     transform: rotate(0deg) scale(1);
+    opacity: 1;
   }
-  25% {
-    transform: rotate(-8deg) scale(1.1);
+  33% {
+    transform: rotate(-1deg) scale(1.01);
+    opacity: 0.98;
   }
-  50% {
-    transform: rotate(0deg) scale(1.05);
-  }
-  75% {
-    transform: rotate(8deg) scale(1.1);
+  66% {
+    transform: rotate(1deg) scale(1.01);
+    opacity: 0.98;
   }
 }
 
-@keyframes elephant-celebration {
+@keyframes elephant-serene {
   0%,
   100% {
     transform: scale(1);
-  }
-  25% {
-    transform: scale(1.1) rotateY(10deg);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.05) rotateY(0deg);
-  }
-  75% {
-    transform: scale(1.1) rotateY(-10deg);
+    transform: scale(1.02);
+    opacity: 0.97;
   }
 }
 
