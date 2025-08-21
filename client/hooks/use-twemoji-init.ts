@@ -2,9 +2,13 @@
  * React hook for initializing Twemoji and managing emoji rendering state
  */
 
-import { useEffect, useState, useCallback } from 'react';
-import { initializeTwemojiSafe, isTwemojiSupported, preloadNavigationTwemojis } from '@/lib/twemojiService';
-import { preloadCriticalEmojis } from '@/lib/emojiUtilsEnhanced';
+import { useEffect, useState, useCallback } from "react";
+import {
+  initializeTwemojiSafe,
+  isTwemojiSupported,
+  preloadNavigationTwemojis,
+} from "@/lib/twemojiService";
+import { preloadCriticalEmojis } from "@/lib/emojiUtilsEnhanced";
 
 export interface TwemojiState {
   isInitialized: boolean;
@@ -32,45 +36,46 @@ export function useTwemojiInit(): UseTwemojiInitReturn {
   });
 
   const initialize = useCallback(async () => {
-    setState(prev => ({ ...prev, isLoading: true, error: null }));
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
       // Check if Twemoji is supported in this environment
       const supported = isTwemojiSupported();
-      
+
       if (!supported) {
         setState({
           isInitialized: false,
           isSupported: false,
           isLoading: false,
-          error: 'Twemoji not supported in this environment',
+          error: "Twemoji not supported in this environment",
         });
         return;
       }
 
       // Initialize Twemoji
       await initializeTwemojiSafe();
-      
+
       // Preload critical navigation emojis
       preloadNavigationTwemojis();
-      
+
       setState({
         isInitialized: true,
         isSupported: true,
         isLoading: false,
         error: null,
       });
-      
-      console.log('Twemoji initialized successfully');
+
+      console.log("Twemoji initialized successfully");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       setState({
         isInitialized: false,
         isSupported: false,
         isLoading: false,
         error: errorMessage,
       });
-      console.warn('Failed to initialize Twemoji:', error);
+      console.warn("Failed to initialize Twemoji:", error);
     }
   }, []);
 
@@ -79,15 +84,15 @@ export function useTwemojiInit(): UseTwemojiInitReturn {
   }, [initialize]);
 
   const preloadEmojis = useCallback((emojis: string[]) => {
-    emojis.forEach(emoji => {
+    emojis.forEach((emoji) => {
       const codePoint = Array.from(emoji)
-        .map(char => char.codePointAt(0)?.toString(16).toLowerCase())
+        .map((char) => char.codePointAt(0)?.toString(16).toLowerCase())
         .filter(Boolean)
-        .join('-');
-      
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
+        .join("-");
+
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
       link.href = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${codePoint}.svg`;
       document.head.appendChild(link);
     });
@@ -114,12 +119,12 @@ export function useTwemojiInit(): UseTwemojiInitReturn {
       }
     };
 
-    window.addEventListener('online', handleOnlineStatusChange);
-    window.addEventListener('offline', handleOnlineStatusChange);
+    window.addEventListener("online", handleOnlineStatusChange);
+    window.addEventListener("offline", handleOnlineStatusChange);
 
     return () => {
-      window.removeEventListener('online', handleOnlineStatusChange);
-      window.removeEventListener('offline', handleOnlineStatusChange);
+      window.removeEventListener("online", handleOnlineStatusChange);
+      window.removeEventListener("offline", handleOnlineStatusChange);
     };
   }, [state.isInitialized, state.isLoading, initialize]);
 
@@ -143,28 +148,34 @@ export function useTwemojiEnabled(): boolean {
  */
 export function useEmojiRenderer() {
   const twemojiEnabled = useTwemojiEnabled();
-  
-  return useCallback((emoji: string, options?: { 
-    size?: number; 
-    className?: string; 
-    ariaLabel?: string; 
-  }) => {
-    if (twemojiEnabled) {
-      // Return Twemoji configuration
+
+  return useCallback(
+    (
+      emoji: string,
+      options?: {
+        size?: number;
+        className?: string;
+        ariaLabel?: string;
+      },
+    ) => {
+      if (twemojiEnabled) {
+        // Return Twemoji configuration
+        return {
+          type: "twemoji" as const,
+          emoji,
+          ...options,
+        };
+      }
+
+      // Return fallback emoji configuration
       return {
-        type: 'twemoji' as const,
+        type: "emoji" as const,
         emoji,
         ...options,
       };
-    }
-    
-    // Return fallback emoji configuration
-    return {
-      type: 'emoji' as const,
-      emoji,
-      ...options,
-    };
-  }, [twemojiEnabled]);
+    },
+    [twemojiEnabled],
+  );
 }
 
 /**
@@ -172,25 +183,25 @@ export function useEmojiRenderer() {
  */
 export function useEmojiPreloader() {
   const { preloadEmojis, isInitialized } = useTwemojiInit();
-  
+
   const preloadNavigationEmojis = useCallback(() => {
     if (isInitialized) {
-      preloadEmojis(['🦉', '🦜', '🐵', '🐘']);
+      preloadEmojis(["🦉", "🦜", "🐵", "🐘"]);
     }
   }, [preloadEmojis, isInitialized]);
-  
+
   const preloadAchievementEmojis = useCallback(() => {
     if (isInitialized) {
-      preloadEmojis(['🏆', '🌟', '👑', '💎', '🥇']);
+      preloadEmojis(["🏆", "🌟", "👑", "💎", "🥇"]);
     }
   }, [preloadEmojis, isInitialized]);
-  
+
   const preloadGameEmojis = useCallback(() => {
     if (isInitialized) {
-      preloadEmojis(['🎯', '🚀', '🧠', '📚', '🎮']);
+      preloadEmojis(["🎯", "🚀", "🧠", "📚", "🎮"]);
     }
   }, [preloadEmojis, isInitialized]);
-  
+
   return {
     preloadNavigationEmojis,
     preloadAchievementEmojis,

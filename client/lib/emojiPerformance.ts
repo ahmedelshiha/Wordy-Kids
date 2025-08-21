@@ -3,9 +3,9 @@
  * Handles lazy loading, caching, and performance optimizations for emoji rendering
  */
 
-import React from 'react';
-import { getTwemojiUrl } from './twemojiService';
-import { preloadCriticalEmojis } from './emojiUtilsEnhanced';
+import React from "react";
+import { getTwemojiUrl } from "./twemojiService";
+import { preloadCriticalEmojis } from "./emojiUtilsEnhanced";
 
 interface EmojiCacheEntry {
   url: string;
@@ -13,7 +13,7 @@ interface EmojiCacheEntry {
   loading: boolean;
   element?: HTMLImageElement;
   lastUsed: number;
-  priority: 'critical' | 'high' | 'medium' | 'low';
+  priority: "critical" | "high" | "medium" | "low";
 }
 
 interface PerformanceConfig {
@@ -53,7 +53,7 @@ class EmojiPerformanceManager {
     this.config = { ...DEFAULT_PERFORMANCE_CONFIG, ...config };
     this.setupIntersectionObserver();
     this.setupCriticalEmojis();
-    
+
     // Monitor performance
     this.startPerformanceMonitoring();
   }
@@ -63,9 +63,9 @@ class EmojiPerformanceManager {
    */
   private setupCriticalEmojis(): void {
     const critical = preloadCriticalEmojis();
-    critical.forEach(emoji => {
+    critical.forEach((emoji) => {
       this.criticalEmojis.add(emoji);
-      this.setCacheEntry(emoji, 'critical');
+      this.setCacheEntry(emoji, "critical");
     });
 
     if (this.config.preloadCritical) {
@@ -77,15 +77,18 @@ class EmojiPerformanceManager {
    * Set up intersection observer for lazy loading
    */
   private setupIntersectionObserver(): void {
-    if (!this.config.enableIntersectionObserver || typeof IntersectionObserver === 'undefined') {
+    if (
+      !this.config.enableIntersectionObserver ||
+      typeof IntersectionObserver === "undefined"
+    ) {
       return;
     }
 
     this.intersectionObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const emoji = entry.target.getAttribute('data-emoji');
+            const emoji = entry.target.getAttribute("data-emoji");
             if (emoji) {
               this.loadEmoji(emoji);
               this.intersectionObserver?.unobserve(entry.target);
@@ -96,16 +99,19 @@ class EmojiPerformanceManager {
       {
         rootMargin: `${this.config.lazyLoadThreshold}px`,
         threshold: 0.1,
-      }
+      },
     );
   }
 
   /**
    * Add cache entry for an emoji
    */
-  private setCacheEntry(emoji: string, priority: EmojiCacheEntry['priority']): void {
+  private setCacheEntry(
+    emoji: string,
+    priority: EmojiCacheEntry["priority"],
+  ): void {
     const url = getTwemojiUrl(emoji);
-    
+
     if (!this.cache.has(emoji)) {
       // Clean cache if it's getting too large
       if (this.cache.size >= this.config.maxCacheSize) {
@@ -127,7 +133,7 @@ class EmojiPerformanceManager {
    */
   private cleanOldestCacheEntries(): void {
     const entries = Array.from(this.cache.entries())
-      .filter(([, entry]) => entry.priority !== 'critical') // Don't remove critical emojis
+      .filter(([, entry]) => entry.priority !== "critical") // Don't remove critical emojis
       .sort(([, a], [, b]) => a.lastUsed - b.lastUsed);
 
     // Remove oldest 20% of non-critical entries
@@ -142,27 +148,30 @@ class EmojiPerformanceManager {
    */
   private async preloadCriticalEmojis(): Promise<void> {
     const criticalArray = Array.from(this.criticalEmojis);
-    const preloadPromises = criticalArray.map(emoji => 
-      this.loadEmoji(emoji, true).catch(error => {
+    const preloadPromises = criticalArray.map((emoji) =>
+      this.loadEmoji(emoji, true).catch((error) => {
         console.warn(`Failed to preload critical emoji ${emoji}:`, error);
         this.performanceMetrics.preloadFails++;
-      })
+      }),
     );
 
     try {
       await Promise.allSettled(preloadPromises);
       this.performanceMetrics.preloadSuccess += criticalArray.length;
     } catch (error) {
-      console.warn('Critical emoji preloading encountered errors:', error);
+      console.warn("Critical emoji preloading encountered errors:", error);
     }
   }
 
   /**
    * Load an emoji with caching and optimization
    */
-  async loadEmoji(emoji: string, isPreload = false): Promise<HTMLImageElement | null> {
+  async loadEmoji(
+    emoji: string,
+    isPreload = false,
+  ): Promise<HTMLImageElement | null> {
     const cacheEntry = this.cache.get(emoji);
-    
+
     if (cacheEntry?.loaded && cacheEntry.element) {
       this.performanceMetrics.cacheHits++;
       cacheEntry.lastUsed = Date.now();
@@ -179,7 +188,7 @@ class EmojiPerformanceManager {
 
     try {
       const element = await this.createImageElement(emoji, isPreload);
-      
+
       if (cacheEntry) {
         cacheEntry.loaded = true;
         cacheEntry.loading = false;
@@ -188,7 +197,7 @@ class EmojiPerformanceManager {
       }
 
       this.loadingQueue.delete(emoji);
-      
+
       if (isPreload) {
         this.performanceMetrics.preloadSuccess++;
       } else {
@@ -198,13 +207,13 @@ class EmojiPerformanceManager {
       return element;
     } catch (error) {
       this.loadingQueue.delete(emoji);
-      
+
       if (isPreload) {
         this.performanceMetrics.preloadFails++;
       } else {
         this.performanceMetrics.lazyLoadFails++;
       }
-      
+
       console.warn(`Failed to load emoji ${emoji}:`, error);
       return null;
     }
@@ -213,18 +222,21 @@ class EmojiPerformanceManager {
   /**
    * Create optimized image element for emoji
    */
-  private createImageElement(emoji: string, isPreload: boolean): Promise<HTMLImageElement> {
+  private createImageElement(
+    emoji: string,
+    isPreload: boolean,
+  ): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
       const img = new Image();
       const url = getTwemojiUrl(emoji);
-      
+
       // Set up timeout for critical emojis
-      const timeout = this.criticalEmojis.has(emoji) 
-        ? this.config.criticalEmojiTimeout 
+      const timeout = this.criticalEmojis.has(emoji)
+        ? this.config.criticalEmojiTimeout
         : 0;
 
       let timeoutId: NodeJS.Timeout | null = null;
-      
+
       if (timeout > 0) {
         timeoutId = setTimeout(() => {
           reject(new Error(`Emoji load timeout: ${emoji}`));
@@ -233,13 +245,13 @@ class EmojiPerformanceManager {
 
       img.onload = () => {
         if (timeoutId) clearTimeout(timeoutId);
-        
+
         // Add performance attributes
-        img.setAttribute('data-emoji', emoji);
-        img.setAttribute('data-cached', 'true');
-        img.setAttribute('loading', 'lazy');
-        img.setAttribute('decoding', 'async');
-        
+        img.setAttribute("data-emoji", emoji);
+        img.setAttribute("data-cached", "true");
+        img.setAttribute("loading", "lazy");
+        img.setAttribute("decoding", "async");
+
         resolve(img);
       };
 
@@ -250,10 +262,10 @@ class EmojiPerformanceManager {
 
       // Set image properties for optimal loading
       if (!isPreload) {
-        img.loading = 'lazy';
+        img.loading = "lazy";
       }
-      img.decoding = 'async';
-      img.crossOrigin = 'anonymous';
+      img.decoding = "async";
+      img.crossOrigin = "anonymous";
       img.src = url;
     });
   }
@@ -269,7 +281,7 @@ class EmojiPerformanceManager {
     return new Promise((resolve) => {
       const checkLoad = () => {
         const cacheEntry = this.cache.get(emoji);
-        
+
         if (cacheEntry?.loaded && cacheEntry.element) {
           resolve(cacheEntry.element);
           return;
@@ -300,8 +312,8 @@ class EmojiPerformanceManager {
   observeForLazyLoad(element: Element, emoji: string): void {
     if (!this.intersectionObserver) return;
 
-    element.setAttribute('data-emoji', emoji);
-    this.setCacheEntry(emoji, 'medium');
+    element.setAttribute("data-emoji", emoji);
+    this.setCacheEntry(emoji, "medium");
     this.intersectionObserver.observe(element);
   }
 
@@ -318,10 +330,10 @@ class EmojiPerformanceManager {
    */
   async prefetchEmojis(emojis: string[]): Promise<void> {
     const prefetchPromises = emojis
-      .filter(emoji => !this.cache.get(emoji)?.loaded)
+      .filter((emoji) => !this.cache.get(emoji)?.loaded)
       .slice(0, 10) // Limit concurrent prefetches
-      .map(emoji => {
-        this.setCacheEntry(emoji, 'low');
+      .map((emoji) => {
+        this.setCacheEntry(emoji, "low");
         return this.loadEmoji(emoji, true);
       });
 
@@ -332,8 +344,11 @@ class EmojiPerformanceManager {
    * Get performance metrics
    */
   getPerformanceMetrics() {
-    const cacheHitRate = this.performanceMetrics.cacheHits / 
-      (this.performanceMetrics.cacheHits + this.performanceMetrics.cacheMisses) * 100;
+    const cacheHitRate =
+      (this.performanceMetrics.cacheHits /
+        (this.performanceMetrics.cacheHits +
+          this.performanceMetrics.cacheMisses)) *
+      100;
 
     return {
       ...this.performanceMetrics,
@@ -353,10 +368,10 @@ class EmojiPerformanceManager {
     }, 60000); // Every minute
 
     // Log performance metrics in development
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       setInterval(() => {
         const metrics = this.getPerformanceMetrics();
-        console.log('Emoji Performance Metrics:', metrics);
+        console.log("Emoji Performance Metrics:", metrics);
       }, 30000); // Every 30 seconds
     }
   }
@@ -377,7 +392,9 @@ let performanceManager: EmojiPerformanceManager | null = null;
 /**
  * Get or create the global emoji performance manager
  */
-export function getEmojiPerformanceManager(config?: Partial<PerformanceConfig>): EmojiPerformanceManager {
+export function getEmojiPerformanceManager(
+  config?: Partial<PerformanceConfig>,
+): EmojiPerformanceManager {
   if (!performanceManager) {
     performanceManager = new EmojiPerformanceManager(config);
   }
@@ -389,10 +406,10 @@ export function getEmojiPerformanceManager(config?: Partial<PerformanceConfig>):
  */
 export async function preloadNavigationEmojis(): Promise<void> {
   const manager = getEmojiPerformanceManager();
-  const navigationEmojis = ['🦉', '🦜', '🐵', '🐘'];
-  
+  const navigationEmojis = ["🦉", "🦜", "🐵", "🐘"];
+
   await Promise.allSettled(
-    navigationEmojis.map(emoji => manager.loadEmoji(emoji, true))
+    navigationEmojis.map((emoji) => manager.loadEmoji(emoji, true)),
   );
 }
 
@@ -432,7 +449,7 @@ export function cleanupEmojiPerformance(): void {
  */
 export function useEmojiPerformance() {
   const [metrics, setMetrics] = React.useState(null);
-  
+
   React.useEffect(() => {
     const interval = setInterval(() => {
       const currentMetrics = getEmojiPerformanceMetrics();

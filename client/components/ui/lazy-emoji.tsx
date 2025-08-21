@@ -1,15 +1,19 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { cn } from '@/lib/utils';
-import { getEmojiPerformanceManager, enableEmojiLazyLoading, disableEmojiLazyLoading } from '@/lib/emojiPerformance';
-import { AccessibleEmoji } from './accessible-emoji';
-import { useTwemojiEnabled } from '@/hooks/use-twemoji-init';
-import { getEmojiAccessibilityAttributes } from '@/lib/emojiAccessibility';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { cn } from "@/lib/utils";
+import {
+  getEmojiPerformanceManager,
+  enableEmojiLazyLoading,
+  disableEmojiLazyLoading,
+} from "@/lib/emojiPerformance";
+import { AccessibleEmoji } from "./accessible-emoji";
+import { useTwemojiEnabled } from "@/hooks/use-twemoji-init";
+import { getEmojiAccessibilityAttributes } from "@/lib/emojiAccessibility";
 
 interface LazyEmojiProps {
   emoji: string;
   className?: string;
   size?: number | string;
-  priority?: 'critical' | 'high' | 'medium' | 'low';
+  priority?: "critical" | "high" | "medium" | "low";
   placeholder?: React.ReactNode;
   fallback?: React.ReactNode;
   context?: string;
@@ -27,7 +31,7 @@ export function LazyEmoji({
   emoji,
   className,
   size = 24,
-  priority = 'medium',
+  priority = "medium",
   placeholder,
   fallback,
   context,
@@ -52,19 +56,28 @@ export function LazyEmoji({
     setError(null);
 
     try {
-      const isPreload = priority === 'critical' || priority === 'high';
+      const isPreload = priority === "critical" || priority === "high";
       await performanceManager.loadEmoji(emoji, isPreload);
-      
+
       setIsLoaded(true);
       onLoad?.();
     } catch (err) {
-      const error = err instanceof Error ? err : new Error('Failed to load emoji');
+      const error =
+        err instanceof Error ? err : new Error("Failed to load emoji");
       setError(error);
       onError?.(error);
     } finally {
       setIsLoading(false);
     }
-  }, [emoji, isLoaded, isLoading, priority, performanceManager, onLoad, onError]);
+  }, [
+    emoji,
+    isLoaded,
+    isLoading,
+    priority,
+    performanceManager,
+    onLoad,
+    onError,
+  ]);
 
   // Set up intersection observer for lazy loading
   useEffect(() => {
@@ -72,7 +85,7 @@ export function LazyEmoji({
     if (!element || !enableIntersectionObserver) return;
 
     // For critical and high priority emojis, load immediately
-    if (priority === 'critical' || priority === 'high') {
+    if (priority === "critical" || priority === "high") {
       loadEmoji();
       return;
     }
@@ -83,7 +96,7 @@ export function LazyEmoji({
     // Set up custom intersection observer callback
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             loadEmoji();
             observer.unobserve(element);
@@ -91,9 +104,9 @@ export function LazyEmoji({
         });
       },
       {
-        rootMargin: '50px', // Start loading 50px before element enters viewport
+        rootMargin: "50px", // Start loading 50px before element enters viewport
         threshold: 0.1,
-      }
+      },
     );
 
     observer.observe(element);
@@ -106,29 +119,33 @@ export function LazyEmoji({
 
   // Preload critical emojis immediately
   useEffect(() => {
-    if (priority === 'critical') {
+    if (priority === "critical") {
       loadEmoji();
     }
   }, [priority, loadEmoji]);
 
   // Get accessibility attributes
-  const accessibilityAttributes = getEmojiAccessibilityAttributes(emoji, {}, context);
+  const accessibilityAttributes = getEmojiAccessibilityAttributes(
+    emoji,
+    {},
+    context,
+  );
 
   // Render placeholder while loading
   if (!isLoaded && !error) {
     const defaultPlaceholder = (
       <div
         className={cn(
-          'emoji-placeholder inline-block animate-pulse',
-          'bg-gray-200 rounded',
-          className
+          "emoji-placeholder inline-block animate-pulse",
+          "bg-gray-200 rounded",
+          className,
         )}
         style={{
-          width: typeof size === 'number' ? `${size}px` : size,
-          height: typeof size === 'number' ? `${size}px` : size,
+          width: typeof size === "number" ? `${size}px` : size,
+          height: typeof size === "number" ? `${size}px` : size,
         }}
         {...accessibilityAttributes}
-        aria-label={`Loading ${accessibilityAttributes['aria-label']}`}
+        aria-label={`Loading ${accessibilityAttributes["aria-label"]}`}
       />
     );
 
@@ -143,7 +160,7 @@ export function LazyEmoji({
   if (error) {
     const defaultFallback = (
       <span
-        className={cn('emoji-error text-gray-400', className)}
+        className={cn("emoji-error text-gray-400", className)}
         title={`Failed to load emoji: ${emoji}`}
         {...accessibilityAttributes}
       >
@@ -163,7 +180,7 @@ export function LazyEmoji({
     <span ref={elementRef} className="lazy-emoji-container">
       <AccessibleEmoji
         emoji={emoji}
-        className={cn('lazy-emoji-loaded', className)}
+        className={cn("lazy-emoji-loaded", className)}
         size={size}
         context={context}
         interactive={interactive}
@@ -179,7 +196,7 @@ export function LazyEmoji({
  */
 
 interface LazyJungleNavEmojiProps {
-  animal: 'owl' | 'parrot' | 'monkey' | 'elephant';
+  animal: "owl" | "parrot" | "monkey" | "elephant";
   label: string;
   isActive?: boolean;
   onClick?: () => void;
@@ -196,10 +213,10 @@ export function LazyJungleNavEmoji({
   size = 24,
 }: LazyJungleNavEmojiProps) {
   const emojiMap = {
-    owl: '🦉',
-    parrot: '🦜',
-    monkey: '🐵',
-    elephant: '🐘',
+    owl: "🦉",
+    parrot: "🦜",
+    monkey: "🐵",
+    elephant: "🐘",
   };
 
   const emoji = emojiMap[animal];
@@ -213,16 +230,16 @@ export function LazyJungleNavEmoji({
       interactive={!!onClick}
       onClick={onClick}
       className={cn(
-        'jungle-nav-emoji transition-transform duration-200',
-        isActive && 'scale-110 ring-2 ring-white/50',
-        className
+        "jungle-nav-emoji transition-transform duration-200",
+        isActive && "scale-110 ring-2 ring-white/50",
+        className,
       )}
       placeholder={
         <div
           className={cn(
-            'nav-emoji-placeholder rounded-full bg-gradient-to-br from-green-400 to-green-600',
-            'animate-pulse',
-            className
+            "nav-emoji-placeholder rounded-full bg-gradient-to-br from-green-400 to-green-600",
+            "animate-pulse",
+            className,
           )}
           style={{ width: size, height: size }}
           aria-label={`Loading ${label} navigation`}
@@ -236,7 +253,7 @@ interface LazyAchievementEmojiProps {
   emoji: string;
   achievementName: string;
   isUnlocked?: boolean;
-  priority?: 'high' | 'medium' | 'low';
+  priority?: "high" | "medium" | "low";
   onClick?: () => void;
   className?: string;
   size?: number;
@@ -246,7 +263,7 @@ export function LazyAchievementEmoji({
   emoji,
   achievementName,
   isUnlocked = false,
-  priority = 'medium',
+  priority = "medium",
   onClick,
   className,
   size = 32,
@@ -255,24 +272,24 @@ export function LazyAchievementEmoji({
     <LazyEmoji
       emoji={emoji}
       size={size}
-      priority={isUnlocked ? 'high' : priority} // Prioritize unlocked achievements
+      priority={isUnlocked ? "high" : priority} // Prioritize unlocked achievements
       context={`${achievementName} achievement`}
       interactive={!!onClick}
       onClick={onClick}
       className={cn(
-        'achievement-emoji transition-all duration-300',
-        isUnlocked ? 'filter-none' : 'filter grayscale opacity-50',
-        className
+        "achievement-emoji transition-all duration-300",
+        isUnlocked ? "filter-none" : "filter grayscale opacity-50",
+        className,
       )}
       placeholder={
         <div
           className={cn(
-            'achievement-placeholder rounded-lg bg-gradient-to-br',
-            isUnlocked 
-              ? 'from-yellow-400 to-yellow-600' 
-              : 'from-gray-300 to-gray-400',
-            'animate-pulse',
-            className
+            "achievement-placeholder rounded-lg bg-gradient-to-br",
+            isUnlocked
+              ? "from-yellow-400 to-yellow-600"
+              : "from-gray-300 to-gray-400",
+            "animate-pulse",
+            className,
           )}
           style={{ width: size, height: size }}
           aria-label={`Loading ${achievementName} achievement`}
@@ -289,14 +306,14 @@ interface LazyEmojiGridProps {
   emojis: Array<{
     emoji: string;
     label: string;
-    priority?: 'critical' | 'high' | 'medium' | 'low';
+    priority?: "critical" | "high" | "medium" | "low";
     onClick?: () => void;
   }>;
   columns?: number;
   gap?: number;
   size?: number;
   className?: string;
-  loadingStrategy?: 'immediate' | 'progressive' | 'viewport';
+  loadingStrategy?: "immediate" | "progressive" | "viewport";
 }
 
 export function LazyEmojiGrid({
@@ -305,32 +322,35 @@ export function LazyEmojiGrid({
   gap = 8,
   size = 32,
   className,
-  loadingStrategy = 'progressive',
+  loadingStrategy = "progressive",
 }: LazyEmojiGridProps) {
   const [visibleCount, setVisibleCount] = useState(
-    loadingStrategy === 'immediate' ? emojis.length : Math.min(8, emojis.length)
+    loadingStrategy === "immediate"
+      ? emojis.length
+      : Math.min(8, emojis.length),
   );
 
   // Progressive loading - load more emojis gradually
   useEffect(() => {
-    if (loadingStrategy !== 'progressive' || visibleCount >= emojis.length) return;
+    if (loadingStrategy !== "progressive" || visibleCount >= emojis.length)
+      return;
 
     const timer = setTimeout(() => {
-      setVisibleCount(prev => Math.min(prev + 4, emojis.length));
+      setVisibleCount((prev) => Math.min(prev + 4, emojis.length));
     }, 500); // Load 4 more every 500ms
 
     return () => clearTimeout(timer);
   }, [visibleCount, emojis.length, loadingStrategy]);
 
   const gridStyle = {
-    display: 'grid',
+    display: "grid",
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
     gap: `${gap}px`,
   };
 
   return (
     <div
-      className={cn('lazy-emoji-grid', className)}
+      className={cn("lazy-emoji-grid", className)}
       style={gridStyle}
       role="grid"
       aria-label="Emoji grid"
@@ -344,20 +364,22 @@ export function LazyEmojiGrid({
           <LazyEmoji
             emoji={item.emoji}
             size={size}
-            priority={item.priority || 'medium'}
+            priority={item.priority || "medium"}
             context={item.label}
             interactive={!!item.onClick}
             onClick={item.onClick}
-            enableIntersectionObserver={loadingStrategy === 'viewport'}
+            enableIntersectionObserver={loadingStrategy === "viewport"}
             className="emoji-grid-item"
           />
         </div>
       ))}
-      
+
       {/* Show loading indicators for remaining items */}
-      {visibleCount < emojis.length && loadingStrategy === 'progressive' && (
+      {visibleCount < emojis.length && loadingStrategy === "progressive" && (
         <>
-          {Array.from({ length: Math.min(4, emojis.length - visibleCount) }).map((_, index) => (
+          {Array.from({
+            length: Math.min(4, emojis.length - visibleCount),
+          }).map((_, index) => (
             <div
               key={`placeholder-${index}`}
               className="emoji-grid-placeholder animate-pulse bg-gray-200 rounded"
@@ -409,13 +431,13 @@ export function VirtualizedEmojiList({
   return (
     <div
       ref={containerRef}
-      className={cn('virtualized-emoji-list overflow-auto', className)}
+      className={cn("virtualized-emoji-list overflow-auto", className)}
       style={{ height: containerHeight }}
       onScroll={handleScroll}
       role="listbox"
       aria-label="Virtualized emoji list"
     >
-      <div style={{ height: totalHeight, position: 'relative' }}>
+      <div style={{ height: totalHeight, position: "relative" }}>
         {visibleItems.map((item, index) => {
           const actualIndex = startIndex + index;
           return (
@@ -423,10 +445,10 @@ export function VirtualizedEmojiList({
               key={`${item.emoji}-${actualIndex}`}
               className="virtualized-emoji-item flex items-center p-2"
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: actualIndex * itemHeight,
                 height: itemHeight,
-                width: '100%',
+                width: "100%",
               }}
               role="option"
             >

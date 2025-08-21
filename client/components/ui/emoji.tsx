@@ -1,11 +1,11 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
 interface EmojiProps {
   children: string;
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  variant?: 'inline' | 'block' | 'navigation' | 'achievement' | 'game';
+  size?: "sm" | "md" | "lg" | "xl";
+  variant?: "inline" | "block" | "navigation" | "achievement" | "game";
   ariaLabel?: string;
   fallback?: string;
   onClick?: () => void;
@@ -18,54 +18,54 @@ interface EmojiProps {
 export function Emoji({
   children,
   className,
-  size = 'md',
-  variant = 'inline',
+  size = "md",
+  variant = "inline",
   ariaLabel,
-  fallback = '🤔',
+  fallback = "🤔",
   onClick,
 }: EmojiProps) {
   // Validate emoji content
   const isValidEmoji = (emoji: string): boolean => {
-    if (!emoji || typeof emoji !== 'string') return false;
+    if (!emoji || typeof emoji !== "string") return false;
     // Check for replacement characters (corrupted emojis)
-    if (emoji.includes('�') || emoji.includes('\uFFFD')) return false;
+    if (emoji.includes("�") || emoji.includes("\uFFFD")) return false;
     return emoji.length <= 4; // Prevent overly long strings
   };
 
   const emojiContent = isValidEmoji(children) ? children : fallback;
 
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'emoji-large',
-    xl: 'emoji-xlarge',
+    sm: "text-sm",
+    md: "text-base",
+    lg: "emoji-large",
+    xl: "emoji-xlarge",
   };
 
   const variantClasses = {
-    inline: 'emoji-inline',
-    block: 'emoji-block',
-    navigation: 'jungle-nav-emoji emoji-optimized',
-    achievement: 'achievement-emoji emoji-optimized',
-    game: 'game-emoji emoji-optimized',
+    inline: "emoji-inline",
+    block: "emoji-block",
+    navigation: "jungle-nav-emoji emoji-optimized",
+    achievement: "achievement-emoji emoji-optimized",
+    game: "game-emoji emoji-optimized",
   };
 
   const baseClasses = cn(
-    'emoji',
+    "emoji",
     sizeClasses[size],
     variantClasses[variant],
-    onClick && 'cursor-pointer',
-    className
+    onClick && "cursor-pointer",
+    className,
   );
 
   // Add accessibility attributes
   const accessibilityProps = {
-    role: 'img' as const,
-    'aria-label': ariaLabel || `Emoji: ${emojiContent}`,
-    ...(onClick && { tabIndex: 0, role: 'button' as const }),
+    role: "img" as const,
+    "aria-label": ariaLabel || `Emoji: ${emojiContent}`,
+    ...(onClick && { tabIndex: 0, role: "button" as const }),
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (onClick && (event.key === 'Enter' || event.key === ' ')) {
+    if (onClick && (event.key === "Enter" || event.key === " ")) {
       event.preventDefault();
       onClick();
     }
@@ -87,14 +87,14 @@ export function Emoji({
  * Specialized emoji components for common use cases
  */
 
-export function JungleNavEmoji({ 
-  emoji, 
-  label, 
-  onClick 
-}: { 
-  emoji: string; 
-  label: string; 
-  onClick?: () => void; 
+export function JungleNavEmoji({
+  emoji,
+  label,
+  onClick,
+}: {
+  emoji: string;
+  label: string;
+  onClick?: () => void;
 }) {
   return (
     <Emoji
@@ -108,12 +108,12 @@ export function JungleNavEmoji({
   );
 }
 
-export function AchievementEmoji({ 
-  emoji, 
-  label 
-}: { 
-  emoji: string; 
-  label: string; 
+export function AchievementEmoji({
+  emoji,
+  label,
+}: {
+  emoji: string;
+  label: string;
 }) {
   return (
     <Emoji
@@ -127,14 +127,14 @@ export function AchievementEmoji({
   );
 }
 
-export function GameEmoji({ 
-  emoji, 
-  label, 
-  onClick 
-}: { 
-  emoji: string; 
-  label: string; 
-  onClick?: () => void; 
+export function GameEmoji({
+  emoji,
+  label,
+  onClick,
+}: {
+  emoji: string;
+  label: string;
+  onClick?: () => void;
 }) {
   return (
     <Emoji
@@ -154,16 +154,16 @@ export function GameEmoji({
 export function EmojiList({
   emojis,
   className,
-  variant = 'inline',
-  size = 'md',
+  variant = "inline",
+  size = "md",
 }: {
   emojis: string[];
   className?: string;
-  variant?: EmojiProps['variant'];
-  size?: EmojiProps['size'];
+  variant?: EmojiProps["variant"];
+  size?: EmojiProps["size"];
 }) {
   return (
-    <div className={cn('flex items-center gap-1', className)}>
+    <div className={cn("flex items-center gap-1", className)}>
       {emojis.map((emoji, index) => (
         <Emoji
           key={`${emoji}-${index}`}
@@ -203,7 +203,7 @@ export function EmojiWithText({
   const textElement = <span>{text}</span>;
 
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className={cn("flex items-center gap-2", className)}>
       {emojiFirst ? (
         <>
           {emojiElement}

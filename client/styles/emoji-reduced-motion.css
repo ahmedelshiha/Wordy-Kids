@@ -12,7 +12,6 @@
 
 /* Respect user's reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  
   /* Disable all emoji animations */
   .emoji,
   .emoji-inline,
@@ -25,7 +24,9 @@
   .game-emoji,
   .emoji-optimized {
     animation: none !important;
-    transition: transform 0.1s ease-out, opacity 0.1s ease-out !important;
+    transition:
+      transform 0.1s ease-out,
+      opacity 0.1s ease-out !important;
   }
 
   /* Reduce complex transforms to simple opacity changes */
@@ -253,7 +254,9 @@
 
 .emoji-essential-motion-only {
   /* Only allow essential motion for functionality */
-  transition: opacity 0.2s ease-out, transform 0.1s ease-out !important;
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.1s ease-out !important;
 }
 
 .emoji-no-transform {
@@ -302,7 +305,7 @@
 }
 
 .emoji-static-feedback::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;

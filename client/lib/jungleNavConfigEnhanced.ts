@@ -3,7 +3,7 @@
  * 🌿 Cross-platform child navigation system with consistent emoji rendering
  */
 
-import { JungleNavTwemoji } from '@/components/ui/twemoji';
+import { JungleNavTwemoji } from "@/components/ui/twemoji";
 
 export interface JungleNavItem {
   id: string;
@@ -11,7 +11,11 @@ export interface JungleNavItem {
   animal: {
     name: string;
     emoji: string;
-    twemojiComponent: React.ComponentType<{ className?: string; size?: number; ariaLabel?: string }>;
+    twemojiComponent: React.ComponentType<{
+      className?: string;
+      size?: number;
+      ariaLabel?: string;
+    }>;
     sound?: string;
     description: string;
   };
@@ -149,14 +153,14 @@ export const enhancedJungleNavItems: JungleNavItem[] = [
  * Get navigation item by ID with fallback
  */
 export function getNavItemById(id: string): JungleNavItem | null {
-  return enhancedJungleNavItems.find(item => item.id === id) || null;
+  return enhancedJungleNavItems.find((item) => item.id === id) || null;
 }
 
 /**
  * Get all navigation emojis for preloading
  */
 export function getNavigationEmojis(): string[] {
-  return enhancedJungleNavItems.map(item => item.animal.emoji);
+  return enhancedJungleNavItems.map((item) => item.animal.emoji);
 }
 
 /**
@@ -242,8 +246,8 @@ export const enhancedJungleTheme: EnhancedJungleThemeConfig = {
   },
   accessibility: {
     reducedMotion: false, // Will be detected at runtime
-    highContrast: false,  // Will be detected at runtime
-    screenReader: false,  // Will be detected at runtime
+    highContrast: false, // Will be detected at runtime
+    screenReader: false, // Will be detected at runtime
   },
 };
 
@@ -317,7 +321,7 @@ export const navUtils = {
    */
   getEmojiComponent: (
     item: JungleNavItem,
-    useTwemoji: boolean
+    useTwemoji: boolean,
   ): string | React.ComponentType<any> => {
     if (useTwemoji) {
       return item.animal.twemojiComponent;
@@ -330,11 +334,11 @@ export const navUtils = {
    */
   getResponsiveEmojiSize: (breakpoint: keyof typeof navBreakpoints): number => {
     switch (breakpoint) {
-      case 'mobile':
+      case "mobile":
         return 20;
-      case 'tablet':
+      case "tablet":
         return 24;
-      case 'desktop':
+      case "desktop":
         return 28;
       default:
         return 24;

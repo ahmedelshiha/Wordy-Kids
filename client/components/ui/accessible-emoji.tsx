@@ -1,14 +1,14 @@
-import React, { forwardRef, useState } from 'react';
-import { cn } from '@/lib/utils';
-import { 
-  getEmojiAccessibilityAttributes, 
+import React, { forwardRef, useState } from "react";
+import { cn } from "@/lib/utils";
+import {
+  getEmojiAccessibilityAttributes,
   getAccessibilitySettings,
   navigationAccessibility,
   achievementAccessibility,
-  type EmojiAccessibilityConfig 
-} from '@/lib/emojiAccessibility';
-import { TwemojiSVG } from './twemoji';
-import { useTwemojiEnabled } from '@/hooks/use-twemoji-init';
+  type EmojiAccessibilityConfig,
+} from "@/lib/emojiAccessibility";
+import { TwemojiSVG } from "./twemoji";
+import { useTwemojiEnabled } from "@/hooks/use-twemoji-init";
 
 interface AccessibleEmojiProps {
   emoji: string;
@@ -26,34 +26,45 @@ interface AccessibleEmojiProps {
 /**
  * Fully accessible emoji component with comprehensive ARIA support
  */
-export const AccessibleEmoji = forwardRef<HTMLSpanElement, AccessibleEmojiProps>(
-  ({ 
-    emoji, 
-    className, 
-    size, 
-    context, 
-    interactive = false,
-    accessibilityConfig = {},
-    onClick,
-    onKeyDown,
-    useTwemoji,
-    fallback,
-    ...props 
-  }, ref) => {
+export const AccessibleEmoji = forwardRef<
+  HTMLSpanElement,
+  AccessibleEmojiProps
+>(
+  (
+    {
+      emoji,
+      className,
+      size,
+      context,
+      interactive = false,
+      accessibilityConfig = {},
+      onClick,
+      onKeyDown,
+      useTwemoji,
+      fallback,
+      ...props
+    },
+    ref,
+  ) => {
     const twemojiEnabled = useTwemojiEnabled();
-    const shouldUseTwemoji = useTwemoji !== undefined ? useTwemoji : twemojiEnabled;
+    const shouldUseTwemoji =
+      useTwemoji !== undefined ? useTwemoji : twemojiEnabled;
     const accessibilitySettings = getAccessibilitySettings();
-    
+
     // Get comprehensive accessibility attributes
     const accessibilityAttributes = getEmojiAccessibilityAttributes(
       emoji,
       accessibilityConfig,
-      context
+      context,
     );
 
     // Handle keyboard interaction for interactive emojis
     const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
-      if (interactive && onClick && (event.key === 'Enter' || event.key === ' ')) {
+      if (
+        interactive &&
+        onClick &&
+        (event.key === "Enter" || event.key === " ")
+      ) {
         event.preventDefault();
         onClick();
       }
@@ -62,19 +73,22 @@ export const AccessibleEmoji = forwardRef<HTMLSpanElement, AccessibleEmojiProps>
 
     // Determine component classes
     const componentClasses = cn(
-      'accessible-emoji',
-      interactive && 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
-      accessibilitySettings.reducedMotion && 'motion-reduce',
-      accessibilitySettings.highContrast && 'high-contrast',
-      className
+      "accessible-emoji",
+      interactive &&
+        "cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+      accessibilitySettings.reducedMotion && "motion-reduce",
+      accessibilitySettings.highContrast && "high-contrast",
+      className,
     );
 
     // Size styling
-    const sizeStyles = size ? {
-      width: typeof size === 'number' ? `${size}px` : size,
-      height: typeof size === 'number' ? `${size}px` : size,
-      fontSize: typeof size === 'number' ? `${size * 0.8}px` : undefined,
-    } : undefined;
+    const sizeStyles = size
+      ? {
+          width: typeof size === "number" ? `${size}px` : size,
+          height: typeof size === "number" ? `${size}px` : size,
+          fontSize: typeof size === "number" ? `${size * 0.8}px` : undefined,
+        }
+      : undefined;
 
     // Common props for both Twemoji and regular emoji
     const commonProps = {
@@ -84,8 +98,8 @@ export const AccessibleEmoji = forwardRef<HTMLSpanElement, AccessibleEmojiProps>
       onClick: interactive ? onClick : undefined,
       onKeyDown: interactive ? handleKeyDown : undefined,
       tabIndex: interactive ? 0 : undefined,
-      'data-emoji': emoji,
-      'data-accessible': 'true',
+      "data-emoji": emoji,
+      "data-accessible": "true",
       ...accessibilityAttributes,
       ...props,
     };
@@ -97,7 +111,7 @@ export const AccessibleEmoji = forwardRef<HTMLSpanElement, AccessibleEmojiProps>
           <TwemojiSVG
             emoji={emoji}
             size={size}
-            ariaLabel={accessibilityAttributes['aria-label']}
+            ariaLabel={accessibilityAttributes["aria-label"]}
             fallback={fallback || <span>{emoji}</span>}
           />
         </span>
@@ -105,22 +119,18 @@ export const AccessibleEmoji = forwardRef<HTMLSpanElement, AccessibleEmojiProps>
     }
 
     // Fallback to regular emoji
-    return (
-      <span {...commonProps}>
-        {emoji}
-      </span>
-    );
-  }
+    return <span {...commonProps}>{emoji}</span>;
+  },
 );
 
-AccessibleEmoji.displayName = 'AccessibleEmoji';
+AccessibleEmoji.displayName = "AccessibleEmoji";
 
 /**
  * Specialized accessible components for different contexts
  */
 
 interface JungleNavEmojiProps {
-  animal: 'owl' | 'parrot' | 'monkey' | 'elephant';
+  animal: "owl" | "parrot" | "monkey" | "elephant";
   label: string;
   isActive?: boolean;
   onClick?: () => void;
@@ -137,14 +147,17 @@ export function AccessibleJungleNavEmoji({
   size = 24,
 }: JungleNavEmojiProps) {
   const emojiMap = {
-    owl: '🦉',
-    parrot: '🦜',
-    monkey: '🐵',
-    elephant: '🐘',
+    owl: "🦉",
+    parrot: "🦜",
+    monkey: "🐵",
+    elephant: "🐘",
   };
 
   const emoji = emojiMap[animal];
-  const navAttributes = navigationAccessibility.getNavItemAttributes(animal, label);
+  const navAttributes = navigationAccessibility.getNavItemAttributes(
+    animal,
+    label,
+  );
 
   return (
     <AccessibleEmoji
@@ -154,15 +167,15 @@ export function AccessibleJungleNavEmoji({
       interactive={!!onClick}
       onClick={onClick}
       className={cn(
-        'jungle-nav-emoji transition-transform duration-200',
-        isActive && 'scale-110 ring-2 ring-white/50',
-        className
+        "jungle-nav-emoji transition-transform duration-200",
+        isActive && "scale-110 ring-2 ring-white/50",
+        className,
       )}
       accessibilityConfig={{
         includeAriaLabel: true,
         includeRole: true,
         includeTitle: true,
-        customDescription: navAttributes['aria-label'],
+        customDescription: navAttributes["aria-label"],
       }}
     />
   );
@@ -187,26 +200,27 @@ export function AccessibleAchievementEmoji({
   size = 32,
   showTooltip = true,
 }: AccessibleAchievementEmojiProps) {
-  const achievementAttributes = achievementAccessibility.getAchievementAttributes(emoji, achievementName);
+  const achievementAttributes =
+    achievementAccessibility.getAchievementAttributes(emoji, achievementName);
 
   return (
     <AccessibleEmoji
       emoji={emoji}
       size={size}
-      context={isUnlocked ? 'unlocked achievement' : 'locked achievement'}
+      context={isUnlocked ? "unlocked achievement" : "locked achievement"}
       interactive={!!onClick}
       onClick={onClick}
       className={cn(
-        'achievement-emoji transition-all duration-300',
-        isUnlocked ? 'filter-none' : 'filter grayscale opacity-50',
-        showTooltip && 'group relative',
-        className
+        "achievement-emoji transition-all duration-300",
+        isUnlocked ? "filter-none" : "filter grayscale opacity-50",
+        showTooltip && "group relative",
+        className,
       )}
       accessibilityConfig={{
         includeAriaLabel: true,
         includeRole: true,
         includeTitle: true,
-        customDescription: achievementAttributes['aria-label'],
+        customDescription: achievementAttributes["aria-label"],
       }}
     />
   );
@@ -239,17 +253,17 @@ export function AccessibleGameEmoji({
       interactive={!disabled && !!onClick}
       onClick={disabled ? undefined : onClick}
       className={cn(
-        'game-emoji transition-transform duration-200',
-        isActive && 'scale-110',
-        disabled && 'opacity-50 cursor-not-allowed',
-        !disabled && 'hover:scale-105',
-        className
+        "game-emoji transition-transform duration-200",
+        isActive && "scale-110",
+        disabled && "opacity-50 cursor-not-allowed",
+        !disabled && "hover:scale-105",
+        className,
       )}
       accessibilityConfig={{
         includeAriaLabel: true,
         includeRole: true,
         includeTitle: true,
-        customDescription: `${gameName} game ${disabled ? '(disabled)' : '(clickable)'}`,
+        customDescription: `${gameName} game ${disabled ? "(disabled)" : "(clickable)"}`,
       }}
     />
   );
@@ -266,7 +280,7 @@ interface AccessibleEmojiListProps {
   }>;
   className?: string;
   size?: number;
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: "horizontal" | "vertical";
   enableKeyboardNavigation?: boolean;
 }
 
@@ -274,17 +288,17 @@ export function AccessibleEmojiList({
   emojis,
   className,
   size = 24,
-  orientation = 'horizontal',
+  orientation = "horizontal",
   enableKeyboardNavigation = true,
 }: AccessibleEmojiListProps) {
   const [focusedIndex, setFocusedIndex] = useState(0);
-  
+
   const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
     if (!enableKeyboardNavigation) return;
 
-    const isHorizontal = orientation === 'horizontal';
-    const nextKey = isHorizontal ? 'ArrowRight' : 'ArrowDown';
-    const prevKey = isHorizontal ? 'ArrowLeft' : 'ArrowUp';
+    const isHorizontal = orientation === "horizontal";
+    const nextKey = isHorizontal ? "ArrowRight" : "ArrowDown";
+    const prevKey = isHorizontal ? "ArrowLeft" : "ArrowUp";
 
     switch (event.key) {
       case nextKey:
@@ -295,16 +309,16 @@ export function AccessibleEmojiList({
         event.preventDefault();
         setFocusedIndex((prev) => (prev - 1 + emojis.length) % emojis.length);
         break;
-      case 'Home':
+      case "Home":
         event.preventDefault();
         setFocusedIndex(0);
         break;
-      case 'End':
+      case "End":
         event.preventDefault();
         setFocusedIndex(emojis.length - 1);
         break;
-      case 'Enter':
-      case ' ':
+      case "Enter":
+      case " ":
         event.preventDefault();
         emojis[index]?.onClick?.();
         break;
@@ -314,9 +328,11 @@ export function AccessibleEmojiList({
   return (
     <div
       className={cn(
-        'accessible-emoji-list',
-        orientation === 'horizontal' ? 'flex items-center gap-2' : 'flex flex-col gap-2',
-        className
+        "accessible-emoji-list",
+        orientation === "horizontal"
+          ? "flex items-center gap-2"
+          : "flex flex-col gap-2",
+        className,
       )}
       role="toolbar"
       aria-label="Emoji selection"
@@ -332,8 +348,10 @@ export function AccessibleEmojiList({
           onClick={item.onClick}
           onKeyDown={(event) => handleKeyDown(event, index)}
           className={cn(
-            'emoji-list-item',
-            focusedIndex === index && enableKeyboardNavigation && 'ring-2 ring-blue-500'
+            "emoji-list-item",
+            focusedIndex === index &&
+              enableKeyboardNavigation &&
+              "ring-2 ring-blue-500",
           )}
           accessibilityConfig={{
             includeAriaLabel: true,
@@ -351,10 +369,13 @@ export function AccessibleEmojiList({
  */
 interface EmojiAnnouncementProps {
   message: string;
-  priority?: 'polite' | 'assertive';
+  priority?: "polite" | "assertive";
 }
 
-export function EmojiAnnouncement({ message, priority = 'polite' }: EmojiAnnouncementProps) {
+export function EmojiAnnouncement({
+  message,
+  priority = "polite",
+}: EmojiAnnouncementProps) {
   return (
     <div
       aria-live={priority}
@@ -393,7 +414,7 @@ export function AccessibleEmojiTooltip({
 
   return (
     <div
-      className={cn('relative inline-block', className)}
+      className={cn("relative inline-block", className)}
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
       onFocus={() => setIsVisible(true)}
@@ -410,9 +431,11 @@ export function AccessibleEmojiTooltip({
         >
           <AccessibleEmoji emoji={emoji} size={16} className="inline mr-1" />
           {description}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 
+          <div
+            className="absolute top-full left-1/2 transform -translate-x-1/2 
                          w-0 h-0 border-l-4 border-r-4 border-t-4 
-                         border-transparent border-t-gray-900" />
+                         border-transparent border-t-gray-900"
+          />
         </div>
       )}
     </div>

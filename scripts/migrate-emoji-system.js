@@ -5,9 +5,9 @@
  * Automates the migration of existing emoji usage to the new future-proof system
  */
 
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
+const fs = require("fs");
+const path = require("path");
+const { promisify } = require("util");
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -16,87 +16,97 @@ const stat = promisify(fs.stat);
 
 // Configuration
 const CONFIG = {
-  sourceDir: './client',
-  extensions: ['.tsx', '.ts', '.jsx', '.js'],
-  backupDir: './backup-pre-emoji-migration',
-  dryRun: process.argv.includes('--dry-run'),
-  verbose: process.argv.includes('--verbose'),
+  sourceDir: "./client",
+  extensions: [".tsx", ".ts", ".jsx", ".js"],
+  backupDir: "./backup-pre-emoji-migration",
+  dryRun: process.argv.includes("--dry-run"),
+  verbose: process.argv.includes("--verbose"),
 };
 
 // Emoji mapping and replacement patterns
 const EMOJI_MIGRATIONS = {
   // Navigation emojis - replace with accessible components
-  '🦉': {
-    component: 'AccessibleJungleNavEmoji',
-    props: { animal: 'owl', label: 'Home Tree' },
-    import: "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';"
+  "🦉": {
+    component: "AccessibleJungleNavEmoji",
+    props: { animal: "owl", label: "Home Tree" },
+    import:
+      "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '🦜': {
-    component: 'AccessibleJungleNavEmoji',
-    props: { animal: 'parrot', label: 'Book Jungle' },
-    import: "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';"
+  "🦜": {
+    component: "AccessibleJungleNavEmoji",
+    props: { animal: "parrot", label: "Book Jungle" },
+    import:
+      "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '🐵': {
-    component: 'AccessibleJungleNavEmoji',
-    props: { animal: 'monkey', label: 'Adventure Games' },
-    import: "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';"
+  "🐵": {
+    component: "AccessibleJungleNavEmoji",
+    props: { animal: "monkey", label: "Adventure Games" },
+    import:
+      "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '🐘': {
-    component: 'AccessibleJungleNavEmoji',
-    props: { animal: 'elephant', label: 'Trophy Grove' },
-    import: "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';"
+  "🐘": {
+    component: "AccessibleJungleNavEmoji",
+    props: { animal: "elephant", label: "Trophy Grove" },
+    import:
+      "import { AccessibleJungleNavEmoji } from '@/components/ui/accessible-emoji';",
   },
 
   // Achievement emojis
-  '🏆': {
-    component: 'AccessibleAchievementEmoji',
-    props: { emoji: '🏆', achievementName: 'Trophy' },
-    import: "import { AccessibleAchievementEmoji } from '@/components/ui/accessible-emoji';"
+  "🏆": {
+    component: "AccessibleAchievementEmoji",
+    props: { emoji: "🏆", achievementName: "Trophy" },
+    import:
+      "import { AccessibleAchievementEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '🌟': {
-    component: 'AccessibleAchievementEmoji',
-    props: { emoji: '🌟', achievementName: 'Star' },
-    import: "import { AccessibleAchievementEmoji } from '@/components/ui/accessible-emoji';"
+  "🌟": {
+    component: "AccessibleAchievementEmoji",
+    props: { emoji: "🌟", achievementName: "Star" },
+    import:
+      "import { AccessibleAchievementEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '👑': {
-    component: 'AccessibleAchievementEmoji',
-    props: { emoji: '👑', achievementName: 'Crown' },
-    import: "import { AccessibleAchievementEmoji } from '@/components/ui/accessible-emoji';"
+  "👑": {
+    component: "AccessibleAchievementEmoji",
+    props: { emoji: "👑", achievementName: "Crown" },
+    import:
+      "import { AccessibleAchievementEmoji } from '@/components/ui/accessible-emoji';",
   },
 
   // Game emojis
-  '🎯': {
-    component: 'AccessibleGameEmoji',
-    props: { emoji: '🎯', gameName: 'Target Game' },
-    import: "import { AccessibleGameEmoji } from '@/components/ui/accessible-emoji';"
+  "🎯": {
+    component: "AccessibleGameEmoji",
+    props: { emoji: "🎯", gameName: "Target Game" },
+    import:
+      "import { AccessibleGameEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '🚀': {
-    component: 'AccessibleGameEmoji',
-    props: { emoji: '🚀', gameName: 'Rocket Game' },
-    import: "import { AccessibleGameEmoji } from '@/components/ui/accessible-emoji';"
+  "🚀": {
+    component: "AccessibleGameEmoji",
+    props: { emoji: "🚀", gameName: "Rocket Game" },
+    import:
+      "import { AccessibleGameEmoji } from '@/components/ui/accessible-emoji';",
   },
-  '🧠': {
-    component: 'AccessibleGameEmoji',
-    props: { emoji: '🧠', gameName: 'Brain Game' },
-    import: "import { AccessibleGameEmoji } from '@/components/ui/accessible-emoji';"
+  "🧠": {
+    component: "AccessibleGameEmoji",
+    props: { emoji: "🧠", gameName: "Brain Game" },
+    import:
+      "import { AccessibleGameEmoji } from '@/components/ui/accessible-emoji';",
   },
 
   // General emojis - use LazyEmoji for better performance
-  'DEFAULT': {
-    component: 'LazyEmoji',
-    props: { emoji: 'EMOJI_PLACEHOLDER', priority: 'medium' },
-    import: "import { LazyEmoji } from '@/components/ui/lazy-emoji';"
-  }
+  DEFAULT: {
+    component: "LazyEmoji",
+    props: { emoji: "EMOJI_PLACEHOLDER", priority: "medium" },
+    import: "import { LazyEmoji } from '@/components/ui/lazy-emoji';",
+  },
 };
 
 // Patterns to detect emoji usage
 const EMOJI_PATTERNS = [
   // Direct emoji in JSX
   /(<[^>]*>)([🦉🦜🐵🐘🏆🌟👑🎯🚀🧠✨⭐🎉🤔😊💡🔊👁️])((?:<\/[^>]+>)|)/g,
-  
+
   // Emoji in strings
   /(["'`])([🦉🦜🐵🐘🏆🌟👑🎯🚀🧠✨⭐🎉🤔😊💡🔊👁️])\1/g,
-  
+
   // Emoji constants usage
   /EMOJI_CONSTANTS\.([A-Z_]+)/g,
 ];
@@ -110,9 +120,9 @@ class EmojiMigrationTool {
   }
 
   async run() {
-    console.log('🚀 Starting Emoji System Migration...');
-    console.log(`Mode: ${CONFIG.dryRun ? 'DRY RUN' : 'LIVE MIGRATION'}`);
-    
+    console.log("🚀 Starting Emoji System Migration...");
+    console.log(`Mode: ${CONFIG.dryRun ? "DRY RUN" : "LIVE MIGRATION"}`);
+
     try {
       // Create backup if not dry run
       if (!CONFIG.dryRun) {
@@ -124,16 +134,15 @@ class EmojiMigrationTool {
 
       // Generate summary report
       this.generateReport();
-
     } catch (error) {
-      console.error('❌ Migration failed:', error);
+      console.error("❌ Migration failed:", error);
       process.exit(1);
     }
   }
 
   async createBackup() {
-    console.log('📦 Creating backup...');
-    
+    console.log("📦 Creating backup...");
+
     if (!fs.existsSync(CONFIG.backupDir)) {
       fs.mkdirSync(CONFIG.backupDir, { recursive: true });
     }
@@ -145,12 +154,12 @@ class EmojiMigrationTool {
 
   async copyDirectory(src, dest) {
     const entries = await readdir(src);
-    
+
     for (const entry of entries) {
       const srcPath = path.join(src, entry);
       const destPath = path.join(dest, entry);
       const entryStat = await stat(srcPath);
-      
+
       if (entryStat.isDirectory()) {
         if (!fs.existsSync(destPath)) {
           fs.mkdirSync(destPath, { recursive: true });
@@ -165,14 +174,14 @@ class EmojiMigrationTool {
 
   async processDirectory(dirPath) {
     const entries = await readdir(dirPath);
-    
+
     for (const entry of entries) {
       const fullPath = path.join(dirPath, entry);
       const entryStat = await stat(fullPath);
-      
+
       if (entryStat.isDirectory()) {
         // Skip node_modules and other irrelevant directories
-        if (!['node_modules', '.git', 'dist', 'build'].includes(entry)) {
+        if (!["node_modules", ".git", "dist", "build"].includes(entry)) {
           await this.processDirectory(fullPath);
         }
       } else if (this.shouldProcessFile(fullPath)) {
@@ -189,14 +198,17 @@ class EmojiMigrationTool {
   async processFile(filePath) {
     try {
       this.filesProcessed++;
-      
+
       if (CONFIG.verbose) {
         console.log(`📄 Processing: ${filePath}`);
       }
 
-      const content = await readFile(filePath, 'utf8');
-      const { newContent, migrations } = this.migrateFileContent(content, filePath);
-      
+      const content = await readFile(filePath, "utf8");
+      const { newContent, migrations } = this.migrateFileContent(
+        content,
+        filePath,
+      );
+
       if (migrations.length > 0) {
         console.log(`🔄 ${filePath}: ${migrations.length} migrations applied`);
         this.migrationsApplied += migrations.length;
@@ -206,12 +218,11 @@ class EmojiMigrationTool {
         }
 
         if (CONFIG.verbose) {
-          migrations.forEach(migration => {
+          migrations.forEach((migration) => {
             console.log(`   - ${migration}`);
           });
         }
       }
-
     } catch (error) {
       this.errors.push({ file: filePath, error: error.message });
       console.error(`❌ Error processing ${filePath}:`, error.message);
@@ -224,33 +235,39 @@ class EmojiMigrationTool {
     const fileImports = new Set();
 
     // Detect and replace emoji patterns
-    EMOJI_PATTERNS.forEach(pattern => {
+    EMOJI_PATTERNS.forEach((pattern) => {
       newContent = newContent.replace(pattern, (match, ...groups) => {
         const emoji = this.extractEmojiFromMatch(match, groups);
-        
+
         if (emoji && EMOJI_MIGRATIONS[emoji]) {
           const migration = EMOJI_MIGRATIONS[emoji];
-          const replacement = this.generateReplacementComponent(migration, emoji);
-          
+          const replacement = this.generateReplacementComponent(
+            migration,
+            emoji,
+          );
+
           migrations.push(`${emoji} → ${migration.component}`);
           fileImports.add(migration.import);
           this.requiredImports.add(migration.import);
-          
+
           return replacement;
         }
-        
+
         // Use default LazyEmoji for unmapped emojis
         if (emoji) {
           const defaultMigration = EMOJI_MIGRATIONS.DEFAULT;
-          const replacement = this.generateReplacementComponent(defaultMigration, emoji);
-          
+          const replacement = this.generateReplacementComponent(
+            defaultMigration,
+            emoji,
+          );
+
           migrations.push(`${emoji} → LazyEmoji (default)`);
           fileImports.add(defaultMigration.import);
           this.requiredImports.add(defaultMigration.import);
-          
+
           return replacement;
         }
-        
+
         return match;
       });
     });
@@ -275,16 +292,16 @@ class EmojiMigrationTool {
 
   generateReplacementComponent(migration, emoji) {
     const props = { ...migration.props };
-    
+
     // Replace placeholder with actual emoji
-    if (props.emoji === 'EMOJI_PLACEHOLDER') {
+    if (props.emoji === "EMOJI_PLACEHOLDER") {
       props.emoji = emoji;
     }
 
     // Generate props string
     const propsString = Object.entries(props)
       .map(([key, value]) => `${key}="${value}"`)
-      .join(' ');
+      .join(" ");
 
     return `<${migration.component} ${propsString} />`;
   }
@@ -293,10 +310,13 @@ class EmojiMigrationTool {
     // Find existing imports section
     const importRegex = /^import\s+.*$/gm;
     const existingImports = content.match(importRegex) || [];
-    
+
     // Check which imports are already present
-    const newImports = imports.filter(imp => 
-      !existingImports.some(existing => existing.includes(imp.split('from')[1]))
+    const newImports = imports.filter(
+      (imp) =>
+        !existingImports.some((existing) =>
+          existing.includes(imp.split("from")[1]),
+        ),
     );
 
     if (newImports.length === 0) {
@@ -304,40 +324,42 @@ class EmojiMigrationTool {
     }
 
     // Add new imports after existing imports
-    const lastImportIndex = existingImports.length > 0 
-      ? content.lastIndexOf(existingImports[existingImports.length - 1]) + existingImports[existingImports.length - 1].length
-      : 0;
+    const lastImportIndex =
+      existingImports.length > 0
+        ? content.lastIndexOf(existingImports[existingImports.length - 1]) +
+          existingImports[existingImports.length - 1].length
+        : 0;
 
     const beforeImports = content.slice(0, lastImportIndex);
     const afterImports = content.slice(lastImportIndex);
-    
-    return beforeImports + '\n' + newImports.join('\n') + afterImports;
+
+    return beforeImports + "\n" + newImports.join("\n") + afterImports;
   }
 
   generateReport() {
-    console.log('\n📊 Migration Report');
-    console.log('==================');
+    console.log("\n📊 Migration Report");
+    console.log("==================");
     console.log(`Files processed: ${this.filesProcessed}`);
     console.log(`Migrations applied: ${this.migrationsApplied}`);
     console.log(`Errors encountered: ${this.errors.length}`);
-    
+
     if (this.errors.length > 0) {
-      console.log('\n❌ Errors:');
-      this.errors.forEach(error => {
+      console.log("\n❌ Errors:");
+      this.errors.forEach((error) => {
         console.log(`   ${error.file}: ${error.error}`);
       });
     }
 
-    console.log('\n📦 Required Imports:');
-    this.requiredImports.forEach(imp => {
+    console.log("\n📦 Required Imports:");
+    this.requiredImports.forEach((imp) => {
       console.log(`   ${imp}`);
     });
 
     if (CONFIG.dryRun) {
-      console.log('\n⚠️  This was a DRY RUN - no files were modified');
-      console.log('   Run without --dry-run to apply changes');
+      console.log("\n⚠️  This was a DRY RUN - no files were modified");
+      console.log("   Run without --dry-run to apply changes");
     } else {
-      console.log('\n✅ Migration completed successfully!');
+      console.log("\n✅ Migration completed successfully!");
       console.log(`   Backup available at: ${CONFIG.backupDir}`);
     }
 
@@ -360,7 +382,7 @@ class EmojiMigrationTool {
     };
 
     const reportPath = `./emoji-migration-report-${Date.now()}.json`;
-    
+
     if (!CONFIG.dryRun) {
       fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
       console.log(`\n📋 Detailed report saved to: ${reportPath}`);
@@ -370,21 +392,21 @@ class EmojiMigrationTool {
 
 // Validation functions
 function validateMigration() {
-  console.log('🔍 Validating migration...');
-  
+  console.log("🔍 Validating migration...");
+
   // Check for remaining raw emoji usage
   // Check for missing imports
   // Validate component prop usage
   // Check accessibility compliance
-  
-  console.log('✅ Validation completed');
+
+  console.log("✅ Validation completed");
 }
 
 // Main execution
 if (require.main === module) {
   const tool = new EmojiMigrationTool();
-  
-  if (process.argv.includes('--help')) {
+
+  if (process.argv.includes("--help")) {
     console.log(`
 Emoji System Migration Tool
 
@@ -404,8 +426,8 @@ Examples:
     process.exit(0);
   }
 
-  tool.run().catch(error => {
-    console.error('Migration failed:', error);
+  tool.run().catch((error) => {
+    console.error("Migration failed:", error);
     process.exit(1);
   });
 }

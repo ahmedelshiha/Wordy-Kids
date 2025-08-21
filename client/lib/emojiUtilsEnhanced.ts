@@ -3,7 +3,7 @@
  * Provides safe emoji management, validation, and Twemoji integration
  */
 
-import { parseEmojiText, getTwemojiUrl } from './twemojiService';
+import { parseEmojiText, getTwemojiUrl } from "./twemojiService";
 
 export interface EmojiCollection {
   [key: string]: string[];
@@ -167,7 +167,7 @@ export const DEFAULT_EMOJI_CONFIG: EmojiRenderConfig = {
   useTwemoji: true,
   fallbackToEmoji: true,
   size: 24,
-  className: 'emoji-inline',
+  className: "emoji-inline",
   lazyLoad: true,
 };
 
@@ -289,13 +289,13 @@ export function detectCorruptedEmojis(text: string): {
  */
 export async function renderEmojiSafe(
   emoji: string,
-  config: Partial<EmojiRenderConfig> = {}
+  config: Partial<EmojiRenderConfig> = {},
 ): Promise<string> {
   const finalConfig = { ...DEFAULT_EMOJI_CONFIG, ...config };
-  
+
   // Validate and sanitize emoji first
   const safeEmoji = sanitizeEmoji(emoji);
-  
+
   if (finalConfig.useTwemoji) {
     try {
       // Try to render with Twemoji
@@ -304,15 +304,15 @@ export async function renderEmojiSafe(
         return twemojiHtml;
       }
     } catch (error) {
-      console.warn('Failed to render Twemoji, falling back to emoji:', error);
+      console.warn("Failed to render Twemoji, falling back to emoji:", error);
     }
   }
-  
+
   // Fallback to regular emoji
   if (finalConfig.fallbackToEmoji) {
     return `<span class="${finalConfig.className}" role="img" aria-label="Emoji: ${safeEmoji}">${safeEmoji}</span>`;
   }
-  
+
   return safeEmoji;
 }
 
@@ -323,8 +323,8 @@ export function getEmojiImageUrl(emoji: string): string {
   try {
     return getTwemojiUrl(emoji);
   } catch (error) {
-    console.warn('Failed to get Twemoji URL:', error);
-    return ''; // Return empty string as fallback
+    console.warn("Failed to get Twemoji URL:", error);
+    return ""; // Return empty string as fallback
   }
 }
 
