@@ -29,6 +29,45 @@ import { useAnimationControl } from "@/lib/animationControl";
 import { animationControl } from "@/lib/animationControl";
 import "@/styles/jungle-adventure-nav.css";
 
+/**
+ * 🎮 Builder.io Animation Style Configuration Guide
+ *
+ * Animation Style Options:
+ *
+ * 1. "calm-breathing" (DEFAULT) ⭐
+ *    - Gentle scale animation like breathing
+ *    - Safe for focus/typing tasks
+ *    - Mobile-optimized, battery efficient
+ *    - Kid-friendly and calming
+ *
+ * 2. "soft-glow" 🌟
+ *    - Adds subtle firefly glow effects
+ *    - No harsh flashing or blinking
+ *    - Soft yellow/green jungle colors
+ *    - Combines with breathing animation
+ *
+ * 3. "micro-movements" 🦉
+ *    - Character-specific subtle movements
+ *    - Owl: gentle blink every ~10s
+ *    - Monkey: tiny tail wiggle
+ *    - Parrot: slight head tilt
+ *    - Elephant: small ear flap
+ *    - Idle & slow, not distracting
+ *
+ * 4. "full-experience" 🌿
+ *    - All effects combined
+ *    - Maximum immersion
+ *    - Best for exploration modes
+ *
+ * 5. "none" ♿
+ *    - No animations (accessibility mode)
+ *    - For motion-sensitive children
+ *    - Fully accessible
+ *
+ * Usage in Builder.io:
+ * Add as dropdown: animationStyle="calm-breathing"
+ */
+
 // Builder.io compatible props interface
 export interface JungleKidNavProps {
   // Core navigation props
