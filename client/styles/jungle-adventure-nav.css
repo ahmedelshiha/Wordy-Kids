@@ -347,30 +347,30 @@
     soft-accent-glow 14s ease-in-out infinite;
 }
 
-/* ===== ANIMAL CHARACTER MICRO-MOVEMENTS (Optional) ===== */
-/* Apply these classes for character-specific micro-movements */
+/* ===== WHISPER-SOFT MICRO-MOVEMENTS (Optional) ===== */
+/* Apply these classes for ultra-subtle character-specific movements */
 .jungle-animal-icon.micro-movements.owl {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    owl-blink 10s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    owl-blink 20s ease-in-out infinite;
 }
 
 .jungle-animal-icon.micro-movements.monkey {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    monkey-wiggle 8s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    monkey-wiggle 18s ease-in-out infinite;
 }
 
 .jungle-animal-icon.micro-movements.parrot {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    parrot-tilt 12s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    parrot-tilt 25s ease-in-out infinite;
 }
 
 .jungle-animal-icon.micro-movements.elephant {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    elephant-flap 15s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    elephant-flap 30s ease-in-out infinite;
 }
 
 /* Combined breathing + glow + micro-movements for full experience */
