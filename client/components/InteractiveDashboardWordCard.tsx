@@ -279,6 +279,15 @@ export function InteractiveDashboardWordCard({
     return () => clearInterval(interval);
   }, [prefersReducedMotion, jungleAdventureMessages.length]);
 
+  // Cleanup audio debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (audioDebounce) {
+        clearTimeout(audioDebounce);
+      }
+    };
+  }, [audioDebounce]);
+
   // Initialize session with systematic word generation
   useEffect(() => {
     if (words.length > 0 && sessionWords.length === 0) {
@@ -1603,7 +1612,7 @@ export function InteractiveDashboardWordCard({
                         easy: [
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
-                          "��� Can you name this jungle buddy?",
+                          "🐨 Can you name this jungle buddy?",
                           "🐸 What creature lives in our jungle?",
                         ],
                         medium: [
