@@ -150,6 +150,13 @@
   display: block;
   filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.35));
   transform-origin: center;
+  /* Enhanced visibility for mobile */
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 1;
+  /* Ensure proper centering */
+  text-align: center;
+  width: 100%;
 }
 
 .jng-btn .jng-label {
@@ -481,7 +488,7 @@
     rgba(139, 69, 19, 0.9),
     rgba(101, 67, 33, 0.95)
   ) !important;
-  border: 2px solid rgba(251, 191, 36, 0.4) !important;
+  border: none !important; /* Remove border for cleaner look */
   border-radius: 12px !important; /* Rounded like other nav items but distinguished */
   box-shadow:
     0 -2px 8px rgba(139, 69, 19, 0.3),
@@ -493,6 +500,9 @@
   /* Ensure it's visible and properly sized */
   min-height: 60px;
   padding: 8px 12px !important;
+  /* Enhanced visibility */
+  opacity: 1 !important;
+  z-index: 10;
 }
 
 .jng-parent-menu-desktop:hover {
@@ -501,7 +511,7 @@
     0 -8px 20px rgba(139, 69, 19, 0.4),
     0 0 30px rgba(251, 191, 36, 0.3),
     inset 0 2px 0 rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(251, 191, 36, 0.6) !important;
+  /* Remove border on hover as well */
   background: linear-gradient(
     145deg,
     rgba(139, 69, 19, 0.95),
@@ -511,7 +521,11 @@
 
 .jng-parent-menu-desktop .parent-menu-emoji {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  font-size: 1.8rem !important;
+  font-size: 2rem !important; /* Larger for better visibility */
+  line-height: 1;
+  display: block;
+  /* Ensure proper positioning */
+  margin: 0 auto;
 }
 
 .jng-parent-menu-desktop .jng-label {
