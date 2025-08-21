@@ -173,19 +173,23 @@ export default function JungleAdventureNavV3({
   return (
     <>
       <nav
-        className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600"
+        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 ${
+          pauseAnimations ? "jng-nav-animations-paused" : ""
+        }`}
         aria-label="Jungle Adventure Navigation"
       >
         {/* Navigation Bar */}
-        <div className="flex justify-around items-end px-4 py-2">
+        <div className="flex justify-around items-end px-4 py-3">
           {items.map((item) => {
             const isActive = item.id === activeId;
+            const animalClass = getAnimalAnimationClass(item.emoji);
+
             return (
               <motion.button
                 key={item.id}
                 whileTap={shouldAnimate ? { scale: 0.9 } : {}}
-                whileHover={shouldAnimate ? { scale: 1.1 } : {}}
-                className={`flex flex-col items-center text-white transition-colors duration-200 ${
+                whileHover={shouldAnimate ? { scale: 1.05 } : {}}
+                className={`jng-nav-icon-container flex flex-col items-center text-white transition-colors duration-200 ${
                   isActive
                     ? "text-yellow-300"
                     : "text-white hover:text-yellow-200"
@@ -193,14 +197,19 @@ export default function JungleAdventureNavV3({
                 onClick={() => handleNavigation(item.id)}
                 aria-label={item.ariaLabel || item.label}
                 aria-current={isActive ? "page" : undefined}
+                style={{ minHeight: "64px", minWidth: "64px" }}
               >
                 <span
-                  className={`text-3xl drop-shadow-lg transform transition-transform duration-200 ${
-                    isActive ? "scale-110" : ""
-                  }`}
+                  className={`${animalClass} ${
+                    isActive ? "active" : ""
+                  } drop-shadow-lg transform transition-transform duration-200`}
                   style={{
-                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
-                    textShadow: "0 0 8px rgba(255,255,255,0.3)",
+                    fontSize: ENHANCED_ICON_SIZE.base,
+                    filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
+                    textShadow: isActive
+                      ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
+                      : "0 0 8px rgba(255,255,255,0.3)",
+                    marginBottom: "2px", // Totem-lift effect
                   }}
                 >
                   {item.emoji}
@@ -213,18 +222,21 @@ export default function JungleAdventureNavV3({
           {/* Parent Menu Button */}
           <motion.button
             whileTap={shouldAnimate ? { scale: 0.9 } : {}}
-            whileHover={shouldAnimate ? { scale: 1.1 } : {}}
-            className="flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
+            whileHover={shouldAnimate ? { scale: 1.05 } : {}}
+            className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
             onClick={() => setShowParentMenu(true)}
             aria-label="Parent Menu - Access family controls and settings"
             aria-expanded={showParentMenu}
             aria-haspopup="dialog"
+            style={{ minHeight: "64px", minWidth: "64px" }}
           >
             <span
-              className="text-3xl drop-shadow-lg"
+              className="jng-nav-icon-totem drop-shadow-lg"
               style={{
-                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
-                textShadow: "0 0 12px rgba(255,193,7,0.4)",
+                fontSize: ENHANCED_ICON_SIZE.base,
+                filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
+                textShadow: "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
+                marginBottom: "2px", // Totem-lift effect
               }}
             >
               🪵
