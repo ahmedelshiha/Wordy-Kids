@@ -209,6 +209,7 @@ export const createAnimationConfig = (
 ): JungleAnimationConfig => ({
   idleSpeed: "slow",
   intensity: "subtle",
+  idlePauseDuration: "long", // Default to maximum calmness
   rareEffects: true,
   reducedMotion: detectReducedMotion(),
   ...overrides,
