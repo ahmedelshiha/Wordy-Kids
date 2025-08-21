@@ -168,7 +168,6 @@ body {
 }
 @media (min-width: 1024px) {
   body {
-    padding-top: var(--jng-desktop-bar-h);
-    padding-bottom: 0;
+    padding-bottom: var(--jng-desktop-bar-h);
   }
 }
