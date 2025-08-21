@@ -145,7 +145,28 @@
   }
 }
 
-/* Gentle idle animations */
+/* ===== KID-FRIENDLY BREATHING ANIMATIONS ===== */
+/* Default gentle breathing animation - like a friendly creature breathing */
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Alternative calm breathing for default state */
+@keyframes calm-breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Gentle idle animations (replaced with breathing) */
 @keyframes gentle-sway {
   0%,
   100% {
