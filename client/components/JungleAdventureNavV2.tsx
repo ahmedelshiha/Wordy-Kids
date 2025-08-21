@@ -64,6 +64,14 @@ export type JungleAdventureNavV2Props = {
   };
   /** Called when parent menu icon is clicked */
   onParentMenuClick?: () => void;
+  /** Called when parent dashboard button is clicked */
+  onParentDashboard?: () => void;
+  /** Called when settings button is clicked */
+  onParentSettings?: () => void;
+  /** Called when sign out button is clicked */
+  onParentSignOut?: () => void;
+  /** Called when register button is clicked */
+  onParentRegister?: () => void;
   /** @deprecated Use showParentMenuIcon instead */
   showMobileMoreIcon?: boolean;
   /** @deprecated Use onParentMenuClick instead */
@@ -133,6 +141,10 @@ export default function JungleAdventureNavV2({
     signOut: true,
   },
   onParentMenuClick,
+  onParentDashboard,
+  onParentSettings,
+  onParentSignOut,
+  onParentRegister,
   showMobileMoreIcon = false,
   onMobileMoreClick,
 }: JungleAdventureNavV2Props) {
@@ -362,7 +374,7 @@ export default function JungleAdventureNavV2({
                       className="jungle-dialog-btn"
                       onClick={() => {
                         setIsParentDialogOpen(false);
-                        // Navigate to parent dashboard
+                        onParentDashboard?.();
                       }}
                       aria-label="Open Parent Dashboard - View child's progress and reports"
                     >
@@ -380,7 +392,7 @@ export default function JungleAdventureNavV2({
                       className="jungle-dialog-btn"
                       onClick={() => {
                         setIsParentDialogOpen(false);
-                        // Navigate to settings
+                        onParentSettings?.();
                       }}
                       aria-label="Open Settings - Child-safe controls and preferences"
                     >
@@ -399,7 +411,7 @@ export default function JungleAdventureNavV2({
                         className="jungle-dialog-btn"
                         onClick={() => {
                           setIsParentDialogOpen(false);
-                          // Handle sign out
+                          onParentSignOut?.();
                         }}
                         aria-label="Sign Out - Log out of parent account"
                       >
@@ -415,7 +427,7 @@ export default function JungleAdventureNavV2({
                         className="jungle-dialog-btn"
                         onClick={() => {
                           setIsParentDialogOpen(false);
-                          // Handle register
+                          onParentRegister?.();
                         }}
                         aria-label="Register - Create new parent account"
                       >

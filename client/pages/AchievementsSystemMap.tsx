@@ -791,7 +791,7 @@ export function AchievementsSystemMap() {
                     🍃
                   </div>
                   <div className="absolute top-1/3 right-1/3 text-jungle text-lg">
-                    ���
+                    🌟
                   </div>
                 </div>
 

@@ -32,6 +32,7 @@ import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
+import { useAuth } from "@/hooks/useAuth";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
@@ -182,6 +183,7 @@ const isConsecutiveDay = (lastActivity: Date, today: Date): boolean => {
 
 export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
+  const { user, isGuest, logout } = useAuth();
 
   // Navigation history for back button functionality
   const { canGoBack, goBack, previousPath } = useNavigationHistory({
@@ -1069,7 +1071,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "vocabulary-champion",
         name: "Vocabulary Champion",
-        icon: "🏆",
+        icon: "🌟",
         earned: rememberedWords.size >= 50,
         description: "Learn 100 words",
       },
@@ -1312,7 +1314,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! 🎮🌟",
+      title: "Amazing Game! 🎮🎉",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -1569,7 +1571,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🗺�����";
+        achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
@@ -2941,7 +2943,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   "Category Review Complete! 📚",
-                                                                message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪���" : "Amazing work! 🎉"}`,
+                                                                message: `You've reviewed all ${completionResult.totalWords} words in ${selectedCategory === "all" ? "this word set" : selectedCategory}!\\n\\n✅ Remembered: ${completionResult.totalRemembered} words\\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\\n\\n${completionResult.totalWords - completionResult.totalRemembered > 0 ? "Don't worry! Let's practice the tricky ones again! 💪" : "Amazing work! 🎉"}`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                   10, // Fewer points since words were forgotten
@@ -2978,7 +2980,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               Get Hint
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Need practice! ���
+                                                              Need practice! 📖
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3069,7 +3071,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   completionResult.title,
-                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
+                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🌟 Category Achievement Unlocked! 🎉`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                     20 +
@@ -3241,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🌿
+                                      🌱🌿
                                     </div>
 
                                     {/* Hero Content - Compact */}
@@ -3252,7 +3254,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2 className="jungle-quiz-title text-lg md:text-xl mb-1">
-                                        🌟 Jungle Quiz Adventure! 🌟
+                                        🧠 Jungle Quiz Adventure! 🌟
                                       </h2>
                                       <p className="jungle-quiz-subtitle text-xs md:text-sm">
                                         Test your vocabulary in the jungle! 🏆✨
@@ -3272,7 +3274,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               <p className="text-sm text-jungle-dark mt-1">
                                                 Your personal jungle companion
                                                 creates adventures just for you!
-                                                🧙‍♂��✨
+                                                🧙‍♂️✨
                                               </p>
                                             </div>
                                           </div>
@@ -3364,7 +3366,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               fontWeight: "bold",
                                             }}
                                           >
-                                            🎵 3D Audio
+                                            🎧 3D Audio
                                           </span>
                                           <span
                                             className="jungle-quiz-badge"
@@ -3400,7 +3402,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Crown className="w-5 h-5 mr-2" />
-                                          Start Epic Adventure! ��
+                                          Start Epic Adventure! 🚀
                                         </button>
                                       </div>
 
@@ -3416,11 +3418,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Journey through magical gardens where
                                           words bloom into beautiful flowers!
                                           Listen to nature's whispers and watch
-                                          your vocabulary grow! 🌸��
+                                          your vocabulary grow! 🌸🌿
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
-                                            ��� Ages 3-5
+                                            🌟 Ages 3-5
                                           </span>
                                           <span className="jungle-quiz-badge-audio">
                                             🎵 Audio Magic
@@ -3449,7 +3451,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Follow ancient jungle sounds to hidden
                                           treasures! Listen carefully to
                                           nature's magical symphony and discover
-                                          secret word treasures! ����🗺️
+                                          secret word treasures! 💎🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3487,7 +3489,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Explore ancient jungle temples and
                                           decode mysterious picture scrolls!
                                           Each image holds the key to incredible
-                                          word treasures! 🏛��💎
+                                          word treasures! 🏛️💎
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3566,7 +3568,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Crystal Quest Awaits! ��
+                                          Crystal Quest Awaits! 💎
                                         </button>
                                       </div>
                                     </div>
@@ -3592,7 +3594,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            ����
+                                            🏆🌟
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-jungle-green text-sm">
@@ -3702,9 +3704,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setFeedback({
                                         type: "celebration",
                                         title:
-                                          "Epic Adventure Complete! 🏆👑✨",
+                                          "Epic Adventure Complete! 🚀👑✨",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
-��� Accuracy: ${stats.accuracy || 0}%
+🎯 Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
 💎 Gems Earned: ${stats.gems || 0}
 🏆 Level Reached: ${stats.level || 1}
@@ -3724,7 +3726,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ��� Word Garden
+                                      🌱 Word Garden
                                     </h2>
                                     <Button
                                       onClick={() => setShowExitDialog(true)}
@@ -3995,7 +3997,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "🌈", "✨", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
@@ -4018,8 +4020,28 @@ export default function Index({ initialProfile }: IndexProps) {
               pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
-              showMobileMoreIcon={true}
-              onMobileMoreClick={() => setIsMobileMenuOpen(true)}
+              showParentMenuIcon={true}
+              parentDialogSections={{
+                dashboard: true,
+                settings: true,
+                signOut: !isGuest,
+              }}
+              onParentDashboard={() => {
+                setUserRole("parent");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              onParentSettings={() => {
+                setShowSettings(true);
+                if (navigator.vibrate) {
+                  navigator.vibrate(50);
+                }
+              }}
+              onParentSignOut={() => {
+                logout();
+              }}
+              onParentRegister={() => {
+                navigate("/signup");
+              }}
               items={[
                 {
                   id: "dashboard",
@@ -4193,6 +4215,8 @@ export default function Index({ initialProfile }: IndexProps) {
                 onClick={() => {
                   setUserRole("parent");
                   setShowParentOptions(false);
+                  // Add smooth scroll to top when switching to parent dashboard
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
                 className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
                 aria-label="Open Parent Dashboard - View detailed progress, analytics, and manage learning goals"
@@ -4237,6 +4261,10 @@ export default function Index({ initialProfile }: IndexProps) {
                 onClick={() => {
                   setShowSettings(true);
                   setShowParentOptions(false);
+                  // Add haptic feedback for better mobile experience
+                  if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                  }
                 }}
                 className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
                 aria-label="Open Jungle Settings - Configure app preferences, safety controls, and adventure options"
