@@ -1966,27 +1966,34 @@ export function InteractiveDashboardWordCard({
                   aria-label="Word hint revealed"
                   aria-live="polite"
                 >
-                  {/* Jungle Adventure Hint Card */}
+                  {/* Jungle Adventure Hint Card with Wooden Border */}
                   <motion.div
                     initial={{
                       backdropFilter: "blur(0px)",
-                      backgroundColor: "rgba(34, 139, 34, 0)",
+                      backgroundColor: "rgba(160, 82, 45, 0)",
                     }}
                     animate={{
-                      backdropFilter: "blur(12px)",
-                      backgroundColor: "rgba(34, 139, 34, 0.15)",
+                      backdropFilter: "blur(4px)",
+                      backgroundColor: "rgba(160, 82, 45, 0.05)",
                     }}
-                    className="mx-auto max-w-xs w-full p-4 sm:p-5 rounded-xl border-2 border-amber-700/30 shadow-lg relative overflow-hidden carved-wood-border"
+                    className="mx-auto max-w-xs w-full p-3 sm:p-4 rounded-xl shadow-lg relative overflow-hidden"
                     style={{
-                      background: `
-                        radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(255, 193, 7, 0.15) 0%, transparent 50%),
-                        linear-gradient(135deg, rgba(34, 139, 34, 0.1), rgba(76, 175, 80, 0.2), rgba(255, 193, 7, 0.1))
-                      `,
+                      background: "rgba(255, 255, 255, 0.98)",
+                      border: "4px solid",
+                      borderImage: `linear-gradient(
+                        45deg,
+                        #8B4513 0%,
+                        #A0522D 25%,
+                        #CD853F 50%,
+                        #A0522D 75%,
+                        #8B4513 100%
+                      ) 1`,
+                      borderRadius: "12px",
                       boxShadow: `
-                        0 20px 40px rgba(34, 139, 34, 0.3),
-                        0 0 30px rgba(255, 193, 7, 0.2),
-                        inset 0 1px 2px rgba(255, 255, 255, 0.3)
+                        inset 0 2px 4px rgba(160, 82, 45, 0.2),
+                        inset 0 -2px 4px rgba(101, 67, 33, 0.2),
+                        0 6px 20px rgba(139, 69, 19, 0.3),
+                        0 0 15px rgba(160, 82, 45, 0.15)
                       `,
                     }}
                   >
@@ -2046,27 +2053,20 @@ export function InteractiveDashboardWordCard({
                         💡
                       </motion.div>
 
-                      {/* Jungle Adventure Hint Container */}
+                      {/* Clean Word Container */}
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.6 }}
                         className="relative"
                         style={{
-                          background: `
-                            linear-gradient(135deg,
-                              rgba(255, 255, 255, 0.2) 0%,
-                              rgba(248, 250, 252, 0.15) 50%,
-                              rgba(240, 253, 244, 0.18) 100%
-                            )
-                          `,
-                          backdropFilter: "blur(12px)",
-                          border: "1px solid rgba(76, 175, 80, 0.2)",
-                          borderRadius: "1rem",
+                          background: "rgba(255, 255, 255, 1)",
+                          border: "1px solid rgba(160, 82, 45, 0.15)",
+                          borderRadius: "8px",
                           padding: "0.75rem",
                           boxShadow: `
-                            0 4px 20px rgba(34, 139, 34, 0.08),
-                            inset 0 1px 1px rgba(255, 255, 255, 0.15)
+                            0 2px 8px rgba(139, 69, 19, 0.08),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.3)
                           `,
                         }}
                       >
@@ -2075,25 +2075,25 @@ export function InteractiveDashboardWordCard({
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.4 }}
-                          className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/50"
+                          className="flex items-center justify-between bg-white rounded-lg px-3 py-2 shadow-sm border border-gray-200"
                         >
-                          <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex-1 tracking-wide">
+                          <p className="text-xl sm:text-2xl font-bold text-gray-900 flex-1 tracking-wide">
                             {currentWord.word}
                           </p>
 
-                          {/* Speaker Button on Right */}
+                          {/* Speaker Button - Always Visible and Properly Contained */}
                           <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.6, duration: 0.3 }}
-                            className="ml-3"
+                            className="ml-2 flex-shrink-0"
                           >
                             <Button
                               onClick={() => playPronunciationDebounced(true)}
                               disabled={isPlaying}
                               size="sm"
                               className={cn(
-                                "bg-gradient-to-br from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md",
+                                "bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-1.5 sm:p-2 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md min-w-[32px] h-8 sm:min-w-[36px] sm:h-9",
                                 isPlaying && "animate-pulse scale-105",
                                 "disabled:opacity-50",
                               )}
@@ -2101,7 +2101,7 @@ export function InteractiveDashboardWordCard({
                             >
                               <Volume2
                                 className={cn(
-                                  "w-4 h-4 sm:w-5 sm:h-5",
+                                  "w-3 h-3 sm:w-4 sm:h-4",
                                   isPlaying && "animate-bounce",
                                 )}
                               />
