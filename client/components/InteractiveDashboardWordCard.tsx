@@ -212,6 +212,7 @@ export function InteractiveDashboardWordCard({
   const [buttonClickedId, setButtonClickedId] = useState<string | null>(null);
   const [showSuccessRipple, setShowSuccessRipple] = useState(false);
   const [showPracticeRipple, setShowPracticeRipple] = useState(false);
+  const [audioPlayedForHint, setAudioPlayedForHint] = useState(false);
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
@@ -1649,7 +1650,7 @@ export function InteractiveDashboardWordCard({
                       ],
                       medium: [
                         "🔍 What jungle mystery awaits you?",
-                        "🎯 Which jungle challenge do you see?",
+                        "��� Which jungle challenge do you see?",
                         "💎 Can you solve this jungle puzzle?",
                         "🗝️ What jungle secret is this?",
                       ],
