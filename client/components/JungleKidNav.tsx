@@ -286,10 +286,10 @@ export function JungleKidNav({
           animate={{ opacity: 1, y: 0 }}
           transition={{
             delay: index * 0.1,
-            duration: navState.deviceCapabilities.animations ? 0.3 : 0,
+            duration: navState.deviceCapabilities.animations && !animationsSuspended ? 0.3 : 0,
           }}
           whileHover={
-            navState.deviceCapabilities.animations
+            navState.deviceCapabilities.animations && !animationsSuspended
               ? {
                   y: -2,
                   scale: 1.02,
