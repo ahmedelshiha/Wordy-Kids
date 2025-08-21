@@ -217,6 +217,23 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
     root.style.setProperty('--elephant-delay', `${animalDelays.elephant}s`);
   }, [animalDelays]);
 
+  // 🎉 Handle navigation clicks with celebration
+  const handleNavClick = (path: string, cardType: string) => {
+    // Trigger celebration animation
+    setClickedCard(cardType);
+
+    // Play kid-friendly sound
+    if (typeof window !== 'undefined') {
+      kidFriendlyEffects.playSound(SOUNDS.SUCCESS);
+    }
+
+    // Navigate after short celebration
+    setTimeout(() => {
+      navigate(path);
+      setClickedCard(null);
+    }, 300);
+  };
+
   // Enhanced sidebar entrance animation with jungle-themed effects
   const sidebarVariants = {
     hidden: {
