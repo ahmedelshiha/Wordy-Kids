@@ -80,7 +80,7 @@
 }
 
 .jungle-animal-icon.active {
-  animation: animal-celebration 2s ease-in-out infinite;
+  animation: breathing 4s ease-in-out infinite;
 }
 
 /* Animal-specific animations */
