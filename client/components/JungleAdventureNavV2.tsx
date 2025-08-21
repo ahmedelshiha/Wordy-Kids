@@ -378,6 +378,15 @@ export default function JungleAdventureNavV2({
               Family controls and settings for parents and guardians
             </p>
             <div className="jungle-dialog-backdrop">
+              {/* Floating Jungle Particles */}
+              <div className="jungle-dialog-particles">
+                <span className="jungle-particle" style={{ left: "10%", top: "20%" }}>🌿</span>
+                <span className="jungle-particle" style={{ left: "80%", top: "30%" }}>🦋</span>
+                <span className="jungle-particle" style={{ left: "20%", top: "70%" }}>🌺</span>
+                <span className="jungle-particle" style={{ left: "85%", top: "80%" }}>🐛</span>
+                <span className="jungle-particle" style={{ left: "60%", top: "15%" }}>🍃</span>
+                <span className="jungle-particle" style={{ left: "15%", top: "85%" }}>✨</span>
+              </div>
               <div className="jungle-dialog-frame">
                 <div className="jungle-dialog-sections">
                   {parentDialogSections.dashboard && (
