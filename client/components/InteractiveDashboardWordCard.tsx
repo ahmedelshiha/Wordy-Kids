@@ -235,7 +235,7 @@ export function InteractiveDashboardWordCard({
     "🦁 Roar into reading!",
     "🐯 Pounce on new words!",
     "🌳 Climb the learning tree!",
-    "��� Flutter through phonics!",
+    "🦋 Flutter through phonics!",
   ];
 
   // Systematic progression state - DISABLED for clean UI
@@ -2285,7 +2285,7 @@ export function InteractiveDashboardWordCard({
                       handleWordAction("remembered");
                     }}
                     disabled={isAnswered}
-                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-100 py-3 sm:py-3 md:py-4 px-3 sm:px-3 min-h-[55px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow"
                     aria-label="Mark word as remembered"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
