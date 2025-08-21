@@ -138,23 +138,6 @@ export function InteractiveDashboardWordCard({
     action();
   };
 
-  // Optimized: Preload next word's audio for faster loading
-  React.useEffect(() => {
-    const nextIndex = currentWordIndex + 1;
-    if (nextIndex < sessionWords.length && nextIndex < SESSION_SIZE) {
-      const nextWord = sessionWords[nextIndex];
-      if (nextWord?.word) {
-        // Preload audio for next word in background
-        setTimeout(() => {
-          try {
-            enhancedAudioService.preloadWordAudio(nextWord.word);
-          } catch (error) {
-            // Silent fail - preloading is optional
-          }
-        }, 100);
-      }
-    }
-  }, [currentWordIndex, sessionWords]);
 
   // Keyboard navigation handler
   const handleKeyDown = (event: React.KeyboardEvent) => {
