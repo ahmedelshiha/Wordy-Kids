@@ -57,13 +57,13 @@
   margin: 0;
   padding: 0 6px;
   list-style: none;
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
+  align-items: end;
   gap: 6px;
   flex: 1;
   max-width: 980px;
-  justify-content: space-between;
-  align-items: end;
+  /* Regular nav items on the left, parent menu on the right */
+  justify-content: flex-start;
 }
 
 .jng-nav-item {
