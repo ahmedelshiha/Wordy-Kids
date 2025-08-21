@@ -2218,7 +2218,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     <span
                       className="text-2xl relative z-10 filter drop-shadow-sm"
                       style={{
-                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)"
+                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)",
                       }}
                     >
                       🪵
