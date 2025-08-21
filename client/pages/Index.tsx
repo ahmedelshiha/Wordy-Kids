@@ -1314,7 +1314,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! 🎮🌟",
+      title: "Amazing Game! 🎮��",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -1571,7 +1571,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
         achievementTitle = "Category Explorer! 🗺️🌟";
-        achievementIcon = "🗺�����";
+        achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
