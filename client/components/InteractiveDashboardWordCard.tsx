@@ -268,7 +268,9 @@ export function InteractiveDashboardWordCard({
       setMessageVisible(false);
 
       setTimeout(() => {
-        setCurrentMessageIndex((prev) => (prev + 1) % jungleAdventureMessages.length);
+        setCurrentMessageIndex(
+          (prev) => (prev + 1) % jungleAdventureMessages.length,
+        );
         setMessageVisible(true);
       }, 300); // Quick fade transition
     }, 6000); // Rotate every 6 seconds
@@ -1532,7 +1534,7 @@ export function InteractiveDashboardWordCard({
                           opacity: {
                             duration: 0.3,
                             ease: "easeInOut",
-                          }
+                          },
                         }
                       : { duration: 0.3, ease: "easeInOut" }
                   }
