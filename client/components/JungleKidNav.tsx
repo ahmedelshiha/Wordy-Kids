@@ -79,6 +79,7 @@ export function JungleKidNav({
   reducedMotion = false,
   enableParticles = true,
   autoOptimize = true,
+  animationStyle = "calm-breathing",
 }: JungleKidNavProps) {
   // State management
   const [navState, setNavState] = useState<JungleNavState>(() => ({
