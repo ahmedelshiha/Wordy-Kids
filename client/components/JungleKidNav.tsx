@@ -25,6 +25,14 @@ import {
 } from "@/lib/jungleNavConfig";
 import { junglePerformanceOptimizer } from "@/lib/jungleNavPerformance";
 import { useJungleNavAnimations } from "@/hooks/use-jungle-nav-animations";
+import {
+  JungleAnimationManager,
+  createAnimationConfig,
+  generateAnimationClasses,
+  detectReducedMotion,
+  developmentAnimationTriggers,
+  type JungleAnimationConfig
+} from "@/lib/theme/animation";
 import "@/styles/jungle-adventure-nav.css";
 
 // Builder.io compatible props interface
@@ -116,7 +124,7 @@ export function JungleKidNav({
         label: item.label,
         animal: {
           name: item.animal || "Friendly Guide",
-          emoji: item.icon || "🌟",
+          emoji: item.icon || "���",
           sound: "default",
           description: `Navigate to ${item.label}`,
         },
