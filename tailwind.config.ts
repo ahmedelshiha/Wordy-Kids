@@ -182,6 +182,11 @@ export default {
         "jungle-sparkle": "jungle-sparkle 1.5s ease-in-out infinite",
         "jungle-celebration": "jungle-celebration 2s ease-in-out",
         "jungle-level-up": "jungle-level-up 3s ease-out",
+        // New calming navigation animations
+        "gentle-breath": "gentle-breath 8s ease-in-out infinite",
+        "serene-glow": "serene-glow 12s ease-in-out infinite",
+        "peaceful-hover": "peaceful-hover 0.4s ease-out forwards",
+        "calm-pulse": "calm-pulse 6s ease-in-out infinite",
       },
     },
   },
