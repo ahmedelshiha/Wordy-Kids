@@ -32,6 +32,7 @@ import { AvatarCustomization } from "@/components/AvatarCustomization";
 import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { DynamicAuthButton } from "@/components/DynamicAuthButton";
 import { useRegistrationReminder } from "@/hooks/useRegistrationReminder";
+import { useAuth } from "@/hooks/useAuth";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { GameHub } from "@/components/games/GameHub";
