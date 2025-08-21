@@ -94,6 +94,23 @@ export function JungleKidNav({
   enableParticles = true,
   autoOptimize = true,
 }: JungleKidNavProps) {
+  // 🎨 Animation System Initialization
+  const animationConfig = useMemo<JungleAnimationConfig>(() =>
+    createAnimationConfig({
+      idleSpeed,
+      intensity,
+      rareEffects,
+      reducedMotion: reducedMotion || detectReducedMotion()
+    }), [idleSpeed, intensity, rareEffects, reducedMotion]);
+
+  const animationManager = useMemo(() =>
+    new JungleAnimationManager(animationConfig),
+    [animationConfig]);
+
+  const animationClasses = useMemo(() =>
+    generateAnimationClasses(animationConfig),
+    [animationConfig]);
+
   // State management
   const [navState, setNavState] = useState<JungleNavState>(() => ({
     activeTab,
@@ -102,10 +119,10 @@ export function JungleKidNav({
     deviceCapabilities: autoOptimize
       ? getOptimalSettings()
       : {
-          animations: animations && !reducedMotion,
+          animations: animations && !animationConfig.reducedMotion,
           sounds: enableSounds,
-          particles: enableParticles && !reducedMotion,
-          backgroundEffects: animations && !reducedMotion,
+          particles: enableParticles && !animationConfig.reducedMotion,
+          backgroundEffects: animations && !animationConfig.reducedMotion,
         },
   }));
 
