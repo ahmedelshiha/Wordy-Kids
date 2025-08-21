@@ -391,10 +391,20 @@ export default function JungleAdventureNavV2({
                 <div className="jungle-dialog-sections">
                   {parentDialogSections.dashboard && (
                     <button
-                      className="jungle-dialog-btn"
+                      className="jungle-dialog-btn jungle-dialog-btn-enhanced"
                       onClick={() => {
+                        // Haptic feedback
+                        if (navigator.vibrate) {
+                          navigator.vibrate([10, 5, 10]);
+                        }
                         setIsParentDialogOpen(false);
                         onParentDashboard?.();
+                      }}
+                      onMouseEnter={() => {
+                        // Light haptic on hover for touch devices
+                        if (navigator.vibrate) {
+                          navigator.vibrate(5);
+                        }
                       }}
                       aria-label="Open Parent Dashboard - View child's progress and reports"
                     >
