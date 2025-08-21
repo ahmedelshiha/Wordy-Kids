@@ -17,6 +17,8 @@ import {
   UserPlus,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export type JungleNavItem = {
   id: string;
