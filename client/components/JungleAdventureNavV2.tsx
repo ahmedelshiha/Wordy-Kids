@@ -412,14 +412,20 @@ export default function JungleAdventureNavV2({
                       className="jungle-dialog-btn jungle-dynamic-auth-btn"
                       onClick={() => {
                         setIsParentDialogOpen(false);
-                        triggerBreath(isUserAuthenticated ? "sign-out" : "register");
+                        triggerBreath(
+                          isUserAuthenticated ? "sign-out" : "register",
+                        );
                         if (isUserAuthenticated) {
                           onSignOut?.();
                         } else {
                           onRegister?.();
                         }
                       }}
-                      aria-label={isUserAuthenticated ? "Sign Out - Log out and return to guest mode" : "Sign Up - Create your family account"}
+                      aria-label={
+                        isUserAuthenticated
+                          ? "Sign Out - Log out and return to guest mode"
+                          : "Sign Up - Create your family account"
+                      }
                     >
                       {isUserAuthenticated ? (
                         <>

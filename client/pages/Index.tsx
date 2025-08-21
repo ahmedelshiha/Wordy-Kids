@@ -1407,7 +1407,6 @@ export default function Index({ initialProfile }: IndexProps) {
     setActiveTab("dashboard");
   };
 
-
   const checkCategoryCompletion = (
     displayWords: any[],
     rememberedWords: Set<number>,
@@ -3909,11 +3908,15 @@ export default function Index({ initialProfile }: IndexProps) {
               onSignOut={() => {
                 // Reset to guest mode with gentle transition
                 setUserRole("child");
-                console.log("🌿 Goodbye! Thank you for visiting WordyKids. See you soon!");
+                console.log(
+                  "🌿 Goodbye! Thank you for visiting WordyKids. See you soon!",
+                );
               }}
               onRegister={() => {
                 // Open registration flow
-                console.log("✨ Welcome to the Family! Let's create your account together.");
+                console.log(
+                  "✨ Welcome to the Family! Let's create your account together.",
+                );
                 setActiveTab("profile");
               }}
               isUserAuthenticated={userRole === "parent"}
