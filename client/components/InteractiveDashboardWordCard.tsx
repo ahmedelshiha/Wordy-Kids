@@ -1553,7 +1553,7 @@ export function InteractiveDashboardWordCard({
 
                     // Jungle Explorer Characters
                     const jungleExplorers = {
-                      easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
+                      easy: ["🐵", "🦜", "🐨", "����", "🐝"],
                       medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
                       hard: ["🐲", "🦅", "🐺", "🐆", "����"],
                     };
@@ -1916,7 +1916,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(12px)",
                       backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-xs w-full p-4 sm:p-5 rounded-xl border border-jungle/15 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-xs w-full p-4 sm:p-5 rounded-xl border-2 border-amber-700/30 shadow-lg relative overflow-hidden carved-wood-border"
                     style={{
                       background: `
                         radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
