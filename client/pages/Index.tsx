@@ -2180,56 +2180,6 @@ export default function Index({ initialProfile }: IndexProps) {
             </div>
           )}
 
-          {/* Parent Gate Button - Top Right Corner (Desktop Only) */}
-          {userRole === "child" && (
-            <div className="fixed top-4 right-4 z-50 hidden md:block">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <motion.button
-                    onClick={() => setShowParentGate(true)}
-                    className="w-12 h-12 bg-gradient-to-br from-orange-100 to-amber-100 hover:from-orange-200 hover:to-amber-200 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center border-2 border-amber-300 hover:border-orange-400 relative overflow-hidden"
-                    style={{
-                      background: `
-                        linear-gradient(135deg,
-                          rgba(139, 69, 19, 0.1) 0%,
-                          rgba(160, 82, 45, 0.15) 50%,
-                          rgba(205, 133, 63, 0.1) 100%
-                        )
-                      `,
-                      boxShadow: `
-                        inset 0 1px 2px rgba(160, 82, 45, 0.2),
-                        0 4px 12px rgba(139, 69, 19, 0.3),
-                        0 0 20px rgba(255, 193, 7, 0.2)
-                      `,
-                    }}
-                    whileHover={{ scale: 1.05, rotate: 2 }}
-                    whileTap={{ scale: 0.95, rotate: -1 }}
-                    aria-label="Access Parent Menu - Family Zone and Settings"
-                  >
-                    {/* Wooden texture overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-orange-50/30 rounded-xl" />
-
-                    {/* 🪵 Wooden Log Icon */}
-                    <span
-                      className="text-2xl relative z-10 filter drop-shadow-sm"
-                      style={{
-                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)",
-                      }}
-                    >
-                      🪵
-                    </span>
-
-                    {/* Subtle glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-200/20 to-orange-200/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                  </motion.button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>🪵 Parent Menu - Family Zone & Settings</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          )}
-
           {/* Main Content with Sidebar Layout */}
           <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (
@@ -4009,6 +3959,7 @@ export default function Index({ initialProfile }: IndexProps) {
           {userRole === "child" && (
             <JungleAdventureNavV2
               activeId={activeTab}
+              showParentMenuOnDesktop={true}
               onNavigate={setActiveTab}
               pauseAnimations={showSettings}
               iconSize={52}

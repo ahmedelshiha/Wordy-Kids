@@ -52,8 +52,10 @@ export type JungleAdventureNavV2Props = {
   iconSize?: number; // px
   /** Optional className passthrough */
   className?: string;
-  /** Show Parent Menu icon (mobile only) - replaces old More ... */
+  /** Show Parent Menu icon (mobile and desktop) - replaces old More ... */
   showParentMenuIcon?: boolean;
+  /** Show Parent Menu on desktop (in addition to mobile) */
+  showParentMenuOnDesktop?: boolean;
   /** Parent menu icon variant */
   parentMenuIconVariant?: ParentMenuIconVariant;
   /** Parent menu animation style */
@@ -135,6 +137,7 @@ export default function JungleAdventureNavV2({
   iconSize = 44,
   className,
   showParentMenuIcon = true,
+  showParentMenuOnDesktop = false,
   parentMenuIconVariant = "totem",
   parentMenuAnimationStyle = "breathing",
   parentDialogSections = {
@@ -297,64 +300,74 @@ export default function JungleAdventureNavV2({
               </li>
             );
           })}
-        </ul>
 
-        {/* Parent Menu Icon - Right Side (Mobile Only) */}
-        {(showParentMenuIcon || showMobileMoreIcon) && (
-          <button
-            className={clsx(
-              "jng-parent-menu-btn md:hidden",
-              parentMenuAnimationStyle === "breathing" && "parent-breathing",
-              parentMenuAnimationStyle === "glow" && "parent-glowing",
-            )}
-            onClick={() => {
-              if (showParentMenuIcon) {
-                handleParentMenuClick();
-              } else {
-                // Legacy support
-                triggerBreath("more");
-                if (onMobileMoreClick) onMobileMoreClick();
-              }
-            }}
-            onMouseEnter={() =>
-              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
-            }
-            onFocus={() =>
-              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
-            }
-            aria-label={
-              showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
-            }
-            aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
-            aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
-          >
-            <span
-              className={clsx(
-                "jng-icon-wrap jng-icon-lifted",
-                showParentMenuIcon && "parent-icon-totem",
-                breathing[showParentMenuIcon ? "parent-menu" : "more"] &&
-                  "breath-once",
-              )}
-              aria-hidden="true"
-            >
-              {showParentMenuIcon ? (
+          {/* Parent Menu Icon - Centered with other navigation items */}
+          {(showParentMenuIcon || showMobileMoreIcon) && (
+            <li className="jng-nav-item jng-parent-menu-item" role="none">
+              <button
+                role="menuitem"
+                className={clsx(
+                  "jng-btn jng-parent-menu-btn",
+                  // Always show on desktop when showParentMenuOnDesktop is true
+                  showParentMenuOnDesktop
+                    ? "jng-parent-menu-desktop"
+                    : "md:hidden",
+                  parentMenuAnimationStyle === "breathing" &&
+                    "parent-breathing",
+                  parentMenuAnimationStyle === "glow" && "parent-glowing",
+                  breathing[showParentMenuIcon ? "parent-menu" : "more"] &&
+                    "breath-once",
+                )}
+                onClick={() => {
+                  if (showParentMenuIcon) {
+                    handleParentMenuClick();
+                  } else {
+                    // Legacy support
+                    triggerBreath("more");
+                    if (onMobileMoreClick) onMobileMoreClick();
+                  }
+                }}
+                onMouseEnter={() =>
+                  triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+                }
+                onFocus={() =>
+                  triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+                }
+                aria-label={
+                  showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
+                }
+                aria-expanded={
+                  showParentMenuIcon ? isParentDialogOpen : undefined
+                }
+                aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
+              >
                 <span
-                  className="jng-emoji parent-menu-emoji"
-                  style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
+                  className={clsx(
+                    "jng-icon-wrap jng-icon-lifted",
+                    showParentMenuIcon && "parent-icon-totem",
+                  )}
+                  aria-hidden="true"
                 >
-                  {getParentMenuIcon()}
+                  {showParentMenuIcon ? (
+                    <span
+                      className="jng-emoji parent-menu-emoji"
+                      style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
+                    >
+                      {getParentMenuIcon()}
+                    </span>
+                  ) : (
+                    <span className="jng-svg">
+                      <MoreHorizontal size={iconSize * 0.7} />
+                    </span>
+                  )}
                 </span>
-              ) : (
-                <span className="jng-svg">
-                  <MoreHorizontal size={iconSize * 0.7} />
+                <span className="jng-label">
+                  {showParentMenuIcon ? "Parents" : "More"}
                 </span>
-              )}
-            </span>
-            <span className="jng-label">
-              {showParentMenuIcon ? "Parents" : "More"}
-            </span>
-          </button>
-        )}
+              </button>
+            </li>
+          )}
+        </ul>
       </div>
 
       {/* Parent Menu Dialog */}
@@ -371,14 +384,63 @@ export default function JungleAdventureNavV2({
               Family controls and settings for parents and guardians
             </p>
             <div className="jungle-dialog-backdrop">
+              {/* Floating Jungle Particles */}
+              <div className="jungle-dialog-particles">
+                <span
+                  className="jungle-particle"
+                  style={{ left: "10%", top: "20%" }}
+                >
+                  🌿
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "80%", top: "30%" }}
+                >
+                  🦋
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "20%", top: "70%" }}
+                >
+                  🌺
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "85%", top: "80%" }}
+                >
+                  🐛
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "60%", top: "15%" }}
+                >
+                  🍃
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "15%", top: "85%" }}
+                >
+                  ✨
+                </span>
+              </div>
               <div className="jungle-dialog-frame">
                 <div className="jungle-dialog-sections">
                   {parentDialogSections.dashboard && (
                     <button
-                      className="jungle-dialog-btn"
+                      className="jungle-dialog-btn jungle-dialog-btn-enhanced"
                       onClick={() => {
+                        // Haptic feedback
+                        if (navigator.vibrate) {
+                          navigator.vibrate([10, 5, 10]);
+                        }
                         setIsParentDialogOpen(false);
                         onParentDashboard?.();
+                      }}
+                      onMouseEnter={() => {
+                        // Light haptic on hover for touch devices
+                        if (navigator.vibrate) {
+                          navigator.vibrate(5);
+                        }
                       }}
                       aria-label="Open Parent Dashboard - View child's progress and reports"
                     >
@@ -393,10 +455,20 @@ export default function JungleAdventureNavV2({
 
                   {parentDialogSections.settings && (
                     <button
-                      className="jungle-dialog-btn"
+                      className="jungle-dialog-btn jungle-dialog-btn-enhanced"
                       onClick={() => {
+                        // Haptic feedback
+                        if (navigator.vibrate) {
+                          navigator.vibrate([10, 5, 10]);
+                        }
                         setIsParentDialogOpen(false);
                         onParentSettings?.();
+                      }}
+                      onMouseEnter={() => {
+                        // Light haptic on hover for touch devices
+                        if (navigator.vibrate) {
+                          navigator.vibrate(5);
+                        }
                       }}
                       aria-label="Open Settings - Child-safe controls and preferences"
                     >

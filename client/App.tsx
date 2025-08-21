@@ -31,6 +31,7 @@ import SpeechDiagnostics from "./components/SpeechDiagnostics";
 import { LightweightAchievementProvider } from "./components/LightweightAchievementProvider";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
+import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 
 const queryClient = new QueryClient();
 
@@ -202,6 +203,10 @@ const App = () => {
                       <Route
                         path="/error-boundary-test"
                         element={<ErrorBoundaryTest />}
+                      />
+                      <Route
+                        path="/mobile-settings-demo"
+                        element={<MobileSettingsDemo />}
                       />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />

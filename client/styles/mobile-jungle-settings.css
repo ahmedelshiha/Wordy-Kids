@@ -1,0 +1,481 @@
+/* Mobile Jungle Settings Panel Styles */
+
+.jungle-mobile-settings-dialog {
+  background: linear-gradient(
+    135deg,
+    rgba(248, 250, 252, 0.98) 0%,
+    rgba(241, 245, 249, 0.98) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(139, 69, 19, 0.2);
+  border-radius: 16px;
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(222, 184, 135, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  /* Wood texture overlay */
+  position: relative;
+}
+
+.jungle-mobile-settings-dialog::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 69, 19, 0.03) 0px,
+      rgba(139, 69, 19, 0.03) 1px,
+      transparent 1px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(160, 82, 45, 0.02) 0px,
+      rgba(160, 82, 45, 0.02) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.jungle-mobile-settings-dialog > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Setting Cards */
+.jungle-setting-card {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.jungle-setting-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+
+.jungle-setting-card:hover::before {
+  opacity: 1;
+}
+
+.jungle-setting-card:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(139, 69, 19, 0.2);
+}
+
+.jungle-setting-card:active {
+  transform: translateY(-1px) scale(1.01);
+  transition: all 0.1s ease;
+}
+
+/* Jungle Switch Enhancements */
+.jungle-switch [role="switch"] {
+  background: rgba(139, 69, 19, 0.2);
+  border: 1px solid rgba(139, 69, 19, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.jungle-switch [role="switch"][data-state="checked"] {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  border-color: #4caf50;
+  box-shadow:
+    0 2px 8px rgba(76, 175, 80, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.jungle-switch [role="switch"] span {
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.jungle-switch [role="switch"][data-state="checked"] span {
+  transform: translateX(20px);
+  background: linear-gradient(145deg, #ffffff, #f0f8f0);
+  box-shadow:
+    0 4px 12px rgba(76, 175, 80, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.jungle-switch [role="switch"]:hover span {
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+/* Button Enhancements */
+.jungle-mobile-settings-dialog button[aria-label="Close"] {
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.jungle-mobile-settings-dialog button[aria-label="Close"]:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.jungle-mobile-settings-dialog button[aria-label="Close"]:active {
+  transform: scale(1.05);
+}
+
+/* Icon Containers */
+.jungle-setting-card .p-2 {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.jungle-setting-card:hover .p-2 {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Text Animations */
+.jungle-setting-card h3 {
+  transition: color 0.3s ease;
+}
+
+.jungle-setting-card:hover h3 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Scroll Area Enhancements */
+.jungle-mobile-settings-dialog [data-radix-scroll-area-viewport] {
+  border-radius: 8px;
+}
+
+.jungle-mobile-settings-dialog [data-radix-scroll-area-scrollbar] {
+  background: rgba(139, 69, 19, 0.1);
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+}
+
+.jungle-mobile-settings-dialog [data-radix-scroll-area-thumb] {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+/* Desktop Enhancements */
+@media (min-width: 768px) {
+  .jungle-mobile-settings-dialog {
+    width: 80vw;
+    max-width: 500px;
+    max-height: 70vh;
+    border-radius: 20px;
+    box-shadow:
+      0 25px 80px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(222, 184, 135, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 0 50px rgba(139, 69, 19, 0.2);
+  }
+
+  .jungle-setting-card {
+    margin: 0 8px;
+    padding: 20px;
+  }
+
+  .jungle-setting-card:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(139, 69, 19, 0.3);
+  }
+
+  /* Enhanced desktop interactions */
+  .jungle-switch [role="switch"] {
+    width: 52px;
+    height: 32px;
+  }
+
+  .jungle-switch [role="switch"] span {
+    width: 28px;
+    height: 28px;
+  }
+
+  .jungle-switch [role="switch"][data-state="checked"] span {
+    transform: translateX(20px);
+  }
+
+  /* Desktop-specific wood grain effect */
+  .jungle-mobile-settings-dialog::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(139, 69, 19, 0.03) 0px,
+        rgba(139, 69, 19, 0.03) 2px,
+        transparent 2px,
+        transparent 12px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(160, 82, 45, 0.02) 0px,
+        rgba(160, 82, 45, 0.02) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 3;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .jungle-mobile-settings-dialog {
+    width: 95vw;
+    max-height: 80vh;
+    margin: 0;
+    border-radius: 16px;
+  }
+
+  .jungle-setting-card {
+    margin: 0 4px;
+  }
+
+  .jungle-setting-card:hover {
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  /* Larger touch targets */
+  .jungle-switch [role="switch"] {
+    width: 48px;
+    height: 28px;
+  }
+
+  .jungle-switch [role="switch"] span {
+    width: 24px;
+    height: 24px;
+  }
+
+  .jungle-switch [role="switch"][data-state="checked"] span {
+    transform: translateX(20px);
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .jungle-mobile-settings-dialog {
+    width: 98vw;
+    max-height: 85vh;
+    border-radius: 12px;
+  }
+
+  .jungle-setting-card .p-4 {
+    padding: 16px;
+  }
+
+  .jungle-setting-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .jungle-setting-card p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-mobile-settings-dialog,
+  .jungle-setting-card,
+  .jungle-switch [role="switch"],
+  .jungle-switch [role="switch"] span,
+  .jungle-setting-card .p-2,
+  .jungle-setting-card h3 {
+    transition: none;
+    animation: none;
+  }
+
+  .jungle-setting-card:hover {
+    transform: none;
+  }
+
+  .jungle-mobile-settings-dialog button[aria-label="Close"]:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .jungle-mobile-settings-dialog {
+    border-width: 3px;
+    border-color: #000;
+    background: #fff;
+  }
+
+  .jungle-setting-card {
+    border-width: 2px;
+    border-color: #000;
+  }
+
+  .jungle-switch [role="switch"] {
+    border-width: 2px;
+    border-color: #000;
+  }
+
+  .jungle-switch [role="switch"][data-state="checked"] {
+    background: #000;
+    border-color: #000;
+  }
+
+  .jungle-switch [role="switch"] span {
+    border-width: 2px;
+    border-color: #000;
+    background: #fff;
+  }
+}
+
+/* Dark Mode Adaptations */
+@media (prefers-color-scheme: dark) {
+  .jungle-mobile-settings-dialog {
+    background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.98) 0%,
+      rgba(30, 41, 59, 0.98) 100%
+    );
+    border-color: rgba(139, 69, 19, 0.4);
+  }
+
+  .jungle-mobile-settings-dialog::before {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        rgba(139, 69, 19, 0.08) 0px,
+        rgba(139, 69, 19, 0.08) 1px,
+        transparent 1px,
+        transparent 6px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(160, 82, 45, 0.06) 0px,
+        rgba(160, 82, 45, 0.06) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+  }
+
+  .jungle-setting-card {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(139, 69, 19, 0.3) !important;
+    color: #f1f5f9;
+  }
+
+  .jungle-setting-card h3 {
+    color: #f1f5f9;
+  }
+
+  .jungle-setting-card p {
+    color: #cbd5e1;
+  }
+
+  .jungle-switch [role="switch"] {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(139, 69, 19, 0.4);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .jungle-mobile-settings-dialog {
+    background: white;
+    box-shadow: none;
+    border: 2px solid #333;
+  }
+
+  .jungle-setting-card {
+    background: white !important;
+    border: 1px solid #333 !important;
+    color: #333 !important;
+  }
+
+  .jungle-switch [role="switch"] {
+    background: white;
+    border: 2px solid #333;
+  }
+
+  .jungle-switch [role="switch"] span {
+    background: #333;
+    border: 1px solid #333;
+  }
+}
+
+/* Accessibility Enhancements */
+.jungle-mobile-settings-dialog *:focus-visible {
+  outline: 3px solid #4caf50;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Loading State */
+.jungle-setting-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.jungle-setting-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(76, 175, 80, 0.1),
+    transparent
+  );
+  animation: jungle-loading-shimmer 1.5s infinite;
+}
+
+@keyframes jungle-loading-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Success Animation */
+.jungle-setting-success {
+  animation: jungle-setting-saved 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes jungle-setting-saved {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}

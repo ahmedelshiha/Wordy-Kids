@@ -57,13 +57,23 @@
   margin: 0;
   padding: 0 6px;
   list-style: none;
-  display: grid;
-  grid-auto-flow: column;
-  gap: 6px;
+  display: flex;
+  align-items: end;
+  gap: 8px;
   flex: 1;
   max-width: 980px;
-  justify-content: space-between;
-  align-items: end;
+  /* Center all icons including parent menu */
+  justify-content: center;
+}
+
+/* Desktop specific layout */
+@media (min-width: 768px) {
+  .jng-nav-list {
+    gap: 16px;
+    padding: 0 12px;
+    /* Ensure all icons are centered and evenly spaced */
+    justify-content: center;
+  }
 }
 
 .jng-nav-item {
@@ -449,6 +459,137 @@
   animation: jungleMistUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Parent Menu Navigation Item Styling */
+.jng-parent-menu-item {
+  /* Center with other navigation items */
+  display: flex;
+}
+
+/* Ensure parent menu is visible on desktop */
+@media (min-width: 768px) {
+  .jng-parent-menu-btn.jng-parent-menu-desktop {
+    display: flex !important;
+  }
+}
+
+/* Desktop Parent Menu Enhancements */
+.jng-parent-menu-desktop {
+  /* Make it a jungle totem rising above the nav bar */
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(139, 69, 19, 0.9),
+    rgba(101, 67, 33, 0.95)
+  ) !important;
+  border: 2px solid rgba(251, 191, 36, 0.4) !important;
+  border-radius: 12px !important; /* Rounded like other nav items but distinguished */
+  box-shadow:
+    0 -2px 8px rgba(139, 69, 19, 0.3),
+    0 0 15px rgba(251, 191, 36, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
+  /* Remove default navigation button styles when it's the desktop parent menu */
+  background-image: none !important;
+  /* Ensure it's visible and properly sized */
+  min-height: 60px;
+  padding: 8px 12px !important;
+}
+
+.jng-parent-menu-desktop:hover {
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow:
+    0 -8px 20px rgba(139, 69, 19, 0.4),
+    0 0 30px rgba(251, 191, 36, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(251, 191, 36, 0.6) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(139, 69, 19, 0.95),
+    rgba(101, 67, 33, 1)
+  ) !important;
+}
+
+.jng-parent-menu-desktop .parent-menu-emoji {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  font-size: 1.8rem !important;
+}
+
+.jng-parent-menu-desktop .jng-label {
+  color: #fbbf24 !important;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: 0.75rem;
+}
+
+/* Ensure parent menu button doesn't interfere with regular nav styling */
+.jng-parent-menu-item .jng-btn:not(.jng-parent-menu-desktop) {
+  /* Keep regular mobile styling for non-desktop */
+}
+
+/* Desktop breathing animation - more subtle */
+@media (min-width: 768px) {
+  .jng-parent-menu-desktop.parent-breathing {
+    animation: jungleTotemBreath 6s ease-in-out infinite;
+  }
+}
+
+@keyframes jungleTotemBreath {
+  0%,
+  100% {
+    transform: translateY(-12px) scale(1);
+    box-shadow:
+      0 -4px 12px rgba(139, 69, 19, 0.3),
+      0 0 20px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    transform: translateY(-14px) scale(1.02);
+    box-shadow:
+      0 -6px 16px rgba(139, 69, 19, 0.4),
+      0 0 25px rgba(251, 191, 36, 0.3);
+  }
+}
+
+/* Floating jungle particles for desktop dialog */
+.jungle-dialog-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.jungle-particle {
+  position: absolute;
+  opacity: 0.6;
+  font-size: 1.2rem;
+  animation: jungleFloat 8s ease-in-out infinite;
+}
+
+.jungle-particle:nth-child(1) {
+  animation-delay: 0s;
+}
+.jungle-particle:nth-child(2) {
+  animation-delay: 2s;
+}
+.jungle-particle:nth-child(3) {
+  animation-delay: 4s;
+}
+.jungle-particle:nth-child(4) {
+  animation-delay: 6s;
+}
+
+@keyframes jungleFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
 /* Screen reader only utility class */
 .sr-only {
   position: absolute;
@@ -462,6 +603,111 @@
   border: 0;
 }
 
+/* Enhanced Button Interactions */
+.jungle-dialog-btn-enhanced {
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-dialog-btn-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.jungle-dialog-btn-enhanced:hover::before {
+  left: 100%;
+}
+
+.jungle-dialog-btn-enhanced:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Gradient Text Effects */
+.jungle-dialog-btn-enhanced span {
+  background: linear-gradient(135deg, #fff, #fbbf24);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: jungleTextShimmer 3s ease-in-out infinite;
+}
+
+@keyframes jungleTextShimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Enhanced Backdrop Patterns */
+.jungle-dialog-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(34, 139, 34, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(46, 125, 50, 0.1) 0%,
+      transparent 50%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(139, 69, 19, 0.05) 10px,
+      rgba(139, 69, 19, 0.05) 20px
+    );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Loading State Animations */
+.jungle-dialog-loading {
+  position: relative;
+}
+
+.jungle-dialog-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(76, 175, 80, 0.2),
+    transparent
+  );
+  animation: jungleLoadingSweep 1.5s ease-in-out infinite;
+}
+
+@keyframes jungleLoadingSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Focus management for keyboard navigation */
 .jungle-dialog-btn:focus-visible {
   outline: 2px solid #fbbf24;
@@ -471,6 +717,264 @@
 .jungle-dialog-close:focus-visible {
   outline: 2px solid #fbbf24;
   outline-offset: 2px;
+}
+
+/* Performance Optimizations */
+.jng-parent-menu-btn,
+.jungle-dialog-btn,
+.jungle-particle,
+.jungle-dialog-backdrop {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* GPU acceleration for smooth animations */
+.jungle-dialog-backdrop,
+.jungle-btn-glow,
+.jungle-particle {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Enhanced Jungle Totem Glow */
+.jng-parent-menu-desktop.parent-glowing {
+  animation: jungleTotemGlow 4s ease-in-out infinite;
+}
+
+@keyframes jungleTotemGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 -4px 12px rgba(139, 69, 19, 0.3),
+      0 0 20px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 -6px 20px rgba(139, 69, 19, 0.5),
+      0 0 40px rgba(251, 191, 36, 0.4),
+      0 0 60px rgba(76, 175, 80, 0.2);
+  }
+}
+
+/* Jungle Vines and Natural Textures */
+.jungle-dialog-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      ellipse at top left,
+      rgba(34, 139, 34, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(46, 125, 50, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(76, 175, 80, 0.03) 0%,
+      transparent 70%
+    );
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Enhanced Icon Lift Effect */
+.jng-parent-menu-desktop .jng-icon-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.jng-parent-menu-desktop .jng-icon-wrap::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 4px;
+  background: radial-gradient(
+    ellipse,
+    rgba(139, 69, 19, 0.3) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.jng-parent-menu-desktop:hover .jng-icon-wrap::before {
+  width: 24px;
+  height: 6px;
+  background: radial-gradient(
+    ellipse,
+    rgba(139, 69, 19, 0.4) 0%,
+    transparent 70%
+  );
+}
+
+/* Tablet Optimizations (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .jng-parent-menu-desktop {
+    padding: 6px 10px;
+    margin-top: -8px;
+  }
+
+  .jng-parent-menu-desktop .parent-menu-emoji {
+    font-size: 1.6rem !important;
+  }
+
+  .jungle-parent-dialog {
+    max-width: 85vw !important;
+    max-height: 75vh !important;
+  }
+
+  .jungle-dialog-frame {
+    padding: 20px;
+  }
+
+  .jungle-dialog-btn {
+    padding: 14px 18px;
+    font-size: 1.05rem;
+  }
+}
+
+/* Large Desktop Optimizations (1440px+) */
+@media (min-width: 1440px) {
+  .jng-parent-menu-desktop {
+    padding: 10px 16px;
+    margin-top: -16px;
+  }
+
+  .jng-parent-menu-desktop .parent-menu-emoji {
+    font-size: 2rem !important;
+  }
+
+  .jungle-parent-dialog {
+    max-width: 600px !important;
+    max-height: 80vh !important;
+  }
+
+  .jungle-dialog-frame {
+    padding: 32px;
+  }
+
+  .jungle-dialog-btn {
+    padding: 20px 24px;
+    font-size: 1.2rem;
+  }
+
+  .jungle-dialog-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Ultra-wide Desktop (1920px+) */
+@media (min-width: 1920px) {
+  .jungle-parent-dialog {
+    max-width: 700px !important;
+  }
+
+  .jungle-dialog-sections {
+    gap: 20px;
+  }
+}
+
+/* High DPI / Retina Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .jng-parent-menu-desktop .parent-menu-emoji {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+  }
+
+  .jungle-dialog-backdrop {
+    backdrop-filter: blur(12px);
+  }
+}
+
+/* Landscape Mobile Optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .jungle-parent-dialog {
+    max-height: 90vh !important;
+    max-width: 70vw !important;
+  }
+
+  .jungle-dialog-frame {
+    padding: 16px;
+  }
+
+  .jungle-dialog-sections {
+    gap: 12px;
+  }
+
+  .jungle-dialog-btn {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .jng-parent-menu-desktop {
+    /* Larger touch targets for mobile */
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .jungle-dialog-btn {
+    /* Ensure buttons are easily tappable */
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+
+  /* Remove hover effects on touch devices */
+  .jungle-dialog-btn-enhanced:hover::before {
+    display: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .jungle-parent-dialog {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: 2px solid black !important;
+  }
+
+  .jungle-dialog-backdrop {
+    background: white !important;
+    border: 1px solid black !important;
+  }
+
+  .jungle-dialog-btn {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+  }
+
+  .jungle-particle {
+    display: none;
+  }
+}
+
+/* Enhanced Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-parent-dialog[data-state="open"] .jungle-dialog-backdrop,
+  .jungleTotemBreath,
+  .jungleTotemGlow,
+  .jungleFloat,
+  .jungleTextShimmer {
+    animation: none !important;
+  }
+
+  .jungle-dialog-btn-enhanced:hover,
+  .jng-parent-menu-desktop:hover,
+  .jungle-setting-card:hover {
+    transform: none !important;
+  }
 }
 
 /* Reduced motion compliance for dialog animations */
