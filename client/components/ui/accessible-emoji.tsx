@@ -383,7 +383,7 @@ export function AccessibleEmojiTooltip({
   children,
   className,
 }: AccessibleEmojiTooltipProps) {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const accessibilitySettings = getAccessibilitySettings();
 
   // Don't show visual tooltips for screen reader users
