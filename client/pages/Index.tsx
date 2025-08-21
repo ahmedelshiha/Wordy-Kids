@@ -3724,7 +3724,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ��� Word Garden
+                                      ���� Word Garden
                                     </h2>
                                     <Button
                                       onClick={() => setShowExitDialog(true)}
@@ -4018,8 +4018,8 @@ export default function Index({ initialProfile }: IndexProps) {
               pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
-              showMobileMoreIcon={true}
-              onMobileMoreClick={() => setIsMobileMenuOpen(true)}
+              showParentMenuIcon={true}
+              onParentMenuClick={() => setShowParentGate(true)}
               items={[
                 {
                   id: "dashboard",
