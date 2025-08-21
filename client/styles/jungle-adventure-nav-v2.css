@@ -39,6 +39,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* Add padding at top to accommodate lifted icons */
+  padding-top: calc(var(--jng-icon-lift) + 8px);
 }
 
 /* Desktop keeps it at the bottom with larger height */
