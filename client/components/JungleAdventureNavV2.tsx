@@ -72,6 +72,8 @@ export type JungleAdventureNavV2Props = {
   onParentSignOut?: () => void;
   /** Called when register button is clicked */
   onParentRegister?: () => void;
+  /** Whether the user is a guest (for dynamic auth button) */
+  isGuest?: boolean;
   /** @deprecated Use showParentMenuIcon instead */
   showMobileMoreIcon?: boolean;
   /** @deprecated Use onParentMenuClick instead */
