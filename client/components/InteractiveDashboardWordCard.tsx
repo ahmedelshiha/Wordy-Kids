@@ -1537,6 +1537,8 @@ export function InteractiveDashboardWordCard({
                       : { duration: 0.3, ease: "easeInOut" }
                   }
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
+                  aria-live="polite"
+                  aria-label="Adventure message"
                   style={{
                     textShadow:
                       "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3)",
@@ -1553,7 +1555,7 @@ export function InteractiveDashboardWordCard({
 
                     // Jungle Explorer Characters
                     const jungleExplorers = {
-                      easy: ["🐵", "🦜", "🐨", "����", "🐝"],
+                      easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
                       medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
                       hard: ["🐲", "🦅", "🐺", "🐆", "����"],
                     };
