@@ -208,79 +208,112 @@
   }
 }
 
-/* 🌿 Improved Kid-Friendly Idle Animations
- * - Configurable timing via CSS variables
- * - Intensity controlled by tokens
- * - Occasional pauses for calm feeling
+/* 🌿 Kid-Friendly Navigation Icon Animations
+ * - Gentle breathing: Like a calm, friendly character
+ * - Mobile-safe: GPU transforms only, battery efficient
+ * - Inclusive: Safe for motion-sensitive children
+ * - Focus-friendly: Won't distract from typing/reading
  */
-@keyframes gentle-sway {
-  0%,
-  95%,
-  100% {
-    transform: rotate(0deg);
-  }
-  40% {
-    transform: rotate(var(--jungle-sway-rotate, 3deg));
-  }
-  60% {
-    transform: rotate(calc(-1 * var(--jungle-sway-rotate, 3deg)));
-  }
-}
 
-@keyframes gentle-float {
-  0%,
-  90%,
-  100% {
-    transform: translateY(0px);
-  }
-  45% {
-    transform: translateY(calc(-1 * var(--jungle-float-translate, 4px)));
-  }
-}
-
-@keyframes gentle-bounce {
-  0%,
-  85%,
-  100% {
-    transform: translateY(0px) scale(1);
-  }
-  42% {
-    transform: translateY(calc(-1 * var(--jungle-bounce-translate, 2px)))
-      scale(var(--jungle-hover-scale, 1.02));
-  }
-}
-
-@keyframes gentle-glow {
-  0%,
-  80%,
-  100% {
-    filter: brightness(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+/* 🫁 Gentle Breathing Animation (Default) */
+@keyframes breathing {
+  0%, 100% {
+    transform: scale(1);
   }
   50% {
-    filter: brightness(1.05) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.2));
+    transform: scale(1.05);
   }
 }
 
-/* 🎯 Calm Idle Animations - Centralized Token System */
-.jungle-animal-icon.idle-owl {
-  animation: gentle-sway
-    var(--jungle-idle-timing, 8s ease-in-out infinite alternate);
-  animation-delay: var(--owl-delay, 0s);
+/* ✨ Soft Glow Pulse (Optional Accent) */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(255, 255, 0, 0);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 255, 100, 0.4);
+    filter: drop-shadow(0 6px 12px rgba(255, 215, 0, 0.2));
+  }
 }
-.jungle-animal-icon.idle-parrot {
-  animation: gentle-float
-    var(--jungle-idle-timing, 10s ease-in-out infinite alternate);
-  animation-delay: var(--parrot-delay, 2s);
+
+/* 🦉 Animal Micro-Movements - Very subtle, infrequent */
+@keyframes owlBlink {
+  0%, 85%, 100% {
+    transform: scale(1) scaleY(1);
+  }
+  90%, 95% {
+    transform: scale(1) scaleY(0.9);
+  }
 }
-.jungle-animal-icon.idle-monkey {
-  animation: gentle-bounce
-    var(--jungle-idle-timing, 7s ease-in-out infinite alternate);
-  animation-delay: var(--monkey-delay, 4s);
+
+@keyframes monkeyTailWiggle {
+  0%, 90%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  95% {
+    transform: scale(1) rotate(2deg);
+  }
+  97% {
+    transform: scale(1) rotate(-1deg);
+  }
 }
-.jungle-animal-icon.idle-elephant {
-  animation: gentle-glow
-    var(--jungle-idle-timing, 12s ease-in-out infinite alternate);
-  animation-delay: var(--elephant-delay, 6s);
+
+@keyframes parrotHeadTilt {
+  0%, 88%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  94% {
+    transform: scale(1) rotate(3deg);
+  }
+}
+
+@keyframes elephantEarFlap {
+  0%, 92%, 100% {
+    transform: scale(1) scaleX(1);
+  }
+  96% {
+    transform: scale(1) scaleX(1.03);
+  }
+}
+
+/* 🎯 Kid-Friendly Animation Styles */
+
+/* Default: Gentle Breathing (Calm & Focus-Safe) */
+.jungle-animal-icon.style-breathing,
+.jungle-animal-icon:not([class*="style-"]) {
+  animation: breathing 4s ease-in-out infinite;
+}
+
+/* Optional: Soft Glow Pulse */
+.jungle-animal-icon.style-glow {
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+/* Animal-Specific Micro-Movements (Very Subtle) */
+.jungle-animal-icon.style-micro.idle-owl {
+  animation: breathing 4s ease-in-out infinite, owlBlink 12s ease-in-out infinite;
+  animation-delay: 0s, var(--owl-delay, 3s);
+}
+
+.jungle-animal-icon.style-micro.idle-parrot {
+  animation: breathing 4s ease-in-out infinite, parrotHeadTilt 15s ease-in-out infinite;
+  animation-delay: 0s, var(--parrot-delay, 7s);
+}
+
+.jungle-animal-icon.style-micro.idle-monkey {
+  animation: breathing 4s ease-in-out infinite, monkeyTailWiggle 10s ease-in-out infinite;
+  animation-delay: 0s, var(--monkey-delay, 5s);
+}
+
+.jungle-animal-icon.style-micro.idle-elephant {
+  animation: breathing 4s ease-in-out infinite, elephantEarFlap 18s ease-in-out infinite;
+  animation-delay: 0s, var(--elephant-delay, 9s);
+}
+
+/* No Animation Option */
+.jungle-animal-icon.style-none {
+  animation: none;
 }
 
 /* 🎯 Animation Control Classes */
