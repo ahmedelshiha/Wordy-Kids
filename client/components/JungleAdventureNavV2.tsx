@@ -410,37 +410,39 @@ export default function JungleAdventureNavV2({
 
                   {parentDialogSections.auth && (
                     <button
-                    className="jungle-dialog-btn"
-                    onClick={() => {
-                      setIsParentDialogOpen(false);
-                      if (isGuest) {
-                        onParentRegister?.();
-                      } else {
-                        onParentSignOut?.();
+                      className="jungle-dialog-btn"
+                      onClick={() => {
+                        setIsParentDialogOpen(false);
+                        if (isGuest) {
+                          onParentRegister?.();
+                        } else {
+                          onParentSignOut?.();
+                        }
+                      }}
+                      aria-label={
+                        isGuest
+                          ? "Sign Up / Register - Create new account"
+                          : "Goodbye & Log Off - Sign out of account"
                       }
-                    }}
-                    aria-label={
-                      isGuest
-                        ? "Sign Up / Register - Create new account"
-                        : "Goodbye & Log Off - Sign out of account"
-                    }
-                  >
-                    {isGuest ? (
-                      <UserPlus
-                        className="jungle-dialog-icon"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <LogOut
-                        className="jungle-dialog-icon"
-                        aria-hidden="true"
-                      />
-                    )}
-                    <span>
-                      {isGuest ? "✨ Sign Up / Register" : "🌿 Goodbye & Log Off"}
-                    </span>
-                    <div className="jungle-btn-glow" />
-                  </button>
+                    >
+                      {isGuest ? (
+                        <UserPlus
+                          className="jungle-dialog-icon"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <LogOut
+                          className="jungle-dialog-icon"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <span>
+                        {isGuest
+                          ? "✨ Sign Up / Register"
+                          : "🌿 Goodbye & Log Off"}
+                      </span>
+                      <div className="jungle-btn-glow" />
+                    </button>
                   )}
                 </div>
 
