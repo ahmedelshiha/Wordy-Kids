@@ -327,24 +327,24 @@
   box-shadow: none !important;
 }
 
-/* ===== GLOW EFFECT CLASSES (Optional) ===== */
-/* Add these classes for subtle glow effects */
+/* ===== SERENE GLOW EFFECT CLASSES (Optional) ===== */
+/* Add these classes for ultra-subtle glow effects */
 .jungle-animal-icon.with-glow {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    glow-pulse 8s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    glow-pulse 15s ease-in-out infinite;
 }
 
 .jungle-animal-icon.active.with-glow {
   animation:
-    breathing 4s ease-in-out infinite,
-    jungle-glow-pulse 6s ease-in-out infinite;
+    breathing 8s ease-in-out infinite,
+    jungle-glow-pulse 12s ease-in-out infinite;
 }
 
 .jungle-animal-icon.accent-glow {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    soft-accent-glow 7s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    soft-accent-glow 14s ease-in-out infinite;
 }
 
 /* ===== ANIMAL CHARACTER MICRO-MOVEMENTS (Optional) ===== */
