@@ -2193,9 +2193,9 @@ export default function Index({ initialProfile }: IndexProps) {
             </div>
           )}
 
-          {/* Parent Gate Button - Top Right Corner */}
+          {/* Parent Gate Button - Top Right Corner (Desktop Only) */}
           {userRole === "child" && (
-            <div className="fixed top-4 right-4 z-50">
+            <div className="fixed top-4 right-4 z-50 hidden md:block">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <motion.button
@@ -3572,7 +3572,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            🌺
+                                            ����
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-jungle-green text-sm">
@@ -3975,7 +3975,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "���", "����", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
