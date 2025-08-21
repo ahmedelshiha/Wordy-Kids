@@ -22,7 +22,7 @@ import {
   Heart,
   Star,
   Gift,
-  Map,
+  Map as MapIcon,
   Compass,
   Search,
   RefreshCw,
