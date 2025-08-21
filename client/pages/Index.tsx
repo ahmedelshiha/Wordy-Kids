@@ -2180,7 +2180,6 @@ export default function Index({ initialProfile }: IndexProps) {
             </div>
           )}
 
-
           {/* Main Content with Sidebar Layout */}
           <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (

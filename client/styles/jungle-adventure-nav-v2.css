@@ -534,7 +534,8 @@
 }
 
 @keyframes jungleTotemBreath {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-12px) scale(1);
     box-shadow:
       0 -4px 12px rgba(139, 69, 19, 0.3),
@@ -564,13 +565,22 @@
   animation: jungleFloat 8s ease-in-out infinite;
 }
 
-.jungle-particle:nth-child(1) { animation-delay: 0s; }
-.jungle-particle:nth-child(2) { animation-delay: 2s; }
-.jungle-particle:nth-child(3) { animation-delay: 4s; }
-.jungle-particle:nth-child(4) { animation-delay: 6s; }
+.jungle-particle:nth-child(1) {
+  animation-delay: 0s;
+}
+.jungle-particle:nth-child(2) {
+  animation-delay: 2s;
+}
+.jungle-particle:nth-child(3) {
+  animation-delay: 4s;
+}
+.jungle-particle:nth-child(4) {
+  animation-delay: 6s;
+}
 
 @keyframes jungleFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
     opacity: 0.3;
   }
@@ -635,7 +645,8 @@
 }
 
 @keyframes jungleTextShimmer {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -649,8 +660,16 @@
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 25% 25%, rgba(34, 139, 34, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(46, 125, 50, 0.1) 0%, transparent 50%),
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(34, 139, 34, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(46, 125, 50, 0.1) 0%,
+      transparent 50%
+    ),
     repeating-linear-gradient(
       45deg,
       transparent,
@@ -723,7 +742,8 @@
 }
 
 @keyframes jungleTotemGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       0 -4px 12px rgba(139, 69, 19, 0.3),
       0 0 20px rgba(251, 191, 36, 0.2);
@@ -742,9 +762,21 @@
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse at top left, rgba(34, 139, 34, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(46, 125, 50, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at center, rgba(76, 175, 80, 0.03) 0%, transparent 70%);
+    radial-gradient(
+      ellipse at top left,
+      rgba(34, 139, 34, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(46, 125, 50, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(76, 175, 80, 0.03) 0%,
+      transparent 70%
+    );
   border-radius: inherit;
   pointer-events: none;
   mix-blend-mode: multiply;
@@ -764,7 +796,11 @@
   transform: translateX(-50%);
   width: 20px;
   height: 4px;
-  background: radial-gradient(ellipse, rgba(139, 69, 19, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse,
+    rgba(139, 69, 19, 0.3) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
   transition: all 0.3s ease;
 }
@@ -772,7 +808,11 @@
 .jng-parent-menu-desktop:hover .jng-icon-wrap::before {
   width: 24px;
   height: 6px;
-  background: radial-gradient(ellipse, rgba(139, 69, 19, 0.4) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse,
+    rgba(139, 69, 19, 0.4) 0%,
+    transparent 70%
+  );
 }
 
 /* Tablet Optimizations (768px - 1024px) */

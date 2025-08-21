@@ -309,10 +309,14 @@ export default function JungleAdventureNavV2({
                 className={clsx(
                   "jng-btn jng-parent-menu-btn",
                   // Always show on desktop when showParentMenuOnDesktop is true
-                  showParentMenuOnDesktop ? "jng-parent-menu-desktop" : "md:hidden",
-                  parentMenuAnimationStyle === "breathing" && "parent-breathing",
+                  showParentMenuOnDesktop
+                    ? "jng-parent-menu-desktop"
+                    : "md:hidden",
+                  parentMenuAnimationStyle === "breathing" &&
+                    "parent-breathing",
                   parentMenuAnimationStyle === "glow" && "parent-glowing",
-                  breathing[showParentMenuIcon ? "parent-menu" : "more"] && "breath-once",
+                  breathing[showParentMenuIcon ? "parent-menu" : "more"] &&
+                    "breath-once",
                 )}
                 onClick={() => {
                   if (showParentMenuIcon) {
@@ -332,7 +336,9 @@ export default function JungleAdventureNavV2({
                 aria-label={
                   showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
                 }
-                aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
+                aria-expanded={
+                  showParentMenuIcon ? isParentDialogOpen : undefined
+                }
                 aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
               >
                 <span
@@ -362,7 +368,6 @@ export default function JungleAdventureNavV2({
             </li>
           )}
         </ul>
-
       </div>
 
       {/* Parent Menu Dialog */}
@@ -381,12 +386,42 @@ export default function JungleAdventureNavV2({
             <div className="jungle-dialog-backdrop">
               {/* Floating Jungle Particles */}
               <div className="jungle-dialog-particles">
-                <span className="jungle-particle" style={{ left: "10%", top: "20%" }}>🌿</span>
-                <span className="jungle-particle" style={{ left: "80%", top: "30%" }}>🦋</span>
-                <span className="jungle-particle" style={{ left: "20%", top: "70%" }}>🌺</span>
-                <span className="jungle-particle" style={{ left: "85%", top: "80%" }}>🐛</span>
-                <span className="jungle-particle" style={{ left: "60%", top: "15%" }}>🍃</span>
-                <span className="jungle-particle" style={{ left: "15%", top: "85%" }}>✨</span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "10%", top: "20%" }}
+                >
+                  🌿
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "80%", top: "30%" }}
+                >
+                  🦋
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "20%", top: "70%" }}
+                >
+                  🌺
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "85%", top: "80%" }}
+                >
+                  🐛
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "60%", top: "15%" }}
+                >
+                  🍃
+                </span>
+                <span
+                  className="jungle-particle"
+                  style={{ left: "15%", top: "85%" }}
+                >
+                  ✨
+                </span>
               </div>
               <div className="jungle-dialog-frame">
                 <div className="jungle-dialog-sections">
