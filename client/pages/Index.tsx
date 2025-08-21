@@ -3254,7 +3254,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2 className="jungle-quiz-title text-lg md:text-xl mb-1">
-                                        🌟 Jungle Quiz Adventure! 🌟
+                                        �� Jungle Quiz Adventure! 🌟
                                       </h2>
                                       <p className="jungle-quiz-subtitle text-xs md:text-sm">
                                         Test your vocabulary in the jungle! 🏆✨
@@ -4037,12 +4037,10 @@ export default function Index({ initialProfile }: IndexProps) {
                 }
               }}
               onParentSignOut={() => {
-                // Handle logout logic here
-                console.log("Parent sign out clicked");
+                logout();
               }}
               onParentRegister={() => {
-                // Handle registration logic here
-                console.log("Parent register clicked");
+                navigate("/signup");
               }}
               items={[
                 {
