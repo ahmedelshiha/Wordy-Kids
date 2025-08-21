@@ -1,5 +1,5 @@
 /**
- * �� Jungle Adventure Navigation Styles
+ * 🌿 Jungle Adventure Navigation Styles
  * Cross-platform immersive navigation with jungle theming
  */
 
@@ -246,21 +246,21 @@
   }
 }
 
-/* 🎯 Calm Idle Animations - Occasional subtle movements */
+/* 🎯 Calm Idle Animations - Centralized Token System */
 .jungle-animal-icon.idle-owl {
-  animation: gentle-sway 8s ease-in-out infinite alternate;
+  animation: gentle-sway var(--jungle-idle-timing, 8s ease-in-out infinite alternate);
   animation-delay: var(--owl-delay, 0s);
 }
 .jungle-animal-icon.idle-parrot {
-  animation: gentle-float 10s ease-in-out infinite alternate;
+  animation: gentle-float var(--jungle-idle-timing, 10s ease-in-out infinite alternate);
   animation-delay: var(--parrot-delay, 2s);
 }
 .jungle-animal-icon.idle-monkey {
-  animation: gentle-bounce 7s ease-in-out infinite alternate;
+  animation: gentle-bounce var(--jungle-idle-timing, 7s ease-in-out infinite alternate);
   animation-delay: var(--monkey-delay, 4s);
 }
 .jungle-animal-icon.idle-elephant {
-  animation: gentle-glow 12s ease-in-out infinite alternate;
+  animation: gentle-glow var(--jungle-idle-timing, 12s ease-in-out infinite alternate);
   animation-delay: var(--elephant-delay, 6s);
 }
 
