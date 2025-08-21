@@ -96,7 +96,7 @@
   }
 }
 
-@keyframes parrot-gentle-sway {
+/* @keyframes parrot-gentle-sway {
   0%,
   100% {
     transform: translateY(0px) rotate(0deg);
@@ -106,7 +106,7 @@
     transform: translateY(-1px) rotate(-1deg);
     opacity: 0.95;
   }
-}
+} */
 
 @keyframes monkey-soft-motion {
   0%,
