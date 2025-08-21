@@ -1823,7 +1823,7 @@ export default function Index({ initialProfile }: IndexProps) {
         notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
-          message: `Congratulations! You've reached a new level!\n\n�� Keep up the amazing work!`,
+          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
           points: 50,
         });
       }
@@ -3240,7 +3240,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🌿
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🍃
+                                      ����
                                     </div>
                                     <div className="jungle-leaves-float">
                                       ����
@@ -3254,7 +3254,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2 className="jungle-quiz-title text-lg md:text-xl mb-1">
-                                        �� Jungle Quiz Adventure! 🌟
+                                        🧠 Jungle Quiz Adventure! 🌟
                                       </h2>
                                       <p className="jungle-quiz-subtitle text-xs md:text-sm">
                                         Test your vocabulary in the jungle! 🏆✨
@@ -3274,7 +3274,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               <p className="text-sm text-jungle-dark mt-1">
                                                 Your personal jungle companion
                                                 creates adventures just for you!
-                                                🧙‍♂��✨
+                                                🧙‍♂️✨
                                               </p>
                                             </div>
                                           </div>
@@ -3402,7 +3402,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Crown className="w-5 h-5 mr-2" />
-                                          Start Epic Adventure! ��
+                                          Start Epic Adventure! 🚀
                                         </button>
                                       </div>
 
@@ -3418,11 +3418,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Journey through magical gardens where
                                           words bloom into beautiful flowers!
                                           Listen to nature's whispers and watch
-                                          your vocabulary grow! 🌸��
+                                          your vocabulary grow! 🌸🌿
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
-                                            ��� Ages 3-5
+                                            🌟 Ages 3-5
                                           </span>
                                           <span className="jungle-quiz-badge-audio">
                                             🎵 Audio Magic
@@ -3451,7 +3451,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Follow ancient jungle sounds to hidden
                                           treasures! Listen carefully to
                                           nature's magical symphony and discover
-                                          secret word treasures! ����🗺️
+                                          secret word treasures! 💎🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3489,7 +3489,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Explore ancient jungle temples and
                                           decode mysterious picture scrolls!
                                           Each image holds the key to incredible
-                                          word treasures! 🏛��💎
+                                          word treasures! 🏛️💎
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3568,7 +3568,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Crystal Quest Awaits! ��
+                                          Crystal Quest Awaits! 💎
                                         </button>
                                       </div>
                                     </div>
