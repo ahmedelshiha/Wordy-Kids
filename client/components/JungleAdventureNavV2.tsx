@@ -300,6 +300,69 @@ export default function JungleAdventureNavV2({
               </li>
             );
           })}
+
+          {/* Parent Menu Icon - Positioned beside Trophy Grove */}
+          {(showParentMenuIcon || showMobileMoreIcon) && (
+            <li className="jng-nav-item jng-parent-menu-item" role="none">
+              <button
+                role="menuitem"
+                className={clsx(
+                  "jng-btn jng-parent-menu-btn",
+                  // Hide on desktop unless showParentMenuOnDesktop is true
+                  !showParentMenuOnDesktop && "md:hidden",
+                  // Desktop-specific styling
+                  showParentMenuOnDesktop && "jng-parent-menu-desktop",
+                  parentMenuAnimationStyle === "breathing" && "parent-breathing",
+                  parentMenuAnimationStyle === "glow" && "parent-glowing",
+                  breathing[showParentMenuIcon ? "parent-menu" : "more"] && "breath-once",
+                )}
+                onClick={() => {
+                  if (showParentMenuIcon) {
+                    handleParentMenuClick();
+                  } else {
+                    // Legacy support
+                    triggerBreath("more");
+                    if (onMobileMoreClick) onMobileMoreClick();
+                  }
+                }}
+                onMouseEnter={() =>
+                  triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+                }
+                onFocus={() =>
+                  triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+                }
+                aria-label={
+                  showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
+                }
+                aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
+                aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
+              >
+                <span
+                  className={clsx(
+                    "jng-icon-wrap jng-icon-lifted",
+                    showParentMenuIcon && "parent-icon-totem",
+                  )}
+                  aria-hidden="true"
+                >
+                  {showParentMenuIcon ? (
+                    <span
+                      className="jng-emoji parent-menu-emoji"
+                      style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
+                    >
+                      {getParentMenuIcon()}
+                    </span>
+                  ) : (
+                    <span className="jng-svg">
+                      <MoreHorizontal size={iconSize * 0.7} />
+                    </span>
+                  )}
+                </span>
+                <span className="jng-label">
+                  {showParentMenuIcon ? "Parents" : "More"}
+                </span>
+              </button>
+            </li>
+          )}
         </ul>
 
         {/* Parent Menu Icon - Right Side (Mobile & Desktop) */}
