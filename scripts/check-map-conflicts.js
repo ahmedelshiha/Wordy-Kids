@@ -5,9 +5,9 @@
  * This script prevents bare "Map" imports from lucide-react and checks for naming conflicts
  */
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+import fs from 'fs';
+import path from 'path';
+import { glob } from 'glob';
 
 // Colors for console output
 const colors = {
