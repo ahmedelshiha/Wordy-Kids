@@ -183,6 +183,7 @@ const isConsecutiveDay = (lastActivity: Date, today: Date): boolean => {
 
 export default function Index({ initialProfile }: IndexProps) {
   const navigate = useNavigate();
+  const { user, isGuest, logout } = useAuth();
 
   // Navigation history for back button functionality
   const { canGoBack, goBack, previousPath } = useNavigationHistory({
