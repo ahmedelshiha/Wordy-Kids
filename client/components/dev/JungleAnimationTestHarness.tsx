@@ -318,6 +318,36 @@ export const JungleAnimationTestHarness: React.FC<
             </div>
           </div>
 
+          {/* Animation Control */}
+          <div>
+            <h4 className="font-semibold mb-2 text-sm">🎮 Animation Control</h4>
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <Button
+                onClick={toggleAnimationsPause}
+                size="sm"
+                variant={animationsPaused ? "default" : "outline"}
+                className="text-xs"
+              >
+                {animationsPaused ? '▶️ Resume' : '⏸️ Pause'}
+              </Button>
+              <Button
+                onClick={runSpeedStressTest}
+                size="sm"
+                variant={stressTestRunning ? "destructive" : "outline"}
+                className="text-xs"
+              >
+                {stressTestRunning ? '🛑 Stop' : '🚀 Stress Test'}
+              </Button>
+            </div>
+            {stressTestRunning && (
+              <div className="text-xs text-center p-2 bg-red-50 rounded border">
+                <div className="font-semibold text-red-700">Stress Test Running</div>
+                <div className="text-red-600">FPS: {fpsCounter}</div>
+                <div className="text-xs text-red-500">Auto-stops in 30s</div>
+              </div>
+            )}
+          </div>
+
           {/* Rare Effects Tests */}
           <div>
             <h4 className="font-semibold mb-2 text-sm">✨ Rare Effects</h4>
