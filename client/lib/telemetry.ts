@@ -52,7 +52,10 @@ class TelemetryService {
    * Log UI errors from ErrorBoundary or other components
    */
   log(type: "ui_error", data: UIErrorData): void;
-  log(type: "performance" | "user_action" | "feature_usage", data: Record<string, any>): void;
+  log(
+    type: "performance" | "user_action" | "feature_usage",
+    data: Record<string, any>,
+  ): void;
   log(type: TelemetryEvent["type"], data: Record<string, any>): void {
     if (!this.isEnabled) return;
 
@@ -60,7 +63,7 @@ class TelemetryService {
       type,
       timestamp: Date.now(),
       sessionId: this.sessionId,
-      data: { ...data }
+      data: { ...data },
     };
 
     this.events.push(event);
@@ -82,17 +85,19 @@ class TelemetryService {
     if (type === "ui_error") {
       try {
         // Import dynamically to avoid circular dependencies
-        import("./parentDashboardAnalytics").then(({ parentDashboardAnalytics }) => {
-          parentDashboardAnalytics.trackError(
-            "dashboard",
-            data.error || "Unknown error",
-            {
-              componentName: data.componentName,
-              errorId: data.errorId,
-              timestamp: data.timestamp
-            }
-          );
-        });
+        import("./parentDashboardAnalytics").then(
+          ({ parentDashboardAnalytics }) => {
+            parentDashboardAnalytics.trackError(
+              "dashboard",
+              data.error || "Unknown error",
+              {
+                componentName: data.componentName,
+                errorId: data.errorId,
+                timestamp: data.timestamp,
+              },
+            );
+          },
+        );
       } catch (error) {
         console.warn("Failed to log to parent dashboard analytics:", error);
       }
@@ -107,7 +112,7 @@ class TelemetryService {
       const eventData = {
         sessionId: this.sessionId,
         events: this.events.slice(-50), // Keep only latest 50 events
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       };
       localStorage.setItem("telemetryEvents", JSON.stringify(eventData));
     } catch (error) {
@@ -130,18 +135,19 @@ class TelemetryService {
     errorsByComponent: Record<string, number>;
     recentErrors: TelemetryEvent[];
   } {
-    const errorEvents = this.events.filter(e => e.type === "ui_error");
+    const errorEvents = this.events.filter((e) => e.type === "ui_error");
     const errorsByComponent: Record<string, number> = {};
 
-    errorEvents.forEach(event => {
+    errorEvents.forEach((event) => {
       const componentName = event.data.componentName || "unknown";
-      errorsByComponent[componentName] = (errorsByComponent[componentName] || 0) + 1;
+      errorsByComponent[componentName] =
+        (errorsByComponent[componentName] || 0) + 1;
     });
 
     return {
       totalErrors: errorEvents.length,
       errorsByComponent,
-      recentErrors: errorEvents.slice(-10) // Last 10 errors
+      recentErrors: errorEvents.slice(-10), // Last 10 errors
     };
   }
 
@@ -162,7 +168,7 @@ class TelemetryService {
 
     try {
       const settings = JSON.parse(
-        localStorage.getItem("jungleAdventureSettings") || "{}"
+        localStorage.getItem("jungleAdventureSettings") || "{}",
       );
       settings.telemetryEnabled = enabled;
       localStorage.setItem("jungleAdventureSettings", JSON.stringify(settings));
@@ -184,16 +190,20 @@ class TelemetryService {
       return null;
     }
 
-    return JSON.stringify({
-      sessionId: this.sessionId,
-      events: this.events,
-      summary: this.getErrorSummary(),
-      metadata: {
-        userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString(),
-        url: window.location.href
-      }
-    }, null, 2);
+    return JSON.stringify(
+      {
+        sessionId: this.sessionId,
+        events: this.events,
+        summary: this.getErrorSummary(),
+        metadata: {
+          userAgent: navigator.userAgent,
+          timestamp: new Date().toISOString(),
+          url: window.location.href,
+        },
+      },
+      null,
+      2,
+    );
   }
 
   /**
@@ -206,9 +216,9 @@ class TelemetryService {
         const data = JSON.parse(stored);
         if (data.events && Array.isArray(data.events)) {
           // Only load events from the last 24 hours
-          const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
-          this.events = data.events.filter((event: TelemetryEvent) => 
-            event.timestamp > oneDayAgo
+          const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+          this.events = data.events.filter(
+            (event: TelemetryEvent) => event.timestamp > oneDayAgo,
           );
         }
       }
@@ -231,7 +241,7 @@ export { TelemetryService };
 export const withTelemetryTracking = async <T>(
   operation: () => Promise<T> | T,
   operationName: string,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ): Promise<T> => {
   const startTime = performance.now();
 
@@ -243,7 +253,7 @@ export const withTelemetryTracking = async <T>(
       operation: operationName,
       duration: Math.round(duration),
       success: true,
-      ...metadata
+      ...metadata,
     });
 
     return result;
@@ -253,10 +263,11 @@ export const withTelemetryTracking = async <T>(
     telemetry.log("ui_error", {
       componentName: operationName,
       error: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack?.substring(0, 500) : undefined,
+      stack:
+        error instanceof Error ? error.stack?.substring(0, 500) : undefined,
       duration: Math.round(duration),
       timestamp: new Date().toISOString(),
-      ...metadata
+      ...metadata,
     });
 
     throw error;

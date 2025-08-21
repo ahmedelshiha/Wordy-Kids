@@ -128,7 +128,10 @@ const App = () => {
                       <Route
                         path="/app"
                         element={
-                          <ErrorBoundary fallbackType="kid" componentName="AppPage">
+                          <ErrorBoundary
+                            fallbackType="kid"
+                            componentName="AppPage"
+                          >
                             <AppPage />
                           </ErrorBoundary>
                         }
@@ -137,7 +140,10 @@ const App = () => {
                       <Route
                         path="/admin"
                         element={
-                          <ErrorBoundary fallbackType="parent" componentName="AdminPage">
+                          <ErrorBoundary
+                            fallbackType="parent"
+                            componentName="AdminPage"
+                          >
                             <AdminPage />
                           </ErrorBoundary>
                         }
@@ -186,7 +192,10 @@ const App = () => {
                         path="/AIWordRecommendationDemo"
                         element={<AIWordRecommendationDemo />}
                       />
-                      <Route path="/ai-system-test" element={<AISystemTest />} />
+                      <Route
+                        path="/ai-system-test"
+                        element={<AISystemTest />}
+                      />
                       <Route
                         path="/enhanced-magical-menu-demo"
                         element={<EnhancedMagicalMenuDemo />}

@@ -4,9 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ErrorBoundary } from "./common/ErrorBoundary";
 
 // Test component that can trigger errors
-const ErrorGeneratingComponent: React.FC<{ shouldError: boolean }> = ({ shouldError }) => {
+const ErrorGeneratingComponent: React.FC<{ shouldError: boolean }> = ({
+  shouldError,
+}) => {
   if (shouldError) {
-    throw new Error("This is a test error to verify ErrorBoundary functionality");
+    throw new Error(
+      "This is a test error to verify ErrorBoundary functionality",
+    );
   }
 
   return (
@@ -43,9 +47,10 @@ export const ErrorBoundaryTest: React.FC = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-600">
-            Use these buttons to test ErrorBoundary functionality with different fallback types:
+            Use these buttons to test ErrorBoundary functionality with different
+            fallback types:
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Button
               onClick={() => setTriggerKidError(true)}
@@ -54,7 +59,7 @@ export const ErrorBoundaryTest: React.FC = () => {
             >
               Test Kid Fallback (Jungle Theme)
             </Button>
-            
+
             <Button
               onClick={() => setTriggerParentError(true)}
               variant="destructive"
@@ -72,7 +77,7 @@ export const ErrorBoundaryTest: React.FC = () => {
             >
               Reset Kid Component
             </Button>
-            
+
             <Button
               onClick={() => setTriggerParentError(false)}
               variant="outline"
@@ -103,7 +108,10 @@ export const ErrorBoundaryTest: React.FC = () => {
             <CardTitle>Parent Fallback Test</CardTitle>
           </CardHeader>
           <CardContent>
-            <ErrorBoundary fallbackType="parent" componentName="ParentTestComponent">
+            <ErrorBoundary
+              fallbackType="parent"
+              componentName="ParentTestComponent"
+            >
               <ErrorGeneratingComponent shouldError={triggerParentError} />
             </ErrorBoundary>
           </CardContent>
@@ -145,7 +153,7 @@ export const ErrorBoundaryTest: React.FC = () => {
             >
               Export Telemetry Data
             </Button>
-            
+
             <Button
               onClick={() => {
                 import("@/lib/telemetry").then(({ telemetry }) => {

@@ -18,25 +18,28 @@ interface ErrorBoundaryState {
   errorId: string;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
       hasError: false,
       error: null,
       errorInfo: null,
-      errorId: ""
+      errorId: "",
     };
   }
 
   static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
     // Generate unique error ID for tracking
     const errorId = `err_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     return {
       hasError: true,
       error,
-      errorId
+      errorId,
     };
   }
 
@@ -54,7 +57,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         url: window.location.href,
         timestamp: new Date().toISOString(),
         errorInfo: JSON.stringify(errorInfo).substring(0, 300),
-        fallbackType
+        fallbackType,
       });
     } catch (telemetryError) {
       console.error("Failed to log error to telemetry:", telemetryError);
@@ -62,7 +65,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
     // Update state with error info
     this.setState({
-      errorInfo
+      errorInfo,
     });
 
     // Log to console in development
@@ -71,7 +74,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         error,
         errorInfo,
         componentName,
-        fallbackType
+        fallbackType,
       });
     }
   }
@@ -84,7 +87,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       telemetry.log("user_action", {
         action: "error_boundary_retry",
         componentName: this.props.componentName,
-        errorId: this.state.errorId
+        errorId: this.state.errorId,
       });
     } catch (error) {
       console.error("Failed to track retry:", error);
@@ -95,7 +98,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       hasError: false,
       error: null,
       errorInfo: null,
-      errorId: ""
+      errorId: "",
     });
 
     // Call custom reset handler if provided
@@ -109,7 +112,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       telemetry.log("user_action", {
         action: "error_boundary_home",
         componentName: this.props.componentName,
-        errorId: this.state.errorId
+        errorId: this.state.errorId,
       });
     } catch (error) {
       console.error("Failed to track home navigation:", error);
@@ -120,7 +123,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   renderKidFallback() {
     const { error } = this.state;
-    
+
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-jungle-light via-green-50 to-white">
         <Card className="max-w-md w-full text-center border-jungle border-2 shadow-lg">
@@ -129,7 +132,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               <div className="relative">
                 {/* Jungle parrot mascot */}
                 <div className="text-6xl animate-bounce">🦜</div>
-                <div className="absolute -top-2 -right-2 text-2xl animate-pulse">✨</div>
+                <div className="absolute -top-2 -right-2 text-2xl animate-pulse">
+                  ✨
+                </div>
               </div>
             </div>
             <CardTitle className="text-2xl font-bold text-jungle-dark">
@@ -140,12 +145,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <p className="text-jungle text-lg">
               Don't worry, our jungle parrot is fixing things! 🌿
             </p>
-            
+
             {/* Decorative vines */}
             <div className="flex justify-center space-x-2 my-4">
               <TreePine className="text-jungle animate-jungle-sway" size={24} />
-              <TreePine className="text-jungle-light animate-jungle-sway animation-delay-500" size={28} />
-              <TreePine className="text-jungle animate-jungle-sway animation-delay-1000" size={24} />
+              <TreePine
+                className="text-jungle-light animate-jungle-sway animation-delay-500"
+                size={28}
+              />
+              <TreePine
+                className="text-jungle animate-jungle-sway animation-delay-1000"
+                size={24}
+              />
             </div>
 
             <div className="space-y-3">
@@ -157,7 +168,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <RefreshCw className="mr-2" size={20} />
                 Try Again! 🌟
               </Button>
-              
+
               <Button
                 onClick={this.handleGoHome}
                 variant="outline"
@@ -188,7 +199,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   renderParentFallback() {
     const { error, errorInfo, errorId } = this.state;
     const { componentName } = this.props;
-    
+
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
         <Card className="max-w-2xl w-full">
@@ -200,7 +211,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   Application Error
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-1">
-                  {componentName ? `Error in ${componentName}` : "An unexpected error occurred"}
+                  {componentName
+                    ? `Error in ${componentName}`
+                    : "An unexpected error occurred"}
                 </p>
               </div>
             </div>
@@ -212,9 +225,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 {error?.message || "Unknown error occurred"}
               </p>
               {errorId && (
-                <p className="text-red-600 text-xs mt-2">
-                  Error ID: {errorId}
-                </p>
+                <p className="text-red-600 text-xs mt-2">Error ID: {errorId}</p>
               )}
             </div>
 
@@ -227,7 +238,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <RefreshCw className="mr-2" size={16} />
                 Retry
               </Button>
-              
+
               <Button
                 onClick={this.handleGoHome}
                 variant="outline"
@@ -246,16 +257,20 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 <div className="mt-3 space-y-3">
                   {error && (
                     <div>
-                      <p className="text-xs font-medium text-gray-700 mb-1">Error:</p>
+                      <p className="text-xs font-medium text-gray-700 mb-1">
+                        Error:
+                      </p>
                       <pre className="text-xs bg-gray-100 p-3 rounded overflow-auto max-h-32">
                         {error.toString()}
                       </pre>
                     </div>
                   )}
-                  
+
                   {error?.stack && (
                     <div>
-                      <p className="text-xs font-medium text-gray-700 mb-1">Stack Trace:</p>
+                      <p className="text-xs font-medium text-gray-700 mb-1">
+                        Stack Trace:
+                      </p>
                       <pre className="text-xs bg-gray-100 p-3 rounded overflow-auto max-h-40">
                         {error.stack}
                       </pre>
@@ -264,7 +279,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
                   {errorInfo && (
                     <div>
-                      <p className="text-xs font-medium text-gray-700 mb-1">Component Stack:</p>
+                      <p className="text-xs font-medium text-gray-700 mb-1">
+                        Component Stack:
+                      </p>
                       <pre className="text-xs bg-gray-100 p-3 rounded overflow-auto max-h-32">
                         {errorInfo.componentStack}
                       </pre>
@@ -284,7 +301,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     const { children, fallbackType = "parent" } = this.props;
 
     if (hasError) {
-      return fallbackType === "kid" ? this.renderKidFallback() : this.renderParentFallback();
+      return fallbackType === "kid"
+        ? this.renderKidFallback()
+        : this.renderParentFallback();
     }
 
     return children;

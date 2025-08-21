@@ -762,7 +762,10 @@ export const JungleAdventureParentDashboard: React.FC<
                             }
                           }}
                         >
-                          <ErrorBoundary fallbackType="kid" componentName="InteractiveJungleMap">
+                          <ErrorBoundary
+                            fallbackType="kid"
+                            componentName="InteractiveJungleMap"
+                          >
                             <InteractiveJungleMap
                               className="w-full"
                               onMarkerClick={(marker) => {
@@ -894,7 +897,10 @@ export const JungleAdventureParentDashboard: React.FC<
                       }
                     }}
                   >
-                    <ErrorBoundary fallbackType="parent" componentName="FamilyAchievementsTimeline">
+                    <ErrorBoundary
+                      fallbackType="parent"
+                      componentName="FamilyAchievementsTimeline"
+                    >
                       <FamilyAchievementsTimeline
                         className="w-full"
                         onEventClick={(event) => {
