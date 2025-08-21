@@ -11,7 +11,7 @@
   --jng-blur: saturate(1.2) blur(6px);
   position: relative;
   width: 100%;
-  z-index: 50; /* Increased to avoid conflicts with other overlays */
+  z-index: 20;
 }
 
 .jng-mounted {
@@ -39,9 +39,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 60; /* Ensure nav bar is above other elements */
-  visibility: visible; /* Explicitly ensure visibility */
-  opacity: 1;
 }
 
 /* Desktop keeps it at the bottom with larger height */
@@ -114,32 +111,26 @@
   margin-right: 8px;
 }
 
-/* Parent Menu Button - Enhanced Jungle Style (Mobile Only) */
+/* Parent Menu Button - Clean minimal style */
 .jng-parent-menu-btn {
   position: relative;
   background: transparent;
-  border: none; /* Ensure no border on mobile */
+  border: none;
   color: var(--jng-color-text);
-  display: flex !important; /* Force display */
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   padding: 0 12px 6px;
   cursor: pointer;
   outline-offset: 3px;
-  margin-right: 8px;
-  /* Larger tap area for child + parent friendly */
   min-width: 64px;
   min-height: 64px;
-  /* Enhanced visibility */
-  opacity: 1 !important;
-  visibility: visible !important;
-  z-index: 10;
 }
 
-/* Hidden on desktop and tablet views ONLY if not desktop enabled */
+/* Hidden on desktop and tablet views */
 @media (min-width: 768px) {
-  .jng-parent-menu-btn:not(.jng-parent-menu-desktop) {
+  .jng-parent-menu-btn {
     display: none !important;
   }
 }
@@ -147,33 +138,15 @@
 /* Parent Menu Icon Positioning */
 .parent-icon-totem {
   position: relative;
-  /* Raise icon above nav height like a jungle totem */
   transform: translateY(calc(-1 * var(--jng-icon-lift) - 4px));
   margin-top: calc(-1 * var(--jng-icon-lift) - 4px);
-  /* Ensure proper fit and visibility */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
 }
 
-/* Parent Menu Emoji - Larger and more prominent */
+/* Parent Menu Emoji - Clean style */
 .parent-menu-emoji {
   display: block;
   filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.35));
   transform-origin: center;
-  /* Enhanced visibility for mobile */
-  font-size: 1.8rem; /* Made larger for better visibility */
-  line-height: 1;
-  opacity: 1;
-  /* Ensure proper centering */
-  text-align: center;
-  width: 100%;
-  /* Temporary debug - add background */
-  background: rgba(255, 255, 0, 0.2);
-  border-radius: 8px;
-  padding: 4px;
 }
 
 .jng-btn .jng-label {
@@ -496,60 +469,25 @@
   }
 }
 
-/* Desktop Parent Menu Enhancements */
+/* Desktop Parent Menu - Clean style */
 .jng-parent-menu-desktop {
-  /* Make it a jungle totem rising above the nav bar */
   position: relative;
-  background: linear-gradient(
-    145deg,
-    rgba(139, 69, 19, 0.9),
-    rgba(101, 67, 33, 0.95)
-  ) !important;
-  border: none !important; /* Remove border for cleaner look */
-  border-radius: 12px !important; /* Rounded like other nav items but distinguished */
-  box-shadow:
-    0 -2px 8px rgba(139, 69, 19, 0.3),
-    0 0 15px rgba(251, 191, 36, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(8px);
-  /* Remove default navigation button styles when it's the desktop parent menu */
-  background-image: none !important;
-  /* Ensure it's visible and properly sized */
-  min-height: 60px;
-  padding: 8px 12px !important;
-  /* Enhanced visibility */
-  opacity: 1 !important;
-  visibility: visible !important;
-  z-index: 15;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
 }
 
 .jng-parent-menu-desktop:hover {
-  transform: translateY(-3px) scale(1.05) !important;
-  box-shadow:
-    0 -8px 20px rgba(139, 69, 19, 0.4),
-    0 0 30px rgba(251, 191, 36, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.2) !important;
-  /* Remove border on hover as well */
-  background: linear-gradient(
-    145deg,
-    rgba(139, 69, 19, 0.95),
-    rgba(101, 67, 33, 1)
-  ) !important;
+  /* Clean hover effect */
 }
 
 .jng-parent-menu-desktop .parent-menu-emoji {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  font-size: 2rem !important; /* Larger for better visibility */
-  line-height: 1;
-  display: block;
-  /* Ensure proper positioning */
-  margin: 0 auto;
+  font-size: 1.8rem;
 }
 
 .jng-parent-menu-desktop .jng-label {
-  color: #fbbf24 !important;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: var(--jng-color-label);
   font-size: 0.75rem;
 }
 
