@@ -3240,7 +3240,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🌿
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      ����
+                                      🍃
                                     </div>
                                     <div className="jungle-leaves-float">
                                       ����
@@ -3594,7 +3594,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            ����
+                                            🏆🌟
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-jungle-green text-sm">
