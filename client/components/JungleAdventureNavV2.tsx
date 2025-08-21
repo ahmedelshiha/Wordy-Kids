@@ -52,8 +52,10 @@ export type JungleAdventureNavV2Props = {
   iconSize?: number; // px
   /** Optional className passthrough */
   className?: string;
-  /** Show Parent Menu icon (mobile only) - replaces old More ... */
+  /** Show Parent Menu icon (mobile and desktop) - replaces old More ... */
   showParentMenuIcon?: boolean;
+  /** Show Parent Menu on desktop (in addition to mobile) */
+  showParentMenuOnDesktop?: boolean;
   /** Parent menu icon variant */
   parentMenuIconVariant?: ParentMenuIconVariant;
   /** Parent menu animation style */
