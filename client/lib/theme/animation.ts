@@ -218,6 +218,7 @@ export const createAnimationConfig = (
   idleSpeed: "slow",
   intensity: "subtle",
   idlePauseDuration: "long", // Default to maximum calmness
+  animationStyle: "breathing", // Default to calm breathing
   rareEffects: true,
   reducedMotion: detectReducedMotion(),
   ...overrides,
