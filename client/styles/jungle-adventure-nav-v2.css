@@ -138,8 +138,9 @@
 /* Parent Menu Icon Positioning */
 .parent-icon-totem {
   position: relative;
-  transform: translateY(calc(-1 * var(--jng-icon-lift) - 4px));
-  margin-top: calc(-1 * var(--jng-icon-lift) - 4px);
+  /* Remove excessive lifting to ensure full icon visibility */
+  transform: translateY(0);
+  margin-top: 0;
 }
 
 /* Parent Menu Emoji - Clean style */
