@@ -1655,7 +1655,7 @@ export function InteractiveDashboardWordCard({
                         ],
                         hard: [
                           "🌋 What powerful jungle force awaits?",
-                          "⚡ Which jungle phenomenon do you see?",
+                          "�� Which jungle phenomenon do you see?",
                           "🌊 Can you name this jungle mystery?",
                           "🔥 What fierce jungle element is this?",
                         ],
@@ -1961,7 +1961,7 @@ export function InteractiveDashboardWordCard({
                     stiffness: 300,
                     damping: 25,
                   }}
-                  className="mb-4 md:mb-6"
+                  className="mb-2 md:mb-3 -mt-2"
                   role="region"
                   aria-label="Word hint revealed"
                   aria-live="polite"
