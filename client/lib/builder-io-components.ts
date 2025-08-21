@@ -113,6 +113,21 @@ export const registerJungleKidNavComponent = () => {
           advanced: false,
         },
         {
+          name: "animationStyle",
+          friendlyName: "Animation Style",
+          type: "string",
+          enum: [
+            { label: "🫁 Gentle Breathing (Focus-Safe)", value: "breathing" },
+            { label: "✨ Soft Glow Pulse", value: "glow" },
+            { label: "🦉 Animal Micro-Moves", value: "micro" },
+            { label: "🚫 No Animation", value: "none" },
+          ],
+          defaultValue: "breathing",
+          helperText:
+            "Choose animation type. Breathing is safest for focus/typing. Micro-moves add character without distraction.",
+          advanced: false,
+        },
+        {
           name: "rareEffects",
           friendlyName: "Magical Effects",
           type: "boolean",
