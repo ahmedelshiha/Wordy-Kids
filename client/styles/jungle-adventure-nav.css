@@ -316,6 +316,78 @@
   animation: none;
 }
 
+/* 🎯 Mobile Optimization & Battery Efficiency */
+@media (max-width: 768px) {
+  /* Use lighter animations on mobile to preserve battery */
+  .jungle-animal-icon.style-breathing {
+    animation: breathing 6s ease-in-out infinite; /* Slower on mobile */
+  }
+
+  .jungle-animal-icon.style-glow {
+    animation: glowPulse 8s ease-in-out infinite; /* Slower on mobile */
+  }
+
+  /* Disable micro-movements on small screens to reduce complexity */
+  .jungle-animal-icon.style-micro.idle-owl,
+  .jungle-animal-icon.style-micro.idle-parrot,
+  .jungle-animal-icon.style-micro.idle-monkey,
+  .jungle-animal-icon.style-micro.idle-elephant {
+    animation: breathing 6s ease-in-out infinite; /* Fallback to breathing */
+  }
+}
+
+/* 🔋 Battery Saving Mode */
+@media (prefers-reduced-motion: reduce),
+       (prefers-color-scheme: dark) and (max-width: 768px) {
+  .jungle-animal-icon.style-breathing,
+  .jungle-animal-icon.style-glow,
+  .jungle-animal-icon.style-micro {
+    animation: none; /* Disable all animations for battery saving */
+  }
+}
+
+/* 🎮 Touch-Friendly Hover States */
+@media (hover: none) and (pointer: coarse) {
+  /* On touch devices, use tap states instead of hover */
+  .jungle-animal-icon:hover {
+    animation: none;
+    transform: none;
+  }
+
+  .jungle-animal-icon:active {
+    animation: breathing 0.5s ease-out;
+    transform: scale(1.05);
+  }
+}
+
+/* 🚫 Accessibility: Respect User Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-animal-icon.style-breathing,
+  .jungle-animal-icon.style-glow,
+  .jungle-animal-icon.style-micro {
+    animation: none !important;
+  }
+
+  /* Provide essential feedback without motion */
+  .jungle-animal-icon:focus,
+  .jungle-animal-icon:active {
+    outline: 2px solid #4ade80;
+    outline-offset: 2px;
+  }
+}
+
+/* 🎯 High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .jungle-animal-icon.style-glow {
+    animation: none; /* Disable glow in high contrast */
+  }
+
+  .jungle-animal-icon {
+    filter: contrast(1.5);
+    border: 1px solid currentColor;
+  }
+}
+
 /* 🎯 Animation Control Classes */
 .jungle-reduced-motion,
 .jungle-reduced-motion * {
