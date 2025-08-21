@@ -2218,14 +2218,22 @@ export function InteractiveDashboardWordCard({
                         transition={{ delay: 0.4, duration: 0.6 }}
                         className="relative mb-3"
                       >
-                        {/* Large Word Display with Speaker */}
+                        {/* Word Display Directly on Green Background */}
                         <motion.div
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.4 }}
-                          className="flex items-center justify-between bg-white rounded-lg px-3 py-2 shadow-sm border border-gray-200"
+                          className="flex items-center justify-center gap-3"
                         >
-                          <p className="text-xl sm:text-2xl font-bold text-gray-900 flex-1 tracking-wide">
+                          <p
+                            className="font-bold flex-1 text-center"
+                            style={{
+                              fontSize: "1.6rem",
+                              color: "white",
+                              textShadow: "0 2px 4px rgba(0, 0, 0, 0.4)",
+                              letterSpacing: "0.05em",
+                            }}
+                          >
                             {currentWord.word}
                           </p>
 
