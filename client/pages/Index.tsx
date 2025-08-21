@@ -138,7 +138,6 @@ import {
   RotateCcw,
   Sparkles,
   Lock,
-  Users,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
