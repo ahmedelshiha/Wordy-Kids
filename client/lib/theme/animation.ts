@@ -242,6 +242,9 @@ export const generateAnimationClasses = (config: JungleAnimationConfig) => {
     hover: "jungle-animate-hover",
     celebration: "jungle-animate-celebration",
 
+    // Animation style classes
+    animationStyle: manager.getAnimationStyleClass(),
+
     // Conditional classes
     rareEffects: manager.shouldShowRareEffects() ? "jungle-rare-effects" : "",
     reducedMotion: config.reducedMotion ? "jungle-reduced-motion" : "",
