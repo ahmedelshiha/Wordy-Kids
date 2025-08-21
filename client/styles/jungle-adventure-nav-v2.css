@@ -558,6 +558,102 @@
   border: 0;
 }
 
+/* Enhanced Button Interactions */
+.jungle-dialog-btn-enhanced {
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-dialog-btn-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.jungle-dialog-btn-enhanced:hover::before {
+  left: 100%;
+}
+
+.jungle-dialog-btn-enhanced:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Gradient Text Effects */
+.jungle-dialog-btn-enhanced span {
+  background: linear-gradient(135deg, #fff, #fbbf24);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: jungleTextShimmer 3s ease-in-out infinite;
+}
+
+@keyframes jungleTextShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Enhanced Backdrop Patterns */
+.jungle-dialog-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(34, 139, 34, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(46, 125, 50, 0.1) 0%, transparent 50%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(139, 69, 19, 0.05) 10px,
+      rgba(139, 69, 19, 0.05) 20px
+    );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Loading State Animations */
+.jungle-dialog-loading {
+  position: relative;
+}
+
+.jungle-dialog-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(76, 175, 80, 0.2),
+    transparent
+  );
+  animation: jungleLoadingSweep 1.5s ease-in-out infinite;
+}
+
+@keyframes jungleLoadingSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Focus management for keyboard navigation */
 .jungle-dialog-btn:focus-visible {
   outline: 2px solid #fbbf24;
