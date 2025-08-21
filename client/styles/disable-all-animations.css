@@ -103,3 +103,29 @@
   transform: none !important;
   scale: 1 !important;
 }
+
+/* Global animation suspension class - overrides ALL inline styles */
+.jungle-animations-suspended * {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* Specifically target Framer Motion elements */
+.jungle-animations-suspended [data-framer-motion],
+.jungle-animations-suspended [style*="transform"] {
+  transform: none !important;
+}
+
+/* Force reset all motion elements */
+.jungle-animations-suspended .motion-reduce,
+.jungle-animations-suspended [data-motion],
+.jungle-animations-suspended .animate-* {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
