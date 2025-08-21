@@ -53,6 +53,11 @@ export interface JungleKidNavProps {
   showParentGate?: boolean;
 
   // 🎯 Kid-Friendly Animation Presets
+  // "calm-breathing" - Default gentle breathing animation (safest for focus/typing)
+  // "soft-glow" - Adds subtle firefly glow effects
+  // "micro-movements" - Animal character micro-movements (owl blinks, monkey wiggles, etc)
+  // "full-experience" - All effects combined for maximum immersion
+  // "none" - No animations (accessibility mode)
   animationStyle?: "calm-breathing" | "soft-glow" | "micro-movements" | "full-experience" | "none";
 
   // Performance and accessibility
