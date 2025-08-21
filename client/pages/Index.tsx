@@ -1314,7 +1314,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! 🎮🎉",
+      title: "Amazing Game! ���🎉",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -4171,7 +4171,7 @@ export default function Index({ initialProfile }: IndexProps) {
         >
           {/* Jungle Background Elements */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-2 left-2 text-lg opacity-20">����</div>
+            <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
             <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
             <div className="absolute bottom-2 left-4 text-sm opacity-20">
               🌱
