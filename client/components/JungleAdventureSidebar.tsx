@@ -197,7 +197,25 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [clickedCard, setClickedCard] = useState<string | null>(null);
   const userData = useUserProgress();
+
+  // 🎯 Generate random animation delays for each animal (kid-friendly surprise timing)
+  const [animalDelays] = useState(() => ({
+    owl: Math.random() * 3, // 0-3s random delay
+    parrot: Math.random() * 4 + 2, // 2-6s random delay
+    monkey: Math.random() * 5 + 3, // 3-8s random delay
+    elephant: Math.random() * 6 + 4, // 4-10s random delay
+  }));
+
+  // Set CSS custom properties for animation delays
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--owl-delay', `${animalDelays.owl}s`);
+    root.style.setProperty('--parrot-delay', `${animalDelays.parrot}s`);
+    root.style.setProperty('--monkey-delay', `${animalDelays.monkey}s`);
+    root.style.setProperty('--elephant-delay', `${animalDelays.elephant}s`);
+  }, [animalDelays]);
 
   // Enhanced sidebar entrance animation with jungle-themed effects
   const sidebarVariants = {
