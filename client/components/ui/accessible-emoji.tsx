@@ -277,7 +277,7 @@ export function AccessibleEmojiList({
   orientation = 'horizontal',
   enableKeyboardNavigation = true,
 }: AccessibleEmojiListProps) {
-  const [focusedIndex, setFocusedIndex] = React.useState(0);
+  const [focusedIndex, setFocusedIndex] = useState(0);
   
   const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
     if (!enableKeyboardNavigation) return;
