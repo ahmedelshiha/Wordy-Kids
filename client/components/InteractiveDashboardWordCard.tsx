@@ -1493,7 +1493,7 @@ export function InteractiveDashboardWordCard({
                     const percentage = Math.round((wordsLearned / goal) * 100);
 
                     if (wordsLearned >= goal) {
-                      if (wordsLearned >= goal * 2) return "⭐";
+                      if (wordsLearned >= goal * 2) return "���";
                       if (wordsLearned >= goal * 1.5) return "🚀";
                       return "🌟";
                     }
@@ -2268,23 +2268,66 @@ export function InteractiveDashboardWordCard({
                         </motion.div>
                       </motion.div>
 
-                      {/* Single Floating Element */}
+                      {/* Achievement-Style Celebration Stars */}
                       <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{
-                          opacity: [0, 1, 0],
-                          y: [0, -15, -25],
-                          x: [0, 5, -5],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1,
-                        }}
-                        className="absolute -top-2 -right-2 text-sunshine text-sm"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.6, duration: 0.3 }}
+                        className="flex gap-3 mt-2"
                       >
-                        ⭐
+                        <motion.span
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 10, -10, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                          className="text-lg"
+                          style={{
+                            animationDelay: "0s",
+                          }}
+                        >
+                          ⭐
+                        </motion.span>
+                        <motion.span
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, -10, 10, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: 0.3,
+                          }}
+                          className="text-lg"
+                          style={{
+                            animationDelay: "0.3s",
+                          }}
+                        >
+                          🌟
+                        </motion.span>
+                        <motion.span
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            rotate: [0, 10, -10, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: 0.6,
+                          }}
+                          className="text-lg"
+                          style={{
+                            animationDelay: "0.6s",
+                          }}
+                        >
+                          ✨
+                        </motion.span>
                       </motion.div>
                     </div>
                   </motion.div>
