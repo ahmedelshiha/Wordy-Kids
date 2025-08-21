@@ -63,6 +63,7 @@ export interface JungleKidNavProps {
   // 🎨 New Builder.io Animation Controls
   idleSpeed?: "slow" | "medium" | "fast";
   intensity?: "subtle" | "normal" | "playful";
+  idlePauseDuration?: "short" | "medium" | "long";
   rareEffects?: boolean;
 
   // Performance and accessibility
