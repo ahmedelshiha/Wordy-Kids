@@ -4024,8 +4024,9 @@ export default function Index({ initialProfile }: IndexProps) {
               parentDialogSections={{
                 dashboard: true,
                 settings: true,
-                signOut: !isGuest,
+                auth: true,
               }}
+              isGuest={isGuest}
               onParentDashboard={() => {
                 setUserRole("parent");
                 window.scrollTo({ top: 0, behavior: "smooth" });
