@@ -25,12 +25,13 @@ export const jungleNavPresets: JungleNavPreset[] = [
   {
     id: 'calm-learning',
     name: 'Calm Learning',
-    description: 'Maximum focus environment - minimal distractions, gentle movements, optimal for studying and concentration',
+    description: 'Maximum focus environment - gentle breathing only, no distractions, optimal for studying and concentration',
     icon: '🧘',
     config: {
       idleSpeed: 'slow',
       intensity: 'subtle',
       idlePauseDuration: 'long',
+      animationStyle: 'breathing',
       rareEffects: false,
       reducedMotion: false
     },
