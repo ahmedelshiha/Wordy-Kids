@@ -137,6 +137,7 @@ export default function JungleAdventureNavV2({
   iconSize = 44,
   className,
   showParentMenuIcon = true,
+  showParentMenuOnDesktop = false,
   parentMenuIconVariant = "totem",
   parentMenuAnimationStyle = "breathing",
   parentDialogSections = {
