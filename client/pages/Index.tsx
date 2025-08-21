@@ -2041,48 +2041,71 @@ export default function Index({ initialProfile }: IndexProps) {
                       id: "dashboard",
                       icon: Target,
                       label: "Dashboard",
+                      emoji: "🎯",
                       color: "purple",
                     },
                     {
                       id: "learn",
                       icon: BookOpen,
                       label: "Word Library",
+                      emoji: "📚",
                       color: "green",
                     },
                     {
                       id: "quiz",
                       icon: Brain,
                       label: "Quiz Time",
+                      emoji: "🧠",
                       color: "pink",
                     },
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🗺️ My Journey",
+                      label: "My Journey",
+                      emoji: "🗺️",
                       color: "yellow",
                     },
-                  ].map(({ id, icon: Icon, label, color }) => (
-                    <button
+                  ].map(({ id, icon: Icon, label, emoji, color }) => (
+                    <motion.button
                       key={id}
                       onClick={() => {
                         setActiveTab(id);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                      className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 ${
                         activeTab === id
-                          ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                          : "bg-white text-gray-700 hover:bg-purple-50"
+                          ? "bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white shadow-xl border-2 border-white/30"
+                          : "bg-white/80 text-gray-700 hover:bg-purple-50 border-2 border-transparent hover:border-purple-200 shadow-lg"
                       }`}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       <div
-                        className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}
+                        className={`flex items-center justify-center w-12 h-12 rounded-xl ${
+                          activeTab === id
+                            ? "bg-white/20 backdrop-blur-sm"
+                            : `bg-gradient-to-br from-${color}-100 to-${color}-200`
+                        }`}
                       >
-                        <Icon
-                          className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`}
-                        />
+                        <span className="text-xl">{emoji}</span>
                       </div>
-                      <span className="font-semibold text-sm">{label}</span>
-                    </button>
+                      <div className="flex-1 text-left">
+                        <span className="font-bold text-base block">{label}</span>
+                        <span className={`text-sm ${
+                          activeTab === id ? "text-white/80" : "text-gray-500"
+                        }`}>
+                          {id === "dashboard" && "Start your adventure"}
+                          {id === "learn" && "Discover new words"}
+                          {id === "quiz" && "Test your knowledge"}
+                          {id === "progress" && "Track your wins"}
+                        </span>
+                      </div>
+                      {activeTab === id && (
+                        <div className="flex flex-col gap-1">
+                          <span className="text-lg animate-bounce">✨</span>
+                        </div>
+                      )}
+                    </motion.button>
                   ))}
 
                   <button
