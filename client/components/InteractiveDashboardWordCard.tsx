@@ -1143,7 +1143,7 @@ export function InteractiveDashboardWordCard({
           }}
           whileTap={{ scale: 0.95 }}
           className="w-48 h-36 ml-2 mt-4 flex items-center justify-center cursor-pointer group relative"
-          onClick={playPronunciation}
+          onClick={() => playPronunciationDebounced(true)}
         >
           {/* Animated background elements */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -1603,7 +1603,7 @@ export function InteractiveDashboardWordCard({
                         easy: [
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
-                          "🐨 Can you name this jungle buddy?",
+                          "��� Can you name this jungle buddy?",
                           "🐸 What creature lives in our jungle?",
                         ],
                         medium: [
