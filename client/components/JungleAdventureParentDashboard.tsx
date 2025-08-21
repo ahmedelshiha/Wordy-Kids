@@ -894,21 +894,23 @@ export const JungleAdventureParentDashboard: React.FC<
                       }
                     }}
                   >
-                    <FamilyAchievementsTimeline
-                      className="w-full"
-                      onEventClick={(event) => {
-                        if (isAnalyticsEnabled) {
-                          parentDashboardAnalytics.trackTimelineEventClick(
-                            event.type,
-                            {
-                              eventId: event.id,
-                              category: event.category,
-                            },
-                          );
-                        }
-                        console.log("Timeline event clicked:", event);
-                      }}
-                    />
+                    <ErrorBoundary fallbackType="parent" componentName="FamilyAchievementsTimeline">
+                      <FamilyAchievementsTimeline
+                        className="w-full"
+                        onEventClick={(event) => {
+                          if (isAnalyticsEnabled) {
+                            parentDashboardAnalytics.trackTimelineEventClick(
+                              event.type,
+                              {
+                                eventId: event.id,
+                                category: event.category,
+                              },
+                            );
+                          }
+                          console.log("Timeline event clicked:", event);
+                        }}
+                      />
+                    </ErrorBoundary>
                   </div>
                 )
               ) : (
