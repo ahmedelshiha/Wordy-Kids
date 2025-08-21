@@ -1980,7 +1980,7 @@
   }
 }
 
-@keyframes gentle-float {
+/* @keyframes gentle-float {
   0%,
   100% {
     transform: translateY(0px);
@@ -1988,7 +1988,7 @@
   50% {
     transform: translateY(-12px);
   }
-}
+} */
 
 @keyframes sparkle-enhanced {
   0%,
@@ -2015,7 +2015,7 @@
 }
 
 .animate-gentle-float {
-  animation: gentle-float 4s ease-in-out infinite;
+  /* animation: gentle-float 4s ease-in-out infinite; */
 }
 
 .animate-sparkle {
