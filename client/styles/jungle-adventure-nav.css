@@ -264,6 +264,40 @@
   animation-delay: var(--elephant-delay, 6s);
 }
 
+/* 🎯 Reduced Motion Preferences - Respect user accessibility needs */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-animal-icon.idle-owl,
+  .jungle-animal-icon.idle-parrot,
+  .jungle-animal-icon.idle-monkey,
+  .jungle-animal-icon.idle-elephant {
+    animation: none !important;
+  }
+
+  .jungle-animal-icon:hover {
+    animation: none;
+    transform: scale(1.05); /* Simple scale only */
+    transition: transform 0.2s ease;
+  }
+
+  .jungle-animal-icon:active,
+  .jungle-animal-icon.clicked {
+    animation: none;
+    transform: scale(0.98); /* Simple press feedback */
+  }
+
+  .jungle-animal-icon.active {
+    animation: none;
+    filter: brightness(1.1) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.3));
+  }
+
+  /* Disable all decorative animations */
+  .jungle-vines,
+  .jungle-fireflies,
+  .jungle-particles {
+    animation: none !important;
+  }
+}
+
 /* ===== DECORATIVE ELEMENTS ===== */
 .jungle-vines {
   position: absolute;
