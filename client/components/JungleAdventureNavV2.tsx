@@ -301,17 +301,15 @@ export default function JungleAdventureNavV2({
             );
           })}
 
-          {/* Parent Menu Icon - Positioned beside Trophy Grove */}
+          {/* Parent Menu Icon - Centered with other navigation items */}
           {(showParentMenuIcon || showMobileMoreIcon) && (
             <li className="jng-nav-item jng-parent-menu-item" role="none">
               <button
                 role="menuitem"
                 className={clsx(
                   "jng-btn jng-parent-menu-btn",
-                  // Hide on desktop unless showParentMenuOnDesktop is true
-                  !showParentMenuOnDesktop && "md:hidden",
-                  // Desktop-specific styling
-                  showParentMenuOnDesktop && "jng-parent-menu-desktop",
+                  // Always show on desktop when showParentMenuOnDesktop is true
+                  showParentMenuOnDesktop ? "jng-parent-menu-desktop" : "md:hidden",
                   parentMenuAnimationStyle === "breathing" && "parent-breathing",
                   parentMenuAnimationStyle === "glow" && "parent-glowing",
                   breathing[showParentMenuIcon ? "parent-menu" : "more"] && "breath-once",
