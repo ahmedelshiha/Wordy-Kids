@@ -473,10 +473,9 @@
 
 /* Parent Menu Navigation Item Styling */
 .jng-parent-menu-item {
-  /* Position after other navigation icons */
+  /* Position beside Trophy Grove icon */
   display: flex;
-  order: 999; /* Ensures it appears last */
-  margin-left: auto; /* Push to the right side */
+  /* No special order - appears in natural flow after regular items */
 }
 
 /* Ensure parent menu is visible on desktop */
