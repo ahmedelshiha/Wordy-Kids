@@ -1,10 +1,19 @@
 /**
  * 🎨 Builder.io Component Registration
  * Register JungleKidNav with full animation configurability
+ *
+ * NOTE: This integration is optional and only works if @builder.io/react is installed
  */
 
-import { Builder } from "@builder.io/react";
 import { JungleKidNav } from "@/components/JungleKidNav";
+
+// Conditional Builder.io import - only if package is available
+let Builder: any = null;
+try {
+  Builder = require('@builder.io/react')?.Builder;
+} catch (error) {
+  console.log('ℹ️ Builder.io not installed - component registration skipped');
+}
 
 // 🎯 Register JungleKidNav with Builder.io
 Builder.registerComponent(JungleKidNav, {
