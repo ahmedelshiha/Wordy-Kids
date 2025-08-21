@@ -144,7 +144,6 @@ import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 import { JungleAdventureSidebar } from "@/components/JungleAdventureSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
-import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
 import "@/styles/jungle-quiz-adventure.css";
 import "@/styles/enhanced-jungle-quiz-adventure.css";
 
@@ -2438,7 +2437,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               {/* Subtle Jungle Decorations */}
                                               <div className="absolute inset-0 overflow-hidden rounded-2xl">
                                                 <div className="absolute top-1 left-3 text-lg animate-sway opacity-30">
-                                                  ���
+                                                  🌿
                                                 </div>
                                                 <div className="absolute top-1 right-3 text-lg animate-gentle-bounce animation-delay-300 opacity-30">
                                                   🦋
