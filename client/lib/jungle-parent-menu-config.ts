@@ -1,8 +1,11 @@
-import { ParentMenuIconVariant, ParentMenuAnimationStyle } from '../components/JungleAdventureNavV2';
+import {
+  ParentMenuIconVariant,
+  ParentMenuAnimationStyle,
+} from "../components/JungleAdventureNavV2";
 
 /**
  * Builder.io Configuration Controls for Jungle Parent Menu
- * 
+ *
  * These configuration options can be used in Builder.io to customize
  * the Parent Menu Icon behavior and appearance.
  */
@@ -38,56 +41,56 @@ export const DEFAULT_PARENT_MENU_CONFIG: JungleParentMenuConfig = {
 
 /**
  * Builder.io Input Configuration Schema
- * 
+ *
  * This can be used in Builder.io to create a visual configuration interface
  * for customizing the Parent Menu behavior.
  */
 export const BUILDER_IO_PARENT_MENU_INPUTS = [
   {
-    name: 'showParentMenuIcon',
-    type: 'boolean',
+    name: "showParentMenuIcon",
+    type: "boolean",
     defaultValue: true,
     helperText: 'Show Parent Menu icon on mobile (replaces "More ..." menu)',
   },
   {
-    name: 'parentMenuIconVariant',
-    type: 'select',
-    defaultValue: 'totem',
+    name: "parentMenuIconVariant",
+    type: "select",
+    defaultValue: "totem",
     options: [
-      { label: '🪵 Carved Totem (Default)', value: 'totem' },
-      { label: '🛡️ Tribal Shield', value: 'shield' },
-      { label: '🔑 Golden Key', value: 'key' },
+      { label: "🪵 Carved Totem (Default)", value: "totem" },
+      { label: "🛡️ Tribal Shield", value: "shield" },
+      { label: "🔑 Golden Key", value: "key" },
     ],
-    helperText: 'Choose the jungle-themed icon for the parent menu',
+    helperText: "Choose the jungle-themed icon for the parent menu",
   },
   {
-    name: 'parentMenuAnimationStyle',
-    type: 'select',
-    defaultValue: 'breathing',
+    name: "parentMenuAnimationStyle",
+    type: "select",
+    defaultValue: "breathing",
     options: [
-      { label: 'Breathing Animation (6s cycle)', value: 'breathing' },
-      { label: 'Firefly Glow Effect', value: 'glow' },
-      { label: 'No Animation', value: 'none' },
+      { label: "Breathing Animation (6s cycle)", value: "breathing" },
+      { label: "Firefly Glow Effect", value: "glow" },
+      { label: "No Animation", value: "none" },
     ],
-    helperText: 'Select animation style (respects prefers-reduced-motion)',
+    helperText: "Select animation style (respects prefers-reduced-motion)",
   },
   {
-    name: 'parentDialogSections.dashboard',
-    type: 'boolean',
+    name: "parentDialogSections.dashboard",
+    type: "boolean",
     defaultValue: true,
-    helperText: 'Show Parent Dashboard section in menu',
+    helperText: "Show Parent Dashboard section in menu",
   },
   {
-    name: 'parentDialogSections.settings',
-    type: 'boolean',
+    name: "parentDialogSections.settings",
+    type: "boolean",
     defaultValue: true,
-    helperText: 'Show Settings section in menu',
+    helperText: "Show Settings section in menu",
   },
   {
-    name: 'parentDialogSections.signOut',
-    type: 'boolean',
+    name: "parentDialogSections.signOut",
+    type: "boolean",
     defaultValue: true,
-    helperText: 'Show Sign Out/Register section in menu',
+    helperText: "Show Sign Out/Register section in menu",
   },
 ];
 
@@ -98,19 +101,22 @@ export const ICON_VARIANT_DESCRIPTIONS = {
   totem: {
     emoji: "🪵",
     name: "Carved Totem",
-    description: "A mystical jungle totem, representing ancient wisdom and guidance",
+    description:
+      "A mystical jungle totem, representing ancient wisdom and guidance",
     accessibility: "Carved wooden totem pole",
   },
   shield: {
     emoji: "🛡️",
     name: "Tribal Shield",
-    description: "A protective tribal shield, symbolizing family safety and security",
+    description:
+      "A protective tribal shield, symbolizing family safety and security",
     accessibility: "Tribal protective shield",
   },
   key: {
     emoji: "🔑",
     name: "Golden Key",
-    description: "A golden key, representing access to family controls and settings",
+    description:
+      "A golden key, representing access to family controls and settings",
     accessibility: "Golden key for family access",
   },
 };

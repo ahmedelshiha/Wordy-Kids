@@ -213,7 +213,8 @@
 
 /* Parent Menu Breathing Animation (6s cycle) */
 @keyframes parentBreathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -223,7 +224,8 @@
 
 /* Firefly Glow Animation */
 @keyframes fireflyGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       0 0 8px rgba(251, 191, 36, 0.2),
       0 0 16px rgba(251, 191, 36, 0.1),
@@ -316,8 +318,16 @@
 .jungle-dialog-backdrop {
   position: relative;
   background:
-    radial-gradient(circle at 20% 30%, rgba(34, 139, 34, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(46, 125, 50, 0.08) 0%, transparent 50%),
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(34, 139, 34, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(46, 125, 50, 0.08) 0%,
+      transparent 50%
+    ),
     linear-gradient(135deg, rgba(13, 52, 40, 0.95), rgba(11, 43, 34, 0.98));
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -330,8 +340,11 @@
 
 .jungle-dialog-frame {
   position: relative;
-  background:
-    linear-gradient(145deg, rgba(139, 69, 19, 0.1), rgba(101, 67, 33, 0.05));
+  background: linear-gradient(
+    145deg,
+    rgba(139, 69, 19, 0.1),
+    rgba(101, 67, 33, 0.05)
+  );
   border-radius: 16px;
   padding: 24px;
   border: 1px solid rgba(139, 69, 19, 0.3);
@@ -346,7 +359,11 @@
 
 .jungle-dialog-btn {
   position: relative;
-  background: linear-gradient(145deg, rgba(139, 69, 19, 0.8), rgba(101, 67, 33, 0.9));
+  background: linear-gradient(
+    145deg,
+    rgba(139, 69, 19, 0.8),
+    rgba(101, 67, 33, 0.9)
+  );
   border: 2px solid rgba(251, 191, 36, 0.3);
   border-radius: 12px;
   padding: 16px 20px;
@@ -363,7 +380,11 @@
 }
 
 .jungle-dialog-btn:hover {
-  background: linear-gradient(145deg, rgba(139, 69, 19, 0.9), rgba(101, 67, 33, 1));
+  background: linear-gradient(
+    145deg,
+    rgba(139, 69, 19, 0.9),
+    rgba(101, 67, 33, 1)
+  );
   border-color: rgba(251, 191, 36, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -381,7 +402,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(251, 191, 36, 0.1),
+    transparent
+  );
   transition: left 0.5s ease;
 }
 

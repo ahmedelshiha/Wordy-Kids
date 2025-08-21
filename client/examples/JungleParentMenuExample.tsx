@@ -1,28 +1,31 @@
-import React from 'react';
-import JungleAdventureNavV2 from '../components/JungleAdventureNavV2';
-import { DEFAULT_PARENT_MENU_CONFIG } from '../lib/jungle-parent-menu-config';
+import React from "react";
+import JungleAdventureNavV2 from "../components/JungleAdventureNavV2";
+import { DEFAULT_PARENT_MENU_CONFIG } from "../lib/jungle-parent-menu-config";
 
 /**
  * Example usage of the enhanced JungleAdventureNavV2 with Parent Menu Icon
- * 
+ *
  * This example demonstrates how to use the new Parent Menu functionality
  * that replaces the old "More ..." button with a jungle-themed parent menu.
  */
 
 export default function JungleParentMenuExample() {
-  const [activeId, setActiveId] = React.useState<string>('home');
+  const [activeId, setActiveId] = React.useState<string>("home");
 
   // Example: Custom parent menu click handler
   const handleParentMenuClick = () => {
-    console.log('Parent menu clicked - custom handler');
+    console.log("Parent menu clicked - custom handler");
     // You can implement custom logic here instead of using the default dialog
   };
 
   return (
     <div className="jungle-nav-example">
       <h2>🪵 Enhanced Jungle Adventure Navigation</h2>
-      <p>The navigation now features a Parent Menu Icon (🪵 Carved Totem by default) on mobile!</p>
-      
+      <p>
+        The navigation now features a Parent Menu Icon (🪵 Carved Totem by
+        default) on mobile!
+      </p>
+
       {/* Default configuration - uses built-in dialog */}
       <div className="example-section">
         <h3>Default Parent Menu (Built-in Dialog)</h3>
@@ -94,7 +97,7 @@ export default function JungleParentMenuExample() {
           onNavigate={setActiveId}
           showParentMenuIcon={false}
           showMobileMoreIcon={true}
-          onMobileMoreClick={() => console.log('Legacy more clicked')}
+          onMobileMoreClick={() => console.log("Legacy more clicked")}
         />
       </div>
 
@@ -113,7 +116,9 @@ export default function JungleParentMenuExample() {
         <ul>
           <li>✅ Keyboard navigation support (Tab, Enter, Escape)</li>
           <li>✅ Screen reader compatible with ARIA labels</li>
-          <li>✅ Respects <code>prefers-reduced-motion</code></li>
+          <li>
+            ✅ Respects <code>prefers-reduced-motion</code>
+          </li>
           <li>✅ Mobile-only behavior (hidden on desktop/tablet)</li>
           <li>✅ Large tap areas for child + parent friendly use</li>
           <li>✅ Focus indicators for keyboard users</li>
@@ -124,10 +129,21 @@ export default function JungleParentMenuExample() {
         <h3>🔄 Migration from "More ..." button</h3>
         <p>To migrate from the old "More ..." button:</p>
         <ol>
-          <li>Replace <code>showMobileMoreIcon</code> with <code>showParentMenuIcon</code></li>
-          <li>Replace <code>onMobileMoreClick</code> with <code>onParentMenuClick</code></li>
-          <li>Configure <code>parentMenuIconVariant</code> and <code>parentMenuAnimationStyle</code></li>
-          <li>Set up <code>parentDialogSections</code> to control dialog content</li>
+          <li>
+            Replace <code>showMobileMoreIcon</code> with{" "}
+            <code>showParentMenuIcon</code>
+          </li>
+          <li>
+            Replace <code>onMobileMoreClick</code> with{" "}
+            <code>onParentMenuClick</code>
+          </li>
+          <li>
+            Configure <code>parentMenuIconVariant</code> and{" "}
+            <code>parentMenuAnimationStyle</code>
+          </li>
+          <li>
+            Set up <code>parentDialogSections</code> to control dialog content
+          </li>
         </ol>
       </div>
     </div>

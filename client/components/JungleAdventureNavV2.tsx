@@ -300,9 +300,15 @@ export default function JungleAdventureNavV2({
                 if (onMobileMoreClick) onMobileMoreClick();
               }
             }}
-            onMouseEnter={() => triggerBreath(showParentMenuIcon ? "parent-menu" : "more")}
-            onFocus={() => triggerBreath(showParentMenuIcon ? "parent-menu" : "more")}
-            aria-label={showParentMenuIcon ? getParentMenuAriaLabel() : "More options"}
+            onMouseEnter={() =>
+              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+            }
+            onFocus={() =>
+              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+            }
+            aria-label={
+              showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
+            }
             aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
             aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
           >
@@ -310,7 +316,8 @@ export default function JungleAdventureNavV2({
               className={clsx(
                 "jng-icon-wrap jng-icon-lifted",
                 showParentMenuIcon && "parent-icon-totem",
-                breathing[showParentMenuIcon ? "parent-menu" : "more"] && "breath-once",
+                breathing[showParentMenuIcon ? "parent-menu" : "more"] &&
+                  "breath-once",
               )}
               aria-hidden="true"
             >
@@ -337,7 +344,10 @@ export default function JungleAdventureNavV2({
       {/* Parent Menu Dialog */}
       {isParentDialogOpen && (
         <Dialog open={isParentDialogOpen} onOpenChange={setIsParentDialogOpen}>
-          <DialogContent className="jungle-parent-dialog" aria-describedby="parent-menu-description">
+          <DialogContent
+            className="jungle-parent-dialog"
+            aria-describedby="parent-menu-description"
+          >
             <DialogTitle className="jungle-dialog-title">
               🏠 Family Zone
             </DialogTitle>
@@ -349,61 +359,73 @@ export default function JungleAdventureNavV2({
                 <div className="jungle-dialog-sections">
                   {parentDialogSections.dashboard && (
                     <button
-                    className="jungle-dialog-btn"
-                    onClick={() => {
-                      setIsParentDialogOpen(false);
-                      // Navigate to parent dashboard
-                    }}
-                    aria-label="Open Parent Dashboard - View child's progress and reports"
-                  >
-                    <BarChart3 className="jungle-dialog-icon" aria-hidden="true" />
-                    <span>📊 Parent Dashboard</span>
-                    <div className="jungle-btn-glow" />
-                  </button>
+                      className="jungle-dialog-btn"
+                      onClick={() => {
+                        setIsParentDialogOpen(false);
+                        // Navigate to parent dashboard
+                      }}
+                      aria-label="Open Parent Dashboard - View child's progress and reports"
+                    >
+                      <BarChart3
+                        className="jungle-dialog-icon"
+                        aria-hidden="true"
+                      />
+                      <span>📊 Parent Dashboard</span>
+                      <div className="jungle-btn-glow" />
+                    </button>
                   )}
 
                   {parentDialogSections.settings && (
                     <button
-                    className="jungle-dialog-btn"
-                    onClick={() => {
-                      setIsParentDialogOpen(false);
-                      // Navigate to settings
-                    }}
-                    aria-label="Open Settings - Child-safe controls and preferences"
-                  >
-                    <Settings className="jungle-dialog-icon" aria-hidden="true" />
-                    <span>⚙️ Settings</span>
-                    <div className="jungle-btn-glow" />
-                  </button>
+                      className="jungle-dialog-btn"
+                      onClick={() => {
+                        setIsParentDialogOpen(false);
+                        // Navigate to settings
+                      }}
+                      aria-label="Open Settings - Child-safe controls and preferences"
+                    >
+                      <Settings
+                        className="jungle-dialog-icon"
+                        aria-hidden="true"
+                      />
+                      <span>⚙️ Settings</span>
+                      <div className="jungle-btn-glow" />
+                    </button>
                   )}
 
                   {parentDialogSections.signOut && (
                     <>
                       <button
-                    className="jungle-dialog-btn"
-                    onClick={() => {
-                      setIsParentDialogOpen(false);
-                      // Handle sign out
-                    }}
-                    aria-label="Sign Out - Log out of parent account"
-                  >
-                    <LogOut className="jungle-dialog-icon" aria-hidden="true" />
-                    <span>🔐 Sign Out</span>
-                    <div className="jungle-btn-glow" />
-                  </button>
+                        className="jungle-dialog-btn"
+                        onClick={() => {
+                          setIsParentDialogOpen(false);
+                          // Handle sign out
+                        }}
+                        aria-label="Sign Out - Log out of parent account"
+                      >
+                        <LogOut
+                          className="jungle-dialog-icon"
+                          aria-hidden="true"
+                        />
+                        <span>🔐 Sign Out</span>
+                        <div className="jungle-btn-glow" />
+                      </button>
 
-                  <button
-                    className="jungle-dialog-btn"
-                    onClick={() => {
-                      setIsParentDialogOpen(false);
-                      // Handle register
-                    }}
-                    aria-label="Register - Create new parent account"
-                  >
-                    <UserPlus className="jungle-dialog-icon" aria-hidden="true" />
-                    <span>🔐 Register</span>
-                    <div className="jungle-btn-glow" />
-                  </button>
+                      <button
+                        className="jungle-dialog-btn"
+                        onClick={() => {
+                          setIsParentDialogOpen(false);
+                          // Handle register
+                        }}
+                        aria-label="Register - Create new parent account"
+                      >
+                        <UserPlus
+                          className="jungle-dialog-icon"
+                          aria-hidden="true"
+                        />
+                        <span>🔐 Register</span>
+                        <div className="jungle-btn-glow" />
+                      </button>
                     </>
                   )}
                 </div>
