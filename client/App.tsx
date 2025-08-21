@@ -204,6 +204,10 @@ const App = () => {
                         path="/error-boundary-test"
                         element={<ErrorBoundaryTest />}
                       />
+                      <Route
+                        path="/mobile-settings-demo"
+                        element={<MobileSettingsDemo />}
+                      />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
