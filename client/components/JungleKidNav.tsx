@@ -91,6 +91,7 @@ export function JungleKidNav({
   // 🎨 New Builder.io Animation Controls
   idleSpeed = "slow",
   intensity = "subtle",
+  idlePauseDuration = "long",
   rareEffects = true,
 
   reducedMotion = false,
