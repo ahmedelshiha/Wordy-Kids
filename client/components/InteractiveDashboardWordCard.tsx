@@ -348,6 +348,27 @@ export function InteractiveDashboardWordCard({
     });
   }, [sessionStats, currentWordIndex, sessionProgress]);
 
+  // Optimized: Preload next word's audio for faster loading
+  useEffect(() => {
+    // Guard against uninitialized state
+    if (sessionWords.length === 0 || currentWordIndex < 0) return;
+
+    const nextIndex = currentWordIndex + 1;
+    if (nextIndex < sessionWords.length && nextIndex < SESSION_SIZE) {
+      const nextWord = sessionWords[nextIndex];
+      if (nextWord?.word) {
+        // Preload audio for next word in background
+        setTimeout(() => {
+          try {
+            enhancedAudioService.preloadWordAudio(nextWord.word);
+          } catch (error) {
+            // Silent fail - preloading is optional
+          }
+        }, 100);
+      }
+    }
+  }, [currentWordIndex, sessionWords]);
+
   // Reset card state when starting new session
   useEffect(() => {
     if (sessionWords.length > 0 && currentWordIndex >= sessionWords.length) {
