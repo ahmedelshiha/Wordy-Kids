@@ -99,6 +99,20 @@ export const registerJungleKidNavComponent = () => {
           advanced: false,
         },
         {
+          name: "idlePauseDuration",
+          friendlyName: "Pause Duration",
+          type: "string",
+          enum: [
+            { label: "Short (2s) - Energetic", value: "short" },
+            { label: "Medium (4s) - Balanced", value: "medium" },
+            { label: "Long (6s) - Calm", value: "long" },
+          ],
+          defaultValue: "long",
+          helperText:
+            "Controls how long animations pause between movements. Longer = calmer experience.",
+          advanced: false,
+        },
+        {
           name: "rareEffects",
           friendlyName: "Magical Effects",
           type: "boolean",
