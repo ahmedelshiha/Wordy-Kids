@@ -80,7 +80,7 @@
 }
 
 .jungle-animal-icon.active {
-  animation: breathing 4s ease-in-out infinite;
+  /* animation: breathing 4s ease-in-out infinite; */
 }
 
 /* Smooth, calming animal-specific animations */
@@ -138,7 +138,7 @@
 
 /* ===== CALMING BREATHING ANIMATIONS ===== */
 /* Ultra-gentle breathing animation - like peaceful meditation */
-@keyframes breathing {
+/* @keyframes breathing {
   0%,
   100% {
     transform: scale(1);
@@ -148,7 +148,7 @@
     transform: scale(1.03);
     opacity: 0.95;
   }
-}
+} */
 
 /* Serene calm breathing for default state */
 /* @keyframes calm-breathing {
@@ -297,16 +297,16 @@
 
 /* Apply serene breathing animations - peaceful and meditative */
 .jungle-animal-icon.idle-owl {
-  animation: breathing 8s ease-in-out infinite;
+  /* animation: breathing 8s ease-in-out infinite; */
 }
 .jungle-animal-icon.idle-parrot {
-  animation: breathing 7s ease-in-out infinite;
+  /* animation: breathing 7s ease-in-out infinite; */
 }
 .jungle-animal-icon.idle-monkey {
-  animation: breathing 6.5s ease-in-out infinite;
+  /* animation: breathing 6.5s ease-in-out infinite; */
 }
 .jungle-animal-icon.idle-elephant {
-  animation: breathing 9s ease-in-out infinite;
+  /* animation: breathing 9s ease-in-out infinite; */
 }
 
 /* Default serene breathing for all icons when not active */
