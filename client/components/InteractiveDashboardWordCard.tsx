@@ -1847,7 +1847,7 @@ export function InteractiveDashboardWordCard({
                       Animals: "🐵",
                       Nature: "🌿",
                       Food: "🍎",
-                      Objects: "🔍",
+                      Objects: "��",
                       Colors: "🌈",
                       Body: "👤",
                       Family: "👨‍👩‍👧‍👦",
@@ -2188,35 +2188,14 @@ export function InteractiveDashboardWordCard({
                     }} />
 
                     {/* Main Content */}
-                    <div className="relative z-2 flex flex-col items-center gap-2">
-
-                      {/* Achievement-Style Hint Content */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.3 }}
-                        className="relative mb-2"
-                      >
-                        <h2
-                          className="font-bold margin-0"
-                          style={{
-                            fontSize: "1.4rem",
-                            margin: "0",
-                            textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
-                            lineHeight: "1.2",
-                            color: "white",
-                          }}
-                        >
-                          💡 Hint!
-                        </h2>
-                      </motion.div>
+                    <div className="relative z-2 flex flex-col items-center gap-1">
 
                       {/* Word Display on Green Background */}
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.6 }}
-                        className="relative mb-3"
+                        className="relative"
                       >
                         {/* Word Display Directly on Green Background */}
                         <motion.div
