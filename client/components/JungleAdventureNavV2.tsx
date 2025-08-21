@@ -153,6 +153,8 @@ export default function JungleAdventureNavV2({
   const reducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   const [isParentDialogOpen, setIsParentDialogOpen] = useState(false);
+  const { isGuest, logout } = useAuth();
+  const navigate = useNavigate();
 
   // Track which icon is doing a one-shot breath animation
   const [breathing, setBreathing] = useState<Record<string, boolean>>({});
