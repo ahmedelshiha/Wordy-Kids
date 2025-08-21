@@ -3847,7 +3847,7 @@ export default function Index({ initialProfile }: IndexProps) {
             <JungleAdventureNavV2
               activeId={activeTab}
               onNavigate={setActiveTab}
-              pauseAnimations={showSettings || showParentGate}
+              pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
             />
