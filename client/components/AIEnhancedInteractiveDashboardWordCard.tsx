@@ -1763,7 +1763,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                         onClick={() => handleWordAction("remembered")}
                         disabled={isAnswered}
                         size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200 text-sm sm:text-base"
+                        className="w-full sm:w-auto bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700 text-white font-bold py-4 px-4 sm:py-5 sm:px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl min-h-[65px] sm:min-h-[75px] touch-manipulation group relative overflow-hidden border-2 border-green-300/50 hover:border-green-200 text-base sm:text-lg"
                         aria-label="I know this word"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
