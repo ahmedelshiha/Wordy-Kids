@@ -60,7 +60,7 @@ export type JungleAdventureNavV2Props = {
   parentDialogSections?: {
     dashboard?: boolean;
     settings?: boolean;
-    signOut?: boolean;
+    auth?: boolean;
   };
   /** Called when parent menu icon is clicked */
   onParentMenuClick?: () => void;
@@ -83,7 +83,7 @@ export type JungleAdventureNavV2Props = {
 const DEFAULT_ITEMS: JungleNavItem[] = [
   { id: "home", label: "Home Tree", emoji: "🦉", ariaLabel: "Home Tree" },
   { id: "learn", label: "Book Jungle", emoji: "🦜", ariaLabel: "Learning" },
-  { id: "play", label: "Adventure Games", emoji: "��", ariaLabel: "Play" },
+  { id: "play", label: "Adventure Games", emoji: "🐵", ariaLabel: "Play" },
   {
     id: "achievements",
     label: "Trophy Grove",
