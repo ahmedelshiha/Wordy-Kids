@@ -1057,7 +1057,7 @@ export function InteractiveDashboardWordCard({
     if (currentWord?.emoji) {
       // Show feedback overlay if user has answered
       if (feedbackType) {
-        const feedbackEmoji = feedbackType === "remembered" ? "🎉" : "💪";
+        const feedbackEmoji = feedbackType === "remembered" ? "���" : "💪";
         const feedbackColor =
           feedbackType === "remembered"
             ? "from-green-100 to-green-200"
@@ -1495,7 +1495,7 @@ export function InteractiveDashboardWordCard({
                     if (wordsLearned >= goal) {
                       if (wordsLearned >= goal * 2) return "⭐";
                       if (wordsLearned >= goal * 1.5) return "🚀";
-                      return "���";
+                      return "🌟";
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
@@ -2190,20 +2190,41 @@ export function InteractiveDashboardWordCard({
                     {/* Main Content */}
                     <div className="relative z-2 flex flex-col items-center gap-2">
 
-                      {/* Clean Word Container */}
+                      {/* Achievement-Style Hint Content */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
+                        className="relative mb-2"
+                      >
+                        <h2
+                          className="font-bold margin-0"
+                          style={{
+                            fontSize: "1.8rem",
+                            margin: "0",
+                            textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+                            lineHeight: "1.2",
+                            color: "white",
+                          }}
+                        >
+                          💡 Hint!
+                        </h2>
+                      </motion.div>
+
+                      {/* Achievement-Style Word Container */}
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.6 }}
                         className="relative"
                         style={{
-                          background: "rgba(255, 255, 255, 1)",
-                          border: "1px solid rgba(160, 82, 45, 0.15)",
-                          borderRadius: "8px",
+                          background: "rgba(255, 255, 255, 0.95)",
+                          border: "2px solid rgba(255, 215, 0, 0.6)",
+                          borderRadius: "12px",
                           padding: "0.75rem",
                           boxShadow: `
-                            0 2px 8px rgba(139, 69, 19, 0.08),
-                            inset 0 1px 1px rgba(255, 255, 255, 0.3)
+                            0 4px 12px rgba(0, 0, 0, 0.2),
+                            inset 0 1px 1px rgba(255, 255, 255, 0.8)
                           `,
                         }}
                       >
