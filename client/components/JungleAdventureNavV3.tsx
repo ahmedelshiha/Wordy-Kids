@@ -74,6 +74,28 @@ function useReducedMotion(): boolean {
   return reduced;
 }
 
+// Utility function to get animal-specific CSS class
+function getAnimalAnimationClass(emoji: string): string {
+  switch (emoji) {
+    case "🦜":
+      return "jng-nav-icon-parrot";
+    case "🐵":
+      return "jng-nav-icon-monkey";
+    case "🐘":
+      return "jng-nav-icon-elephant";
+    default:
+      return "jng-nav-v3-icon";
+  }
+}
+
+// Enhanced icon size calculation (20% larger than base size)
+const ENHANCED_ICON_SIZE = {
+  base: "3.6rem", // 20% larger than 3rem (text-3xl)
+  active: "scale-110",
+  hover: "scale-115",
+  tap: "scale-95"
+};
+
 export default function JungleAdventureNavV3({
   activeId,
   items = DEFAULT_ITEMS,
