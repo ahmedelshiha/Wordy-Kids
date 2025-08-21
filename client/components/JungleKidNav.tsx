@@ -25,7 +25,48 @@ import {
 } from "@/lib/jungleNavConfig";
 import { junglePerformanceOptimizer } from "@/lib/jungleNavPerformance";
 import { useJungleNavAnimations } from "@/hooks/use-jungle-nav-animations";
+import { useAnimationControl } from "@/lib/animationControl";
+import { animationControl } from "@/lib/animationControl";
 import "@/styles/jungle-adventure-nav.css";
+
+/**
+ * 🎮 Builder.io Animation Style Configuration Guide
+ *
+ * Animation Style Options:
+ *
+ * 1. "calm-breathing" (DEFAULT) ⭐
+ *    - Gentle scale animation like breathing
+ *    - Safe for focus/typing tasks
+ *    - Mobile-optimized, battery efficient
+ *    - Kid-friendly and calming
+ *
+ * 2. "soft-glow" 🌟
+ *    - Adds subtle firefly glow effects
+ *    - No harsh flashing or blinking
+ *    - Soft yellow/green jungle colors
+ *    - Combines with breathing animation
+ *
+ * 3. "micro-movements" 🦉
+ *    - Character-specific subtle movements
+ *    - Owl: gentle blink every ~10s
+ *    - Monkey: tiny tail wiggle
+ *    - Parrot: slight head tilt
+ *    - Elephant: small ear flap
+ *    - Idle & slow, not distracting
+ *
+ * 4. "full-experience" 🌿
+ *    - All effects combined
+ *    - Maximum immersion
+ *    - Best for exploration modes
+ *
+ * 5. "none" ♿
+ *    - No animations (accessibility mode)
+ *    - For motion-sensitive children
+ *    - Fully accessible
+ *
+ * Usage in Builder.io:
+ * Add as dropdown: animationStyle="calm-breathing"
+ */
 
 // Builder.io compatible props interface
 export interface JungleKidNavProps {
@@ -49,6 +90,19 @@ export interface JungleKidNavProps {
   enableSounds?: boolean;
   animations?: boolean;
   showParentGate?: boolean;
+
+  // 🎯 Kid-Friendly Animation Presets
+  // "calm-breathing" - Default gentle breathing animation (safest for focus/typing)
+  // "soft-glow" - Adds subtle firefly glow effects
+  // "micro-movements" - Animal character micro-movements (owl blinks, monkey wiggles, etc)
+  // "full-experience" - All effects combined for maximum immersion
+  // "none" - No animations (accessibility mode)
+  animationStyle?:
+    | "calm-breathing"
+    | "soft-glow"
+    | "micro-movements"
+    | "full-experience"
+    | "none";
 
   // Performance and accessibility
   reducedMotion?: boolean;
@@ -74,6 +128,7 @@ export function JungleKidNav({
   reducedMotion = false,
   enableParticles = true,
   autoOptimize = true,
+  animationStyle = "calm-breathing",
 }: JungleKidNavProps) {
   // State management
   const [navState, setNavState] = useState<JungleNavState>(() => ({
@@ -101,11 +156,16 @@ export function JungleKidNav({
   // Parent gate code
   const correctParentCode = "PARENT2024";
 
+  // Global animation control state
+  const { isSuspended: animationsSuspended } = useAnimationControl();
+
   // Initialize animation controls
   const animationControls = useJungleNavAnimations({
-    enableAnimations: navState.deviceCapabilities.animations,
-    enableSounds: navState.deviceCapabilities.sounds,
-    enableParticles: navState.deviceCapabilities.particles,
+    enableAnimations:
+      navState.deviceCapabilities.animations && !animationsSuspended,
+    enableSounds: navState.deviceCapabilities.sounds && !animationsSuspended,
+    enableParticles:
+      navState.deviceCapabilities.particles && !animationsSuspended,
   });
 
   // Use custom menu items if provided, otherwise use default jungle items
@@ -215,6 +275,15 @@ export function JungleKidNav({
     };
   }, [autoOptimize, animations, enableSounds, enableParticles, reducedMotion]);
 
+  // Auto-pause animations when parent gate dialog opens
+  useEffect(() => {
+    if (navState.showParentGate) {
+      animationControl.suspend("Parent Gate Dialog opened");
+    } else {
+      animationControl.resume();
+    }
+  }, [navState.showParentGate]);
+
   // Parent gate handling
   const handleParentGateSubmit = useCallback(() => {
     if (parentCode === correctParentCode) {
@@ -282,10 +351,13 @@ export function JungleKidNav({
           animate={{ opacity: 1, y: 0 }}
           transition={{
             delay: index * 0.1,
-            duration: navState.deviceCapabilities.animations ? 0.3 : 0,
+            duration:
+              navState.deviceCapabilities.animations && !animationsSuspended
+                ? 0.3
+                : 0,
           }}
           whileHover={
-            navState.deviceCapabilities.animations
+            navState.deviceCapabilities.animations && !animationsSuspended
               ? {
                   y: -2,
                   scale: 1.02,
@@ -304,7 +376,7 @@ export function JungleKidNav({
           {screenSize === "desktop" &&
             theme === "jungle" &&
             navState.deviceCapabilities.backgroundEffects && (
-              <div className="jungle-vines">🌿</div>
+              <div className="jungle-vines">����</div>
             )}
 
           {/* Animal/Icon */}
@@ -314,7 +386,20 @@ export function JungleKidNav({
               isActive && "active",
               !isActive &&
                 navState.deviceCapabilities.animations &&
+                animationStyle !== "none" &&
                 `idle-${item.animal.name.toLowerCase().replace(" ", "")}`,
+              // No animations override
+              animationStyle === "none" && "no-animations",
+              // Apply animation style classes based on preset (only if animations enabled)
+              navState.deviceCapabilities.animations &&
+                animationStyle !== "none" && {
+                  "with-glow": animationStyle === "soft-glow",
+                  "micro-movements": animationStyle === "micro-movements",
+                  "full-experience": animationStyle === "full-experience",
+                  [item.animal.name.toLowerCase().replace(" ", "")]:
+                    animationStyle === "micro-movements" ||
+                    animationStyle === "full-experience",
+                },
             )}
           >
             {item.animal.emoji}
@@ -342,7 +427,10 @@ export function JungleKidNav({
               className="jungle-active-indicator"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{
+                duration: animationsSuspended ? 0 : 0.3,
+                ease: "easeOut",
+              }}
             />
           )}
         </motion.button>
@@ -355,6 +443,7 @@ export function JungleKidNav({
       screenSize,
       handleNavClick,
       handleNavHover,
+      animationsSuspended,
     ],
   );
 
@@ -420,12 +509,12 @@ export function JungleKidNav({
               }
               className="jungle-parent-gate-button"
               whileHover={
-                navState.deviceCapabilities.animations
+                navState.deviceCapabilities.animations && !animationsSuspended
                   ? { scale: 1.05 }
                   : undefined
               }
               whileTap={
-                navState.deviceCapabilities.animations
+                navState.deviceCapabilities.animations && !animationsSuspended
                   ? { scale: 0.95 }
                   : undefined
               }

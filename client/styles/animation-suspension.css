@@ -1,0 +1,179 @@
+/**
+ * 🎯 Animation Suspension CSS Safety Net
+ * 
+ * This CSS provides a global way to pause all jungle animations when
+ * the global animation control is suspended (e.g., during parent gate dialogs).
+ * 
+ * Applied when body has 'jungle-animations-suspended' class.
+ */
+
+/* ========== GLOBAL ANIMATION SUSPENSION ========== */
+
+body.jungle-animations-suspended {
+  /* Disable all transitions and animations globally */
+  --animation-duration: 0s !important;
+  --transition-duration: 0s !important;
+}
+
+/* ========== JUNGLE ANIMAL ICONS ========== */
+
+body.jungle-animations-suspended .jungle-animal-icon {
+  animation-play-state: paused !important;
+  animation-duration: 0s !important;
+  transition: none !important;
+}
+
+body.jungle-animations-suspended .jungle-nav-item {
+  animation: none !important;
+  transition: none !important;
+}
+
+body.jungle-animations-suspended .jungle-nav-item:hover {
+  transform: none !important;
+}
+
+/* ========== JUNGLE THEME ANIMATIONS ========== */
+
+body.jungle-animations-suspended .jungle-glow,
+body.jungle-animations-suspended .jungle-float,
+body.jungle-animations-suspended .jungle-sway,
+body.jungle-animations-suspended .jungle-sparkle {
+  animation-play-state: paused !important;
+  animation-duration: 0s !important;
+}
+
+/* ========== FRAMER MOTION OVERRIDE ========== */
+
+body.jungle-animations-suspended [data-framer-component] {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* ========== KEYFRAME ANIMATION OVERRIDES ========== */
+
+body.jungle-animations-suspended *[class*="animate-"] {
+  animation-play-state: paused !important;
+  animation-duration: 0s !important;
+}
+
+body.jungle-animations-suspended *[class*="jungle-"] {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* ========== SPECIFIC JUNGLE ADVENTURE ANIMATIONS ========== */
+
+body.jungle-animations-suspended .jungle-creature,
+body.jungle-animations-suspended .jungle-butterfly,
+body.jungle-animations-suspended .jungle-fireflies,
+body.jungle-animations-suspended .jungle-vines,
+body.jungle-animations-suspended .jungle-active-indicator {
+  animation: none !important;
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+/* ========== PARTICLE EFFECTS ========== */
+
+body.jungle-animations-suspended [class*="particle"],
+body.jungle-animations-suspended [class*="sparkle"],
+body.jungle-animations-suspended [class*="celebration"] {
+  animation: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ========== HOVER AND INTERACTION STATES ========== */
+
+body.jungle-animations-suspended *:hover {
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+body.jungle-animations-suspended button:hover,
+body.jungle-animations-suspended .jungle-nav-item:hover {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+/* ========== MOTION COMPONENTS ========== */
+
+body.jungle-animations-suspended .motion-div,
+body.jungle-animations-suspended .motion-button {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* ========== LOADING AND SPINNER ANIMATIONS ========== */
+
+body.jungle-animations-suspended [class*="loading"],
+body.jungle-animations-suspended [class*="spinner"],
+body.jungle-animations-suspended [class*="rotating"] {
+  animation: none !important;
+  animation-play-state: paused !important;
+}
+
+/* ========== BACKGROUND ANIMATIONS ========== */
+
+body.jungle-animations-suspended .jungle-pattern-bg,
+body.jungle-animations-suspended [class*="jungle-bg"] {
+  animation: none !important;
+  background-attachment: scroll !important;
+}
+
+/* ========== ACCESSIBILITY CONSIDERATIONS ========== */
+
+/* Ensure essential UI elements remain visible */
+body.jungle-animations-suspended .jungle-nav-item {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Keep focus indicators working */
+body.jungle-animations-suspended *:focus {
+  outline: 2px solid #4caf50 !important;
+  outline-offset: 2px !important;
+}
+
+/* ========== PERFORMANCE OPTIMIZATIONS ========== */
+
+/* Disable GPU acceleration to reduce resource usage */
+body.jungle-animations-suspended * {
+  will-change: auto !important;
+  transform-style: flat !important;
+  backface-visibility: visible !important;
+}
+
+/* ========== DEBUG HELPERS (development only) ========== */
+
+body.jungle-animations-suspended::before {
+  content: "🎯 Animations Suspended";
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgba(255, 193, 7, 0.9);
+  color: #000;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 10000;
+  border-radius: 0 0 0 4px;
+  pointer-events: none;
+  opacity: 0.7;
+  font-family: monospace;
+}
+
+/* Remove debug indicator in production */
+body.production.jungle-animations-suspended::before {
+  display: none;
+}
+
+/* ========== EMERGENCY OVERRIDE ========== */
+
+/* Emergency class to force resume animations if CSS gets stuck */
+body.jungle-animations-force-resume * {
+  animation-play-state: running !important;
+  animation-duration: revert !important;
+  transition: revert !important;
+}
