@@ -93,6 +93,7 @@ export function JungleKidNav({
   idleSpeed = "slow",
   intensity = "subtle",
   idlePauseDuration = "long",
+  animationStyle = "breathing",
   rareEffects = true,
 
   reducedMotion = false,
