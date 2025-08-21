@@ -424,12 +424,12 @@ export function JungleKidNav({
               }
               className="jungle-parent-gate-button"
               whileHover={
-                navState.deviceCapabilities.animations
+                navState.deviceCapabilities.animations && !animationsSuspended
                   ? { scale: 1.05 }
                   : undefined
               }
               whileTap={
-                navState.deviceCapabilities.animations
+                navState.deviceCapabilities.animations && !animationsSuspended
                   ? { scale: 0.95 }
                   : undefined
               }
