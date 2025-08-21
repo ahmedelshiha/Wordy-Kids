@@ -11,6 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { JungleAdventureWordCard } from "@/components/JungleAdventureWordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
@@ -3335,7 +3340,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Follow ancient jungle sounds to hidden
                                           treasures! Listen carefully to
                                           nature's magical symphony and discover
-                                          secret word treasures! ����🗺️
+                                          secret word treasures! ������🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
