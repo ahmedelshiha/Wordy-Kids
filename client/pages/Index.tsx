@@ -3580,7 +3580,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="jungle-sound-indicator">
                                             <Trophy className="w-6 h-6 text-white" />
                                           </div>
-                                          ���� Your Jungle Adventures! 🏆
+                                          🏆 Your Jungle Adventures! 🏆
                                         </h3>
                                         <p className="text-jungle-dark">
                                           Track your epic quiz journeys and
@@ -4030,7 +4030,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "learn",
                   label: "Word Jungle",
-                  emoji: "🦜",
+                  emoji: "��",
                   ariaLabel: "Learning",
                 },
                 {
@@ -4176,8 +4176,8 @@ export default function Index({ initialProfile }: IndexProps) {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-3 relative z-10">
-            <div className="grid grid-cols-1 gap-3">
+          <div className="space-y-3 relative z-10" role="navigation" aria-labelledby="parent-menu-title">
+            <div className="grid grid-cols-1 gap-3" role="group" aria-label="Parent menu options">
               {/* Parent Dashboard Button with Owl Icon */}
               <Button
                 onClick={() => {
