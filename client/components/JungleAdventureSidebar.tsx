@@ -14,21 +14,19 @@ interface JungleAdventureSidebarProps {
 
 // Enhanced jungle-themed icons with animated backgrounds
 const ParrotIcon = ({ className }: { className?: string }) => (
-  <motion.div
+  <div
     className={cn(
-      "w-12 h-12 rounded-xl bg-gradient-to-br from-sky to-sky-dark flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 flex-shrink-0 relative overflow-hidden",
+      "w-12 h-12 rounded-xl bg-gradient-to-br from-sky to-sky-dark flex items-center justify-center shadow-lg flex-shrink-0 relative overflow-hidden",
       className,
     )}
-    whileHover={{ scale: 1.1, rotate: 3 }}
-    whileTap={{ scale: 0.95 }}
   >
     {/* Animated background elements */}
-    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-300 rounded-full animate-pulse" />
-    <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300 relative z-10">
+    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
+    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-300 rounded-full" />
+    <div className="text-white text-lg relative z-10">
       🦜
     </div>
-  </motion.div>
+  </div>
 );
 
 const MonkeyIcon = ({ className }: { className?: string }) => (
