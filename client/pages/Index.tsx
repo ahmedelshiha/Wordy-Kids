@@ -3594,7 +3594,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            🏆����
+                                            🏆🌟
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-jungle-green text-sm">
@@ -3726,7 +3726,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      ��� Word Garden
+                                      🌱 Word Garden
                                     </h2>
                                     <Button
                                       onClick={() => setShowExitDialog(true)}
