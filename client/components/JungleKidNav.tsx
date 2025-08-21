@@ -652,6 +652,9 @@ export function JungleKidNav({
       <ParentGateButton />
       <ParentGateDialog />
       <ParentOptionsDialog />
+
+      {/* 🧪 Development Testing Harness */}
+      <JungleAnimationTestHarness />
     </>
   );
 }
