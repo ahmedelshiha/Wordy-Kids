@@ -265,7 +265,6 @@ export default function Index({ initialProfile }: IndexProps) {
     new Set(),
   );
 
-
   // Session persistence states
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
   const [sessionRestorationData, setSessionRestorationData] =
@@ -3799,7 +3798,6 @@ export default function Index({ initialProfile }: IndexProps) {
               onClose={() => setFeedback(null)}
             />
           )}
-
 
           {/* Achievement dialogs now handled by LightweightAchievementProvider */}
 
