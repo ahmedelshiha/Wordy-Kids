@@ -102,11 +102,14 @@ export function JungleKidNav({
   // Parent gate code
   const correctParentCode = "PARENT2024";
 
+  // Global animation control state
+  const { isSuspended: animationsSuspended } = useAnimationControl();
+
   // Initialize animation controls
   const animationControls = useJungleNavAnimations({
-    enableAnimations: navState.deviceCapabilities.animations,
-    enableSounds: navState.deviceCapabilities.sounds,
-    enableParticles: navState.deviceCapabilities.particles,
+    enableAnimations: navState.deviceCapabilities.animations && !animationsSuspended,
+    enableSounds: navState.deviceCapabilities.sounds && !animationsSuspended,
+    enableParticles: navState.deviceCapabilities.particles && !animationsSuspended,
   });
 
   // Use custom menu items if provided, otherwise use default jungle items
