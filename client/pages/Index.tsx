@@ -3334,7 +3334,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             fontWeight: "bold",
                                           }}
                                         >
-                                          ���� Enhanced Jungle Adventure
+                                          🏆 Enhanced Jungle Adventure
                                         </h3>
                                         <p className="jungle-quiz-card-description">
                                           Experience the ultimate AAA-quality
@@ -3632,7 +3632,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            ����
+                                            📸
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-bright-orange text-sm">
@@ -4237,9 +4237,9 @@ export default function Index({ initialProfile }: IndexProps) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full" />
                   </div>
-                  <div className="text-left flex-1">
-                    <div className="font-semibold text-lg">Jungle Settings</div>
-                    <div className="text-sm text-green-100">
+                  <div className="text-left flex-1 min-w-0">
+                    <div className="font-semibold text-base sm:text-lg leading-tight">Jungle Settings</div>
+                    <div className="text-xs sm:text-sm text-green-100 leading-tight">
                       🛠️ Configure adventure preferences and safety controls
                     </div>
                   </div>
