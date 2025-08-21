@@ -8,7 +8,15 @@ import {
   Home,
   BookOpen,
   MoreHorizontal,
+  Shield,
+  Key,
+  X,
+  BarChart3,
+  Settings,
+  LogOut,
+  UserPlus,
 } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 
 export type JungleNavItem = {
   id: string;
@@ -19,6 +27,9 @@ export type JungleNavItem = {
   onClick?: () => void;
   ariaLabel?: string;
 };
+
+export type ParentMenuIconVariant = "totem" | "shield" | "key";
+export type ParentMenuAnimationStyle = "breathing" | "glow" | "none";
 
 export type JungleAdventureNavV2Props = {
   /** Current route/active item id */
