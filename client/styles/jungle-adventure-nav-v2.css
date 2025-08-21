@@ -40,14 +40,10 @@
   align-items: center;
 }
 
-/* Desktop places it at the top by default */
+/* Desktop keeps it at the bottom with larger height */
 @media (min-width: 1024px) {
   .jng-nav-bar {
-    top: 0;
-    bottom: auto;
     height: var(--jng-desktop-bar-h);
-    border-top: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     background: linear-gradient(
       180deg,
       rgba(13, 52, 40, 0.92),
