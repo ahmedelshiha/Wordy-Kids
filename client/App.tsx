@@ -195,6 +195,10 @@ const App = () => {
                         path="/jungle-adventure-word-card-demo"
                         element={<JungleAdventureWordCardDemo />}
                       />
+                      <Route
+                        path="/error-boundary-test"
+                        element={<ErrorBoundaryTest />}
+                      />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
