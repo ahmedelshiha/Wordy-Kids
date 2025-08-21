@@ -2104,26 +2104,24 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Parent Gate Button - Top Right Corner */}
           {userRole === "child" && (
-            <button
-              onClick={() => setUserRole("parent")}
-              className="fixed top-4 right-4 z-50 w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-gray-200"
-              aria-label="Parent Access"
-            >
-              <svg
-                className="w-6 h-6 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-            </button>
+            <div className="fixed top-4 right-4 z-50">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.button
+                    onClick={() => setShowParentGate(true)}
+                    className="w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-yellow-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label="Access Family Zone and Settings"
+                  >
+                    <Crown className="w-6 h-6 text-yellow-600" />
+                  </motion.button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Family Zone & Settings</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
           )}
 
           {/* Main Content with Sidebar Layout */}
@@ -3340,7 +3338,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Follow ancient jungle sounds to hidden
                                           treasures! Listen carefully to
                                           nature's magical symphony and discover
-                                          secret word treasures! ������🗺️
+                                          secret word treasures! ����🗺️
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
