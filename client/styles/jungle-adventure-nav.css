@@ -295,23 +295,23 @@
   }
 }
 
-/* Apply calm breathing animations - much gentler than previous */
+/* Apply serene breathing animations - peaceful and meditative */
 .jungle-animal-icon.idle-owl {
-  animation: breathing 5s ease-in-out infinite;
+  animation: breathing 8s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-parrot {
-  animation: breathing 4s ease-in-out infinite;
+  animation: breathing 7s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-monkey {
-  animation: breathing 3.5s ease-in-out infinite;
+  animation: breathing 6.5s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-elephant {
-  animation: breathing 4.5s ease-in-out infinite;
+  animation: breathing 9s ease-in-out infinite;
 }
 
-/* Default breathing for all icons when not active */
+/* Default serene breathing for all icons when not active */
 .jungle-animal-icon {
-  animation: calm-breathing 6s ease-in-out infinite;
+  animation: calm-breathing 10s ease-in-out infinite;
 }
 
 /* ===== NO ANIMATION MODE (Accessibility) ===== */
