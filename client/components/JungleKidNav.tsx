@@ -434,10 +434,10 @@ export function JungleKidNav({
           {isActive && (
             <motion.div
               className="jungle-active-indicator"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
               transition={{
-                duration: animationsSuspended ? 0 : 0.3,
+                duration: animationsSuspended ? 0 : 0.8,
                 ease: "easeOut",
               }}
             />
