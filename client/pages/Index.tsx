@@ -2218,7 +2218,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     <span
                       className="text-2xl relative z-10 filter drop-shadow-sm"
                       style={{
-                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)"
+                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)",
                       }}
                     >
                       🪵
@@ -4151,7 +4151,9 @@ export default function Index({ initialProfile }: IndexProps) {
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
             <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
-            <div className="absolute bottom-2 left-4 text-sm opacity-20">🌱</div>
+            <div className="absolute bottom-2 left-4 text-sm opacity-20">
+              🌱
+            </div>
           </div>
 
           <DialogHeader className="relative z-10">
@@ -4176,8 +4178,16 @@ export default function Index({ initialProfile }: IndexProps) {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-3 relative z-10" role="navigation" aria-labelledby="parent-menu-title">
-            <div className="grid grid-cols-1 gap-3" role="group" aria-label="Parent menu options">
+          <div
+            className="space-y-3 relative z-10"
+            role="navigation"
+            aria-labelledby="parent-menu-title"
+          >
+            <div
+              className="grid grid-cols-1 gap-3"
+              role="group"
+              aria-label="Parent menu options"
+            >
               {/* Parent Dashboard Button with Owl Icon */}
               <Button
                 onClick={() => {
@@ -4204,9 +4214,17 @@ export default function Index({ initialProfile }: IndexProps) {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
-                  <span className="text-2xl filter drop-shadow-sm" role="img" aria-label="Owl icon">🦉</span>
+                  <span
+                    className="text-2xl filter drop-shadow-sm"
+                    role="img"
+                    aria-label="Owl icon"
+                  >
+                    🦉
+                  </span>
                   <div className="text-left flex-1 min-w-0">
-                    <div className="font-semibold text-base sm:text-lg leading-tight">Parent Dashboard</div>
+                    <div className="font-semibold text-base sm:text-lg leading-tight">
+                      Parent Dashboard
+                    </div>
                     <div className="text-xs sm:text-sm text-amber-100 leading-tight">
                       🌟 View progress, analytics, and learning adventures
                     </div>
@@ -4245,13 +4263,15 @@ export default function Index({ initialProfile }: IndexProps) {
                       className="w-6 h-6"
                       style={{
                         filter: "drop-shadow(0 1px 2px rgba(139, 69, 19, 0.3))",
-                        color: "#CD853F"
+                        color: "#CD853F",
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full" />
                   </div>
                   <div className="text-left flex-1 min-w-0">
-                    <div className="font-semibold text-base sm:text-lg leading-tight">Jungle Settings</div>
+                    <div className="font-semibold text-base sm:text-lg leading-tight">
+                      Jungle Settings
+                    </div>
                     <div className="text-xs sm:text-sm text-green-100 leading-tight">
                       🛠️ Configure adventure preferences and safety controls
                     </div>
