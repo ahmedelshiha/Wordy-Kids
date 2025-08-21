@@ -1314,7 +1314,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setGameMode(false);
     setFeedback({
       type: "celebration",
-      title: "Amazing Game! ���🎉",
+      title: "Amazing Game! 🎮🎉",
       message: `You scored ${score} points and learned ${totalWords} words!`,
       points: score,
       onContinue: () => setFeedback(null),
@@ -3366,7 +3366,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               fontWeight: "bold",
                                             }}
                                           >
-                                            🎵 3D Audio
+                                            ���� 3D Audio
                                           </span>
                                           <span
                                             className="jungle-quiz-badge"
