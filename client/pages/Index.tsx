@@ -2980,7 +2980,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               Get Hint
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Need practice! ���
+                                                              Need practice! 📖
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🌿
+                                      ����
                                     </div>
 
                                     {/* Hero Content - Compact */}
@@ -3997,7 +3997,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "����"]}
           />
 
           {/* Enhanced Reward Celebration */}
