@@ -15,13 +15,13 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Crown, Lock, Settings, Users, Shield } from "lucide-react";
-import { 
-  jungleNavItems, 
-  jungleTheme, 
-  navBreakpoints, 
+import {
+  jungleNavItems,
+  jungleTheme,
+  navBreakpoints,
   getOptimalSettings,
   type JungleNavState,
-  type DeviceCapabilities 
+  type DeviceCapabilities,
 } from "@/lib/jungleNavConfig";
 import { junglePerformanceOptimizer } from "@/lib/jungleNavPerformance";
 import { useJungleNavAnimations } from "@/hooks/use-jungle-nav-animations";
@@ -49,7 +49,7 @@ export interface JungleKidNavProps {
   enableSounds?: boolean;
   animations?: boolean;
   showParentGate?: boolean;
-  
+
   // Performance and accessibility
   reducedMotion?: boolean;
   enableParticles?: boolean;
@@ -64,7 +64,7 @@ export function JungleKidNav({
   onSettingsClick = () => {},
   onAdminClick = () => {},
   className,
-  
+
   // Builder.io props with defaults
   menuItems,
   theme = "jungle",
@@ -80,18 +80,22 @@ export function JungleKidNav({
     activeTab,
     isCollapsed: false,
     showParentGate: false,
-    deviceCapabilities: autoOptimize ? getOptimalSettings() : {
-      animations: animations && !reducedMotion,
-      sounds: enableSounds,
-      particles: enableParticles && !reducedMotion,
-      backgroundEffects: animations && !reducedMotion
-    }
+    deviceCapabilities: autoOptimize
+      ? getOptimalSettings()
+      : {
+          animations: animations && !reducedMotion,
+          sounds: enableSounds,
+          particles: enableParticles && !reducedMotion,
+          backgroundEffects: animations && !reducedMotion,
+        },
   }));
 
   const [parentCode, setParentCode] = useState("");
   const [parentCodeError, setParentCodeError] = useState(false);
   const [showParentOptions, setShowParentOptions] = useState(false);
-  const [screenSize, setScreenSize] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [screenSize, setScreenSize] = useState<"mobile" | "tablet" | "desktop">(
+    "desktop",
+  );
   const [isPerformanceOptimized, setIsPerformanceOptimized] = useState(false);
 
   // Parent gate code
@@ -108,20 +112,24 @@ export function JungleKidNav({
   const navigationItems = useMemo(() => {
     if (menuItems && menuItems.length > 0) {
       return menuItems.map((item, index) => ({
-        id: item.link.replace('/', '') || `item-${index}`,
+        id: item.link.replace("/", "") || `item-${index}`,
         label: item.label,
         animal: {
           name: item.animal || "Friendly Guide",
           emoji: item.icon || "🌟",
           sound: "default",
-          description: `Navigate to ${item.label}`
+          description: `Navigate to ${item.label}`,
         },
-        colors: jungleNavItems[index % jungleNavItems.length]?.colors || jungleNavItems[0].colors,
-        animations: jungleNavItems[index % jungleNavItems.length]?.animations || jungleNavItems[0].animations,
+        colors:
+          jungleNavItems[index % jungleNavItems.length]?.colors ||
+          jungleNavItems[0].colors,
+        animations:
+          jungleNavItems[index % jungleNavItems.length]?.animations ||
+          jungleNavItems[0].animations,
         accessibility: {
           ariaLabel: `Navigate to ${item.label}`,
-          description: `Go to ${item.label} section`
-        }
+          description: `Go to ${item.label} section`,
+        },
       }));
     }
     return jungleNavItems;
@@ -132,25 +140,25 @@ export function JungleKidNav({
     const handleResize = () => {
       const width = window.innerWidth;
       if (width < navBreakpoints.mobile) {
-        setScreenSize('mobile');
+        setScreenSize("mobile");
       } else if (width < navBreakpoints.desktop) {
-        setScreenSize('tablet');
+        setScreenSize("tablet");
       } else {
-        setScreenSize('desktop');
+        setScreenSize("desktop");
       }
 
       // Update device capabilities on resize if auto-optimize is enabled
       if (autoOptimize) {
-        setNavState(prev => ({
+        setNavState((prev) => ({
           ...prev,
-          deviceCapabilities: getOptimalSettings()
+          deviceCapabilities: getOptimalSettings(),
         }));
       }
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [autoOptimize]);
 
   // Performance optimization initialization
@@ -165,7 +173,7 @@ export function JungleKidNav({
         await junglePerformanceOptimizer.initialize();
         setIsPerformanceOptimized(true);
       } catch (error) {
-        console.warn('Performance optimization failed:', error);
+        console.warn("Performance optimization failed:", error);
         setIsPerformanceOptimized(true); // Continue anyway
       }
     };
@@ -175,21 +183,32 @@ export function JungleKidNav({
     // Listen for optimization updates
     const handleOptimizationUpdate = (event: CustomEvent) => {
       const optimizations = event.detail;
-      setNavState(prev => ({
+      setNavState((prev) => ({
         ...prev,
         deviceCapabilities: {
-          animations: animations && !optimizations.reduceAnimations && !reducedMotion,
+          animations:
+            animations && !optimizations.reduceAnimations && !reducedMotion,
           sounds: enableSounds && !optimizations.disableParticles,
-          particles: enableParticles && !optimizations.disableParticles && !reducedMotion,
-          backgroundEffects: animations && !optimizations.simplifyBackground && !reducedMotion
-        }
+          particles:
+            enableParticles &&
+            !optimizations.disableParticles &&
+            !reducedMotion,
+          backgroundEffects:
+            animations && !optimizations.simplifyBackground && !reducedMotion,
+        },
       }));
     };
 
-    window.addEventListener('jungle-nav-optimizations-updated', handleOptimizationUpdate as EventListener);
+    window.addEventListener(
+      "jungle-nav-optimizations-updated",
+      handleOptimizationUpdate as EventListener,
+    );
 
     return () => {
-      window.removeEventListener('jungle-nav-optimizations-updated', handleOptimizationUpdate as EventListener);
+      window.removeEventListener(
+        "jungle-nav-optimizations-updated",
+        handleOptimizationUpdate as EventListener,
+      );
       if (autoOptimize) {
         junglePerformanceOptimizer.destroy();
       }
@@ -199,11 +218,11 @@ export function JungleKidNav({
   // Parent gate handling
   const handleParentGateSubmit = useCallback(() => {
     if (parentCode === correctParentCode) {
-      setNavState(prev => ({ ...prev, showParentGate: false }));
+      setNavState((prev) => ({ ...prev, showParentGate: false }));
       setShowParentOptions(true);
       setParentCode("");
       setParentCodeError(false);
-      animationControls.playAnimalSound('elephant'); // Celebration sound
+      animationControls.playAnimalSound("elephant"); // Celebration sound
     } else {
       setParentCodeError(true);
       setParentCode("");
@@ -212,112 +231,135 @@ export function JungleKidNav({
   }, [parentCode, animationControls]);
 
   // Navigation item click handler
-  const handleNavClick = useCallback((itemId: string) => {
-    const item = navigationItems.find(nav => nav.id === itemId);
-    if (item && navState.deviceCapabilities.sounds) {
-      animationControls.playAnimalSound(item.animal.name.toLowerCase().replace(' ', ''));
-    }
-    onTabChange(itemId);
-    setNavState(prev => ({ ...prev, activeTab: itemId }));
-  }, [navigationItems, navState.deviceCapabilities.sounds, onTabChange, animationControls]);
+  const handleNavClick = useCallback(
+    (itemId: string) => {
+      const item = navigationItems.find((nav) => nav.id === itemId);
+      if (item && navState.deviceCapabilities.sounds) {
+        animationControls.playAnimalSound(
+          item.animal.name.toLowerCase().replace(" ", ""),
+        );
+      }
+      onTabChange(itemId);
+      setNavState((prev) => ({ ...prev, activeTab: itemId }));
+    },
+    [
+      navigationItems,
+      navState.deviceCapabilities.sounds,
+      onTabChange,
+      animationControls,
+    ],
+  );
 
   // Hover handlers
-  const handleNavHover = useCallback((element: HTMLElement) => {
-    if (navState.deviceCapabilities.animations) {
-      animationControls.playHoverEffect(element);
-    }
-  }, [navState.deviceCapabilities.animations, animationControls]);
+  const handleNavHover = useCallback(
+    (element: HTMLElement) => {
+      if (navState.deviceCapabilities.animations) {
+        animationControls.playHoverEffect(element);
+      }
+    },
+    [navState.deviceCapabilities.animations, animationControls],
+  );
 
   // Render individual navigation item
-  const renderNavItem = useCallback((item: typeof navigationItems[0], index: number) => {
-    const isActive = activeTab === item.id;
-    const isSimpleTheme = theme === 'simple';
+  const renderNavItem = useCallback(
+    (item: (typeof navigationItems)[0], index: number) => {
+      const isActive = activeTab === item.id;
+      const isSimpleTheme = theme === "simple";
 
-    return (
-      <motion.button
-        key={item.id}
-        onClick={() => handleNavClick(item.id)}
-        onMouseEnter={(e) => handleNavHover(e.currentTarget)}
-        className={cn(
-          "jungle-nav-item",
-          isActive && "active",
-          isSimpleTheme && "simple-theme"
-        )}
-        aria-label={item.accessibility.ariaLabel}
-        title={item.accessibility.description}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          delay: index * 0.1,
-          duration: navState.deviceCapabilities.animations ? 0.3 : 0
-        }}
-        whileHover={navState.deviceCapabilities.animations ? { 
-          y: -2,
-          scale: 1.02 
-        } : undefined}
-        whileTap={navState.deviceCapabilities.animations ? { 
-          scale: 0.98 
-        } : undefined}
-      >
-        {/* Decorative vines (desktop only, jungle theme) */}
-        {screenSize === 'desktop' && 
-         theme === 'jungle' && 
-         navState.deviceCapabilities.backgroundEffects && (
-          <div className="jungle-vines">🌿</div>
-        )}
-
-        {/* Animal/Icon */}
-        <div className={cn(
-          "jungle-animal-icon",
-          isActive && "active",
-          !isActive && 
-          navState.deviceCapabilities.animations && 
-          `idle-${item.animal.name.toLowerCase().replace(' ', '')}`
-        )}>
-          {item.animal.emoji}
-          
-          {/* Fireflies for active items */}
-          {isActive && 
-           navState.deviceCapabilities.particles && 
-           theme === 'jungle' && (
-            <>
-              <div className="jungle-fireflies">✨</div>
-              <div className="jungle-fireflies">💫</div>
-              <div className="jungle-fireflies">⭐</div>
-            </>
+      return (
+        <motion.button
+          key={item.id}
+          onClick={() => handleNavClick(item.id)}
+          onMouseEnter={(e) => handleNavHover(e.currentTarget)}
+          className={cn(
+            "jungle-nav-item",
+            isActive && "active",
+            isSimpleTheme && "simple-theme",
           )}
-        </div>
+          aria-label={item.accessibility.ariaLabel}
+          title={item.accessibility.description}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: index * 0.1,
+            duration: navState.deviceCapabilities.animations ? 0.3 : 0,
+          }}
+          whileHover={
+            navState.deviceCapabilities.animations
+              ? {
+                  y: -2,
+                  scale: 1.02,
+                }
+              : undefined
+          }
+          whileTap={
+            navState.deviceCapabilities.animations
+              ? {
+                  scale: 0.98,
+                }
+              : undefined
+          }
+        >
+          {/* Decorative vines (desktop only, jungle theme) */}
+          {screenSize === "desktop" &&
+            theme === "jungle" &&
+            navState.deviceCapabilities.backgroundEffects && (
+              <div className="jungle-vines">🌿</div>
+            )}
 
-        {/* Label */}
-        <span className={cn(
-          "jungle-nav-label",
-          isActive && "active"
-        )}>
-          {item.label}
-        </span>
+          {/* Animal/Icon */}
+          <div
+            className={cn(
+              "jungle-animal-icon",
+              isActive && "active",
+              !isActive &&
+                navState.deviceCapabilities.animations &&
+                `idle-${item.animal.name.toLowerCase().replace(" ", "")}`,
+            )}
+          >
+            {item.animal.emoji}
 
-        {/* Active indicator */}
-        {isActive && (
-          <motion.div
-            className="jungle-active-indicator"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
-        )}
-      </motion.button>
-    );
-  }, [
-    activeTab, 
-    theme, 
-    navState.deviceCapabilities, 
-    screenSize, 
-    handleNavClick, 
-    handleNavHover
-  ]);
+            {/* Fireflies for active items */}
+            {isActive &&
+              navState.deviceCapabilities.particles &&
+              theme === "jungle" && (
+                <>
+                  <div className="jungle-fireflies">✨</div>
+                  <div className="jungle-fireflies">💫</div>
+                  <div className="jungle-fireflies">⭐</div>
+                </>
+              )}
+          </div>
+
+          {/* Label */}
+          <span className={cn("jungle-nav-label", isActive && "active")}>
+            {item.label}
+          </span>
+
+          {/* Active indicator */}
+          {isActive && (
+            <motion.div
+              className="jungle-active-indicator"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
+          )}
+        </motion.button>
+      );
+    },
+    [
+      activeTab,
+      theme,
+      navState.deviceCapabilities,
+      screenSize,
+      handleNavClick,
+      handleNavHover,
+    ],
+  );
 
   // Simple theme fallback for low-performance devices or Builder.io simple mode
-  if (theme === 'simple' || !isPerformanceOptimized) {
+  if (theme === "simple" || !isPerformanceOptimized) {
     return (
       <div className={cn("simple-nav-container", className)}>
         <div className="bg-white border-t border-gray-200 px-4 py-2">
@@ -330,7 +372,7 @@ export function JungleKidNav({
                   "flex flex-col items-center p-2 rounded-lg transition-colors",
                   activeTab === item.id
                     ? "text-blue-600 bg-blue-50"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
                 )}
               >
                 <div className="text-2xl mb-1">
@@ -347,11 +389,13 @@ export function JungleKidNav({
 
   // Main jungle navigation container
   const NavigationContainer = () => (
-    <div className={cn(
-      "jungle-nav-container",
-      `jungle-nav-${screenSize}`,
-      className
-    )}>
+    <div
+      className={cn(
+        "jungle-nav-container",
+        `jungle-nav-${screenSize}`,
+        className,
+      )}
+    >
       {/* Jungle canopy background effect */}
       {navState.deviceCapabilities.backgroundEffects && (
         <div className="jungle-canopy" />
@@ -365,32 +409,46 @@ export function JungleKidNav({
   );
 
   // Parent gate button
-  const ParentGateButton = () => showParentGate && (
-    <div className="jungle-parent-gate">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <motion.button
-            onClick={() => setNavState(prev => ({ ...prev, showParentGate: true }))}
-            className="jungle-parent-gate-button"
-            whileHover={navState.deviceCapabilities.animations ? { scale: 1.05 } : undefined}
-            whileTap={navState.deviceCapabilities.animations ? { scale: 0.95 } : undefined}
-            aria-label="Access Family Zone and Settings"
-          >
-            <Crown className="w-6 h-6 text-yellow-600" />
-          </motion.button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Family Zone & Settings</p>
-        </TooltipContent>
-      </Tooltip>
-    </div>
-  );
+  const ParentGateButton = () =>
+    showParentGate && (
+      <div className="jungle-parent-gate">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <motion.button
+              onClick={() =>
+                setNavState((prev) => ({ ...prev, showParentGate: true }))
+              }
+              className="jungle-parent-gate-button"
+              whileHover={
+                navState.deviceCapabilities.animations
+                  ? { scale: 1.05 }
+                  : undefined
+              }
+              whileTap={
+                navState.deviceCapabilities.animations
+                  ? { scale: 0.95 }
+                  : undefined
+              }
+              aria-label="Access Family Zone and Settings"
+            >
+              <Crown className="w-6 h-6 text-yellow-600" />
+            </motion.button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Family Zone & Settings</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
 
   // Parent gate dialog
   const ParentGateDialog = () => (
-    <Dialog open={navState.showParentGate} onOpenChange={(open) => 
-      setNavState(prev => ({ ...prev, showParentGate: open }))
-    }>
+    <Dialog
+      open={navState.showParentGate}
+      onOpenChange={(open) =>
+        setNavState((prev) => ({ ...prev, showParentGate: open }))
+      }
+    >
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -425,7 +483,7 @@ export function JungleKidNav({
                 "w-full px-3 py-2 border rounded-lg focus:ring-2 focus:border-transparent",
                 parentCodeError
                   ? "border-red-500 focus:ring-red-500 bg-red-50"
-                  : "border-gray-300 focus:ring-blue-500"
+                  : "border-gray-300 focus:ring-blue-500",
               )}
               placeholder="Enter code..."
               onKeyDown={(e) => {
@@ -444,7 +502,7 @@ export function JungleKidNav({
             <Button
               variant="outline"
               onClick={() => {
-                setNavState(prev => ({ ...prev, showParentGate: false }));
+                setNavState((prev) => ({ ...prev, showParentGate: false }));
                 setParentCode("");
               }}
             >

@@ -10,9 +10,11 @@ import JungleKidNav from "@/components/JungleKidNav";
 Builder.registerComponent(JungleKidNav, {
   name: "JungleKidNav",
   friendlyName: "🌿 Jungle Kid Navigation",
-  description: "Immersive jungle-themed navigation with animal guides and interactive animations",
-  image: "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
-  
+  description:
+    "Immersive jungle-themed navigation with animal guides and interactive animations",
+  image:
+    "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
+
   inputs: [
     // Core Navigation Settings
     {
@@ -21,7 +23,7 @@ Builder.registerComponent(JungleKidNav, {
       type: "string",
       defaultValue: "dashboard",
       enum: ["dashboard", "learn", "quiz", "achievements"],
-      description: "Currently active navigation tab"
+      description: "Currently active navigation tab",
     },
     {
       name: "userRole",
@@ -29,7 +31,7 @@ Builder.registerComponent(JungleKidNav, {
       type: "string",
       defaultValue: "child",
       enum: ["child", "parent"],
-      description: "Current user role for appropriate navigation display"
+      description: "Current user role for appropriate navigation display",
     },
 
     // Menu Configuration
@@ -44,29 +46,29 @@ Builder.registerComponent(JungleKidNav, {
           friendlyName: "Label",
           type: "string",
           required: true,
-          description: "Display name for the navigation item"
+          description: "Display name for the navigation item",
         },
         {
           name: "link",
           friendlyName: "Link/Route",
           type: "string",
           required: true,
-          description: "Navigation route or URL"
+          description: "Navigation route or URL",
         },
         {
           name: "icon",
           friendlyName: "Icon/Emoji",
           type: "string",
           defaultValue: "🌟",
-          description: "Emoji or icon to display (e.g., 🦉, 🦜, 🐵, 🐘)"
+          description: "Emoji or icon to display (e.g., 🦉, 🦜, 🐵, 🐘)",
         },
         {
           name: "animal",
           friendlyName: "Animal Guide",
           type: "string",
-          description: "Animal character name for this section"
-        }
-      ]
+          description: "Animal character name for this section",
+        },
+      ],
     },
 
     // Theme and Visual Settings
@@ -76,28 +78,28 @@ Builder.registerComponent(JungleKidNav, {
       type: "string",
       defaultValue: "jungle",
       enum: ["jungle", "simple"],
-      description: "Choose between immersive jungle theme or simple navigation"
+      description: "Choose between immersive jungle theme or simple navigation",
     },
     {
       name: "enableSounds",
       friendlyName: "Enable Sounds",
       type: "boolean",
       defaultValue: true,
-      description: "Enable animal sounds and audio feedback"
+      description: "Enable animal sounds and audio feedback",
     },
     {
       name: "animations",
       friendlyName: "Enable Animations",
       type: "boolean",
       defaultValue: true,
-      description: "Enable hover effects and animal animations"
+      description: "Enable hover effects and animal animations",
     },
     {
       name: "enableParticles",
       friendlyName: "Enable Particle Effects",
       type: "boolean",
       defaultValue: true,
-      description: "Enable fireflies and magical particle effects"
+      description: "Enable fireflies and magical particle effects",
     },
 
     // Accessibility and Performance
@@ -106,14 +108,15 @@ Builder.registerComponent(JungleKidNav, {
       friendlyName: "Reduced Motion",
       type: "boolean",
       defaultValue: false,
-      description: "Disable animations for accessibility (overrides animation settings)"
+      description:
+        "Disable animations for accessibility (overrides animation settings)",
     },
     {
       name: "autoOptimize",
       friendlyName: "Auto Performance Optimization",
       type: "boolean",
       defaultValue: true,
-      description: "Automatically optimize for device performance"
+      description: "Automatically optimize for device performance",
     },
 
     // Parent Controls
@@ -122,7 +125,7 @@ Builder.registerComponent(JungleKidNav, {
       friendlyName: "Show Parent Gate",
       type: "boolean",
       defaultValue: true,
-      description: "Display parent access button for family controls"
+      description: "Display parent access button for family controls",
     },
 
     // Styling
@@ -130,8 +133,8 @@ Builder.registerComponent(JungleKidNav, {
       name: "className",
       friendlyName: "CSS Classes",
       type: "string",
-      description: "Additional CSS classes for custom styling"
-    }
+      description: "Additional CSS classes for custom styling",
+    },
   ],
 
   // Define component behavior
@@ -144,7 +147,7 @@ Builder.registerComponent(JungleKidNav, {
     bottom: "0",
     left: "0",
     right: "0",
-    zIndex: "40"
+    zIndex: "40",
   },
 
   // Component category in Builder.io
@@ -152,19 +155,19 @@ Builder.registerComponent(JungleKidNav, {
 
   // Advanced configuration
   hideFromInsertMenu: false,
-  
+
   // Responsive behavior
   responsiveStyles: {
     large: {
-      height: "100px"
+      height: "100px",
     },
     medium: {
-      height: "80px"
+      height: "80px",
     },
     small: {
-      height: "70px"
-    }
-  }
+      height: "70px",
+    },
+  },
 });
 
 // Export for potential external use
@@ -172,13 +175,13 @@ export { JungleKidNav };
 
 /**
  * Usage in Builder.io:
- * 
+ *
  * 1. Drag "Jungle Kid Navigation" from the component library
  * 2. Configure animals, sounds, and animations in the visual editor
  * 3. Set custom menu items or use defaults (🦉 Home, 🦜 Learn, 🐵 Play, 🐘 Achievements)
  * 4. Choose theme: "jungle" for full experience, "simple" for basic navigation
  * 5. Configure accessibility and performance settings as needed
- * 
+ *
  * The component automatically:
  * - Adapts to screen size (desktop/tablet/mobile)
  * - Optimizes performance based on device capabilities

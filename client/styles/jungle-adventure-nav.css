@@ -5,33 +5,39 @@
 
 /* ===== JUNGLE NAVIGATION BASE ===== */
 .jungle-nav-container {
-  background: linear-gradient(135deg, 
-    #065f46 0%,     /* Dark green */
-    #047857 25%,    /* Emerald */
-    #059669 50%,    /* Green */
-    #10b981 75%,    /* Emerald light */
-    #34d399 100%    /* Emerald lighter */
+  background: linear-gradient(
+    135deg,
+    #065f46 0%,
+    /* Dark green */ #047857 25%,
+    /* Emerald */ #059669 50%,
+    /* Green */ #10b981 75%,
+    /* Emerald light */ #34d399 100% /* Emerald lighter */
   );
   position: relative;
   overflow: hidden;
 }
 
 .jungle-nav-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(ellipse at top, rgba(16, 185, 129, 0.1) 0%, transparent 70%),
+  background:
+    radial-gradient(
+      ellipse at top,
+      rgba(16, 185, 129, 0.1) 0%,
+      transparent 70%
+    ),
     radial-gradient(ellipse at bottom, rgba(6, 95, 70, 0.2) 0%, transparent 70%);
   pointer-events: none;
 }
 
 /* Jungle Canopy Effect */
 .jungle-canopy {
-  background: linear-gradient(to bottom,
+  background: linear-gradient(
+    to bottom,
     rgba(6, 95, 70, 0.9) 0%,
     rgba(6, 95, 70, 0.7) 30%,
     rgba(6, 95, 70, 0.5) 60%,
@@ -79,58 +85,120 @@
 
 /* Animal-specific animations */
 @keyframes owl-hoot {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(-2deg) scale(1.05); }
-  75% { transform: rotate(2deg) scale(1.05); }
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-2deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(2deg) scale(1.05);
+  }
 }
 
 @keyframes parrot-dance {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-4px) rotate(-5deg); }
-  50% { transform: translateY(-2px) rotate(0deg); }
-  75% { transform: translateY(-4px) rotate(5deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-4px) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(5deg);
+  }
 }
 
 @keyframes monkey-swing {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(-8deg) scale(1.1); }
-  50% { transform: rotate(0deg) scale(1.05); }
-  75% { transform: rotate(8deg) scale(1.1); }
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-8deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(8deg) scale(1.1);
+  }
 }
 
 @keyframes elephant-celebration {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.1) rotateY(10deg); }
-  50% { transform: scale(1.05) rotateY(0deg); }
-  75% { transform: scale(1.1) rotateY(-10deg); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1) rotateY(10deg);
+  }
+  50% {
+    transform: scale(1.05) rotateY(0deg);
+  }
+  75% {
+    transform: scale(1.1) rotateY(-10deg);
+  }
 }
 
 /* Gentle idle animations */
 @keyframes gentle-sway {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(1deg); }
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
 }
 
 @keyframes gentle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-2px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
 }
 
 @keyframes gentle-bounce {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-3px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 @keyframes gentle-glow {
-  0%, 100% { filter: brightness(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); }
-  50% { filter: brightness(1.1) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.4)); }
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  }
+  50% {
+    filter: brightness(1.1) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.4));
+  }
 }
 
 /* Apply idle animations */
-.jungle-animal-icon.idle-owl { animation: gentle-sway 4s ease-in-out infinite; }
-.jungle-animal-icon.idle-parrot { animation: gentle-float 3s ease-in-out infinite; }
-.jungle-animal-icon.idle-monkey { animation: gentle-bounce 2.5s ease-in-out infinite; }
-.jungle-animal-icon.idle-elephant { animation: gentle-glow 3.5s ease-in-out infinite; }
+.jungle-animal-icon.idle-owl {
+  animation: gentle-sway 4s ease-in-out infinite;
+}
+.jungle-animal-icon.idle-parrot {
+  animation: gentle-float 3s ease-in-out infinite;
+}
+.jungle-animal-icon.idle-monkey {
+  animation: gentle-bounce 2.5s ease-in-out infinite;
+}
+.jungle-animal-icon.idle-elephant {
+  animation: gentle-glow 3.5s ease-in-out infinite;
+}
 
 /* ===== DECORATIVE ELEMENTS ===== */
 .jungle-vines {
@@ -145,8 +213,13 @@
 }
 
 @keyframes vine-sway {
-  0%, 100% { transform: translateX(-50%) rotate(0deg); }
-  50% { transform: translateX(-50%) rotate(2deg); }
+  0%,
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(2deg);
+  }
 }
 
 .jungle-fireflies {
@@ -159,10 +232,23 @@
 }
 
 @keyframes firefly-dance {
-  0%, 100% { opacity: 0; transform: translateY(0px) scale(0.5); }
-  25% { opacity: 0.8; transform: translateY(-10px) scale(1); }
-  50% { opacity: 1; transform: translateY(-15px) scale(1.1); }
-  75% { opacity: 0.8; transform: translateY(-8px) scale(1); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(0px) scale(0.5);
+  }
+  25% {
+    opacity: 0.8;
+    transform: translateY(-10px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-15px) scale(1.1);
+  }
+  75% {
+    opacity: 0.8;
+    transform: translateY(-8px) scale(1);
+  }
 }
 
 /* Position fireflies around active items */
@@ -188,16 +274,16 @@
 .jungle-nav-label {
   color: white;
   font-weight: 700;
-  text-shadow: 
+  text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.5),
     0 1px 2px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 .jungle-nav-label.active {
   color: #fbbf24;
-  text-shadow: 
+  text-shadow:
     0 2px 6px rgba(251, 191, 36, 0.6),
     0 1px 3px rgba(0, 0, 0, 0.4);
 }
@@ -212,22 +298,23 @@
   height: 12px;
   background: radial-gradient(circle, #fbbf24 0%, #f59e0b 70%, #d97706 100%);
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(251, 191, 36, 0.3),
     0 2px 8px rgba(251, 191, 36, 0.4);
   animation: active-glow 2s ease-in-out infinite;
 }
 
 @keyframes active-glow {
-  0%, 100% { 
+  0%,
+  100% {
     transform: translateX(-50%) scale(1);
-    box-shadow: 
+    box-shadow:
       0 0 0 3px rgba(251, 191, 36, 0.3),
       0 2px 8px rgba(251, 191, 36, 0.4);
   }
-  50% { 
+  50% {
     transform: translateX(-50%) scale(1.1);
-    box-shadow: 
+    box-shadow:
       0 0 0 6px rgba(251, 191, 36, 0.2),
       0 4px 12px rgba(251, 191, 36, 0.6);
   }
@@ -359,8 +446,13 @@
   }
 
   @keyframes simple-bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
   }
 }
 

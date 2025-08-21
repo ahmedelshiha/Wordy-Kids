@@ -1,5 +1,5 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
-import { jungleTheme } from '@/lib/jungleNavConfig';
+import { useEffect, useRef, useCallback, useState } from "react";
+import { jungleTheme } from "@/lib/jungleNavConfig";
 
 /**
  * 🌿 Jungle Navigation Animations Hook
@@ -24,7 +24,7 @@ interface JungleAnimationControls {
 }
 
 export function useJungleNavAnimations(
-  options: UseJungleNavAnimationsOptions = {}
+  options: UseJungleNavAnimationsOptions = {},
 ): JungleAnimationControls {
   const {
     enableAnimations = true,
@@ -47,43 +47,43 @@ export function useJungleNavAnimations(
       try {
         // Preload animal sounds
         const animalSounds = {
-          owl: '/sounds/owl-hoot.mp3',
-          parrot: '/sounds/parrot-chirp.mp3',
-          monkey: '/sounds/monkey-chatter.mp3',
-          elephant: '/sounds/elephant-trumpet.mp3',
+          owl: "/sounds/owl-hoot.mp3",
+          parrot: "/sounds/parrot-chirp.mp3",
+          monkey: "/sounds/monkey-chatter.mp3",
+          elephant: "/sounds/elephant-trumpet.mp3",
         };
 
         Object.entries(animalSounds).forEach(([animal, soundPath]) => {
           const audio = new Audio(soundPath);
-          audio.preload = 'metadata';
+          audio.preload = "metadata";
           audio.volume = 0.3;
           audioRef.current[animal] = audio;
         });
 
         setIsAudioInitialized(true);
       } catch (error) {
-        console.warn('Audio initialization failed:', error);
+        console.warn("Audio initialization failed:", error);
       }
     };
 
     // Initialize on first user interaction
     const handleFirstInteraction = () => {
       initializeAudio();
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener("click", handleFirstInteraction);
+      document.removeEventListener("touchstart", handleFirstInteraction);
     };
 
-    document.addEventListener('click', handleFirstInteraction);
-    document.addEventListener('touchstart', handleFirstInteraction);
+    document.addEventListener("click", handleFirstInteraction);
+    document.addEventListener("touchstart", handleFirstInteraction);
 
     return () => {
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      
+      document.removeEventListener("click", handleFirstInteraction);
+      document.removeEventListener("touchstart", handleFirstInteraction);
+
       // Cleanup audio
-      Object.values(audioRef.current).forEach(audio => {
+      Object.values(audioRef.current).forEach((audio) => {
         audio.pause();
-        audio.src = '';
+        audio.src = "";
       });
     };
   }, [enableSounds]);
@@ -91,7 +91,7 @@ export function useJungleNavAnimations(
   // Cleanup animations on unmount
   useEffect(() => {
     return () => {
-      animationRefs.current.forEach(timerId => {
+      animationRefs.current.forEach((timerId) => {
         clearTimeout(timerId);
       });
       animationRefs.current.clear();
@@ -99,36 +99,41 @@ export function useJungleNavAnimations(
   }, []);
 
   // Play animal sound
-  const playAnimalSound = useCallback(async (animal: string): Promise<void> => {
-    if (!enableSounds || !isAudioInitialized) return;
+  const playAnimalSound = useCallback(
+    async (animal: string): Promise<void> => {
+      if (!enableSounds || !isAudioInitialized) return;
 
-    try {
-      const audio = audioRef.current[animal];
-      if (audio) {
-        audio.currentTime = 0;
-        await audio.play();
+      try {
+        const audio = audioRef.current[animal];
+        if (audio) {
+          audio.currentTime = 0;
+          await audio.play();
+        }
+      } catch (error) {
+        console.warn(`Failed to play ${animal} sound:`, error);
       }
-    } catch (error) {
-      console.warn(`Failed to play ${animal} sound:`, error);
-    }
-  }, [enableSounds, isAudioInitialized]);
+    },
+    [enableSounds, isAudioInitialized],
+  );
 
   // Trigger celebration animation
-  const triggerCelebration = useCallback((element: HTMLElement): void => {
-    if (!enableAnimations) return;
+  const triggerCelebration = useCallback(
+    (element: HTMLElement): void => {
+      if (!enableAnimations) return;
 
-    element.style.animation = 'none';
-    element.offsetHeight; // Force reflow
-    element.style.animation = 'animal-celebration 2s ease-in-out';
+      element.style.animation = "none";
+      element.offsetHeight; // Force reflow
+      element.style.animation = "animal-celebration 2s ease-in-out";
 
-    // Create burst of particles
-    if (enableParticles) {
-      const particles = ['🌟', '✨', '💫', '⭐'];
-      
-      for (let i = 0; i < 6; i++) {
-        const particle = document.createElement('div');
-        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
-        particle.style.cssText = `
+      // Create burst of particles
+      if (enableParticles) {
+        const particles = ["🌟", "✨", "💫", "⭐"];
+
+        for (let i = 0; i < 6; i++) {
+          const particle = document.createElement("div");
+          particle.textContent =
+            particles[Math.floor(Math.random() * particles.length)];
+          particle.style.cssText = `
           position: absolute;
           font-size: 1.5rem;
           pointer-events: none;
@@ -140,116 +145,129 @@ export function useJungleNavAnimations(
           --burst-y: ${(Math.random() - 0.5) * 200}px;
         `;
 
-        element.style.position = 'relative';
-        element.appendChild(particle);
+          element.style.position = "relative";
+          element.appendChild(particle);
 
-        // Cleanup particle
-        setTimeout(() => {
-          if (particle.parentNode) {
-            particle.parentNode.removeChild(particle);
-          }
-        }, 1500);
+          // Cleanup particle
+          setTimeout(() => {
+            if (particle.parentNode) {
+              particle.parentNode.removeChild(particle);
+            }
+          }, 1500);
+        }
       }
-    }
-  }, [enableAnimations, enableParticles]);
+    },
+    [enableAnimations, enableParticles],
+  );
 
   // Start idle animation
-  const startIdleAnimation = useCallback((element: HTMLElement, animalType: string): void => {
-    if (!enableAnimations) return;
+  const startIdleAnimation = useCallback(
+    (element: HTMLElement, animalType: string): void => {
+      if (!enableAnimations) return;
 
-    // Stop any existing animation
-    stopIdleAnimation(element);
+      // Stop any existing animation
+      stopIdleAnimation(element);
 
-    const animalAnimations = {
-      owl: 'gentle-sway 4s ease-in-out infinite',
-      parrot: 'gentle-float 3s ease-in-out infinite',
-      monkey: 'gentle-bounce 2.5s ease-in-out infinite',
-      elephant: 'gentle-glow 3.5s ease-in-out infinite',
-    };
+      const animalAnimations = {
+        owl: "gentle-sway 4s ease-in-out infinite",
+        parrot: "gentle-float 3s ease-in-out infinite",
+        monkey: "gentle-bounce 2.5s ease-in-out infinite",
+        elephant: "gentle-glow 3.5s ease-in-out infinite",
+      };
 
-    const animation = animalAnimations[animalType as keyof typeof animalAnimations];
-    if (animation) {
-      element.style.animation = animation;
-    }
-  }, [enableAnimations]);
+      const animation =
+        animalAnimations[animalType as keyof typeof animalAnimations];
+      if (animation) {
+        element.style.animation = animation;
+      }
+    },
+    [enableAnimations],
+  );
 
   // Stop idle animation
   const stopIdleAnimation = useCallback((element: HTMLElement): void => {
-    element.style.animation = 'none';
+    element.style.animation = "none";
     animationRefs.current.delete(element);
   }, []);
 
   // Create fireflies around active elements
-  const createFireflies = useCallback((container: HTMLElement): void => {
-    if (!enableParticles) return;
+  const createFireflies = useCallback(
+    (container: HTMLElement): void => {
+      if (!enableParticles) return;
 
-    const fireflies = ['✨', '💫', '⭐'];
-    const positions = [
-      { top: '-5px', right: '-5px', delay: 0 },
-      { bottom: '-5px', left: '-5px', delay: 1000 },
-      { top: '50%', right: '-10px', delay: 2000 },
-    ];
+      const fireflies = ["✨", "💫", "⭐"];
+      const positions = [
+        { top: "-5px", right: "-5px", delay: 0 },
+        { bottom: "-5px", left: "-5px", delay: 1000 },
+        { top: "50%", right: "-10px", delay: 2000 },
+      ];
 
-    positions.forEach(({ top, right, bottom, left, delay }, index) => {
-      setTimeout(() => {
-        const firefly = document.createElement('div');
-        firefly.className = 'jungle-fireflies';
-        firefly.textContent = fireflies[index % fireflies.length];
-        firefly.style.cssText = `
+      positions.forEach(({ top, right, bottom, left, delay }, index) => {
+        setTimeout(() => {
+          const firefly = document.createElement("div");
+          firefly.className = "jungle-fireflies";
+          firefly.textContent = fireflies[index % fireflies.length];
+          firefly.style.cssText = `
           position: absolute;
           font-size: 0.8rem;
           opacity: 0;
           animation: firefly-dance 3s ease-in-out infinite;
           pointer-events: none;
           z-index: 3;
-          ${top ? `top: ${top};` : ''}
-          ${right ? `right: ${right};` : ''}
-          ${bottom ? `bottom: ${bottom};` : ''}
-          ${left ? `left: ${left};` : ''}
+          ${top ? `top: ${top};` : ""}
+          ${right ? `right: ${right};` : ""}
+          ${bottom ? `bottom: ${bottom};` : ""}
+          ${left ? `left: ${left};` : ""}
         `;
 
-        container.style.position = 'relative';
-        container.appendChild(firefly);
+          container.style.position = "relative";
+          container.appendChild(firefly);
 
-        // Store for cleanup
-        const dataset = container.dataset.fireflies || '';
-        container.dataset.fireflies = dataset + firefly.outerHTML + ';';
-      }, delay);
-    });
-  }, [enableParticles]);
+          // Store for cleanup
+          const dataset = container.dataset.fireflies || "";
+          container.dataset.fireflies = dataset + firefly.outerHTML + ";";
+        }, delay);
+      });
+    },
+    [enableParticles],
+  );
 
   // Remove fireflies
   const removeFireflies = useCallback((container: HTMLElement): void => {
-    const fireflies = container.querySelectorAll('.jungle-fireflies');
-    fireflies.forEach(firefly => {
+    const fireflies = container.querySelectorAll(".jungle-fireflies");
+    fireflies.forEach((firefly) => {
       firefly.remove();
     });
     delete container.dataset.fireflies;
   }, []);
 
   // Play hover effect
-  const playHoverEffect = useCallback((element: HTMLElement): void => {
-    if (!enableAnimations) return;
+  const playHoverEffect = useCallback(
+    (element: HTMLElement): void => {
+      if (!enableAnimations) return;
 
-    const originalTransform = element.style.transform;
-    element.style.transition = 'transform 0.2s ease-out';
-    element.style.transform = 'translateY(-2px) scale(1.02)';
+      const originalTransform = element.style.transform;
+      element.style.transition = "transform 0.2s ease-out";
+      element.style.transform = "translateY(-2px) scale(1.02)";
 
-    const timerId = setTimeout(() => {
-      element.style.transform = originalTransform;
-    }, 200);
+      const timerId = setTimeout(() => {
+        element.style.transform = originalTransform;
+      }, 200);
 
-    animationRefs.current.set(element, timerId);
-  }, [enableAnimations]);
+      animationRefs.current.set(element, timerId);
+    },
+    [enableAnimations],
+  );
 
   // Create vine decoration
-  const createVineDecoration = useCallback((element: HTMLElement): void => {
-    if (!enableParticles) return;
+  const createVineDecoration = useCallback(
+    (element: HTMLElement): void => {
+      if (!enableParticles) return;
 
-    const vine = document.createElement('div');
-    vine.className = 'jungle-vines';
-    vine.textContent = '🌿';
-    vine.style.cssText = `
+      const vine = document.createElement("div");
+      vine.className = "jungle-vines";
+      vine.textContent = "🌿";
+      vine.style.cssText = `
       position: absolute;
       top: -10px;
       left: 50%;
@@ -260,9 +278,11 @@ export function useJungleNavAnimations(
       animation: vine-sway 4s ease-in-out infinite;
     `;
 
-    element.style.position = 'relative';
-    element.appendChild(vine);
-  }, [enableParticles]);
+      element.style.position = "relative";
+      element.appendChild(vine);
+    },
+    [enableParticles],
+  );
 
   return {
     playAnimalSound,

@@ -36,7 +36,7 @@ class JungleNavPerformanceMonitor {
     };
 
     // Check for reduced motion preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       capabilities.reduceAnimations = true;
       capabilities.disableParticles = true;
       return capabilities;
@@ -56,11 +56,11 @@ class JungleNavPerformanceMonitor {
 
     // Connection speed detection
     const connection = (navigator as any).connection;
-    const isSlowConnection = connection && (
-      connection.effectiveType === 'slow-2g' ||
-      connection.effectiveType === '2g' ||
-      connection.effectiveType === '3g'
-    );
+    const isSlowConnection =
+      connection &&
+      (connection.effectiveType === "slow-2g" ||
+        connection.effectiveType === "2g" ||
+        connection.effectiveType === "3g");
 
     // Apply optimizations based on capabilities
     if (isLowEnd || isLowMemory) {
@@ -137,7 +137,7 @@ class JungleNavPerformanceMonitor {
 
   // Get memory usage (if available)
   private getMemoryUsage(): number {
-    if ('memory' in performance) {
+    if ("memory" in performance) {
       const memory = (performance as any).memory;
       return memory.usedJSHeapSize / memory.jsHeapSizeLimit;
     }
@@ -191,7 +191,7 @@ export class JungleAssetManager {
         resolve();
       };
       audio.onerror = reject;
-      audio.preload = 'metadata';
+      audio.preload = "metadata";
       audio.src = src;
     });
 
@@ -209,7 +209,7 @@ export class JungleAssetManager {
       'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="80" font-size="80">🐘</text></svg>',
     ];
 
-    const promises = criticalAssets.map(asset => this.preloadImage(asset));
+    const promises = criticalAssets.map((asset) => this.preloadImage(asset));
     await Promise.allSettled(promises);
   }
 
@@ -236,7 +236,7 @@ export class JunglePerformanceOptimizer {
       try {
         await this.assetManager.preloadCriticalAssets();
       } catch (error) {
-        console.warn('Asset preloading failed:', error);
+        console.warn("Asset preloading failed:", error);
       }
     }
 
@@ -263,9 +263,11 @@ export class JunglePerformanceOptimizer {
     }
 
     // Broadcast optimization changes
-    window.dispatchEvent(new CustomEvent('jungle-nav-optimizations-updated', {
-      detail: this.optimizations
-    }));
+    window.dispatchEvent(
+      new CustomEvent("jungle-nav-optimizations-updated", {
+        detail: this.optimizations,
+      }),
+    );
   }
 
   // Get current optimizations
@@ -284,7 +286,7 @@ export const performanceUtils = {
   // Throttle function calls
   throttle<T extends (...args: any[]) => void>(
     func: T,
-    delay: number
+    delay: number,
   ): (...args: Parameters<T>) => void {
     let timeoutId: number | null = null;
     let lastExecTime = 0;
@@ -297,10 +299,13 @@ export const performanceUtils = {
         lastExecTime = currentTime;
       } else {
         if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          func(...args);
-          lastExecTime = Date.now();
-        }, delay - (currentTime - lastExecTime));
+        timeoutId = setTimeout(
+          () => {
+            func(...args);
+            lastExecTime = Date.now();
+          },
+          delay - (currentTime - lastExecTime),
+        );
       }
     };
   },
@@ -308,7 +313,7 @@ export const performanceUtils = {
   // Debounce function calls
   debounce<T extends (...args: any[]) => void>(
     func: T,
-    delay: number
+    delay: number,
   ): (...args: Parameters<T>) => void {
     let timeoutId: number | null = null;
 
@@ -324,20 +329,21 @@ export const performanceUtils = {
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
   },
 
   // Optimize CSS transforms for better performance
   enableHardwareAcceleration(element: HTMLElement): void {
-    element.style.transform = element.style.transform || 'translateZ(0)';
-    element.style.willChange = 'transform, opacity';
+    element.style.transform = element.style.transform || "translateZ(0)";
+    element.style.willChange = "transform, opacity";
   },
 
   // Disable hardware acceleration when not needed
   disableHardwareAcceleration(element: HTMLElement): void {
-    element.style.willChange = 'auto';
+    element.style.willChange = "auto";
   },
 };
 
