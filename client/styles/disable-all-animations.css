@@ -1,0 +1,105 @@
+/* 
+ * Global Animation Disable Override
+ * This file disables ALL animations across the entire application
+ */
+
+/* Disable all CSS animations and transitions */
+*,
+*::before,
+*::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+  transform: none !important;
+}
+
+/* Disable specific Tailwind animation classes */
+.animate-spin,
+.animate-ping,
+.animate-pulse,
+.animate-bounce,
+.animate-gentle-float,
+.animate-gentle-bounce,
+.animate-sparkle,
+.animate-emoji-bounce,
+.animate-star-fill,
+.animate-celebration-sparkles,
+.animate-voice-pulse,
+.animate-funny-voice-pulse,
+.animate-mini-game-appear,
+.animate-letter-highlight,
+.animate-puzzle-piece-place,
+.animate-jungle-glow,
+.animate-jungle-float,
+.animate-jungle-sway,
+.animate-jungle-sparkle,
+.animate-jungle-celebration,
+.animate-jungle-level-up,
+.animate-gentle-breath,
+.animate-serene-glow,
+.animate-peaceful-hover,
+.animate-calm-pulse {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Disable all keyframe animations */
+@keyframes gentle-float,
+@keyframes gentle-bounce,
+@keyframes sparkle,
+@keyframes breathing,
+@keyframes calm-breathing,
+@keyframes parrot-gentle-sway,
+@keyframes parrot-tilt,
+@keyframes owl-peaceful,
+@keyframes monkey-soft-motion,
+@keyframes elephant-serene,
+@keyframes glow-pulse,
+@keyframes jungle-glow-pulse,
+@keyframes soft-accent-glow,
+@keyframes owl-blink,
+@keyframes monkey-wiggle,
+@keyframes elephant-flap,
+@keyframes vine-sway,
+@keyframes firefly-dance,
+@keyframes active-glow,
+@keyframes simple-bounce {
+  from, to {
+    transform: none !important;
+    opacity: 1 !important;
+    scale: 1 !important;
+  }
+}
+
+/* Force disable motion on all elements */
+.motion-reduce,
+[data-motion="reduced"] {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Override framer-motion styles */
+[data-framer-motion] {
+  transform: none !important;
+}
+
+/* Disable hover effects */
+*:hover {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+/* Disable focus effects */
+*:focus {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+/* Disable active states */
+*:active {
+  transform: none !important;
+  scale: 1 !important;
+}
