@@ -109,12 +109,13 @@ export const jungleNavPresets: JungleNavPreset[] = [
   {
     id: 'bedtime-mode',
     name: 'Bedtime Mode',
-    description: 'Ultra-calm evening mode - minimal motion, soft sounds, designed for wind-down activities',
+    description: 'Ultra-calm evening mode - gentle breathing only, perfect for wind-down activities',
     icon: '🌙',
     config: {
       idleSpeed: 'slow',
       intensity: 'subtle',
       idlePauseDuration: 'long',
+      animationStyle: 'breathing',
       rareEffects: false,
       reducedMotion: false
     },
@@ -129,12 +130,13 @@ export const jungleNavPresets: JungleNavPreset[] = [
   {
     id: 'high-energy',
     name: 'High Energy',
-    description: 'Maximum engagement mode - fastest animations, constant effects, for active learning sessions',
+    description: 'Maximum engagement mode - animal micro-movements with glow effects for active learning',
     icon: '⚡',
     config: {
       idleSpeed: 'fast',
       intensity: 'playful',
       idlePauseDuration: 'short',
+      animationStyle: 'micro',
       rareEffects: true,
       reducedMotion: false
     },
