@@ -264,6 +264,84 @@
   animation-delay: var(--elephant-delay, 6s);
 }
 
+/* 🎯 Animation Control Classes */
+.jungle-reduced-motion,
+.jungle-reduced-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.jungle-reduced-motion .jungle-animal-icon:hover {
+  transform: scale(1.05); /* Simple scale only */
+  transition: transform 0.2s ease;
+}
+
+.jungle-reduced-motion .jungle-animal-icon:active,
+.jungle-reduced-motion .jungle-animal-icon.clicked {
+  transform: scale(0.98); /* Simple press feedback */
+}
+
+/* 🎨 Intensity Control Classes */
+.jungle-intensity-subtle {
+  --jungle-hover-scale: 1.02;
+  --jungle-tap-scale: 1.05;
+  --jungle-active-scale: 1.03;
+  --jungle-hover-rotate: 2deg;
+  --jungle-tap-rotate: 5deg;
+  --jungle-sway-rotate: 1deg;
+  --jungle-float-translate: 2px;
+  --jungle-bounce-translate: 1px;
+}
+
+.jungle-intensity-normal {
+  --jungle-hover-scale: 1.05;
+  --jungle-tap-scale: 1.1;
+  --jungle-active-scale: 1.05;
+  --jungle-hover-rotate: 3deg;
+  --jungle-tap-rotate: 8deg;
+  --jungle-sway-rotate: 2deg;
+  --jungle-float-translate: 4px;
+  --jungle-bounce-translate: 2px;
+}
+
+.jungle-intensity-playful {
+  --jungle-hover-scale: 1.1;
+  --jungle-tap-scale: 1.15;
+  --jungle-active-scale: 1.08;
+  --jungle-hover-rotate: 5deg;
+  --jungle-tap-rotate: 12deg;
+  --jungle-sway-rotate: 3deg;
+  --jungle-float-translate: 6px;
+  --jungle-bounce-translate: 3px;
+}
+
+/* 🚀 Speed Control Classes */
+.jungle-speed-slow {
+  --jungle-idle-timing: 12s ease-in-out infinite alternate;
+}
+
+.jungle-speed-medium {
+  --jungle-idle-timing: 10s ease-in-out infinite alternate;
+}
+
+.jungle-speed-fast {
+  --jungle-idle-timing: 8s ease-in-out infinite alternate;
+}
+
+/* 🧪 Development Testing Classes */
+.jungle-celebration-trigger {
+  animation: celebration-tap 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+.jungle-hover-trigger {
+  animation: playful-hover 0.6s ease-out forwards !important;
+}
+
+.jungle-rare-active {
+  opacity: 1 !important;
+  animation-play-state: running !important;
+}
+
 /* 🎯 Reduced Motion Preferences - Respect user accessibility needs */
 @media (prefers-reduced-motion: reduce) {
   .jungle-animal-icon.idle-owl,
@@ -293,7 +371,8 @@
   /* Disable all decorative animations */
   .jungle-vines,
   .jungle-fireflies,
-  .jungle-particles {
+  .jungle-particles,
+  .jungle-floating-element {
     animation: none !important;
   }
 }
