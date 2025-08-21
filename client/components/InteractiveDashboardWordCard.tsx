@@ -414,17 +414,17 @@ export function InteractiveDashboardWordCard({
     setAudioDebounce(timer);
   };
 
-  // Automatically pronounce word when hint is shown (only once per word)
-  useEffect(() => {
-    if (showHint && currentWord && !audioPlayedForHint) {
-      // Delay to allow hint card animation to start
-      const timer = setTimeout(() => {
-        playPronunciationDebounced(false);
-      }, 250); // Slightly reduced delay
-
-      return () => clearTimeout(timer);
-    }
-  }, [showHint, currentWord]);
+  // Automatically pronounce word when hint is shown (DISABLED - manual speaker button only)
+  // useEffect(() => {
+  //   if (showHint && currentWord && !audioPlayedForHint) {
+  //     // Delay to allow hint card animation to start
+  //     const timer = setTimeout(() => {
+  //       playPronunciationDebounced(false);
+  //     }, 250); // Slightly reduced delay
+  //
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [showHint, currentWord]);
 
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
@@ -1691,7 +1691,7 @@ export function InteractiveDashboardWordCard({
                           "🏹 What jungle equipment awaits?",
                           "🛶 Which jungle vessel do you recognize?",
                           "🔥 Can you identify this jungle necessity?",
-                          "🗡️ What jungle instrument is this?",
+                          "🗡��� What jungle instrument is this?",
                         ],
                         hard: [
                           "⚔️ What legendary jungle artifact is this?",
