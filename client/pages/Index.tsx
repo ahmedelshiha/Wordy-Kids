@@ -132,6 +132,8 @@ import {
   BookOpen,
   RotateCcw,
   Sparkles,
+  Lock,
+  Users,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -3450,7 +3452,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Crystal Quest Awaits! 💎
+                                          Crystal Quest Awaits! ��
                                         </button>
                                       </div>
                                     </div>
