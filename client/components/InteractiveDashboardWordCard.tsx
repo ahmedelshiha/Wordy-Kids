@@ -213,6 +213,7 @@ export function InteractiveDashboardWordCard({
   const [showSuccessRipple, setShowSuccessRipple] = useState(false);
   const [showPracticeRipple, setShowPracticeRipple] = useState(false);
   const [audioPlayedForHint, setAudioPlayedForHint] = useState(false);
+  const [audioDebounce, setAudioDebounce] = useState<NodeJS.Timeout | null>(null);
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
@@ -1626,7 +1627,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Objects: {
                         easy: [
-                          "��� What jungle tool is this?",
+                          "���� What jungle tool is this?",
                           "🎒 Which jungle gear do you see?",
                           "🧭 Can you name this jungle helper?",
                           "⛺ What jungle shelter is this?",
