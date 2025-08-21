@@ -1495,7 +1495,7 @@ export function InteractiveDashboardWordCard({
                     if (wordsLearned >= goal) {
                       if (wordsLearned >= goal * 2) return "⭐";
                       if (wordsLearned >= goal * 1.5) return "🚀";
-                      return "🌟";
+                      return "���";
                     }
                     if (percentage >= 90) return "⭐";
                     if (percentage >= 75) return "🎯";
@@ -1966,29 +1966,48 @@ export function InteractiveDashboardWordCard({
                   aria-label="Word hint revealed"
                   aria-live="polite"
                 >
-                  {/* Jungle Adventure Hint Card with Hanging Vines */}
+                  {/* Achievement-Style Jungle Hint Card */}
                   <motion.div
                     initial={{
-                      backdropFilter: "blur(0px)",
-                      backgroundColor: "rgba(255, 255, 255, 0)",
+                      opacity: 0,
+                      scale: 0.8,
+                      y: 20,
                     }}
                     animate={{
-                      backdropFilter: "blur(4px)",
-                      backgroundColor: "rgba(255, 255, 255, 0.98)",
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
                     }}
-                    className="mx-auto max-w-xs w-full p-3 sm:p-4 rounded-xl shadow-lg relative overflow-visible"
+                    exit={{
+                      opacity: 0,
+                      scale: 0.8,
+                      y: -20,
+                    }}
+                    transition={{
+                      type: "spring",
+                      duration: 0.4,
+                      damping: 15,
+                      stiffness: 300,
+                    }}
+                    className="mx-auto max-w-xs w-full relative overflow-hidden"
                     style={{
-                      background: "rgba(255, 255, 255, 0.98)",
-                      borderRadius: "12px",
+                      background: "linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%)",
+                      border: "4px solid #ffd700",
+                      borderRadius: "24px",
+                      padding: "20px 24px",
+                      textAlign: "center",
+                      color: "white",
+                      fontFamily: '"Comic Sans MS", "Fredoka One", cursive, sans-serif',
                       boxShadow: `
-                        0 6px 20px rgba(76, 175, 80, 0.15),
-                        0 0 15px rgba(76, 175, 80, 0.08)
+                        0 10px 30px rgba(0, 0, 0, 0.3),
+                        0 0 20px rgba(255, 215, 0, 0.4),
+                        inset 0 2px 0 rgba(255, 255, 255, 0.2)
                       `,
+                      transformOrigin: "center center",
                     }}
                   >
-                    {/* Hanging Jungle Vines and Leaves */}
-                    <div className="absolute -inset-2 pointer-events-none overflow-visible">
-                      {/* Top hanging vines */}
+                    {/* Achievement-Style Jungle Vines Frame */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ borderRadius: "20px" }}>
                       {!prefersReducedMotion && (
                         <>
                           <motion.div
@@ -2001,7 +2020,12 @@ export function InteractiveDashboardWordCard({
                               repeat: Infinity,
                               ease: "easeInOut",
                             }}
-                            className="absolute -top-3 left-2 text-lg text-green-600 z-0"
+                            className="absolute text-2xl z-1"
+                            style={{
+                              top: "-8px",
+                              left: "-4px",
+                              animationDelay: "0s",
+                            }}
                           >
                             🌿
                           </motion.div>
@@ -2011,104 +2035,136 @@ export function InteractiveDashboardWordCard({
                               y: [0, -1, 0],
                             }}
                             transition={{
-                              duration: 3.5,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                              delay: 0.5,
-                            }}
-                            className="absolute -top-2 right-4 text-base text-green-500 z-0"
-                          >
-                            🍃
-                          </motion.div>
-                          <motion.div
-                            animate={{
-                              rotate: [0, 3, 0, -2, 0],
-                              y: [0, 2, 0],
-                            }}
-                            transition={{
-                              duration: 5,
+                              duration: 4,
                               repeat: Infinity,
                               ease: "easeInOut",
                               delay: 1,
                             }}
-                            className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-sm text-green-700 z-0"
-                          >
-                            🌱
-                          </motion.div>
-                          {/* Side vines */}
-                          <motion.div
-                            animate={{
-                              rotate: [0, -1, 0, 2, 0],
-                              x: [0, 1, 0],
+                            className="absolute text-2xl z-1"
+                            style={{
+                              top: "-8px",
+                              right: "-4px",
+                              animationDelay: "1s",
                             }}
-                            transition={{
-                              duration: 4.5,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                              delay: 0.3,
-                            }}
-                            className="absolute top-1/4 -left-3 text-lg text-green-600 z-0"
-                          >
-                            🌿
-                          </motion.div>
-                          <motion.div
-                            animate={{
-                              rotate: [0, 1, 0, -3, 0],
-                              x: [0, -1, 0],
-                            }}
-                            transition={{
-                              duration: 3.8,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                              delay: 0.8,
-                            }}
-                            className="absolute top-1/3 -right-2 text-base text-green-500 z-0"
                           >
                             🍃
                           </motion.div>
-                          {/* Bottom corner leaves */}
                           <motion.div
                             animate={{
-                              rotate: [0, 2, 0, -1, 0],
-                              scale: [1, 1.05, 1],
+                              rotate: [0, 1, 0, -2, 0],
+                              y: [0, 1, 0],
+                            }}
+                            transition={{
+                              duration: 4,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                              delay: 2,
+                            }}
+                            className="absolute text-2xl z-1"
+                            style={{
+                              bottom: "-8px",
+                              left: "-4px",
+                              animationDelay: "2s",
+                            }}
+                          >
+                            🌱
+                          </motion.div>
+                          <motion.div
+                            animate={{
+                              rotate: [0, -1, 0, 2, 0],
+                              y: [0, -1, 0],
+                            }}
+                            transition={{
+                              duration: 4,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                              delay: 3,
+                            }}
+                            className="absolute text-2xl z-1"
+                            style={{
+                              bottom: "-8px",
+                              right: "-4px",
+                              animationDelay: "3s",
+                            }}
+                          >
+                            🌿
+                          </motion.div>
+                        </>
+                      )}
+                      {/* Static vines for reduced motion */}
+                      {prefersReducedMotion && (
+                        <>
+                          <div className="absolute text-2xl z-1" style={{ top: "-8px", left: "-4px" }}>🌿</div>
+                          <div className="absolute text-2xl z-1" style={{ top: "-8px", right: "-4px" }}>🍃</div>
+                          <div className="absolute text-2xl z-1" style={{ bottom: "-8px", left: "-4px" }}>🌱</div>
+                          <div className="absolute text-2xl z-1" style={{ bottom: "-8px", right: "-4px" }}>🌿</div>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Achievement-Style Fireflies */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                      {!prefersReducedMotion && (
+                        <>
+                          <motion.div
+                            animate={{
+                              x: [0, 10, -5, 8, 0],
+                              y: [0, -8, 5, -3, 0],
+                              opacity: [0.6, 1, 0.8, 1, 0.6],
                             }}
                             transition={{
                               duration: 6,
                               repeat: Infinity,
                               ease: "easeInOut",
-                              delay: 1.2,
                             }}
-                            className="absolute bottom-2 -left-2 text-sm text-green-600 z-0"
+                            className="absolute text-sm opacity-80"
+                            style={{
+                              top: "20%",
+                              left: "10%",
+                            }}
                           >
-                            🌿
+                            ✨
                           </motion.div>
                           <motion.div
                             animate={{
-                              rotate: [0, -1, 0, 2, 0],
-                              scale: [1, 1.1, 1],
+                              x: [0, -8, 6, -4, 0],
+                              y: [0, 5, -8, 3, 0],
+                              opacity: [0.8, 1, 0.6, 1, 0.8],
                             }}
                             transition={{
-                              duration: 5.5,
+                              duration: 6,
                               repeat: Infinity,
                               ease: "easeInOut",
-                              delay: 0.7,
+                              delay: 2,
                             }}
-                            className="absolute bottom-1 -right-3 text-lg text-green-700 z-0"
+                            className="absolute text-sm opacity-80"
+                            style={{
+                              top: "60%",
+                              right: "15%",
+                            }}
                           >
-                            🍃
+                            ✨
                           </motion.div>
-                        </>
-                      )}
-                      {/* Static vines for reduced motion preference */}
-                      {prefersReducedMotion && (
-                        <>
-                          <div className="absolute -top-3 left-2 text-lg text-green-600 z-0">🌿</div>
-                          <div className="absolute -top-2 right-4 text-base text-green-500 z-0">🍃</div>
-                          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-sm text-green-700 z-0">🌱</div>
-                          <div className="absolute top-1/4 -left-3 text-lg text-green-600 z-0">🌿</div>
-                          <div className="absolute top-1/3 -right-2 text-base text-green-500 z-0">🍃</div>
-                          <div className="absolute bottom-2 -left-2 text-sm text-green-600 z-0">🌿</div>
-                          <div className="absolute bottom-1 -right-3 text-lg text-green-700 z-0">🍃</div>
+                          <motion.div
+                            animate={{
+                              x: [0, 6, -10, 4, 0],
+                              y: [0, -5, 8, -6, 0],
+                              opacity: [0.7, 1, 0.9, 1, 0.7],
+                            }}
+                            transition={{
+                              duration: 6,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                              delay: 4,
+                            }}
+                            className="absolute text-sm opacity-80"
+                            style={{
+                              bottom: "25%",
+                              left: "20%",
+                            }}
+                          >
+                            ✨
+                          </motion.div>
                         </>
                       )}
                     </div>
@@ -2125,15 +2181,14 @@ export function InteractiveDashboardWordCard({
                       <span className="text-xs font-bold">✕</span>
                     </motion.button>
 
-                    {/* Magical Jungle Glow */}
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0.8 }}
-                      animate={{ scale: 2.5, opacity: 0 }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="absolute inset-0 bg-gradient-to-r from-green-100/30 via-emerald-50/20 to-green-100/30 rounded-3xl"
-                    />
+                    {/* Achievement-Style Soft Glow */}
+                    <div className="absolute inset-0 pointer-events-none" style={{
+                      background: "radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%)",
+                      borderRadius: "20px",
+                    }} />
 
-                    <div className="text-center relative z-10">
+                    {/* Main Content */}
+                    <div className="relative z-2 flex flex-col items-center gap-2">
 
                       {/* Clean Word Container */}
                       <motion.div
