@@ -124,6 +124,15 @@ export default function JungleAdventureNavV2({
   iconLift = 14,
   iconSize = 44,
   className,
+  showParentMenuIcon = true,
+  parentMenuIconVariant = "totem",
+  parentMenuAnimationStyle = "breathing",
+  parentDialogSections = {
+    dashboard: true,
+    settings: true,
+    signOut: true,
+  },
+  onParentMenuClick,
   showMobileMoreIcon = false,
   onMobileMoreClick,
 }: JungleAdventureNavV2Props) {
