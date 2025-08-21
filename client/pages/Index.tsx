@@ -528,7 +528,7 @@ export default function Index({ initialProfile }: IndexProps) {
       );
       generateDashboardWords();
     }
-  }, [rememberedWords.size]); // Trigger when remembered words count changes
+  }, [rememberedWords.size, generateDashboardWords, dashboardSession]); // Include all referenced functions and state
 
   // Update current progress for goals tracking
   useEffect(() => {
