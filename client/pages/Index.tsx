@@ -73,7 +73,7 @@ import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
-import { DesktopKidNav } from "@/components/DesktopKidNav";
+import { JungleKidNav } from "@/components/JungleKidNav";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
@@ -3257,7 +3257,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
-                                            🎯 Ages 3-5
+                                            ��� Ages 3-5
                                           </span>
                                           <span className="jungle-quiz-badge-audio">
                                             🎵 Audio Magic
@@ -3857,7 +3857,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "✨", "⭐", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "✨", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
@@ -3874,7 +3874,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Desktop Kid Mode Navigation */}
           {userRole === "child" && (
-            <DesktopKidNav
+            <JungleKidNav
               activeTab={activeTab}
               onTabChange={setActiveTab}
               userRole={userRole}
@@ -3888,6 +3888,10 @@ export default function Index({ initialProfile }: IndexProps) {
               }}
               onSettingsClick={() => setShowSettings(true)}
               onAdminClick={() => navigate("/admin")}
+              theme="jungle"
+              enableSounds={true}
+              animations={true}
+              autoOptimize={true}
             />
           )}
 

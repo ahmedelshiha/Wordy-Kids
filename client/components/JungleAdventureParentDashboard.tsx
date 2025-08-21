@@ -69,7 +69,6 @@ import {
   Zap,
   Sparkles,
   Gift,
-  Map,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import "@/styles/jungle-adventure-parent-dashboard.css";
