@@ -3997,7 +3997,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "����"]}
+            particleEmojis={["🌟", "🌈", "✨", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
