@@ -80,7 +80,7 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 0 8px 6px;
+  padding: 0 5px 6px;
   cursor: pointer;
   outline-offset: 3px;
 }
