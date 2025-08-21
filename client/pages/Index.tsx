@@ -1560,7 +1560,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ���";
+        achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -2012,12 +2012,30 @@ export default function Index({ initialProfile }: IndexProps) {
           {isMobileMenuOpen && (
             <div className="fixed inset-0 z-50 md:hidden">
               <div
-                className="absolute inset-0 bg-black/50"
+                className="absolute inset-0 bg-black/60"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              <aside className="absolute left-0 top-0 w-80 h-full bg-white/90 backdrop-blur-md p-6 flex flex-col shadow-2xl">
+              <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-br from-white/95 to-purple-50/95 backdrop-blur-lg p-6 flex flex-col shadow-2xl border-r border-purple-200/50">
+                {/* Magic Menu Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                    <h2 className="text-lg font-bold text-purple-800">🌟 Magic Menu</h2>
+                  </div>
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <X className="w-4 h-4 text-gray-600" />
+                  </motion.button>
+                </div>
+
                 {/* Mobile Navigation */}
-                <nav className="flex-1 space-y-2">
+                <nav className="flex-1 space-y-3">
                   {[
                     {
                       id: "dashboard",
