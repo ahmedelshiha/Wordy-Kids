@@ -13,6 +13,7 @@ import { JungleAdventureSettingsPanel } from "@/components/JungleAdventureSettin
 import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "@/styles/jungle-nav-v3-animations.css";
 
 export type JungleNavItem = {
   id: string;
