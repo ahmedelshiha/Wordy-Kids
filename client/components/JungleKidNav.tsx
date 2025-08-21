@@ -339,6 +339,8 @@ export function JungleKidNav({
                 navState.deviceCapabilities.animations &&
                 animationStyle !== "none" &&
                 `idle-${item.animal.name.toLowerCase().replace(" ", "")}`,
+              // No animations override
+              animationStyle === "none" && "no-animations",
               // Apply animation style classes based on preset (only if animations enabled)
               navState.deviceCapabilities.animations && animationStyle !== "none" && {
                 "with-glow": animationStyle === "soft-glow",
