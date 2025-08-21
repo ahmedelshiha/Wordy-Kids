@@ -124,6 +124,41 @@ export default {
             height: "0",
           },
         },
+        // New calming navigation animations
+        "gentle-breath": {
+          "0%, 100%": {
+            transform: "scale(1)",
+            opacity: "1",
+          },
+          "50%": {
+            transform: "scale(1.02)",
+            opacity: "0.98",
+          },
+        },
+        "serene-glow": {
+          "0%, 100%": {
+            boxShadow: "0 0 0px rgba(76, 175, 80, 0)",
+          },
+          "50%": {
+            boxShadow: "0 0 8px rgba(76, 175, 80, 0.15)",
+          },
+        },
+        "peaceful-hover": {
+          "0%": {
+            transform: "translateY(0) scale(1)",
+          },
+          "100%": {
+            transform: "translateY(-0.5px) scale(1.005)",
+          },
+        },
+        "calm-pulse": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.97",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
