@@ -138,7 +138,6 @@ export function InteractiveDashboardWordCard({
     action();
   };
 
-
   // Keyboard navigation handler
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (isAnswered) return;
@@ -718,7 +717,7 @@ export function InteractiveDashboardWordCard({
     }
 
     // Optimized: Reduce console logging in production
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.log(`Word Action: ${currentWord.word} - ${status}`, {
         wordId: currentWord.id,
         sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
@@ -842,19 +841,21 @@ export function InteractiveDashboardWordCard({
           });
 
           // Track enhanced achievements with difficulty-based progression
-          const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
-            type: "wordLearning",
-            wordsLearned: status === "remembered" ? 1 : 0,
-            accuracy:
-              status === "remembered"
-                ? 100
-                : status === "needs_practice"
-                  ? 0
-                  : undefined,
-            category: currentWord.category,
-            difficulty: currentWord.difficulty,
-            timeSpent: 1,
-          });
+          const enhancedAchievements = EnhancedAchievementTracker.trackActivity(
+            {
+              type: "wordLearning",
+              wordsLearned: status === "remembered" ? 1 : 0,
+              accuracy:
+                status === "remembered"
+                  ? 100
+                  : status === "needs_practice"
+                    ? 0
+                    : undefined,
+              category: currentWord.category,
+              difficulty: currentWord.difficulty,
+              timeSpent: 1,
+            },
+          );
 
           // Combine achievements from both systems
           const allNewAchievements = [
@@ -955,8 +956,10 @@ export function InteractiveDashboardWordCard({
 
   const advanceToNextWord = () => {
     // Optimized: Reduce console logging in production
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
+    if (process.env.NODE_ENV === "development") {
+      console.log(
+        `Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`,
+      );
     }
 
     // Start transition effect
@@ -970,12 +973,12 @@ export function InteractiveDashboardWordCard({
       // Critical update: Move to next word immediately
       if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
         setCurrentWordIndex(nextIndex);
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === "development") {
           console.log(
             `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
           );
         }
-      } else if (process.env.NODE_ENV === 'development') {
+      } else if (process.env.NODE_ENV === "development") {
         console.log("Reached end of session words");
       }
 
