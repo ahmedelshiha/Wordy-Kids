@@ -2156,10 +2156,16 @@ export default function Index({ initialProfile }: IndexProps) {
                     </div>
                   </motion.button>
 
-                  <DynamicAuthButton
-                    variant="mobile"
-                    onAction={() => setIsMobileMenuOpen(false)}
-                  />
+                  {/* Final Divider */}
+                  <div className="border-t border-purple-200/50 my-4"></div>
+
+                  {/* Enhanced Auth Button */}
+                  <div className="mt-auto">
+                    <DynamicAuthButton
+                      variant="mobile"
+                      onAction={() => setIsMobileMenuOpen(false)}
+                    />
+                  </div>
                 </nav>
               </aside>
             </div>
@@ -3969,7 +3975,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "���", "����", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
