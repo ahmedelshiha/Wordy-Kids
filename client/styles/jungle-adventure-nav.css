@@ -1,5 +1,5 @@
 /**
- * 🌿 Jungle Adventure Navigation Styles
+ * �� Jungle Adventure Navigation Styles
  * Cross-platform immersive navigation with jungle theming
  */
 
@@ -307,7 +307,69 @@
   font-size: 1.5rem;
   opacity: 0.6;
   z-index: 2;
-  animation: vine-sway 4s ease-in-out infinite;
+  animation: vine-sway 8s ease-in-out infinite;
+}
+
+/* 🌟 Rare magical sparkle effects - only appear occasionally */
+.jungle-rare-sparkle {
+  position: absolute;
+  pointer-events: none;
+  animation: rare-sparkle-dance 20s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes rare-sparkle-dance {
+  0%, 85% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  87% {
+    opacity: 0.3;
+    transform: scale(0.5) rotate(45deg);
+  }
+  90% {
+    opacity: 0.8;
+    transform: scale(1) rotate(90deg);
+  }
+  93% {
+    opacity: 0.3;
+    transform: scale(0.7) rotate(135deg);
+  }
+  95%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+}
+
+/* Firefly-like glow effect for ambient magic */
+.jungle-firefly {
+  position: absolute;
+  pointer-events: none;
+  animation: firefly-glow 15s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes firefly-glow {
+  0%, 80% {
+    opacity: 0;
+    transform: translateY(0px) scale(0.5);
+    filter: brightness(1);
+  }
+  85% {
+    opacity: 0.6;
+    transform: translateY(-10px) scale(1);
+    filter: brightness(1.5);
+  }
+  90% {
+    opacity: 0.3;
+    transform: translateY(-5px) scale(0.8);
+    filter: brightness(1.2);
+  }
+  95%, 100% {
+    opacity: 0;
+    transform: translateY(0px) scale(0.5);
+    filter: brightness(1);
+  }
 }
 
 @keyframes vine-sway {
