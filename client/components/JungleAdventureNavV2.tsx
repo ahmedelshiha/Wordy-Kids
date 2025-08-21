@@ -269,30 +269,51 @@ export default function JungleAdventureNavV2({
           })}
         </ul>
 
-        {/* Mobile More Icon - Right Side (Mobile Only) */}
-        {showMobileMoreIcon && (
+        {/* Parent Menu Icon - Right Side (Mobile Only) */}
+        {(showParentMenuIcon || showMobileMoreIcon) && (
           <button
-            className="jng-more-btn md:hidden"
+            className={clsx(
+              "jng-parent-menu-btn md:hidden",
+              parentMenuAnimationStyle === "breathing" && "parent-breathing",
+              parentMenuAnimationStyle === "glow" && "parent-glowing",
+            )}
             onClick={() => {
-              triggerBreath("more");
-              if (onMobileMoreClick) onMobileMoreClick();
+              if (showParentMenuIcon) {
+                handleParentMenuClick();
+              } else {
+                // Legacy support
+                triggerBreath("more");
+                if (onMobileMoreClick) onMobileMoreClick();
+              }
             }}
-            onMouseEnter={() => triggerBreath("more")}
-            onFocus={() => triggerBreath("more")}
-            aria-label="More options"
+            onMouseEnter={() => triggerBreath(showParentMenuIcon ? "parent-menu" : "more")}
+            onFocus={() => triggerBreath(showParentMenuIcon ? "parent-menu" : "more")}
+            aria-label={showParentMenuIcon ? "Parent Menu" : "More options"}
           >
             <span
               className={clsx(
                 "jng-icon-wrap jng-icon-lifted",
-                breathing["more"] && "breath-once",
+                showParentMenuIcon && "parent-icon-totem",
+                breathing[showParentMenuIcon ? "parent-menu" : "more"] && "breath-once",
               )}
               aria-hidden="true"
             >
-              <span className="jng-svg">
-                <MoreHorizontal size={iconSize * 0.7} />
-              </span>
+              {showParentMenuIcon ? (
+                <span
+                  className="jng-emoji parent-menu-emoji"
+                  style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
+                >
+                  {getParentMenuIcon()}
+                </span>
+              ) : (
+                <span className="jng-svg">
+                  <MoreHorizontal size={iconSize * 0.7} />
+                </span>
+              )}
             </span>
-            <span className="jng-label">More</span>
+            <span className="jng-label">
+              {showParentMenuIcon ? "Parents" : "More"}
+            </span>
           </button>
         )}
       </div>
