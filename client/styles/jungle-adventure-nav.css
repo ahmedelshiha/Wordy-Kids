@@ -166,6 +166,37 @@
   }
 }
 
+/* ===== SUBTLE GLOW/PULSE ANIMATIONS ===== */
+/* Soft jungle firefly glow - no harsh flashing */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(255,255,0,0);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255,255,100,0.6);
+  }
+}
+
+/* Green jungle glow variation */
+@keyframes jungle-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(76, 175, 80, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
+  }
+}
+
+/* Soft accent glow for active elements */
+@keyframes soft-accent-glow {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(255, 193, 7, 0);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+  }
+}
+
 /* Gentle idle animations (replaced with breathing) */
 @keyframes gentle-sway {
   0%,
