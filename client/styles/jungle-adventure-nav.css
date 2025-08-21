@@ -163,37 +163,37 @@
   }
 }
 
-/* ===== SUBTLE GLOW/PULSE ANIMATIONS ===== */
-/* Soft jungle firefly glow - no harsh flashing */
+/* ===== SERENE GLOW/PULSE ANIMATIONS ===== */
+/* Ultra-soft ambient glow - barely perceptible */
 @keyframes glow-pulse {
   0%,
   100% {
     box-shadow: 0 0 0px rgba(255, 255, 0, 0);
   }
   50% {
-    box-shadow: 0 0 15px rgba(255, 255, 100, 0.6);
+    box-shadow: 0 0 8px rgba(255, 255, 100, 0.2);
   }
 }
 
-/* Green jungle glow variation */
+/* Gentle green aura variation */
 @keyframes jungle-glow-pulse {
   0%,
   100% {
     box-shadow: 0 0 0px rgba(76, 175, 80, 0);
   }
   50% {
-    box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.15);
   }
 }
 
-/* Soft accent glow for active elements */
+/* Whisper-soft accent glow for active elements */
 @keyframes soft-accent-glow {
   0%,
   100% {
     box-shadow: 0 0 0px rgba(255, 193, 7, 0);
   }
   50% {
-    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.2);
   }
 }
 
