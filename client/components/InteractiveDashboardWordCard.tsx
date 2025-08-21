@@ -354,6 +354,12 @@ export function InteractiveDashboardWordCard({
     setIsTransitioning(true);
     setAudioPlayedForHint(false);
 
+    // Clear any pending audio debounce
+    if (audioDebounce) {
+      clearTimeout(audioDebounce);
+      setAudioDebounce(null);
+    }
+
     // Reset transition state after brief delay
     const timer = setTimeout(() => setIsTransitioning(false), 300);
     return () => clearTimeout(timer);
@@ -1826,7 +1832,7 @@ export function InteractiveDashboardWordCard({
                       Family: "👨‍👩‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
-                      Clothes: "👕",
+                      Clothes: "����",
                     };
 
                     const emoji = categoryEmojis[category] || "🌟";
