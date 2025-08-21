@@ -359,17 +359,45 @@ export function InteractiveDashboardWordCard({
     return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
-  // Automatically pronounce word when hint is shown (only once per word)
-  useEffect(() => {
-    if (showHint && currentWord && !isPlaying && !audioPlayedForHint) {
-      // Small delay to allow hint card animation to start
-      const timer = setTimeout(() => {
+  // Debounced pronunciation function to prevent double-play
+  const playPronunciationDebounced = (isManual = false) => {
+    // Clear any existing audio timeout
+    if (audioDebounce) {
+      clearTimeout(audioDebounce);
+    }
+
+    // For manual clicks, allow immediate play
+    if (isManual) {
+      playPronunciation();
+      return;
+    }
+
+    // For auto-play (hint), add debounce and check if already played
+    if (audioPlayedForHint || isPlaying) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      if (!audioPlayedForHint && !isPlaying && currentWord) {
         playPronunciation();
         setAudioPlayedForHint(true);
-      }, 400);
+      }
+    }, 150); // 150ms debounce as requested
+
+    setAudioDebounce(timer);
+  };
+
+  // Automatically pronounce word when hint is shown (only once per word)
+  useEffect(() => {
+    if (showHint && currentWord && !audioPlayedForHint) {
+      // Delay to allow hint card animation to start
+      const timer = setTimeout(() => {
+        playPronunciationDebounced(false);
+      }, 250); // Slightly reduced delay
+
       return () => clearTimeout(timer);
     }
-  }, [showHint, currentWord, audioPlayedForHint, isPlaying]);
+  }, [showHint, currentWord]);
 
   const playPronunciation = () => {
     if (currentWord && !isPlaying) {
@@ -1627,7 +1655,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Objects: {
                         easy: [
-                          "���� What jungle tool is this?",
+                          "��� What jungle tool is this?",
                           "🎒 Which jungle gear do you see?",
                           "🧭 Can you name this jungle helper?",
                           "⛺ What jungle shelter is this?",
