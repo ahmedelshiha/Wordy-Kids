@@ -1071,7 +1071,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "vocabulary-champion",
         name: "Vocabulary Champion",
-        icon: "🏆",
+        icon: "��",
         earned: rememberedWords.size >= 50,
         description: "Learn 100 words",
       },
@@ -2059,7 +2059,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       id: "quiz",
                       icon: Brain,
                       label: "Quiz Time",
-                      emoji: "🧠",
+                      emoji: "���",
                       color: "pink",
                     },
                     {
@@ -4064,7 +4064,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "achievements",
                   label: "Trophy Grove",
-                  emoji: "��",
+                  emoji: "🏆",
                   ariaLabel: "Achievements",
                 },
               ]}
@@ -4171,7 +4171,7 @@ export default function Index({ initialProfile }: IndexProps) {
         >
           {/* Jungle Background Elements */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
+            <div className="absolute top-2 left-2 text-lg opacity-20">����</div>
             <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
             <div className="absolute bottom-2 left-4 text-sm opacity-20">
               🌱
