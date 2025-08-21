@@ -1989,12 +1989,12 @@ export function InteractiveDashboardWordCard({
                       damping: 15,
                       stiffness: 300,
                     }}
-                    className="mx-auto max-w-xs w-full relative overflow-hidden"
+                    className="mx-auto max-w-[280px] w-full relative overflow-hidden"
                     style={{
                       background: "linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%)",
                       border: "4px solid #ffd700",
-                      borderRadius: "24px",
-                      padding: "20px 24px",
+                      borderRadius: "20px",
+                      padding: "16px 20px",
                       textAlign: "center",
                       color: "white",
                       fontFamily: '"Comic Sans MS", "Fredoka One", cursive, sans-serif',
@@ -2200,7 +2200,7 @@ export function InteractiveDashboardWordCard({
                         <h2
                           className="font-bold margin-0"
                           style={{
-                            fontSize: "1.8rem",
+                            fontSize: "1.4rem",
                             margin: "0",
                             textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
                             lineHeight: "1.2",
