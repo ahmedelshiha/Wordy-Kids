@@ -3,7 +3,7 @@
 // Migration to V3 includes:
 // - Enhanced jungle theming with proper gradients
 // - Improved parent menu integration
-// - Better mobile/desktop responsive design  
+// - Better mobile/desktop responsive design
 // - Optimized performance and accessibility
 // - Simplified prop interface
 

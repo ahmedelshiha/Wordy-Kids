@@ -2,7 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { JungleAdventureSettingsPanel } from "@/components/JungleAdventureSettingsPanel";
 import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
@@ -46,7 +51,12 @@ const DEFAULT_ITEMS: JungleNavItem[] = [
   { id: "dashboard", label: "Home Tree", emoji: "🦉", ariaLabel: "Dashboard" },
   { id: "learn", label: "Word Jungle", emoji: "🦜", ariaLabel: "Learning" },
   { id: "quiz", label: "Quiz Adventure", emoji: "🐵", ariaLabel: "Quiz Games" },
-  { id: "achievements", label: "Trophy Grove", emoji: "🐘", ariaLabel: "Achievements" },
+  {
+    id: "achievements",
+    label: "Trophy Grove",
+    emoji: "🐘",
+    ariaLabel: "Achievements",
+  },
 ];
 
 // Hook for reduced motion
@@ -76,12 +86,12 @@ export default function JungleAdventureNavV3({
     dashboard: true,
     settings: true,
     signOut: true,
-  }
+  },
 }: JungleAdventureNavV3Props) {
   const { isGuest, logout } = useAuth();
   const navigate = useNavigate();
   const reducedMotion = useReducedMotion();
-  
+
   const [showSettingsPanel, setShowSettingsPanel] = useState(false);
   const [showParentDashboard, setShowParentDashboard] = useState(false);
   const [showParentMenu, setShowParentMenu] = useState(false);
@@ -90,12 +100,12 @@ export default function JungleAdventureNavV3({
 
   const handleParentAction = (action: string) => {
     setShowParentMenu(false);
-    
+
     // Add haptic feedback
     if (navigator.vibrate) {
       navigator.vibrate(50);
     }
-    
+
     switch (action) {
       case "dashboard":
         if (onParentDashboard) {
@@ -128,8 +138,8 @@ export default function JungleAdventureNavV3({
     if (navigator.vibrate) {
       navigator.vibrate(30);
     }
-    
-    const item = items.find(i => i.id === itemId);
+
+    const item = items.find((i) => i.id === itemId);
     if (item?.onClick) {
       item.onClick();
     } else if (onNavigate) {
@@ -139,7 +149,7 @@ export default function JungleAdventureNavV3({
 
   return (
     <>
-      <nav 
+      <nav
         className="fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600"
         aria-label="Jungle Adventure Navigation"
       >
@@ -153,19 +163,21 @@ export default function JungleAdventureNavV3({
                 whileTap={shouldAnimate ? { scale: 0.9 } : {}}
                 whileHover={shouldAnimate ? { scale: 1.1 } : {}}
                 className={`flex flex-col items-center text-white transition-colors duration-200 ${
-                  isActive ? 'text-yellow-300' : 'text-white hover:text-yellow-200'
+                  isActive
+                    ? "text-yellow-300"
+                    : "text-white hover:text-yellow-200"
                 }`}
                 onClick={() => handleNavigation(item.id)}
                 aria-label={item.ariaLabel || item.label}
                 aria-current={isActive ? "page" : undefined}
               >
-                <span 
+                <span
                   className={`text-3xl drop-shadow-lg transform transition-transform duration-200 ${
-                    isActive ? 'scale-110' : ''
+                    isActive ? "scale-110" : ""
                   }`}
-                  style={{ 
-                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-                    textShadow: '0 0 8px rgba(255,255,255,0.3)'
+                  style={{
+                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                    textShadow: "0 0 8px rgba(255,255,255,0.3)",
                   }}
                 >
                   {item.emoji}
@@ -185,11 +197,11 @@ export default function JungleAdventureNavV3({
             aria-expanded={showParentMenu}
             aria-haspopup="dialog"
           >
-            <span 
+            <span
               className="text-3xl drop-shadow-lg"
-              style={{ 
-                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-                textShadow: '0 0 12px rgba(255,193,7,0.4)'
+              style={{
+                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                textShadow: "0 0 12px rgba(255,193,7,0.4)",
               }}
             >
               🪵
@@ -231,17 +243,25 @@ export default function JungleAdventureNavV3({
             >
               {/* Jungle Background Elements */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
-                <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
-                <div className="absolute bottom-2 left-4 text-sm opacity-20">🌱</div>
-                <div className="absolute top-1/2 right-2 text-sm opacity-15">🦋</div>
+                <div className="absolute top-2 left-2 text-lg opacity-20">
+                  🌿
+                </div>
+                <div className="absolute top-4 right-4 text-sm opacity-25">
+                  🍃
+                </div>
+                <div className="absolute bottom-2 left-4 text-sm opacity-20">
+                  🌱
+                </div>
+                <div className="absolute top-1/2 right-2 text-sm opacity-15">
+                  🦋
+                </div>
               </div>
 
               <div className="relative z-10">
                 <h2 className="text-xl font-bold text-green-900 mb-4 flex items-center justify-center gap-2">
                   🪵 <span>Parent Menu</span>
                 </h2>
-                
+
                 <div className="flex flex-col gap-3">
                   {parentDialogSections.dashboard && (
                     <Button
@@ -253,7 +273,7 @@ export default function JungleAdventureNavV3({
                       </span>
                     </Button>
                   )}
-                  
+
                   {parentDialogSections.settings && (
                     <Button
                       className="px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
@@ -264,23 +284,25 @@ export default function JungleAdventureNavV3({
                       </span>
                     </Button>
                   )}
-                  
+
                   {parentDialogSections.signOut && (
                     <Button
                       className={`px-4 py-3 rounded-lg text-white transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] ${
-                        isGuest 
-                          ? 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800' 
-                          : 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800'
+                        isGuest
+                          ? "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"
+                          : "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
                       }`}
                       onClick={() => handleParentAction("logout")}
                     >
                       <span className="flex items-center gap-2">
-                        {isGuest ? "✨ Sign Up / Register" : "🌿 Goodbye & Log Off"}
+                        {isGuest
+                          ? "✨ Sign Up / Register"
+                          : "🌿 Goodbye & Log Off"}
                       </span>
                     </Button>
                   )}
                 </div>
-                
+
                 <button
                   className="mt-4 text-sm text-gray-600 underline hover:text-gray-800 transition-colors duration-200"
                   onClick={() => setShowParentMenu(false)}
@@ -296,7 +318,10 @@ export default function JungleAdventureNavV3({
       {/* Parent Dashboard Popup */}
       <AnimatePresence>
         {showParentDashboard && (
-          <Dialog open={showParentDashboard} onOpenChange={setShowParentDashboard}>
+          <Dialog
+            open={showParentDashboard}
+            onOpenChange={setShowParentDashboard}
+          >
             <DialogContent className="max-w-[90vw] max-h-[90vh] overflow-auto p-0">
               <DialogHeader className="p-4 pb-2">
                 <DialogTitle className="text-xl font-bold text-green-900">
