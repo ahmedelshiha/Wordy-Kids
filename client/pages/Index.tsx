@@ -2022,7 +2022,9 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                       <Sparkles className="w-4 h-4 text-white" />
                     </div>
-                    <h2 className="text-lg font-bold text-purple-800">🌟 Magic Menu</h2>
+                    <h2 className="text-lg font-bold text-purple-800">
+                      🌟 Magic Menu
+                    </h2>
                   </div>
                   <motion.button
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -2090,10 +2092,14 @@ export default function Index({ initialProfile }: IndexProps) {
                         <span className="text-xl">{emoji}</span>
                       </div>
                       <div className="flex-1 text-left">
-                        <span className="font-bold text-base block">{label}</span>
-                        <span className={`text-sm ${
-                          activeTab === id ? "text-white/80" : "text-gray-500"
-                        }`}>
+                        <span className="font-bold text-base block">
+                          {label}
+                        </span>
+                        <span
+                          className={`text-sm ${
+                            activeTab === id ? "text-white/80" : "text-gray-500"
+                          }`}
+                        >
                           {id === "dashboard" && "Start your adventure"}
                           {id === "learn" && "Discover new words"}
                           {id === "quiz" && "Test your knowledge"}
@@ -2126,8 +2132,12 @@ export default function Index({ initialProfile }: IndexProps) {
                       <span className="text-xl">👨‍👩‍👧‍👦</span>
                     </div>
                     <div className="flex-1 text-left">
-                      <span className="font-bold text-base block">Parent Dashboard</span>
-                      <span className="text-sm text-blue-100">View progress & settings</span>
+                      <span className="font-bold text-base block">
+                        Parent Dashboard
+                      </span>
+                      <span className="text-sm text-blue-100">
+                        View progress & settings
+                      </span>
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-lg animate-bounce">🔑</span>
@@ -2148,8 +2158,12 @@ export default function Index({ initialProfile }: IndexProps) {
                       <span className="text-xl">⚙️</span>
                     </div>
                     <div className="flex-1 text-left">
-                      <span className="font-bold text-base block">Settings</span>
-                      <span className="text-sm text-green-100">Customize your experience</span>
+                      <span className="font-bold text-base block">
+                        Settings
+                      </span>
+                      <span className="text-sm text-green-100">
+                        Customize your experience
+                      </span>
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-lg animate-bounce">🎛️</span>
@@ -2170,7 +2184,6 @@ export default function Index({ initialProfile }: IndexProps) {
               </aside>
             </div>
           )}
-
 
           {/* Parent Gate Button - Top Right Corner (Desktop Only) */}
           {userRole === "child" && (
