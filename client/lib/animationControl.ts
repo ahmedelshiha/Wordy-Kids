@@ -141,6 +141,11 @@ class AnimationControlManager {
 // Create singleton instance
 export const animationControl = new AnimationControlManager();
 
+// Immediately disable animations on page load
+if (typeof document !== "undefined") {
+  document.body.classList.add("jungle-animations-suspended");
+}
+
 // React hook for easy component integration
 export function useAnimationControl() {
   const [state, setState] = useState<AnimationControlState>(
