@@ -1695,7 +1695,7 @@ export function InteractiveDashboardWordCard({
                         ],
                         hard: [
                           "⚔️ What legendary jungle artifact is this?",
-                          "🏺 Which ancient jungle relic awaits?",
+                          "���� Which ancient jungle relic awaits?",
                           "🔮 Can you name this mystical jungle object?",
                           "👑 What sacred jungle treasure is this?",
                         ],
@@ -2134,20 +2134,6 @@ export function InteractiveDashboardWordCard({
                     />
 
                     <div className="text-center relative z-10">
-                      {/* Compact Explorer Icon */}
-                      <motion.div
-                        initial={{ scale: 0, rotate: -90 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{
-                          delay: 0.2,
-                          duration: 0.5,
-                          type: "spring",
-                        }}
-                        className="text-lg sm:text-xl mb-1"
-                        aria-hidden="true"
-                      >
-                        💡
-                      </motion.div>
 
                       {/* Clean Word Container */}
                       <motion.div
