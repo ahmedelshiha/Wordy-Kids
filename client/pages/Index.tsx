@@ -1560,7 +1560,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! 🎓";
+        achievementTitle = "Category Expert! ���";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -2099,6 +2099,28 @@ export default function Index({ initialProfile }: IndexProps) {
                   />
                 </nav>
               </aside>
+            </div>
+          )}
+
+          {/* Mobile Menu Button - Top Left Corner */}
+          {userRole === "child" && (
+            <div className="fixed top-4 left-4 z-50 md:hidden">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    className="w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-purple-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label="Open Magic Menu"
+                  >
+                    <Menu className="w-6 h-6 text-purple-600" />
+                  </motion.button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>🌟 Magic Menu</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           )}
 
