@@ -31,6 +31,7 @@ import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 import { LightweightAchievementProvider } from "./components/LightweightAchievementProvider";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
+import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 
 const queryClient = new QueryClient();
 
