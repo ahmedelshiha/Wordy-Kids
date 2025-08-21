@@ -373,33 +373,33 @@
     elephant-flap 30s ease-in-out infinite;
 }
 
-/* Combined breathing + glow + micro-movements for full experience */
+/* Combined serene breathing + gentle glow + whisper movements for full experience */
 .jungle-animal-icon.full-experience.owl {
   animation:
-    breathing 5s ease-in-out infinite,
-    jungle-glow-pulse 8s ease-in-out infinite,
-    owl-blink 10s ease-in-out infinite;
+    breathing 8s ease-in-out infinite,
+    jungle-glow-pulse 16s ease-in-out infinite,
+    owl-blink 20s ease-in-out infinite;
 }
 
 .jungle-animal-icon.full-experience.monkey {
   animation:
-    breathing 4s ease-in-out infinite,
-    glow-pulse 7s ease-in-out infinite,
-    monkey-wiggle 8s ease-in-out infinite;
+    breathing 7s ease-in-out infinite,
+    glow-pulse 14s ease-in-out infinite,
+    monkey-wiggle 18s ease-in-out infinite;
 }
 
 .jungle-animal-icon.full-experience.parrot {
   animation:
-    breathing 4.5s ease-in-out infinite,
-    soft-accent-glow 6s ease-in-out infinite,
-    parrot-tilt 12s ease-in-out infinite;
+    breathing 7.5s ease-in-out infinite,
+    soft-accent-glow 15s ease-in-out infinite,
+    parrot-tilt 25s ease-in-out infinite;
 }
 
 .jungle-animal-icon.full-experience.elephant {
   animation:
-    breathing 5.5s ease-in-out infinite,
-    jungle-glow-pulse 9s ease-in-out infinite,
-    elephant-flap 15s ease-in-out infinite;
+    breathing 9s ease-in-out infinite,
+    jungle-glow-pulse 18s ease-in-out infinite,
+    elephant-flap 30s ease-in-out infinite;
 }
 
 /* ===== DECORATIVE ELEMENTS ===== */
