@@ -4022,23 +4022,13 @@ export default function Index({ initialProfile }: IndexProps) {
               onOpenParentDashboard={() => setUserRole("parent")}
               onOpenSettings={() => setShowSettings(true)}
               onSignOut={() => {
-                // Show farewell message and reset to guest mode
-                toast({
-                  title: "🌿 Goodbye!",
-                  description: "Thank you for visiting WordyKids. See you soon!",
-                  duration: 3000,
-                });
-                setTimeout(() => {
-                  setUserRole("child");
-                }, 1000);
+                // Reset to guest mode with gentle transition
+                setUserRole("child");
+                console.log("🌿 Goodbye! Thank you for visiting WordyKids. See you soon!");
               }}
               onRegister={() => {
                 // Open registration flow
-                toast({
-                  title: "✨ Welcome to the Family!",
-                  description: "Let's create your family account together.",
-                  duration: 3000,
-                });
+                console.log("✨ Welcome to the Family! Let's create your account together.");
                 setActiveTab("profile");
               }}
               isUserAuthenticated={userRole === "parent"}
