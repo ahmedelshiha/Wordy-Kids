@@ -665,6 +665,98 @@
   outline-offset: 2px;
 }
 
+/* Performance Optimizations */
+.jng-parent-menu-btn,
+.jungle-dialog-btn,
+.jungle-particle,
+.jungle-dialog-backdrop {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* GPU acceleration for smooth animations */
+.jungle-dialog-backdrop,
+.jungle-btn-glow,
+.jungle-particle {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Enhanced Jungle Totem Glow */
+.jng-parent-menu-desktop.parent-glowing {
+  animation: jungleTotemGlow 4s ease-in-out infinite;
+}
+
+@keyframes jungleTotemGlow {
+  0%, 100% {
+    box-shadow:
+      0 -4px 12px rgba(139, 69, 19, 0.3),
+      0 0 20px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 -6px 20px rgba(139, 69, 19, 0.5),
+      0 0 40px rgba(251, 191, 36, 0.4),
+      0 0 60px rgba(76, 175, 80, 0.2);
+  }
+}
+
+/* Jungle Vines and Natural Textures */
+.jungle-dialog-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at top left, rgba(34, 139, 34, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(46, 125, 50, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at center, rgba(76, 175, 80, 0.03) 0%, transparent 70%);
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Enhanced Icon Lift Effect */
+.jng-parent-menu-desktop .jng-icon-wrap {
+  position: relative;
+  z-index: 2;
+}
+
+.jng-parent-menu-desktop .jng-icon-wrap::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 4px;
+  background: radial-gradient(ellipse, rgba(139, 69, 19, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.jng-parent-menu-desktop:hover .jng-icon-wrap::before {
+  width: 24px;
+  height: 6px;
+  background: radial-gradient(ellipse, rgba(139, 69, 19, 0.4) 0%, transparent 70%);
+}
+
+/* Enhanced Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-parent-dialog[data-state="open"] .jungle-dialog-backdrop,
+  .jungleTotemBreath,
+  .jungleTotemGlow,
+  .jungleFloat,
+  .jungleTextShimmer {
+    animation: none !important;
+  }
+
+  .jungle-dialog-btn-enhanced:hover,
+  .jng-parent-menu-desktop:hover,
+  .jungle-setting-card:hover {
+    transform: none !important;
+  }
+}
+
 /* Reduced motion compliance for dialog animations */
 @media (prefers-reduced-motion: reduce) {
   .jungle-parent-dialog[data-state="open"] .jungle-dialog-backdrop {
