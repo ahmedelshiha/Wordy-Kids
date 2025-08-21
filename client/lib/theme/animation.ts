@@ -164,12 +164,19 @@ export class JungleAnimationManager {
     return this.config.rareEffects && !this.config.reducedMotion;
   }
 
+  // Get pause duration based on setting
+  getPauseDuration(): string {
+    if (this.config.reducedMotion) return "0s";
+    return jungleAnimationPause[this.config.idlePauseDuration];
+  }
+
   // Generate CSS custom properties
   getCSSProperties(): Record<string, string> {
     const intensity = this.getIntensity();
 
     return {
       "--jungle-idle-timing": this.getIdleTiming(),
+      "--jungle-pause-duration": this.getPauseDuration(),
       "--jungle-hover-scale": intensity.scale.hover.toString(),
       "--jungle-tap-scale": intensity.scale.tap.toString(),
       "--jungle-active-scale": intensity.scale.active.toString(),
