@@ -1996,13 +1996,15 @@ export function InteractiveDashboardWordCard({
                     }}
                     className="mx-auto max-w-[280px] w-full relative overflow-hidden"
                     style={{
-                      background: "linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%)",
+                      background:
+                        "linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%)",
                       border: "4px solid #ffd700",
                       borderRadius: "20px",
                       padding: "16px 20px",
                       textAlign: "center",
                       color: "white",
-                      fontFamily: '"Comic Sans MS", "Fredoka One", cursive, sans-serif',
+                      fontFamily:
+                        '"Comic Sans MS", "Fredoka One", cursive, sans-serif',
                       boxShadow: `
                         0 10px 30px rgba(0, 0, 0, 0.3),
                         0 0 20px rgba(255, 215, 0, 0.4),
@@ -2012,7 +2014,10 @@ export function InteractiveDashboardWordCard({
                     }}
                   >
                     {/* Achievement-Style Jungle Vines Frame */}
-                    <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ borderRadius: "20px" }}>
+                    <div
+                      className="absolute inset-0 pointer-events-none overflow-hidden"
+                      style={{ borderRadius: "20px" }}
+                    >
                       {!prefersReducedMotion && (
                         <>
                           <motion.div
@@ -2099,10 +2104,30 @@ export function InteractiveDashboardWordCard({
                       {/* Static vines for reduced motion */}
                       {prefersReducedMotion && (
                         <>
-                          <div className="absolute text-2xl z-1" style={{ top: "-8px", left: "-4px" }}>🌿</div>
-                          <div className="absolute text-2xl z-1" style={{ top: "-8px", right: "-4px" }}>🍃</div>
-                          <div className="absolute text-2xl z-1" style={{ bottom: "-8px", left: "-4px" }}>🌱</div>
-                          <div className="absolute text-2xl z-1" style={{ bottom: "-8px", right: "-4px" }}>🌿</div>
+                          <div
+                            className="absolute text-2xl z-1"
+                            style={{ top: "-8px", left: "-4px" }}
+                          >
+                            🌿
+                          </div>
+                          <div
+                            className="absolute text-2xl z-1"
+                            style={{ top: "-8px", right: "-4px" }}
+                          >
+                            🍃
+                          </div>
+                          <div
+                            className="absolute text-2xl z-1"
+                            style={{ bottom: "-8px", left: "-4px" }}
+                          >
+                            🌱
+                          </div>
+                          <div
+                            className="absolute text-2xl z-1"
+                            style={{ bottom: "-8px", right: "-4px" }}
+                          >
+                            🌿
+                          </div>
                         </>
                       )}
                     </div>
@@ -2187,14 +2212,17 @@ export function InteractiveDashboardWordCard({
                     </motion.button>
 
                     {/* Achievement-Style Soft Glow */}
-                    <div className="absolute inset-0 pointer-events-none" style={{
-                      background: "radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%)",
-                      borderRadius: "20px",
-                    }} />
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background:
+                          "radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%)",
+                        borderRadius: "20px",
+                      }}
+                    />
 
                     {/* Main Content */}
                     <div className="relative z-2 flex flex-col items-center gap-1">
-
                       {/* Word Display on Green Background */}
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -2214,7 +2242,8 @@ export function InteractiveDashboardWordCard({
                             style={{
                               fontSize: "1.6rem",
                               color: "white",
-                              textShadow: "0 2px 4px rgba(0, 0, 0, 0.4), 0 3px 8px rgba(46, 125, 50, 0.6), 0 1px 2px rgba(46, 125, 50, 0.8)",
+                              textShadow:
+                                "0 2px 4px rgba(0, 0, 0, 0.4), 0 3px 8px rgba(46, 125, 50, 0.6), 0 1px 2px rgba(46, 125, 50, 0.8)",
                               letterSpacing: "0.05em",
                             }}
                           >
@@ -2234,7 +2263,8 @@ export function InteractiveDashboardWordCard({
                               size="sm"
                               className={cn(
                                 "bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border border-white/30 hover:border-white/50 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95 shadow-lg min-w-[36px] h-9",
-                                isPlaying && "animate-pulse scale-110 bg-white/30",
+                                isPlaying &&
+                                  "animate-pulse scale-110 bg-white/30",
                                 "disabled:opacity-50",
                               )}
                               aria-label="Listen to word pronunciation"
