@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { 
   getEmojiAccessibilityAttributes, 
