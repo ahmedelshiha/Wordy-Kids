@@ -802,53 +802,58 @@ export function InteractiveDashboardWordCard({
         `Session progress: ${newStats.wordsCompleted}/${SESSION_SIZE}, Accuracy: ${newStats.accuracy}%`,
       );
 
-      // Track journey achievements for word learning activity
-      const newJourneyAchievements = AchievementTracker.trackActivity({
-        type: "wordLearning",
-        wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy:
-          status === "remembered"
-            ? 100
-            : status === "needs_practice"
-              ? 0
-              : undefined,
-        category: currentWord.category,
-        timeSpent: 1, // Assume 1 minute per word on average
-      });
-
-      // Track enhanced achievements with difficulty-based progression
-      const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
-        type: "wordLearning",
-        wordsLearned: status === "remembered" ? 1 : 0,
-        accuracy:
-          status === "remembered"
-            ? 100
-            : status === "needs_practice"
-              ? 0
-              : undefined,
-        category: currentWord.category,
-        difficulty: currentWord.difficulty,
-        timeSpent: 1,
-      });
-
-      // Combine achievements from both systems
-      const allNewAchievements = [
-        ...newJourneyAchievements,
-        ...enhancedAchievements,
-      ];
-
-      // Show enhanced achievements if any were unlocked
-      if (allNewAchievements.length > 0) {
-        // Trigger achievements through new lightweight popup system
-        setTimeout(() => {
-          allNewAchievements.forEach((achievement) => {
-            const event = new CustomEvent("milestoneUnlocked", {
-              detail: { achievement },
-            });
-            window.dispatchEvent(event);
+      // Optimized: Defer achievement tracking to avoid blocking next word loading
+      setTimeout(() => {
+        try {
+          // Track journey achievements for word learning activity
+          const newJourneyAchievements = AchievementTracker.trackActivity({
+            type: "wordLearning",
+            wordsLearned: status === "remembered" ? 1 : 0,
+            accuracy:
+              status === "remembered"
+                ? 100
+                : status === "needs_practice"
+                  ? 0
+                  : undefined,
+            category: currentWord.category,
+            timeSpent: 1, // Assume 1 minute per word on average
           });
-        }, 1500); // Show after feedback animation
-      }
+
+          // Track enhanced achievements with difficulty-based progression
+          const enhancedAchievements = EnhancedAchievementTracker.trackActivity({
+            type: "wordLearning",
+            wordsLearned: status === "remembered" ? 1 : 0,
+            accuracy:
+              status === "remembered"
+                ? 100
+                : status === "needs_practice"
+                  ? 0
+                  : undefined,
+            category: currentWord.category,
+            difficulty: currentWord.difficulty,
+            timeSpent: 1,
+          });
+
+          // Combine achievements from both systems
+          const allNewAchievements = [
+            ...newJourneyAchievements,
+            ...enhancedAchievements,
+          ];
+
+          // Show enhanced achievements if any were unlocked
+          if (allNewAchievements.length > 0) {
+            // Trigger achievements through new lightweight popup system immediately
+            allNewAchievements.forEach((achievement) => {
+              const event = new CustomEvent("milestoneUnlocked", {
+                detail: { achievement },
+              });
+              window.dispatchEvent(event);
+            });
+          }
+        } catch (error) {
+          console.error("Error in deferred achievement tracking:", error);
+        }
+      }, 50); // Process achievements asynchronously after 50ms
     } catch (error) {
       console.error("Error in word progress callback:", error);
     }
