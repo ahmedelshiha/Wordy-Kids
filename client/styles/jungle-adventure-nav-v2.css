@@ -54,13 +54,13 @@
 }
 
 .jng-nav-list {
-  margin: 0 auto;
+  margin: 0;
   padding: 0 10px;
   list-style: none;
   display: grid;
   grid-auto-flow: column;
   gap: 10px;
-  width: 100%;
+  flex: 1;
   max-width: 980px;
   justify-content: space-between;
   align-items: end;
