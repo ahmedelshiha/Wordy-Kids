@@ -1071,7 +1071,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "vocabulary-champion",
         name: "Vocabulary Champion",
-        icon: "��",
+        icon: "🌟",
         earned: rememberedWords.size >= 50,
         description: "Learn 100 words",
       },
