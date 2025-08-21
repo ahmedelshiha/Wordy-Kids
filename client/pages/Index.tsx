@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      ����
+                                      🌱🌿
                                     </div>
 
                                     {/* Hero Content - Compact */}
