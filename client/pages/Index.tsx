@@ -493,7 +493,7 @@ export default function Index({ initialProfile }: IndexProps) {
     };
 
     initializeWords();
-  }, [selectedCategory]); // Only re-initialize when category changes to prevent constant regeneration
+  }, [selectedCategory, generateFreshWords]); // Include generateFreshWords since it's called in the effect
 
   // Initialize dashboard words for systematic learning (independent of category selection)
   useEffect(() => {
