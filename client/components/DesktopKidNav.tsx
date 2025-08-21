@@ -80,351 +80,78 @@ export function DesktopKidNav({
   onAdminClick,
   className,
 }: DesktopKidNavProps) {
-  const [showParentGate, setShowParentGate] = useState(false);
-  const [parentCode, setParentCode] = useState("");
-  const [showParentOptions, setShowParentOptions] = useState(false);
-  const [parentCodeError, setParentCodeError] = useState(false);
+  const [isPerformanceOptimized, setIsPerformanceOptimized] = useState(false);
 
-  const correctParentCode = "PARENT2024"; // More secure parent code
+  // Initialize performance optimization
+  useEffect(() => {
+    const initializePerformance = async () => {
+      try {
+        await junglePerformanceOptimizer.initialize();
+        setIsPerformanceOptimized(true);
+      } catch (error) {
+        console.warn('Performance optimization failed:', error);
+        setIsPerformanceOptimized(false);
+      }
+    };
 
-  const handleParentGateSubmit = () => {
-    if (parentCode === correctParentCode) {
-      setShowParentGate(false);
-      setShowParentOptions(true);
-      setParentCode("");
-      setParentCodeError(false);
-    } else {
-      // Show error feedback
-      setParentCodeError(true);
-      setParentCode("");
-      setTimeout(() => setParentCodeError(false), 3000);
-    }
-  };
+    initializePerformance();
 
+    // Listen for optimization updates
+    const handleOptimizationUpdate = (event: CustomEvent) => {
+      setIsPerformanceOptimized(true);
+    };
+
+    window.addEventListener('jungle-nav-optimizations-updated', handleOptimizationUpdate as EventListener);
+
+    return () => {
+      window.removeEventListener('jungle-nav-optimizations-updated', handleOptimizationUpdate as EventListener);
+      junglePerformanceOptimizer.destroy();
+    };
+  }, []);
+
+  // Render enhanced jungle navigation or fallback based on performance
+  if (isPerformanceOptimized) {
+    return (
+      <JungleAdventureNav
+        activeTab={activeTab}
+        onTabChange={onTabChange}
+        userRole={userRole}
+        onRoleChange={onRoleChange}
+        onSettingsClick={onSettingsClick}
+        onAdminClick={onAdminClick}
+        className={className}
+      />
+    );
+  }
+
+  // Fallback to simple navigation for low-performance devices
   return (
-    <>
-      {/* Kid Mode: Bottom Navigation - Optimized for Small Screens */}
-      {true && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 hidden lg:block compact-kid-nav">
-          <div className="bg-white/95 backdrop-blur-lg border-t-2 border-rainbow shadow-xl h-full max-h-16 lg:max-h-20 xl:max-h-24">
-            <div className="max-w-4xl mx-auto px-3 lg:px-4 h-full">
-              <div className="flex items-center justify-center gap-2 lg:gap-4 xl:gap-6 h-full">
-                {kidNavTabs.map((tab, index) => (
-                  <motion.button
-                    key={tab.id}
-                    onClick={() => onTabChange(tab.id)}
-                    className={cn(
-                      "flex flex-col items-center transition-all duration-300 transform relative group kid-nav-button-compact",
-                      // Apply container-less design to all icons - same size for all icons
-                      "min-w-[100px] lg:min-w-[120px] xl:min-w-[140px] scale-110 lg:scale-120 p-1 lg:p-2 xl:p-3 gap-0 lg:gap-0.5",
-                      // All buttons now have transparent background - natural kid-friendly appearance
-                      "bg-transparent hover:bg-transparent shadow-none hover:shadow-none",
-                    )}
-                    whileHover={{ y: -1, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    {/* Remove old glow effect for all icons - now using sparkles */}
-
-                    {/* Emoji Icon - Larger kid-friendly icons for all, moved up */}
-                    <div className="relative z-10 -mt-2 lg:-mt-3 xl:-mt-4 text-4xl lg:text-5xl xl:text-6xl">
-                      <motion.div
-                        animate={
-                          activeTab === tab.id
-                            ? {
-                                scale: [1, 1.1, 1],
-                                rotate:
-                                  tab.id === "dashboard"
-                                    ? [0, 2, -2, 0]
-                                    : [0, 5, -5, 0], // Gentler animation for home
-                              }
-                            : { scale: 1 }
-                        }
-                        transition={{
-                          duration: tab.id === "dashboard" ? 3 : 2, // Slower animation for home
-                          repeat: activeTab === tab.id ? Infinity : 0,
-                          ease: "easeInOut",
-                        }}
-                        className={cn(
-                          tab.id === "dashboard" && "filter drop-shadow-lg", // Extra shadow for home
-                        )}
-                      >
-                        {/* Kid-friendly custom image design for all icons */}
-                        <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 flex items-center justify-center">
-                          {tab.image.startsWith("/") ||
-                          tab.image.startsWith("http") ? (
-                            <img
-                              src={tab.image}
-                              alt={tab.label}
-                              className="relative z-10 w-full h-full object-contain filter drop-shadow-2xl"
-                            />
-                          ) : (
-                            <div className="relative z-10 text-4xl lg:text-5xl xl:text-6xl filter drop-shadow-2xl">
-                              {tab.image}
-                            </div>
-                          )}
-                          {/* Magical sparkles around any active icon */}
-                          {activeTab === tab.id && (
-                            <>
-                              <motion.div
-                                className="absolute -top-2 -right-2 text-yellow-400 text-xl"
-                                animate={{
-                                  opacity: [0, 1, 0],
-                                  scale: [0.5, 1, 0.5],
-                                  rotate: [0, 180, 360],
-                                }}
-                                transition={{
-                                  duration: 3,
-                                  repeat: Infinity,
-                                  delay: 0,
-                                }}
-                              >
-                                ✨
-                              </motion.div>
-                              <motion.div
-                                className="absolute -bottom-2 -left-2 text-yellow-300 text-lg"
-                                animate={{
-                                  opacity: [0, 1, 0],
-                                  scale: [0.5, 1, 0.5],
-                                  rotate: [360, 180, 0],
-                                }}
-                                transition={{
-                                  duration: 3,
-                                  repeat: Infinity,
-                                  delay: 1.5,
-                                }}
-                              >
-                                🌟
-                              </motion.div>
-                            </>
-                          )}
-                        </div>
-                      </motion.div>
-                    </div>
-
-                    {/* Label - White text for all container-less icons, same size for all */}
-                    <span className="font-bold text-center relative z-10 text-white drop-shadow-lg -mt-1 lg:-mt-2 text-sm lg:text-base xl:text-lg">
-                      {tab.label}
-                    </span>
-
-                    {/* Active Indicator - Smaller */}
-                    {activeTab === tab.id && (
-                      <motion.div
-                        className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 lg:w-3 lg:h-3 bg-yellow-300 rounded-full shadow-md"
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          boxShadow: [
-                            "0 0 0 0 rgba(251, 191, 36, 0.7)",
-                            "0 0 0 6px rgba(251, 191, 36, 0)",
-                            "0 0 0 0 rgba(251, 191, 36, 0)",
-                          ],
-                        }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      />
-                    )}
-
-                    {/* Sparkle Effects - Smaller and more subtle */}
-                    <AnimatePresence>
-                      {activeTab === tab.id && (
-                        <>
-                          <motion.div
-                            className="absolute -top-0.5 -right-0.5 text-yellow-300 text-xs lg:text-sm"
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              repeatDelay: 1,
-                            }}
-                          >
-                            ✨
-                          </motion.div>
-                          <motion.div
-                            className="absolute -bottom-0.5 -left-0.5 text-white text-xs"
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              repeatDelay: 2,
-                              delay: 0.5,
-                            }}
-                          >
-                            ⭐
-                          </motion.div>
-                        </>
-                      )}
-                    </AnimatePresence>
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Parent Gate Button - Top Right Corner */}
-      <div className="fixed top-3 right-3 lg:top-4 lg:right-4 z-50 hidden lg:block">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <motion.button
-              onClick={() => setShowParentGate(true)}
-              className="bg-white/90 backdrop-blur-lg border-2 border-gray-300 rounded-full p-2 lg:p-3 shadow-lg hover:shadow-xl transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Crown className="w-5 h-5 lg:w-6 lg:h-6 text-yellow-600 group-hover:text-yellow-700" />
-            </motion.button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Family Zone & Settings</p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-
-      {/* Parent Gate Dialog */}
-      <Dialog open={showParentGate} onOpenChange={setShowParentGate}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Lock className="w-5 h-5 text-yellow-600" />
-              Parent Gate
-            </DialogTitle>
-            <DialogDescription>
-              Enter the parent code to access family settings and controls.
-              <br />
-              <span className="text-xs text-gray-500 mt-2 block">
-                Hint: The code is "PARENT2024"
-              </span>
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="parent-code"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Parent Code
-              </label>
-              <input
-                id="parent-code"
-                type="password"
-                value={parentCode}
-                onChange={(e) => {
-                  setParentCode(e.target.value);
-                  setParentCodeError(false);
-                }}
-                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:border-transparent ${
-                  parentCodeError
-                    ? "border-red-500 focus:ring-red-500 bg-red-50"
-                    : "border-gray-300 focus:ring-blue-500"
-                }`}
-                placeholder="Enter code..."
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleParentGateSubmit();
-                  }
-                }}
-              />
-              {parentCodeError && (
-                <p className="text-sm text-red-600 mt-1">
-                  Incorrect code. Please try again.
-                </p>
+    <div className={cn("fixed bottom-0 left-0 right-0 z-40", className)}>
+      <div className="bg-white border-t border-gray-200 px-4 py-2">
+        <div className="flex justify-center space-x-8">
+          {kidNavTabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={cn(
+                "flex flex-col items-center p-2 rounded-lg transition-colors",
+                activeTab === tab.id
+                  ? "text-blue-600 bg-blue-50"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
               )}
-            </div>
-            <div className="flex justify-between">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setShowParentGate(false);
-                  setParentCode("");
-                }}
-              >
-                Cancel
-              </Button>
-              <Button onClick={handleParentGateSubmit}>Access</Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Parent Options Dialog */}
-      <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-yellow-600" />
-              Family Zone
-            </DialogTitle>
-            <DialogDescription>
-              Access parent dashboard, settings, and family controls.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            {/* Parent Controls */}
-            <div className="grid grid-cols-1 gap-3">
-              <Button
-                onClick={() => {
-                  onRoleChange("parent");
-                  setShowParentOptions(false);
-                }}
-                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <Users className="w-6 h-6" />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Parent Dashboard</div>
-                  <div className="text-sm text-blue-100">
-                    View detailed progress, analytics, and manage learning goals
-                  </div>
-                </div>
-              </Button>
-
-              <Button
-                onClick={() => {
-                  onSettingsClick();
-                  setShowParentOptions(false);
-                }}
-                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <Settings className="w-6 h-6" />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Settings</div>
-                  <div className="text-sm text-green-100">
-                    Configure app preferences, controls, and customizations
-                  </div>
-                </div>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => {
-                  onAdminClick();
-                  setShowParentOptions(false);
-                }}
-                className="flex items-center gap-3 p-4 h-auto justify-start border-2 border-purple-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-300"
-              >
-                <Shield className="w-5 h-5 text-purple-600" />
-                <div className="text-left">
-                  <div className="font-medium text-purple-800">Admin Panel</div>
-                  <div className="text-sm text-purple-600">
-                    Advanced configuration and system controls
-                  </div>
-                </div>
-              </Button>
-            </div>
-
-            <Button
-              variant="outline"
-              onClick={() => setShowParentOptions(false)}
-              className="w-full mt-4 border-gray-300 hover:border-gray-400"
             >
-              Close Family Zone
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </>
+              <div className="text-2xl mb-1">
+                {tab.image.startsWith('/') ? (
+                  <img src={tab.image} alt={tab.label} className="w-6 h-6" />
+                ) : (
+                  <span>{tab.image}</span>
+                )}
+              </div>
+              <span className="text-xs font-medium">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
