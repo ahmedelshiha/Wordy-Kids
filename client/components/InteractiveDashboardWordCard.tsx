@@ -349,6 +349,7 @@ export function InteractiveDashboardWordCard({
     setImageLoaded(false);
     setImageError(false);
     setIsTransitioning(true);
+    setAudioPlayedForHint(false);
 
     // Reset transition state after brief delay
     const timer = setTimeout(() => setIsTransitioning(false), 300);
