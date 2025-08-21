@@ -2108,31 +2108,53 @@ export default function Index({ initialProfile }: IndexProps) {
                     </motion.button>
                   ))}
 
-                  <button
+                  {/* Divider */}
+                  <div className="border-t border-purple-200/50 my-4"></div>
+
+                  {/* Parent Dashboard Button */}
+                  <motion.button
                     onClick={() => {
                       setUserRole("parent");
                       setIsMobileMenuOpen(false);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl border-2 border-blue-300/30"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <div className="p-2 rounded-lg bg-blue-100">
-                      <Users className="w-4 h-4 text-blue-600" />
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm">
+                      <span className="text-xl">👨‍👩‍👧‍👦</span>
                     </div>
-                    <span className="font-semibold text-sm">
-                      Parent Dashboard
-                    </span>
-                  </button>
+                    <div className="flex-1 text-left">
+                      <span className="font-bold text-base block">Parent Dashboard</span>
+                      <span className="text-sm text-blue-100">View progress & settings</span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-lg animate-bounce">🔑</span>
+                    </div>
+                  </motion.button>
 
-                  <button
-                    onClick={() => setShowSettings(true)}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                  {/* Settings Button */}
+                  <motion.button
+                    onClick={() => {
+                      setShowSettings(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:shadow-xl border-2 border-green-300/30"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <div className="p-2 rounded-lg bg-gray-100">
-                      <Settings className="w-4 h-4 text-gray-600" />
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm">
+                      <span className="text-xl">⚙️</span>
                     </div>
-                    <span className="font-semibold text-sm">Settings</span>
-                  </button>
+                    <div className="flex-1 text-left">
+                      <span className="font-bold text-base block">Settings</span>
+                      <span className="text-sm text-green-100">Customize your experience</span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-lg animate-bounce">🎛️</span>
+                    </div>
+                  </motion.button>
 
                   <DynamicAuthButton
                     variant="mobile"
