@@ -364,43 +364,46 @@ export default function JungleAdventureNavV2({
 
                   {parentDialogSections.settings && (
                     <button
-                      className="jungle-dialog-btn"
-                      onClick={() => {
-                        setIsParentDialogOpen(false);
-                        // Navigate to settings
-                      }}
-                    >
-                      <Settings className="jungle-dialog-icon" />
-                      <span>⚙️ Settings</span>
-                      <div className="jungle-btn-glow" />
-                    </button>
+                    className="jungle-dialog-btn"
+                    onClick={() => {
+                      setIsParentDialogOpen(false);
+                      // Navigate to settings
+                    }}
+                    aria-label="Open Settings - Child-safe controls and preferences"
+                  >
+                    <Settings className="jungle-dialog-icon" aria-hidden="true" />
+                    <span>⚙️ Settings</span>
+                    <div className="jungle-btn-glow" />
+                  </button>
                   )}
 
                   {parentDialogSections.signOut && (
                     <>
                       <button
-                        className="jungle-dialog-btn"
-                        onClick={() => {
-                          setIsParentDialogOpen(false);
-                          // Handle sign out
-                        }}
-                      >
-                        <LogOut className="jungle-dialog-icon" />
-                        <span>🔐 Sign Out</span>
-                        <div className="jungle-btn-glow" />
-                      </button>
+                    className="jungle-dialog-btn"
+                    onClick={() => {
+                      setIsParentDialogOpen(false);
+                      // Handle sign out
+                    }}
+                    aria-label="Sign Out - Log out of parent account"
+                  >
+                    <LogOut className="jungle-dialog-icon" aria-hidden="true" />
+                    <span>🔐 Sign Out</span>
+                    <div className="jungle-btn-glow" />
+                  </button>
 
-                      <button
-                        className="jungle-dialog-btn"
-                        onClick={() => {
-                          setIsParentDialogOpen(false);
-                          // Handle register
-                        }}
-                      >
-                        <UserPlus className="jungle-dialog-icon" />
-                        <span>🔐 Register</span>
-                        <div className="jungle-btn-glow" />
-                      </button>
+                  <button
+                    className="jungle-dialog-btn"
+                    onClick={() => {
+                      setIsParentDialogOpen(false);
+                      // Handle register
+                    }}
+                    aria-label="Register - Create new parent account"
+                  >
+                    <UserPlus className="jungle-dialog-icon" aria-hidden="true" />
+                    <span>🔐 Register</span>
+                    <div className="jungle-btn-glow" />
+                  </button>
                     </>
                   )}
                 </div>
