@@ -259,6 +259,22 @@ export function InteractiveDashboardWordCard({
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
+  // Rotating jungle adventure messages effect
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const interval = setInterval(() => {
+      setMessageVisible(false);
+
+      setTimeout(() => {
+        setCurrentMessageIndex((prev) => (prev + 1) % jungleAdventureMessages.length);
+        setMessageVisible(true);
+      }, 300); // Quick fade transition
+    }, 6000); // Rotate every 6 seconds
+
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion, jungleAdventureMessages.length]);
+
   // Initialize session with systematic word generation
   useEffect(() => {
     if (words.length > 0 && sessionWords.length === 0) {
