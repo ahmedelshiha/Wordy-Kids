@@ -236,6 +236,27 @@ export default function Index({ initialProfile }: IndexProps) {
   const [parentCodeError, setParentCodeError] = useState(false);
   const [showParentOptions, setShowParentOptions] = useState(false);
   const correctParentCode = "PARENT2024";
+
+  // Parent gate handling
+  const handleParentGateSubmit = useCallback(() => {
+    if (parentCode === correctParentCode) {
+      setShowParentGate(false);
+      setShowParentOptions(true);
+      setParentCode("");
+      setParentCodeError(false);
+      // Play success sound if available
+      try {
+        audioService.playSuccessSound();
+      } catch (error) {
+        console.log("Success sound not available");
+      }
+    } else {
+      setParentCodeError(true);
+      setParentCode("");
+      setTimeout(() => setParentCodeError(false), 3000);
+    }
+  }, [parentCode]);
+
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
@@ -3279,7 +3300,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Journey through magical gardens where
                                           words bloom into beautiful flowers!
                                           Listen to nature's whispers and watch
-                                          your vocabulary grow! 🌸✨
+                                          your vocabulary grow! 🌸��
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
