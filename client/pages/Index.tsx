@@ -3221,7 +3221,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🐵
                                     </div>
                                     <div className="jungle-creature jungle-creature-bird">
-                                      ��
+                                      🦜
                                     </div>
                                     <div className="jungle-creature jungle-creature-butterfly">
                                       🦋
@@ -4204,7 +4204,7 @@ export default function Index({ initialProfile }: IndexProps) {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
-                  <span className="text-2xl filter drop-shadow-sm">🦉</span>
+                  <span className="text-2xl filter drop-shadow-sm" role="img" aria-label="Owl icon">🦉</span>
                   <div className="text-left flex-1 min-w-0">
                     <div className="font-semibold text-base sm:text-lg leading-tight">Parent Dashboard</div>
                     <div className="text-xs sm:text-sm text-amber-100 leading-tight">
