@@ -141,9 +141,6 @@ export const animationControl = new AnimationControlManager();
 
 // React hook for easy component integration
 export function useAnimationControl() {
-  // Dynamic import to avoid bundling issues
-  const { useState, useEffect } = require("react");
-
   const [state, setState] = useState<AnimationControlState>(
     animationControl.currentState,
   );
