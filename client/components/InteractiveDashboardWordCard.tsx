@@ -2526,7 +2526,7 @@ export function InteractiveDashboardWordCard({
                     }}
                     disabled={isAnswered}
                     className={cn(
-                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[50px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation flex flex-col items-center justify-center",
+                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-5 min-h-[60px] sm:min-h-[70px] md:min-h-[80px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation flex flex-col items-center justify-center",
                       "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
                       "jungle-button-glow",
                     )}
@@ -2542,7 +2542,7 @@ export function InteractiveDashboardWordCard({
                         {showHint ? "💪" : "💡"}
                       </span>
                       <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base leading-tight">
+                        <div className="font-bold text-sm sm:text-base md:text-lg leading-tight">
                           {showHint ? "Need Practice" : "Get Hint"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
@@ -2558,7 +2558,7 @@ export function InteractiveDashboardWordCard({
                       handleWordAction("remembered");
                     }}
                     disabled={isAnswered}
-                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[50px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow flex flex-col items-center justify-center"
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-3 sm:py-4 md:py-6 px-3 sm:px-4 md:px-5 min-h-[60px] sm:min-h-[70px] md:min-h-[80px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow flex flex-col items-center justify-center"
                     aria-label="Mark word as remembered"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
@@ -2567,7 +2567,7 @@ export function InteractiveDashboardWordCard({
                         😊
                       </span>
                       <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base leading-tight">
+                        <div className="font-bold text-sm sm:text-base md:text-lg leading-tight">
                           I Remember
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
