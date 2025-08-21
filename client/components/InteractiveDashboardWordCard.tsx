@@ -1080,21 +1080,21 @@ export function InteractiveDashboardWordCard({
             🔊
           </div>
 
-          {/* Main emoji with simplified animation */}
+          {/* Main emoji with enhanced visibility and gentle animation */}
           <motion.div
             key={`emoji-inner-${currentWordIndex}`}
             animate={
               !prefersReducedMotion
                 ? {
-                    y: [0, -5, 0],
-                    scale: [1, 1.02, 1],
+                    y: [0, -6, 0],
+                    rotate: [-2, 2, -2],
                   }
                 : {}
             }
             transition={
               !prefersReducedMotion
                 ? {
-                    duration: 4,
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }
@@ -1109,13 +1109,21 @@ export function InteractiveDashboardWordCard({
                   }
                 : {}
             }
-            className="text-9xl relative z-10"
-            style={{
-              filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))",
-              textShadow: "0 0 10px rgba(255, 255, 255, 0.7)",
-            }}
+            className="relative z-10 -translate-x-2"
           >
-            {currentWord.emoji}
+            {/* White glow background for visibility */}
+            <span className="absolute inset-0 blur-md bg-white/60 rounded-full scale-110 -z-10"></span>
+
+            {/* Main emoji with adjusted size */}
+            <span
+              className="text-8xl relative inline-block drop-shadow-lg"
+              style={{
+                filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.8))",
+                textShadow: "0 0 15px rgba(255, 255, 255, 0.9)",
+              }}
+            >
+              {currentWord.emoji}
+            </span>
           </motion.div>
 
           {/* Jungle Adventure Background Pattern */}
