@@ -318,10 +318,9 @@ export const navUtils = {
   getEmojiComponent: (
     item: JungleNavItem,
     useTwemoji: boolean
-  ): React.ReactNode => {
+  ): string | React.ComponentType<any> => {
     if (useTwemoji) {
-      const TwemojiComponent = item.animal.twemojiComponent;
-      return <TwemojiComponent ariaLabel={item.animal.name} />;
+      return item.animal.twemojiComponent;
     }
     return item.animal.emoji;
   },
