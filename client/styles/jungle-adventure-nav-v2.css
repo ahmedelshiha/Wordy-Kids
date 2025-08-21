@@ -59,11 +59,21 @@
   list-style: none;
   display: flex;
   align-items: end;
-  gap: 6px;
+  gap: 8px;
   flex: 1;
   max-width: 980px;
-  /* Regular nav items on the left, parent menu on the right */
-  justify-content: flex-start;
+  /* Center all icons including parent menu */
+  justify-content: center;
+}
+
+/* Desktop specific layout */
+@media (min-width: 768px) {
+  .jng-nav-list {
+    gap: 16px;
+    padding: 0 12px;
+    /* Ensure all icons are centered and evenly spaced */
+    justify-content: center;
+  }
 }
 
 .jng-nav-item {
