@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 /**
  * 🎯 Global Animation Control Service
  * Manages animation suspension/resumption across the entire application.
