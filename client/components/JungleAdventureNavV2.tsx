@@ -351,7 +351,7 @@ export default function JungleAdventureNavV2({
                   {showParentMenuIcon ? (
                     <span
                       className="jng-emoji parent-menu-emoji"
-                      style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
+                      style={{ fontSize: `calc(var(--jng-icon-size) * 0.9)` }}
                     >
                       {getParentMenuIcon()}
                     </span>
