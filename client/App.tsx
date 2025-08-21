@@ -31,6 +31,7 @@ import SpeechDiagnostics from "./components/SpeechDiagnostics";
 import { LightweightAchievementProvider } from "./components/LightweightAchievementProvider";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
+import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 
 const queryClient = new QueryClient();
 
