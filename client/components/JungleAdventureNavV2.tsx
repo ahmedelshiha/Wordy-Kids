@@ -50,9 +50,23 @@ export type JungleAdventureNavV2Props = {
   iconSize?: number; // px
   /** Optional className passthrough */
   className?: string;
-  /** Show mobile more icon (mobile only) */
+  /** Show Parent Menu icon (mobile only) - replaces old More ... */
+  showParentMenuIcon?: boolean;
+  /** Parent menu icon variant */
+  parentMenuIconVariant?: ParentMenuIconVariant;
+  /** Parent menu animation style */
+  parentMenuAnimationStyle?: ParentMenuAnimationStyle;
+  /** Toggle sections in parent dialog */
+  parentDialogSections?: {
+    dashboard?: boolean;
+    settings?: boolean;
+    signOut?: boolean;
+  };
+  /** Called when parent menu icon is clicked */
+  onParentMenuClick?: () => void;
+  /** @deprecated Use showParentMenuIcon instead */
   showMobileMoreIcon?: boolean;
-  /** Called when mobile more icon is clicked */
+  /** @deprecated Use onParentMenuClick instead */
   onMobileMoreClick?: () => void;
 };
 
