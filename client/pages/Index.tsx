@@ -4260,7 +4260,11 @@ export default function Index({ initialProfile }: IndexProps) {
               </Button>
 
               {/* Dynamic Authentication Button */}
-              <div className="pt-2 border-t border-amber-300/30">
+              <div
+                className="pt-2 border-t border-amber-300/30"
+                role="group"
+                aria-label="Authentication options"
+              >
                 <DynamicAuthButton
                   variant="mobile"
                   onAction={() => setShowParentOptions(false)}
