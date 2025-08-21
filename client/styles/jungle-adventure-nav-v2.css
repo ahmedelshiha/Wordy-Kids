@@ -486,37 +486,9 @@
   }
 }
 
-/* Desktop Parent Menu - Jungle Adventure Style */
+/* Desktop Parent Menu - Same as regular buttons */
 .jng-parent-menu-desktop {
-  position: relative;
-  background: transparent;
-  border: none;
-  padding: 8px 12px;
-  /* Enhanced wooden texture for desktop */
-  border-radius: 12px;
-  backdrop-filter: blur(4px);
-}
-
-.jng-parent-menu-desktop:hover {
-  /* Jungle hover effect */
-  transform: translateY(-2px) scale(1.02);
-  transition: transform 0.2s ease-out;
-}
-
-.jng-parent-menu-desktop .parent-menu-emoji {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  font-size: 1.8rem;
-  /* Enhanced wooden glow for desktop */
-  text-shadow:
-    0 0 8px rgba(255, 255, 255, 0.9),
-    0 0 16px rgba(139, 69, 19, 0.7);
-}
-
-.jng-parent-menu-desktop .jng-label {
-  color: #fef6e4; /* Light cream/beige */
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  /* No special styling - uses default button styles */
 }
 
 /* Ensure parent menu button doesn't interfere with regular nav styling */
