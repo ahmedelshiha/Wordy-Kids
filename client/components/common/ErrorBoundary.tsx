@@ -78,10 +78,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   handleRetry = () => {
     const { onReset } = this.props;
-    
+
     // Log retry attempt
     try {
-      parentDashboardAnalytics.trackFeatureUsage("error_boundary", "retry_clicked", {
+      telemetry.log("user_action", {
+        action: "error_boundary_retry",
         componentName: this.props.componentName,
         errorId: this.state.errorId
       });
