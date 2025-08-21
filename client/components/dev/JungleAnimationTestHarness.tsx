@@ -27,7 +27,12 @@ export const JungleAnimationTestHarness: React.FC<
     createAnimationConfig(),
   );
   const [testResults, setTestResults] = useState<string[]>([]);
+  const [animationsPaused, setAnimationsPaused] = useState(false);
+  const [stressTestRunning, setStressTestRunning] = useState(false);
+  const [fpsCounter, setFpsCounter] = useState(0);
   const testLogRef = useRef<HTMLDivElement>(null);
+  const fpsIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const frameCountRef = useRef(0);
 
   // Only show in development
   if (process.env.NODE_ENV !== "development") {
