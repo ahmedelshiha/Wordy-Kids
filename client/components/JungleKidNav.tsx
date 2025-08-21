@@ -473,25 +473,15 @@ export function JungleKidNav({
       <div className="jungle-parent-gate">
         <Tooltip>
           <TooltipTrigger asChild>
-            <motion.button
+            <button
               onClick={() =>
                 setNavState((prev) => ({ ...prev, showParentGate: true }))
               }
               className="jungle-parent-gate-button"
-              whileHover={
-                navState.deviceCapabilities.animations && !animationsSuspended
-                  ? { scale: 1.05 }
-                  : undefined
-              }
-              whileTap={
-                navState.deviceCapabilities.animations && !animationsSuspended
-                  ? { scale: 0.95 }
-                  : undefined
-              }
               aria-label="Access Family Zone and Settings"
             >
               <Crown className="w-6 h-6 text-yellow-600" />
-            </motion.button>
+            </button>
           </TooltipTrigger>
           <TooltipContent>
             <p>Family Zone & Settings</p>
