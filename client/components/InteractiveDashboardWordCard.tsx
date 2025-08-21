@@ -1411,7 +1411,7 @@ export function InteractiveDashboardWordCard({
                 transition={{ duration: 1.8, ease: "easeOut", delay: 0.3 }}
                 className="absolute top-6 right-6 text-3xl text-jungle-light"
               >
-                🌟
+                ���
               </motion.div>
             </div>
           )}
@@ -1509,22 +1509,29 @@ export function InteractiveDashboardWordCard({
 
                 {/* Dynamic Jungle Explorer Prompt */}
                 <motion.h1
-                  initial={{ scale: 0.8 }}
+                  initial={{ scale: 0.8, opacity: 0 }}
                   animate={
                     !prefersReducedMotion
                       ? {
                           scale: [1, 1.02, 1],
+                          opacity: messageVisible ? 1 : 0,
                         }
-                      : { scale: 1 }
+                      : { scale: 1, opacity: messageVisible ? 1 : 0 }
                   }
                   transition={
                     !prefersReducedMotion
                       ? {
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
+                          scale: {
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          },
+                          opacity: {
+                            duration: 0.3,
+                            ease: "easeInOut",
+                          }
                         }
-                      : { duration: 0 }
+                      : { duration: 0.3, ease: "easeInOut" }
                   }
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   style={{
@@ -1935,7 +1942,7 @@ export function InteractiveDashboardWordCard({
                           }}
                           className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                         >
-                          ����
+                          �����
                         </motion.div>
                       )}
                     </div>
