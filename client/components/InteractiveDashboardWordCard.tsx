@@ -171,7 +171,7 @@ export function InteractiveDashboardWordCard({
         break;
       case " ":
         event.preventDefault();
-        playPronunciation();
+        playPronunciationDebounced(true);
         break;
       default:
         break;
@@ -1993,7 +1993,7 @@ export function InteractiveDashboardWordCard({
                           }}
                           className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                         >
-                          �����
+                          ������
                         </motion.div>
                       )}
                     </div>
