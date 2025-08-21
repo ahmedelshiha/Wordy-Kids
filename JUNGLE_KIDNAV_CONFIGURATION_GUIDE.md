@@ -23,16 +23,16 @@ To register JungleKidNav in Builder.io, configure the following component inputs
       enum: ['dashboard', 'learn', 'games', 'achievements', 'library']
     },
     {
-      name: 'userRole', 
+      name: 'userRole',
       type: 'string',
       defaultValue: 'child',
       enum: ['child', 'parent']
     },
-    
+
     // Theme Configuration
     {
       name: 'theme',
-      type: 'string', 
+      type: 'string',
       defaultValue: 'jungle',
       enum: ['jungle', 'simple'],
       helperText: 'jungle = immersive jungle theme, simple = minimal theme'
@@ -40,11 +40,11 @@ To register JungleKidNav in Builder.io, configure the following component inputs
     {
       name: 'performanceMode',
       type: 'string',
-      defaultValue: 'auto', 
+      defaultValue: 'auto',
       enum: ['auto', 'high', 'low'],
       helperText: 'auto = device-optimized, high = all effects, low = minimal effects'
     },
-    
+
     // Animal Guides (JSON Configuration)
     {
       name: 'animalGuides',
@@ -57,21 +57,21 @@ To register JungleKidNav in Builder.io, configure the following component inputs
       },
       helperText: 'Configure animal guide characters'
     },
-    
+
     // Visual Effects
     {
       name: 'effects',
       type: 'object',
       defaultValue: {
         vines: true,
-        canopy: true, 
+        canopy: true,
         fireflies: true,
         particles: true,
         soundEffects: true
       },
       helperText: 'Toggle visual and audio effects'
     },
-    
+
     // Menu Items Override
     {
       name: 'menuItems',
@@ -84,7 +84,7 @@ To register JungleKidNav in Builder.io, configure the following component inputs
       ],
       helperText: 'Override default navigation items'
     },
-    
+
     // Accessibility & Performance
     {
       name: 'enableSounds',
@@ -92,13 +92,13 @@ To register JungleKidNav in Builder.io, configure the following component inputs
       defaultValue: true
     },
     {
-      name: 'animations', 
+      name: 'animations',
       type: 'boolean',
       defaultValue: true
     },
     {
       name: 'reducedMotion',
-      type: 'boolean', 
+      type: 'boolean',
       defaultValue: false,
       helperText: 'Respect user motion preferences'
     },
@@ -115,12 +115,14 @@ To register JungleKidNav in Builder.io, configure the following component inputs
 ## 🎨 Theme Configuration
 
 ### Jungle Theme (Default)
+
 - **Visual**: Immersive jungle backgrounds, animated vines, floating particles
 - **Audio**: Nature sounds, animal guide voices
 - **Animations**: Smooth transitions, hover effects, loading animations
 - **Performance**: Auto-optimized based on device capabilities
 
 ### Simple Theme
+
 - **Visual**: Clean, minimal interface with basic colors
 - **Audio**: Subtle click sounds only
 - **Animations**: Reduced motion, essential transitions only
@@ -136,7 +138,7 @@ Animal guides provide contextual help and entertainment throughout the navigatio
 {
   "monkey": {
     "name": "Coco",
-    "icon": "🐵", 
+    "icon": "🐵",
     "personality": "playful",
     "helpTopics": ["games", "activities"],
     "sound": "monkey.mp3"
@@ -144,12 +146,12 @@ Animal guides provide contextual help and entertainment throughout the navigatio
   "parrot": {
     "name": "Polly",
     "icon": "🦜",
-    "personality": "wise", 
+    "personality": "wise",
     "helpTopics": ["learning", "reading"],
     "sound": "parrot.mp3"
   },
   "tiger": {
-    "name": "Stripe", 
+    "name": "Stripe",
     "icon": "🐅",
     "personality": "brave",
     "helpTopics": ["challenges", "achievements"],
@@ -157,7 +159,7 @@ Animal guides provide contextual help and entertainment throughout the navigatio
   },
   "elephant": {
     "name": "Jumbo",
-    "icon": "🐘", 
+    "icon": "🐘",
     "personality": "gentle",
     "helpTopics": ["progress", "help"],
     "sound": "elephant.mp3"
@@ -179,7 +181,7 @@ const customAnimalGuides = {
   toucan: {
     name: 'Beaky',
     icon: '🦜',
-    personality: 'curious', 
+    personality: 'curious',
     helpTopics: ['discovery', 'search'],
     sound: 'toucan.mp3'
   }
@@ -191,10 +193,11 @@ const customAnimalGuides = {
 ## ⚡ Performance Configuration
 
 ### Auto Performance Mode (Recommended)
+
 Automatically detects device capabilities and optimizes accordingly:
 
 - **High-end devices**: Full jungle theme with all effects
-- **Mid-range devices**: Jungle theme with reduced particles  
+- **Mid-range devices**: Jungle theme with reduced particles
 - **Low-end devices**: Simple theme with minimal animations
 - **Mobile devices**: Touch-optimized with battery-saving mode
 
@@ -208,7 +211,7 @@ Automatically detects device capabilities and optimizes accordingly:
 <JungleKidNav performanceMode="low" />
 
 // Custom Performance Settings
-<JungleKidNav 
+<JungleKidNav
   autoOptimize={false}
   animations={false}
   enableParticles={false}
@@ -221,7 +224,7 @@ Automatically detects device capabilities and optimizes accordingly:
 ### Sound Categories
 
 1. **UI Sounds**: Button clicks, hover effects, transitions
-2. **Animal Sounds**: Guide character voices and sounds  
+2. **Animal Sounds**: Guide character voices and sounds
 3. **Ambient Sounds**: Background jungle atmosphere
 4. **Achievement Sounds**: Success celebrations, level-ups
 
@@ -232,7 +235,7 @@ Automatically detects device capabilities and optimizes accordingly:
 <JungleKidNav enableSounds={false} />
 
 // Custom sound configuration
-<JungleKidNav 
+<JungleKidNav
   effects={{
     vines: true,
     canopy: true,
@@ -246,11 +249,13 @@ Automatically detects device capabilities and optimizes accordingly:
 ## 📱 Responsive Behavior
 
 ### Breakpoints
+
 - **Mobile**: < 768px - Collapsed navigation with bottom tabs
-- **Tablet**: 768px - 1024px - Sidebar with touch-friendly controls  
+- **Tablet**: 768px - 1024px - Sidebar with touch-friendly controls
 - **Desktop**: > 1024px - Full sidebar with all features
 
 ### Mobile Optimizations
+
 - Touch-friendly button sizes (minimum 44px)
 - Swipe gestures for navigation
 - Reduced animations to preserve battery
@@ -259,6 +264,7 @@ Automatically detects device capabilities and optimizes accordingly:
 ## ♿ Accessibility Features
 
 ### Built-in Accessibility
+
 - **ARIA labels**: Comprehensive screen reader support
 - **Keyboard navigation**: Full keyboard accessibility
 - **High contrast**: Automatic contrast adjustments
@@ -269,7 +275,7 @@ Automatically detects device capabilities and optimizes accordingly:
 ### Accessibility Configuration
 
 ```typescript
-<JungleKidNav 
+<JungleKidNav
   reducedMotion={true}        // Respect motion preferences
   animations={false}          // Disable animations
   enableSounds={false}        // Disable sounds for hearing impaired
@@ -290,14 +296,14 @@ const customMenuItems = [
     animal: 'parrot'
   },
   {
-    label: 'Music Room', 
+    label: 'Music Room',
     link: '/music',
     icon: '🎵',
     animal: 'monkey'
   },
   {
     label: 'Science Lab',
-    link: '/science', 
+    link: '/science',
     icon: '🔬',
     animal: 'elephant'
   }
@@ -309,7 +315,7 @@ const customMenuItems = [
 ### Event Handlers
 
 ```typescript
-<JungleKidNav 
+<JungleKidNav
   onTabChange={(tab) => console.log('Tab changed:', tab)}
   onRoleChange={(role) => console.log('Role changed:', role)}
   onSettingsClick={() => openSettings()}
@@ -320,6 +326,7 @@ const customMenuItems = [
 ## 🚀 Migration from DesktopKidNav
 
 ### Automatic Migration
+
 The JungleKidNav component is fully backward compatible with DesktopKidNav props:
 
 ```typescript
@@ -327,8 +334,8 @@ The JungleKidNav component is fully backward compatible with DesktopKidNav props
 <DesktopKidNav activeTab={tab} onTabChange={setTab} />
 
 // New JungleKidNav usage (enhanced)
-<JungleKidNav 
-  activeTab={tab} 
+<JungleKidNav
+  activeTab={tab}
   onTabChange={setTab}
   theme="jungle"              // New: Choose theme
   performanceMode="auto"      // New: Performance optimization
@@ -352,7 +359,7 @@ The JungleKidNav component is fully backward compatible with DesktopKidNav props
 # Run migration safeguard check
 npm run check:nav-migration
 
-# Verify Builder.io registration  
+# Verify Builder.io registration
 npm run verify:builderio
 
 # Run accessibility tests
@@ -375,7 +382,7 @@ npm run test:a11y
 ### Updating Existing Content
 
 1. **Search for DesktopKidNav**: Use Builder.io content search to find all references
-2. **Replace Component**: Change component type from DesktopKidNav to JungleKidNav  
+2. **Replace Component**: Change component type from DesktopKidNav to JungleKidNav
 3. **Configure Props**: Set theme, performance mode, and animal guides
 4. **Test Changes**: Preview in Builder.io visual editor
 5. **Publish Updates**: Deploy updated content
@@ -385,32 +392,32 @@ npm run test:a11y
 ```javascript
 // Example Builder.io content update script
 const updateContentEntries = async () => {
-  const entries = await builder.getAll('page', {
+  const entries = await builder.getAll("page", {
     query: {
-      'data.blocks.component.name': 'DesktopKidNav'
-    }
+      "data.blocks.component.name": "DesktopKidNav",
+    },
   });
-  
+
   for (const entry of entries) {
     // Update component name and add new props
-    entry.data.blocks = entry.data.blocks.map(block => {
-      if (block.component?.name === 'DesktopKidNav') {
+    entry.data.blocks = entry.data.blocks.map((block) => {
+      if (block.component?.name === "DesktopKidNav") {
         return {
           ...block,
           component: {
-            name: 'JungleKidNav',
+            name: "JungleKidNav",
             options: {
               ...block.component.options,
-              theme: 'jungle',
-              performanceMode: 'auto',
-              animalGuides: defaultAnimalGuides
-            }
-          }
+              theme: "jungle",
+              performanceMode: "auto",
+              animalGuides: defaultAnimalGuides,
+            },
+          },
         };
       }
       return block;
     });
-    
+
     await builder.patch(entry.id, entry);
   }
 };
@@ -419,26 +426,30 @@ const updateContentEntries = async () => {
 ## 🎯 Best Practices
 
 ### Performance
+
 - Use `autoOptimize={true}` for automatic device optimization
 - Test on various devices and network conditions
 - Monitor Core Web Vitals impact
 - Use simple theme for low-power devices
 
-### User Experience  
+### User Experience
+
 - Keep animal guide interactions brief and helpful
 - Ensure navigation is intuitive across age groups
 - Test with actual children for usability feedback
 - Provide clear visual feedback for all interactions
 
 ### Accessibility
+
 - Always respect `prefers-reduced-motion`
 - Provide alternative text for all visual elements
 - Test with screen readers
 - Ensure keyboard navigation works completely
 
 ### Maintenance
+
 - Run migration safeguard script before each deployment
-- Keep animal guide content age-appropriate  
+- Keep animal guide content age-appropriate
 - Update sound files for better quality
 - Monitor performance metrics regularly
 
@@ -451,4 +462,4 @@ const updateContentEntries = async () => {
 
 ---
 
-*For support or questions about JungleKidNav configuration, refer to the project documentation or contact the development team.*
+_For support or questions about JungleKidNav configuration, refer to the project documentation or contact the development team._
