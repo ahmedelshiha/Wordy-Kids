@@ -101,7 +101,7 @@
   margin-right: 8px;
 }
 
-/* Parent Menu Button - Enhanced Jungle Style */
+/* Parent Menu Button - Enhanced Jungle Style (Mobile Only) */
 .jng-parent-menu-btn {
   position: relative;
   background: transparent;
@@ -118,6 +118,13 @@
   /* Larger tap area for child + parent friendly */
   min-width: 64px;
   min-height: 64px;
+}
+
+/* Hidden on desktop and tablet views */
+@media (min-width: 768px) {
+  .jng-parent-menu-btn {
+    display: none !important;
+  }
 }
 
 /* Parent Menu Icon Positioning */
@@ -267,7 +274,7 @@
   box-shadow: none !important;
 }
 
-/* Parent Menu Dialog - Jungle Theme */
+/* Parent Menu Dialog - Jungle Theme (Mobile Optimized) */
 .jungle-parent-dialog {
   background: transparent !important;
   border: none !important;
@@ -275,6 +282,23 @@
   padding: 0 !important;
   max-width: 90vw !important;
   max-height: 80vh !important;
+  width: 100% !important;
+}
+
+@media (max-width: 480px) {
+  .jungle-parent-dialog {
+    max-width: 95vw !important;
+    margin: 10px !important;
+  }
+
+  .jungle-dialog-frame {
+    padding: 16px;
+  }
+
+  .jungle-dialog-btn {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
 }
 
 .jungle-dialog-title {
