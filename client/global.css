@@ -28,6 +28,9 @@
 /* Import jungle mobile optimizations */
 @import "./styles/jungle-mobile-optimizations.css";
 
+/* Import mobile jungle settings */
+@import "./styles/mobile-jungle-settings.css";
+
 /* Import Jungle Adventure Word Card Styles */
 @import "./styles/jungle-adventure-word-card.css";
 
