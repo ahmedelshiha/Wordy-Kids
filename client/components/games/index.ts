@@ -462,7 +462,7 @@ export class EnhancedJungleQuizAdventureSystem {
   public async cleanup(): Promise<void> {
     if (!this.isInitialized) return;
 
-    console.log("���� Cleaning up Enhanced Jungle Quiz Adventure System...");
+    console.log("🧹 Cleaning up Enhanced Jungle Quiz Adventure System...");
 
     try {
       // Cleanup systems
