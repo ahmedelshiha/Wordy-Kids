@@ -72,7 +72,7 @@ import { JungleAdventureParentDashboard } from "@/components/JungleAdventurePare
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import { JungleKidNav } from "@/components/JungleKidNav";
+import JungleAdventureNavV2 from "@/components/JungleAdventureNavV2";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
@@ -3416,7 +3416,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </h3>
                                         <p className="text-jungle-dark">
                                           Track your epic quiz journeys and
-                                          celebrate your achievements! 🌟
+                                          celebrate your achievements! ����
                                         </p>
                                       </div>
 
