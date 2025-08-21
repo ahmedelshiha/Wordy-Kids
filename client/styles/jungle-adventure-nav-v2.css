@@ -569,6 +569,16 @@
   }
 }
 
+/* Jungle Breathing Animation for Parent Icon */
+@keyframes jungleBreath {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
 /* Floating jungle particles for desktop dialog */
 .jungle-dialog-particles {
   position: absolute;
