@@ -262,24 +262,30 @@ const FloatingButterfly = ({
 }: {
   className?: string;
   delay?: number;
-}) => (
-  <motion.div
-    className={cn("absolute opacity-20", className)}
-    animate={{
-      x: [0, 10, 0],
-      y: [0, -5, 0],
-      rotate: [0, 10, -10, 0],
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay,
-    }}
-  >
-    🦋
-  </motion.div>
-);
+}) => {
+  // 🎯 Check for reduced motion preference
+  const prefersReducedMotion = typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  return (
+    <motion.div
+      className={cn("absolute opacity-20 jungle-floating-element", className)}
+      animate={prefersReducedMotion ? {} : {
+        x: [0, 10, 0],
+        y: [0, -5, 0],
+        rotate: [0, 10, -10, 0],
+      }}
+      transition={prefersReducedMotion ? {} : {
+        duration: 12, // Much slower, more magical
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay,
+      }}
+    >
+      🦋
+    </motion.div>
+  );
+};
 
 export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
   className,
