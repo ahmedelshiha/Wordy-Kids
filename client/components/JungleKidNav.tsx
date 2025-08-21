@@ -661,6 +661,9 @@ export function JungleKidNav({
 
       {/* 🧪 Development Testing Harness */}
       <JungleAnimationTestHarness />
+
+      {/* 🚫 Accessibility Visual Indicators */}
+      <ReducedMotionIndicator forced={reducedMotion} />
     </>
   );
 }
