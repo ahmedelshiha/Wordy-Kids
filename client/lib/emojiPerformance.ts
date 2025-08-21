@@ -3,6 +3,7 @@
  * Handles lazy loading, caching, and performance optimizations for emoji rendering
  */
 
+import React from 'react';
 import { getTwemojiUrl } from './twemojiService';
 import { preloadCriticalEmojis } from './emojiUtilsEnhanced';
 
