@@ -6,6 +6,7 @@
 export interface JungleAnimationConfig {
   idleSpeed: "slow" | "medium" | "fast";
   intensity: "subtle" | "normal" | "playful";
+  idlePauseDuration: "short" | "medium" | "long";
   rareEffects: boolean;
   reducedMotion: boolean;
 }
