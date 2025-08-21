@@ -7,6 +7,7 @@ export interface JungleAnimationConfig {
   idleSpeed: "slow" | "medium" | "fast";
   intensity: "subtle" | "normal" | "playful";
   idlePauseDuration: "short" | "medium" | "long";
+  animationStyle: "breathing" | "glow" | "micro" | "none";
   rareEffects: boolean;
   reducedMotion: boolean;
 }
