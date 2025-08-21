@@ -1472,7 +1472,7 @@ export function InteractiveDashboardWordCard({
                 transition={{ duration: 1.8, ease: "easeOut", delay: 0.3 }}
                 className="absolute top-6 right-6 text-3xl text-jungle-light"
               >
-                ���
+                🌟
               </motion.div>
             </div>
           )}
