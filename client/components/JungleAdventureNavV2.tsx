@@ -138,10 +138,34 @@ export default function JungleAdventureNavV2({
 }: JungleAdventureNavV2Props) {
   const reducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
+  const [isParentDialogOpen, setIsParentDialogOpen] = useState(false);
 
   // Track which icon is doing a one-shot breath animation
   const [breathing, setBreathing] = useState<Record<string, boolean>>({});
   const breathTimers = useRef<Record<string, number>>({});
+
+  // Get parent menu icon based on variant
+  const getParentMenuIcon = () => {
+    switch (parentMenuIconVariant) {
+      case "shield":
+        return "🛡️";
+      case "key":
+        return "🔑";
+      case "totem":
+      default:
+        return "🪵";
+    }
+  };
+
+  // Handle parent menu click
+  const handleParentMenuClick = () => {
+    triggerBreath("parent-menu");
+    if (onParentMenuClick) {
+      onParentMenuClick();
+    } else {
+      setIsParentDialogOpen(true);
+    }
+  };
 
   // Helper: trigger one-shot breathing animation for an item
   const triggerBreath = (id: string, durationMs = 800) => {
