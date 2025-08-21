@@ -2229,7 +2229,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   </motion.button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Family Zone & Settings</p>
+                  <p>🪵 Parent Menu - Family Zone & Settings</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -3995,7 +3995,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "��"]}
+            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
