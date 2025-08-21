@@ -32,6 +32,10 @@ export type JungleAdventureNavV2Props = {
   iconSize?: number; // px
   /** Optional className passthrough */
   className?: string;
+  /** Show mobile more icon (mobile only) */
+  showMobileMoreIcon?: boolean;
+  /** Called when mobile more icon is clicked */
+  onMobileMoreClick?: () => void;
 };
 
 const DEFAULT_ITEMS: JungleNavItem[] = [
