@@ -1916,7 +1916,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(12px)",
                       backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-sm w-full p-6 sm:p-8 rounded-2xl border border-jungle/15 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-xs w-full p-4 sm:p-5 rounded-xl border border-jungle/15 shadow-lg relative overflow-hidden"
                     style={{
                       background: `
                         radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
