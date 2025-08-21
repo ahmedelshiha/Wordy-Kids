@@ -3874,7 +3874,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Desktop Kid Mode Navigation */}
           {userRole === "child" && (
-            <DesktopKidNav
+            <JungleKidNav
               activeTab={activeTab}
               onTabChange={setActiveTab}
               userRole={userRole}
@@ -3888,6 +3888,10 @@ export default function Index({ initialProfile }: IndexProps) {
               }}
               onSettingsClick={() => setShowSettings(true)}
               onAdminClick={() => navigate("/admin")}
+              theme="jungle"
+              enableSounds={true}
+              animations={true}
+              autoOptimize={true}
             />
           )}
 
