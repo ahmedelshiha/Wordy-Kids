@@ -34,6 +34,7 @@ import {
   type JungleAnimationConfig,
 } from "@/lib/theme/animation";
 import JungleAnimationTestHarness from "@/components/dev/JungleAnimationTestHarness";
+import { ReducedMotionIndicator } from "@/components/ui/AccessibilityIndicator";
 import "@/styles/jungle-adventure-nav.css";
 
 // Builder.io compatible props interface
