@@ -207,18 +207,23 @@
   }
 }
 
-/* Apply idle animations */
+/* Apply calm breathing animations - much gentler than previous */
 .jungle-animal-icon.idle-owl {
-  animation: gentle-sway 4s ease-in-out infinite;
+  animation: breathing 5s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-parrot {
-  animation: gentle-float 3s ease-in-out infinite;
+  animation: breathing 4s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-monkey {
-  animation: gentle-bounce 2.5s ease-in-out infinite;
+  animation: breathing 3.5s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-elephant {
-  animation: gentle-glow 3.5s ease-in-out infinite;
+  animation: breathing 4.5s ease-in-out infinite;
+}
+
+/* Default breathing for all icons when not active */
+.jungle-animal-icon {
+  animation: calm-breathing 6s ease-in-out infinite;
 }
 
 /* ===== DECORATIVE ELEMENTS ===== */
