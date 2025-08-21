@@ -333,6 +333,13 @@ export function JungleKidNav({
               !isActive &&
                 navState.deviceCapabilities.animations &&
                 `idle-${item.animal.name.toLowerCase().replace(" ", "")}`,
+              // Apply animation style classes based on preset
+              animationStyle === "soft-glow" && "with-glow",
+              animationStyle === "micro-movements" && "micro-movements",
+              animationStyle === "full-experience" && "full-experience",
+              // Add animal type class for micro-movements
+              (animationStyle === "micro-movements" || animationStyle === "full-experience") &&
+                item.animal.name.toLowerCase().replace(" ", ""),
             )}
           >
             {item.animal.emoji}
