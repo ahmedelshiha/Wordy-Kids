@@ -1071,7 +1071,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "vocabulary-champion",
         name: "Vocabulary Champion",
-        icon: "��",
+        icon: "🌟",
         earned: rememberedWords.size >= 50,
         description: "Learn 100 words",
       },
@@ -2025,7 +2025,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       <Sparkles className="w-4 h-4 text-white" />
                     </div>
                     <h2 className="text-lg font-bold text-purple-800">
-                      ��� Magic Menu
+                      🌟 Magic Menu
                     </h2>
                   </div>
                   <motion.button
@@ -2059,7 +2059,7 @@ export default function Index({ initialProfile }: IndexProps) {
                       id: "quiz",
                       icon: Brain,
                       label: "Quiz Time",
-                      emoji: "�����",
+                      emoji: "🧠",
                       color: "pink",
                     },
                     {
@@ -3483,7 +3483,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           📸
                                         </div>
                                         <h3 className="jungle-quiz-card-title text-bright-orange">
-                                          �� Picture Treasure Hunt
+                                          🌅 Picture Treasure Hunt
                                         </h3>
                                         <p className="jungle-quiz-card-description">
                                           Explore ancient jungle temples and
