@@ -227,7 +227,7 @@
 }
 
 /* 🦜 Parrot - gentle peaceful tilt */
-@keyframes parrot-tilt {
+/* @keyframes parrot-tilt {
   0%,
   94%,
   100% {
@@ -238,7 +238,7 @@
     transform: rotate(0.5deg);
     opacity: 0.98;
   }
-}
+} */
 
 /* 🐘 Elephant - serene breathing */
 @keyframes elephant-flap {
@@ -362,9 +362,9 @@
 }
 
 .jungle-animal-icon.micro-movements.parrot {
-  animation:
+  /* animation:
     calm-breathing 10s ease-in-out infinite,
-    parrot-tilt 25s ease-in-out infinite;
+    parrot-tilt 25s ease-in-out infinite; */
 }
 
 .jungle-animal-icon.micro-movements.elephant {
@@ -389,10 +389,10 @@
 }
 
 .jungle-animal-icon.full-experience.parrot {
-  animation:
+  /* animation:
     breathing 7.5s ease-in-out infinite,
     soft-accent-glow 15s ease-in-out infinite,
-    parrot-tilt 25s ease-in-out infinite;
+    parrot-tilt 25s ease-in-out infinite; */
 }
 
 .jungle-animal-icon.full-experience.elephant {
