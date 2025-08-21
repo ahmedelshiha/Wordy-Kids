@@ -112,7 +112,7 @@
   margin-right: 8px;
 }
 
-/* Parent Menu Button - Clean minimal style */
+/* Parent Menu Button - Jungle Adventure Style */
 .jng-parent-menu-btn {
   position: relative;
   background: transparent;
@@ -123,11 +123,26 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 12px; /* Increased top padding to accommodate full icon */
+  padding: 8px 12px;
   cursor: pointer;
   outline-offset: 3px;
   min-width: 64px;
   min-height: 64px;
+  /* Tap effect */
+  transition: transform 0.1s ease-out;
+}
+
+/* Active/Pressed State - Wood cracking effect */
+.jng-parent-menu-btn:active {
+  transform: scale(0.9);
+}
+
+/* Parent button label styling */
+.jng-parent-menu-btn .jng-label {
+  color: #fef6e4; /* Light cream/beige for contrast */
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  drop-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Hidden on desktop and tablet views */
@@ -137,19 +152,38 @@
   }
 }
 
-/* Parent Menu Icon Positioning */
+/* Parent Menu Icon Positioning - Jungle Style */
 .parent-icon-totem {
   position: relative;
-  /* Remove excessive lifting to ensure full icon visibility */
-  transform: translateY(0);
-  margin-top: 0;
+  /* Slightly lift above nav bar like other icons */
+  transform: translateY(calc(-1 * var(--jng-icon-lift) / 2));
+  margin-top: calc(-1 * var(--jng-icon-lift) / 2);
+  /* Ensure adequate padding to avoid cropping */
+  padding: 4px;
 }
 
-/* Parent Menu Emoji - Clean style */
+/* Parent Menu Emoji - Jungle Wooden Style */
 .parent-menu-emoji {
-  display: block;
-  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.35));
+  display: inline-block;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
   transform-origin: center;
+  /* Wooden glow effect for visibility */
+  text-shadow:
+    0 0 6px rgba(255, 255, 255, 0.8),
+    0 0 12px rgba(139, 69, 19, 0.6);
+  /* Breathing animation like other jungle icons */
+  animation: jungleBreath 3.5s ease-in-out infinite;
+  /* Match size with other icons */
+  font-size: calc(var(--jng-icon-size) * 0.9);
+  /* Circular jungle-style background */
+  background: radial-gradient(
+    circle,
+    rgba(139, 69, 19, 0.15),
+    rgba(101, 67, 33, 0.1)
+  );
+  border-radius: 50%;
+  padding: 8px;
+  border: 1px solid rgba(139, 69, 19, 0.2);
 }
 
 .jng-btn .jng-label {
@@ -474,26 +508,37 @@
   }
 }
 
-/* Desktop Parent Menu - Clean style */
+/* Desktop Parent Menu - Jungle Adventure Style */
 .jng-parent-menu-desktop {
   position: relative;
   background: transparent;
   border: none;
   padding: 8px 12px;
+  /* Enhanced wooden texture for desktop */
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
 }
 
 .jng-parent-menu-desktop:hover {
-  /* Clean hover effect */
+  /* Jungle hover effect */
+  transform: translateY(-2px) scale(1.02);
+  transition: transform 0.2s ease-out;
 }
 
 .jng-parent-menu-desktop .parent-menu-emoji {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   font-size: 1.8rem;
+  /* Enhanced wooden glow for desktop */
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 16px rgba(139, 69, 19, 0.7);
 }
 
 .jng-parent-menu-desktop .jng-label {
-  color: var(--jng-color-label);
+  color: #fef6e4; /* Light cream/beige */
   font-size: 0.75rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 /* Ensure parent menu button doesn't interfere with regular nav styling */
