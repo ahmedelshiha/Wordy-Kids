@@ -458,8 +458,10 @@
 
 /* Parent Menu Navigation Item Styling */
 .jng-parent-menu-item {
-  /* Center with other navigation items */
+  /* Position after other navigation icons */
   display: flex;
+  order: 999; /* Ensures it appears last */
+  margin-left: auto; /* Push to the right side */
 }
 
 /* Ensure parent menu is visible on desktop */
