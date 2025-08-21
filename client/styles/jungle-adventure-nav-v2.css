@@ -137,9 +137,9 @@
   z-index: 10;
 }
 
-/* Hidden on desktop and tablet views */
+/* Hidden on desktop and tablet views ONLY if not desktop enabled */
 @media (min-width: 768px) {
-  .jng-parent-menu-btn {
+  .jng-parent-menu-btn:not(.jng-parent-menu-desktop) {
     display: none !important;
   }
 }
