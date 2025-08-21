@@ -37,6 +37,20 @@ export const registerJungleKidNavComponent = () => {
         "https://cdn.builder.io/api/v1/image/assets%2Fpwb%2F8b6b83c4c0c34a0c93e92b5a5e52c9b0",
 
       inputs: [
+        // 🎯 Preset Configuration (Simplified UX)
+        {
+          name: "preset",
+          friendlyName: "Animation Preset",
+          type: "string",
+          enum: jungleNavPresets.map(preset => ({
+            label: getPresetDisplayName(preset.id),
+            value: preset.id
+          })),
+          defaultValue: "balanced-adventure",
+          helperText: "Choose a pre-configured animation style. Reduces configuration complexity and ensures optimal UX.",
+          advanced: false,
+        },
+
         // 🧭 Core Navigation
         {
           name: "activeTab",
