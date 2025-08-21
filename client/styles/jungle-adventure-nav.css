@@ -301,6 +301,19 @@
   animation: calm-breathing 6s ease-in-out infinite;
 }
 
+/* ===== NO ANIMATION MODE (Accessibility) ===== */
+/* Override all animations when animation style is "none" */
+.jungle-animal-icon.no-animations,
+.jungle-animal-icon.no-animations.active,
+.jungle-animal-icon.no-animations.idle-owl,
+.jungle-animal-icon.no-animations.idle-parrot,
+.jungle-animal-icon.no-animations.idle-monkey,
+.jungle-animal-icon.no-animations.idle-elephant {
+  animation: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 /* ===== GLOW EFFECT CLASSES (Optional) ===== */
 /* Add these classes for subtle glow effects */
 .jungle-animal-icon.with-glow {
