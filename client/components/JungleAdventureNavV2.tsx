@@ -92,6 +92,8 @@ export default function JungleAdventureNavV2({
   iconLift = 14,
   iconSize = 44,
   className,
+  showMobileMoreIcon = false,
+  onMobileMoreClick,
 }: JungleAdventureNavV2Props) {
   const reducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
