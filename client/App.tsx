@@ -30,6 +30,7 @@ import AISystemTest from "./pages/AISystemTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 import { LightweightAchievementProvider } from "./components/LightweightAchievementProvider";
+import { ErrorBoundary } from "./components/common/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
