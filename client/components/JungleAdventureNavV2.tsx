@@ -302,11 +302,15 @@ export default function JungleAdventureNavV2({
           })}
         </ul>
 
-        {/* Parent Menu Icon - Right Side (Mobile Only) */}
+        {/* Parent Menu Icon - Right Side (Mobile & Desktop) */}
         {(showParentMenuIcon || showMobileMoreIcon) && (
           <button
             className={clsx(
-              "jng-parent-menu-btn md:hidden",
+              "jng-parent-menu-btn",
+              // Hide on desktop unless showParentMenuOnDesktop is true
+              !showParentMenuOnDesktop && "md:hidden",
+              // Desktop-specific styling
+              showParentMenuOnDesktop && "jng-parent-menu-desktop",
               parentMenuAnimationStyle === "breathing" && "parent-breathing",
               parentMenuAnimationStyle === "glow" && "parent-glowing",
             )}
