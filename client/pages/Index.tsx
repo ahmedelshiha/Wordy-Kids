@@ -72,7 +72,6 @@ import { JungleAdventureParentDashboard } from "@/components/JungleAdventurePare
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { JungleKidNav } from "@/components/JungleKidNav";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
@@ -145,7 +144,6 @@ import { getAISettings, isAIEnabled } from "@/lib/aiSettings";
 import { JungleAdventureSidebar } from "@/components/JungleAdventureSidebar";
 import { MobileChildProfileHeader } from "@/components/MobileChildProfileHeader";
 import { EnhancedStatsHelper } from "@/lib/enhancedStatsHelper";
-import { useBottomNavSettings } from "@/hooks/use-bottom-nav-settings";
 import "@/styles/jungle-quiz-adventure.css";
 import "@/styles/enhanced-jungle-quiz-adventure.css";
 
@@ -266,9 +264,6 @@ export default function Index({ initialProfile }: IndexProps) {
   const [excludedWordIds, setExcludedWordIds] = useState<Set<number>>(
     new Set(),
   );
-
-  // Bottom navigation settings
-  const { showBottomNav } = useBottomNavSettings();
 
   // Session persistence states
   const [showSessionRestoration, setShowSessionRestoration] = useState(false);
@@ -3801,31 +3796,6 @@ export default function Index({ initialProfile }: IndexProps) {
             <EncouragingFeedback
               feedback={feedback}
               onClose={() => setFeedback(null)}
-            />
-          )}
-
-          {/* Enhanced Magical Adventure Menu - Show for both child and parent modes */}
-          {showBottomNav && (
-            <EnhancedMagicalAdventureMenu
-              activeTab={userRole === "parent" ? "" : activeTab}
-              onTabChange={(tab) => {
-                setUserRole("child");
-                setActiveTab(tab);
-              }}
-              onSettingsClick={() => {
-                setShowSettings(true);
-              }}
-              onParentClick={() => {
-                setUserRole("parent");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              onAdminClick={() => {
-                navigate("/admin");
-              }}
-              userRole={userRole}
-              achievementCount={
-                learningStats.badges.filter((b) => b.earned).length
-              }
             />
           )}
 

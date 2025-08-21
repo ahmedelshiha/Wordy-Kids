@@ -171,21 +171,30 @@ export function JungleAdventureNav({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            delay: index * 0.1,
-            duration: navState.deviceCapabilities.animations ? 0.3 : 0,
+            delay: index * 0.15,
+            duration: navState.deviceCapabilities.animations ? 0.6 : 0,
+            ease: "easeOut",
           }}
           whileHover={
             navState.deviceCapabilities.animations
               ? {
-                  y: -2,
-                  scale: 1.02,
+                  y: -0.5,
+                  scale: 1.005,
+                  transition: {
+                    duration: 0.4,
+                    ease: "easeOut",
+                  },
                 }
               : undefined
           }
           whileTap={
             navState.deviceCapabilities.animations
               ? {
-                  scale: 0.98,
+                  scale: 0.995,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeInOut",
+                  },
                 }
               : undefined
           }
@@ -227,9 +236,9 @@ export function JungleAdventureNav({
           {isActive && (
             <motion.div
               className="jungle-active-indicator"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             />
           )}
         </motion.button>

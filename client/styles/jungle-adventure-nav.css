@@ -55,17 +55,17 @@
 /* ===== NAVIGATION ITEMS ===== */
 .jungle-nav-item {
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   z-index: 10;
 }
 
 .jungle-nav-item:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .jungle-nav-item.active {
-  transform: translateY(-3px) scale(1.05);
+  transform: translateY(-1px) scale(1.02);
 }
 
 /* Animal Icon Container */
@@ -83,174 +83,174 @@
   animation: breathing 4s ease-in-out infinite;
 }
 
-/* Animal-specific animations */
-@keyframes owl-hoot {
+/* Smooth, calming animal-specific animations */
+@keyframes owl-peaceful {
   0%,
   100% {
     transform: rotate(0deg) scale(1);
+    opacity: 1;
   }
-  25% {
-    transform: rotate(-2deg) scale(1.05);
-  }
-  75% {
-    transform: rotate(2deg) scale(1.05);
+  50% {
+    transform: rotate(-0.5deg) scale(1.02);
+    opacity: 0.98;
   }
 }
 
-@keyframes parrot-dance {
+@keyframes parrot-gentle-sway {
   0%,
   100% {
     transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-4px) rotate(-5deg);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-2px) rotate(0deg);
-  }
-  75% {
-    transform: translateY(-4px) rotate(5deg);
+    transform: translateY(-1px) rotate(-1deg);
+    opacity: 0.95;
   }
 }
 
-@keyframes monkey-swing {
+@keyframes monkey-soft-motion {
   0%,
   100% {
     transform: rotate(0deg) scale(1);
+    opacity: 1;
   }
-  25% {
-    transform: rotate(-8deg) scale(1.1);
+  33% {
+    transform: rotate(-1deg) scale(1.01);
+    opacity: 0.98;
   }
-  50% {
-    transform: rotate(0deg) scale(1.05);
-  }
-  75% {
-    transform: rotate(8deg) scale(1.1);
+  66% {
+    transform: rotate(1deg) scale(1.01);
+    opacity: 0.98;
   }
 }
 
-@keyframes elephant-celebration {
+@keyframes elephant-serene {
   0%,
   100% {
     transform: scale(1);
-  }
-  25% {
-    transform: scale(1.1) rotateY(10deg);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.05) rotateY(0deg);
-  }
-  75% {
-    transform: scale(1.1) rotateY(-10deg);
+    transform: scale(1.02);
+    opacity: 0.97;
   }
 }
 
-/* ===== KID-FRIENDLY BREATHING ANIMATIONS ===== */
-/* Default gentle breathing animation - like a friendly creature breathing */
+/* ===== CALMING BREATHING ANIMATIONS ===== */
+/* Ultra-gentle breathing animation - like peaceful meditation */
 @keyframes breathing {
   0%,
   100% {
     transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.03);
+    opacity: 0.95;
   }
 }
 
-/* Alternative calm breathing for default state */
+/* Serene calm breathing for default state */
 @keyframes calm-breathing {
   0%,
   100% {
     transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.02);
+    opacity: 0.98;
   }
 }
 
-/* ===== SUBTLE GLOW/PULSE ANIMATIONS ===== */
-/* Soft jungle firefly glow - no harsh flashing */
+/* ===== SERENE GLOW/PULSE ANIMATIONS ===== */
+/* Ultra-soft ambient glow - barely perceptible */
 @keyframes glow-pulse {
   0%,
   100% {
     box-shadow: 0 0 0px rgba(255, 255, 0, 0);
   }
   50% {
-    box-shadow: 0 0 15px rgba(255, 255, 100, 0.6);
+    box-shadow: 0 0 8px rgba(255, 255, 100, 0.2);
   }
 }
 
-/* Green jungle glow variation */
+/* Gentle green aura variation */
 @keyframes jungle-glow-pulse {
   0%,
   100% {
     box-shadow: 0 0 0px rgba(76, 175, 80, 0);
   }
   50% {
-    box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.15);
   }
 }
 
-/* Soft accent glow for active elements */
+/* Whisper-soft accent glow for active elements */
 @keyframes soft-accent-glow {
   0%,
   100% {
     box-shadow: 0 0 0px rgba(255, 193, 7, 0);
   }
   50% {
-    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.2);
   }
 }
 
-/* ===== ANIMAL CHARACTER MICRO-MOVEMENTS ===== */
-/* 🦉 Owl - gentle blink every ~10s */
+/* ===== WHISPER-SOFT MICRO-MOVEMENTS ===== */
+/* 🦉 Owl - barely visible peaceful blink */
 @keyframes owl-blink {
-  0%,
-  90%,
-  100% {
-    transform: scaleY(1);
-  }
-  95% {
-    transform: scaleY(0.3);
-  }
-}
-
-/* 🐵 Monkey - tiny tail wiggle */
-@keyframes monkey-wiggle {
   0%,
   95%,
   100% {
-    transform: rotate(0deg);
+    transform: scaleY(1);
+    opacity: 1;
   }
-  97.5% {
-    transform: rotate(1deg);
+  97% {
+    transform: scaleY(0.95);
+    opacity: 0.98;
   }
 }
 
-/* 🦜 Parrot - slight head tilt */
+/* 🐵 Monkey - ultra-subtle contentment */
+@keyframes monkey-wiggle {
+  0%,
+  97%,
+  100% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  98.5% {
+    transform: rotate(0.3deg);
+    opacity: 0.99;
+  }
+}
+
+/* 🦜 Parrot - gentle peaceful tilt */
 @keyframes parrot-tilt {
   0%,
-  90%,
+  94%,
   100% {
     transform: rotate(0deg);
+    opacity: 1;
   }
-  95% {
-    transform: rotate(2deg);
+  97% {
+    transform: rotate(0.5deg);
+    opacity: 0.98;
   }
 }
 
-/* 🐘 Elephant - small ear flap */
+/* 🐘 Elephant - serene breathing */
 @keyframes elephant-flap {
   0%,
-  88%,
+  92%,
   100% {
     transform: scale(1);
+    opacity: 1;
   }
-  92% {
-    transform: scale(1.02);
-  }
-  96% {
-    transform: scale(1);
+  95% {
+    transform: scale(1.005);
+    opacity: 0.99;
   }
 }
 
@@ -295,23 +295,23 @@
   }
 }
 
-/* Apply calm breathing animations - much gentler than previous */
+/* Apply serene breathing animations - peaceful and meditative */
 .jungle-animal-icon.idle-owl {
-  animation: breathing 5s ease-in-out infinite;
+  animation: breathing 8s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-parrot {
-  animation: breathing 4s ease-in-out infinite;
+  animation: breathing 7s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-monkey {
-  animation: breathing 3.5s ease-in-out infinite;
+  animation: breathing 6.5s ease-in-out infinite;
 }
 .jungle-animal-icon.idle-elephant {
-  animation: breathing 4.5s ease-in-out infinite;
+  animation: breathing 9s ease-in-out infinite;
 }
 
-/* Default breathing for all icons when not active */
+/* Default serene breathing for all icons when not active */
 .jungle-animal-icon {
-  animation: calm-breathing 6s ease-in-out infinite;
+  animation: calm-breathing 10s ease-in-out infinite;
 }
 
 /* ===== NO ANIMATION MODE (Accessibility) ===== */
@@ -327,79 +327,79 @@
   box-shadow: none !important;
 }
 
-/* ===== GLOW EFFECT CLASSES (Optional) ===== */
-/* Add these classes for subtle glow effects */
+/* ===== SERENE GLOW EFFECT CLASSES (Optional) ===== */
+/* Add these classes for ultra-subtle glow effects */
 .jungle-animal-icon.with-glow {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    glow-pulse 8s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    glow-pulse 15s ease-in-out infinite;
 }
 
 .jungle-animal-icon.active.with-glow {
   animation:
-    breathing 4s ease-in-out infinite,
-    jungle-glow-pulse 6s ease-in-out infinite;
+    breathing 8s ease-in-out infinite,
+    jungle-glow-pulse 12s ease-in-out infinite;
 }
 
 .jungle-animal-icon.accent-glow {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    soft-accent-glow 7s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    soft-accent-glow 14s ease-in-out infinite;
 }
 
-/* ===== ANIMAL CHARACTER MICRO-MOVEMENTS (Optional) ===== */
-/* Apply these classes for character-specific micro-movements */
+/* ===== WHISPER-SOFT MICRO-MOVEMENTS (Optional) ===== */
+/* Apply these classes for ultra-subtle character-specific movements */
 .jungle-animal-icon.micro-movements.owl {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    owl-blink 10s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    owl-blink 20s ease-in-out infinite;
 }
 
 .jungle-animal-icon.micro-movements.monkey {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    monkey-wiggle 8s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    monkey-wiggle 18s ease-in-out infinite;
 }
 
 .jungle-animal-icon.micro-movements.parrot {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    parrot-tilt 12s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    parrot-tilt 25s ease-in-out infinite;
 }
 
 .jungle-animal-icon.micro-movements.elephant {
   animation:
-    calm-breathing 6s ease-in-out infinite,
-    elephant-flap 15s ease-in-out infinite;
+    calm-breathing 10s ease-in-out infinite,
+    elephant-flap 30s ease-in-out infinite;
 }
 
-/* Combined breathing + glow + micro-movements for full experience */
+/* Combined serene breathing + gentle glow + whisper movements for full experience */
 .jungle-animal-icon.full-experience.owl {
   animation:
-    breathing 5s ease-in-out infinite,
-    jungle-glow-pulse 8s ease-in-out infinite,
-    owl-blink 10s ease-in-out infinite;
+    breathing 8s ease-in-out infinite,
+    jungle-glow-pulse 16s ease-in-out infinite,
+    owl-blink 20s ease-in-out infinite;
 }
 
 .jungle-animal-icon.full-experience.monkey {
   animation:
-    breathing 4s ease-in-out infinite,
-    glow-pulse 7s ease-in-out infinite,
-    monkey-wiggle 8s ease-in-out infinite;
+    breathing 7s ease-in-out infinite,
+    glow-pulse 14s ease-in-out infinite,
+    monkey-wiggle 18s ease-in-out infinite;
 }
 
 .jungle-animal-icon.full-experience.parrot {
   animation:
-    breathing 4.5s ease-in-out infinite,
-    soft-accent-glow 6s ease-in-out infinite,
-    parrot-tilt 12s ease-in-out infinite;
+    breathing 7.5s ease-in-out infinite,
+    soft-accent-glow 15s ease-in-out infinite,
+    parrot-tilt 25s ease-in-out infinite;
 }
 
 .jungle-animal-icon.full-experience.elephant {
   animation:
-    breathing 5.5s ease-in-out infinite,
-    jungle-glow-pulse 9s ease-in-out infinite,
-    elephant-flap 15s ease-in-out infinite;
+    breathing 9s ease-in-out infinite,
+    jungle-glow-pulse 18s ease-in-out infinite,
+    elephant-flap 30s ease-in-out infinite;
 }
 
 /* ===== DECORATIVE ELEMENTS ===== */
