@@ -1560,7 +1560,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! 🎓";
+        achievementTitle = "Category Expert! ����";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -2218,7 +2218,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     <span
                       className="text-2xl relative z-10 filter drop-shadow-sm"
                       style={{
-                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)",
+                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)"
                       }}
                     >
                       🪵
@@ -3144,7 +3144,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       <div className="flex justify-center gap-3 sm:gap-4 text-sm">
                                                         <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg">
                                                           <span className="text-sm">
-                                                            ✅
+                                                            ��
                                                           </span>
                                                           <span className="font-bold text-sm">
                                                             {
@@ -3227,7 +3227,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🦋
                                     </div>
                                     <div className="jungle-creature jungle-creature-frog">
-                                      🐸
+                                      ��
                                     </div>
 
                                     {/* Floating Jungle Leaves */}
@@ -4121,49 +4121,139 @@ export default function Index({ initialProfile }: IndexProps) {
 
       {/* Parent Options Dialog */}
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-yellow-600" />
-              Family Zone
+        <DialogContent
+          className="sm:max-w-md max-w-[90vw] mx-4"
+          style={{
+            background: `
+              linear-gradient(135deg,
+                rgba(255, 248, 220, 0.95) 0%,
+                rgba(250, 240, 200, 0.98) 100%
+              )
+            `,
+            border: "3px solid",
+            borderImage: `linear-gradient(
+              45deg,
+              #8B4513 0%,
+              #A0522D 25%,
+              #CD853F 50%,
+              #A0522D 75%,
+              #8B4513 100%
+            ) 1`,
+            borderRadius: "16px",
+            boxShadow: `
+              inset 0 2px 4px rgba(160, 82, 45, 0.15),
+              0 8px 25px rgba(139, 69, 19, 0.4),
+              0 0 30px rgba(255, 193, 7, 0.2)
+            `,
+          }}
+        >
+          {/* Jungle Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
+            <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
+            <div className="absolute bottom-2 left-4 text-sm opacity-20">🌱</div>
+          </div>
+
+          <DialogHeader className="relative z-10">
+            <DialogTitle className="flex items-center gap-2 text-xl font-bold">
+              <span
+                className="text-2xl filter drop-shadow-sm"
+                style={{ textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)" }}
+              >
+                🪵
+              </span>
+              <span style={{ color: "#8B4513" }}>Parent Menu</span>
             </DialogTitle>
-            <DialogDescription>
-              Access parent dashboard, settings, and family controls.
+            <DialogDescription style={{ color: "#A0522D" }}>
+              🌿 Access family dashboard, jungle settings, and adventure controls.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
+
+          <div className="space-y-3 relative z-10">
             <div className="grid grid-cols-1 gap-3">
+              {/* Parent Dashboard Button with Owl Icon */}
               <Button
                 onClick={() => {
                   setUserRole("parent");
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="flex items-center gap-3 p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
+                style={{
+                  background: `
+                    linear-gradient(135deg,
+                      #8B4513 0%,
+                      #A0522D 50%,
+                      #8B4513 100%
+                    )
+                  `,
+                  boxShadow: `
+                    inset 0 1px 2px rgba(139, 69, 19, 0.2),
+                    0 4px 12px rgba(139, 69, 19, 0.3)
+                  `,
+                }}
               >
-                <Users className="w-6 h-6" />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Parent Dashboard</div>
-                  <div className="text-sm text-blue-100">
-                    View detailed progress, analytics, and manage learning goals
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10 flex items-center gap-3 w-full">
+                  <span className="text-2xl filter drop-shadow-sm">🦉</span>
+                  <div className="text-left flex-1">
+                    <div className="font-semibold text-lg">Parent Dashboard</div>
+                    <div className="text-sm text-amber-100">
+                      🌟 View progress, analytics, and learning adventures
+                    </div>
                   </div>
                 </div>
               </Button>
 
+              {/* Settings Button with Carved Wood Gear */}
               <Button
                 onClick={() => {
                   setShowSettings(true);
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="flex items-center gap-3 p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
+                style={{
+                  background: `
+                    linear-gradient(135deg,
+                      #228B22 0%,
+                      #32CD32 50%,
+                      #228B22 100%
+                    )
+                  `,
+                  boxShadow: `
+                    inset 0 1px 2px rgba(34, 139, 34, 0.2),
+                    0 4px 12px rgba(34, 139, 34, 0.3)
+                  `,
+                }}
               >
-                <Settings className="w-6 h-6" />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Family Settings</div>
-                  <div className="text-sm text-green-100">
-                    Configure app preferences, safety controls, and more
+                <div className="absolute inset-0 bg-gradient-to-r from-green-200/10 to-emerald-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10 flex items-center gap-3 w-full">
+                  <div className="relative">
+                    <Settings
+                      className="w-6 h-6"
+                      style={{
+                        filter: "drop-shadow(0 1px 2px rgba(139, 69, 19, 0.3))",
+                        color: "#CD853F"
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full" />
+                  </div>
+                  <div className="text-left flex-1">
+                    <div className="font-semibold text-lg">Jungle Settings</div>
+                    <div className="text-sm text-green-100">
+                      🛠️ Configure adventure preferences and safety controls
+                    </div>
                   </div>
                 </div>
               </Button>
+
+              {/* Dynamic Authentication Button */}
+              <div className="pt-2 border-t border-amber-300/30">
+                <DynamicAuthButton
+                  variant="mobile"
+                  onAction={() => setShowParentOptions(false)}
+                  className="border-2 border-amber-300/50"
+                />
+              </div>
             </div>
           </div>
         </DialogContent>
