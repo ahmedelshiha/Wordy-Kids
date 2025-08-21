@@ -387,10 +387,14 @@ export function InteractiveDashboardWordCard({
       clearTimeout(audioDebounce);
     }
 
-    // For manual clicks, allow immediate play
+    // For manual clicks, allow immediate play if not already playing
     if (isManual) {
-      console.log("🔊 Playing audio manually");
-      playPronunciation();
+      if (!isPlaying) {
+        console.log("🔊 Playing audio manually");
+        playPronunciation();
+      } else {
+        console.log("🔊 Audio already playing, skipping manual request");
+      }
       return;
     }
 
