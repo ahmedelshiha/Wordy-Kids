@@ -10,6 +10,7 @@ import {
 import { featureFlags } from "@/lib/featureFlags";
 import { JungleAdventureStorage } from "@/lib/jungleAdventureStorage";
 import { useAuth } from "@/hooks/useAuth";
+import { ErrorBoundary } from "./common/ErrorBoundary";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
