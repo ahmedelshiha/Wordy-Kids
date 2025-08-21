@@ -1,6 +1,9 @@
 /* Import Baloo 2 Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap");
 
+/* Import emoji-safe font configuration */
+@import "./styles/emoji-safe-fonts.css";
+
 /* Import mobile games optimization */
 @import "./styles/mobile-games-optimization.css";
 
