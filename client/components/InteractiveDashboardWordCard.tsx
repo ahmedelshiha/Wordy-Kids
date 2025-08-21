@@ -2297,7 +2297,7 @@ export function InteractiveDashboardWordCard({
                 role="group"
                 aria-label="Word learning choices"
               >
-                <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-md mx-auto">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-sm mx-auto px-2">
                   <Button
                     onClick={() => {
                       // Show hint first if not already shown
@@ -2313,7 +2313,7 @@ export function InteractiveDashboardWordCard({
                     }}
                     disabled={isAnswered}
                     className={cn(
-                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-100 py-3 sm:py-3 md:py-4 px-3 sm:px-3 min-h-[55px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
+                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[50px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation flex flex-col items-center justify-center",
                       "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
                       "jungle-button-glow",
                     )}
@@ -2324,16 +2324,16 @@ export function InteractiveDashboardWordCard({
                     }
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10 flex items-center justify-center">
-                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-wiggle">
+                    <div className="relative z-10 flex flex-col items-center justify-center">
+                      <span className="text-sm sm:text-base mb-0.5 animate-wiggle">
                         {showHint ? "💪" : "💡"}
                       </span>
                       <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                        <div className="font-bold text-xs sm:text-sm md:text-base leading-tight">
                           {showHint ? "Need Practice" : "Get Hint"}
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          {showHint ? "Keep learning! 💪" : "Need help? 💡"}
+                          {showHint ? "Keep learning!" : "Need help?"}
                         </div>
                       </div>
                     </div>
@@ -2345,20 +2345,20 @@ export function InteractiveDashboardWordCard({
                       handleWordAction("remembered");
                     }}
                     disabled={isAnswered}
-                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-100 py-3 sm:py-3 md:py-4 px-3 sm:px-3 min-h-[55px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow"
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[50px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow flex flex-col items-center justify-center"
                     aria-label="Mark word as remembered"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10 flex items-center justify-center">
-                      <span className="text-base sm:text-lg mr-1 sm:mr-2 animate-bounce">
+                    <div className="relative z-10 flex flex-col items-center justify-center">
+                      <span className="text-sm sm:text-base mb-0.5 animate-bounce">
                         😊
                       </span>
                       <div className="text-center">
-                        <div className="font-bold text-xs sm:text-sm md:text-base">
+                        <div className="font-bold text-xs sm:text-sm md:text-base leading-tight">
                           I Remember
                         </div>
                         <div className="text-xs opacity-90 mt-0.5 hidden sm:block">
-                          Awesome! ⭐
+                          Awesome!
                         </div>
                       </div>
                     </div>
