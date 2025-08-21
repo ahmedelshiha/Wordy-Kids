@@ -33,6 +33,13 @@ export const jungleAnimationTimings = {
   particles: "18s ease-in-out infinite",
 } as const;
 
+// ⏸️ Idle Pause Duration Controls (addresses "too fast without stopping" concern)
+export const jungleAnimationPause = {
+  short: "2s",  // Quick rest - more energetic feel
+  medium: "4s", // Balanced pause - standard calm
+  long: "6s",   // Extended rest - maximum calmness (default)
+} as const;
+
 // 🎨 Animation Intensity Levels
 export const jungleAnimationIntensity = {
   subtle: {
