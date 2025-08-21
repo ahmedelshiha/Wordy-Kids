@@ -257,6 +257,26 @@
   animation: calm-breathing 6s ease-in-out infinite;
 }
 
+/* ===== GLOW EFFECT CLASSES (Optional) ===== */
+/* Add these classes for subtle glow effects */
+.jungle-animal-icon.with-glow {
+  animation:
+    calm-breathing 6s ease-in-out infinite,
+    glow-pulse 8s ease-in-out infinite;
+}
+
+.jungle-animal-icon.active.with-glow {
+  animation:
+    breathing 4s ease-in-out infinite,
+    jungle-glow-pulse 6s ease-in-out infinite;
+}
+
+.jungle-animal-icon.accent-glow {
+  animation:
+    calm-breathing 6s ease-in-out infinite,
+    soft-accent-glow 7s ease-in-out infinite;
+}
+
 /* ===== DECORATIVE ELEMENTS ===== */
 .jungle-vines {
   position: absolute;
