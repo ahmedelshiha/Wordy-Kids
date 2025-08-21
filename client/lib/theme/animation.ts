@@ -171,6 +171,12 @@ export class JungleAnimationManager {
     return jungleAnimationPause[this.config.idlePauseDuration];
   }
 
+  // Get animation style class
+  getAnimationStyleClass(): string {
+    if (this.config.reducedMotion) return 'style-none';
+    return `style-${this.config.animationStyle}`;
+  }
+
   // Generate CSS custom properties
   getCSSProperties(): Record<string, string> {
     const intensity = this.getIntensity();
@@ -178,6 +184,7 @@ export class JungleAnimationManager {
     return {
       "--jungle-idle-timing": this.getIdleTiming(),
       "--jungle-pause-duration": this.getPauseDuration(),
+      "--jungle-animation-style": this.config.animationStyle,
       "--jungle-hover-scale": intensity.scale.hover.toString(),
       "--jungle-tap-scale": intensity.scale.tap.toString(),
       "--jungle-active-scale": intensity.scale.active.toString(),
