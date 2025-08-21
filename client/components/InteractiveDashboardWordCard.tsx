@@ -1599,7 +1599,7 @@ export function InteractiveDashboardWordCard({
                         }
                       : { duration: 0.3, ease: "easeInOut" }
                   }
-                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-1 sm:mb-2 relative z-10"
                   aria-live="polite"
                   aria-label="Adventure message"
                   style={{
