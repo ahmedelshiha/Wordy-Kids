@@ -204,13 +204,67 @@
   transition: transform 0.15s ease;
 }
 
+/* Parent Menu Breathing Animation (6s cycle) */
+@keyframes parentBreathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Firefly Glow Animation */
+@keyframes fireflyGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 8px rgba(251, 191, 36, 0.2),
+      0 0 16px rgba(251, 191, 36, 0.1),
+      0 0 24px rgba(251, 191, 36, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 12px rgba(251, 191, 36, 0.35),
+      0 0 24px rgba(251, 191, 36, 0.2),
+      0 0 36px rgba(251, 191, 36, 0.1);
+  }
+}
+
+/* Apply breathing animation to parent menu */
+.parent-breathing .parent-menu-emoji {
+  animation: parentBreathing 6s ease-in-out infinite;
+}
+
+/* Apply glow effect to parent menu */
+.parent-glowing .parent-icon-totem::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  animation: fireflyGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Both breathing and glow */
+.parent-breathing.parent-glowing .parent-menu-emoji {
+  animation: parentBreathing 6s ease-in-out infinite;
+}
+
 /* Disable all animations if reduced-motion or globally paused */
 .jng-reduced-motion .jng-emoji,
 .jng-reduced-motion .jng-svg,
+.jng-reduced-motion .parent-menu-emoji,
 .jng-anim-paused .jng-emoji,
-.jng-anim-paused .jng-svg {
+.jng-anim-paused .jng-svg,
+.jng-anim-paused .parent-menu-emoji {
   animation: none !important;
   transition: none !important;
+}
+
+.jng-reduced-motion .parent-icon-totem::after,
+.jng-anim-paused .parent-icon-totem::after {
+  animation: none !important;
+  box-shadow: none !important;
 }
 
 /* Make room so icons can float above the bar without overlap */
