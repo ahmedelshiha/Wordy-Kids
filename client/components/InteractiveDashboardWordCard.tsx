@@ -1317,7 +1317,7 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-[340px] h-[500px] sm:w-[400px] sm:h-[520px] md:w-[440px] md:h-[520px] lg:w-[480px] lg:h-[540px] xl:w-[500px] xl:h-[560px] mx-auto relative overflow-hidden",
+            "w-[380px] h-[500px] sm:w-[440px] sm:h-[520px] md:w-[480px] md:h-[520px] lg:w-[520px] lg:h-[540px] xl:w-[540px] xl:h-[560px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
             "ai-card-background",
             "bg-transparent", // Override default Card white background
