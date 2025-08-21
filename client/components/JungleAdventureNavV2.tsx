@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 // Safe lucide-react imports (no Map)
-import { Compass, Trophy, Flame, Home, BookOpen } from "lucide-react";
+import { Compass, Trophy, Flame, Home, BookOpen, MoreHorizontal } from "lucide-react";
 
 export type JungleNavItem = {
   id: string;
