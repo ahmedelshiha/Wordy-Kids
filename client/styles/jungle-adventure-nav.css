@@ -203,8 +203,8 @@
 }
 
 /* 🌿 Improved Kid-Friendly Idle Animations
- * - Slower timing (8-12s instead of 2-4s)
- * - More subtle movements
+ * - Configurable timing via CSS variables
+ * - Intensity controlled by tokens
  * - Occasional pauses for calm feeling
  */
 @keyframes gentle-sway {
@@ -212,10 +212,10 @@
     transform: rotate(0deg);
   }
   40% {
-    transform: rotate(3deg);
+    transform: rotate(var(--jungle-sway-rotate, 3deg));
   }
   60% {
-    transform: rotate(-3deg);
+    transform: rotate(calc(-1 * var(--jungle-sway-rotate, 3deg)));
   }
 }
 
@@ -224,7 +224,7 @@
     transform: translateY(0px);
   }
   45% {
-    transform: translateY(-4px);
+    transform: translateY(calc(-1 * var(--jungle-float-translate, 4px)));
   }
 }
 
@@ -233,7 +233,7 @@
     transform: translateY(0px) scale(1);
   }
   42% {
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(calc(-1 * var(--jungle-bounce-translate, 2px))) scale(var(--jungle-hover-scale, 1.02));
   }
 }
 
