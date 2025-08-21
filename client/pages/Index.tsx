@@ -2012,99 +2012,182 @@ export default function Index({ initialProfile }: IndexProps) {
           {isMobileMenuOpen && (
             <div className="fixed inset-0 z-50 md:hidden">
               <div
-                className="absolute inset-0 bg-black/50"
+                className="absolute inset-0 bg-black/60"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              <aside className="absolute left-0 top-0 w-80 h-full bg-white/90 backdrop-blur-md p-6 flex flex-col shadow-2xl">
+              <aside className="absolute left-0 top-0 w-80 h-full bg-gradient-to-br from-white/95 to-purple-50/95 backdrop-blur-lg p-6 flex flex-col shadow-2xl border-r border-purple-200/50">
+                {/* Magic Menu Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                    <h2 className="text-lg font-bold text-purple-800">
+                      🌟 Magic Menu
+                    </h2>
+                  </div>
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <X className="w-4 h-4 text-gray-600" />
+                  </motion.button>
+                </div>
+
                 {/* Mobile Navigation */}
-                <nav className="flex-1 space-y-2">
+                <nav className="flex-1 space-y-3">
                   {[
                     {
                       id: "dashboard",
                       icon: Target,
                       label: "Dashboard",
+                      emoji: "🎯",
                       color: "purple",
                     },
                     {
                       id: "learn",
                       icon: BookOpen,
                       label: "Word Library",
+                      emoji: "📚",
                       color: "green",
                     },
                     {
                       id: "quiz",
                       icon: Brain,
                       label: "Quiz Time",
+                      emoji: "🧠",
                       color: "pink",
                     },
                     {
                       id: "progress",
                       icon: Trophy,
-                      label: "🗺️ My Journey",
+                      label: "My Journey",
+                      emoji: "🗺️",
                       color: "yellow",
                     },
-                  ].map(({ id, icon: Icon, label, color }) => (
-                    <button
+                  ].map(({ id, icon: Icon, label, emoji, color }) => (
+                    <motion.button
                       key={id}
                       onClick={() => {
                         setActiveTab(id);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
+                      className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 ${
                         activeTab === id
-                          ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
-                          : "bg-white text-gray-700 hover:bg-purple-50"
+                          ? "bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white shadow-xl border-2 border-white/30"
+                          : "bg-white/80 text-gray-700 hover:bg-purple-50 border-2 border-transparent hover:border-purple-200 shadow-lg"
                       }`}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       <div
-                        className={`p-2 rounded-lg ${activeTab === id ? "bg-white/20" : `bg-${color}-100`}`}
+                        className={`flex items-center justify-center w-12 h-12 rounded-xl ${
+                          activeTab === id
+                            ? "bg-white/20 backdrop-blur-sm"
+                            : `bg-gradient-to-br from-${color}-100 to-${color}-200`
+                        }`}
                       >
-                        <Icon
-                          className={`w-4 h-4 ${activeTab === id ? "text-white" : `text-${color}-600`}`}
-                        />
+                        <span className="text-xl">{emoji}</span>
                       </div>
-                      <span className="font-semibold text-sm">{label}</span>
-                    </button>
+                      <div className="flex-1 text-left">
+                        <span className="font-bold text-base block">
+                          {label}
+                        </span>
+                        <span
+                          className={`text-sm ${
+                            activeTab === id ? "text-white/80" : "text-gray-500"
+                          }`}
+                        >
+                          {id === "dashboard" && "Start your adventure"}
+                          {id === "learn" && "Discover new words"}
+                          {id === "quiz" && "Test your knowledge"}
+                          {id === "progress" && "Track your wins"}
+                        </span>
+                      </div>
+                      {activeTab === id && (
+                        <div className="flex flex-col gap-1">
+                          <span className="text-lg animate-bounce">✨</span>
+                        </div>
+                      )}
+                    </motion.button>
                   ))}
 
-                  <button
+                  {/* Divider */}
+                  <div className="border-t border-purple-200/50 my-4"></div>
+
+                  {/* Parent Dashboard Button */}
+                  <motion.button
                     onClick={() => {
                       setUserRole("parent");
                       setIsMobileMenuOpen(false);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl transition-all bg-white text-gray-700 hover:bg-blue-50 border-2 border-transparent"
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg hover:shadow-xl border-2 border-blue-300/30"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <div className="p-2 rounded-lg bg-blue-100">
-                      <Users className="w-4 h-4 text-blue-600" />
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm">
+                      <span className="text-xl">👨‍👩‍👧‍👦</span>
                     </div>
-                    <span className="font-semibold text-sm">
-                      Parent Dashboard
-                    </span>
-                  </button>
+                    <div className="flex-1 text-left">
+                      <span className="font-bold text-base block">
+                        Parent Dashboard
+                      </span>
+                      <span className="text-sm text-blue-100">
+                        View progress & settings
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-lg animate-bounce">🔑</span>
+                    </div>
+                  </motion.button>
 
-                  <button
-                    onClick={() => setShowSettings(true)}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white text-gray-700 hover:bg-purple-50 transition-all border border-purple-200"
+                  {/* Settings Button */}
+                  <motion.button
+                    onClick={() => {
+                      setShowSettings(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:shadow-xl border-2 border-green-300/30"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <div className="p-2 rounded-lg bg-gray-100">
-                      <Settings className="w-4 h-4 text-gray-600" />
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm">
+                      <span className="text-xl">⚙️</span>
                     </div>
-                    <span className="font-semibold text-sm">Settings</span>
-                  </button>
+                    <div className="flex-1 text-left">
+                      <span className="font-bold text-base block">
+                        Settings
+                      </span>
+                      <span className="text-sm text-green-100">
+                        Customize your experience
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-lg animate-bounce">🎛️</span>
+                    </div>
+                  </motion.button>
 
-                  <DynamicAuthButton
-                    variant="mobile"
-                    onAction={() => setIsMobileMenuOpen(false)}
-                  />
+                  {/* Final Divider */}
+                  <div className="border-t border-purple-200/50 my-4"></div>
+
+                  {/* Enhanced Auth Button */}
+                  <div className="mt-auto">
+                    <DynamicAuthButton
+                      variant="mobile"
+                      onAction={() => setIsMobileMenuOpen(false)}
+                    />
+                  </div>
                 </nav>
               </aside>
             </div>
           )}
 
-          {/* Parent Gate Button - Top Right Corner */}
+          {/* Parent Gate Button - Top Right Corner (Desktop Only) */}
           {userRole === "child" && (
-            <div className="fixed top-4 right-4 z-50">
+            <div className="fixed top-4 right-4 z-50 hidden md:block">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <motion.button
@@ -3289,7 +3372,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Crown className="w-5 h-5 mr-2" />
-                                          Start Epic Adventure! 👑
+                                          Start Epic Adventure! ��
                                         </button>
                                       </div>
 
@@ -3481,7 +3564,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            🌺
+                                            ����
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-jungle-green text-sm">
@@ -3907,6 +3990,8 @@ export default function Index({ initialProfile }: IndexProps) {
               pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
+              showMobileMoreIcon={true}
+              onMobileMoreClick={() => setIsMobileMenuOpen(true)}
               items={[
                 {
                   id: "dashboard",

@@ -1,7 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 // Safe lucide-react imports (no Map)
-import { Compass, Trophy, Flame, Home, BookOpen } from "lucide-react";
+import {
+  Compass,
+  Trophy,
+  Flame,
+  Home,
+  BookOpen,
+  MoreHorizontal,
+} from "lucide-react";
 
 export type JungleNavItem = {
   id: string;
@@ -32,6 +39,10 @@ export type JungleAdventureNavV2Props = {
   iconSize?: number; // px
   /** Optional className passthrough */
   className?: string;
+  /** Show mobile more icon (mobile only) */
+  showMobileMoreIcon?: boolean;
+  /** Called when mobile more icon is clicked */
+  onMobileMoreClick?: () => void;
 };
 
 const DEFAULT_ITEMS: JungleNavItem[] = [
@@ -88,6 +99,8 @@ export default function JungleAdventureNavV2({
   iconLift = 14,
   iconSize = 44,
   className,
+  showMobileMoreIcon = false,
+  onMobileMoreClick,
 }: JungleAdventureNavV2Props) {
   const reducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
@@ -197,6 +210,33 @@ export default function JungleAdventureNavV2({
             );
           })}
         </ul>
+
+        {/* Mobile More Icon - Right Side (Mobile Only) */}
+        {showMobileMoreIcon && (
+          <button
+            className="jng-more-btn md:hidden"
+            onClick={() => {
+              triggerBreath("more");
+              if (onMobileMoreClick) onMobileMoreClick();
+            }}
+            onMouseEnter={() => triggerBreath("more")}
+            onFocus={() => triggerBreath("more")}
+            aria-label="More options"
+          >
+            <span
+              className={clsx(
+                "jng-icon-wrap jng-icon-lifted",
+                breathing["more"] && "breath-once",
+              )}
+              aria-hidden="true"
+            >
+              <span className="jng-svg">
+                <MoreHorizontal size={iconSize * 0.7} />
+              </span>
+            </span>
+            <span className="jng-label">More</span>
+          </button>
+        )}
       </div>
     </nav>
   );
