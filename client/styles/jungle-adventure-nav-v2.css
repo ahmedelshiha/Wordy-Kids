@@ -63,9 +63,11 @@
   align-items: end;
   gap: 8px;
   flex: 1;
-  max-width: 980px;
+  max-width: 100%; /* Allow full width for proper spacing */
   /* Center all icons including parent menu */
   justify-content: center;
+  /* Ensure adequate spacing for all icons */
+  min-width: 0;
 }
 
 /* Desktop specific layout */
