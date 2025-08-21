@@ -108,8 +108,8 @@ function main() {
   let errorCount = 0;
   let warningCount = 0;
 
-  patterns.forEach(pattern => {
-    const files = glob.sync(pattern);
+  patterns.forEach(async pattern => {
+    const files = await glob(pattern);
     
     files.forEach(file => {
       const issues = checkFile(file);
