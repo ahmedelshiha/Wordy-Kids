@@ -22,7 +22,9 @@
     "scan:emojis": "node scripts/scan-emojis.js",
     "lint:emojis": "npm run scan:emojis",
     "check:map-conflicts": "node scripts/check-map-conflicts.js",
-    "precommit": "npm run lint:emojis && npm run check:map-conflicts && npm run typecheck"
+    "check:nav-migration": "node scripts/check-nav-migration.js",
+    "verify:builderio": "node scripts/verify-builderio-registration.js",
+    "precommit": "npm run lint:emojis && npm run check:map-conflicts && npm run check:nav-migration && npm run typecheck"
   },
   "dependencies": {
     "dotenv": "^17.2.0",
