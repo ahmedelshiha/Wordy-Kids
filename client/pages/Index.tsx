@@ -1407,7 +1407,7 @@ export default function Index({ initialProfile }: IndexProps) {
     setActiveTab("dashboard");
   };
 
-  const generateFreshWords = () => {
+  const generateFreshWords = useCallback(() => {
     if (!selectedCategory) {
       console.log("No category selected, skipping word generation");
       return [];
@@ -1468,7 +1468,7 @@ export default function Index({ initialProfile }: IndexProps) {
       setCurrentDashboardWords(fallbackWords);
       return fallbackWords;
     }
-  };
+  }, [selectedCategory, userWordHistory, rememberedWords, forgottenWords, excludedWordIds, childStats, sessionNumber]);
 
   const generateDashboardWords = () => {
     console.log("Generating systematic dashboard words...");
