@@ -1586,7 +1586,7 @@ export function AIEnhancedInteractiveDashboardWordCard({
                     disabled={isAnswered}
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-2.5 px-3 sm:py-3 sm:px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[50px] sm:min-h-[60px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300 text-sm sm:text-base"
+                    className="w-full sm:w-auto bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 text-orange-700 hover:text-red-700 font-bold py-4 px-4 sm:py-5 sm:px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl min-h-[65px] sm:min-h-[75px] touch-manipulation group relative overflow-hidden border-2 border-orange-300 hover:border-red-300 text-base sm:text-lg"
                     aria-label="Get hint for this word"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-200/0 via-orange-200/30 to-orange-200/0 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-600 ease-out" />
