@@ -359,15 +359,23 @@ export function JungleKidNav({
           whileHover={
             navState.deviceCapabilities.animations && !animationsSuspended
               ? {
-                  y: -2,
-                  scale: 1.02,
+                  y: -0.5,
+                  scale: 1.005,
+                  transition: {
+                    duration: 0.4,
+                    ease: "easeOut",
+                  },
                 }
               : undefined
           }
           whileTap={
             navState.deviceCapabilities.animations
               ? {
-                  scale: 0.98,
+                  scale: 0.995,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeInOut",
+                  },
                 }
               : undefined
           }
