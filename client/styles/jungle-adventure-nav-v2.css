@@ -164,12 +164,16 @@
   filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.35));
   transform-origin: center;
   /* Enhanced visibility for mobile */
-  font-size: 1.5rem;
+  font-size: 1.8rem; /* Made larger for better visibility */
   line-height: 1;
   opacity: 1;
   /* Ensure proper centering */
   text-align: center;
   width: 100%;
+  /* Temporary debug - add background */
+  background: rgba(255, 255, 0, 0.2);
+  border-radius: 8px;
+  padding: 4px;
 }
 
 .jng-btn .jng-label {
