@@ -61,7 +61,7 @@
   list-style: none;
   display: flex;
   align-items: end;
-  gap: 8px;
+  gap: 6px; /* Reduced gap to accommodate 5 icons on mobile */
   flex: 1;
   max-width: 100%; /* Allow full width for proper spacing */
   /* Center all icons including parent menu */
