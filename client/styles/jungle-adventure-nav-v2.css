@@ -146,6 +146,12 @@
   /* Raise icon above nav height like a jungle totem */
   transform: translateY(calc(-1 * var(--jng-icon-lift) - 4px));
   margin-top: calc(-1 * var(--jng-icon-lift) - 4px);
+  /* Ensure proper fit and visibility */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
 }
 
 /* Parent Menu Emoji - Larger and more prominent */
