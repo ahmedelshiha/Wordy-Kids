@@ -39,6 +39,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 60; /* Ensure nav bar is above other elements */
+  visibility: visible; /* Explicitly ensure visibility */
+  opacity: 1;
 }
 
 /* Desktop keeps it at the bottom with larger height */
