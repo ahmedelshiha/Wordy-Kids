@@ -8,7 +8,15 @@ import {
   Home,
   BookOpen,
   MoreHorizontal,
+  Shield,
+  Key,
+  X,
+  BarChart3,
+  Settings,
+  LogOut,
+  UserPlus,
 } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 export type JungleNavItem = {
   id: string;
@@ -19,6 +27,9 @@ export type JungleNavItem = {
   onClick?: () => void;
   ariaLabel?: string;
 };
+
+export type ParentMenuIconVariant = "totem" | "shield" | "key";
+export type ParentMenuAnimationStyle = "breathing" | "glow" | "none";
 
 export type JungleAdventureNavV2Props = {
   /** Current route/active item id */
@@ -39,9 +50,23 @@ export type JungleAdventureNavV2Props = {
   iconSize?: number; // px
   /** Optional className passthrough */
   className?: string;
-  /** Show mobile more icon (mobile only) */
+  /** Show Parent Menu icon (mobile only) - replaces old More ... */
+  showParentMenuIcon?: boolean;
+  /** Parent menu icon variant */
+  parentMenuIconVariant?: ParentMenuIconVariant;
+  /** Parent menu animation style */
+  parentMenuAnimationStyle?: ParentMenuAnimationStyle;
+  /** Toggle sections in parent dialog */
+  parentDialogSections?: {
+    dashboard?: boolean;
+    settings?: boolean;
+    signOut?: boolean;
+  };
+  /** Called when parent menu icon is clicked */
+  onParentMenuClick?: () => void;
+  /** @deprecated Use showParentMenuIcon instead */
   showMobileMoreIcon?: boolean;
-  /** Called when mobile more icon is clicked */
+  /** @deprecated Use onParentMenuClick instead */
   onMobileMoreClick?: () => void;
 };
 
@@ -99,15 +124,62 @@ export default function JungleAdventureNavV2({
   iconLift = 14,
   iconSize = 44,
   className,
+  showParentMenuIcon = true,
+  parentMenuIconVariant = "totem",
+  parentMenuAnimationStyle = "breathing",
+  parentDialogSections = {
+    dashboard: true,
+    settings: true,
+    signOut: true,
+  },
+  onParentMenuClick,
   showMobileMoreIcon = false,
   onMobileMoreClick,
 }: JungleAdventureNavV2Props) {
   const reducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
+  const [isParentDialogOpen, setIsParentDialogOpen] = useState(false);
 
   // Track which icon is doing a one-shot breath animation
   const [breathing, setBreathing] = useState<Record<string, boolean>>({});
   const breathTimers = useRef<Record<string, number>>({});
+
+  // Get parent menu icon based on variant
+  const getParentMenuIcon = () => {
+    switch (parentMenuIconVariant) {
+      case "shield":
+        return "🛡️";
+      case "key":
+        return "🔑";
+      case "totem":
+      default:
+        return "🪵";
+    }
+  };
+
+  // Get accessible description for parent menu icon
+  const getParentMenuAriaLabel = () => {
+    const baseLabel = "Parent Menu";
+    switch (parentMenuIconVariant) {
+      case "shield":
+        return `${baseLabel} - Tribal Shield`;
+      case "key":
+        return `${baseLabel} - Golden Key`;
+      case "totem":
+      default:
+        return `${baseLabel} - Carved Totem`;
+    }
+  };
+
+  // Handle parent menu click
+  const handleParentMenuClick = () => {
+    triggerBreath("parent-menu");
+    if (onParentMenuClick) {
+      onParentMenuClick();
+    } else {
+      setIsParentDialogOpen(true);
+    }
+  };
 
   // Helper: trigger one-shot breathing animation for an item
   const triggerBreath = (id: string, durationMs = 800) => {
@@ -211,33 +283,165 @@ export default function JungleAdventureNavV2({
           })}
         </ul>
 
-        {/* Mobile More Icon - Right Side (Mobile Only) */}
-        {showMobileMoreIcon && (
+        {/* Parent Menu Icon - Right Side (Mobile Only) */}
+        {(showParentMenuIcon || showMobileMoreIcon) && (
           <button
-            className="jng-more-btn md:hidden"
+            className={clsx(
+              "jng-parent-menu-btn md:hidden",
+              parentMenuAnimationStyle === "breathing" && "parent-breathing",
+              parentMenuAnimationStyle === "glow" && "parent-glowing",
+            )}
             onClick={() => {
-              triggerBreath("more");
-              if (onMobileMoreClick) onMobileMoreClick();
+              if (showParentMenuIcon) {
+                handleParentMenuClick();
+              } else {
+                // Legacy support
+                triggerBreath("more");
+                if (onMobileMoreClick) onMobileMoreClick();
+              }
             }}
-            onMouseEnter={() => triggerBreath("more")}
-            onFocus={() => triggerBreath("more")}
-            aria-label="More options"
+            onMouseEnter={() =>
+              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+            }
+            onFocus={() =>
+              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
+            }
+            aria-label={
+              showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
+            }
+            aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
+            aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
           >
             <span
               className={clsx(
                 "jng-icon-wrap jng-icon-lifted",
-                breathing["more"] && "breath-once",
+                showParentMenuIcon && "parent-icon-totem",
+                breathing[showParentMenuIcon ? "parent-menu" : "more"] &&
+                  "breath-once",
               )}
               aria-hidden="true"
             >
-              <span className="jng-svg">
-                <MoreHorizontal size={iconSize * 0.7} />
-              </span>
+              {showParentMenuIcon ? (
+                <span
+                  className="jng-emoji parent-menu-emoji"
+                  style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
+                >
+                  {getParentMenuIcon()}
+                </span>
+              ) : (
+                <span className="jng-svg">
+                  <MoreHorizontal size={iconSize * 0.7} />
+                </span>
+              )}
             </span>
-            <span className="jng-label">More</span>
+            <span className="jng-label">
+              {showParentMenuIcon ? "Parents" : "More"}
+            </span>
           </button>
         )}
       </div>
+
+      {/* Parent Menu Dialog */}
+      {isParentDialogOpen && (
+        <Dialog open={isParentDialogOpen} onOpenChange={setIsParentDialogOpen}>
+          <DialogContent
+            className="jungle-parent-dialog"
+            aria-describedby="parent-menu-description"
+          >
+            <DialogTitle className="jungle-dialog-title">
+              🏠 Family Zone
+            </DialogTitle>
+            <p id="parent-menu-description" className="sr-only">
+              Family controls and settings for parents and guardians
+            </p>
+            <div className="jungle-dialog-backdrop">
+              <div className="jungle-dialog-frame">
+                <div className="jungle-dialog-sections">
+                  {parentDialogSections.dashboard && (
+                    <button
+                      className="jungle-dialog-btn"
+                      onClick={() => {
+                        setIsParentDialogOpen(false);
+                        // Navigate to parent dashboard
+                      }}
+                      aria-label="Open Parent Dashboard - View child's progress and reports"
+                    >
+                      <BarChart3
+                        className="jungle-dialog-icon"
+                        aria-hidden="true"
+                      />
+                      <span>📊 Parent Dashboard</span>
+                      <div className="jungle-btn-glow" />
+                    </button>
+                  )}
+
+                  {parentDialogSections.settings && (
+                    <button
+                      className="jungle-dialog-btn"
+                      onClick={() => {
+                        setIsParentDialogOpen(false);
+                        // Navigate to settings
+                      }}
+                      aria-label="Open Settings - Child-safe controls and preferences"
+                    >
+                      <Settings
+                        className="jungle-dialog-icon"
+                        aria-hidden="true"
+                      />
+                      <span>⚙️ Settings</span>
+                      <div className="jungle-btn-glow" />
+                    </button>
+                  )}
+
+                  {parentDialogSections.signOut && (
+                    <>
+                      <button
+                        className="jungle-dialog-btn"
+                        onClick={() => {
+                          setIsParentDialogOpen(false);
+                          // Handle sign out
+                        }}
+                        aria-label="Sign Out - Log out of parent account"
+                      >
+                        <LogOut
+                          className="jungle-dialog-icon"
+                          aria-hidden="true"
+                        />
+                        <span>🔐 Sign Out</span>
+                        <div className="jungle-btn-glow" />
+                      </button>
+
+                      <button
+                        className="jungle-dialog-btn"
+                        onClick={() => {
+                          setIsParentDialogOpen(false);
+                          // Handle register
+                        }}
+                        aria-label="Register - Create new parent account"
+                      >
+                        <UserPlus
+                          className="jungle-dialog-icon"
+                          aria-hidden="true"
+                        />
+                        <span>🔐 Register</span>
+                        <div className="jungle-btn-glow" />
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                <button
+                  className="jungle-dialog-close"
+                  onClick={() => setIsParentDialogOpen(false)}
+                  aria-label="Close Parent Menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </nav>
   );
 }

@@ -171,7 +171,7 @@ export function InteractiveDashboardWordCard({
         break;
       case " ":
         event.preventDefault();
-        playPronunciation();
+        playPronunciationDebounced(true);
         break;
       default:
         break;
@@ -212,6 +212,10 @@ export function InteractiveDashboardWordCard({
   const [buttonClickedId, setButtonClickedId] = useState<string | null>(null);
   const [showSuccessRipple, setShowSuccessRipple] = useState(false);
   const [showPracticeRipple, setShowPracticeRipple] = useState(false);
+  const [audioPlayedForHint, setAudioPlayedForHint] = useState(false);
+  const [audioDebounce, setAudioDebounce] = useState<NodeJS.Timeout | null>(
+    null,
+  );
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
@@ -221,6 +225,21 @@ export function InteractiveDashboardWordCard({
   const [imageError, setImageError] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Dynamic jungle adventure messages
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [messageVisible, setMessageVisible] = useState(true);
+
+  const jungleAdventureMessages = [
+    "🌿 Let's explore the jungle!",
+    "🦜 Find the secret word!",
+    "🐒 Swing into action!",
+    "🐘 Stomp forward to learn!",
+    "🦁 Roar into reading!",
+    "🐯 Pounce on new words!",
+    "🌳 Climb the learning tree!",
+    "🦋 Flutter through phonics!",
+  ];
 
   // Systematic progression state - DISABLED for clean UI
   // const [progressionInfo, setProgressionInfo] = useState({
@@ -243,6 +262,33 @@ export function InteractiveDashboardWordCard({
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
+
+  // Rotating jungle adventure messages effect
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const interval = setInterval(() => {
+      setMessageVisible(false);
+
+      setTimeout(() => {
+        setCurrentMessageIndex(
+          (prev) => (prev + 1) % jungleAdventureMessages.length,
+        );
+        setMessageVisible(true);
+      }, 300); // Quick fade transition
+    }, 6000); // Rotate every 6 seconds
+
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion, jungleAdventureMessages.length]);
+
+  // Cleanup audio debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (audioDebounce) {
+        clearTimeout(audioDebounce);
+      }
+    };
+  }, [audioDebounce]);
 
   // Initialize session with systematic word generation
   useEffect(() => {
@@ -317,19 +363,65 @@ export function InteractiveDashboardWordCard({
     setImageLoaded(false);
     setImageError(false);
     setIsTransitioning(true);
+    setAudioPlayedForHint(false);
+
+    // Clear any pending audio debounce
+    if (audioDebounce) {
+      clearTimeout(audioDebounce);
+      setAudioDebounce(null);
+    }
 
     // Reset transition state after brief delay
     const timer = setTimeout(() => setIsTransitioning(false), 300);
     return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
-  // Automatically pronounce word when hint is shown
-  useEffect(() => {
-    if (showHint && currentWord && !isPlaying) {
-      // Small delay to allow hint card animation to start
-      const timer = setTimeout(() => {
+  // Debounced pronunciation function to prevent double-play
+  const playPronunciationDebounced = (isManual = false) => {
+    console.log(
+      `🔊 Audio call: ${isManual ? "Manual" : "Auto"}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`,
+    );
+
+    // Clear any existing audio timeout
+    if (audioDebounce) {
+      clearTimeout(audioDebounce);
+    }
+
+    // For manual clicks, allow immediate play
+    if (isManual) {
+      console.log("🔊 Playing audio manually");
+      playPronunciation();
+      return;
+    }
+
+    // For auto-play (hint), add debounce and check if already played
+    if (audioPlayedForHint || isPlaying) {
+      console.log("🔊 Audio blocked: already played or currently playing");
+      return;
+    }
+
+    console.log("🔊 Setting up auto-play with 150ms debounce");
+    const timer = setTimeout(() => {
+      if (!audioPlayedForHint && !isPlaying && currentWord) {
+        console.log("🔊 Auto-playing audio after debounce");
         playPronunciation();
-      }, 400);
+        setAudioPlayedForHint(true);
+      } else {
+        console.log("🔊 Auto-play cancelled: conditions changed");
+      }
+    }, 150); // 150ms debounce as requested
+
+    setAudioDebounce(timer);
+  };
+
+  // Automatically pronounce word when hint is shown (only once per word)
+  useEffect(() => {
+    if (showHint && currentWord && !audioPlayedForHint) {
+      // Delay to allow hint card animation to start
+      const timer = setTimeout(() => {
+        playPronunciationDebounced(false);
+      }, 250); // Slightly reduced delay
+
       return () => clearTimeout(timer);
     }
   }, [showHint, currentWord]);
@@ -1072,7 +1164,7 @@ export function InteractiveDashboardWordCard({
           }}
           whileTap={{ scale: 0.95 }}
           className="w-48 h-36 ml-2 mt-4 flex items-center justify-center cursor-pointer group relative"
-          onClick={playPronunciation}
+          onClick={() => playPronunciationDebounced(true)}
         >
           {/* Animated background elements */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -1317,7 +1409,7 @@ export function InteractiveDashboardWordCard({
       >
         <Card
           className={cn(
-            "w-[320px] h-[500px] sm:w-[380px] sm:h-[520px] md:w-[420px] md:h-[520px] lg:w-[460px] lg:h-[540px] xl:w-[480px] xl:h-[560px] mx-auto relative overflow-hidden",
+            "w-[380px] h-[500px] sm:w-[440px] sm:h-[520px] md:w-[480px] md:h-[520px] lg:w-[520px] lg:h-[540px] xl:w-[540px] xl:h-[560px] mx-auto relative overflow-hidden",
             "jungle-adventure-card-container",
             "ai-card-background",
             "bg-transparent", // Override default Card white background
@@ -1380,7 +1472,7 @@ export function InteractiveDashboardWordCard({
                 transition={{ duration: 1.8, ease: "easeOut", delay: 0.3 }}
                 className="absolute top-6 right-6 text-3xl text-jungle-light"
               >
-                🌟
+                ���
               </motion.div>
             </div>
           )}
@@ -1478,24 +1570,33 @@ export function InteractiveDashboardWordCard({
 
                 {/* Dynamic Jungle Explorer Prompt */}
                 <motion.h1
-                  initial={{ scale: 0.8 }}
+                  initial={{ scale: 0.8, opacity: 0 }}
                   animate={
                     !prefersReducedMotion
                       ? {
                           scale: [1, 1.02, 1],
+                          opacity: messageVisible ? 1 : 0,
                         }
-                      : { scale: 1 }
+                      : { scale: 1, opacity: messageVisible ? 1 : 0 }
                   }
                   transition={
                     !prefersReducedMotion
                       ? {
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
+                          scale: {
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          },
+                          opacity: {
+                            duration: 0.3,
+                            ease: "easeInOut",
+                          },
                         }
-                      : { duration: 0 }
+                      : { duration: 0.3, ease: "easeInOut" }
                   }
                   className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 relative z-10"
+                  aria-live="polite"
+                  aria-label="Adventure message"
                   style={{
                     textShadow:
                       "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(76, 175, 80, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3)",
@@ -1570,13 +1671,13 @@ export function InteractiveDashboardWordCard({
                           "🥭 What exotic jungle fruit is this?",
                           "🍍 Which tropical jungle treasure awaits?",
                           "🥑 Can you identify this jungle nutrition?",
-                          "🌾 What jungle harvest is this?",
+                          "��� What jungle harvest is this?",
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
-                          "🫚 Which ancient jungle spice awaits?",
+                          "���� Which ancient jungle spice awaits?",
                           "🌶️ Can you name this fiery jungle flavor?",
-                          "🧄 What powerful jungle ingredient is this?",
+                          "�� What powerful jungle ingredient is this?",
                         ],
                       },
                       Objects: {
@@ -1625,7 +1726,7 @@ export function InteractiveDashboardWordCard({
 
                     // Progress-based encouragement
                     const progressPrompts = {
-                      0: "🚀 Ready for a jungle adventure?",
+                      0: jungleAdventureMessages[currentMessageIndex],
                       25: "��� You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
@@ -1752,7 +1853,7 @@ export function InteractiveDashboardWordCard({
                       Family: "👨‍👩‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
-                      Clothes: "👕",
+                      Clothes: "����",
                     };
 
                     const emoji = categoryEmojis[category] || "🌟";
@@ -1875,7 +1976,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(12px)",
                       backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-sm w-full p-6 sm:p-8 rounded-2xl border border-jungle/15 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-xs w-full p-4 sm:p-5 rounded-xl border-2 border-amber-700/30 shadow-lg relative overflow-hidden carved-wood-border"
                     style={{
                       background: `
                         radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
@@ -1904,7 +2005,7 @@ export function InteractiveDashboardWordCard({
                           }}
                           className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                         >
-                          ����
+                          �����
                         </motion.div>
                       )}
                     </div>
@@ -1974,9 +2075,9 @@ export function InteractiveDashboardWordCard({
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.4 }}
-                          className="flex items-center justify-between bg-white/85 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/40"
+                          className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/50"
                         >
-                          <p className="text-3xl font-bold text-gray-800 flex-1">
+                          <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex-1 tracking-wide">
                             {currentWord.word}
                           </p>
 
@@ -1988,7 +2089,7 @@ export function InteractiveDashboardWordCard({
                             className="ml-3"
                           >
                             <Button
-                              onClick={playPronunciation}
+                              onClick={() => playPronunciationDebounced(true)}
                               disabled={isPlaying}
                               size="sm"
                               className={cn(
@@ -2149,22 +2250,22 @@ export function InteractiveDashboardWordCard({
                       type: "spring",
                       damping: 20,
                     }}
-                    className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20"
+                    className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-xl p-3 text-center shadow-md backdrop-blur-sm ring-1 ring-yellow-200/20"
                     role="region"
                     aria-label="Word hint and definition"
                     aria-live="polite"
                   >
-                    <div className="flex items-center justify-center gap-2 mb-2">
+                    <div className="flex items-center justify-center gap-1 mb-1">
                       <Lightbulb
-                        className="w-4 h-4 text-yellow-600"
+                        className="w-3 h-3 text-yellow-600"
                         aria-hidden="true"
                       />
-                      <h3 className="text-sm font-semibold text-yellow-800">
+                      <h3 className="text-xs font-semibold text-yellow-800">
                         💡 Definition:
                       </h3>
                     </div>
                     <p
-                      className="text-yellow-700 text-sm leading-relaxed"
+                      className="text-yellow-700 text-xs leading-relaxed"
                       id="hint-text"
                     >
                       "{currentWord.definition}"
@@ -2212,8 +2313,9 @@ export function InteractiveDashboardWordCard({
                     }}
                     disabled={isAnswered}
                     className={cn(
-                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
+                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-100 py-3 sm:py-3 md:py-4 px-3 sm:px-3 min-h-[55px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
                       "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
+                      "jungle-button-glow",
                     )}
                     aria-label={
                       showHint
@@ -2243,7 +2345,7 @@ export function InteractiveDashboardWordCard({
                       handleWordAction("remembered");
                     }}
                     disabled={isAnswered}
-                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation"
+                    className="w-full bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:from-green-600 active:to-emerald-700 text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-100 py-3 sm:py-3 md:py-4 px-3 sm:px-3 min-h-[55px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation jungle-button-glow"
                     aria-label="Mark word as remembered"
                   >
                     <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"></div>

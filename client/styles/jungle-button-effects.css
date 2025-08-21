@@ -1,0 +1,134 @@
+/* Jungle-themed button glow effects for Interactive Word Card */
+
+.jungle-button-glow {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.jungle-button-glow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.jungle-button-glow:hover::before {
+  left: 100%;
+}
+
+/* Leaf ripple effect on click */
+.jungle-button-glow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(46, 125, 50, 0.3) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.4s ease,
+    height 0.4s ease;
+  z-index: 1;
+}
+
+.jungle-button-glow:active::after {
+  width: 120%;
+  height: 120%;
+}
+
+/* Enhanced bounce animation for jungle feel */
+@keyframes jungle-bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  40% {
+    transform: translate3d(0, -4px, 0) scale(1.02);
+  }
+  60% {
+    transform: translate3d(0, -2px, 0) scale(1.01);
+  }
+}
+
+.jungle-button-glow:active {
+  animation: jungle-bounce 0.6s ease;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-button-glow::before,
+  .jungle-button-glow::after {
+    display: none;
+  }
+
+  .jungle-button-glow:active {
+    animation: none;
+    transform: scale(0.98);
+  }
+}
+
+/* Vine glow effect on hover for jungle theme */
+.jungle-button-glow:hover {
+  box-shadow:
+    0 0 20px rgba(46, 125, 50, 0.3),
+    0 0 40px rgba(34, 139, 34, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Focus accessibility */
+.jungle-button-glow:focus-visible {
+  outline: 2px solid #4caf50;
+  outline-offset: 2px;
+}
+
+/* Carved wood border effect for hint cards */
+.carved-wood-border {
+  border-image: linear-gradient(
+      45deg,
+      rgba(139, 69, 19, 0.4) 0%,
+      rgba(160, 82, 45, 0.3) 25%,
+      rgba(139, 69, 19, 0.4) 50%,
+      rgba(101, 67, 33, 0.5) 75%,
+      rgba(139, 69, 19, 0.4) 100%
+    )
+    1;
+
+  box-shadow:
+    inset 0 1px 2px rgba(160, 82, 45, 0.2),
+    inset 0 -1px 2px rgba(101, 67, 33, 0.2),
+    0 2px 8px rgba(139, 69, 19, 0.1);
+}
+
+.carved-wood-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    45deg,
+    rgba(139, 69, 19, 0.1),
+    rgba(160, 82, 45, 0.05),
+    rgba(139, 69, 19, 0.1)
+  );
+  z-index: -1;
+}
