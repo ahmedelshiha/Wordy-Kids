@@ -365,66 +365,6 @@ export default function JungleAdventureNavV2({
           )}
         </ul>
 
-        {/* Parent Menu Icon - Right Side (Mobile & Desktop) */}
-        {(showParentMenuIcon || showMobileMoreIcon) && (
-          <button
-            className={clsx(
-              "jng-parent-menu-btn",
-              // Hide on desktop unless showParentMenuOnDesktop is true
-              !showParentMenuOnDesktop && "md:hidden",
-              // Desktop-specific styling
-              showParentMenuOnDesktop && "jng-parent-menu-desktop",
-              parentMenuAnimationStyle === "breathing" && "parent-breathing",
-              parentMenuAnimationStyle === "glow" && "parent-glowing",
-            )}
-            onClick={() => {
-              if (showParentMenuIcon) {
-                handleParentMenuClick();
-              } else {
-                // Legacy support
-                triggerBreath("more");
-                if (onMobileMoreClick) onMobileMoreClick();
-              }
-            }}
-            onMouseEnter={() =>
-              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
-            }
-            onFocus={() =>
-              triggerBreath(showParentMenuIcon ? "parent-menu" : "more")
-            }
-            aria-label={
-              showParentMenuIcon ? getParentMenuAriaLabel() : "More options"
-            }
-            aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
-            aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
-          >
-            <span
-              className={clsx(
-                "jng-icon-wrap jng-icon-lifted",
-                showParentMenuIcon && "parent-icon-totem",
-                breathing[showParentMenuIcon ? "parent-menu" : "more"] &&
-                  "breath-once",
-              )}
-              aria-hidden="true"
-            >
-              {showParentMenuIcon ? (
-                <span
-                  className="jng-emoji parent-menu-emoji"
-                  style={{ fontSize: `calc(var(--jng-icon-size) * 1.1)` }}
-                >
-                  {getParentMenuIcon()}
-                </span>
-              ) : (
-                <span className="jng-svg">
-                  <MoreHorizontal size={iconSize * 0.7} />
-                </span>
-              )}
-            </span>
-            <span className="jng-label">
-              {showParentMenuIcon ? "Parents" : "More"}
-            </span>
-          </button>
-        )}
       </div>
 
       {/* Parent Menu Dialog */}
