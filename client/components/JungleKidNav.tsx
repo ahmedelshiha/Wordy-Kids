@@ -84,6 +84,12 @@ export function JungleKidNav({
   enableSounds = true,
   animations = true,
   showParentGate = true,
+
+  // 🎨 New Builder.io Animation Controls
+  idleSpeed = "slow",
+  intensity = "subtle",
+  rareEffects = true,
+
   reducedMotion = false,
   enableParticles = true,
   autoOptimize = true,
