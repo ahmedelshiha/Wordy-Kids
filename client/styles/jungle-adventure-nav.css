@@ -80,10 +80,10 @@
   cursor: pointer;
 }
 
-/* 🎉 Event-Triggered Animations - Only animate on interaction */
+/* 🎉 Event-Triggered Animations - Centralized Token System */
 .jungle-animal-icon:hover {
   animation: playful-hover 0.6s ease-out forwards;
-  transform: scale(1.1);
+  transform: scale(var(--jungle-hover-scale, 1.1)) rotate(var(--jungle-hover-rotate, 5deg));
 }
 
 .jungle-animal-icon:active,
@@ -93,7 +93,7 @@
 
 .jungle-animal-icon.active {
   animation: active-celebration 2s ease-in-out infinite;
-  transform: scale(1.05);
+  transform: scale(var(--jungle-active-scale, 1.05));
 }
 
 /* 🎯 Event-Triggered Animation Keyframes */
