@@ -1,9 +1,12 @@
 import React from "react";
-import JungleAdventureNavV2 from "../components/JungleAdventureNavV2";
+// 🚨 DEPRECATED: This example references the old V2 component
+// The new JungleAdventureNavV3 has simplified props and better integration
+import JungleAdventureNavV2 from "../components/deprecated/JungleAdventureNavV2";
 import { DEFAULT_PARENT_MENU_CONFIG } from "../lib/jungle-parent-menu-config";
 
 /**
- * Example usage of the enhanced JungleAdventureNavV2 with Parent Menu Icon
+ * DEPRECATED Example usage of the JungleAdventureNavV2 with Parent Menu Icon
+ * Please use JungleAdventureNavV3 instead for new implementations
  *
  * This example demonstrates how to use the new Parent Menu functionality
  * that replaces the old "More ..." button with a jungle-themed parent menu.
