@@ -960,23 +960,10 @@ export function InteractiveDashboardWordCard({
 
     // Optimized: Batch all state resets and reduce delay
     setTimeout(() => {
-      // Batch all state resets for better performance
-      const resetStates = () => {
-        setIsAnswered(false);
-        setFeedbackType(null);
-        setCelebrationEffect(false);
-        setShowWordDetails(false);
-        setShowHint(false);
-        setParticles([]);
-        setButtonClickedId(null);
-        setShowSuccessRipple(false);
-        setShowPracticeRipple(false);
-        setIsTransitioning(false);
-      };
-
-      // Move to next word in session
+      // Optimized: Use startTransition for non-urgent state updates
       const nextIndex = currentWordIndex + 1;
 
+      // Critical update: Move to next word immediately
       if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
         setCurrentWordIndex(nextIndex);
         if (process.env.NODE_ENV === 'development') {
@@ -988,8 +975,19 @@ export function InteractiveDashboardWordCard({
         console.log("Reached end of session words");
       }
 
-      // Apply all state resets at once
-      resetStates();
+      // Non-critical updates: Batch in startTransition for better performance
+      startTransition(() => {
+        setIsAnswered(false);
+        setFeedbackType(null);
+        setCelebrationEffect(false);
+        setShowWordDetails(false);
+        setShowHint(false);
+        setParticles([]);
+        setButtonClickedId(null);
+        setShowSuccessRipple(false);
+        setShowPracticeRipple(false);
+        setIsTransitioning(false);
+      });
     }, 150); // Reduced from 300ms to 150ms
   };
 
@@ -1648,7 +1646,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "🐸 What creature lives in our jungle?",
+                          "��� What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
@@ -1677,7 +1675,7 @@ export function InteractiveDashboardWordCard({
                           "🌴 What tropical jungle beauty is this?",
                         ],
                         hard: [
-                          "🌋 What powerful jungle force awaits?",
+                          "���� What powerful jungle force awaits?",
                           "�� Which jungle phenomenon do you see?",
                           "🌊 Can you name this jungle mystery?",
                           "🔥 What fierce jungle element is this?",
