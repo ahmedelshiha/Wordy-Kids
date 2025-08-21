@@ -229,6 +229,13 @@ export default function Index({ initialProfile }: IndexProps) {
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [kidModeEnabled, setKidModeEnabled] = useState(true);
+
+  // Parent gate states
+  const [showParentGate, setShowParentGate] = useState(false);
+  const [parentCode, setParentCode] = useState("");
+  const [parentCodeError, setParentCodeError] = useState(false);
+  const [showParentOptions, setShowParentOptions] = useState(false);
+  const correctParentCode = "PARENT2024";
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
@@ -3276,7 +3283,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
-                                            ����� Ages 3-5
+                                            ��� Ages 3-5
                                           </span>
                                           <span className="jungle-quiz-badge-audio">
                                             🎵 Audio Magic
