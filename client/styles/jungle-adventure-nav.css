@@ -197,6 +197,50 @@
   }
 }
 
+/* ===== ANIMAL CHARACTER MICRO-MOVEMENTS ===== */
+/* 🦉 Owl - gentle blink every ~10s */
+@keyframes owl-blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.3);
+  }
+}
+
+/* 🐵 Monkey - tiny tail wiggle */
+@keyframes monkey-wiggle {
+  0%, 95%, 100% {
+    transform: rotate(0deg);
+  }
+  97.5% {
+    transform: rotate(1deg);
+  }
+}
+
+/* 🦜 Parrot - slight head tilt */
+@keyframes parrot-tilt {
+  0%, 90%, 100% {
+    transform: rotate(0deg);
+  }
+  95% {
+    transform: rotate(2deg);
+  }
+}
+
+/* 🐘 Elephant - small ear flap */
+@keyframes elephant-flap {
+  0%, 88%, 100% {
+    transform: scale(1);
+  }
+  92% {
+    transform: scale(1.02);
+  }
+  96% {
+    transform: scale(1);
+  }
+}
+
 /* Gentle idle animations (replaced with breathing) */
 @keyframes gentle-sway {
   0%,
