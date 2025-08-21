@@ -1823,7 +1823,7 @@ export default function Index({ initialProfile }: IndexProps) {
         notifications.push({
           type: "celebration",
           title: "🎉 Level Up! 🎉",
-          message: `Congratulations! You've reached a new level!\n\n🌟 Keep up the amazing work!`,
+          message: `Congratulations! You've reached a new level!\n\n�� Keep up the amazing work!`,
           points: 50,
         });
       }
@@ -3071,7 +3071,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                                 type: "celebration",
                                                                 title:
                                                                   completionResult.title,
-                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n��� Category Achievement Unlocked! 🎉`,
+                                                                message: `${completionResult.message}\n\n✅ Remembered: ${completionResult.totalRemembered} words\n❌ Need practice: ${completionResult.totalWords - completionResult.totalRemembered} words\n\n🌟 Category Achievement Unlocked! 🎉`,
                                                                 points:
                                                                   completionResult.totalRemembered *
                                                                     20 +
