@@ -346,7 +346,7 @@ export function JungleKidNav({
               className="jungle-active-indicator"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: animationsSuspended ? 0 : 0.3, ease: "easeOut" }}
             />
           )}
         </motion.button>
