@@ -124,7 +124,14 @@ const App = () => {
                       <Route path="/" element={<LoginForm />} />
                       <Route path="/login" element={<LoginForm />} />
                       <Route path="/signup" element={<SignUp />} />
-                      <Route path="/app" element={<AppPage />} />
+                      <Route
+                        path="/app"
+                        element={
+                          <ErrorBoundary fallbackType="kid" componentName="AppPage">
+                            <AppPage />
+                          </ErrorBoundary>
+                        }
+                      />
                       <Route path="/profile" element={<Login />} />
                       <Route
                         path="/admin"
