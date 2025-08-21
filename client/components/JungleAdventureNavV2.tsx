@@ -374,7 +374,7 @@ export default function JungleAdventureNavV2({
                       className="jungle-dialog-btn"
                       onClick={() => {
                         setIsParentDialogOpen(false);
-                        // Navigate to parent dashboard
+                        onParentDashboard?.();
                       }}
                       aria-label="Open Parent Dashboard - View child's progress and reports"
                     >
