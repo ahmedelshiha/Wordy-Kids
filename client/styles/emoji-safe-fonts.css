@@ -1,0 +1,248 @@
+/**
+ * Emoji-Safe Font Configuration
+ * Ensures consistent emoji rendering across all devices and browsers
+ */
+
+/* Import Noto Color Emoji from Google Fonts as fallback */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
+/* Define local Noto Color Emoji font face (for performance when available) */
+@font-face {
+  font-family: "NotoColorEmoji";
+  src: url("/fonts/NotoColorEmoji.woff2") format("woff2");
+  font-display: swap; /* Improve loading performance */
+  unicode-range: U+1F600-1F64F, U+1F300-1F5FF, U+1F680-1F6FF, U+1F1E0-1F1FF, U+2600-26FF, U+2700-27BF;
+}
+
+/* Emoji-specific font stack for consistent rendering */
+.emoji {
+  font-family: 
+    "NotoColorEmoji",           /* Local Noto Color Emoji (best performance) */
+    "Noto Color Emoji",         /* Google Fonts fallback */
+    "Apple Color Emoji",        /* iOS/macOS */
+    "Segoe UI Emoji",          /* Windows */
+    "Segoe UI Symbol",         /* Windows fallback */
+    "Twemoji Mozilla",         /* Firefox */
+    "Android Emoji",           /* Android */
+    "EmojiOne Color",          /* EmojiOne */
+    sans-serif;                /* Ultimate fallback */
+  
+  /* Optimize emoji rendering */
+  font-variant-emoji: emoji;
+  text-rendering: optimizeSpeed; /* Prioritize speed over ligatures for emoji */
+  -webkit-font-feature-settings: "liga" off; /* Disable ligatures for emoji */
+  font-feature-settings: "liga" off;
+  
+  /* Prevent emoji from being selected as text */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  
+  /* Ensure consistent sizing */
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+}
+
+/* Specific classes for different emoji contexts */
+.emoji-inline {
+  @apply emoji;
+  display: inline;
+  vertical-align: middle;
+}
+
+.emoji-block {
+  @apply emoji;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emoji-large {
+  @apply emoji;
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.emoji-xlarge {
+  @apply emoji;
+  font-size: 2em;
+  line-height: 1;
+}
+
+.emoji-navigation {
+  @apply emoji;
+  font-size: 1.25em;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Jungle Adventure Navigation Emoji Styling */
+.jungle-nav-emoji {
+  @apply emoji emoji-navigation;
+  
+  /* Enhanced visibility and interaction */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Ensure proper spacing */
+  margin-right: 0.5rem;
+  
+  /* Prevent layout shift */
+  width: 1.25em;
+  height: 1.25em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jungle-nav-emoji:hover {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transform: scale(1.1);
+}
+
+/* Achievement and game emoji styling */
+.achievement-emoji {
+  @apply emoji emoji-large;
+  
+  /* Celebration effects */
+  filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.3));
+  animation: gentle-glow 3s ease-in-out infinite;
+}
+
+.game-emoji {
+  @apply emoji emoji-inline;
+  
+  /* Interactive feedback */
+  transition: transform 0.2s ease-out;
+  cursor: pointer;
+}
+
+.game-emoji:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.game-emoji:active {
+  transform: scale(0.95);
+}
+
+/* Special handling for corrupted emoji fallbacks */
+.emoji-fallback {
+  @apply emoji;
+  
+  /* Provide visual feedback for fallback state */
+  background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  font-size: 0.875em;
+  color: #6b7280;
+}
+
+/* Accessibility improvements for emoji */
+.emoji-accessible {
+  @apply emoji;
+  
+  /* Ensure screen readers can access emoji meaning */
+  position: relative;
+}
+
+.emoji-accessible[aria-label]:focus::after,
+.emoji-accessible[aria-label]:hover::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Performance optimizations */
+.emoji-optimized {
+  @apply emoji;
+  
+  /* Enable hardware acceleration for smooth animations */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Responsive emoji sizing */
+@media (max-width: 640px) {
+  .emoji-navigation {
+    font-size: 1.125em;
+  }
+  
+  .emoji-large {
+    font-size: 1.375em;
+  }
+  
+  .emoji-xlarge {
+    font-size: 1.75em;
+  }
+}
+
+@media (max-width: 480px) {
+  .emoji-navigation {
+    font-size: 1em;
+  }
+  
+  .emoji-large {
+    font-size: 1.25em;
+  }
+  
+  .emoji-xlarge {
+    font-size: 1.5em;
+  }
+}
+
+/* Animation for emoji glow effect */
+@keyframes gentle-glow {
+  0%, 100% {
+    filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.5));
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-nav-emoji,
+  .achievement-emoji,
+  .game-emoji {
+    transition: none;
+    animation: none;
+  }
+  
+  .jungle-nav-emoji:hover,
+  .game-emoji:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .emoji {
+    filter: contrast(1.2);
+  }
+  
+  .jungle-nav-emoji {
+    filter: contrast(1.2) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .emoji-fallback {
+    background: linear-gradient(45deg, #374151, #4b5563);
+    color: #d1d5db;
+  }
+}
