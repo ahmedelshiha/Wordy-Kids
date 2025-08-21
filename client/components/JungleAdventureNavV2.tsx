@@ -337,25 +337,29 @@ export default function JungleAdventureNavV2({
       {/* Parent Menu Dialog */}
       {isParentDialogOpen && (
         <Dialog open={isParentDialogOpen} onOpenChange={setIsParentDialogOpen}>
-          <DialogContent className="jungle-parent-dialog">
+          <DialogContent className="jungle-parent-dialog" aria-describedby="parent-menu-description">
             <DialogTitle className="jungle-dialog-title">
               🏠 Family Zone
             </DialogTitle>
+            <p id="parent-menu-description" className="sr-only">
+              Family controls and settings for parents and guardians
+            </p>
             <div className="jungle-dialog-backdrop">
               <div className="jungle-dialog-frame">
                 <div className="jungle-dialog-sections">
                   {parentDialogSections.dashboard && (
                     <button
-                      className="jungle-dialog-btn"
-                      onClick={() => {
-                        setIsParentDialogOpen(false);
-                        // Navigate to parent dashboard
-                      }}
-                    >
-                      <BarChart3 className="jungle-dialog-icon" />
-                      <span>📊 Parent Dashboard</span>
-                      <div className="jungle-btn-glow" />
-                    </button>
+                    className="jungle-dialog-btn"
+                    onClick={() => {
+                      setIsParentDialogOpen(false);
+                      // Navigate to parent dashboard
+                    }}
+                    aria-label="Open Parent Dashboard - View child's progress and reports"
+                  >
+                    <BarChart3 className="jungle-dialog-icon" aria-hidden="true" />
+                    <span>📊 Parent Dashboard</span>
+                    <div className="jungle-btn-glow" />
+                  </button>
                   )}
 
                   {parentDialogSections.settings && (
