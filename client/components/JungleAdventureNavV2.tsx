@@ -157,6 +157,20 @@ export default function JungleAdventureNavV2({
     }
   };
 
+  // Get accessible description for parent menu icon
+  const getParentMenuAriaLabel = () => {
+    const baseLabel = "Parent Menu";
+    switch (parentMenuIconVariant) {
+      case "shield":
+        return `${baseLabel} - Tribal Shield`;
+      case "key":
+        return `${baseLabel} - Golden Key`;
+      case "totem":
+      default:
+        return `${baseLabel} - Carved Totem`;
+    }
+  };
+
   // Handle parent menu click
   const handleParentMenuClick = () => {
     triggerBreath("parent-menu");
@@ -288,7 +302,9 @@ export default function JungleAdventureNavV2({
             }}
             onMouseEnter={() => triggerBreath(showParentMenuIcon ? "parent-menu" : "more")}
             onFocus={() => triggerBreath(showParentMenuIcon ? "parent-menu" : "more")}
-            aria-label={showParentMenuIcon ? "Parent Menu" : "More options"}
+            aria-label={showParentMenuIcon ? getParentMenuAriaLabel() : "More options"}
+            aria-expanded={showParentMenuIcon ? isParentDialogOpen : undefined}
+            aria-haspopup={showParentMenuIcon ? "dialog" : undefined}
           >
             <span
               className={clsx(
