@@ -28,6 +28,9 @@
 /* Import Jungle Adventure Word Card Styles */
 @import "./styles/jungle-adventure-word-card.css";
 
+/* Import New Jungle Adventure Nav V2 */
+@import "./styles/jungle-adventure-nav-v2.css";
+
 /* Import Desktop Quiz Optimization Styles */
 @import "./styles/desktop-quiz-optimization.css";
 

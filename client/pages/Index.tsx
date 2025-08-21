@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +12,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { JungleAdventureWordCard } from "@/components/JungleAdventureWordCard";
 import { LearningDashboard } from "@/components/LearningDashboard";
 import { QuizGame } from "@/components/QuizGame";
@@ -72,7 +78,7 @@ import { JungleAdventureParentDashboard } from "@/components/JungleAdventurePare
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import { JungleKidNav } from "@/components/JungleKidNav";
+import JungleAdventureNavV2 from "@/components/JungleAdventureNavV2";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
@@ -132,6 +138,7 @@ import {
   BookOpen,
   RotateCcw,
   Sparkles,
+  Lock,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { WordProgressAPI } from "@/lib/wordProgressApi";
@@ -229,6 +236,34 @@ export default function Index({ initialProfile }: IndexProps) {
   const [celebrationEffect, setCelebrationEffect] = useState(false);
   const [userRole, setUserRole] = useState<"child" | "parent">("child");
   const [kidModeEnabled, setKidModeEnabled] = useState(true);
+
+  // Parent gate states
+  const [showParentGate, setShowParentGate] = useState(false);
+  const [parentCode, setParentCode] = useState("");
+  const [parentCodeError, setParentCodeError] = useState(false);
+  const [showParentOptions, setShowParentOptions] = useState(false);
+  const correctParentCode = "PARENT2024";
+
+  // Parent gate handling
+  const handleParentGateSubmit = useCallback(() => {
+    if (parentCode === correctParentCode) {
+      setShowParentGate(false);
+      setShowParentOptions(true);
+      setParentCode("");
+      setParentCodeError(false);
+      // Play success sound if available
+      try {
+        audioService.playSuccessSound();
+      } catch (error) {
+        console.log("Success sound not available");
+      }
+    } else {
+      setParentCodeError(true);
+      setParentCode("");
+      setTimeout(() => setParentCodeError(false), 3000);
+    }
+  }, [parentCode]);
+
   const [showWordCreator, setShowWordCreator] = useState(false);
   const [customWords, setCustomWords] = useState<any[]>([]);
   const [backgroundAnimationsEnabled, setBackgroundAnimationsEnabled] =
@@ -2067,6 +2102,28 @@ export default function Index({ initialProfile }: IndexProps) {
             </div>
           )}
 
+          {/* Parent Gate Button - Top Right Corner */}
+          {userRole === "child" && (
+            <div className="fixed top-4 right-4 z-50">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.button
+                    onClick={() => setShowParentGate(true)}
+                    className="w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-yellow-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label="Access Family Zone and Settings"
+                  >
+                    <Crown className="w-6 h-6 text-yellow-600" />
+                  </motion.button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Family Zone & Settings</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          )}
+
           {/* Main Content with Sidebar Layout */}
           <main className="min-h-screen scroll-smooth">
             {userRole === "parent" ? (
@@ -3248,7 +3305,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Journey through magical gardens where
                                           words bloom into beautiful flowers!
                                           Listen to nature's whispers and watch
-                                          your vocabulary grow! 🌸✨
+                                          your vocabulary grow! 🌸��
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span className="jungle-quiz-badge">
@@ -3398,7 +3455,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Crystal Quest Awaits! 💎
+                                          Crystal Quest Awaits! ��
                                         </button>
                                       </div>
                                     </div>
@@ -3827,7 +3884,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "✨", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
@@ -3842,32 +3899,162 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Desktop Kid Mode Navigation */}
+          {/* Adventure Navigation */}
           {userRole === "child" && (
-            <JungleKidNav
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-              userRole={userRole}
-              onRoleChange={(role) => {
-                setUserRole(role);
-                if (role === "child") {
-                  setKidModeEnabled(true);
-                } else {
-                  setKidModeEnabled(false);
-                }
-              }}
-              onSettingsClick={() => setShowSettings(true)}
-              onAdminClick={() => navigate("/admin")}
-              theme="jungle"
-              enableSounds={true}
-              animations={true}
-              autoOptimize={true}
+            <JungleAdventureNavV2
+              activeId={activeTab}
+              onNavigate={setActiveTab}
+              pauseAnimations={showSettings}
+              iconSize={52}
+              iconLift={18}
+              items={[
+                {
+                  id: "dashboard",
+                  label: "Home Tree",
+                  emoji: "🦉",
+                  ariaLabel: "Dashboard",
+                },
+                {
+                  id: "learn",
+                  label: "Word Jungle",
+                  emoji: "🦜",
+                  ariaLabel: "Learning",
+                },
+                {
+                  id: "quiz",
+                  label: "Quiz Adventure",
+                  emoji: "🐵",
+                  ariaLabel: "Quiz Games",
+                },
+                {
+                  id: "achievements",
+                  label: "Trophy Grove",
+                  emoji: "🐘",
+                  ariaLabel: "Achievements",
+                },
+              ]}
             />
           )}
 
           {/* Floating Registration Reminder for Guest Users - Mobile Only (Desktop has side card) */}
         </>
       )}
+
+      {/* Parent Gate Dialog */}
+      <Dialog open={showParentGate} onOpenChange={setShowParentGate}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Lock className="w-5 h-5 text-yellow-600" />
+              Parent Gate
+            </DialogTitle>
+            <DialogDescription>
+              Enter the parent code to access family settings and controls.
+              <br />
+              <span className="text-xs text-gray-500 mt-2 block">
+                Hint: The code is "PARENT2024"
+              </span>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="parent-code"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Parent Code
+              </label>
+              <input
+                id="parent-code"
+                type="password"
+                value={parentCode}
+                onChange={(e) => {
+                  setParentCode(e.target.value);
+                  setParentCodeError(false);
+                }}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  parentCodeError
+                    ? "border-red-500 focus:ring-red-500 bg-red-50"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
+                placeholder="Enter code..."
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleParentGateSubmit();
+                  }
+                }}
+              />
+              {parentCodeError && (
+                <p className="text-sm text-red-600 mt-1">
+                  Incorrect code. Please try again.
+                </p>
+              )}
+            </div>
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowParentGate(false);
+                  setParentCode("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleParentGateSubmit}>Access</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Parent Options Dialog */}
+      <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Crown className="w-5 h-5 text-yellow-600" />
+              Family Zone
+            </DialogTitle>
+            <DialogDescription>
+              Access parent dashboard, settings, and family controls.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-3">
+              <Button
+                onClick={() => {
+                  setUserRole("parent");
+                  setShowParentOptions(false);
+                }}
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Users className="w-6 h-6" />
+                <div className="text-left">
+                  <div className="font-semibold text-lg">Parent Dashboard</div>
+                  <div className="text-sm text-blue-100">
+                    View detailed progress, analytics, and manage learning goals
+                  </div>
+                </div>
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setShowSettings(true);
+                  setShowParentOptions(false);
+                }}
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Settings className="w-6 h-6" />
+                <div className="text-left">
+                  <div className="font-semibold text-lg">Family Settings</div>
+                  <div className="text-sm text-green-100">
+                    Configure app preferences, safety controls, and more
+                  </div>
+                </div>
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

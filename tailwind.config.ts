@@ -159,6 +159,15 @@ export default {
             opacity: "0.97",
           },
         },
+        // Gentle emoji floating animation
+        "gentle-emoji-float": {
+          "0%, 100%": {
+            transform: "translateY(0) rotate(-2deg)",
+          },
+          "50%": {
+            transform: "translateY(-6px) rotate(2deg)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -187,6 +196,8 @@ export default {
         "serene-glow": "serene-glow 12s ease-in-out infinite",
         "peaceful-hover": "peaceful-hover 0.4s ease-out forwards",
         "calm-pulse": "calm-pulse 6s ease-in-out infinite",
+        // Gentle emoji floating animation
+        "gentle-emoji-float": "gentle-emoji-float 3s ease-in-out infinite",
       },
     },
   },

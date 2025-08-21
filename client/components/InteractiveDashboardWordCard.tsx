@@ -1080,21 +1080,21 @@ export function InteractiveDashboardWordCard({
             🔊
           </div>
 
-          {/* Main emoji with simplified animation */}
+          {/* Main emoji with enhanced visibility and gentle animation */}
           <motion.div
             key={`emoji-inner-${currentWordIndex}`}
             animate={
               !prefersReducedMotion
                 ? {
-                    y: [0, -5, 0],
-                    scale: [1, 1.02, 1],
+                    y: [0, -6, 0],
+                    rotate: [-2, 2, -2],
                   }
                 : {}
             }
             transition={
               !prefersReducedMotion
                 ? {
-                    duration: 4,
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }
@@ -1109,13 +1109,21 @@ export function InteractiveDashboardWordCard({
                   }
                 : {}
             }
-            className="text-9xl relative z-10"
-            style={{
-              filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))",
-              textShadow: "0 0 10px rgba(255, 255, 255, 0.7)",
-            }}
+            className="relative z-10 -translate-x-12"
           >
-            {currentWord.emoji}
+            {/* White glow background for visibility */}
+            <span className="absolute inset-0 blur-md bg-white/60 rounded-full scale-110 -z-10"></span>
+
+            {/* Main emoji with adjusted size */}
+            <span
+              className="text-8xl relative inline-block drop-shadow-lg"
+              style={{
+                filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.8))",
+                textShadow: "0 0 15px rgba(255, 255, 255, 0.9)",
+              }}
+            >
+              {currentWord.emoji}
+            </span>
           </motion.div>
 
           {/* Jungle Adventure Background Pattern */}
@@ -1867,7 +1875,7 @@ export function InteractiveDashboardWordCard({
                       backdropFilter: "blur(12px)",
                       backgroundColor: "rgba(34, 139, 34, 0.15)",
                     }}
-                    className="mx-auto max-w-[220px] sm:max-w-[260px] md:max-w-[280px] p-1.5 sm:p-2 md:p-2.5 rounded-xl sm:rounded-2xl border border-jungle/15 shadow-lg relative overflow-hidden"
+                    className="mx-auto max-w-sm w-full p-6 sm:p-8 rounded-2xl border border-jungle/15 shadow-lg relative overflow-hidden"
                     style={{
                       background: `
                         radial-gradient(circle at 30% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
@@ -1907,10 +1915,10 @@ export function InteractiveDashboardWordCard({
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.6, duration: 0.3 }}
                       onClick={() => setShowHint(false)}
-                      className="absolute top-1 right-1 w-5 h-5 sm:w-6 sm:h-6 bg-coral-red/80 hover:bg-coral-red text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 z-20 shadow-md"
+                      className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-800 shadow transition-all duration-200 hover:scale-110 active:scale-95 z-20"
                       aria-label="Close hint"
                     >
-                      <span className="text-xs font-bold">×</span>
+                      <span className="text-sm font-bold">✕</span>
                     </motion.button>
 
                     {/* Magical Jungle Glow */}
@@ -1968,7 +1976,7 @@ export function InteractiveDashboardWordCard({
                           transition={{ delay: 0.4, duration: 0.4 }}
                           className="flex items-center justify-between bg-white/85 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/40"
                         >
-                          <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 flex-1">
+                          <p className="text-3xl font-bold text-gray-800 flex-1">
                             {currentWord.word}
                           </p>
 

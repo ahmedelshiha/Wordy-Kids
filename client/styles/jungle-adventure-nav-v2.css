@@ -1,0 +1,173 @@
+/* Container */
+.jng-nav-v2 {
+  --jng-mobile-bar-h: 64px;
+  --jng-desktop-bar-h: 72px;
+  --jng-icon-lift: 14px; /* how far icons rise above bar (no animation) */
+  --jng-icon-size: 44px; /* icon size */
+  --jng-color-bar: rgba(14, 55, 41, 0.88);
+  --jng-color-accent: #fbbf24; /* golden indicator */
+  --jng-color-text: #f0fff6;
+  --jng-color-label: rgba(255, 255, 255, 0.88);
+  --jng-blur: saturate(1.2) blur(6px);
+  position: relative;
+  width: 100%;
+  z-index: 20;
+}
+
+.jng-mounted {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.jng-nav-v2:not(.jng-mounted) {
+  opacity: 0;
+}
+
+/* NAV BAR (mobile = bottom, desktop = top) */
+.jng-nav-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0; /* mobile first: bottom bar */
+  height: var(--jng-mobile-bar-h);
+  background: linear-gradient(
+    180deg,
+    rgba(17, 65, 50, 0.92),
+    rgba(8, 28, 22, 0.92)
+  );
+  backdrop-filter: var(--jng-blur);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+}
+
+/* Desktop keeps it at the bottom with larger height */
+@media (min-width: 1024px) {
+  .jng-nav-bar {
+    height: var(--jng-desktop-bar-h);
+    background: linear-gradient(
+      180deg,
+      rgba(13, 52, 40, 0.92),
+      rgba(11, 43, 34, 0.92)
+    );
+  }
+}
+
+.jng-nav-list {
+  margin: 0 auto;
+  padding: 0 10px;
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 980px;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.jng-nav-item {
+  display: flex;
+}
+
+/* Buttons */
+.jng-btn {
+  position: relative;
+  background: transparent;
+  border: 0;
+  color: var(--jng-color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px 6px;
+  cursor: pointer;
+  outline-offset: 3px;
+}
+
+.jng-btn .jng-label {
+  font-size: 11px;
+  line-height: 1;
+  color: var(--jng-color-label);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* ICON wrapper — lifted above bar, but NOT animated */
+.jng-icon-wrap {
+  position: relative;
+  width: var(--jng-icon-size);
+  height: var(--jng-icon-size);
+  display: grid;
+  place-items: center;
+  /* lift the icons visually above the bar (static) */
+  margin-top: calc(-1 * var(--jng-icon-lift));
+  transform: translateY(calc(-1 * var(--jng-icon-lift)));
+}
+
+.jng-emoji {
+  display: block;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.25));
+}
+
+.jng-svg {
+  width: calc(var(--jng-icon-size) * 0.85);
+  height: calc(var(--jng-icon-size) * 0.85);
+}
+
+/* Active golden indicator — subtle halo (no pulsing by default) */
+.jng-btn.is-active .jng-icon-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  box-shadow:
+    0 0 0 2px rgba(251, 191, 36, 0.28),
+    0 0 18px rgba(251, 191, 36, 0.22);
+  pointer-events: none;
+}
+
+/* INTERACTION-ONLY micro-animations (no infinite loops) */
+@keyframes breathOnce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Applied ONLY when hovering/tapping or when item becomes active */
+.breath-once .jng-emoji,
+.breath-once .jng-svg {
+  animation: breathOnce 0.8s ease-in-out both;
+}
+
+/* Hover/Tap feedback — gentle, no bouncing */
+.jng-btn:hover .jng-emoji,
+.jng-btn:focus-visible .jng-emoji,
+.jng-btn:hover .jng-svg,
+.jng-btn:focus-visible .jng-svg {
+  transform: scale(1.06);
+  transition: transform 0.15s ease;
+}
+
+/* Disable all animations if reduced-motion or globally paused */
+.jng-reduced-motion .jng-emoji,
+.jng-reduced-motion .jng-svg,
+.jng-anim-paused .jng-emoji,
+.jng-anim-paused .jng-svg {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Make room so icons can float above the bar without overlap */
+body {
+  padding-bottom: var(--jng-mobile-bar-h);
+}
+@media (min-width: 1024px) {
+  body {
+    padding-bottom: var(--jng-desktop-bar-h);
+  }
+}
