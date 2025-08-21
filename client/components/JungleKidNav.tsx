@@ -58,6 +58,11 @@ export interface JungleKidNavProps {
   animations?: boolean;
   showParentGate?: boolean;
 
+  // 🎨 New Builder.io Animation Controls
+  idleSpeed?: "slow" | "medium" | "fast";
+  intensity?: "subtle" | "normal" | "playful";
+  rareEffects?: boolean;
+
   // Performance and accessibility
   reducedMotion?: boolean;
   enableParticles?: boolean;
@@ -124,7 +129,7 @@ export function JungleKidNav({
         label: item.label,
         animal: {
           name: item.animal || "Friendly Guide",
-          emoji: item.icon || "���",
+          emoji: item.icon || "🌟",
           sound: "default",
           description: `Navigate to ${item.label}`,
         },
