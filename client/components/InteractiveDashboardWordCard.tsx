@@ -2190,22 +2190,22 @@ export function InteractiveDashboardWordCard({
                       type: "spring",
                       damping: 20,
                     }}
-                    className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-2xl p-4 text-center shadow-lg backdrop-blur-sm ring-1 ring-yellow-200/20"
+                    className="bg-gradient-to-br from-yellow-50 via-orange-50/50 to-amber-50 border border-yellow-200/60 rounded-xl p-3 text-center shadow-md backdrop-blur-sm ring-1 ring-yellow-200/20"
                     role="region"
                     aria-label="Word hint and definition"
                     aria-live="polite"
                   >
-                    <div className="flex items-center justify-center gap-2 mb-2">
+                    <div className="flex items-center justify-center gap-1 mb-1">
                       <Lightbulb
-                        className="w-4 h-4 text-yellow-600"
+                        className="w-3 h-3 text-yellow-600"
                         aria-hidden="true"
                       />
-                      <h3 className="text-sm font-semibold text-yellow-800">
+                      <h3 className="text-xs font-semibold text-yellow-800">
                         💡 Definition:
                       </h3>
                     </div>
                     <p
-                      className="text-yellow-700 text-sm leading-relaxed"
+                      className="text-yellow-700 text-xs leading-relaxed"
                       id="hint-text"
                     >
                       "{currentWord.definition}"
