@@ -147,6 +147,7 @@ export default function JungleAdventureNavV2({
   onParentSettings,
   onParentSignOut,
   onParentRegister,
+  isGuest = true,
   showMobileMoreIcon = false,
   onMobileMoreClick,
 }: JungleAdventureNavV2Props) {
