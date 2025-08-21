@@ -16,7 +16,7 @@ import {
   LogOut,
   UserPlus,
 } from "lucide-react";
-import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 
 export type JungleNavItem = {
   id: string;
