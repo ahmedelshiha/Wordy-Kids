@@ -203,6 +203,33 @@ export default function JungleAdventureNavV2({
             );
           })}
         </ul>
+
+        {/* Mobile More Icon - Right Side (Mobile Only) */}
+        {showMobileMoreIcon && (
+          <button
+            className="jng-more-btn md:hidden"
+            onClick={() => {
+              triggerBreath("more");
+              if (onMobileMoreClick) onMobileMoreClick();
+            }}
+            onMouseEnter={() => triggerBreath("more")}
+            onFocus={() => triggerBreath("more")}
+            aria-label="More options"
+          >
+            <span
+              className={clsx(
+                "jng-icon-wrap jng-icon-lifted",
+                breathing["more"] && "breath-once",
+              )}
+              aria-hidden="true"
+            >
+              <span className="jng-svg">
+                <MoreHorizontal size={iconSize * 0.7} />
+              </span>
+            </span>
+            <span className="jng-label">More</span>
+          </button>
+        )}
       </div>
     </nav>
   );
