@@ -3214,3 +3214,6 @@
     padding: 0.5rem 0.75rem;
   }
 }
+
+/* DISABLE ALL ANIMATIONS - Must be last import */
+@import "./styles/disable-all-animations.css";
