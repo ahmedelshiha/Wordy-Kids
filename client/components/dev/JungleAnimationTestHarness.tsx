@@ -47,6 +47,89 @@ export const JungleAnimationTestHarness: React.FC<
     ]);
   };
 
+  // 🎮 Pause/Play Animation Control
+  const toggleAnimationsPause = () => {
+    const newPaused = !animationsPaused;
+    setAnimationsPaused(newPaused);
+
+    // Apply pause to all animated elements
+    const animatedElements = document.querySelectorAll('[class*="jungle-animal-icon"], [class*="jungle-floating"]');
+    animatedElements.forEach(element => {
+      const htmlElement = element as HTMLElement;
+      if (newPaused) {
+        htmlElement.style.animationPlayState = 'paused';
+      } else {
+        htmlElement.style.animationPlayState = 'running';
+      }
+    });
+
+    addTestResult(newPaused ? '⏸️ All animations paused' : '▶️ All animations resumed');
+  };
+
+  // 🚀 Speed Stress Test - All animals fast + playful
+  const runSpeedStressTest = () => {
+    if (stressTestRunning) {
+      // Stop stress test
+      setStressTestRunning(false);
+      if (fpsIntervalRef.current) {
+        clearInterval(fpsIntervalRef.current);
+        fpsIntervalRef.current = null;
+      }
+
+      // Reset to normal config
+      testAnimationConfig({ idleSpeed: 'slow', intensity: 'subtle' });
+      addTestResult('🏁 Speed stress test stopped');
+      return;
+    }
+
+    setStressTestRunning(true);
+    addTestResult('🚀 Starting speed stress test...');
+
+    // Apply maximum animation load
+    testAnimationConfig({
+      idleSpeed: 'fast',
+      intensity: 'playful',
+      rareEffects: true,
+      idlePauseDuration: 'short'
+    });
+
+    // Trigger all animals simultaneously
+    ['owl', 'parrot', 'monkey', 'elephant'].forEach(animal => {
+      triggerAnimalAnimation(animal as any);
+    });
+
+    // Start FPS monitoring
+    frameCountRef.current = 0;
+    const startTime = performance.now();
+
+    const measureFPS = () => {
+      frameCountRef.current++;
+      if (frameCountRef.current % 60 === 0) { // Update every 60 frames
+        const elapsed = (performance.now() - startTime) / 1000;
+        const fps = Math.round(frameCountRef.current / elapsed);
+        setFpsCounter(fps);
+
+        if (fps < 30) {
+          addTestResult(`⚠️ Low FPS detected: ${fps} fps`);
+        }
+      }
+
+      if (stressTestRunning) {
+        requestAnimationFrame(measureFPS);
+      }
+    };
+
+    requestAnimationFrame(measureFPS);
+
+    // Auto-stop after 30 seconds to prevent battery drain
+    setTimeout(() => {
+      if (stressTestRunning) {
+        runSpeedStressTest(); // Stop the test
+        addTestResult('⏰ Stress test auto-stopped after 30s');
+      }
+    }, 30000);
+  };
+
   const triggerAnimalAnimation = (
     animal: "owl" | "parrot" | "monkey" | "elephant",
   ) => {
