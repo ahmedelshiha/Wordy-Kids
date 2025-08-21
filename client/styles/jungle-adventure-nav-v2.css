@@ -2,8 +2,8 @@
 .jng-nav-v2 {
   --jng-mobile-bar-h: 64px;
   --jng-desktop-bar-h: 72px;
-  --jng-icon-lift: 14px;  /* how far icons rise above bar (no animation) */
-  --jng-icon-size: 44px;  /* icon size */
+  --jng-icon-lift: 14px; /* how far icons rise above bar (no animation) */
+  --jng-icon-size: 44px; /* icon size */
   --jng-color-bar: rgba(14, 55, 41, 0.88);
   --jng-color-accent: #fbbf24; /* golden indicator */
   --jng-color-text: #f0fff6;
@@ -14,8 +14,13 @@
   z-index: 20;
 }
 
-.jng-mounted { opacity: 1; transition: opacity .4s ease; }
-.jng-nav-v2:not(.jng-mounted) { opacity: 0; }
+.jng-mounted {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.jng-nav-v2:not(.jng-mounted) {
+  opacity: 0;
+}
 
 /* NAV BAR (mobile = bottom, desktop = top) */
 .jng-nav-bar {
@@ -24,7 +29,11 @@
   right: 0;
   bottom: 0; /* mobile first: bottom bar */
   height: var(--jng-mobile-bar-h);
-  background: linear-gradient(180deg, rgba(17, 65, 50, .92), rgba(8, 28, 22, .92));
+  background: linear-gradient(
+    180deg,
+    rgba(17, 65, 50, 0.92),
+    rgba(8, 28, 22, 0.92)
+  );
   backdrop-filter: var(--jng-blur);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
@@ -39,7 +48,11 @@
     height: var(--jng-desktop-bar-h);
     border-top: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    background: linear-gradient(180deg, rgba(13, 52, 40, .92), rgba(11, 43, 34, .92));
+    background: linear-gradient(
+      180deg,
+      rgba(13, 52, 40, 0.92),
+      rgba(11, 43, 34, 0.92)
+    );
   }
 }
 
@@ -56,7 +69,9 @@
   align-items: end;
 }
 
-.jng-nav-item { display: flex; }
+.jng-nav-item {
+  display: flex;
+}
 
 /* Buttons */
 .jng-btn {
@@ -77,7 +92,7 @@
   font-size: 11px;
   line-height: 1;
   color: var(--jng-color-label);
-  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 
 /* ICON wrapper — lifted above bar, but NOT animated */
@@ -89,12 +104,12 @@
   place-items: center;
   /* lift the icons visually above the bar (static) */
   margin-top: calc(-1 * var(--jng-icon-lift));
-  transform: translateY( calc(-1 * var(--jng-icon-lift)) );
+  transform: translateY(calc(-1 * var(--jng-icon-lift)));
 }
 
 .jng-emoji {
   display: block;
-  filter: drop-shadow(0 2px 0 rgba(0,0,0,.25));
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.25));
 }
 
 .jng-svg {
@@ -108,21 +123,29 @@
   position: absolute;
   inset: -6px;
   border-radius: 9999px;
-  box-shadow: 0 0 0 2px rgba(251, 191, 36, .28), 0 0 18px rgba(251,191,36,.22);
+  box-shadow:
+    0 0 0 2px rgba(251, 191, 36, 0.28),
+    0 0 18px rgba(251, 191, 36, 0.22);
   pointer-events: none;
 }
 
 /* INTERACTION-ONLY micro-animations (no infinite loops) */
 @keyframes breathOnce {
-  0%   { transform: scale(1); }
-  30%  { transform: scale(1.06); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Applied ONLY when hovering/tapping or when item becomes active */
 .breath-once .jng-emoji,
 .breath-once .jng-svg {
-  animation: breathOnce .8s ease-in-out both;
+  animation: breathOnce 0.8s ease-in-out both;
 }
 
 /* Hover/Tap feedback — gentle, no bouncing */
@@ -131,7 +154,7 @@
 .jng-btn:hover .jng-svg,
 .jng-btn:focus-visible .jng-svg {
   transform: scale(1.06);
-  transition: transform .15s ease;
+  transition: transform 0.15s ease;
 }
 
 /* Disable all animations if reduced-motion or globally paused */
@@ -144,7 +167,12 @@
 }
 
 /* Make room so icons can float above the bar without overlap */
-body { padding-bottom: var(--jng-mobile-bar-h); }
+body {
+  padding-bottom: var(--jng-mobile-bar-h);
+}
 @media (min-width: 1024px) {
-  body { padding-top: var(--jng-desktop-bar-h); padding-bottom: 0; }
+  body {
+    padding-top: var(--jng-desktop-bar-h);
+    padding-bottom: 0;
+  }
 }

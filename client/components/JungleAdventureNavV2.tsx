@@ -38,10 +38,25 @@ const DEFAULT_ITEMS: JungleNavItem[] = [
   { id: "home", label: "Home Tree", emoji: "🦉", ariaLabel: "Home Tree" },
   { id: "learn", label: "Book Jungle", emoji: "🦜", ariaLabel: "Learning" },
   { id: "play", label: "Adventure Games", emoji: "🐵", ariaLabel: "Play" },
-  { id: "achievements", label: "Trophy Grove", emoji: "🐘", ariaLabel: "Achievements" },
+  {
+    id: "achievements",
+    label: "Trophy Grove",
+    emoji: "🐘",
+    ariaLabel: "Achievements",
+  },
   // Non-animal system icons (safe)
-  { id: "map", label: "Explore", icon: <Compass aria-hidden="true" />, ariaLabel: "Explore" },
-  { id: "streak", label: "Streak", icon: <Flame aria-hidden="true" />, ariaLabel: "Daily Streak" },
+  {
+    id: "map",
+    label: "Explore",
+    icon: <Compass aria-hidden="true" />,
+    ariaLabel: "Explore",
+  },
+  {
+    id: "streak",
+    label: "Streak",
+    icon: <Flame aria-hidden="true" />,
+    ariaLabel: "Daily Streak",
+  },
 ];
 
 function useReducedMotion(): boolean {
@@ -96,7 +111,9 @@ export default function JungleAdventureNavV2({
     setMounted(true);
     return () => {
       // cleanup timers
-      Object.values(breathTimers.current).forEach((t) => window.clearTimeout(t));
+      Object.values(breathTimers.current).forEach((t) =>
+        window.clearTimeout(t),
+      );
     };
   }, []);
 
@@ -115,7 +132,7 @@ export default function JungleAdventureNavV2({
       ["--jng-icon-lift" as any]: `${iconLift}px`,
       ["--jng-icon-size" as any]: `${iconSize}px`,
     }),
-    [mobileBarHeight, desktopBarHeight, iconLift, iconSize]
+    [mobileBarHeight, desktopBarHeight, iconLift, iconSize],
   );
 
   return (
@@ -125,7 +142,7 @@ export default function JungleAdventureNavV2({
         mounted && "jng-mounted",
         pauseAnimations && "jng-anim-paused",
         reducedMotion && "jng-reduced-motion",
-        className
+        className,
       )}
       style={styleVars}
       aria-label="Jungle Adventure Navigation"
@@ -144,7 +161,7 @@ export default function JungleAdventureNavV2({
                   className={clsx(
                     "jng-btn",
                     isActive && "is-active",
-                    isBreathing && "breath-once"
+                    isBreathing && "breath-once",
                   )}
                   onMouseEnter={() => triggerBreath(item.id)}
                   onFocus={() => triggerBreath(item.id)}
@@ -159,12 +176,15 @@ export default function JungleAdventureNavV2({
                     className={clsx(
                       "jng-icon-wrap",
                       // keep icons visually lifted above the bar
-                      "jng-icon-lifted"
+                      "jng-icon-lifted",
                     )}
                     aria-hidden="true"
                   >
                     {item.emoji ? (
-                      <span className="jng-emoji" style={{ fontSize: `calc(var(--jng-icon-size) * 0.9)` }}>
+                      <span
+                        className="jng-emoji"
+                        style={{ fontSize: `calc(var(--jng-icon-size) * 0.9)` }}
+                      >
                         {item.emoji}
                       </span>
                     ) : (
