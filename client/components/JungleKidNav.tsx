@@ -97,7 +97,12 @@ export interface JungleKidNavProps {
   // "micro-movements" - Animal character micro-movements (owl blinks, monkey wiggles, etc)
   // "full-experience" - All effects combined for maximum immersion
   // "none" - No animations (accessibility mode)
-  animationStyle?: "calm-breathing" | "soft-glow" | "micro-movements" | "full-experience" | "none";
+  animationStyle?:
+    | "calm-breathing"
+    | "soft-glow"
+    | "micro-movements"
+    | "full-experience"
+    | "none";
 
   // Performance and accessibility
   reducedMotion?: boolean;
@@ -156,9 +161,11 @@ export function JungleKidNav({
 
   // Initialize animation controls
   const animationControls = useJungleNavAnimations({
-    enableAnimations: navState.deviceCapabilities.animations && !animationsSuspended,
+    enableAnimations:
+      navState.deviceCapabilities.animations && !animationsSuspended,
     enableSounds: navState.deviceCapabilities.sounds && !animationsSuspended,
-    enableParticles: navState.deviceCapabilities.particles && !animationsSuspended,
+    enableParticles:
+      navState.deviceCapabilities.particles && !animationsSuspended,
   });
 
   // Use custom menu items if provided, otherwise use default jungle items
@@ -344,7 +351,10 @@ export function JungleKidNav({
           animate={{ opacity: 1, y: 0 }}
           transition={{
             delay: index * 0.1,
-            duration: navState.deviceCapabilities.animations && !animationsSuspended ? 0.3 : 0,
+            duration:
+              navState.deviceCapabilities.animations && !animationsSuspended
+                ? 0.3
+                : 0,
           }}
           whileHover={
             navState.deviceCapabilities.animations && !animationsSuspended
@@ -381,13 +391,15 @@ export function JungleKidNav({
               // No animations override
               animationStyle === "none" && "no-animations",
               // Apply animation style classes based on preset (only if animations enabled)
-              navState.deviceCapabilities.animations && animationStyle !== "none" && {
-                "with-glow": animationStyle === "soft-glow",
-                "micro-movements": animationStyle === "micro-movements",
-                "full-experience": animationStyle === "full-experience",
-                [item.animal.name.toLowerCase().replace(" ", "")]:
-                  animationStyle === "micro-movements" || animationStyle === "full-experience"
-              },
+              navState.deviceCapabilities.animations &&
+                animationStyle !== "none" && {
+                  "with-glow": animationStyle === "soft-glow",
+                  "micro-movements": animationStyle === "micro-movements",
+                  "full-experience": animationStyle === "full-experience",
+                  [item.animal.name.toLowerCase().replace(" ", "")]:
+                    animationStyle === "micro-movements" ||
+                    animationStyle === "full-experience",
+                },
             )}
           >
             {item.animal.emoji}
@@ -415,7 +427,10 @@ export function JungleKidNav({
               className="jungle-active-indicator"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ duration: animationsSuspended ? 0 : 0.3, ease: "easeOut" }}
+              transition={{
+                duration: animationsSuspended ? 0 : 0.3,
+                ease: "easeOut",
+              }}
             />
           )}
         </motion.button>

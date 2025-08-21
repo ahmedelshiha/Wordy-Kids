@@ -148,7 +148,8 @@
 /* ===== KID-FRIENDLY BREATHING ANIMATIONS ===== */
 /* Default gentle breathing animation - like a friendly creature breathing */
 @keyframes breathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -158,7 +159,8 @@
 
 /* Alternative calm breathing for default state */
 @keyframes calm-breathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -169,17 +171,19 @@
 /* ===== SUBTLE GLOW/PULSE ANIMATIONS ===== */
 /* Soft jungle firefly glow - no harsh flashing */
 @keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0px rgba(255,255,0,0);
+  0%,
+  100% {
+    box-shadow: 0 0 0px rgba(255, 255, 0, 0);
   }
   50% {
-    box-shadow: 0 0 15px rgba(255,255,100,0.6);
+    box-shadow: 0 0 15px rgba(255, 255, 100, 0.6);
   }
 }
 
 /* Green jungle glow variation */
 @keyframes jungle-glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0px rgba(76, 175, 80, 0);
   }
   50% {
@@ -189,7 +193,8 @@
 
 /* Soft accent glow for active elements */
 @keyframes soft-accent-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0px rgba(255, 193, 7, 0);
   }
   50% {
@@ -200,7 +205,9 @@
 /* ===== ANIMAL CHARACTER MICRO-MOVEMENTS ===== */
 /* 🦉 Owl - gentle blink every ~10s */
 @keyframes owl-blink {
-  0%, 90%, 100% {
+  0%,
+  90%,
+  100% {
     transform: scaleY(1);
   }
   95% {
@@ -210,7 +217,9 @@
 
 /* 🐵 Monkey - tiny tail wiggle */
 @keyframes monkey-wiggle {
-  0%, 95%, 100% {
+  0%,
+  95%,
+  100% {
     transform: rotate(0deg);
   }
   97.5% {
@@ -220,7 +229,9 @@
 
 /* 🦜 Parrot - slight head tilt */
 @keyframes parrot-tilt {
-  0%, 90%, 100% {
+  0%,
+  90%,
+  100% {
     transform: rotate(0deg);
   }
   95% {
@@ -230,7 +241,9 @@
 
 /* 🐘 Elephant - small ear flap */
 @keyframes elephant-flap {
-  0%, 88%, 100% {
+  0%,
+  88%,
+  100% {
     transform: scale(1);
   }
   92% {

@@ -132,7 +132,7 @@ body.jungle-animations-suspended .jungle-nav-item {
 
 /* Keep focus indicators working */
 body.jungle-animations-suspended *:focus {
-  outline: 2px solid #4CAF50 !important;
+  outline: 2px solid #4caf50 !important;
   outline-offset: 2px !important;
 }
 
