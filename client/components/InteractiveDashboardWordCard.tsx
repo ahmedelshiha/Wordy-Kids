@@ -2211,22 +2211,12 @@ export function InteractiveDashboardWordCard({
                         </h2>
                       </motion.div>
 
-                      {/* Achievement-Style Word Container */}
+                      {/* Word Display on Green Background */}
                       <motion.div
                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.6 }}
-                        className="relative"
-                        style={{
-                          background: "rgba(255, 255, 255, 0.95)",
-                          border: "2px solid rgba(255, 215, 0, 0.6)",
-                          borderRadius: "12px",
-                          padding: "0.75rem",
-                          boxShadow: `
-                            0 4px 12px rgba(0, 0, 0, 0.2),
-                            inset 0 1px 1px rgba(255, 255, 255, 0.8)
-                          `,
-                        }}
+                        className="relative mb-3"
                       >
                         {/* Large Word Display with Speaker */}
                         <motion.div
