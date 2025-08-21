@@ -235,7 +235,7 @@ export function InteractiveDashboardWordCard({
     "🦁 Roar into reading!",
     "🐯 Pounce on new words!",
     "🌳 Climb the learning tree!",
-    "🦋 Flutter through phonics!",
+    "��� Flutter through phonics!",
   ];
 
   // Systematic progression state - DISABLED for clean UI
@@ -2253,8 +2253,9 @@ export function InteractiveDashboardWordCard({
                     }}
                     disabled={isAnswered}
                     className={cn(
-                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 py-2 sm:py-3 md:py-4 px-2 sm:px-3 min-h-[48px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
+                      "w-full text-white font-bold border-0 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-100 py-3 sm:py-3 md:py-4 px-3 sm:px-3 min-h-[55px] sm:min-h-[56px] md:min-h-[64px] relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none touch-manipulation",
                       "bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 active:from-orange-600 active:to-amber-700",
+                      "jungle-button-glow",
                     )}
                     aria-label={
                       showHint
