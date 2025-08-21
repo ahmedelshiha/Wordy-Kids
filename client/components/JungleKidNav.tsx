@@ -134,6 +134,23 @@ export function JungleKidNav({
   );
   const [isPerformanceOptimized, setIsPerformanceOptimized] = useState(false);
 
+  // 🎨 Apply CSS Animation Properties
+  useEffect(() => {
+    const root = document.documentElement;
+    const cssProperties = animationManager.getCSSProperties();
+
+    Object.entries(cssProperties).forEach(([property, value]) => {
+      root.style.setProperty(property, value);
+    });
+
+    // Cleanup on unmount
+    return () => {
+      Object.keys(cssProperties).forEach(property => {
+        root.style.removeProperty(property);
+      });
+    };
+  }, [animationManager]);
+
   // Parent gate code
   const correctParentCode = "PARENT2024";
 
