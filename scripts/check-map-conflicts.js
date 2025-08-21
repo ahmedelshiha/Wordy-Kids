@@ -7,7 +7,11 @@
 
 import fs from 'fs';
 import path from 'path';
-import { glob } from 'glob';
+import { fileURLToPath } from 'url';
+
+// Get directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Colors for console output
 const colors = {
@@ -50,23 +54,30 @@ const conflictPatterns = [
     severity: 'error'
   },
   {
-    pattern: /class\s+Map\s*{/,
+    pattern: /class\s+Map\s*/,
     message: 'Found class declaration using reserved name "Map".',
     severity: 'error'
   }
 ];
 
-// Additional reserved names to check
-const reservedNames = ['Set', 'Date', 'Error', 'Promise', 'Array', 'Object', 'String', 'Number'];
-
-// Generate patterns for other reserved names
-reservedNames.forEach(name => {
-  conflictPatterns.push({
-    pattern: new RegExp(`import\\s*{[^}]*\\b${name}\\b[^}]*}\\s*from\\s*['"]lucide-react['"]`),
-    message: `Found bare "${name}" import from lucide-react. Use "${name} as ${name}Icon" instead.`,
-    severity: 'warning'
+function walkDir(dir, fileList = []) {
+  const files = fs.readdirSync(dir);
+  
+  files.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+    
+    if (stat.isDirectory()) {
+      if (!file.startsWith('.') && !file.includes('node_modules')) {
+        walkDir(filePath, fileList);
+      }
+    } else if (/\.(ts|tsx|js|jsx)$/.test(file)) {
+      fileList.push(filePath);
+    }
   });
-});
+  
+  return fileList;
+}
 
 function checkFile(filePath) {
   try {
@@ -97,44 +108,48 @@ function checkFile(filePath) {
 function main() {
   log(colors.blue, '🔍 Checking for Map naming conflicts...\n');
 
+  // Get project root (one level up from scripts dir)
+  const projectRoot = path.resolve(__dirname, '..');
+  
   // Find all TypeScript/JavaScript files
-  const patterns = [
-    'client/**/*.{ts,tsx,js,jsx}',
-    'server/**/*.{ts,tsx,js,jsx}',
-    'shared/**/*.{ts,tsx,js,jsx}'
-  ];
+  const dirsToCheck = ['client', 'server', 'shared'].map(dir => path.join(projectRoot, dir));
+  let allFiles = [];
+  
+  dirsToCheck.forEach(dir => {
+    if (fs.existsSync(dir)) {
+      allFiles = allFiles.concat(walkDir(dir));
+    }
+  });
 
   let totalIssues = 0;
   let errorCount = 0;
   let warningCount = 0;
 
-  patterns.forEach(async pattern => {
-    const files = await glob(pattern);
+  allFiles.forEach(file => {
+    const issues = checkFile(file);
     
-    files.forEach(file => {
-      const issues = checkFile(file);
+    if (issues.length > 0) {
+      // Make path relative to project root for cleaner display
+      const relativePath = path.relative(projectRoot, file);
+      log(colors.yellow, `📄 ${relativePath}:`);
       
-      if (issues.length > 0) {
-        log(colors.yellow, `📄 ${file}:`);
+      issues.forEach(issue => {
+        const color = issue.severity === 'error' ? colors.red : colors.yellow;
+        const prefix = issue.severity === 'error' ? '❌' : '⚠️';
         
-        issues.forEach(issue => {
-          const color = issue.severity === 'error' ? colors.red : colors.yellow;
-          const prefix = issue.severity === 'error' ? '❌' : '⚠️';
-          
-          log(color, `  ${prefix} Line ${issue.line}: ${issue.message}`);
-          log(colors.reset, `     ${issue.content}`);
-          
-          if (issue.severity === 'error') {
-            errorCount++;
-          } else {
-            warningCount++;
-          }
-          totalIssues++;
-        });
+        log(color, `  ${prefix} Line ${issue.line}: ${issue.message}`);
+        log(colors.reset, `     ${issue.content}`);
         
-        console.log('');
-      }
-    });
+        if (issue.severity === 'error') {
+          errorCount++;
+        } else {
+          warningCount++;
+        }
+        totalIssues++;
+      });
+      
+      console.log('');
+    }
   });
 
   // Summary
