@@ -1523,7 +1523,7 @@ export function InteractiveDashboardWordCard({
                           return "⭐ SUPERSTAR! Amazing effort!";
                         if (wordsLearned >= goal * 1.5)
                           return "🚀 Beyond awesome! Keep going!";
-                        return "��� Goal achieved! You're incredible!";
+                        return "🌟 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
                         return "🌟 Almost there, superstar!";
@@ -1615,7 +1615,7 @@ export function InteractiveDashboardWordCard({
                     const jungleExplorers = {
                       easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
                       medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
-                      hard: ["🐲", "🦅", "🐺", "🐆", "����"],
+                      hard: ["🐲", "🦅", "🐺", "🐆", "🦁"],
                     };
 
                     // Category-specific prompts
@@ -1671,18 +1671,18 @@ export function InteractiveDashboardWordCard({
                           "🥭 What exotic jungle fruit is this?",
                           "🍍 Which tropical jungle treasure awaits?",
                           "🥑 Can you identify this jungle nutrition?",
-                          "��� What jungle harvest is this?",
+                          "🌽 What jungle harvest is this?",
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
-                          "���� Which ancient jungle spice awaits?",
+                          "🌶️ Which ancient jungle spice awaits?",
                           "🌶️ Can you name this fiery jungle flavor?",
-                          "�� What powerful jungle ingredient is this?",
+                          "🌿 What powerful jungle ingredient is this?",
                         ],
                       },
                       Objects: {
                         easy: [
-                          "��� What jungle tool is this?",
+                          "🔧 What jungle tool is this?",
                           "🎒 Which jungle gear do you see?",
                           "🧭 Can you name this jungle helper?",
                           "⛺ What jungle shelter is this?",
@@ -1727,7 +1727,7 @@ export function InteractiveDashboardWordCard({
                     // Progress-based encouragement
                     const progressPrompts = {
                       0: jungleAdventureMessages[currentMessageIndex],
-                      25: "��� You're exploring well, jungle explorer!",
+                      25: "🌟 You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
                       90: "👑 Final jungle challenges await!",
@@ -1853,7 +1853,7 @@ export function InteractiveDashboardWordCard({
                       Family: "👨‍👩‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
-                      Clothes: "����",
+                      Clothes: "👕",
                     };
 
                     const emoji = categoryEmojis[category] || "🌟";
@@ -2012,7 +2012,7 @@ export function InteractiveDashboardWordCard({
                           }}
                           className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                         >
-                          �����
+                          🌟
                         </motion.div>
                       )}
                     </div>
