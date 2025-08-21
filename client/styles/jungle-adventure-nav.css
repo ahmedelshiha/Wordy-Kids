@@ -96,7 +96,51 @@
   transform: scale(1.05);
 }
 
-/* Animal-specific animations */
+/* 🎯 Event-Triggered Animation Keyframes */
+@keyframes playful-hover {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15) rotate(5deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(0deg);
+  }
+}
+
+@keyframes celebration-tap {
+  0% {
+    transform: scale(1.1);
+  }
+  25% {
+    transform: scale(1.3) rotate(10deg);
+    filter: brightness(1.3) drop-shadow(0 8px 16px rgba(255, 215, 0, 0.6));
+  }
+  50% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.15) rotate(2deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(0deg);
+    filter: brightness(1.1) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.3));
+  }
+}
+
+@keyframes active-celebration {
+  0%, 100% {
+    transform: scale(1.05);
+    filter: brightness(1.1) drop-shadow(0 6px 12px rgba(255, 215, 0, 0.3));
+  }
+  50% {
+    transform: scale(1.08) rotateY(5deg);
+    filter: brightness(1.2) drop-shadow(0 8px 16px rgba(255, 215, 0, 0.5));
+  }
+}
+
+/* Animal-specific hover animations */
 @keyframes owl-hoot {
   0%,
   100% {
