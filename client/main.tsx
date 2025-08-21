@@ -2,11 +2,15 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 
-// 🎨 Register Builder.io components
+// 🎨 Register Builder.io components (optional - only if Builder.io is available)
 import { registerJungleKidNavComponent } from "./lib/builder-io-components";
 
-// Initialize Builder.io component registration
-registerJungleKidNavComponent();
+// Initialize Builder.io component registration (gracefully handles missing dependency)
+try {
+  registerJungleKidNavComponent();
+} catch (error) {
+  console.log('ℹ️ Builder.io registration skipped:', error?.message || 'Unknown error');
+}
 
 // Create the root only once
 const rootElement = document.getElementById("root");
