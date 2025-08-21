@@ -695,11 +695,14 @@ export function InteractiveDashboardWordCard({
       triggerHapticFeedback("light"); // Light feedback for skip
     }
 
-    console.log(`Word Action: ${currentWord.word} - ${status}`, {
-      wordId: currentWord.id,
-      sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
-      sessionStats,
-    });
+    // Optimized: Reduce console logging in production
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Word Action: ${currentWord.word} - ${status}`, {
+        wordId: currentWord.id,
+        sessionProgress: `${currentWordIndex + 1}/${SESSION_SIZE}`,
+        sessionStats,
+      });
+    }
 
     // Mark as answered immediately to prevent double-clicks
     setIsAnswered(true);
@@ -741,51 +744,36 @@ export function InteractiveDashboardWordCard({
     if (status === "remembered") {
       setCelebrationEffect(true);
 
-      // Play jungle celebration sound based on difficulty with proper error handling
+      // Optimized: Play jungle celebration sound with faster execution
       try {
         const difficulty = currentWord.difficulty || "medium";
-        switch (difficulty) {
-          case "easy":
-            // Gentle jungle celebration
-            enhancedAudioService.playSuccessSound();
-            setTimeout(() => {
-              try {
-                audioService.playClickSound(); // Additional gentle sound
-              } catch (e) {
-                console.log("Additional sound effect not available");
-              }
-            }, 200);
-            break;
-          case "medium":
-            // Adventure jungle celebration
-            enhancedAudioService.playSuccessSound();
-            setTimeout(() => {
-              try {
-                audioService.playWhooshSound(); // Additional adventure sound
-              } catch (e) {
-                console.log("Additional sound effect not available");
-              }
-            }, 200);
-            break;
-          case "hard":
-            // Epic jungle victory
-            enhancedAudioService.playSuccessSound();
-            setTimeout(() => {
-              try {
-                audioService.playCheerSound(); // Additional victory sound
-              } catch (e) {
-                console.log("Additional sound effect not available");
-              }
-            }, 200);
-            break;
-        }
+        // Play primary sound immediately
+        enhancedAudioService.playSuccessSound();
+
+        // Queue secondary sound without blocking (optimized timing)
+        setTimeout(() => {
+          try {
+            switch (difficulty) {
+              case "easy":
+                audioService.playClickSound();
+                break;
+              case "medium":
+                audioService.playWhooshSound();
+                break;
+              case "hard":
+                audioService.playCheerSound();
+                break;
+            }
+          } catch (e) {
+            // Silent fail for better performance
+          }
+        }, 100); // Reduced from 200ms to 100ms
       } catch (error) {
-        console.log("Primary success sound failed, using basic fallback");
         // Fallback to basic audioService
         try {
           audioService.playSuccessSound();
         } catch (fallbackError) {
-          console.log("All success sounds failed:", fallbackError);
+          // Silent fail for better performance
         }
       }
 
@@ -929,50 +917,57 @@ export function InteractiveDashboardWordCard({
       return;
     }
 
-    // Auto-advance to next word after progress is recorded
+    // Auto-advance to next word after progress is recorded (optimized timing)
     setTimeout(
       () => {
         advanceToNextWord();
       },
-      status === "remembered" ? 1500 : 800,
+      status === "remembered" ? 800 : 400,
     );
   };
 
   const advanceToNextWord = () => {
-    console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
+    // Optimized: Reduce console logging in production
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Advancing from word ${currentWordIndex + 1}/${SESSION_SIZE}`);
+    }
 
     // Start transition effect
     setIsTransitioning(true);
 
-    // Brief delay for smooth transition
+    // Optimized: Batch all state resets and reduce delay
     setTimeout(() => {
-      // Reset states for next word
-      setIsAnswered(false);
-      setFeedbackType(null);
-      setCelebrationEffect(false);
-      setShowWordDetails(false);
-      setShowHint(false);
-      setParticles([]);
-      setButtonClickedId(null);
-      setShowSuccessRipple(false);
-      setShowPracticeRipple(false);
+      // Batch all state resets for better performance
+      const resetStates = () => {
+        setIsAnswered(false);
+        setFeedbackType(null);
+        setCelebrationEffect(false);
+        setShowWordDetails(false);
+        setShowHint(false);
+        setParticles([]);
+        setButtonClickedId(null);
+        setShowSuccessRipple(false);
+        setShowPracticeRipple(false);
+        setIsTransitioning(false);
+      };
 
-      // Simply move to next word in session
+      // Move to next word in session
       const nextIndex = currentWordIndex + 1;
 
       if (nextIndex < SESSION_SIZE && nextIndex < sessionWords.length) {
         setCurrentWordIndex(nextIndex);
-        console.log(
-          `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
-        );
-      } else {
+        if (process.env.NODE_ENV === 'development') {
+          console.log(
+            `Advanced to word ${nextIndex + 1}/${SESSION_SIZE}: ${sessionWords[nextIndex]?.word}`,
+          );
+        }
+      } else if (process.env.NODE_ENV === 'development') {
         console.log("Reached end of session words");
-        // This shouldn't happen as session completion is handled in handleWordAction
       }
 
-      // End transition effect
-      setTimeout(() => setIsTransitioning(false), 100);
-    }, 300);
+      // Apply all state resets at once
+      resetStates();
+    }, 150); // Reduced from 300ms to 150ms
   };
 
   const startNewSession = () => {
