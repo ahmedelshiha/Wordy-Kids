@@ -52,6 +52,9 @@ export interface JungleKidNavProps {
   animations?: boolean;
   showParentGate?: boolean;
 
+  // 🎯 Kid-Friendly Animation Presets
+  animationStyle?: "calm-breathing" | "soft-glow" | "micro-movements" | "full-experience" | "none";
+
   // Performance and accessibility
   reducedMotion?: boolean;
   enableParticles?: boolean;
@@ -318,7 +321,7 @@ export function JungleKidNav({
           {screenSize === "desktop" &&
             theme === "jungle" &&
             navState.deviceCapabilities.backgroundEffects && (
-              <div className="jungle-vines">🌿</div>
+              <div className="jungle-vines">����</div>
             )}
 
           {/* Animal/Icon */}
