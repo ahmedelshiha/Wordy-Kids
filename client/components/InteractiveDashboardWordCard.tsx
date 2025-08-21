@@ -376,6 +376,8 @@ export function InteractiveDashboardWordCard({
 
   // Debounced pronunciation function to prevent double-play
   const playPronunciationDebounced = (isManual = false) => {
+    console.log(`🔊 Audio call: ${isManual ? 'Manual' : 'Auto'}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`);
+
     // Clear any existing audio timeout
     if (audioDebounce) {
       clearTimeout(audioDebounce);
@@ -383,19 +385,25 @@ export function InteractiveDashboardWordCard({
 
     // For manual clicks, allow immediate play
     if (isManual) {
+      console.log('🔊 Playing audio manually');
       playPronunciation();
       return;
     }
 
     // For auto-play (hint), add debounce and check if already played
     if (audioPlayedForHint || isPlaying) {
+      console.log('🔊 Audio blocked: already played or currently playing');
       return;
     }
 
+    console.log('🔊 Setting up auto-play with 150ms debounce');
     const timer = setTimeout(() => {
       if (!audioPlayedForHint && !isPlaying && currentWord) {
+        console.log('🔊 Auto-playing audio after debounce');
         playPronunciation();
         setAudioPlayedForHint(true);
+      } else {
+        console.log('🔊 Auto-play cancelled: conditions changed');
       }
     }, 150); // 150ms debounce as requested
 
@@ -1663,7 +1671,7 @@ export function InteractiveDashboardWordCard({
                         ],
                         hard: [
                           "🍄 What rare jungle delicacy is this?",
-                          "🫚 Which ancient jungle spice awaits?",
+                          "���� Which ancient jungle spice awaits?",
                           "🌶️ Can you name this fiery jungle flavor?",
                           "�� What powerful jungle ingredient is this?",
                         ],
@@ -1993,7 +2001,7 @@ export function InteractiveDashboardWordCard({
                           }}
                           className="absolute -top-2 -left-2 text-lg opacity-25 text-jungle-light"
                         >
-                          ������
+                          �����
                         </motion.div>
                       )}
                     </div>
