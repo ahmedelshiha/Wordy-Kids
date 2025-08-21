@@ -2,7 +2,7 @@ import React, { Component, ReactNode } from "react";
 import { AlertTriangle, RefreshCw, Home, TreePine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { parentDashboardAnalytics } from "@/lib/parentDashboardAnalytics";
+import { telemetry } from "@/lib/telemetry";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
