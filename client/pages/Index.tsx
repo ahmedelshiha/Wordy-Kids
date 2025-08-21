@@ -3334,7 +3334,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             fontWeight: "bold",
                                           }}
                                         >
-                                          🏆 Enhanced Jungle Adventure
+                                          ���� Enhanced Jungle Adventure
                                         </h3>
                                         <p className="jungle-quiz-card-description">
                                           Experience the ultimate AAA-quality
@@ -3632,7 +3632,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            📸
+                                            ����
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-bright-orange text-sm">
@@ -4195,9 +4195,9 @@ export default function Index({ initialProfile }: IndexProps) {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
                   <span className="text-2xl filter drop-shadow-sm">🦉</span>
-                  <div className="text-left flex-1">
-                    <div className="font-semibold text-lg">Parent Dashboard</div>
-                    <div className="text-sm text-amber-100">
+                  <div className="text-left flex-1 min-w-0">
+                    <div className="font-semibold text-base sm:text-lg leading-tight">Parent Dashboard</div>
+                    <div className="text-xs sm:text-sm text-amber-100 leading-tight">
                       🌟 View progress, analytics, and learning adventures
                     </div>
                   </div>
