@@ -2113,16 +2113,16 @@ export function InteractiveDashboardWordCard({
                       )}
                     </div>
 
-                    {/* Compact Exit Button */}
+                    {/* Enhanced Exit Button */}
                     <motion.button
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.6, duration: 0.3 }}
                       onClick={() => setShowHint(false)}
-                      className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-800 shadow transition-all duration-200 hover:scale-110 active:scale-95 z-20"
+                      className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-white/90 hover:bg-white border border-gray-200 hover:border-gray-300 text-gray-500 hover:text-gray-700 shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 z-30 backdrop-blur-sm"
                       aria-label="Close hint"
                     >
-                      <span className="text-sm font-bold">✕</span>
+                      <span className="text-xs font-bold">✕</span>
                     </motion.button>
 
                     {/* Magical Jungle Glow */}
