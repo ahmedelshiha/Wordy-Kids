@@ -3800,30 +3800,6 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Enhanced Magical Adventure Menu - Show for both child and parent modes */}
-          {showBottomNav && (
-            <EnhancedMagicalAdventureMenu
-              activeTab={userRole === "parent" ? "" : activeTab}
-              onTabChange={(tab) => {
-                setUserRole("child");
-                setActiveTab(tab);
-              }}
-              onSettingsClick={() => {
-                setShowSettings(true);
-              }}
-              onParentClick={() => {
-                setUserRole("parent");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              onAdminClick={() => {
-                navigate("/admin");
-              }}
-              userRole={userRole}
-              achievementCount={
-                learningStats.badges.filter((b) => b.earned).length
-              }
-            />
-          )}
 
           {/* Achievement dialogs now handled by LightweightAchievementProvider */}
 
