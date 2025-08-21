@@ -83,7 +83,7 @@ export type JungleAdventureNavV2Props = {
 const DEFAULT_ITEMS: JungleNavItem[] = [
   { id: "home", label: "Home Tree", emoji: "🦉", ariaLabel: "Home Tree" },
   { id: "learn", label: "Book Jungle", emoji: "🦜", ariaLabel: "Learning" },
-  { id: "play", label: "Adventure Games", emoji: "🐵", ariaLabel: "Play" },
+  { id: "play", label: "Adventure Games", emoji: "��", ariaLabel: "Play" },
   {
     id: "achievements",
     label: "Trophy Grove",
@@ -408,41 +408,39 @@ export default function JungleAdventureNavV2({
                     </button>
                   )}
 
-                  {parentDialogSections.signOut && (
-                    <>
-                      <button
-                        className="jungle-dialog-btn"
-                        onClick={() => {
-                          setIsParentDialogOpen(false);
-                          onParentSignOut?.();
-                        }}
-                        aria-label="Sign Out - Log out of parent account"
-                      >
-                        <LogOut
-                          className="jungle-dialog-icon"
-                          aria-hidden="true"
-                        />
-                        <span>🔐 Sign Out</span>
-                        <div className="jungle-btn-glow" />
-                      </button>
-
-                      <button
-                        className="jungle-dialog-btn"
-                        onClick={() => {
-                          setIsParentDialogOpen(false);
-                          onParentRegister?.();
-                        }}
-                        aria-label="Register - Create new parent account"
-                      >
-                        <UserPlus
-                          className="jungle-dialog-icon"
-                          aria-hidden="true"
-                        />
-                        <span>🔐 Register</span>
-                        <div className="jungle-btn-glow" />
-                      </button>
-                    </>
-                  )}
+                  {/* Dynamic Auth Button */}
+                  <button
+                    className="jungle-dialog-btn"
+                    onClick={() => {
+                      setIsParentDialogOpen(false);
+                      if (isGuest) {
+                        onParentRegister?.();
+                      } else {
+                        onParentSignOut?.();
+                      }
+                    }}
+                    aria-label={
+                      isGuest
+                        ? "Sign Up / Register - Create new account"
+                        : "Goodbye & Log Off - Sign out of account"
+                    }
+                  >
+                    {isGuest ? (
+                      <UserPlus
+                        className="jungle-dialog-icon"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <LogOut
+                        className="jungle-dialog-icon"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span>
+                      {isGuest ? "✨ Sign Up / Register" : "🌿 Goodbye & Log Off"}
+                    </span>
+                    <div className="jungle-btn-glow" />
+                  </button>
                 </div>
 
                 <button
