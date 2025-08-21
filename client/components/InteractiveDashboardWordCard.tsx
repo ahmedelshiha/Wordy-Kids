@@ -1642,7 +1642,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Nature: {
                         easy: [
-                          "🌿 What jungle treasure is this?",
+                          "�� What jungle treasure is this?",
                           "🌺 Which jungle bloom do you see?",
                           "🍃 Can you name this jungle wonder?",
                           "🌳 What grows in our jungle home?",
@@ -2237,27 +2237,27 @@ export function InteractiveDashboardWordCard({
                             {currentWord.word}
                           </p>
 
-                          {/* Speaker Button - Always Visible and Properly Contained */}
+                          {/* Speaker Button on Green Background */}
                           <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.6, duration: 0.3 }}
-                            className="ml-2 flex-shrink-0"
+                            className="flex-shrink-0"
                           >
                             <Button
                               onClick={() => playPronunciationDebounced(true)}
                               disabled={isPlaying}
                               size="sm"
                               className={cn(
-                                "bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-1.5 sm:p-2 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md min-w-[32px] h-8 sm:min-w-[36px] sm:h-9",
-                                isPlaying && "animate-pulse scale-105",
+                                "bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border border-white/30 hover:border-white/50 p-2 rounded-full transition-all duration-200 transform hover:scale-110 active:scale-95 shadow-lg min-w-[36px] h-9",
+                                isPlaying && "animate-pulse scale-110 bg-white/30",
                                 "disabled:opacity-50",
                               )}
                               aria-label="Listen to word pronunciation"
                             >
                               <Volume2
                                 className={cn(
-                                  "w-3 h-3 sm:w-4 sm:h-4",
+                                  "w-4 h-4",
                                   isPlaying && "animate-bounce",
                                 )}
                               />
