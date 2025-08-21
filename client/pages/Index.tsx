@@ -3580,7 +3580,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <div className="jungle-sound-indicator">
                                             <Trophy className="w-6 h-6 text-white" />
                                           </div>
-                                          🏆 Your Jungle Adventures! 🏆
+                                          ���� Your Jungle Adventures! 🏆
                                         </h3>
                                         <p className="text-jungle-dark">
                                           Track your epic quiz journeys and
@@ -4155,17 +4155,24 @@ export default function Index({ initialProfile }: IndexProps) {
           </div>
 
           <DialogHeader className="relative z-10">
-            <DialogTitle className="flex items-center gap-2 text-xl font-bold">
+            <DialogTitle
+              className="flex items-center gap-2 text-xl font-bold"
+              id="parent-menu-title"
+            >
               <span
                 className="text-2xl filter drop-shadow-sm"
                 style={{ textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)" }}
+                aria-hidden="true"
               >
                 🪵
               </span>
               <span style={{ color: "#8B4513" }}>Parent Menu</span>
             </DialogTitle>
-            <DialogDescription style={{ color: "#A0522D" }}>
-              🌿 Access family dashboard, jungle settings, and adventure controls.
+            <DialogDescription
+              style={{ color: "#A0522D" }}
+              id="parent-menu-description"
+            >
+              Access family dashboard, jungle settings, and adventure controls.
             </DialogDescription>
           </DialogHeader>
 
