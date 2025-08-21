@@ -220,6 +220,15 @@ export function JungleKidNav({
     };
   }, [autoOptimize, animations, enableSounds, enableParticles, reducedMotion]);
 
+  // Auto-pause animations when parent gate dialog opens
+  useEffect(() => {
+    if (navState.showParentGate) {
+      animationControl.suspend("Parent Gate Dialog opened");
+    } else {
+      animationControl.resume();
+    }
+  }, [navState.showParentGate]);
+
   // Parent gate handling
   const handleParentGateSubmit = useCallback(() => {
     if (parentCode === correctParentCode) {
