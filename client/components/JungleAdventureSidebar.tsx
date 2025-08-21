@@ -464,7 +464,11 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               onMouseEnter={() => setHoveredCard("words")}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              <ParrotIcon className="w-10 h-10" />
+              <ParrotIcon
+                className="w-10 h-10"
+                isClicked={clickedCard === "words"}
+                onAnimalClick={() => handleNavClick("/words", "words")}
+              />
               <div className="flex-1 ml-3 min-w-0">
                 <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
                   Words Learned
