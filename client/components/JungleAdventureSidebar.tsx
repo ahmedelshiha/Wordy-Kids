@@ -23,9 +23,7 @@ const ParrotIcon = ({ className }: { className?: string }) => (
     {/* Animated background elements */}
     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
     <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-300 rounded-full" />
-    <div className="text-white text-lg relative z-10">
-      🦜
-    </div>
+    <div className="text-white text-lg relative z-10">🦜</div>
   </div>
 );
 

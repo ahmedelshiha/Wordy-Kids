@@ -398,11 +398,7 @@ export function JungleKidNav({
           </span>
 
           {/* Active indicator */}
-          {isActive && (
-            <div
-              className="jungle-active-indicator"
-            />
-          )}
+          {isActive && <div className="jungle-active-indicator" />}
         </button>
       );
     },

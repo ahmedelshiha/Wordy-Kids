@@ -66,7 +66,8 @@
 @keyframes firefly-dance,
 @keyframes active-glow,
 @keyframes simple-bounce {
-  from, to {
+  from,
+  to {
     transform: none !important;
     opacity: 1 !important;
     scale: 1 !important;
