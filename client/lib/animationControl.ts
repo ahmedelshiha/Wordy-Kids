@@ -139,11 +139,14 @@ export const animationControl = new AnimationControlManager();
 
 // React hook for easy component integration
 export function useAnimationControl() {
-  const [state, setState] = React.useState<AnimationControlState>(
+  // Dynamic import to avoid bundling issues
+  const { useState, useEffect } = require("react");
+
+  const [state, setState] = useState<AnimationControlState>(
     animationControl.currentState,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = animationControl.subscribe(setState);
     return unsubscribe;
   }, []);
@@ -154,18 +157,6 @@ export function useAnimationControl() {
     resume: animationControl.resume.bind(animationControl),
     toggle: animationControl.toggle.bind(animationControl),
     forceResume: animationControl.forceResume.bind(animationControl),
-  };
-}
-
-// React import workaround for hook
-let React: any;
-try {
-  React = require("react");
-} catch {
-  // Fallback for non-React environments
-  React = {
-    useState: () => [animationControl.currentState, () => {}],
-    useEffect: () => {},
   };
 }
 
