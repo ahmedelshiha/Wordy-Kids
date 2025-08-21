@@ -1,7 +1,7 @@
 /* Container */
 .jng-nav-v2 {
-  --jng-mobile-bar-h: 64px;
-  --jng-desktop-bar-h: 72px;
+  --jng-mobile-bar-h: calc(64px + var(--jng-icon-lift) + 8px);
+  --jng-desktop-bar-h: calc(72px + var(--jng-icon-lift) + 8px);
   --jng-icon-lift: 14px; /* how far icons rise above bar (no animation) */
   --jng-icon-size: 44px; /* icon size */
   --jng-color-bar: rgba(14, 55, 41, 0.88);
