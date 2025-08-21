@@ -187,6 +187,8 @@ export default {
         "serene-glow": "serene-glow 12s ease-in-out infinite",
         "peaceful-hover": "peaceful-hover 0.4s ease-out forwards",
         "calm-pulse": "calm-pulse 6s ease-in-out infinite",
+        // Gentle emoji floating animation
+        "gentle-emoji-float": "gentle-emoji-float 3s ease-in-out infinite",
       },
     },
   },
