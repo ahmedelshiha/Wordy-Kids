@@ -3884,7 +3884,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "✨", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "���", "��", "💫", "🔮", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
@@ -3939,6 +3939,123 @@ export default function Index({ initialProfile }: IndexProps) {
           {/* Floating Registration Reminder for Guest Users - Mobile Only (Desktop has side card) */}
         </>
       )}
+
+      {/* Parent Gate Dialog */}
+      <Dialog open={showParentGate} onOpenChange={setShowParentGate}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Lock className="w-5 h-5 text-yellow-600" />
+              Parent Gate
+            </DialogTitle>
+            <DialogDescription>
+              Enter the parent code to access family settings and controls.
+              <br />
+              <span className="text-xs text-gray-500 mt-2 block">
+                Hint: The code is "PARENT2024"
+              </span>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="parent-code"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Parent Code
+              </label>
+              <input
+                id="parent-code"
+                type="password"
+                value={parentCode}
+                onChange={(e) => {
+                  setParentCode(e.target.value);
+                  setParentCodeError(false);
+                }}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  parentCodeError
+                    ? "border-red-500 focus:ring-red-500 bg-red-50"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
+                placeholder="Enter code..."
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleParentGateSubmit();
+                  }
+                }}
+              />
+              {parentCodeError && (
+                <p className="text-sm text-red-600 mt-1">
+                  Incorrect code. Please try again.
+                </p>
+              )}
+            </div>
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowParentGate(false);
+                  setParentCode("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleParentGateSubmit}>Access</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Parent Options Dialog */}
+      <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Crown className="w-5 h-5 text-yellow-600" />
+              Family Zone
+            </DialogTitle>
+            <DialogDescription>
+              Access parent dashboard, settings, and family controls.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-3">
+              <Button
+                onClick={() => {
+                  setUserRole("parent");
+                  setShowParentOptions(false);
+                }}
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Users className="w-6 h-6" />
+                <div className="text-left">
+                  <div className="font-semibold text-lg">Parent Dashboard</div>
+                  <div className="text-sm text-blue-100">
+                    View detailed progress, analytics, and manage learning goals
+                  </div>
+                </div>
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setShowSettings(true);
+                  setShowParentOptions(false);
+                }}
+                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Settings className="w-6 h-6" />
+                <div className="text-left">
+                  <div className="font-semibold text-lg">Family Settings</div>
+                  <div className="text-sm text-green-100">
+                    Configure app preferences, safety controls, and more
+                  </div>
+                </div>
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
