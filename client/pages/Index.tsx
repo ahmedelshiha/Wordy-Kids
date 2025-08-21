@@ -72,7 +72,6 @@ import { JungleAdventureParentDashboard } from "@/components/JungleAdventurePare
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import { EnhancedMagicalAdventureMenu } from "@/components/EnhancedMagicalAdventureMenu";
 import { JungleKidNav } from "@/components/JungleKidNav";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
@@ -2439,7 +2438,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               {/* Subtle Jungle Decorations */}
                                               <div className="absolute inset-0 overflow-hidden rounded-2xl">
                                                 <div className="absolute top-1 left-3 text-lg animate-sway opacity-30">
-                                                  🌿
+                                                  ���
                                                 </div>
                                                 <div className="absolute top-1 right-3 text-lg animate-gentle-bounce animation-delay-300 opacity-30">
                                                   🦋
