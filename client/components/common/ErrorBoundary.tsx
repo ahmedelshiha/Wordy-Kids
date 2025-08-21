@@ -42,22 +42,20 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     const { componentName = "unknown", fallbackType = "parent" } = this.props;
-    
+
     // Log error to telemetry
     try {
-      parentDashboardAnalytics.trackError(
-        fallbackType === "kid" ? "dashboard" : "map",
-        error.message,
-        {
-          componentName,
-          stack: error.stack?.substring(0, 500),
-          errorInfo: JSON.stringify(errorInfo).substring(0, 300),
-          timestamp: new Date().toISOString(),
-          errorId: this.state.errorId,
-          userAgent: navigator.userAgent.substring(0, 100),
-          url: window.location.href
-        }
-      );
+      telemetry.log("ui_error", {
+        componentName,
+        error: error.message,
+        stack: error.stack?.substring(0, 500),
+        errorId: this.state.errorId,
+        userAgent: navigator.userAgent.substring(0, 100),
+        url: window.location.href,
+        timestamp: new Date().toISOString(),
+        errorInfo: JSON.stringify(errorInfo).substring(0, 300),
+        fallbackType
+      });
     } catch (telemetryError) {
       console.error("Failed to log error to telemetry:", telemetryError);
     }
