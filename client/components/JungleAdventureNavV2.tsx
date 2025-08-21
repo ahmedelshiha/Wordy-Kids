@@ -411,7 +411,7 @@ export default function JungleAdventureNavV2({
                         className="jungle-dialog-btn"
                         onClick={() => {
                           setIsParentDialogOpen(false);
-                          // Handle sign out
+                          onParentSignOut?.();
                         }}
                         aria-label="Sign Out - Log out of parent account"
                       >
@@ -427,7 +427,7 @@ export default function JungleAdventureNavV2({
                         className="jungle-dialog-btn"
                         onClick={() => {
                           setIsParentDialogOpen(false);
-                          // Handle register
+                          onParentRegister?.();
                         }}
                         aria-label="Register - Create new parent account"
                       >
