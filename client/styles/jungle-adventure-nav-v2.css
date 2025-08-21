@@ -461,8 +461,8 @@
 
 /* Parent Menu Navigation Item Styling */
 .jng-parent-menu-item {
-  /* Ensure it appears on the right side of the navigation */
-  margin-left: auto;
+  /* Center with other navigation items */
+  display: flex;
 }
 
 /* Desktop Parent Menu Enhancements */
