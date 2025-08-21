@@ -53,17 +53,21 @@ export const JungleAnimationTestHarness: React.FC<
     setAnimationsPaused(newPaused);
 
     // Apply pause to all animated elements
-    const animatedElements = document.querySelectorAll('[class*="jungle-animal-icon"], [class*="jungle-floating"]');
-    animatedElements.forEach(element => {
+    const animatedElements = document.querySelectorAll(
+      '[class*="jungle-animal-icon"], [class*="jungle-floating"]',
+    );
+    animatedElements.forEach((element) => {
       const htmlElement = element as HTMLElement;
       if (newPaused) {
-        htmlElement.style.animationPlayState = 'paused';
+        htmlElement.style.animationPlayState = "paused";
       } else {
-        htmlElement.style.animationPlayState = 'running';
+        htmlElement.style.animationPlayState = "running";
       }
     });
 
-    addTestResult(newPaused ? '⏸️ All animations paused' : '▶️ All animations resumed');
+    addTestResult(
+      newPaused ? "⏸️ All animations paused" : "▶️ All animations resumed",
+    );
   };
 
   // 🚀 Speed Stress Test - All animals fast + playful
@@ -77,24 +81,24 @@ export const JungleAnimationTestHarness: React.FC<
       }
 
       // Reset to normal config
-      testAnimationConfig({ idleSpeed: 'slow', intensity: 'subtle' });
-      addTestResult('🏁 Speed stress test stopped');
+      testAnimationConfig({ idleSpeed: "slow", intensity: "subtle" });
+      addTestResult("🏁 Speed stress test stopped");
       return;
     }
 
     setStressTestRunning(true);
-    addTestResult('🚀 Starting speed stress test...');
+    addTestResult("🚀 Starting speed stress test...");
 
     // Apply maximum animation load
     testAnimationConfig({
-      idleSpeed: 'fast',
-      intensity: 'playful',
+      idleSpeed: "fast",
+      intensity: "playful",
       rareEffects: true,
-      idlePauseDuration: 'short'
+      idlePauseDuration: "short",
     });
 
     // Trigger all animals simultaneously
-    ['owl', 'parrot', 'monkey', 'elephant'].forEach(animal => {
+    ["owl", "parrot", "monkey", "elephant"].forEach((animal) => {
       triggerAnimalAnimation(animal as any);
     });
 
@@ -104,7 +108,8 @@ export const JungleAnimationTestHarness: React.FC<
 
     const measureFPS = () => {
       frameCountRef.current++;
-      if (frameCountRef.current % 60 === 0) { // Update every 60 frames
+      if (frameCountRef.current % 60 === 0) {
+        // Update every 60 frames
         const elapsed = (performance.now() - startTime) / 1000;
         const fps = Math.round(frameCountRef.current / elapsed);
         setFpsCounter(fps);
@@ -125,7 +130,7 @@ export const JungleAnimationTestHarness: React.FC<
     setTimeout(() => {
       if (stressTestRunning) {
         runSpeedStressTest(); // Stop the test
-        addTestResult('⏰ Stress test auto-stopped after 30s');
+        addTestResult("⏰ Stress test auto-stopped after 30s");
       }
     }, 30000);
   };
@@ -328,7 +333,7 @@ export const JungleAnimationTestHarness: React.FC<
                 variant={animationsPaused ? "default" : "outline"}
                 className="text-xs"
               >
-                {animationsPaused ? '▶️ Resume' : '⏸️ Pause'}
+                {animationsPaused ? "▶️ Resume" : "⏸️ Pause"}
               </Button>
               <Button
                 onClick={runSpeedStressTest}
@@ -336,12 +341,14 @@ export const JungleAnimationTestHarness: React.FC<
                 variant={stressTestRunning ? "destructive" : "outline"}
                 className="text-xs"
               >
-                {stressTestRunning ? '🛑 Stop' : '🚀 Stress Test'}
+                {stressTestRunning ? "🛑 Stop" : "🚀 Stress Test"}
               </Button>
             </div>
             {stressTestRunning && (
               <div className="text-xs text-center p-2 bg-red-50 rounded border">
-                <div className="font-semibold text-red-700">Stress Test Running</div>
+                <div className="font-semibold text-red-700">
+                  Stress Test Running
+                </div>
                 <div className="text-red-600">FPS: {fpsCounter}</div>
                 <div className="text-xs text-red-500">Auto-stops in 30s</div>
               </div>

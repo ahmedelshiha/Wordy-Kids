@@ -217,7 +217,8 @@
 
 /* 🫁 Gentle Breathing Animation (Default) */
 @keyframes breathing {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -227,7 +228,8 @@
 
 /* ✨ Soft Glow Pulse (Optional Accent) */
 @keyframes glowPulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0px rgba(255, 255, 0, 0);
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
   }
@@ -239,16 +241,21 @@
 
 /* 🦉 Animal Micro-Movements - Very subtle, infrequent */
 @keyframes owlBlink {
-  0%, 85%, 100% {
+  0%,
+  85%,
+  100% {
     transform: scale(1) scaleY(1);
   }
-  90%, 95% {
+  90%,
+  95% {
     transform: scale(1) scaleY(0.9);
   }
 }
 
 @keyframes monkeyTailWiggle {
-  0%, 90%, 100% {
+  0%,
+  90%,
+  100% {
     transform: scale(1) rotate(0deg);
   }
   95% {
@@ -260,7 +267,9 @@
 }
 
 @keyframes parrotHeadTilt {
-  0%, 88%, 100% {
+  0%,
+  88%,
+  100% {
     transform: scale(1) rotate(0deg);
   }
   94% {
@@ -269,7 +278,9 @@
 }
 
 @keyframes elephantEarFlap {
-  0%, 92%, 100% {
+  0%,
+  92%,
+  100% {
     transform: scale(1) scaleX(1);
   }
   96% {
@@ -292,22 +303,30 @@
 
 /* Animal-Specific Micro-Movements (Very Subtle) */
 .jungle-animal-icon.style-micro.idle-owl {
-  animation: breathing 4s ease-in-out infinite, owlBlink 12s ease-in-out infinite;
+  animation:
+    breathing 4s ease-in-out infinite,
+    owlBlink 12s ease-in-out infinite;
   animation-delay: 0s, var(--owl-delay, 3s);
 }
 
 .jungle-animal-icon.style-micro.idle-parrot {
-  animation: breathing 4s ease-in-out infinite, parrotHeadTilt 15s ease-in-out infinite;
+  animation:
+    breathing 4s ease-in-out infinite,
+    parrotHeadTilt 15s ease-in-out infinite;
   animation-delay: 0s, var(--parrot-delay, 7s);
 }
 
 .jungle-animal-icon.style-micro.idle-monkey {
-  animation: breathing 4s ease-in-out infinite, monkeyTailWiggle 10s ease-in-out infinite;
+  animation:
+    breathing 4s ease-in-out infinite,
+    monkeyTailWiggle 10s ease-in-out infinite;
   animation-delay: 0s, var(--monkey-delay, 5s);
 }
 
 .jungle-animal-icon.style-micro.idle-elephant {
-  animation: breathing 4s ease-in-out infinite, elephantEarFlap 18s ease-in-out infinite;
+  animation:
+    breathing 4s ease-in-out infinite,
+    elephantEarFlap 18s ease-in-out infinite;
   animation-delay: 0s, var(--elephant-delay, 9s);
 }
 
@@ -338,7 +357,7 @@
 
 /* 🔋 Battery Saving Mode */
 @media (prefers-reduced-motion: reduce),
-       (prefers-color-scheme: dark) and (max-width: 768px) {
+  (prefers-color-scheme: dark) and (max-width: 768px) {
   .jungle-animal-icon.style-breathing,
   .jungle-animal-icon.style-glow,
   .jungle-animal-icon.style-micro {

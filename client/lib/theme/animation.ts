@@ -36,9 +36,9 @@ export const jungleAnimationTimings = {
 
 // ⏸️ Idle Pause Duration Controls (addresses "too fast without stopping" concern)
 export const jungleAnimationPause = {
-  short: "2s",  // Quick rest - more energetic feel
+  short: "2s", // Quick rest - more energetic feel
   medium: "4s", // Balanced pause - standard calm
-  long: "6s",   // Extended rest - maximum calmness (default)
+  long: "6s", // Extended rest - maximum calmness (default)
 } as const;
 
 // 🎨 Animation Intensity Levels
@@ -173,7 +173,7 @@ export class JungleAnimationManager {
 
   // Get animation style class
   getAnimationStyleClass(): string {
-    if (this.config.reducedMotion) return 'style-none';
+    if (this.config.reducedMotion) return "style-none";
     return `style-${this.config.animationStyle}`;
   }
 

@@ -111,7 +111,14 @@ export function JungleKidNav({
         rareEffects,
         reducedMotion: reducedMotion || detectReducedMotion(),
       }),
-    [idleSpeed, intensity, idlePauseDuration, animationStyle, rareEffects, reducedMotion],
+    [
+      idleSpeed,
+      intensity,
+      idlePauseDuration,
+      animationStyle,
+      rareEffects,
+      reducedMotion,
+    ],
   );
 
   const animationManager = useMemo(

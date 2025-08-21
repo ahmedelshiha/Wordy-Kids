@@ -9,7 +9,10 @@ import { registerJungleKidNavComponent } from "./lib/builder-io-components";
 try {
   registerJungleKidNavComponent();
 } catch (error) {
-  console.log('ℹ️ Builder.io registration skipped:', error?.message || 'Unknown error');
+  console.log(
+    "ℹ️ Builder.io registration skipped:",
+    error?.message || "Unknown error",
+  );
 }
 
 // Create the root only once

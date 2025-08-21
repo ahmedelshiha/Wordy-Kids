@@ -1,7 +1,7 @@
 /**
  * 🎨 Builder.io Component Registration
  * Register JungleKidNav with full animation configurability
- * 
+ *
  * NOTE: This integration is optional and only works if @builder.io/react is installed
  */
 
@@ -12,17 +12,19 @@ import { jungleNavPresets, getPresetDisplayName } from "./jungle-nav-presets";
 let Builder: any = null;
 try {
   // Try to dynamically import Builder.io
-  const builderModule = require('@builder.io/react');
+  const builderModule = require("@builder.io/react");
   Builder = builderModule?.Builder;
 } catch (error) {
   // Builder.io not installed - this is fine, app will work without it
-  console.log('ℹ️ Builder.io not installed - component registration skipped');
+  console.log("ℹ️ Builder.io not installed - component registration skipped");
 }
 
 // 🔧 Export registration function for manual setup
 export const registerJungleKidNavComponent = () => {
   if (!Builder) {
-    console.log('⚠️ Builder.io not available - skipping component registration');
+    console.log(
+      "⚠️ Builder.io not available - skipping component registration",
+    );
     return;
   }
 
@@ -42,12 +44,13 @@ export const registerJungleKidNavComponent = () => {
           name: "preset",
           friendlyName: "Animation Preset",
           type: "string",
-          enum: jungleNavPresets.map(preset => ({
+          enum: jungleNavPresets.map((preset) => ({
             label: getPresetDisplayName(preset.id),
-            value: preset.id
+            value: preset.id,
           })),
           defaultValue: "balanced-adventure",
-          helperText: "Choose a pre-configured animation style. Reduces configuration complexity and ensures optimal UX.",
+          helperText:
+            "Choose a pre-configured animation style. Reduces configuration complexity and ensures optimal UX.",
           advanced: false,
         },
 
@@ -232,7 +235,8 @@ export const registerJungleKidNavComponent = () => {
           friendlyName: "Parent Gate",
           type: "boolean",
           defaultValue: true,
-          helperText: "Show parent verification before accessing parent features",
+          helperText:
+            "Show parent verification before accessing parent features",
           advanced: true,
         },
       ],
@@ -270,7 +274,7 @@ export const registerJungleKidNavComponent = () => {
     });
 
     // 🎨 Register Preset Bundle Components
-    jungleNavPresets.forEach(preset => {
+    jungleNavPresets.forEach((preset) => {
       Builder.registerComponent(JungleKidNav, {
         name: `JungleKidNav-${preset.id}`,
         friendlyName: `${preset.icon} ${preset.name}`,
@@ -281,29 +285,36 @@ export const registerJungleKidNavComponent = () => {
             friendlyName: "Active Tab",
             type: "string",
             enum: ["dashboard", "learn", "games", "achievements", "library"],
-            defaultValue: "dashboard"
-          }
+            defaultValue: "dashboard",
+          },
         ],
         defaults: {
           bindings: {
             // Animation config
             "component.options.idleSpeed": preset.config.idleSpeed || "slow",
             "component.options.intensity": preset.config.intensity || "subtle",
-            "component.options.idlePauseDuration": preset.config.idlePauseDuration || "long",
+            "component.options.idlePauseDuration":
+              preset.config.idlePauseDuration || "long",
             "component.options.rareEffects": preset.config.rareEffects || false,
-            "component.options.reducedMotion": preset.config.reducedMotion || false,
+            "component.options.reducedMotion":
+              preset.config.reducedMotion || false,
 
             // Additional props
-            ...Object.entries(preset.additionalProps || {}).reduce((acc, [key, value]) => {
-              acc[`component.options.${key}`] = value;
-              return acc;
-            }, {} as Record<string, any>)
-          }
+            ...Object.entries(preset.additionalProps || {}).reduce(
+              (acc, [key, value]) => {
+                acc[`component.options.${key}`] = value;
+                return acc;
+              },
+              {} as Record<string, any>,
+            ),
+          },
         },
         // Add category for better organization
-        tags: preset.id.includes('accessibility') ? ['accessibility'] :
-              preset.id.includes('learning') ? ['education'] :
-              ['engagement']
+        tags: preset.id.includes("accessibility")
+          ? ["accessibility"]
+          : preset.id.includes("learning")
+            ? ["education"]
+            : ["engagement"],
       });
     });
 
@@ -311,7 +322,7 @@ export const registerJungleKidNavComponent = () => {
     console.log("🎨 Available animation presets: Calm, Playful");
     console.log("🎯 Configurable props: idleSpeed, intensity, rareEffects");
   } catch (error) {
-    console.error('❌ Failed to register JungleKidNav with Builder.io:', error);
+    console.error("❌ Failed to register JungleKidNav with Builder.io:", error);
   }
 };
 
