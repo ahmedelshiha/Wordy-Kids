@@ -3960,6 +3960,7 @@ export default function Index({ initialProfile }: IndexProps) {
           {userRole === "child" && (
             <JungleAdventureNavV2
               activeId={activeTab}
+              showParentMenuOnDesktop={true}
               onNavigate={setActiveTab}
               pauseAnimations={showSettings}
               iconSize={52}
