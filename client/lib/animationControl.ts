@@ -14,7 +14,9 @@ interface AnimationControlState {
 
 class AnimationControlManager {
   private state: AnimationControlState = {
-    isSuspended: false,
+    isSuspended: true, // FORCE SUSPEND ALL ANIMATIONS
+    suspensionReason: "Animations permanently disabled",
+    suspendedAt: Date.now(),
   };
 
   private listeners: Set<(state: AnimationControlState) => void> = new Set();
