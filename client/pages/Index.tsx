@@ -3704,7 +3704,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setFeedback({
                                         type: "celebration",
                                         title:
-                                          "Epic Adventure Complete! ��👑✨",
+                                          "Epic Adventure Complete! 🚀👑✨",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
 ��� Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
