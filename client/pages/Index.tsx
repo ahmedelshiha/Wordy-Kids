@@ -4028,7 +4028,7 @@ export default function Index({ initialProfile }: IndexProps) {
               }}
               onParentDashboard={() => {
                 setUserRole("parent");
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               onParentSettings={() => {
                 setShowSettings(true);
@@ -4216,7 +4216,7 @@ export default function Index({ initialProfile }: IndexProps) {
                   setUserRole("parent");
                   setShowParentOptions(false);
                   // Add smooth scroll to top when switching to parent dashboard
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
                 className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
                 aria-label="Open Parent Dashboard - View detailed progress, analytics, and manage learning goals"
