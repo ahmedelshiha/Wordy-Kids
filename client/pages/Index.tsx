@@ -2123,7 +2123,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     whileTap={{ scale: 0.98 }}
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm">
-                      <span className="text-xl">👨‍👩‍👧���👦</span>
+                      <span className="text-xl">👨‍👩‍👧‍👦</span>
                     </div>
                     <div className="flex-1 text-left">
                       <span className="font-bold text-base block">Parent Dashboard</span>
@@ -2171,27 +2171,6 @@ export default function Index({ initialProfile }: IndexProps) {
             </div>
           )}
 
-          {/* Mobile Menu Button - Top Left Corner */}
-          {userRole === "child" && (
-            <div className="fixed top-4 left-4 z-50 md:hidden">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <motion.button
-                    onClick={() => setIsMobileMenuOpen(true)}
-                    className="w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-purple-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label="Open Magic Menu"
-                  >
-                    <Menu className="w-6 h-6 text-purple-600" />
-                  </motion.button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>🌟 Magic Menu</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          )}
 
           {/* Parent Gate Button - Top Right Corner (Desktop Only) */}
           {userRole === "child" && (
@@ -3380,7 +3359,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Crown className="w-5 h-5 mr-2" />
-                                          Start Epic Adventure! 👑
+                                          Start Epic Adventure! ��
                                         </button>
                                       </div>
 
