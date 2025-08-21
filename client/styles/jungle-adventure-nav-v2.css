@@ -11,7 +11,7 @@
   --jng-blur: saturate(1.2) blur(6px);
   position: relative;
   width: 100%;
-  z-index: 20;
+  z-index: 50; /* Increased to avoid conflicts with other overlays */
 }
 
 .jng-mounted {
