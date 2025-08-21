@@ -6,6 +6,7 @@
  */
 
 import { JungleKidNav } from "@/components/JungleKidNav";
+import { jungleNavPresets, getPresetDisplayName } from "./jungle-nav-presets";
 
 // Conditional Builder.io import - only if package is available
 let Builder: any = null;
