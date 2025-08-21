@@ -3416,7 +3416,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </h3>
                                         <p className="text-jungle-dark">
                                           Track your epic quiz journeys and
-                                          celebrate your achievements! ����
+                                          celebrate your achievements! 🌟
                                         </p>
                                       </div>
 
@@ -3842,26 +3842,14 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Desktop Kid Mode Navigation */}
+          {/* Adventure Navigation */}
           {userRole === "child" && (
-            <JungleKidNav
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-              userRole={userRole}
-              onRoleChange={(role) => {
-                setUserRole(role);
-                if (role === "child") {
-                  setKidModeEnabled(true);
-                } else {
-                  setKidModeEnabled(false);
-                }
-              }}
-              onSettingsClick={() => setShowSettings(true)}
-              onAdminClick={() => navigate("/admin")}
-              theme="jungle"
-              enableSounds={true}
-              animations={true}
-              autoOptimize={true}
+            <JungleAdventureNavV2
+              activeId={activeTab}
+              onNavigate={setActiveTab}
+              pauseAnimations={showSettings || showParentGate}
+              iconSize={52}
+              iconLift={18}
             />
           )}
 
