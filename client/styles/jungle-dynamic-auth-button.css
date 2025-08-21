@@ -1,0 +1,75 @@
+/* Dynamic auth button special styling for JungleAdventureNavV2 */
+.jungle-dynamic-auth-btn {
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.9) 0%,
+    rgba(46, 125, 50, 0.9) 100%
+  ) !important;
+  border: 2px solid rgba(255, 215, 0, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.jungle-dynamic-auth-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 1) 0%,
+    rgba(46, 125, 50, 1) 100%
+  ) !important;
+  border-color: rgba(255, 215, 0, 0.6) !important;
+  box-shadow: 
+    0 0 12px rgba(255, 215, 0, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+.jungle-dynamic-auth-btn:active {
+  transform: translateY(0) scale(1) !important;
+  transition: all 0.15s ease !important;
+}
+
+/* Enhanced glow effect for the dynamic button */
+.jungle-dynamic-auth-btn .jungle-btn-glow {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+/* Focus state for accessibility */
+.jungle-dynamic-auth-btn:focus-visible {
+  outline: 3px solid #fbbf24 !important;
+  outline-offset: 3px !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .jungle-dynamic-auth-btn {
+    min-height: 48px;
+    font-size: 1.1rem;
+    padding: 16px 20px;
+  }
+  
+  .jungle-dynamic-auth-btn:hover {
+    transform: none !important;
+  }
+  
+  .jungle-dynamic-auth-btn:active {
+    transform: scale(0.98) !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-dynamic-auth-btn,
+  .jungle-dynamic-auth-btn:hover,
+  .jungle-dynamic-auth-btn:active {
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .jungle-dynamic-auth-btn .jungle-btn-glow {
+    display: none !important;
+  }
+}
