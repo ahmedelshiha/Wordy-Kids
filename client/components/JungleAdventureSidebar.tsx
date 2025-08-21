@@ -518,7 +518,11 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               onMouseEnter={() => setHoveredCard("achievements")}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              <TrophyIcon className="w-10 h-10" />
+              <MonkeyIcon
+                className="w-10 h-10"
+                isClicked={clickedCard === "achievements"}
+                onAnimalClick={() => handleNavClick("/achievements", "achievements")}
+              />
               <div className="flex-1 ml-3 min-w-0">
                 <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
                   Achievements
