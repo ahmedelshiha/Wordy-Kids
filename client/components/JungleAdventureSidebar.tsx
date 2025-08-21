@@ -45,21 +45,36 @@ const ParrotIcon = ({
   </div>
 );
 
-const MonkeyIcon = ({ className }: { className?: string }) => (
-  <motion.div
+const MonkeyIcon = ({
+  className,
+  isClicked,
+  onAnimalClick
+}: {
+  className?: string;
+  isClicked?: boolean;
+  onAnimalClick?: () => void;
+}) => (
+  <div
     className={cn(
-      "w-12 h-12 rounded-xl bg-gradient-to-br from-bright-orange to-orange-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 flex-shrink-0 relative overflow-hidden",
+      "w-12 h-12 rounded-xl bg-gradient-to-br from-bright-orange to-orange-600 flex items-center justify-center shadow-lg transition-all duration-300 flex-shrink-0 relative overflow-hidden cursor-pointer",
+      "jungle-animal-icon idle-monkey",
+      isClicked && "clicked",
       className,
     )}
-    whileHover={{ scale: 1.1, rotate: -3 }}
-    whileTap={{ scale: 0.95 }}
+    onClick={onAnimalClick}
   >
-    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-    <div className="absolute -top-1 -left-1 w-2 h-2 bg-green-400 rounded-full animate-bounce" />
-    <div className="text-white text-lg transform hover:rotate-12 transition-transform duration-300 relative z-10">
+    {/* Celebration particles for clicks */}
+    {isClicked && (
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">🎉</div>
+        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">🌟</div>
+        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">✨</div>
+      </div>
+    )}
+    <div className="text-white text-lg relative z-10">
       🏆
     </div>
-  </motion.div>
+  </div>
 );
 
 const CompassIcon = ({ className }: { className?: string }) => (
