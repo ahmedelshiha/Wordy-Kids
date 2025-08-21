@@ -21,7 +21,8 @@
     "typecheck": "tsc",
     "scan:emojis": "node scripts/scan-emojis.js",
     "lint:emojis": "npm run scan:emojis",
-    "precommit": "npm run lint:emojis && npm run typecheck"
+    "check:map-conflicts": "node scripts/check-map-conflicts.js",
+    "precommit": "npm run lint:emojis && npm run check:map-conflicts && npm run typecheck"
   },
   "dependencies": {
     "dotenv": "^17.2.0",
