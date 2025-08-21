@@ -408,8 +408,8 @@ export default function JungleAdventureNavV2({
                     </button>
                   )}
 
-                  {/* Dynamic Auth Button */}
-                  <button
+                  {parentDialogSections.auth && (
+                    <button
                     className="jungle-dialog-btn"
                     onClick={() => {
                       setIsParentDialogOpen(false);
@@ -441,6 +441,7 @@ export default function JungleAdventureNavV2({
                     </span>
                     <div className="jungle-btn-glow" />
                   </button>
+                  )}
                 </div>
 
                 <button
