@@ -277,7 +277,7 @@ export default function Index({ initialProfile }: IndexProps) {
       id: "demo-child-1",
       name: "Alex",
       age: 8,
-      avatar: "👦",
+      avatar: "��",
       interests: ["Animals", "Science", "Space"],
     },
   );
@@ -4018,8 +4018,30 @@ export default function Index({ initialProfile }: IndexProps) {
               pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
-              showMobileMoreIcon={true}
-              onMobileMoreClick={() => setIsMobileMenuOpen(true)}
+              showParentMenuIcon={true}
+              onOpenParentDashboard={() => setUserRole("parent")}
+              onOpenSettings={() => setShowSettings(true)}
+              onSignOut={() => {
+                // Show farewell message and reset to guest mode
+                toast({
+                  title: "🌿 Goodbye!",
+                  description: "Thank you for visiting WordyKids. See you soon!",
+                  duration: 3000,
+                });
+                setTimeout(() => {
+                  setUserRole("child");
+                }, 1000);
+              }}
+              onRegister={() => {
+                // Open registration flow
+                toast({
+                  title: "✨ Welcome to the Family!",
+                  description: "Let's create your family account together.",
+                  duration: 3000,
+                });
+                setActiveTab("profile");
+              }}
+              isUserAuthenticated={userRole === "parent"}
               items={[
                 {
                   id: "dashboard",
