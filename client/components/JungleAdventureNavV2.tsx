@@ -392,7 +392,7 @@ export default function JungleAdventureNavV2({
                       className="jungle-dialog-btn"
                       onClick={() => {
                         setIsParentDialogOpen(false);
-                        // Navigate to settings
+                        onParentSettings?.();
                       }}
                       aria-label="Open Settings - Child-safe controls and preferences"
                     >
