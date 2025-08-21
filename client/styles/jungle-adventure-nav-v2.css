@@ -465,6 +465,13 @@
   display: flex;
 }
 
+/* Ensure parent menu is visible on desktop */
+@media (min-width: 768px) {
+  .jng-parent-menu-btn.jng-parent-menu-desktop {
+    display: flex !important;
+  }
+}
+
 /* Desktop Parent Menu Enhancements */
 .jng-parent-menu-desktop {
   /* Make it a jungle totem rising above the nav bar */
@@ -475,14 +482,17 @@
     rgba(101, 67, 33, 0.95)
   ) !important;
   border: 2px solid rgba(251, 191, 36, 0.4) !important;
-  border-radius: 16px 16px 8px 8px !important; /* Totem-like shape */
+  border-radius: 12px !important; /* Rounded like other nav items but distinguished */
   box-shadow:
-    0 -4px 12px rgba(139, 69, 19, 0.3),
-    0 0 20px rgba(251, 191, 36, 0.2),
+    0 -2px 8px rgba(139, 69, 19, 0.3),
+    0 0 15px rgba(251, 191, 36, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(8px);
   /* Remove default navigation button styles when it's the desktop parent menu */
   background-image: none !important;
+  /* Ensure it's visible and properly sized */
+  min-height: 60px;
+  padding: 8px 12px !important;
 }
 
 .jng-parent-menu-desktop:hover {
