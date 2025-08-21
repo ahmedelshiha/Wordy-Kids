@@ -2192,16 +2192,44 @@ export default function Index({ initialProfile }: IndexProps) {
                 <TooltipTrigger asChild>
                   <motion.button
                     onClick={() => setShowParentGate(true)}
-                    className="w-12 h-12 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-yellow-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label="Access Family Zone and Settings"
+                    className="w-12 h-12 bg-gradient-to-br from-orange-100 to-amber-100 hover:from-orange-200 hover:to-amber-200 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center border-2 border-amber-300 hover:border-orange-400 relative overflow-hidden"
+                    style={{
+                      background: `
+                        linear-gradient(135deg,
+                          rgba(139, 69, 19, 0.1) 0%,
+                          rgba(160, 82, 45, 0.15) 50%,
+                          rgba(205, 133, 63, 0.1) 100%
+                        )
+                      `,
+                      boxShadow: `
+                        inset 0 1px 2px rgba(160, 82, 45, 0.2),
+                        0 4px 12px rgba(139, 69, 19, 0.3),
+                        0 0 20px rgba(255, 193, 7, 0.2)
+                      `,
+                    }}
+                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    whileTap={{ scale: 0.95, rotate: -1 }}
+                    aria-label="Access Parent Menu - Family Zone and Settings"
                   >
-                    <Crown className="w-6 h-6 text-yellow-600" />
+                    {/* Wooden texture overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 to-orange-50/30 rounded-xl" />
+
+                    {/* 🪵 Wooden Log Icon */}
+                    <span
+                      className="text-2xl relative z-10 filter drop-shadow-sm"
+                      style={{
+                        textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)",
+                      }}
+                    >
+                      🪵
+                    </span>
+
+                    {/* Subtle glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-200/20 to-orange-200/20 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
                   </motion.button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Family Zone & Settings</p>
+                  <p>🪵 Parent Menu - Family Zone & Settings</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -4093,49 +4121,176 @@ export default function Index({ initialProfile }: IndexProps) {
 
       {/* Parent Options Dialog */}
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Crown className="w-5 h-5 text-yellow-600" />
-              Family Zone
+        <DialogContent
+          className="sm:max-w-md max-w-[95vw] w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto"
+          style={{
+            background: `
+              linear-gradient(135deg,
+                rgba(255, 248, 220, 0.95) 0%,
+                rgba(250, 240, 200, 0.98) 100%
+              )
+            `,
+            border: "3px solid",
+            borderImage: `linear-gradient(
+              45deg,
+              #8B4513 0%,
+              #A0522D 25%,
+              #CD853F 50%,
+              #A0522D 75%,
+              #8B4513 100%
+            ) 1`,
+            borderRadius: "16px",
+            boxShadow: `
+              inset 0 2px 4px rgba(160, 82, 45, 0.15),
+              0 8px 25px rgba(139, 69, 19, 0.4),
+              0 0 30px rgba(255, 193, 7, 0.2)
+            `,
+          }}
+        >
+          {/* Jungle Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
+            <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
+            <div className="absolute bottom-2 left-4 text-sm opacity-20">
+              🌱
+            </div>
+          </div>
+
+          <DialogHeader className="relative z-10">
+            <DialogTitle
+              className="flex items-center gap-2 text-xl font-bold"
+              id="parent-menu-title"
+            >
+              <span
+                className="text-2xl filter drop-shadow-sm"
+                style={{ textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)" }}
+                aria-hidden="true"
+              >
+                🪵
+              </span>
+              <span style={{ color: "#8B4513" }}>Parent Menu</span>
             </DialogTitle>
-            <DialogDescription>
-              Access parent dashboard, settings, and family controls.
+            <DialogDescription
+              style={{ color: "#A0522D" }}
+              id="parent-menu-description"
+            >
+              Access family dashboard, jungle settings, and adventure controls.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 gap-3">
+
+          <div
+            className="space-y-3 relative z-10"
+            role="navigation"
+            aria-labelledby="parent-menu-title"
+          >
+            <div
+              className="grid grid-cols-1 gap-3"
+              role="group"
+              aria-label="Parent menu options"
+            >
+              {/* Parent Dashboard Button with Owl Icon */}
               <Button
                 onClick={() => {
                   setUserRole("parent");
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                aria-label="Open Parent Dashboard - View detailed progress, analytics, and manage learning goals"
+                role="button"
+                tabIndex={0}
+                style={{
+                  background: `
+                    linear-gradient(135deg,
+                      #8B4513 0%,
+                      #A0522D 50%,
+                      #8B4513 100%
+                    )
+                  `,
+                  boxShadow: `
+                    inset 0 1px 2px rgba(139, 69, 19, 0.2),
+                    0 4px 12px rgba(139, 69, 19, 0.3)
+                  `,
+                }}
               >
-                <Users className="w-6 h-6" />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Parent Dashboard</div>
-                  <div className="text-sm text-blue-100">
-                    View detailed progress, analytics, and manage learning goals
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10 flex items-center gap-3 w-full">
+                  <span
+                    className="text-2xl filter drop-shadow-sm"
+                    role="img"
+                    aria-label="Owl icon"
+                  >
+                    🦉
+                  </span>
+                  <div className="text-left flex-1 min-w-0">
+                    <div className="font-semibold text-base sm:text-lg leading-tight">
+                      Parent Dashboard
+                    </div>
+                    <div className="text-xs sm:text-sm text-amber-100 leading-tight">
+                      🌟 View progress, analytics, and learning adventures
+                    </div>
                   </div>
                 </div>
               </Button>
 
+              {/* Settings Button with Carved Wood Gear */}
               <Button
                 onClick={() => {
                   setShowSettings(true);
                   setShowParentOptions(false);
                 }}
-                className="flex items-center gap-3 p-4 h-auto justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                aria-label="Open Jungle Settings - Configure app preferences, safety controls, and adventure options"
+                role="button"
+                tabIndex={0}
+                style={{
+                  background: `
+                    linear-gradient(135deg,
+                      #228B22 0%,
+                      #32CD32 50%,
+                      #228B22 100%
+                    )
+                  `,
+                  boxShadow: `
+                    inset 0 1px 2px rgba(34, 139, 34, 0.2),
+                    0 4px 12px rgba(34, 139, 34, 0.3)
+                  `,
+                }}
               >
-                <Settings className="w-6 h-6" />
-                <div className="text-left">
-                  <div className="font-semibold text-lg">Family Settings</div>
-                  <div className="text-sm text-green-100">
-                    Configure app preferences, safety controls, and more
+                <div className="absolute inset-0 bg-gradient-to-r from-green-200/10 to-emerald-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10 flex items-center gap-3 w-full">
+                  <div className="relative">
+                    <Settings
+                      className="w-6 h-6"
+                      style={{
+                        filter: "drop-shadow(0 1px 2px rgba(139, 69, 19, 0.3))",
+                        color: "#CD853F",
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full" />
+                  </div>
+                  <div className="text-left flex-1 min-w-0">
+                    <div className="font-semibold text-base sm:text-lg leading-tight">
+                      Jungle Settings
+                    </div>
+                    <div className="text-xs sm:text-sm text-green-100 leading-tight">
+                      🛠️ Configure adventure preferences and safety controls
+                    </div>
                   </div>
                 </div>
               </Button>
+
+              {/* Dynamic Authentication Button */}
+              <div
+                className="pt-2 border-t border-amber-300/30"
+                role="group"
+                aria-label="Authentication options"
+              >
+                <DynamicAuthButton
+                  variant="mobile"
+                  onAction={() => setShowParentOptions(false)}
+                  className="border-2 border-amber-300/50"
+                />
+              </div>
             </div>
           </div>
         </DialogContent>
