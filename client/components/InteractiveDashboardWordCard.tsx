@@ -1109,7 +1109,7 @@ export function InteractiveDashboardWordCard({
                   }
                 : {}
             }
-            className="relative z-10 -translate-x-8"
+            className="relative z-10 -translate-x-12"
           >
             {/* White glow background for visibility */}
             <span className="absolute inset-0 blur-md bg-white/60 rounded-full scale-110 -z-10"></span>
@@ -1514,7 +1514,7 @@ export function InteractiveDashboardWordCard({
                     const jungleExplorers = {
                       easy: ["🐵", "🦜", "🐨", "🦋", "🐝"],
                       medium: ["🦁", "🐯", "🐘", "🦓", "🦏"],
-                      hard: ["🐲", "🦅", "🐺", "🐆", "������"],
+                      hard: ["🐲", "🦅", "🐺", "🐆", "����"],
                     };
 
                     // Category-specific prompts
