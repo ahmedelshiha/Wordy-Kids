@@ -33,6 +33,7 @@ import {
   developmentAnimationTriggers,
   type JungleAnimationConfig
 } from "@/lib/theme/animation";
+import JungleAnimationTestHarness from "@/components/dev/JungleAnimationTestHarness";
 import "@/styles/jungle-adventure-nav.css";
 
 // Builder.io compatible props interface
