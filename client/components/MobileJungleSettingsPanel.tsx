@@ -79,10 +79,10 @@ export default function MobileJungleSettingsPanel({
   const updateSetting = (key: keyof JungleSettings, value: boolean) => {
     const newSettings = { ...settings, [key]: value };
     setSettings(newSettings);
-    
+
     // Save to localStorage
     localStorage.setItem("mobileJungleSettings", JSON.stringify(newSettings));
-    
+
     // Apply the setting
     switch (key) {
       case "backgroundMusic":
@@ -100,7 +100,10 @@ export default function MobileJungleSettingsPanel({
       case "reducedMotion":
         // Apply reduced motion preference to document
         if (value) {
-          document.documentElement.style.setProperty("--animation-duration", "0s");
+          document.documentElement.style.setProperty(
+            "--animation-duration",
+            "0s",
+          );
           document.documentElement.classList.add("reduce-motion");
         } else {
           document.documentElement.style.removeProperty("--animation-duration");
@@ -137,30 +140,31 @@ export default function MobileJungleSettingsPanel({
       <DialogContent className="w-[95vw] max-h-[80vh] p-0 overflow-hidden jungle-mobile-settings-dialog">
         {/* Floating Jungle Elements */}
         <AnimatePresence>
-          {!settings.reducedMotion && floatingElements.map((element) => (
-            <motion.div
-              key={element.id}
-              className="absolute text-lg pointer-events-none select-none z-10 opacity-50"
-              style={{
-                left: `${element.x}%`,
-                top: `${element.y}%`,
-              }}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: [0.3, 0.5, 0.3],
-                scale: [0.8, 1.1, 0.8],
-                rotate: [0, 10, -10, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                delay: element.delay,
-                ease: "easeInOut",
-              }}
-            >
-              {element.emoji}
-            </motion.div>
-          ))}
+          {!settings.reducedMotion &&
+            floatingElements.map((element) => (
+              <motion.div
+                key={element.id}
+                className="absolute text-lg pointer-events-none select-none z-10 opacity-50"
+                style={{
+                  left: `${element.x}%`,
+                  top: `${element.y}%`,
+                }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: [0.3, 0.5, 0.3],
+                  scale: [0.8, 1.1, 0.8],
+                  rotate: [0, 10, -10, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  delay: element.delay,
+                  ease: "easeInOut",
+                }}
+              >
+                {element.emoji}
+              </motion.div>
+            ))}
         </AnimatePresence>
 
         {/* Parchment/Wood Background Header */}
@@ -177,7 +181,7 @@ export default function MobileJungleSettingsPanel({
           animate={{ opacity: 1, y: 0 }}
         >
           {/* Wood grain texture */}
-          <div 
+          <div
             className="absolute inset-0 opacity-10"
             style={{
               backgroundImage: `repeating-linear-gradient(
@@ -186,10 +190,10 @@ export default function MobileJungleSettingsPanel({
                 rgba(139, 69, 19, 0.2) 1px,
                 transparent 1px,
                 transparent 8px
-              )`
+              )`,
             }}
           />
-          
+
           <div className="relative z-10 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -255,7 +259,9 @@ export default function MobileJungleSettingsPanel({
                   </div>
                   <Switch
                     checked={settings.backgroundMusic}
-                    onCheckedChange={(value) => updateSetting("backgroundMusic", value)}
+                    onCheckedChange={(value) =>
+                      updateSetting("backgroundMusic", value)
+                    }
                     className="jungle-switch"
                   />
                 </div>
@@ -285,7 +291,9 @@ export default function MobileJungleSettingsPanel({
                   </div>
                   <Switch
                     checked={settings.soundEffects}
-                    onCheckedChange={(value) => updateSetting("soundEffects", value)}
+                    onCheckedChange={(value) =>
+                      updateSetting("soundEffects", value)
+                    }
                     className="jungle-switch"
                   />
                 </div>
@@ -311,7 +319,9 @@ export default function MobileJungleSettingsPanel({
                   </div>
                   <Switch
                     checked={settings.reducedMotion}
-                    onCheckedChange={(value) => updateSetting("reducedMotion", value)}
+                    onCheckedChange={(value) =>
+                      updateSetting("reducedMotion", value)
+                    }
                     className="jungle-switch"
                   />
                 </div>
@@ -322,7 +332,9 @@ export default function MobileJungleSettingsPanel({
             <div className="flex justify-center pt-4 pb-2">
               <div className="flex items-center gap-2 text-amber-600 opacity-60">
                 <Leaf className="w-4 h-4" />
-                <span className="text-xs">Made with 💚 for jungle explorers</span>
+                <span className="text-xs">
+                  Made with 💚 for jungle explorers
+                </span>
                 <Leaf className="w-4 h-4 scale-x-[-1]" />
               </div>
             </div>

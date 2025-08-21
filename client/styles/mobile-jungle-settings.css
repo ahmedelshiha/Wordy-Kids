@@ -13,7 +13,7 @@
     0 25px 80px rgba(0, 0, 0, 0.15),
     0 0 0 1px rgba(222, 184, 135, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  
+
   /* Wood texture overlay */
   position: relative;
 }
@@ -22,7 +22,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: 
+  background-image:
     repeating-linear-gradient(
       0deg,
       rgba(139, 69, 19, 0.03) 0px,
@@ -91,7 +91,7 @@
   background: rgba(139, 69, 19, 0.2);
   border: 1px solid rgba(139, 69, 19, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
+  box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.1),
     0 1px 2px rgba(0, 0, 0, 0.05);
 }
@@ -99,14 +99,14 @@
 .jungle-switch [role="switch"][data-state="checked"] {
   background: linear-gradient(135deg, #4caf50, #8bc34a);
   border-color: #4caf50;
-  box-shadow: 
+  box-shadow:
     0 2px 8px rgba(76, 175, 80, 0.3),
     inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .jungle-switch [role="switch"] span {
   background: linear-gradient(145deg, #ffffff, #f8f9fa);
-  box-shadow: 
+  box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.2),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -116,13 +116,13 @@
 .jungle-switch [role="switch"][data-state="checked"] span {
   transform: translateX(20px);
   background: linear-gradient(145deg, #ffffff, #f0f8f0);
-  box-shadow: 
+  box-shadow:
     0 4px 12px rgba(76, 175, 80, 0.3),
     inset 0 1px 2px rgba(255, 255, 255, 0.9);
 }
 
 .jungle-switch [role="switch"]:hover span {
-  box-shadow: 
+  box-shadow:
     0 3px 8px rgba(0, 0, 0, 0.25),
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
@@ -296,7 +296,7 @@
   }
 
   .jungle-mobile-settings-dialog::before {
-    background-image: 
+    background-image:
       repeating-linear-gradient(
         0deg,
         rgba(139, 69, 19, 0.08) 0px,

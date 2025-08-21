@@ -23,7 +23,8 @@ export default function MobileSettingsDemo() {
             <Sparkles className="w-8 h-8 text-yellow-500" />
           </div>
           <p className="text-green-600">
-            Experience the optimized jungle adventure settings panel for mobile devices
+            Experience the optimized jungle adventure settings panel for mobile
+            devices
           </p>
         </div>
 
@@ -43,8 +44,8 @@ export default function MobileSettingsDemo() {
                   {deviceInfo.isMobile
                     ? "📱 Mobile"
                     : deviceInfo.isTablet
-                    ? "📱 Tablet"
-                    : "💻 Desktop"}
+                      ? "📱 Tablet"
+                      : "💻 Desktop"}
                 </span>
               </div>
               <div>
@@ -93,36 +94,56 @@ export default function MobileSettingsDemo() {
               <div className="flex items-start gap-3">
                 <span className="text-green-500 text-lg">🎨</span>
                 <div>
-                  <h4 className="font-medium text-green-800">Parchment & Wood Background</h4>
-                  <p className="text-sm text-green-600">Beautiful jungle-themed design with texture</p>
+                  <h4 className="font-medium text-green-800">
+                    Parchment & Wood Background
+                  </h4>
+                  <p className="text-sm text-green-600">
+                    Beautiful jungle-themed design with texture
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-green-500 text-lg">📱</span>
                 <div>
-                  <h4 className="font-medium text-green-800">Mobile Optimized</h4>
-                  <p className="text-sm text-green-600">Max height ~80vh, perfectly sized for mobile screens</p>
+                  <h4 className="font-medium text-green-800">
+                    Mobile Optimized
+                  </h4>
+                  <p className="text-sm text-green-600">
+                    Max height ~80vh, perfectly sized for mobile screens
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-green-500 text-lg">📜</span>
                 <div>
-                  <h4 className="font-medium text-green-800">Scrollable Content</h4>
-                  <p className="text-sm text-green-600">Smooth scrolling when content exceeds viewport</p>
+                  <h4 className="font-medium text-green-800">
+                    Scrollable Content
+                  </h4>
+                  <p className="text-sm text-green-600">
+                    Smooth scrolling when content exceeds viewport
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-green-500 text-lg">🎵</span>
                 <div>
-                  <h4 className="font-medium text-green-800">Jungle-Styled Toggles</h4>
-                  <p className="text-sm text-green-600">Background Music, Sound Effects, and Reduced Motion controls</p>
+                  <h4 className="font-medium text-green-800">
+                    Jungle-Styled Toggles
+                  </h4>
+                  <p className="text-sm text-green-600">
+                    Background Music, Sound Effects, and Reduced Motion controls
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-green-500 text-lg">❌</span>
                 <div>
-                  <h4 className="font-medium text-green-800">Styled Close Button</h4>
-                  <p className="text-sm text-green-600">Easy-to-tap close button with haptic feedback</p>
+                  <h4 className="font-medium text-green-800">
+                    Styled Close Button
+                  </h4>
+                  <p className="text-sm text-green-600">
+                    Easy-to-tap close button with haptic feedback
+                  </p>
                 </div>
               </div>
             </div>
@@ -149,10 +170,12 @@ export default function MobileSettingsDemo() {
               <div>
                 <h4 className="font-medium text-amber-800 mb-1">Try It Out!</h4>
                 <p className="text-sm text-amber-700">
-                  Tap the button above to open the mobile settings panel. 
-                  {deviceInfo.hasHaptic && " You'll feel haptic feedback on supported devices!"} 
-                  The panel features beautiful jungle-themed styling with wood and parchment textures, 
-                  smooth animations (unless you have reduced motion enabled), and intuitive toggle controls.
+                  Tap the button above to open the mobile settings panel.
+                  {deviceInfo.hasHaptic &&
+                    " You'll feel haptic feedback on supported devices!"}
+                  The panel features beautiful jungle-themed styling with wood
+                  and parchment textures, smooth animations (unless you have
+                  reduced motion enabled), and intuitive toggle controls.
                 </p>
               </div>
             </div>
