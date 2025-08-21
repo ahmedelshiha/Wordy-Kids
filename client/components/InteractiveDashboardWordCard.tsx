@@ -1656,7 +1656,7 @@ export function InteractiveDashboardWordCard({
 
                     // Progress-based encouragement
                     const progressPrompts = {
-                      0: "🚀 Ready for a jungle adventure?",
+                      0: jungleAdventureMessages[currentMessageIndex],
                       25: "��� You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
