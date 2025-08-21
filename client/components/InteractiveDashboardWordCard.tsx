@@ -213,7 +213,9 @@ export function InteractiveDashboardWordCard({
   const [showSuccessRipple, setShowSuccessRipple] = useState(false);
   const [showPracticeRipple, setShowPracticeRipple] = useState(false);
   const [audioPlayedForHint, setAudioPlayedForHint] = useState(false);
-  const [audioDebounce, setAudioDebounce] = useState<NodeJS.Timeout | null>(null);
+  const [audioDebounce, setAudioDebounce] = useState<NodeJS.Timeout | null>(
+    null,
+  );
 
   // Voice settings integration
   const voiceSettings = useVoiceSettings();
@@ -376,7 +378,9 @@ export function InteractiveDashboardWordCard({
 
   // Debounced pronunciation function to prevent double-play
   const playPronunciationDebounced = (isManual = false) => {
-    console.log(`🔊 Audio call: ${isManual ? 'Manual' : 'Auto'}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`);
+    console.log(
+      `🔊 Audio call: ${isManual ? "Manual" : "Auto"}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`,
+    );
 
     // Clear any existing audio timeout
     if (audioDebounce) {
@@ -385,25 +389,25 @@ export function InteractiveDashboardWordCard({
 
     // For manual clicks, allow immediate play
     if (isManual) {
-      console.log('🔊 Playing audio manually');
+      console.log("🔊 Playing audio manually");
       playPronunciation();
       return;
     }
 
     // For auto-play (hint), add debounce and check if already played
     if (audioPlayedForHint || isPlaying) {
-      console.log('🔊 Audio blocked: already played or currently playing');
+      console.log("🔊 Audio blocked: already played or currently playing");
       return;
     }
 
-    console.log('🔊 Setting up auto-play with 150ms debounce');
+    console.log("🔊 Setting up auto-play with 150ms debounce");
     const timer = setTimeout(() => {
       if (!audioPlayedForHint && !isPlaying && currentWord) {
-        console.log('🔊 Auto-playing audio after debounce');
+        console.log("🔊 Auto-playing audio after debounce");
         playPronunciation();
         setAudioPlayedForHint(true);
       } else {
-        console.log('🔊 Auto-play cancelled: conditions changed');
+        console.log("🔊 Auto-play cancelled: conditions changed");
       }
     }, 150); // 150ms debounce as requested
 
