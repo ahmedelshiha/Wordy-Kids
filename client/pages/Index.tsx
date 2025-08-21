@@ -3870,15 +3870,9 @@ export default function Index({ initialProfile }: IndexProps) {
                   ariaLabel: "Quiz Games",
                 },
                 {
-                  id: "adventure",
-                  label: "Epic Quest",
-                  emoji: "🐘",
-                  ariaLabel: "Adventures",
-                },
-                {
                   id: "achievements",
                   label: "Trophy Grove",
-                  emoji: "🏆",
+                  emoji: "🐘",
                   ariaLabel: "Achievements",
                 },
               ]}
