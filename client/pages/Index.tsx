@@ -3366,7 +3366,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               fontWeight: "bold",
                                             }}
                                           >
-                                            ���� 3D Audio
+                                            🎧 3D Audio
                                           </span>
                                           <span
                                             className="jungle-quiz-badge"
