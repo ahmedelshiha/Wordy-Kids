@@ -449,6 +449,12 @@
   animation: jungleMistUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Parent Menu Navigation Item Styling */
+.jng-parent-menu-item {
+  /* Ensure it appears on the right side of the navigation */
+  margin-left: auto;
+}
+
 /* Desktop Parent Menu Enhancements */
 .jng-parent-menu-desktop {
   /* Make it a jungle totem rising above the nav bar */
@@ -457,26 +463,30 @@
     145deg,
     rgba(139, 69, 19, 0.9),
     rgba(101, 67, 33, 0.95)
-  );
-  border: 2px solid rgba(251, 191, 36, 0.4);
-  border-radius: 16px 16px 8px 8px; /* Totem-like shape */
+  ) !important;
+  border: 2px solid rgba(251, 191, 36, 0.4) !important;
+  border-radius: 16px 16px 8px 8px !important; /* Totem-like shape */
   box-shadow:
     0 -4px 12px rgba(139, 69, 19, 0.3),
     0 0 20px rgba(251, 191, 36, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(8px);
-  padding: 8px 12px;
-  margin-top: -12px; /* Rise above the bar */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Remove default navigation button styles when it's the desktop parent menu */
+  background-image: none !important;
 }
 
 .jng-parent-menu-desktop:hover {
-  transform: translateY(-3px) scale(1.05);
+  transform: translateY(-3px) scale(1.05) !important;
   box-shadow:
     0 -8px 20px rgba(139, 69, 19, 0.4),
     0 0 30px rgba(251, 191, 36, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.2);
-  border-color: rgba(251, 191, 36, 0.6);
+    inset 0 2px 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(251, 191, 36, 0.6) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(139, 69, 19, 0.95),
+    rgba(101, 67, 33, 1)
+  ) !important;
 }
 
 .jng-parent-menu-desktop .parent-menu-emoji {
@@ -485,10 +495,15 @@
 }
 
 .jng-parent-menu-desktop .jng-label {
-  color: #fbbf24;
+  color: #fbbf24 !important;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   font-size: 0.75rem;
+}
+
+/* Ensure parent menu button doesn't interfere with regular nav styling */
+.jng-parent-menu-item .jng-btn:not(.jng-parent-menu-desktop) {
+  /* Keep regular mobile styling for non-desktop */
 }
 
 /* Desktop breathing animation - more subtle */
