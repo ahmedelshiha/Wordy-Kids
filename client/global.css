@@ -4,6 +4,9 @@
 /* Import emoji-safe font configuration */
 @import "./styles/emoji-safe-fonts.css";
 
+/* Import reduced motion support for emoji */
+@import "./styles/emoji-reduced-motion.css";
+
 /* Import mobile games optimization */
 @import "./styles/mobile-games-optimization.css";
 
