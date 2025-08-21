@@ -2015,9 +2015,9 @@ export function InteractiveDashboardWordCard({
                           initial={{ scale: 0.8, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.4, duration: 0.4 }}
-                          className="flex items-center justify-between bg-white/85 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/40"
+                          className="flex items-center justify-between bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-white/50"
                         >
-                          <p className="text-3xl font-bold text-gray-800 flex-1">
+                          <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 flex-1 tracking-wide">
                             {currentWord.word}
                           </p>
 
