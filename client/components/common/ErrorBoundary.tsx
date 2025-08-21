@@ -106,7 +106,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   handleGoHome = () => {
     try {
-      parentDashboardAnalytics.trackFeatureUsage("error_boundary", "home_clicked", {
+      telemetry.log("user_action", {
+        action: "error_boundary_home",
         componentName: this.props.componentName,
         errorId: this.state.errorId
       });
