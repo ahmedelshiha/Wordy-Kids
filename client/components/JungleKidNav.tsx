@@ -31,7 +31,7 @@ import {
   generateAnimationClasses,
   detectReducedMotion,
   developmentAnimationTriggers,
-  type JungleAnimationConfig
+  type JungleAnimationConfig,
 } from "@/lib/theme/animation";
 import JungleAnimationTestHarness from "@/components/dev/JungleAnimationTestHarness";
 import "@/styles/jungle-adventure-nav.css";
@@ -96,21 +96,26 @@ export function JungleKidNav({
   autoOptimize = true,
 }: JungleKidNavProps) {
   // 🎨 Animation System Initialization
-  const animationConfig = useMemo<JungleAnimationConfig>(() =>
-    createAnimationConfig({
-      idleSpeed,
-      intensity,
-      rareEffects,
-      reducedMotion: reducedMotion || detectReducedMotion()
-    }), [idleSpeed, intensity, rareEffects, reducedMotion]);
+  const animationConfig = useMemo<JungleAnimationConfig>(
+    () =>
+      createAnimationConfig({
+        idleSpeed,
+        intensity,
+        rareEffects,
+        reducedMotion: reducedMotion || detectReducedMotion(),
+      }),
+    [idleSpeed, intensity, rareEffects, reducedMotion],
+  );
 
-  const animationManager = useMemo(() =>
-    new JungleAnimationManager(animationConfig),
-    [animationConfig]);
+  const animationManager = useMemo(
+    () => new JungleAnimationManager(animationConfig),
+    [animationConfig],
+  );
 
-  const animationClasses = useMemo(() =>
-    generateAnimationClasses(animationConfig),
-    [animationConfig]);
+  const animationClasses = useMemo(
+    () => generateAnimationClasses(animationConfig),
+    [animationConfig],
+  );
 
   // State management
   const [navState, setNavState] = useState<JungleNavState>(() => ({
@@ -146,7 +151,7 @@ export function JungleKidNav({
 
     // Cleanup on unmount
     return () => {
-      Object.keys(cssProperties).forEach(property => {
+      Object.keys(cssProperties).forEach((property) => {
         root.style.removeProperty(property);
       });
     };

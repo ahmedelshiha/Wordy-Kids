@@ -3,68 +3,81 @@
  * Development-only tool for QA testing animations
  */
 
-import React, { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  developmentAnimationTriggers, 
+import React, { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  developmentAnimationTriggers,
   JungleAnimationManager,
   createAnimationConfig,
-  type JungleAnimationConfig 
-} from '@/lib/theme/animation';
-import { cn } from '@/lib/utils';
+  type JungleAnimationConfig,
+} from "@/lib/theme/animation";
+import { cn } from "@/lib/utils";
 
 interface JungleAnimationTestHarnessProps {
   className?: string;
 }
 
-export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProps> = ({ 
-  className 
-}) => {
+export const JungleAnimationTestHarness: React.FC<
+  JungleAnimationTestHarnessProps
+> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentConfig, setCurrentConfig] = useState<JungleAnimationConfig>(
-    createAnimationConfig()
+    createAnimationConfig(),
   );
   const [testResults, setTestResults] = useState<string[]>([]);
   const testLogRef = useRef<HTMLDivElement>(null);
 
   // Only show in development
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV !== "development") {
     return null;
   }
 
   const addTestResult = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
-    setTestResults(prev => [`[${timestamp}] ${message}`, ...prev.slice(0, 9)]);
+    setTestResults((prev) => [
+      `[${timestamp}] ${message}`,
+      ...prev.slice(0, 9),
+    ]);
   };
 
-  const triggerAnimalAnimation = (animal: 'owl' | 'parrot' | 'monkey' | 'elephant') => {
-    const elements = document.querySelectorAll(`.jungle-animal-icon.idle-${animal}`);
-    
+  const triggerAnimalAnimation = (
+    animal: "owl" | "parrot" | "monkey" | "elephant",
+  ) => {
+    const elements = document.querySelectorAll(
+      `.jungle-animal-icon.idle-${animal}`,
+    );
+
     if (elements.length === 0) {
       addTestResult(`❌ No ${animal} elements found`);
       return;
     }
 
-    elements.forEach(element => {
+    elements.forEach((element) => {
       developmentAnimationTriggers.triggerCelebration(element as HTMLElement);
     });
-    
-    addTestResult(`✅ Triggered ${animal} celebration (${elements.length} elements)`);
+
+    addTestResult(
+      `✅ Triggered ${animal} celebration (${elements.length} elements)`,
+    );
   };
 
-  const triggerHoverEffect = (animal: 'owl' | 'parrot' | 'monkey' | 'elephant') => {
-    const elements = document.querySelectorAll(`.jungle-animal-icon.idle-${animal}`);
-    
-    elements.forEach(element => {
+  const triggerHoverEffect = (
+    animal: "owl" | "parrot" | "monkey" | "elephant",
+  ) => {
+    const elements = document.querySelectorAll(
+      `.jungle-animal-icon.idle-${animal}`,
+    );
+
+    elements.forEach((element) => {
       developmentAnimationTriggers.triggerHover(element as HTMLElement);
     });
-    
+
     addTestResult(`🎯 Triggered ${animal} hover effect`);
   };
 
-  const triggerRareEffect = (type: 'sparkle' | 'firefly' | 'magicalGlow') => {
+  const triggerRareEffect = (type: "sparkle" | "firefly" | "magicalGlow") => {
     developmentAnimationTriggers.triggerRareEffect(type);
     addTestResult(`✨ Triggered ${type} rare effect`);
   };
@@ -72,29 +85,34 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
   const testAnimationConfig = (config: Partial<JungleAnimationConfig>) => {
     const newConfig = { ...currentConfig, ...config };
     setCurrentConfig(newConfig);
-    
+
     const manager = new JungleAnimationManager(newConfig);
     const cssProperties = manager.getCSSProperties();
-    
+
     // Apply to document
     const root = document.documentElement;
     Object.entries(cssProperties).forEach(([property, value]) => {
       root.style.setProperty(property, value);
     });
-    
-    addTestResult(`🔧 Applied ${Object.keys(config).join(', ')} configuration`);
+
+    addTestResult(`🔧 Applied ${Object.keys(config).join(", ")} configuration`);
   };
 
   const runFullAnimationTest = () => {
-    addTestResult('🚀 Starting full animation test suite...');
-    
+    addTestResult("🚀 Starting full animation test suite...");
+
     // Test each animal in sequence
-    const animals: Array<'owl' | 'parrot' | 'monkey' | 'elephant'> = ['owl', 'parrot', 'monkey', 'elephant'];
-    
+    const animals: Array<"owl" | "parrot" | "monkey" | "elephant"> = [
+      "owl",
+      "parrot",
+      "monkey",
+      "elephant",
+    ];
+
     animals.forEach((animal, index) => {
       setTimeout(() => {
         triggerHoverEffect(animal);
-        
+
         setTimeout(() => {
           triggerAnimalAnimation(animal);
         }, 300);
@@ -103,35 +121,37 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
 
     // Test rare effects
     setTimeout(() => {
-      triggerRareEffect('sparkle');
+      triggerRareEffect("sparkle");
     }, 5000);
 
     setTimeout(() => {
-      triggerRareEffect('firefly');
+      triggerRareEffect("firefly");
     }, 6000);
 
     setTimeout(() => {
-      addTestResult('✅ Full animation test suite completed');
+      addTestResult("✅ Full animation test suite completed");
     }, 7000);
   };
 
   const clearTestLog = () => {
     setTestResults([]);
-    addTestResult('🧹 Test log cleared');
+    addTestResult("🧹 Test log cleared");
   };
 
   const performanceTest = () => {
     const startTime = performance.now();
-    
+
     // Trigger multiple animations simultaneously
-    ['owl', 'parrot', 'monkey', 'elephant'].forEach(animal => {
+    ["owl", "parrot", "monkey", "elephant"].forEach((animal) => {
       triggerAnimalAnimation(animal as any);
     });
-    
+
     setTimeout(() => {
       const endTime = performance.now();
       const duration = Math.round(endTime - startTime);
-      addTestResult(`⚡ Performance test: ${duration}ms for simultaneous animations`);
+      addTestResult(
+        `⚡ Performance test: ${duration}ms for simultaneous animations`,
+      );
     }, 1000);
   };
 
@@ -148,10 +168,12 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
   }
 
   return (
-    <div className={cn(
-      "fixed bottom-4 right-4 w-96 max-h-[600px] bg-white rounded-lg shadow-2xl z-50 border border-gray-200",
-      className
-    )}>
+    <div
+      className={cn(
+        "fixed bottom-4 right-4 w-96 max-h-[600px] bg-white rounded-lg shadow-2xl z-50 border border-gray-200",
+        className,
+      )}
+    >
       <Card className="h-full">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
@@ -169,18 +191,20 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
           </div>
           <div className="flex gap-2">
             <Badge variant="secondary">Development Only</Badge>
-            <Badge variant={currentConfig.reducedMotion ? "destructive" : "default"}>
+            <Badge
+              variant={currentConfig.reducedMotion ? "destructive" : "default"}
+            >
               {currentConfig.reducedMotion ? "Reduced Motion" : "Full Motion"}
             </Badge>
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-4 max-h-96 overflow-y-auto">
           {/* Animal Animation Tests */}
           <div>
             <h4 className="font-semibold mb-2 text-sm">🦔 Animal Animations</h4>
             <div className="grid grid-cols-2 gap-2">
-              {['owl', 'parrot', 'monkey', 'elephant'].map(animal => (
+              {["owl", "parrot", "monkey", "elephant"].map((animal) => (
                 <div key={animal} className="space-y-1">
                   <Button
                     onClick={() => triggerAnimalAnimation(animal as any)}
@@ -188,11 +212,10 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
                     variant="outline"
                     className="w-full text-xs"
                   >
-                    {animal === 'owl' && '🦉'} 
-                    {animal === 'parrot' && '🦜'}
-                    {animal === 'monkey' && '🐵'}
-                    {animal === 'elephant' && '🐘'}
-                    {' '}{animal}
+                    {animal === "owl" && "🦉"}
+                    {animal === "parrot" && "🦜"}
+                    {animal === "monkey" && "🐵"}
+                    {animal === "elephant" && "🐘"} {animal}
                   </Button>
                   <Button
                     onClick={() => triggerHoverEffect(animal as any)}
@@ -212,7 +235,7 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
             <h4 className="font-semibold mb-2 text-sm">✨ Rare Effects</h4>
             <div className="grid grid-cols-3 gap-2">
               <Button
-                onClick={() => triggerRareEffect('sparkle')}
+                onClick={() => triggerRareEffect("sparkle")}
                 size="sm"
                 variant="outline"
                 className="text-xs"
@@ -220,7 +243,7 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
                 ✨ Sparkle
               </Button>
               <Button
-                onClick={() => triggerRareEffect('firefly')}
+                onClick={() => triggerRareEffect("firefly")}
                 size="sm"
                 variant="outline"
                 className="text-xs"
@@ -228,7 +251,7 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
                 🌟 Firefly
               </Button>
               <Button
-                onClick={() => triggerRareEffect('magicalGlow')}
+                onClick={() => triggerRareEffect("magicalGlow")}
                 size="sm"
                 variant="outline"
                 className="text-xs"
@@ -244,25 +267,31 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
             <div className="space-y-2">
               <div className="grid grid-cols-3 gap-1">
                 <Button
-                  onClick={() => testAnimationConfig({ idleSpeed: 'slow' })}
+                  onClick={() => testAnimationConfig({ idleSpeed: "slow" })}
                   size="sm"
-                  variant={currentConfig.idleSpeed === 'slow' ? 'default' : 'outline'}
+                  variant={
+                    currentConfig.idleSpeed === "slow" ? "default" : "outline"
+                  }
                   className="text-xs"
                 >
                   Slow
                 </Button>
                 <Button
-                  onClick={() => testAnimationConfig({ idleSpeed: 'medium' })}
+                  onClick={() => testAnimationConfig({ idleSpeed: "medium" })}
                   size="sm"
-                  variant={currentConfig.idleSpeed === 'medium' ? 'default' : 'outline'}
+                  variant={
+                    currentConfig.idleSpeed === "medium" ? "default" : "outline"
+                  }
                   className="text-xs"
                 >
                   Medium
                 </Button>
                 <Button
-                  onClick={() => testAnimationConfig({ idleSpeed: 'fast' })}
+                  onClick={() => testAnimationConfig({ idleSpeed: "fast" })}
                   size="sm"
-                  variant={currentConfig.idleSpeed === 'fast' ? 'default' : 'outline'}
+                  variant={
+                    currentConfig.idleSpeed === "fast" ? "default" : "outline"
+                  }
                   className="text-xs"
                 >
                   Fast
@@ -270,34 +299,48 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
               </div>
               <div className="grid grid-cols-3 gap-1">
                 <Button
-                  onClick={() => testAnimationConfig({ intensity: 'subtle' })}
+                  onClick={() => testAnimationConfig({ intensity: "subtle" })}
                   size="sm"
-                  variant={currentConfig.intensity === 'subtle' ? 'default' : 'outline'}
+                  variant={
+                    currentConfig.intensity === "subtle" ? "default" : "outline"
+                  }
                   className="text-xs"
                 >
                   Subtle
                 </Button>
                 <Button
-                  onClick={() => testAnimationConfig({ intensity: 'normal' })}
+                  onClick={() => testAnimationConfig({ intensity: "normal" })}
                   size="sm"
-                  variant={currentConfig.intensity === 'normal' ? 'default' : 'outline'}
+                  variant={
+                    currentConfig.intensity === "normal" ? "default" : "outline"
+                  }
                   className="text-xs"
                 >
                   Normal
                 </Button>
                 <Button
-                  onClick={() => testAnimationConfig({ intensity: 'playful' })}
+                  onClick={() => testAnimationConfig({ intensity: "playful" })}
                   size="sm"
-                  variant={currentConfig.intensity === 'playful' ? 'default' : 'outline'}
+                  variant={
+                    currentConfig.intensity === "playful"
+                      ? "default"
+                      : "outline"
+                  }
                   className="text-xs"
                 >
                   Playful
                 </Button>
               </div>
               <Button
-                onClick={() => testAnimationConfig({ reducedMotion: !currentConfig.reducedMotion })}
+                onClick={() =>
+                  testAnimationConfig({
+                    reducedMotion: !currentConfig.reducedMotion,
+                  })
+                }
                 size="sm"
-                variant={currentConfig.reducedMotion ? 'destructive' : 'outline'}
+                variant={
+                  currentConfig.reducedMotion ? "destructive" : "outline"
+                }
                 className="w-full text-xs"
               >
                 Toggle Reduced Motion
@@ -340,7 +383,7 @@ export const JungleAnimationTestHarness: React.FC<JungleAnimationTestHarnessProp
                 Clear
               </Button>
             </div>
-            <div 
+            <div
               ref={testLogRef}
               className="bg-gray-50 rounded p-2 text-xs space-y-1 max-h-32 overflow-y-auto"
             >

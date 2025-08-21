@@ -16,7 +16,7 @@ interface JungleAdventureSidebarProps {
 const ParrotIcon = ({
   className,
   isClicked,
-  onAnimalClick
+  onAnimalClick,
 }: {
   className?: string;
   isClicked?: boolean;
@@ -34,21 +34,25 @@ const ParrotIcon = ({
     {/* Celebration particles for clicks */}
     {isClicked && (
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">✨</div>
-        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">⭐</div>
-        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">💫</div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">
+          ✨
+        </div>
+        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">
+          ⭐
+        </div>
+        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">
+          💫
+        </div>
       </div>
     )}
-    <div className="text-white text-lg relative z-10">
-      🦜
-    </div>
+    <div className="text-white text-lg relative z-10">🦜</div>
   </div>
 );
 
 const MonkeyIcon = ({
   className,
   isClicked,
-  onAnimalClick
+  onAnimalClick,
 }: {
   className?: string;
   isClicked?: boolean;
@@ -66,21 +70,25 @@ const MonkeyIcon = ({
     {/* Celebration particles for clicks */}
     {isClicked && (
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">🎉</div>
-        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">🌟</div>
-        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">✨</div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">
+          🎉
+        </div>
+        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">
+          🌟
+        </div>
+        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">
+          ✨
+        </div>
       </div>
     )}
-    <div className="text-white text-lg relative z-10">
-      🏆
-    </div>
+    <div className="text-white text-lg relative z-10">🏆</div>
   </div>
 );
 
 const OwlIcon = ({
   className,
   isClicked,
-  onAnimalClick
+  onAnimalClick,
 }: {
   className?: string;
   isClicked?: boolean;
@@ -97,21 +105,25 @@ const OwlIcon = ({
   >
     {isClicked && (
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">🌙</div>
-        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">⭐</div>
-        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">🔮</div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">
+          🌙
+        </div>
+        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">
+          ⭐
+        </div>
+        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">
+          🔮
+        </div>
       </div>
     )}
-    <div className="text-white text-lg relative z-10">
-      🦉
-    </div>
+    <div className="text-white text-lg relative z-10">🦉</div>
   </div>
 );
 
 const ElephantIcon = ({
   className,
   isClicked,
-  onAnimalClick
+  onAnimalClick,
 }: {
   className?: string;
   isClicked?: boolean;
@@ -128,14 +140,18 @@ const ElephantIcon = ({
   >
     {isClicked && (
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">💎</div>
-        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">🌟</div>
-        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">✨</div>
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 text-yellow-300 animate-ping">
+          💎
+        </div>
+        <div className="absolute top-1 right-0 text-yellow-300 animate-bounce">
+          🌟
+        </div>
+        <div className="absolute bottom-0 left-0 text-yellow-300 animate-pulse">
+          ✨
+        </div>
       </div>
     )}
-    <div className="text-white text-lg relative z-10">
-      🐘
-    </div>
+    <div className="text-white text-lg relative z-10">🐘</div>
   </div>
 );
 
@@ -264,23 +280,32 @@ const FloatingButterfly = ({
   delay?: number;
 }) => {
   // 🎯 Check for reduced motion preference
-  const prefersReducedMotion = typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   return (
     <motion.div
       className={cn("absolute opacity-20 jungle-floating-element", className)}
-      animate={prefersReducedMotion ? {} : {
-        x: [0, 10, 0],
-        y: [0, -5, 0],
-        rotate: [0, 10, -10, 0],
-      }}
-      transition={prefersReducedMotion ? {} : {
-        duration: 12, // Much slower, more magical
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay,
-      }}
+      animate={
+        prefersReducedMotion
+          ? {}
+          : {
+              x: [0, 10, 0],
+              y: [0, -5, 0],
+              rotate: [0, 10, -10, 0],
+            }
+      }
+      transition={
+        prefersReducedMotion
+          ? {}
+          : {
+              duration: 12, // Much slower, more magical
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay,
+            }
+      }
     >
       🦋
     </motion.div>
@@ -308,10 +333,10 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
   // Set CSS custom properties for animation delays
   useEffect(() => {
     const root = document.documentElement;
-    root.style.setProperty('--owl-delay', `${animalDelays.owl}s`);
-    root.style.setProperty('--parrot-delay', `${animalDelays.parrot}s`);
-    root.style.setProperty('--monkey-delay', `${animalDelays.monkey}s`);
-    root.style.setProperty('--elephant-delay', `${animalDelays.elephant}s`);
+    root.style.setProperty("--owl-delay", `${animalDelays.owl}s`);
+    root.style.setProperty("--parrot-delay", `${animalDelays.parrot}s`);
+    root.style.setProperty("--monkey-delay", `${animalDelays.monkey}s`);
+    root.style.setProperty("--elephant-delay", `${animalDelays.elephant}s`);
   }, [animalDelays]);
 
   // 🎉 Handle navigation clicks with celebration
@@ -320,7 +345,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
     setClickedCard(cardType);
 
     // Play kid-friendly sound
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       kidFriendlyEffects.playSound(SOUNDS.SUCCESS);
     }
 
@@ -589,7 +614,9 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               <MonkeyIcon
                 className="w-10 h-10"
                 isClicked={clickedCard === "achievements"}
-                onAnimalClick={() => handleNavClick("/achievements", "achievements")}
+                onAnimalClick={() =>
+                  handleNavClick("/achievements", "achievements")
+                }
               />
               <div className="flex-1 ml-3 min-w-0">
                 <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
