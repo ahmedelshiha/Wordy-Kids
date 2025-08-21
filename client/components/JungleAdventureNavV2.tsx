@@ -64,6 +64,14 @@ export type JungleAdventureNavV2Props = {
   };
   /** Called when parent menu icon is clicked */
   onParentMenuClick?: () => void;
+  /** Called when parent dashboard button is clicked */
+  onParentDashboard?: () => void;
+  /** Called when settings button is clicked */
+  onParentSettings?: () => void;
+  /** Called when sign out button is clicked */
+  onParentSignOut?: () => void;
+  /** Called when register button is clicked */
+  onParentRegister?: () => void;
   /** @deprecated Use showParentMenuIcon instead */
   showMobileMoreIcon?: boolean;
   /** @deprecated Use onParentMenuClick instead */
