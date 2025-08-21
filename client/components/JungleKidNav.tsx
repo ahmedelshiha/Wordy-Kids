@@ -336,7 +336,7 @@ export function JungleKidNav({
       const isSimpleTheme = theme === "simple";
 
       return (
-        <motion.button
+        <button
           key={item.id}
           onClick={() => handleNavClick(item.id)}
           onMouseEnter={(e) => handleNavHover(e.currentTarget)}
@@ -347,39 +347,6 @@ export function JungleKidNav({
           )}
           aria-label={item.accessibility.ariaLabel}
           title={item.accessibility.description}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: index * 0.15,
-            duration:
-              navState.deviceCapabilities.animations && !animationsSuspended
-                ? 0.6
-                : 0,
-            ease: "easeOut",
-          }}
-          whileHover={
-            navState.deviceCapabilities.animations && !animationsSuspended
-              ? {
-                  y: -0.5,
-                  scale: 1.005,
-                  transition: {
-                    duration: 0.4,
-                    ease: "easeOut",
-                  },
-                }
-              : undefined
-          }
-          whileTap={
-            navState.deviceCapabilities.animations
-              ? {
-                  scale: 0.995,
-                  transition: {
-                    duration: 0.2,
-                    ease: "easeInOut",
-                  },
-                }
-              : undefined
-          }
         >
           {/* Decorative vines (desktop only, jungle theme) */}
           {screenSize === "desktop" &&
@@ -442,7 +409,7 @@ export function JungleKidNav({
               }}
             />
           )}
-        </motion.button>
+        </button>
       );
     },
     [
