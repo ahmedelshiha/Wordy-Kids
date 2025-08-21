@@ -442,7 +442,9 @@ export default function JungleAdventureNavV2({
                         />
                       )}
                       <span>
-                        {isGuest ? "✨ Sign Up / Register" : "🌿 Goodbye & Log Off"}
+                        {isGuest
+                          ? "✨ Sign Up / Register"
+                          : "🌿 Goodbye & Log Off"}
                       </span>
                       <div className="jungle-btn-glow" />
                     </button>
