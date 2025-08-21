@@ -3850,6 +3850,13 @@ export default function Index({ initialProfile }: IndexProps) {
               pauseAnimations={showSettings}
               iconSize={52}
               iconLift={18}
+              items={[
+                { id: "dashboard", label: "Home Tree", emoji: "🦉", ariaLabel: "Dashboard" },
+                { id: "learn", label: "Word Jungle", emoji: "🦜", ariaLabel: "Learning" },
+                { id: "quiz", label: "Quiz Adventure", emoji: "🐵", ariaLabel: "Quiz Games" },
+                { id: "adventure", label: "Epic Quest", emoji: "🐘", ariaLabel: "Adventures" },
+                { id: "achievements", label: "Trophy Grove", emoji: "🏆", ariaLabel: "Achievements" },
+              ]}
             />
           )}
 
