@@ -762,21 +762,23 @@ export const JungleAdventureParentDashboard: React.FC<
                             }
                           }}
                         >
-                          <InteractiveJungleMap
-                            className="w-full"
-                            onMarkerClick={(marker) => {
-                              if (isAnalyticsEnabled) {
-                                parentDashboardAnalytics.trackMapInteraction(
-                                  "marker_click",
-                                  {
-                                    markerId: marker.id,
-                                    markerType: marker.type,
-                                  },
-                                );
-                              }
-                              console.log("Marker clicked:", marker);
-                            }}
-                          />
+                          <ErrorBoundary fallbackType="kid" componentName="InteractiveJungleMap">
+                            <InteractiveJungleMap
+                              className="w-full"
+                              onMarkerClick={(marker) => {
+                                if (isAnalyticsEnabled) {
+                                  parentDashboardAnalytics.trackMapInteraction(
+                                    "marker_click",
+                                    {
+                                      markerId: marker.id,
+                                      markerType: marker.type,
+                                    },
+                                  );
+                                }
+                                console.log("Marker clicked:", marker);
+                              }}
+                            />
+                          </ErrorBoundary>
                         </div>
                       )}
                     </div>
