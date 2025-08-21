@@ -359,6 +359,7 @@ export function JungleKidNav({
       screenSize,
       handleNavClick,
       handleNavHover,
+      animationsSuspended,
     ],
   );
 
