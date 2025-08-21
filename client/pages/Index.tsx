@@ -4064,7 +4064,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "achievements",
                   label: "Trophy Grove",
-                  emoji: "🏆",
+                  emoji: "🐘",
                   ariaLabel: "Achievements",
                 },
               ]}
