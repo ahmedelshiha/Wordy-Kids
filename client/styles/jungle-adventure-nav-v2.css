@@ -515,7 +515,8 @@
   padding: 8px 12px !important;
   /* Enhanced visibility */
   opacity: 1 !important;
-  z-index: 10;
+  visibility: visible !important;
+  z-index: 15;
 }
 
 .jng-parent-menu-desktop:hover {
