@@ -254,35 +254,42 @@ export const registerJungleKidNavComponent = () => {
       ],
     });
 
-    // 🎨 Register Animation Presets as Symbols
-    Builder.registerComponent(JungleKidNav, {
-      name: "JungleKidNav-Calm",
-      friendlyName: "Jungle Nav (Calm Mode)",
-      description: "Pre-configured for maximum focus and minimal distraction",
-      inputs: [],
-      defaults: {
-        bindings: {
-          "component.options.idleSpeed": "slow",
-          "component.options.intensity": "subtle",
-          "component.options.rareEffects": false,
-          "component.options.enableSounds": false,
-        },
-      },
-    });
+    // 🎨 Register Preset Bundle Components
+    jungleNavPresets.forEach(preset => {
+      Builder.registerComponent(JungleKidNav, {
+        name: `JungleKidNav-${preset.id}`,
+        friendlyName: `${preset.icon} ${preset.name}`,
+        description: preset.description,
+        inputs: [
+          {
+            name: "activeTab",
+            friendlyName: "Active Tab",
+            type: "string",
+            enum: ["dashboard", "learn", "games", "achievements", "library"],
+            defaultValue: "dashboard"
+          }
+        ],
+        defaults: {
+          bindings: {
+            // Animation config
+            "component.options.idleSpeed": preset.config.idleSpeed || "slow",
+            "component.options.intensity": preset.config.intensity || "subtle",
+            "component.options.idlePauseDuration": preset.config.idlePauseDuration || "long",
+            "component.options.rareEffects": preset.config.rareEffects || false,
+            "component.options.reducedMotion": preset.config.reducedMotion || false,
 
-    Builder.registerComponent(JungleKidNav, {
-      name: "JungleKidNav-Playful",
-      friendlyName: "Jungle Nav (Playful Mode)",
-      description: "Pre-configured for maximum engagement and fun",
-      inputs: [],
-      defaults: {
-        bindings: {
-          "component.options.idleSpeed": "fast",
-          "component.options.intensity": "playful",
-          "component.options.rareEffects": true,
-          "component.options.enableSounds": true,
+            // Additional props
+            ...Object.entries(preset.additionalProps || {}).reduce((acc, [key, value]) => {
+              acc[`component.options.${key}`] = value;
+              return acc;
+            }, {} as Record<string, any>)
+          }
         },
-      },
+        // Add category for better organization
+        tags: preset.id.includes('accessibility') ? ['accessibility'] :
+              preset.id.includes('learning') ? ['education'] :
+              ['engagement']
+      });
     });
 
     console.log("✅ JungleKidNav registered with Builder.io");
