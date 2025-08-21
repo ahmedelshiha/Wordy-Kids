@@ -3594,7 +3594,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Achievement Items */}
                                         <div className="jungle-achievement-item">
                                           <div className="jungle-achievement-icon">
-                                            🏆🌟
+                                            🏆����
                                           </div>
                                           <div className="achievement-content">
                                             <div className="font-bold text-jungle-green text-sm">
@@ -3706,7 +3706,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         title:
                                           "Epic Adventure Complete! 🚀👑✨",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
-��� Accuracy: ${stats.accuracy || 0}%
+🎯 Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
 💎 Gems Earned: ${stats.gems || 0}
 🏆 Level Reached: ${stats.level || 1}
