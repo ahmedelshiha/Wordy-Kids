@@ -145,26 +145,30 @@
   }
 }
 
-/* ===== KID-FRIENDLY BREATHING ANIMATIONS ===== */
-/* Default gentle breathing animation - like a friendly creature breathing */
+/* ===== CALMING BREATHING ANIMATIONS ===== */
+/* Ultra-gentle breathing animation - like peaceful meditation */
 @keyframes breathing {
   0%,
   100% {
     transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.03);
+    opacity: 0.95;
   }
 }
 
-/* Alternative calm breathing for default state */
+/* Serene calm breathing for default state */
 @keyframes calm-breathing {
   0%,
   100% {
     transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.02);
+    opacity: 0.98;
   }
 }
 
