@@ -222,6 +222,21 @@ export function InteractiveDashboardWordCard({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+  // Dynamic jungle adventure messages
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [messageVisible, setMessageVisible] = useState(true);
+
+  const jungleAdventureMessages = [
+    "🌿 Let's explore the jungle!",
+    "🦜 Find the secret word!",
+    "🐒 Swing into action!",
+    "🐘 Stomp forward to learn!",
+    "🦁 Roar into reading!",
+    "🐯 Pounce on new words!",
+    "🌳 Climb the learning tree!",
+    "🦋 Flutter through phonics!",
+  ];
+
   // Systematic progression state - DISABLED for clean UI
   // const [progressionInfo, setProgressionInfo] = useState({
   //   stage: "Foundation Building",
