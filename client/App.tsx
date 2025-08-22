@@ -32,6 +32,7 @@ import { LightweightAchievementProvider } from "./components/LightweightAchievem
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
+import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 
 const queryClient = new QueryClient();
 
@@ -207,6 +208,10 @@ const App = () => {
                       <Route
                         path="/mobile-settings-demo"
                         element={<MobileSettingsDemo />}
+                      />
+                      <Route
+                        path="/settings-panel-v2-demo"
+                        element={<SettingsPanelV2Demo />}
                       />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
