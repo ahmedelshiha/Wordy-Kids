@@ -49,7 +49,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -16px; /* Bring label closer to icon */
+  margin-top: -20px; /* Bring label closer to higher floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -75,7 +75,7 @@
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -20px; /* Adjust for higher floating icons */
+    margin-top: -28px; /* Adjust for higher floating icons on mobile */
   }
 }
 
@@ -203,7 +203,7 @@
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -18px;
+    margin-top: -24px; /* Adjust for higher floating icons on very small screens */
   }
 }
 
