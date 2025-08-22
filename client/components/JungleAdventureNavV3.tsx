@@ -260,7 +260,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-0 font-medium leading-tight relative z-10">
+              <span className="text-xs mt-[-3px] font-medium leading-tight relative z-10">
                 Family
               </span>
             </motion.button>
@@ -337,7 +337,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-0 font-medium leading-tight relative z-10">
+              <span className="text-xs mt-[-3px] font-medium leading-tight relative z-10">
                 Family
               </span>
             </motion.button>
