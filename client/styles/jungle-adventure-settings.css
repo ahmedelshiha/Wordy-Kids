@@ -22,6 +22,21 @@
   .jungle-settings-dialog .grid.grid-cols-2 {
     grid-template-columns: 1fr 1fr;
     align-items: start;
+    /* Allow grid items to have flexible height for accordions */
+    grid-auto-rows: auto;
+  }
+
+  /* Desktop accordion category enhancements */
+  .jungle-settings-category {
+    /* Enable smooth scrolling and proper overflow handling */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  /* Desktop accordion content spacing */
+  .jungle-settings-dialog [data-state="open"] {
+    /* Ensure expanded accordions have proper spacing */
+    margin-bottom: 0.5rem;
   }
 }
 
