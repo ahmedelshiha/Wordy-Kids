@@ -11,7 +11,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import Login from "./pages/Login";
 import LoginForm from "./pages/LoginForm";
 import SignUp from "./pages/SignUp";
-import AppPage from "./pages/App";
+import MainAppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
@@ -32,6 +32,7 @@ import { LightweightAchievementProvider } from "./components/LightweightAchievem
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
+import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 
 const queryClient = new QueryClient();
 
@@ -130,9 +131,9 @@ const App = () => {
                         element={
                           <ErrorBoundary
                             fallbackType="kid"
-                            componentName="AppPage"
+                            componentName="MainAppPage"
                           >
-                            <AppPage />
+                            <MainAppPage />
                           </ErrorBoundary>
                         }
                       />
@@ -207,6 +208,10 @@ const App = () => {
                       <Route
                         path="/mobile-settings-demo"
                         element={<MobileSettingsDemo />}
+                      />
+                      <Route
+                        path="/settings-panel-v2-demo"
+                        element={<SettingsPanelV2Demo />}
                       />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
