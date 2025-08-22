@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import JungleAdventureParentDashboard from "@/components/JungleAdventureParentDashboard";
 import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
-import "@/styles/jungle-icon-nav.css\";\nimport \"@/styles/enhanced-jungle-parent-menu.css";
+import "@/styles/jungle-icon-nav.css\";\nimport \"@/styles/enhanced-jungle-parent-menu.css\";\nimport \"@/styles/jungle-parent-menu-buttons.css";
 
 export type IconNavItem = {
   id: string;
