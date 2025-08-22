@@ -104,26 +104,28 @@
 
 /* Active state styling */
 .jungle-icon-nav-item[aria-current="page"] .jungle-nav-icon {
-  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)) 
-          drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
 }
 
 .jungle-icon-nav-item[aria-current="page"] .jungle-nav-label {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
-               0 0 4px rgba(255, 215, 0, 0.4);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 4px rgba(255, 215, 0, 0.4);
 }
 
 /* Hover effects for desktop */
 @media (hover: hover) {
   .jungle-icon-nav-item:hover .jungle-nav-icon {
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
-            drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+      drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
     transform: translateY(-68px) scale(1.05);
   }
 
   .jungle-icon-nav-item:hover .jungle-nav-label {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
-                 0 0 4px rgba(255, 255, 255, 0.2);
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.5),
+      0 0 4px rgba(255, 255, 255, 0.2);
   }
 
   /* Mobile hover adjustments */
@@ -140,13 +142,14 @@
 }
 
 .jungle-icon-nav-item:focus .jungle-nav-icon {
-  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)) 
-          drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
 }
 
 .jungle-icon-nav-item:focus .jungle-nav-label {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
-               0 0 6px rgba(255, 215, 0, 0.6);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 6px rgba(255, 215, 0, 0.6);
 }
 
 /* High contrast mode support */

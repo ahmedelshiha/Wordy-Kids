@@ -3977,20 +3977,24 @@ export default function Index({ initialProfile }: IndexProps) {
             <JungleAdventureIconNav
               activeId={
                 // Map old tab IDs to new navigation IDs
-                activeTab === "dashboard" ? "home" :
-                activeTab === "learn" ? "jungle" :
-                activeTab === "quiz" ? "quiz" :
-                activeTab === "achievements" ? "trophy" :
-                activeTab
+                activeTab === "dashboard"
+                  ? "home"
+                  : activeTab === "learn"
+                    ? "jungle"
+                    : activeTab === "quiz"
+                      ? "quiz"
+                      : activeTab === "achievements"
+                        ? "trophy"
+                        : activeTab
               }
               onNavigate={(newId) => {
                 // Map new navigation IDs back to old tab IDs
                 const tabMapping = {
-                  "home": "dashboard",
-                  "jungle": "learn",
-                  "quiz": "quiz",
-                  "trophy": "achievements",
-                  "parents": "parent-menu"
+                  home: "dashboard",
+                  jungle: "learn",
+                  quiz: "quiz",
+                  trophy: "achievements",
+                  parents: "parent-menu",
                 };
 
                 if (newId === "parents") {
@@ -4000,7 +4004,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     navigator.vibrate(50);
                   }
                 } else {
-                  const mappedTab = tabMapping[newId as keyof typeof tabMapping];
+                  const mappedTab =
+                    tabMapping[newId as keyof typeof tabMapping];
                   if (mappedTab) {
                     setActiveTab(mappedTab);
                   }

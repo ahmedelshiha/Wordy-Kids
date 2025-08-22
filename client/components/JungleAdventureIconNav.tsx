@@ -25,40 +25,40 @@ interface JungleAdventureIconNavProps {
 }
 
 const DEFAULT_ITEMS: IconNavItem[] = [
-  { 
-    id: "home", 
-    label: "Home", 
+  {
+    id: "home",
+    label: "Home",
     iconSrc: "/images/iconset/home.png",
     labelColor: "#FFD700",
-    ariaLabel: "Navigate to Home" 
+    ariaLabel: "Navigate to Home",
   },
-  { 
-    id: "jungle", 
-    label: "Jungle", 
+  {
+    id: "jungle",
+    label: "Jungle",
     iconSrc: "/images/iconset/book.png",
     labelColor: "#FFFFFF",
-    ariaLabel: "Navigate to Jungle Learning" 
+    ariaLabel: "Navigate to Jungle Learning",
   },
-  { 
-    id: "quiz", 
-    label: "Quiz", 
+  {
+    id: "quiz",
+    label: "Quiz",
     iconSrc: "/images/iconset/quiz.png",
     labelColor: "#FFFFFF",
-    ariaLabel: "Navigate to Quiz Games" 
+    ariaLabel: "Navigate to Quiz Games",
   },
-  { 
-    id: "trophy", 
-    label: "Trophy", 
+  {
+    id: "trophy",
+    label: "Trophy",
     iconSrc: "/images/iconset/trophy.png",
     labelColor: "#FFFFFF",
-    ariaLabel: "Navigate to Trophy Gallery" 
+    ariaLabel: "Navigate to Trophy Gallery",
   },
-  { 
-    id: "parents", 
-    label: "Parents", 
+  {
+    id: "parents",
+    label: "Parents",
     iconSrc: "/images/iconset/parent.png",
     labelColor: "#FFD700",
-    ariaLabel: "Navigate to Parent Area" 
+    ariaLabel: "Navigate to Parent Area",
   },
 ];
 
@@ -73,7 +73,7 @@ export default function JungleAdventureIconNav({
   const handleNavigation = (itemId: string) => {
     // Set tapped state for visual feedback
     setTappedItem(itemId);
-    
+
     // Add haptic feedback
     if (navigator.vibrate) {
       navigator.vibrate(30);
@@ -101,7 +101,7 @@ export default function JungleAdventureIconNav({
         boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.3)",
       }}
     >
-      <div 
+      <div
         className="flex justify-around items-end h-full px-2"
         style={{ overflow: "visible" }}
       >
@@ -149,7 +149,11 @@ export default function JungleAdventureIconNav({
                   color: item.labelColor,
                 }}
                 animate={{
-                  color: isTapped ? (item.labelColor === "#FFD700" ? "#FFED4A" : "#F7FAFC") : item.labelColor,
+                  color: isTapped
+                    ? item.labelColor === "#FFD700"
+                      ? "#FFED4A"
+                      : "#F7FAFC"
+                    : item.labelColor,
                 }}
                 transition={{
                   duration: 0.2,
