@@ -5,10 +5,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { X, Play, Square, RotateCcw, Save } from "lucide-react";
 import {
   setSoundEnabled,
@@ -17,7 +28,10 @@ import {
   isUIInteractionSoundsEnabled,
 } from "@/lib/soundEffects";
 import { audioService, VoiceType } from "@/lib/audioService";
-import { useMobileDevice, triggerHapticFeedback } from "@/hooks/use-mobile-device";
+import {
+  useMobileDevice,
+  triggerHapticFeedback,
+} from "@/hooks/use-mobile-device";
 import "@/styles/jungle-adventure-settings.css";
 
 type Settings = {
@@ -67,16 +81,16 @@ const STORAGE_KEY = "jungleAdventureSettings";
 const soundEffects = {
   ambient: {
     birds: "/sounds/jungle-birds.mp3",
-    rain: "/sounds/jungle-rain.mp3", 
+    rain: "/sounds/jungle-rain.mp3",
     wind: "/sounds/jungle-wind.mp3",
     waterfall: "/sounds/jungle-waterfall.mp3",
     insects: "/sounds/jungle-insects.mp3",
   },
   ui: {
     settingsSaved: "/sounds/ui/settings-saved.mp3",
-    settingsReset: "/sounds/ui/settings-reset.mp3", 
+    settingsReset: "/sounds/ui/settings-reset.mp3",
     voicePreview: "/sounds/ui/voice-preview.mp3",
-  }
+  },
 };
 
 function loadSettings(): Settings {
@@ -93,14 +107,17 @@ function loadSettings(): Settings {
 function saveSettings(s: Settings) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
   // apply side-effects
-  document.documentElement.style.setProperty("--jng-text-scale", String(s.textScale));
+  document.documentElement.style.setProperty(
+    "--jng-text-scale",
+    String(s.textScale),
+  );
   document.documentElement.classList.toggle("dark", !!s.darkMode);
   document.documentElement.classList.toggle("hc", !!s.highContrast);
   if (s.reducedMotion) document.documentElement.classList.add("reduce-motion");
   else document.documentElement.classList.remove("reduce-motion");
   // theme hook (light, parchment woods)
   document.documentElement.setAttribute("data-jungle-theme", s.theme);
-  
+
   // Apply sound settings
   setSoundEnabled(s.uiSounds);
   setUIInteractionSoundsEnabled(s.uiSounds);
@@ -111,7 +128,10 @@ type Props = {
   onOpenChange: (v: boolean) => void;
 };
 
-export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: Props) {
+export default function JungleAdventureSettingsPanelV2({
+  open,
+  onOpenChange,
+}: Props) {
   const { isMobile, hasHaptic, prefersReducedMotion } = useMobileDevice();
   const [settings, setSettings] = useState<Settings>(loadSettings());
   const [dirty, setDirty] = useState(false);
@@ -167,14 +187,12 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
       ambientRef.current.src = src;
     }
     ambientRef.current.volume = clamp(vol, 0, 1);
-    ambientRef.current
-      .play()
-      .catch(() => {
-        // Autoplay block – will start on first tap
-        // no-op
-      });
+    ambientRef.current.play().catch(() => {
+      // Autoplay block – will start on first tap
+      // no-op
+    });
   }
-  
+
   function stopAmbient() {
     if (!ambientRef.current) return;
     ambientRef.current.pause();
@@ -203,7 +221,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
         // Autoplay might be blocked, ignore error
       });
     } catch (error) {
-      console.warn('Could not play sound:', src, error);
+      console.warn("Could not play sound:", src, error);
     }
   }
 
@@ -221,11 +239,12 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
   }
 
   function previewVoice() {
-    const sampleText = "Hello! Let's explore the jungle together and discover amazing words!";
+    const sampleText =
+      "Hello! Let's explore the jungle together and discover amazing words!";
     audioService.pronounceWord(sampleText, {
       onStart: () => {
         playSound(soundEffects.ui.voicePreview);
-      }
+      },
     });
   }
 
@@ -263,7 +282,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
         className={cn(
           "relative w-[min(720px,92vw)] max-h-[80vh] overflow-hidden rounded-2xl shadow-xl",
           "bg-gradient-to-br from-orange-50/95 via-yellow-50/95 to-green-50/95 backdrop-blur-lg",
-          "border border-green-200/50"
+          "border border-green-200/50",
         )}
       >
         {/* Header */}
@@ -300,7 +319,12 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
         <div className="p-0">
           <ScrollArea className="max-h-[calc(80vh-112px)] px-4 pb-24">
             {/* MOBILE: Accordion; DESKTOP: sections visible */}
-            <div className={cn("space-y-4 py-4", isMobile ? "" : "grid grid-cols-2 gap-4")}>
+            <div
+              className={cn(
+                "space-y-4 py-4",
+                isMobile ? "" : "grid grid-cols-2 gap-4",
+              )}
+            >
               {/* 1) SOUND & VOICE */}
               <Section title="🎵 Sound & Voice" isMobile={isMobile} defaultOpen>
                 <Row
@@ -335,10 +359,14 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     </Select>
                   }
                 />
-                <Row label={`Ambient Volume ${Math.round(settings.ambientVolume * 100)}%`}>
+                <Row
+                  label={`Ambient Volume ${Math.round(settings.ambientVolume * 100)}%`}
+                >
                   <Slider
                     value={[settings.ambientVolume * 100]}
-                    onValueChange={([v]) => markDirty({ ambientVolume: v / 100 })}
+                    onValueChange={([v]) =>
+                      markDirty({ ambientVolume: v / 100 })
+                    }
                     max={100}
                     step={5}
                     className="flex-1"
@@ -349,7 +377,9 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                   control={
                     <Select
                       value={settings.voice}
-                      onValueChange={(v) => markDirty({ voice: v as Settings["voice"] })}
+                      onValueChange={(v) =>
+                        markDirty({ voice: v as Settings["voice"] })
+                      }
                     >
                       <SelectTrigger className="w-44">
                         <SelectValue placeholder="Voice" />
@@ -357,7 +387,9 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                       <SelectContent>
                         <SelectItem value="woman">👩 Guide (Woman)</SelectItem>
                         <SelectItem value="man">👨 Guide (Man)</SelectItem>
-                        <SelectItem value="child">🧒 Explorer (Child)</SelectItem>
+                        <SelectItem value="child">
+                          🧒 Explorer (Child)
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   }
@@ -378,7 +410,11 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     Preview Voice
                   </Button>
                   {settings.ambient !== "off" && (
-                    <Button variant="secondary" size="sm" onClick={() => markDirty({ ambient: "off" })}>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => markDirty({ ambient: "off" })}
+                    >
                       <Square className="w-4 h-4 mr-2" />
                       Stop Ambient
                     </Button>
@@ -393,13 +429,17 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                   control={
                     <Select
                       value={settings.theme}
-                      onValueChange={(v) => markDirty({ theme: v as Settings["theme"] })}
+                      onValueChange={(v) =>
+                        markDirty({ theme: v as Settings["theme"] })
+                      }
                     >
                       <SelectTrigger className="w-44">
                         <SelectValue placeholder="Theme" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="parchment">📜 Parchment (Light)</SelectItem>
+                        <SelectItem value="parchment">
+                          📜 Parchment (Light)
+                        </SelectItem>
                         <SelectItem value="jungle">🌿 Jungle Green</SelectItem>
                         <SelectItem value="canopy">🌫️ Canopy Mist</SelectItem>
                         <SelectItem value="river">🌊 River Blue</SelectItem>
@@ -444,7 +484,9 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                   control={
                     <Select
                       value={settings.difficulty}
-                      onValueChange={(v) => markDirty({ difficulty: v as Settings["difficulty"] })}
+                      onValueChange={(v) =>
+                        markDirty({ difficulty: v as Settings["difficulty"] })
+                      }
                     >
                       <SelectTrigger className="w-40">
                         <SelectValue placeholder="Difficulty" />
@@ -459,15 +501,21 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                 />
                 <Row label={`Daily Goal: ${settings.dailyGoal} cards`}>
                   <Slider
-                    min={5} max={50} step={5}
+                    min={5}
+                    max={50}
+                    step={5}
                     value={[settings.dailyGoal]}
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
                     className="flex-1"
                   />
                 </Row>
-                <Row label={`Time Limit: ${settings.timeLimitMin === 0 ? "Off" : settings.timeLimitMin + " min"}`}>
+                <Row
+                  label={`Time Limit: ${settings.timeLimitMin === 0 ? "Off" : settings.timeLimitMin + " min"}`}
+                >
                   <Slider
-                    min={0} max={60} step={5}
+                    min={0}
+                    max={60}
+                    step={5}
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
                     className="flex-1"
@@ -478,7 +526,9 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                   control={
                     <Switch
                       checked={settings.parentGateEnabled}
-                      onCheckedChange={(v) => markDirty({ parentGateEnabled: !!v })}
+                      onCheckedChange={(v) =>
+                        markDirty({ parentGateEnabled: !!v })
+                      }
                     />
                   }
                 />
@@ -488,7 +538,9 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
               <Section title="♿ Accessibility" isMobile={isMobile}>
                 <Row label={`Text Size ×${settings.textScale.toFixed(1)}`}>
                   <Slider
-                    min={90} max={130} step={5}
+                    min={90}
+                    max={130}
+                    step={5}
                     value={[settings.textScale * 100]}
                     onValueChange={([v]) => markDirty({ textScale: v / 100 })}
                     className="flex-1"
@@ -519,7 +571,11 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
           {/* Sticky Footer */}
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-orange-50/95 to-green-50/95 border-t border-green-200/50 backdrop-blur-sm p-4">
             <div className="flex justify-between items-center">
-              <Button variant="secondary" onClick={handleReset} className="flex items-center gap-2">
+              <Button
+                variant="secondary"
+                onClick={handleReset}
+                className="flex items-center gap-2"
+              >
                 <RotateCcw className="w-4 h-4" />
                 Reset
               </Button>
@@ -527,7 +583,11 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                 <Button variant="ghost" onClick={() => onOpenChange(false)}>
                   Close
                 </Button>
-                <Button disabled={!dirty} onClick={handleSave} className="flex items-center gap-2">
+                <Button
+                  disabled={!dirty}
+                  onClick={handleSave}
+                  className="flex items-center gap-2"
+                >
                   <Save className="w-4 h-4" />
                   Save & Apply
                 </Button>
@@ -542,12 +602,25 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
 
 /* ---------- helpers ---------- */
 
-function Section({ title, children, isMobile, defaultOpen = false }: { title: string; children: React.ReactNode; isMobile: boolean; defaultOpen?: boolean }) {
+function Section({
+  title,
+  children,
+  isMobile,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  isMobile: boolean;
+  defaultOpen?: boolean;
+}) {
   // auto-collapsing accordion on mobile
   if (isMobile) {
     return (
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1" className="border rounded-lg bg-white/60 backdrop-blur-sm">
+        <AccordionItem
+          value="item-1"
+          className="border rounded-lg bg-white/60 backdrop-blur-sm"
+        >
           <AccordionTrigger className="px-4 py-3 hover:no-underline">
             <span className="font-medium text-green-800">{title}</span>
           </AccordionTrigger>
@@ -579,10 +652,10 @@ function Row({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="text-sm font-medium text-green-800 min-w-0 flex-1">{label}</div>
-      <div className="flex-shrink-0">
-        {control ?? children}
+      <div className="text-sm font-medium text-green-800 min-w-0 flex-1">
+        {label}
       </div>
+      <div className="flex-shrink-0">{control ?? children}</div>
     </div>
   );
 }
