@@ -74,9 +74,11 @@ function useReducedMotion(): boolean {
   return reduced;
 }
 
-// Utility function to get animal-specific CSS class
+// Utility function to get animal-specific CSS class for totem animations
 function getAnimalAnimationClass(emoji: string): string {
   switch (emoji) {
+    case "🦉":
+      return "jng-nav-icon-owl";
     case "🦜":
       return "jng-nav-icon-parrot";
     case "🐵":
@@ -88,9 +90,10 @@ function getAnimalAnimationClass(emoji: string): string {
   }
 }
 
-// Enhanced icon size calculation (maintaining large icons with compact navigation)
-const ENHANCED_ICON_SIZE = {
-  base: "3.6rem", // Keeping original enhanced size despite reduced navigation height
+// Enhanced totem icon sizes - Larger than bar, rising like jungle totems
+const TOTEM_ICON_SIZE = {
+  base: "1.8rem", // 1.6-1.8rem as specified, 20-25% taller than nav bar
+  mobileBase: "1.6rem", // Slightly smaller on mobile for better fit
   active: "scale-110",
   hover: "scale-115",
   tap: "scale-95",
@@ -179,7 +182,7 @@ export default function JungleAdventureNavV3({
         aria-label="Jungle Adventure Navigation"
       >
         {/* Navigation Bar */}
-        <div className="flex justify-around items-end px-4 py-0.5">
+        <div className="flex justify-around items-end px-2 py-0.5">
           {items.map((item) => {
             const isActive = item.id === activeId;
             const animalClass = getAnimalAnimationClass(item.emoji);
@@ -197,24 +200,21 @@ export default function JungleAdventureNavV3({
                 onClick={() => handleNavigation(item.id)}
                 aria-label={item.ariaLabel || item.label}
                 aria-current={isActive ? "page" : undefined}
-                style={{ minHeight: "32px", minWidth: "45px" }}
               >
                 <span
                   className={`${animalClass} ${
                     isActive ? "active" : ""
-                  } drop-shadow-lg transform transition-transform duration-200`}
+                  } drop-shadow-lg`}
                   style={{
-                    fontSize: ENHANCED_ICON_SIZE.base,
-                    filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
+                    fontSize: window.innerWidth <= 768 ? TOTEM_ICON_SIZE.mobileBase : TOTEM_ICON_SIZE.base,
                     textShadow: isActive
                       ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                       : "0 0 8px rgba(255,255,255,0.3)",
-                    marginBottom: "1px", // Reduced totem-lift effect for compact nav
                   }}
                 >
                   {item.emoji}
                 </span>
-                <span className="text-xs mt-0 font-medium">{item.label}</span>
+                <span className="text-xs mt-1 font-medium leading-tight">{item.label}</span>
               </motion.button>
             );
           })}
@@ -228,21 +228,20 @@ export default function JungleAdventureNavV3({
             aria-label="Parent Menu - Access family controls and settings"
             aria-expanded={showParentMenu}
             aria-haspopup="dialog"
-            style={{ minHeight: "32px", minWidth: "45px" }}
           >
             <span
-              className="jng-nav-icon-totem drop-shadow-lg"
+              className={`jng-nav-icon-totem drop-shadow-lg ${
+                showParentMenu ? "active" : ""
+              }`}
               style={{
-                fontSize: ENHANCED_ICON_SIZE.base,
-                filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
+                fontSize: window.innerWidth <= 768 ? TOTEM_ICON_SIZE.mobileBase : TOTEM_ICON_SIZE.base,
                 textShadow:
                   "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
-                marginBottom: "1px", // Reduced totem-lift effect for compact nav
               }}
             >
               🪵
             </span>
-            <span className="text-xs mt-0 font-medium">Parents</span>
+            <span className="text-xs mt-1 font-medium leading-tight">Parents</span>
           </motion.button>
         </div>
       </nav>
