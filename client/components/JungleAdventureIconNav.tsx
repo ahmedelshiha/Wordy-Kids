@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "@/styles/jungle-icon-nav.css";
 
@@ -69,6 +69,24 @@ export default function JungleAdventureIconNav({
   className = "",
 }: JungleAdventureIconNavProps) {
   const [tappedItem, setTappedItem] = useState<string | null>(null);
+  const [translateY, setTranslateY] = useState(-55);
+
+  // Update translateY based on screen size - slightly lower positioning
+  useEffect(() => {
+    const updateTranslateY = () => {
+      if (window.innerWidth <= 374) {
+        setTranslateY(-75); // Very small screens - brought down 20px
+      } else if (window.innerWidth <= 767) {
+        setTranslateY(-45); // Mobile - brought down 15px
+      } else {
+        setTranslateY(-40); // Desktop - brought down 15px
+      }
+    };
+
+    updateTranslateY();
+    window.addEventListener("resize", updateTranslateY);
+    return () => window.removeEventListener("resize", updateTranslateY);
+  }, []);
 
   const handleNavigation = (itemId: string) => {
     // Set tapped state for visual feedback
@@ -133,8 +151,18 @@ export default function JungleAdventureIconNav({
                 src={item.iconSrc}
                 alt={item.label}
                 className="jungle-nav-icon"
+                initial={{ y: translateY }}
                 animate={{
                   scale: isTapped ? 1.1 : 1,
+                  y: translateY, // Maintain elevated position during animations
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  y: translateY - 20, // Float even higher on hover
+                }}
+                whileTap={{
+                  scale: 1.1,
+                  y: translateY - 10, // Slight additional lift on tap
                 }}
                 transition={{
                   type: "spring",

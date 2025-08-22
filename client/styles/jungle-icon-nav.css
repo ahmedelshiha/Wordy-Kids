@@ -27,15 +27,14 @@
   position: relative;
   /* Ensure adequate touch target */
   padding-bottom: 8px;
-  padding-top: 35px; /* Account for floating icons */
+  padding-top: 45px; /* Account for slightly lowered floating icons */
 }
 
 .jungle-nav-icon {
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float higher above the bar */
-  transform: translateY(-35px);
+  /* Desktop: Elevation handled by Framer Motion */
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
@@ -52,7 +51,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -15px; /* Bring label closer to floating icon */
+  margin-top: -30px; /* Bring label even closer to floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -64,21 +63,20 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float higher above the bar */
-    transform: translateY(-40px);
+    /* Mobile: Elevation handled by Framer Motion */
     /* 20% larger than before */
     max-width: 53px;
   }
 
   .jungle-icon-nav-item {
     min-width: 44px;
-    padding-top: 40px; /* Account for floating icons */
+    padding-top: 50px; /* Account for slightly lowered mobile floating icons */
   }
 
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -20px; /* Adjust for floating icons */
+    margin-top: -35px; /* Bring mobile labels even closer to icons */
   }
 }
 
@@ -122,7 +120,7 @@
   .jungle-icon-nav-item:hover .jungle-nav-icon {
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
-    transform: translateY(-68px) scale(1.05);
+    /* Hover handled by Framer Motion component */
   }
 
   .jungle-icon-nav-item:hover .jungle-nav-label {
@@ -134,7 +132,7 @@
   /* Mobile hover adjustments */
   @media (max-width: 767px) {
     .jungle-icon-nav-item:hover .jungle-nav-icon {
-      transform: translateY(-83px) scale(1.05);
+      /* Mobile hover handled by Framer Motion component */
     }
   }
 }
@@ -198,18 +196,18 @@
 @media (max-width: 374px) {
   .jungle-nav-icon {
     max-width: 48px;
-    transform: translateY(-75px);
+    /* Very small screen elevation handled by Framer Motion */
   }
 
   .jungle-icon-nav-item {
     min-width: 40px;
-    padding-top: 82px; /* Account for extremely high floating (75px + margin) */
+    padding-top: 80px; /* Account for lowered very small screen floating icons */
   }
 
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -65px; /* Adjust for extremely high floating icons on very small screens */
+    margin-top: -60px; /* Bring very small screen labels even closer to lowered icons */
   }
 }
 
