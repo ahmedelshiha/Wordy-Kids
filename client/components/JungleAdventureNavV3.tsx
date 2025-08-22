@@ -223,7 +223,7 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-[-3px] font-medium leading-tight">
+                  <span className="text-xs mt-[-8px] font-medium leading-none">
                     {item.label}
                   </span>
                 </motion.button>
@@ -262,7 +262,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-[-3px] font-medium leading-tight relative z-10">
+              <span className="text-xs mt-[-8px] font-medium leading-none relative z-10">
                 Family
               </span>
             </motion.button>
@@ -300,7 +300,7 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-[-3px] font-medium leading-tight">
+                  <span className="text-xs mt-[-8px] font-medium leading-none">
                     {item.label}
                   </span>
                 </motion.button>
@@ -338,7 +338,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-[-3px] font-medium leading-tight relative z-10">
+              <span className="text-xs mt-[-8px] font-medium leading-none relative z-10">
                 Family
               </span>
             </motion.button>
