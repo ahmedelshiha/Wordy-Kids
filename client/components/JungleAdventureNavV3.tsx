@@ -182,77 +182,144 @@ export default function JungleAdventureNavV3({
         aria-label="Jungle Adventure Navigation"
       >
         {/* Navigation Bar */}
-        <div className="flex justify-around items-end px-2 py-0">
-          {items.map((item) => {
-            const isActive = item.id === activeId;
-            const animalClass = getAnimalAnimationClass(item.emoji);
+        <div className="flex items-end px-2 py-0 relative">
+          {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
+          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-4">
+            {items.map((item) => {
+              const isActive = item.id === activeId;
+              const animalClass = getAnimalAnimationClass(item.emoji);
 
-            return (
-              <motion.button
-                key={item.id}
-                whileTap={shouldAnimate ? { scale: 0.9 } : {}}
-                whileHover={shouldAnimate ? { scale: 1.05 } : {}}
-                className={`jng-nav-icon-container flex flex-col items-center text-white transition-colors duration-200 ${
-                  isActive
-                    ? "text-yellow-300"
-                    : "text-white hover:text-yellow-200"
-                }`}
-                onClick={() => handleNavigation(item.id)}
-                aria-label={item.ariaLabel || item.label}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <span
-                  className={`${animalClass} ${
-                    isActive ? "active" : ""
-                  } drop-shadow-lg`}
-                  style={{
-                    fontSize:
-                      window.innerWidth <= 768
-                        ? TOTEM_ICON_SIZE.mobileBase
-                        : TOTEM_ICON_SIZE.base,
-                    textShadow: isActive
-                      ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
-                      : "0 0 8px rgba(255,255,255,0.3)",
-                  }}
+              return (
+                <motion.button
+                  key={item.id}
+                  whileTap={shouldAnimate ? { scale: 0.9 } : {}}
+                  whileHover={shouldAnimate ? { scale: 1.05 } : {}}
+                  className={`jng-nav-icon-container flex flex-col items-center text-white transition-colors duration-200 ${
+                    isActive
+                      ? "text-yellow-300"
+                      : "text-white hover:text-yellow-200"
+                  }`}
+                  onClick={() => handleNavigation(item.id)}
+                  aria-label={item.ariaLabel || item.label}
+                  aria-current={isActive ? "page" : undefined}
                 >
-                  {item.emoji}
-                </span>
-                <span className="text-xs mt-1 font-medium leading-tight">
-                  {item.label}
-                </span>
-              </motion.button>
-            );
-          })}
+                  <span
+                    className={`${animalClass} ${
+                      isActive ? "active" : ""
+                    } drop-shadow-lg`}
+                    style={{
+                      fontSize: TOTEM_ICON_SIZE.base,
+                      textShadow: isActive
+                        ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
+                        : "0 0 8px rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    {item.emoji}
+                  </span>
+                  <span className="text-xs mt-1 font-medium leading-tight">
+                    {item.label}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
 
-          {/* Parent Menu Button */}
-          <motion.button
-            whileTap={shouldAnimate ? { scale: 0.9 } : {}}
-            whileHover={shouldAnimate ? { scale: 1.05 } : {}}
-            className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
-            onClick={() => setShowParentMenu(true)}
-            aria-label="Parent Menu - Access family controls and settings"
-            aria-expanded={showParentMenu}
-            aria-haspopup="dialog"
-          >
-            <span
-              className={`jng-nav-icon-totem drop-shadow-lg ${
-                showParentMenu ? "active" : ""
-              }`}
-              style={{
-                fontSize:
-                  window.innerWidth <= 768
-                    ? TOTEM_ICON_SIZE.mobileBase
-                    : TOTEM_ICON_SIZE.base,
-                textShadow:
-                  "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
-              }}
+          {/* Desktop Parent Menu Button - Right Side */}
+          <div className="hidden md:block absolute right-2">
+            <motion.button
+              whileTap={shouldAnimate ? { scale: 0.9 } : {}}
+              whileHover={shouldAnimate ? { scale: 1.05 } : {}}
+              className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
+              onClick={() => setShowParentMenu(true)}
+              aria-label="Parent Menu - Access family controls and settings"
+              aria-expanded={showParentMenu}
+              aria-haspopup="dialog"
             >
-              🪵
-            </span>
-            <span className="text-xs mt-1 font-medium leading-tight">
-              Parents
-            </span>
-          </motion.button>
+              <span
+                className={`jng-nav-icon-totem drop-shadow-lg ${
+                  showParentMenu ? "active" : ""
+                }`}
+                style={{
+                  fontSize: TOTEM_ICON_SIZE.base,
+                  textShadow:
+                    "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
+                }}
+              >
+                🪵
+              </span>
+              <span className="text-xs mt-1 font-medium leading-tight">
+                Parents
+              </span>
+            </motion.button>
+          </div>
+
+          {/* Mobile Layout: Distributed layout for smaller screens */}
+          <div className="flex md:hidden justify-around w-full">
+            {items.map((item) => {
+              const isActive = item.id === activeId;
+              const animalClass = getAnimalAnimationClass(item.emoji);
+
+              return (
+                <motion.button
+                  key={item.id}
+                  whileTap={shouldAnimate ? { scale: 0.9 } : {}}
+                  whileHover={shouldAnimate ? { scale: 1.05 } : {}}
+                  className={`jng-nav-icon-container flex flex-col items-center text-white transition-colors duration-200 ${
+                    isActive
+                      ? "text-yellow-300"
+                      : "text-white hover:text-yellow-200"
+                  }`}
+                  onClick={() => handleNavigation(item.id)}
+                  aria-label={item.ariaLabel || item.label}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <span
+                    className={`${animalClass} ${
+                      isActive ? "active" : ""
+                    } drop-shadow-lg`}
+                    style={{
+                      fontSize: TOTEM_ICON_SIZE.mobileBase,
+                      textShadow: isActive
+                        ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
+                        : "0 0 8px rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    {item.emoji}
+                  </span>
+                  <span className="text-xs mt-1 font-medium leading-tight">
+                    {item.label}
+                  </span>
+                </motion.button>
+              );
+            })}
+
+            {/* Mobile Parent Menu Button */}
+            <motion.button
+              whileTap={shouldAnimate ? { scale: 0.9 } : {}}
+              whileHover={shouldAnimate ? { scale: 1.05 } : {}}
+              className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
+              onClick={() => setShowParentMenu(true)}
+              aria-label="Parent Menu - Access family controls and settings"
+              aria-expanded={showParentMenu}
+              aria-haspopup="dialog"
+            >
+              <span
+                className={`jng-nav-icon-totem drop-shadow-lg ${
+                  showParentMenu ? "active" : ""
+                }`}
+                style={{
+                  fontSize: TOTEM_ICON_SIZE.mobileBase,
+                  textShadow:
+                    "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
+                }}
+              >
+                🪵
+              </span>
+              <span className="text-xs mt-1 font-medium leading-tight">
+                Parents
+              </span>
+            </motion.button>
+          </div>
         </div>
       </nav>
 
