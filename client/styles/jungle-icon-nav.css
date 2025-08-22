@@ -7,7 +7,7 @@
   width: 100%;
   z-index: 50;
   background-color: #0b6623; /* Dark jungle green */
-  height: 49px; /* Reduced height by 30% (70px * 0.7 = 49px) */
+  height: 60px; /* Slightly taller to accommodate floating icons */
   overflow: visible; /* Allow icons to float above */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -41,6 +41,9 @@
   /* Ensure crisp rendering */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  /* Higher z-index to appear above navigation bar */
+  position: relative;
+  z-index: 60;
 }
 
 .jungle-nav-label {
