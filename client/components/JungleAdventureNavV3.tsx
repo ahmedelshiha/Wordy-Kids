@@ -249,10 +249,11 @@ export default function JungleAdventureNavV3({
               </div>
 
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[3.51rem] relative z-10 ${
+                className={`jng-nav-icon-totem drop-shadow-lg relative z-10 ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
+                  fontSize: "4.91rem", // Desktop: 3.51rem * 1.4 = 4.914rem
                   textShadow:
                     "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 }}
@@ -260,7 +261,7 @@ export default function JungleAdventureNavV3({
                 🪵
               </span>
               <span className="text-xs mt-0 font-medium leading-tight relative z-10">
-                Parents
+                Family
               </span>
             </motion.button>
           </div>
@@ -325,10 +326,11 @@ export default function JungleAdventureNavV3({
               </div>
 
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[3.12rem] md:text-[3.51rem] relative z-10 ${
+                className={`jng-nav-icon-totem drop-shadow-lg relative z-10 ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
+                  fontSize: "4.37rem", // Mobile: 3.12rem * 1.4 = 4.368rem
                   textShadow:
                     "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 }}
@@ -336,7 +338,7 @@ export default function JungleAdventureNavV3({
                 🪵
               </span>
               <span className="text-xs mt-0 font-medium leading-tight relative z-10">
-                Parents
+                Family
               </span>
             </motion.button>
           </div>
