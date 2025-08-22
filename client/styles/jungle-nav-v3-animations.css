@@ -332,33 +332,33 @@
   }
 }
 
-/* Parent Menu Icon (🪵 Totem) - Mystical Jungle Guardian */
+/* Parent Menu Icon (🪵 Totem) - Mystical Jungle Guardian - 50% Larger */
 .jng-nav-icon-totem {
   animation:
     breathing 7s ease-in-out infinite,
     totemFireflyShimmer 16s ease-in-out infinite; /* Firefly shimmer effect */
   animation-delay: 0s, 6s; /* Stagger the shimmer */
   transform: translateY(-12px); /* Same totem lift as others */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); /* Stronger shadow for larger size */
 }
 
 .jng-nav-icon-totem:hover {
-  transform: translateY(-12px) scale(1.15);
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
-    drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
+  transform: translateY(-12px) scale(1.10); /* Reduced hover scale since button is already 50% larger */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 16px rgba(251, 191, 36, 0.4)); /* Enhanced glow for larger button */
   transition: all 0.2s ease-out;
 }
 
 .jng-nav-icon-totem:active {
-  transform: translateY(-12px) scale(0.95);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  transform: translateY(-12px) scale(0.98); /* Adjusted for larger button */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
   transition: all 0.1s ease-out;
 }
 
 /* Active Parent Menu State */
 .jng-nav-icon-totem.active {
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
-    drop-shadow(0 0 15px rgba(255, 193, 7, 0.5));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 20px rgba(255, 193, 7, 0.6)); /* Enhanced active glow */
 }
 
 /* Battery-Friendly Optimization for Small Devices */
