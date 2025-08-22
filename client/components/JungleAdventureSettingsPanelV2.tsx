@@ -89,6 +89,12 @@ const DEFAULTS: Settings = {
   darkMode: false,
   reducedMotion: false,
   highContrast: false,
+  overlays: {
+    fireflies: true,
+    fog: true,
+    glow: true,
+    ripples: false,
+  },
   difficulty: "normal",
   dailyGoal: 10,
   timeLimitMin: 0,
