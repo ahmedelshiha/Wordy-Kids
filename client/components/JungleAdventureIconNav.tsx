@@ -230,83 +230,331 @@ export default function JungleAdventureIconNav({
         })}
       </div>
 
-      {/* Parent Menu Popup */}
+      {/* Enhanced Parent Menu Popup - Jungle Adventure Theme */}
       <AnimatePresence>
         {showParentMenu && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black/50 z-[60] backdrop-blur-sm"
+            className="fixed inset-0 flex items-center justify-center z-[60]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowParentMenu(false)}
+            style={{
+              background: `
+                radial-gradient(circle at 30% 70%, rgba(34, 139, 34, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(76, 175, 80, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg,
+                  rgba(0, 0, 0, 0.7) 0%,
+                  rgba(20, 40, 20, 0.8) 50%,
+                  rgba(0, 0, 0, 0.7) 100%
+                )
+              `,
+              backdropFilter: "blur(12px)",
+            }}
           >
+            {/* Floating Jungle Elements */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {/* Animated fireflies */}
+              {[...Array(8)].map((_, i) => (
+                <motion.div
+                  key={`firefly-${i}`}
+                  className="absolute w-1 h-1 bg-yellow-300 rounded-full shadow-lg"
+                  style={{
+                    left: `${20 + i * 10}%`,
+                    top: `${30 + (i % 3) * 20}%`,
+                    boxShadow: "0 0 8px rgba(255, 255, 0, 0.8)",
+                  }}
+                  animate={{
+                    x: [0, 20, -10, 0],
+                    y: [0, -15, 10, 0],
+                    opacity: [0.3, 1, 0.5, 0.8],
+                  }}
+                  transition={{
+                    duration: 4 + i * 0.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+
+              {/* Floating leaves */}
+              {["🍃", "🌿", "🍀", "🌱"].map((leaf, i) => (
+                <motion.div
+                  key={`leaf-${i}`}
+                  className="absolute text-2xl opacity-20"
+                  style={{
+                    left: `${10 + i * 25}%`,
+                    top: `${20 + i * 15}%`,
+                  }}
+                  animate={{
+                    y: [0, -30, 0],
+                    x: [0, 15, -5, 0],
+                    rotate: [0, 10, -5, 0],
+                  }}
+                  transition={{
+                    duration: 6 + i * 0.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {leaf}
+                </motion.div>
+              ))}
+            </div>
+
             <motion.div
-              className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl shadow-2xl p-6 w-[90%] max-w-sm text-center border-4 border-amber-700 relative overflow-hidden"
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              className="relative w-[95%] max-w-lg mx-auto text-center overflow-hidden"
+              initial={{ scale: 0.7, opacity: 0, y: 50, rotateX: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0, rotateX: 0 }}
+              exit={{ scale: 0.7, opacity: 0, y: 50, rotateX: 15 }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 20,
+                duration: 0.6,
+              }}
               onClick={(e) => e.stopPropagation()}
               style={{
                 background: `
                   linear-gradient(135deg,
-                    rgba(255, 248, 220, 0.95) 0%,
-                    rgba(250, 240, 200, 0.98) 100%
+                    rgba(255, 248, 220, 0.98) 0%,
+                    rgba(250, 240, 200, 0.95) 25%,
+                    rgba(245, 235, 190, 0.98) 50%,
+                    rgba(240, 230, 180, 0.95) 75%,
+                    rgba(235, 225, 170, 0.98) 100%
                   )
                 `,
+                borderRadius: "24px",
+                border: "4px solid #8B4513",
                 boxShadow: `
-                  inset 0 2px 4px rgba(160, 82, 45, 0.15),
-                  0 8px 25px rgba(139, 69, 19, 0.4),
-                  0 0 30px rgba(255, 193, 7, 0.2)
+                  inset 0 4px 8px rgba(160, 82, 45, 0.2),
+                  inset 0 -2px 4px rgba(139, 69, 19, 0.3),
+                  0 20px 40px rgba(0, 0, 0, 0.4),
+                  0 0 60px rgba(255, 193, 7, 0.3),
+                  0 0 0 1px rgba(222, 184, 135, 0.5)
                 `,
               }}
             >
-              {/* Jungle Background Elements */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-2 left-2 text-lg opacity-20">
+              {/* Wood grain texture overlay */}
+              <div
+                className="absolute inset-0 opacity-10 pointer-events-none"
+                style={{
+                  borderRadius: "20px",
+                  backgroundImage: `
+                    repeating-linear-gradient(
+                      90deg,
+                      rgba(139, 69, 19, 0.1) 0px,
+                      rgba(139, 69, 19, 0.1) 2px,
+                      transparent 2px,
+                      transparent 8px
+                    ),
+                    repeating-linear-gradient(
+                      0deg,
+                      rgba(160, 82, 45, 0.08) 0px,
+                      rgba(160, 82, 45, 0.08) 1px,
+                      transparent 1px,
+                      transparent 12px
+                    )
+                  `,
+                }}
+              />
+
+              {/* Enhanced jungle decorative elements */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ borderRadius: "20px" }}>
+                {/* Corner vines */}
+                <div className="absolute top-0 left-0 text-3xl opacity-25 transform -rotate-12">
                   🌿
                 </div>
-                <div className="absolute top-4 right-4 text-sm opacity-25">
+                <div className="absolute top-0 right-0 text-3xl opacity-25 transform rotate-12">
+                  🌿
+                </div>
+                <div className="absolute bottom-2 left-2 text-2xl opacity-20">
                   🍃
                 </div>
-                <div className="absolute bottom-2 left-4 text-sm opacity-20">
-                  🌱
+                <div className="absolute bottom-2 right-2 text-2xl opacity-20">
+                  🍃
                 </div>
-                <div className="absolute top-1/2 right-2 text-sm opacity-15">
+
+                {/* Animated jungle creatures */}
+                <motion.div
+                  className="absolute top-4 left-1/4 text-xl"
+                  animate={{
+                    y: [0, -5, 0],
+                    rotate: [0, 5, -5, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
                   🦋
-                </div>
+                </motion.div>
+
+                <motion.div
+                  className="absolute top-6 right-1/4 text-lg"
+                  animate={{
+                    x: [0, 5, -5, 0],
+                    opacity: [0.3, 0.7, 0.3],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  🐛
+                </motion.div>
+
+                <motion.div
+                  className="absolute bottom-6 left-1/3 text-lg"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.4, 0.8, 0.4],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  🌺
+                </motion.div>
               </div>
 
-              <div className="relative z-10">
-                <h2 className="text-xl font-bold text-green-900 mb-4 flex items-center justify-center gap-2">
-                  🪵 <span>Parent Menu</span>
-                </h2>
-
-                <div className="flex flex-col gap-3">
-                  <Button
-                    className="px-4 py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
-                    onClick={() => handleParentAction("dashboard")}
-                  >
-                    <span className="flex items-center gap-2">
-                      📊 Parent Dashboard
-                    </span>
-                  </Button>
-
-                  <Button
-                    className="px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
-                    onClick={() => handleParentAction("settings")}
-                  >
-                    <span className="flex items-center gap-2">
-                      ⚙️ Jungle Settings
-                    </span>
-                  </Button>
-                </div>
-
-                <button
-                  className="mt-4 text-sm text-gray-600 underline hover:text-gray-800 transition-colors duration-200"
-                  onClick={() => setShowParentMenu(false)}
+              {/* Content container */}
+              <div className="relative z-10 p-6 md:p-8">
+                {/* Enhanced header */}
+                <motion.div
+                  className="mb-6"
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
                 >
-                  Close
-                </button>
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <motion.span
+                      className="text-4xl"
+                      animate={{
+                        rotate: [0, -5, 5, 0],
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      🪵
+                    </motion.span>
+                    <h2 className="text-2xl md:text-3xl font-bold text-green-900 font-serif">
+                      Parent Jungle Portal
+                    </h2>
+                  </div>
+                  <p className="text-sm md:text-base text-green-700 opacity-80 font-medium">
+                    🌟 Welcome to the Guardian's Gateway 🌟
+                  </p>
+                </motion.div>
+
+                {/* Enhanced action buttons */}
+                <motion.div
+                  className="flex flex-col gap-4 mb-6"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  {/* Parent Dashboard Button */}
+                  <motion.div
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Button
+                      className="w-full px-6 py-4 rounded-2xl text-white font-semibold text-base md:text-lg relative overflow-hidden group transition-all duration-300"
+                      onClick={() => handleParentAction("dashboard")}
+                      style={{
+                        background: `
+                          linear-gradient(135deg,
+                            #059669 0%,
+                            #10b981 25%,
+                            #34d399 50%,
+                            #10b981 75%,
+                            #059669 100%
+                          )
+                        `,
+                        boxShadow: `
+                          0 8px 16px rgba(5, 150, 105, 0.3),
+                          inset 0 2px 4px rgba(255, 255, 255, 0.2),
+                          inset 0 -2px 4px rgba(0, 0, 0, 0.1)
+                        `,
+                      }}
+                    >
+                      {/* Animated background effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+
+                      <span className="flex items-center justify-center gap-3 relative z-10">
+                        <span className="text-2xl">📊</span>
+                        <span className="flex flex-col items-start">
+                          <span className="font-bold">Parent Dashboard</span>
+                          <span className="text-xs opacity-90">Monitor progress & insights</span>
+                        </span>
+                      </span>
+                    </Button>
+                  </motion.div>
+
+                  {/* Jungle Settings Button */}
+                  <motion.div
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <Button
+                      className="w-full px-6 py-4 rounded-2xl text-white font-semibold text-base md:text-lg relative overflow-hidden group transition-all duration-300"
+                      onClick={() => handleParentAction("settings")}
+                      style={{
+                        background: `
+                          linear-gradient(135deg,
+                            #1e40af 0%,
+                            #3b82f6 25%,
+                            #60a5fa 50%,
+                            #3b82f6 75%,
+                            #1e40af 100%
+                          )
+                        `,
+                        boxShadow: `
+                          0 8px 16px rgba(30, 64, 175, 0.3),
+                          inset 0 2px 4px rgba(255, 255, 255, 0.2),
+                          inset 0 -2px 4px rgba(0, 0, 0, 0.1)
+                        `,
+                      }}
+                    >
+                      {/* Animated background effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+
+                      <span className="flex items-center justify-center gap-3 relative z-10">
+                        <span className="text-2xl">⚙️</span>
+                        <span className="flex flex-col items-start">
+                          <span className="font-bold">Jungle Settings</span>
+                          <span className="text-xs opacity-90">Customize adventure experience</span>
+                        </span>
+                      </span>
+                    </Button>
+                  </motion.div>
+                </motion.div>
+
+                {/* Enhanced close button */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                >
+                  <button
+                    className="text-green-700 hover:text-green-900 font-medium text-sm md:text-base underline decoration-2 underline-offset-4 hover:decoration-green-900 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-green-100/50"
+                    onClick={() => setShowParentMenu(false)}
+                  >
+                    🌿 Return to Jungle Adventure
+                  </button>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>
