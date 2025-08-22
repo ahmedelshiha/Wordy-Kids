@@ -299,6 +299,25 @@
   }
 }
 
+/* Tablet Optimizations */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .jungle-mobile-settings-dialog {
+    width: 90vw;
+    max-width: 600px;
+    max-height: 75vh;
+  }
+
+  /* Reduce ScrollArea padding for tablets */
+  [data-radix-scroll-area-viewport] {
+    padding: 12px !important;
+  }
+
+  /* Compact accordion content for tablets */
+  [data-radix-accordion-content] {
+    padding-bottom: 12px !important;
+  }
+}
+
 /* Extra small screens */
 @media (max-width: 480px) {
   .jungle-mobile-settings-dialog {
