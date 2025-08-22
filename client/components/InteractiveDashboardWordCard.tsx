@@ -1845,7 +1845,7 @@ export function InteractiveDashboardWordCard({
                     const difficulty = currentWord.difficulty || "medium";
                     const difficultyEmojis = {
                       easy: "🌱",
-                      medium: "�����",
+                      medium: "⭐",
                       hard: "🔥",
                     };
                     const difficultyNames = {
@@ -2060,7 +2060,7 @@ export function InteractiveDashboardWordCard({
                               animationDelay: "0s",
                             }}
                           >
-                            ���
+                            🌟
                           </motion.div>
                           <motion.div
                             animate={{
