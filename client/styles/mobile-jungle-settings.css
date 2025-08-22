@@ -1,5 +1,38 @@
 /* Mobile Jungle Settings Panel Styles */
 
+/* Enhanced Mobile Scrolling Support */
+.jungle-mobile-scrollarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(76, 175, 80, 0.4) rgba(76, 175, 80, 0.1);
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
+
+.jungle-mobile-scrollarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.jungle-mobile-scrollarea::-webkit-scrollbar-track {
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 3px;
+}
+
+.jungle-mobile-scrollarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.jungle-mobile-scrollarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #388e3c, #689f38);
+}
+
+/* Mobile-specific scroll optimizations */
+.jungle-mobile-category {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
 .jungle-mobile-settings-dialog {
   background: linear-gradient(
     135deg,

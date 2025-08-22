@@ -1,5 +1,74 @@
 /* Jungle Adventure Settings Panel Styles */
 
+/* Desktop Compact Layout Optimizations */
+@media (min-width: 768px) {
+  .jungle-settings-dialog {
+    /* Ensure optimal sizing for desktop */
+    min-width: 650px;
+    max-width: 700px;
+  }
+
+  /* Compact desktop category cards */
+  .jungle-category-container {
+    padding: 0.75rem;
+  }
+
+  /* Optimize button spacing for desktop */
+  .jungle-settings-dialog .flex.gap-2 {
+    gap: 0.5rem;
+  }
+
+  /* Ensure proper grid responsiveness */
+  .jungle-settings-dialog .grid.grid-cols-2 {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* Enhanced Scrolling Support */
+.jungle-settings-scrollarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(76, 175, 80, 0.3) rgba(76, 175, 80, 0.1);
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar-track {
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 4px;
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #388e3c, #689f38);
+}
+
+/* Smooth scrolling for better UX */
+.jungle-settings-category {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+/* Category Container Enhancements */
+.jungle-category-container {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.jungle-category-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 /* Main Dialog Enhancements */
 .jungle-settings-dialog {
   background: linear-gradient(
@@ -469,6 +538,32 @@
   border-top: 1px solid rgba(76, 175, 80, 0.2);
   border-left: 1px solid rgba(76, 175, 80, 0.2);
   transform: translateX(-50%) rotate(45deg);
+}
+
+/* Large Desktop Optimizations */
+@media (min-width: 1200px) {
+  .jungle-settings-dialog {
+    max-width: 720px;
+  }
+}
+
+/* Small Desktop / Tablet Optimizations */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .jungle-settings-dialog {
+    width: 90vw;
+    max-width: 680px;
+  }
+}
+
+/* Very Small Desktop Screens */
+@media (min-width: 768px) and (max-height: 700px) {
+  .jungle-settings-dialog {
+    max-height: 95vh;
+  }
+
+  .jungle-category-container {
+    max-height: 20rem; /* Increase to accommodate more content */
+  }
 }
 
 /* Mobile Optimizations */
