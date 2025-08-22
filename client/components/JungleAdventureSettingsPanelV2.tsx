@@ -554,22 +554,23 @@ export default function JungleAdventureSettingsPanelV2({
                 />
 
                 <SettingRow
-                  label={`Speech Speed ×${settings.speechRate.toFixed(1)}`}
+                  label="Speech Speed"
                   description={
                     settings.speechRate < 0.8 ? "Slower" :
                     settings.speechRate > 1.2 ? "Faster" : "Normal"
                   }
                 >
-                  <Slider
+                  <EnhancedSlider
                     min={50}
                     max={150}
                     step={10}
                     value={[settings.speechRate * 100]}
                     onValueChange={([v]) => markDirty({ speechRate: v / 100 })}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                    size="md"
+                    variant="jungle"
+                    tooltipFormatter={(v) => `×${(v / 100).toFixed(1)}`}
+                    hapticFeedback={settings.haptics}
+                    className="flex-1"
                   />
                 </SettingRow>
 
@@ -623,7 +624,7 @@ export default function JungleAdventureSettingsPanelV2({
                       <SelectContent>
                         <SelectItem value="parchment">📜 Parchment</SelectItem>
                         <SelectItem value="jungle">���� Jungle</SelectItem>
-                        <SelectItem value="canopy">🌫️ Canopy</SelectItem>
+                        <SelectItem value="canopy">��️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
                         <SelectItem value="sunset">🌅 Sunset</SelectItem>
                       </SelectContent>
