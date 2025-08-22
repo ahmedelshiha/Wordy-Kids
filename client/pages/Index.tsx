@@ -522,18 +522,23 @@ export default function Index({ initialProfile }: IndexProps) {
     initializeDashboardWords();
   }, []); // Run only once on mount
 
+  // Track last regeneration count to prevent infinite loops
+  const lastRegenerationCountRef = useRef(0);
+
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
     const wordsCompleted = rememberedWords.size;
     const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
 
-    if (shouldRegenerate && dashboardSession) {
+    // Prevent infinite loops by checking if we already regenerated for this count
+    if (shouldRegenerate && dashboardSession && wordsCompleted !== lastRegenerationCountRef.current) {
       console.log(
         `Regenerating dashboard words after ${wordsCompleted} completed words`,
       );
+      lastRegenerationCountRef.current = wordsCompleted;
       generateDashboardWords();
     }
-  }, [rememberedWords.size]); // Trigger when remembered words count changes
+  }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
 
   // Update current progress for goals tracking
   useEffect(() => {
