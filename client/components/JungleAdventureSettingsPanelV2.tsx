@@ -853,50 +853,51 @@ function SettingsSection({
   isMobile: boolean;
   defaultOpen?: boolean;
 }) {
-  return (
-    <Accordion
-      type="single"
-      collapsible
-      className="w-full"
-      defaultValue={defaultOpen ? "item-1" : undefined}
-    >
-      <AccordionItem
-        value="item-1"
-        className={cn(
-          "border rounded-lg backdrop-blur-sm shadow-sm",
-          isMobile
-            ? "bg-white/80"
-            : "bg-white/70 border-orange-200/50"
-        )}
+  if (isMobile) {
+    // Mobile: Keep accordion behavior
+    return (
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        defaultValue={defaultOpen ? "item-1" : undefined}
       >
-        <AccordionTrigger
-          className={cn(
-            "hover:no-underline font-medium text-green-800",
-            isMobile
-              ? "px-3 py-3 text-sm touch-manipulation"
-              : "px-4 py-4 text-base"
-          )}
+        <AccordionItem
+          value="item-1"
+          className="border rounded-lg bg-white/80 backdrop-blur-sm shadow-sm"
         >
-          <div className="flex items-center gap-2">
-            {icon}
-            <span>{title}</span>
-          </div>
-        </AccordionTrigger>
-        <AccordionContent
-          className={cn(
-            isMobile ? "px-3 pb-3" : "px-4 pb-4"
-          )}
-        >
-          {isMobile ? (
+          <AccordionTrigger className="px-3 py-3 hover:no-underline text-sm touch-manipulation">
+            <div className="flex items-center gap-2 font-medium text-green-800">
+              {icon}
+              <span>{title}</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-3 pb-3">
             <ScrollArea className="max-h-60 pr-3 jungle-mobile-category jungle-mobile-scrollarea">
               <div className="space-y-2.5">{children}</div>
             </ScrollArea>
-          ) : (
-            <div className="space-y-2.5">{children}</div>
-          )}
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    );
+  }
+
+  // Desktop: Show all content expanded with compact card layout
+  return (
+    <div className="bg-white/70 backdrop-blur-sm border border-orange-200/50 rounded-lg shadow-sm">
+      {/* Category Header - Always visible, non-clickable */}
+      <div className="px-3 py-2 border-b border-orange-200/30 bg-gradient-to-r from-green-50/50 to-yellow-50/50">
+        <div className="flex items-center gap-2 font-medium text-green-800 text-sm">
+          {icon}
+          <span>{title}</span>
+        </div>
+      </div>
+
+      {/* Category Content - Always expanded */}
+      <div className="px-3 py-2.5">
+        <div className="space-y-2">{children}</div>
+      </div>
+    </div>
   );
 }
 
