@@ -1555,7 +1555,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n�� Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🏆 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
