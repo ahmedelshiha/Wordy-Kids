@@ -277,6 +277,7 @@ export default function JungleAdventureSettingsPanelV2({
     const sampleText =
       "Hello! Let's explore the jungle together and discover amazing words!";
     audioService.pronounceWord(sampleText, {
+      rate: settings.speechRate,
       onStart: () => playUISound(SOUND_FILES.ui.voicePreview),
     });
   }
