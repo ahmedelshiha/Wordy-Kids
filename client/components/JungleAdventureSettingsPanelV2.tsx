@@ -639,7 +639,7 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.dailyGoal]}
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
-                    className="flex-1"
+                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
                   />
                 </SettingRow>
 
@@ -652,7 +652,7 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
-                    className="flex-1"
+                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
                   />
                 </SettingRow>
 
