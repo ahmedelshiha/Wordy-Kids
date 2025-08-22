@@ -197,7 +197,7 @@ export default function JungleAdventureNavV3({
                 onClick={() => handleNavigation(item.id)}
                 aria-label={item.ariaLabel || item.label}
                 aria-current={isActive ? "page" : undefined}
-                style={{ minHeight: "45px", minWidth: "45px" }}
+                style={{ minHeight: "32px", minWidth: "45px" }}
               >
                 <span
                   className={`${animalClass} ${
