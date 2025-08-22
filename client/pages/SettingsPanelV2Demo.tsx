@@ -119,7 +119,7 @@ export default function SettingsPanelV2Demo() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-white/80 backdrop-blur-sm">
+          <Card className="bg-white/90 backdrop-blur-md border-white/50 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-green-800 flex items-center gap-2">
                 ✨ What's New in V2
@@ -165,10 +165,10 @@ export default function SettingsPanelV2Demo() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur-sm">
+          <Card className="bg-white/90 backdrop-blur-md border-white/50 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-green-800 flex items-center gap-2">
-                🔧 Technical Features
+                🔧 Enhanced Features
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
