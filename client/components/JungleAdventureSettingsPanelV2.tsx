@@ -179,6 +179,9 @@ function saveSettings(s: Settings) {
     };
   }
 
+  // Apply ambient sound settings globally
+  globalAmbientAudio.updateFromSettings(s.ambient, s.ambientVolume);
+
   // Make session manager globally available
   (window as any).sessionManager = sessionManager;
 
