@@ -97,6 +97,8 @@ import {
   WordHistory,
   SystematicWordSelection,
 } from "@/lib/enhancedWordSelection";
+import JungleThemeOverlay from "@/components/JungleThemeOverlay";
+import { JungleAdventureThemeManager } from "@/lib/JungleAdventureThemeManager";
 import {
   DashboardWordGenerator,
   DashboardWordSession,
@@ -1553,7 +1555,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🏆 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
@@ -1957,8 +1959,22 @@ export default function Index({ initialProfile }: IndexProps) {
     });
   };
 
+  // Initialize jungle theme system
+  useEffect(() => {
+    JungleAdventureThemeManager.init();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
+    <div className="min-h-screen jng-surface relative overflow-x-hidden">
+      {/* Jungle Theme Overlay */}
+      <JungleThemeOverlay
+        fireflies={JungleAdventureThemeManager.getOverlays().fireflies}
+        fog={JungleAdventureThemeManager.getOverlays().fog}
+        glow={JungleAdventureThemeManager.getOverlays().glow}
+        ripples={JungleAdventureThemeManager.getOverlays().ripples}
+        seed={123}
+      />
+
       {/* Session Restoration Modal */}
       {showSessionRestoration && sessionRestorationData && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -3286,7 +3302,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           jungle quiz! 3D effects, power-ups,
                                           achievements, dynamic music, and
                                           immersive gaming that rivals premium
-                                          mobile games! ����✨🌟
+                                          mobile games! 🚀✨🌟
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
@@ -3739,7 +3755,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setShowMatchingGame(false);
                                       setFeedback({
                                         type: "celebration",
-                                        title: "Matching Game Complete! 🎯✨",
+                                        title: "Matching Game Complete! 🎉✨",
                                         message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                                         points: score * 15,
                                         onContinue: () => setFeedback(null),
@@ -3940,7 +3956,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "🌈", "✨", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "🌈", "✨", "💫", "⭐", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}

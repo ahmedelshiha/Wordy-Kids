@@ -31,6 +31,7 @@ import {
   Palette,
   BookOpen,
   Accessibility,
+  Sparkles,
 } from "lucide-react";
 import {
   setSoundEnabled,
@@ -44,6 +45,12 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import {
+  JungleAdventureThemeManager,
+  JungleTheme,
+  OverlaySettings,
+} from "@/lib/JungleAdventureThemeManager";
+import "@/styles/jungle-theme.css";
 
 // Settings type definition
 type Settings = {
@@ -55,10 +62,13 @@ type Settings = {
   speechRate: number; // 0.5..1.5
 
   // Theme & Motion
-  theme: "jungle" | "canopy" | "parchment" | "river" | "sunset";
+  theme: JungleTheme;
   darkMode: boolean;
   reducedMotion: boolean;
   highContrast: boolean;
+
+  // Overlay Effects
+  overlays: OverlaySettings;
 
   // Learning & Family
   difficulty: "easy" | "normal" | "hard";
@@ -83,6 +93,12 @@ const DEFAULTS: Settings = {
   darkMode: false,
   reducedMotion: false,
   highContrast: false,
+  overlays: {
+    fireflies: false,
+    fog: false,
+    glow: false,
+    ripples: false,
+  },
   difficulty: "normal",
   dailyGoal: 10,
   timeLimitMin: 0,
@@ -114,9 +130,18 @@ const SOUND_FILES = {
 function loadSettings(): Settings {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return DEFAULTS;
-    const parsed = JSON.parse(raw);
-    return { ...DEFAULTS, ...parsed };
+    let parsed = raw ? JSON.parse(raw) : {};
+
+    // Integrate with theme manager
+    const themeFromManager = JungleAdventureThemeManager.getTheme();
+    const overlaysFromManager = JungleAdventureThemeManager.getOverlays();
+
+    return {
+      ...DEFAULTS,
+      ...parsed,
+      theme: themeFromManager,
+      overlays: overlaysFromManager,
+    };
   } catch {
     return DEFAULTS;
   }
@@ -133,7 +158,10 @@ function saveSettings(s: Settings) {
   document.documentElement.classList.toggle("dark", s.darkMode);
   document.documentElement.classList.toggle("hc", s.highContrast);
   document.documentElement.classList.toggle("reduce-motion", s.reducedMotion);
-  document.documentElement.setAttribute("data-jungle-theme", s.theme);
+
+  // Apply theme and overlays through theme manager
+  JungleAdventureThemeManager.applyTheme(s.theme);
+  JungleAdventureThemeManager.applyOverlays(s.overlays);
 
   // Apply sound settings
   setSoundEnabled(s.uiSounds);
@@ -155,8 +183,9 @@ export default function JungleAdventureSettingsPanelV2({
   const [dirty, setDirty] = useState(false);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize ambient audio
+  // Initialize ambient audio and theme manager
   useEffect(() => {
+    JungleAdventureThemeManager.init();
     saveSettings(settings);
     ambientRef.current = new Audio();
     ambientRef.current.loop = true;
@@ -453,7 +482,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Select
                       value={settings.theme}
                       onValueChange={(v) =>
-                        markDirty({ theme: v as Settings["theme"] })
+                        markDirty({ theme: v as JungleTheme })
                       }
                     >
                       <SelectTrigger className="w-40">
@@ -499,6 +528,72 @@ export default function JungleAdventureSettingsPanelV2({
                     />
                   }
                 />
+
+                {/* Overlay Effects */}
+                <div className="pt-3 border-t border-orange-200/50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <span className="text-sm font-medium text-green-800">
+                      Animated Overlays
+                    </span>
+                  </div>
+
+                  <SettingRow
+                    label="Fireflies 🌟"
+                    control={
+                      <Switch
+                        checked={settings.overlays.fireflies}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, fireflies: v },
+                          })
+                        }
+                      />
+                    }
+                  />
+
+                  <SettingRow
+                    label="Fog 🌫️"
+                    control={
+                      <Switch
+                        checked={settings.overlays.fog}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, fog: v },
+                          })
+                        }
+                      />
+                    }
+                  />
+
+                  <SettingRow
+                    label="Glow ✨"
+                    control={
+                      <Switch
+                        checked={settings.overlays.glow}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, glow: v },
+                          })
+                        }
+                      />
+                    }
+                  />
+
+                  <SettingRow
+                    label="Ripples 💧"
+                    control={
+                      <Switch
+                        checked={settings.overlays.ripples}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, ripples: v },
+                          })
+                        }
+                      />
+                    }
+                  />
+                </div>
               </SettingsSection>
 
               {/* 📚 Learning & Family Section */}

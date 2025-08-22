@@ -55,6 +55,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Jungle Adventure Theme System */
+@import "./styles/jungle-theme.css";
+
 @layer utilities {
   /* Custom scrollbar styles */
   .scrollbar-thin {
