@@ -540,7 +540,7 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
 
-  // Update current progress for goals tracking
+  // Update current progress for goals tracking (using stable dependencies)
   useEffect(() => {
     const totalWordsLearned = rememberedWords.size;
     const totalAttempts = rememberedWords.size + forgottenWords.size;
@@ -555,7 +555,7 @@ export default function Index({ initialProfile }: IndexProps) {
       sessionCount: dailySessionCount,
       accuracy: accuracy,
     });
-  }, [rememberedWords, forgottenWords, dailySessionCount]);
+  }, [rememberedWords.size, forgottenWords.size, dailySessionCount]); // Use .size instead of full Set objects
 
   // Load saved learning goals on mount
   useEffect(() => {
