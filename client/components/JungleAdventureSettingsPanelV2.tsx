@@ -361,10 +361,10 @@ export default function JungleAdventureSettingsPanelV2({
         <div className="flex flex-col min-h-0">
           <ScrollArea
             className={cn(
-              "flex-1 min-h-0",
+              "flex-1 min-h-0 jungle-settings-category",
               isMobile
-                ? "max-h-[calc(75vh-120px)] p-3"
-                : "max-h-[calc(80vh-140px)] p-4",
+                ? "max-h-[calc(75vh-120px)] p-3 jungle-mobile-scrollarea"
+                : "max-h-[calc(80vh-140px)] p-4 jungle-settings-scrollarea",
             )}
           >
             <div
@@ -571,7 +571,7 @@ export default function JungleAdventureSettingsPanelV2({
                   </div>
 
                   <SettingRow
-                    label="Fireflies 🌟"
+                    label="Fireflies ��"
                     control={
                       <Switch
                         checked={settings.overlays.fireflies}
@@ -862,7 +862,7 @@ function SettingsSection({
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-3 pb-3">
-            <ScrollArea className="max-h-60 pr-3">
+            <ScrollArea className="max-h-60 pr-3 jungle-mobile-category jungle-mobile-scrollarea">
               <div className="space-y-2.5">{children}</div>
             </ScrollArea>
           </AccordionContent>
@@ -879,8 +879,8 @@ function SettingsSection({
           <span>{title}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pt-0 pb-3 min-h-0">
-        <ScrollArea className="h-full pr-3">
+      <CardContent className="flex-1 pt-0 pb-3 min-h-0 jungle-category-container">
+        <ScrollArea className="h-full pr-3 jungle-category-content jungle-settings-scrollarea">
           <div className="space-y-3">{children}</div>
         </ScrollArea>
       </CardContent>
