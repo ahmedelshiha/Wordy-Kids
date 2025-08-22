@@ -13,7 +13,6 @@ import { X, Play, Square, RotateCcw, Save } from "lucide-react";
 import {
   setSoundEnabled,
   isSoundEnabled,
-  playSoundIfEnabled,
   setUIInteractionSoundsEnabled,
   isUIInteractionSoundsEnabled,
 } from "@/lib/soundEffects";
@@ -194,24 +193,38 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
     hapticTap();
   }
 
+  // Helper to play sound files
+  function playSound(src: string, volume: number = 1.0) {
+    if (!settings.uiSounds) return;
+    try {
+      const audio = new Audio(src);
+      audio.volume = Math.max(0, Math.min(1, volume));
+      audio.play().catch(() => {
+        // Autoplay might be blocked, ignore error
+      });
+    } catch (error) {
+      console.warn('Could not play sound:', src, error);
+    }
+  }
+
   function handleSave() {
     saveSettings(settings);
     setDirty(false);
-    if (settings.uiSounds) playSoundIfEnabled(soundEffects.ui.settingsSaved);
+    playSound(soundEffects.ui.settingsSaved);
     onOpenChange(false);
   }
 
   function handleReset() {
     setSettings(DEFAULTS);
     setDirty(true);
-    if (settings.uiSounds) playSoundIfEnabled(soundEffects.ui.settingsReset);
+    playSound(soundEffects.ui.settingsReset);
   }
 
   function previewVoice() {
     const sampleText = "Hello! Let's explore the jungle together and discover amazing words!";
     audioService.pronounceWord(sampleText, {
       onStart: () => {
-        if (settings.uiSounds) playSoundIfEnabled(soundEffects.ui.voicePreview);
+        playSound(soundEffects.ui.voicePreview);
       }
     });
   }
