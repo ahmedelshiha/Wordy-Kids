@@ -553,6 +553,10 @@ export default function JungleAdventureSettingsPanelV2({
 
                 <SettingRow
                   label={`Speech Speed ×${settings.speechRate.toFixed(1)}`}
+                  description={
+                    settings.speechRate < 0.8 ? "Slower" :
+                    settings.speechRate > 1.2 ? "Faster" : "Normal"
+                  }
                 >
                   <Slider
                     min={50}
