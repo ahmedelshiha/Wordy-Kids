@@ -80,6 +80,7 @@ import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
 import JungleAdventureNavV3 from "@/components/JungleAdventureNavV3";
+import JungleAdventureIconNav from "@/components/JungleAdventureIconNav";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
@@ -4008,7 +4009,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 {
                   id: "learn",
                   label: "Word Jungle",
-                  emoji: "🦜",
+                  emoji: "��",
                   ariaLabel: "Learning",
                 },
                 {
