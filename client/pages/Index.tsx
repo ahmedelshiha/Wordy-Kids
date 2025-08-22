@@ -3102,7 +3102,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               I Remember!
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Awesome! 🎉
+                                                              Awesome! ���
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3205,7 +3205,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      🌿
+                                      ���
                                     </div>
                                     <div className="jungle-leaves-float">
                                       🍃
@@ -4117,25 +4117,24 @@ export default function Index({ initialProfile }: IndexProps) {
             <div className="absolute bottom-3 left-3 text-lg opacity-12">🍃</div>
           </div>
 
-          <DialogHeader className="relative z-10">
+          <DialogHeader className="relative z-10 p-6 pb-4">
             <DialogTitle
-              className="flex items-center gap-2 text-xl font-bold"
+              className="flex items-center gap-3 text-xl font-bold"
               id="parent-menu-title"
             >
               <span
-                className="text-2xl filter drop-shadow-sm"
-                style={{ textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)" }}
+                className="text-2xl animate-gentle-emoji-float"
                 aria-hidden="true"
               >
-                🪵
+                🌿
               </span>
-              <span style={{ color: "#8B4513" }}>Parent Menu</span>
+              <span className="text-jungle-dark">Parent Menu</span>
             </DialogTitle>
             <DialogDescription
-              style={{ color: "#A0522D" }}
+              className="text-jungle mt-2 text-sm"
               id="parent-menu-description"
             >
-              Access family dashboard, jungle settings, and adventure controls.
+              Access family dashboard, settings, and adventure controls.
             </DialogDescription>
           </DialogHeader>
 
