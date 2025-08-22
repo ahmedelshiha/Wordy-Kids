@@ -31,6 +31,7 @@ import {
   Palette,
   BookOpen,
   Accessibility,
+  Sparkles,
 } from "lucide-react";
 import {
   setSoundEnabled,
@@ -44,6 +45,8 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import { JungleAdventureThemeManager, JungleTheme, OverlaySettings } from "@/lib/JungleAdventureThemeManager";
+import "@/styles/jungle-theme.css";
 
 // Settings type definition
 type Settings = {
