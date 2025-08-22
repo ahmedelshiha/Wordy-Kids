@@ -34,16 +34,16 @@ export const JungleAdventureThemeManager = {
     try {
       const stored = localStorage.getItem(OVERLAYS_STORAGE_KEY);
       if (!stored)
-        return { fireflies: true, fog: true, glow: true, ripples: false };
+        return { fireflies: false, fog: false, glow: false, ripples: false };
       return {
-        fireflies: true,
-        fog: true,
-        glow: true,
+        fireflies: false,
+        fog: false,
+        glow: false,
         ripples: false,
         ...JSON.parse(stored),
       };
     } catch {
-      return { fireflies: true, fog: true, glow: true, ripples: false };
+      return { fireflies: false, fog: false, glow: false, ripples: false };
     }
   },
 

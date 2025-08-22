@@ -94,9 +94,9 @@ const DEFAULTS: Settings = {
   reducedMotion: false,
   highContrast: false,
   overlays: {
-    fireflies: true,
-    fog: true,
-    glow: true,
+    fireflies: false,
+    fog: false,
+    glow: false,
     ripples: false,
   },
   difficulty: "normal",
