@@ -184,7 +184,7 @@ export default function JungleAdventureNavV3({
         {/* Navigation Bar */}
         <div className="flex items-end px-2 py-2 relative min-h-[60px]">
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
-          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-4">
+          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 bottom-2 gap-4">
             {items.map((item) => {
               const isActive = item.id === activeId;
               const animalClass = getAnimalAnimationClass(item.emoji);
