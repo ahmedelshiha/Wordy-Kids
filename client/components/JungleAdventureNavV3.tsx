@@ -206,7 +206,10 @@ export default function JungleAdventureNavV3({
                     isActive ? "active" : ""
                   } drop-shadow-lg`}
                   style={{
-                    fontSize: window.innerWidth <= 768 ? TOTEM_ICON_SIZE.mobileBase : TOTEM_ICON_SIZE.base,
+                    fontSize:
+                      window.innerWidth <= 768
+                        ? TOTEM_ICON_SIZE.mobileBase
+                        : TOTEM_ICON_SIZE.base,
                     textShadow: isActive
                       ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                       : "0 0 8px rgba(255,255,255,0.3)",
@@ -214,7 +217,9 @@ export default function JungleAdventureNavV3({
                 >
                   {item.emoji}
                 </span>
-                <span className="text-xs mt-1 font-medium leading-tight">{item.label}</span>
+                <span className="text-xs mt-1 font-medium leading-tight">
+                  {item.label}
+                </span>
               </motion.button>
             );
           })}
@@ -234,14 +239,19 @@ export default function JungleAdventureNavV3({
                 showParentMenu ? "active" : ""
               }`}
               style={{
-                fontSize: window.innerWidth <= 768 ? TOTEM_ICON_SIZE.mobileBase : TOTEM_ICON_SIZE.base,
+                fontSize:
+                  window.innerWidth <= 768
+                    ? TOTEM_ICON_SIZE.mobileBase
+                    : TOTEM_ICON_SIZE.base,
                 textShadow:
                   "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
               }}
             >
               🪵
             </span>
-            <span className="text-xs mt-1 font-medium leading-tight">Parents</span>
+            <span className="text-xs mt-1 font-medium leading-tight">
+              Parents
+            </span>
           </motion.button>
         </div>
       </nav>
