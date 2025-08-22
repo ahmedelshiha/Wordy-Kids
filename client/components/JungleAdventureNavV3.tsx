@@ -241,7 +241,7 @@ export default function JungleAdventureNavV3({
             >
               🪵
             </span>
-            <span className="text-xs mt-0.5 font-medium">Parents</span>
+            <span className="text-xs mt-0 font-medium">Parents</span>
           </motion.button>
         </div>
       </nav>
