@@ -40,13 +40,13 @@
   0%,
   91%,
   100% {
-    transform: translateY(-12px) scaleY(1);
+    transform: translateY(-24px) scaleY(1);
   }
   93% {
-    transform: translateY(-12px) scaleY(0.8);
+    transform: translateY(-24px) scaleY(0.8);
   }
   95% {
-    transform: translateY(-12px) scaleY(1);
+    transform: translateY(-24px) scaleY(1);
   }
 }
 
@@ -55,13 +55,13 @@
   0%,
   89%,
   100% {
-    transform: translateY(-12px) rotate(0deg);
+    transform: translateY(-24px) rotate(0deg);
   }
   93% {
-    transform: translateY(-12px) rotate(4deg);
+    transform: translateY(-24px) rotate(4deg);
   }
   97% {
-    transform: translateY(-12px) rotate(-2deg);
+    transform: translateY(-24px) rotate(-2deg);
   }
 }
 
@@ -70,16 +70,16 @@
   0%,
   87%,
   100% {
-    transform: translateY(-12px) rotate(0deg);
+    transform: translateY(-24px) rotate(0deg);
   }
   91% {
-    transform: translateY(-12px) rotate(3deg);
+    transform: translateY(-24px) rotate(3deg);
   }
   95% {
-    transform: translateY(-12px) rotate(-2deg);
+    transform: translateY(-24px) rotate(-2deg);
   }
   99% {
-    transform: translateY(-12px) rotate(1deg);
+    transform: translateY(-24px) rotate(1deg);
   }
 }
 
@@ -88,13 +88,13 @@
   0%,
   90%,
   100% {
-    transform: translateY(-12px) scaleX(1);
+    transform: translateY(-24px) scaleX(1);
   }
   94% {
-    transform: translateY(-12px) scaleX(1.06);
+    transform: translateY(-24px) scaleX(1.06);
   }
   98% {
-    transform: translateY(-12px) scaleX(1.02);
+    transform: translateY(-24px) scaleX(1.02);
   }
 }
 
@@ -103,17 +103,17 @@
   0%,
   88%,
   100% {
-    transform: translateY(-12px) scale(1);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    transform: translateY(-24px) scale(1);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   }
   92% {
-    transform: translateY(-12px) scale(1.015); /* Slightly reduced scale for larger button */
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    transform: translateY(-24px) scale(1.015); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 18px rgba(255, 193, 7, 0.7));
   }
   96% {
-    transform: translateY(-12px) scale(1.008); /* Slightly reduced scale for larger button */
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    transform: translateY(-24px) scale(1.008); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 24px rgba(255, 193, 7, 0.5));
   }
 }
