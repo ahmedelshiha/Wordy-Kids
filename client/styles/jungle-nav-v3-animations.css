@@ -557,18 +557,18 @@
 @media (prefers-color-scheme: dark) {
   .jng-nav-v3-icon,
   .jng-nav-icon-totem {
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) brightness(1.1);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25)) brightness(1.1);
   }
 
   .jng-nav-v3-icon:hover,
   .jng-nav-icon-totem:hover {
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 12px rgba(251, 191, 36, 0.4)) brightness(1.1);
   }
 
   .jng-nav-v3-icon.active,
   .jng-nav-icon-totem.active {
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 15px rgba(251, 191, 36, 0.45)) brightness(1.1);
   }
 
