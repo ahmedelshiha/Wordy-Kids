@@ -510,9 +510,11 @@ export default function JungleAdventureSettingsPanelV2({
                     }
                     max={100}
                     step={5}
+                    disabled={settings.ambient === "off"}
                     className={cn(
                       "flex-1",
                       isMobile ? "touch-manipulation h-6" : "h-4",
+                      settings.ambient === "off" && "opacity-50 pointer-events-none",
                     )}
                   />
                 </SettingRow>
