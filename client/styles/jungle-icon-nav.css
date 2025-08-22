@@ -34,8 +34,8 @@
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float 28px above the bar (40% increase from -20px) */
-  transform: translateY(-28px);
+  /* Desktop: Float 45px above the bar for better visibility */
+  transform: translateY(-45px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
@@ -61,8 +61,8 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float 39px above the bar (40% increase from -28px) */
-    transform: translateY(-39px);
+    /* Mobile: Float 55px above the bar for better visibility */
+    transform: translateY(-55px);
     /* 20% larger than before */
     max-width: 53px;
   }
@@ -118,7 +118,7 @@
   .jungle-icon-nav-item:hover .jungle-nav-icon {
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
             drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
-    transform: translateY(-28px) scale(1.05);
+    transform: translateY(-45px) scale(1.05);
   }
 
   .jungle-icon-nav-item:hover .jungle-nav-label {
@@ -129,7 +129,7 @@
   /* Mobile hover adjustments */
   @media (max-width: 767px) {
     .jungle-icon-nav-item:hover .jungle-nav-icon {
-      transform: translateY(-39px) scale(1.05);
+      transform: translateY(-55px) scale(1.05);
     }
   }
 }
@@ -192,7 +192,7 @@
 @media (max-width: 374px) {
   .jungle-nav-icon {
     max-width: 48px;
-    transform: translateY(-34px);
+    transform: translateY(-50px);
   }
 
   .jungle-icon-nav-item {
