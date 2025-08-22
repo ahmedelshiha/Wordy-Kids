@@ -156,6 +156,14 @@ export default function JungleAdventureIconNav({
                   scale: isTapped ? 1.1 : 1,
                   y: translateY, // Maintain elevated position during animations
                 }}
+                whileHover={{
+                  scale: 1.05,
+                  y: translateY - 20, // Float even higher on hover
+                }}
+                whileTap={{
+                  scale: 1.1,
+                  y: translateY - 10, // Slight additional lift on tap
+                }}
                 transition={{
                   type: "spring",
                   stiffness: 400,
