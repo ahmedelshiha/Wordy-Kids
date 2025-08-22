@@ -1579,7 +1579,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
-        achievementIcon = "💪";
+        achievementIcon = "��";
         achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!`;
       }
 
@@ -4156,28 +4156,15 @@ export default function Index({ initialProfile }: IndexProps) {
                   // Add smooth scroll to top when switching to parent dashboard
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                className="flex items-center gap-3 p-4 h-auto justify-start text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[64px] w-full touch-manipulation bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle shadow-md hover:shadow-lg"
                 aria-label="Open Parent Dashboard - View detailed progress, analytics, and manage learning goals"
                 role="button"
                 tabIndex={0}
-                style={{
-                  background: `
-                    linear-gradient(135deg,
-                      #8B4513 0%,
-                      #A0522D 50%,
-                      #8B4513 100%
-                    )
-                  `,
-                  boxShadow: `
-                    inset 0 1px 2px rgba(139, 69, 19, 0.2),
-                    0 4px 12px rgba(139, 69, 19, 0.3)
-                  `,
-                }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
                   <span
-                    className="text-2xl filter drop-shadow-sm"
+                    className="text-2xl animate-gentle-breath"
                     role="img"
                     aria-label="Owl icon"
                   >
@@ -4187,8 +4174,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div className="font-semibold text-base sm:text-lg leading-tight">
                       Parent Dashboard
                     </div>
-                    <div className="text-xs sm:text-sm text-amber-100 leading-tight">
-                      🌟 View progress, analytics, and learning adventures
+                    <div className="text-xs sm:text-sm text-green-100 leading-tight opacity-90">
+                      View progress and learning adventures
                     </div>
                   </div>
                 </div>
