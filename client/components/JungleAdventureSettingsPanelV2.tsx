@@ -179,8 +179,9 @@ export default function JungleAdventureSettingsPanelV2({
   const [dirty, setDirty] = useState(false);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize ambient audio
+  // Initialize ambient audio and theme manager
   useEffect(() => {
+    JungleAdventureThemeManager.init();
     saveSettings(settings);
     ambientRef.current = new Audio();
     ambientRef.current.loop = true;
