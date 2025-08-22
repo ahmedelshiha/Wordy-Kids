@@ -87,7 +87,7 @@
   }
 }
 
-/* �� Parent Totem - Rare Firefly Shimmer Glow (every ~16s) */
+/* 🪵 Parent Totem - Rare Firefly Shimmer Glow (every ~16s) */
 @keyframes totemFireflyShimmer {
   0%,
   88%,
@@ -264,6 +264,14 @@
   padding-bottom: 1px; /* Minimal padding for ultra-compact design */
   overflow: visible; /* Ensure totems can rise above container */
   gap: 0; /* Remove any gap between icon and label */
+}
+
+/* Mobile-specific navigation container - 30% height reduction */
+@media (max-width: 767px) {
+  .jng-nav-icon-container {
+    min-height: 29px; /* 30% reduction from 42px (42 * 0.7 = 29.4px ≈ 29px) */
+    padding-bottom: 0.5px; /* Even more minimal padding for mobile */
+  }
 }
 
 /* Parent Menu Icon (🪵 Totem) - Mystical Jungle Guardian */
