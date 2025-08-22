@@ -11,9 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
 import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
+import { EnhancedJungleParentMenuDialog } from "@/components/EnhancedJungleParentMenuDialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "@/styles/jungle-icon-nav.css";
+import "@/styles/enhanced-jungle-parent-menu.css";
 
 export type IconNavItem = {
   id: string;
@@ -243,103 +245,19 @@ export default function JungleAdventureIconNav({
         })}
       </div>
 
-      {/* Parent Menu Popup */}
-      <AnimatePresence>
-        {showParentMenu && (
-          <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black/50 z-[60] backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowParentMenu(false)}
-          >
-            <motion.div
-              className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl shadow-2xl p-6 w-[90%] max-w-sm text-center border-4 border-amber-700 relative overflow-hidden"
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                background: `
-                  linear-gradient(135deg,
-                    rgba(255, 248, 220, 0.95) 0%,
-                    rgba(250, 240, 200, 0.98) 100%
-                  )
-                `,
-                boxShadow: `
-                  inset 0 2px 4px rgba(160, 82, 45, 0.15),
-                  0 8px 25px rgba(139, 69, 19, 0.4),
-                  0 0 30px rgba(255, 193, 7, 0.2)
-                `,
-              }}
-            >
-              {/* Jungle Background Elements */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-2 left-2 text-lg opacity-20">
-                  🌿
-                </div>
-                <div className="absolute top-4 right-4 text-sm opacity-25">
-                  🍃
-                </div>
-                <div className="absolute bottom-2 left-4 text-sm opacity-20">
-                  🌱
-                </div>
-                <div className="absolute top-1/2 right-2 text-sm opacity-15">
-                  🦋
-                </div>
-              </div>
-
-              <div className="relative z-10">
-                <h2 className="text-xl font-bold text-green-900 mb-4 flex items-center justify-center gap-2">
-                  🪵 <span>Parent Menu</span>
-                </h2>
-
-                <div className="flex flex-col gap-3">
-                  <Button
-                    className="px-4 py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-700 text-white hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
-                    onClick={() => handleParentAction("dashboard")}
-                  >
-                    <span className="flex items-center gap-2">
-                      📊 Parent Dashboard
-                    </span>
-                  </Button>
-
-                  <Button
-                    className="px-4 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
-                    onClick={() => handleParentAction("settings")}
-                  >
-                    <span className="flex items-center gap-2">
-                      ⚙️ Jungle Settings
-                    </span>
-                  </Button>
-
-                  <Button
-                    className={`px-4 py-3 rounded-lg text-white transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] ${
-                      isGuest
-                        ? "bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800"
-                        : "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
-                    }`}
-                    onClick={() => handleParentAction("logout")}
-                  >
-                    <span className="flex items-center gap-2">
-                      {isGuest
-                        ? "✨ Sign Up / Register"
-                        : "🌿 Goodbye & Log Off"}
-                    </span>
-                  </Button>
-                </div>
-
-                <button
-                  className="mt-4 text-sm text-gray-600 underline hover:text-gray-800 transition-colors duration-200"
-                  onClick={() => setShowParentMenu(false)}
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Enhanced Parent Menu Dialog */}
+      <EnhancedJungleParentMenuDialog
+        isOpen={showParentMenu}
+        onClose={() => setShowParentMenu(false)}
+        parentDialogSections={{
+          dashboard: true,
+          settings: true,
+          signOut: true,
+        }}
+        isGuest={isGuest}
+        onParentAction={handleParentAction}
+        className="enhanced-jungle-parent-menu"
+      />
 
       {/* Parent Dashboard Popup */}
       <AnimatePresence>

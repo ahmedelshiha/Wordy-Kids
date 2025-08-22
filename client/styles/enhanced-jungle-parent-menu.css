@@ -1,0 +1,605 @@
+/* Enhanced Jungle Parent Menu Dialog - Immersive Experience Styles */
+
+/* Global Animation Performance Optimizations */
+.enhanced-jungle-parent-menu * {
+  will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Ambient Jungle Atmosphere - Breathing Background */
+@keyframes jungleAmbienceBreath {
+  0%,
+  100% {
+    background-size: 100% 100%;
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    background-size: 105% 105%;
+    filter: hue-rotate(5deg) brightness(1.02);
+  }
+}
+
+/* Floating Leaf Gentle Sway */
+@keyframes gentleLeafSway {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) rotate(2deg) scale(1.02);
+  }
+  50% {
+    transform: translateY(-4px) rotate(-1deg) scale(1.01);
+  }
+  75% {
+    transform: translateY(-12px) rotate(3deg) scale(1.03);
+  }
+}
+
+/* Butterfly Flutter */
+@keyframes butterflyFlutter {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) translateX(8px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-5px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-20px) translateX(12px) rotate(8deg);
+  }
+}
+
+/* Firefly Glow Pulse */
+@keyframes fireflyGlow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 0, 0.4));
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 0, 0.8));
+  }
+}
+
+/* Vine Growth Animation */
+@keyframes vineGrowth {
+  0% {
+    clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%);
+    opacity: 0;
+  }
+  50% {
+    clip-path: polygon(0 100%, 100% 100%, 100% 50%, 0 50%);
+    opacity: 0.6;
+  }
+  100% {
+    clip-path: polygon(0 100%, 100% 100%, 100% 0%, 0 0%);
+    opacity: 1;
+  }
+}
+
+/* Enhanced Button Ripple Effect */
+@keyframes jungleButtonRipple {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(3) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Totem Mystical Glow */
+@keyframes totemMysticalGlow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 10px rgba(255, 193, 7, 0.5),
+      0 0 20px rgba(255, 193, 7, 0.3),
+      0 0 30px rgba(139, 69, 19, 0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 15px rgba(255, 193, 7, 0.8),
+      0 0 30px rgba(255, 193, 7, 0.5),
+      0 0 45px rgba(139, 69, 19, 0.3),
+      0 0 60px rgba(76, 175, 80, 0.2);
+  }
+}
+
+/* Particle Trail Effect */
+@keyframes particleTrail {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.8;
+    transform: scale(1) rotate(36deg);
+  }
+  90% {
+    opacity: 0.6;
+    transform: scale(1.2) rotate(324deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) rotate(360deg);
+  }
+}
+
+/* Enhanced Dialog Container Animations */
+.enhanced-jungle-dialog-container {
+  position: relative;
+  animation: jungleAmbienceBreath 8s ease-in-out infinite;
+}
+
+/* Floating Foliage Specific Animations */
+.enhanced-jungle-foliage-leaf {
+  animation: gentleLeafSway 6s ease-in-out infinite;
+}
+
+.enhanced-jungle-foliage-butterfly {
+  animation: butterflyFlutter 4s ease-in-out infinite;
+}
+
+.enhanced-jungle-foliage-sparkle {
+  animation: fireflyGlow 3s ease-in-out infinite;
+}
+
+/* Enhanced Button Interactions */
+.enhanced-jungle-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-jungle-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.4s ease,
+    height 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.enhanced-jungle-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.enhanced-jungle-button:active::before {
+  animation: jungleButtonRipple 0.6s ease-out;
+}
+
+/* Enhanced Totem Animation */
+.enhanced-jungle-totem {
+  animation: totemMysticalGlow 5s ease-in-out infinite;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.enhanced-jungle-totem:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Reduce animation intensity on mobile for better performance */
+  .enhanced-jungle-dialog-container {
+    animation-duration: 12s; /* Slower on mobile */
+  }
+
+  .enhanced-jungle-foliage-leaf {
+    animation-duration: 8s;
+  }
+
+  .enhanced-jungle-foliage-butterfly {
+    animation-duration: 6s;
+  }
+
+  .enhanced-jungle-foliage-sparkle {
+    animation-duration: 4s;
+  }
+
+  /* Simplify complex animations on smaller screens */
+  .enhanced-jungle-button::before {
+    display: none; /* Remove complex ripple on mobile */
+  }
+
+  .enhanced-jungle-totem:hover {
+    transform: scale(1.05) rotate(2deg); /* Reduced hover effect */
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .enhanced-jungle-dialog-container {
+    animation-duration: 10s;
+  }
+
+  .enhanced-jungle-button:hover::before {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* Large Desktop Enhancements */
+@media (min-width: 1440px) {
+  .enhanced-jungle-dialog-container {
+    animation-duration: 6s; /* Faster and more dynamic on large screens */
+  }
+
+  .enhanced-jungle-foliage-leaf {
+    animation-duration: 4s;
+  }
+
+  .enhanced-jungle-foliage-butterfly {
+    animation-duration: 3s;
+  }
+
+  .enhanced-jungle-button:hover::before {
+    width: 400px;
+    height: 400px;
+  }
+
+  .enhanced-jungle-totem:hover {
+    transform: scale(1.15) rotate(8deg);
+  }
+}
+
+/* High Performance Mode - Reduced Animations */
+@media (prefers-reduced-motion: reduce) {
+  .enhanced-jungle-dialog-container,
+  .enhanced-jungle-foliage-leaf,
+  .enhanced-jungle-foliage-butterfly,
+  .enhanced-jungle-foliage-sparkle,
+  .enhanced-jungle-totem {
+    animation: none !important;
+  }
+
+  .enhanced-jungle-button::before {
+    display: none;
+  }
+
+  .enhanced-jungle-totem:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+  }
+
+  .enhanced-jungle-button:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .enhanced-jungle-button:hover::before {
+    display: none; /* Remove hover effects on touch devices */
+  }
+
+  .enhanced-jungle-totem:hover {
+    transform: none; /* No hover transform on touch */
+  }
+
+  /* Add larger touch targets */
+  .enhanced-jungle-button {
+    min-height: 56px; /* Minimum touch target size */
+    padding: 16px 20px;
+  }
+}
+
+/* Dark Mode Adaptations */
+@media (prefers-color-scheme: dark) {
+  .enhanced-jungle-dialog-container {
+    filter: brightness(0.9) contrast(1.1);
+  }
+
+  .enhanced-jungle-totem {
+    filter: brightness(1.1) contrast(1.05);
+  }
+
+  .enhanced-jungle-foliage-sparkle {
+    animation: fireflyGlow 3s ease-in-out infinite;
+    filter: brightness(1.2);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .enhanced-jungle-dialog-container,
+  .enhanced-jungle-foliage-leaf,
+  .enhanced-jungle-foliage-butterfly,
+  .enhanced-jungle-foliage-sparkle,
+  .enhanced-jungle-totem {
+    animation: none !important;
+    background: white !important;
+    color: black !important;
+    filter: none !important;
+  }
+
+  .enhanced-jungle-button {
+    background: white !important;
+    color: black !important;
+    border: 2px solid black !important;
+  }
+}
+
+/* Accessibility Focus Enhancements */
+.enhanced-jungle-button:focus-visible {
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 3px rgba(251, 191, 36, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Close Button */
+.enhanced-jungle-close-button {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.9),
+    rgba(245, 158, 11, 0.95)
+  );
+  border: 2px solid rgba(139, 69, 19, 0.3);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.enhanced-jungle-close-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.95),
+    rgba(217, 119, 6, 1)
+  );
+  border-color: rgba(139, 69, 19, 0.5);
+  transform: scale(1.1) rotate(90deg);
+  box-shadow:
+    0 6px 16px rgba(139, 69, 19, 0.4),
+    0 0 20px rgba(251, 191, 36, 0.5);
+}
+
+.enhanced-jungle-close-button:active {
+  transform: scale(0.95) rotate(90deg);
+}
+
+/* Loading State Animations */
+.enhanced-jungle-loading {
+  position: relative;
+}
+
+.enhanced-jungle-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(76, 175, 80, 0.2) 50%,
+    transparent 100%
+  );
+  animation: jungleLoadingSweep 2s ease-in-out infinite;
+  border-radius: inherit;
+}
+
+@keyframes jungleLoadingSweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(-15deg);
+  }
+}
+
+/* Particle System Enhancements */
+.enhanced-jungle-particle-system {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.enhanced-jungle-particle {
+  position: absolute;
+  animation: particleTrail 8s linear infinite;
+  pointer-events: none;
+}
+
+.enhanced-jungle-particle:nth-child(1) {
+  animation-delay: 0s;
+}
+.enhanced-jungle-particle:nth-child(2) {
+  animation-delay: 1s;
+}
+.enhanced-jungle-particle:nth-child(3) {
+  animation-delay: 2s;
+}
+.enhanced-jungle-particle:nth-child(4) {
+  animation-delay: 3s;
+}
+.enhanced-jungle-particle:nth-child(5) {
+  animation-delay: 4s;
+}
+.enhanced-jungle-particle:nth-child(6) {
+  animation-delay: 5s;
+}
+.enhanced-jungle-particle:nth-child(7) {
+  animation-delay: 6s;
+}
+.enhanced-jungle-particle:nth-child(8) {
+  animation-delay: 7s;
+}
+
+/* Enhanced Button Glow Effects */
+.enhanced-jungle-button-glow {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 75%,
+    transparent 100%
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.enhanced-jungle-button:hover .enhanced-jungle-button-glow {
+  opacity: 1;
+  animation: jungleButtonGlowSweep 2s ease-in-out infinite;
+}
+
+@keyframes jungleButtonGlowSweep {
+  0%,
+  100% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  50% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* Container Breathing Effect */
+.enhanced-jungle-breathing-container {
+  animation: jungleContainerBreath 6s ease-in-out infinite;
+}
+
+@keyframes jungleContainerBreath {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.01);
+    filter: brightness(1.02);
+  }
+}
+
+/* Enhanced Text Effects */
+.enhanced-jungle-text-shimmer {
+  background: linear-gradient(
+    135deg,
+    #1f2937 0%,
+    #059669 25%,
+    #fbbf24 50%,
+    #059669 75%,
+    #1f2937 100%
+  );
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: jungleTextShimmer 4s ease-in-out infinite;
+}
+
+@keyframes jungleTextShimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Performance Monitoring Classes */
+.enhanced-jungle-high-performance {
+  animation-duration: 0.5s !important;
+}
+
+.enhanced-jungle-medium-performance {
+  animation-duration: 1s !important;
+}
+
+.enhanced-jungle-low-performance {
+  animation: none !important;
+}
+
+/* GPU Acceleration Helpers */
+.enhanced-jungle-gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Enhanced Shadow Layers */
+.enhanced-jungle-shadow-depth {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(139, 69, 19, 0.1),
+    0 8px 16px rgba(139, 69, 19, 0.1),
+    0 16px 32px rgba(139, 69, 19, 0.1),
+    0 0 40px rgba(251, 191, 36, 0.2);
+}
+
+/* Enhanced Border Glow */
+.enhanced-jungle-border-glow {
+  position: relative;
+}
+
+.enhanced-jungle-border-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  padding: 2px;
+  background: linear-gradient(
+    45deg,
+    rgba(251, 191, 36, 0.5),
+    rgba(139, 69, 19, 0.3),
+    rgba(76, 175, 80, 0.4),
+    rgba(251, 191, 36, 0.5)
+  );
+  background-size: 400% 400%;
+  border-radius: inherit;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  animation: jungleBorderGlow 3s ease-in-out infinite;
+}
+
+@keyframes jungleBorderGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
