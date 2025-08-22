@@ -135,12 +135,17 @@ export default function JungleAdventureIconNav({
                 className="jungle-nav-icon"
                 animate={{
                   scale: isTapped ? 1.1 : 1,
+                  y: -55, // Preserve desktop elevated position
                 }}
                 transition={{
                   type: "spring",
                   stiffness: 400,
                   damping: 17,
                   duration: 0.2,
+                }}
+                style={{
+                  // Responsive translateY for different screen sizes
+                  transform: window.innerWidth <= 767 ? 'translateY(-60px)' : 'translateY(-55px)',
                 }}
               />
               <motion.span
