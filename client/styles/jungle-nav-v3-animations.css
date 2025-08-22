@@ -235,17 +235,17 @@
   transform: translateY(-12px) !important;
 }
 
-/* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar */
+/* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Reduced Height by 20%) */
 .jng-nav-icon-container {
   position: relative;
-  /* Increased space to accommodate raised totems */
-  min-height: 65px; /* Expanded height for totem lift effect */
+  /* Reduced space by 20% while maintaining totem lift effect */
+  min-height: 52px; /* Reduced from 65px by 20% */
   min-width: 50px; /* Slightly wider for better touch targets */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end; /* Align to bottom to keep labels in bar */
-  padding-bottom: 4px; /* Small padding for label spacing */
+  padding-bottom: 3px; /* Reduced padding for more compact design */
   overflow: visible; /* Ensure totems can rise above container */
 }
 
