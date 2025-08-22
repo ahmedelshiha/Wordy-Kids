@@ -186,7 +186,9 @@ export default function JungleAdventureNavV3({
         }}
       >
         {/* Navigation Bar - Mobile reduced by 50%, Desktop unchanged */}
-        <div className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[0.5px] md:min-h-[42px]"> {/* Mobile: 1px -> 0.5px (-50%), Desktop: 42px (unchanged) */}
+        <div className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[0.5px] md:min-h-[42px]">
+          {" "}
+          {/* Mobile: 1px -> 0.5px (-50%), Desktop: 42px (unchanged) */}
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 bottom-1 gap-4">
             {items.map((item) => {
@@ -227,7 +229,6 @@ export default function JungleAdventureNavV3({
               );
             })}
           </div>
-
           {/* Desktop Parent Menu Button - Right Side */}
           <div className="hidden md:block absolute right-2 bottom-1">
             <motion.button
@@ -265,7 +266,6 @@ export default function JungleAdventureNavV3({
               </span>
             </motion.button>
           </div>
-
           {/* Mobile Layout: Distributed layout for smaller screens */}
           <div className="flex md:hidden justify-around w-full">
             {items.map((item) => {
