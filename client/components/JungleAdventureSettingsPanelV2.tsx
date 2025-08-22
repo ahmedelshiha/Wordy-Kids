@@ -44,6 +44,7 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import { sessionManager } from "@/lib/sessionManager";
 import {
   JungleAdventureThemeManager,
   JungleTheme,
