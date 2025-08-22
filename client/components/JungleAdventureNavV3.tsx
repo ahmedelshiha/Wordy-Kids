@@ -88,9 +88,9 @@ function getAnimalAnimationClass(emoji: string): string {
   }
 }
 
-// Enhanced icon size calculation (optimized for reduced navigation height)
+// Enhanced icon size calculation (maintaining large icons with compact navigation)
 const ENHANCED_ICON_SIZE = {
-  base: "2.8rem", // Proportionally reduced for 30% smaller navigation
+  base: "3.6rem", // Keeping original enhanced size despite reduced navigation height
   active: "scale-110",
   hover: "scale-115",
   tap: "scale-95"
