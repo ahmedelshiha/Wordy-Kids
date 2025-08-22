@@ -808,19 +808,19 @@ function SettingsSection({
 }) {
   if (isMobile) {
     return (
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion type="single" collapsible className="w-full" defaultValue={defaultOpen ? "item-1" : undefined}>
         <AccordionItem
           value="item-1"
-          className="border rounded-lg bg-white/70 backdrop-blur-sm"
+          className="border rounded-lg bg-white/80 backdrop-blur-sm shadow-sm"
         >
-          <AccordionTrigger className="px-3 py-2 hover:no-underline text-sm">
+          <AccordionTrigger className="px-3 py-3 hover:no-underline text-sm touch-manipulation">
             <div className="flex items-center gap-2 font-medium text-green-800">
               {icon}
               <span>{title}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-3 pb-3">
-            <div className="space-y-3">{children}</div>
+            <div className="space-y-2.5">{children}</div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
