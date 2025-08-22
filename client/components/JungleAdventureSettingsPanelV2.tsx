@@ -342,14 +342,30 @@ export default function JungleAdventureSettingsPanelV2({
     });
   }
 
-  // Close on ESC
+  // Close on ESC and handle cleanup
   useEffect(() => {
     function onEsc(e: KeyboardEvent) {
-      if (open && e.key === "Escape") onOpenChange(false);
+      if (open && e.key === "Escape") {
+        // Stop preview audio when closing
+        if (ambientRef.current) {
+          ambientRef.current.pause();
+          ambientRef.current.currentTime = 0;
+        }
+        onOpenChange(false);
+      }
     }
     window.addEventListener("keydown", onEsc);
     return () => window.removeEventListener("keydown", onEsc);
   }, [open, onOpenChange]);
+
+  // Handle panel close cleanup
+  useEffect(() => {
+    if (!open && ambientRef.current) {
+      // Stop preview audio when panel is closed
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+    }
+  }, [open]);
 
   if (!open) return null;
 
