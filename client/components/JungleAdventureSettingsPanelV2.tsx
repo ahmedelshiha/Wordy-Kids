@@ -20,17 +20,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { 
-  X, 
-  Play, 
-  Square, 
-  RotateCcw, 
+import {
+  X,
+  Play,
+  Square,
+  RotateCcw,
   Save,
   Volume2,
   VolumeX,
   Palette,
   BookOpen,
-  Accessibility
+  Accessibility,
 } from "lucide-react";
 import {
   setSoundEnabled,
@@ -54,7 +54,7 @@ type Settings = {
   voice: "woman" | "man" | "child";
   speechRate: number; // 0.5..1.5
 
-  // Theme & Motion  
+  // Theme & Motion
   theme: "jungle" | "canopy" | "parchment" | "river" | "sunset";
   darkMode: boolean;
   reducedMotion: boolean;
@@ -98,7 +98,7 @@ const STORAGE_KEY = "jungleAdventureSettings";
 const SOUND_FILES = {
   ambient: {
     birds: "/sounds/jungle-birds.mp3",
-    rain: "/sounds/jungle-rain.mp3", 
+    rain: "/sounds/jungle-rain.mp3",
     wind: "/sounds/jungle-wind.mp3",
     waterfall: "/sounds/jungle-waterfall.mp3",
     insects: "/sounds/jungle-insects.mp3",
@@ -124,9 +124,12 @@ function loadSettings(): Settings {
 
 function saveSettings(s: Settings) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-  
+
   // Apply side-effects to document
-  document.documentElement.style.setProperty("--jng-text-scale", String(s.textScale));
+  document.documentElement.style.setProperty(
+    "--jng-text-scale",
+    String(s.textScale),
+  );
   document.documentElement.classList.toggle("dark", s.darkMode);
   document.documentElement.classList.toggle("hc", s.highContrast);
   document.documentElement.classList.toggle("reduce-motion", s.reducedMotion);
@@ -158,7 +161,7 @@ export default function JungleAdventureSettingsPanelV2({
     ambientRef.current = new Audio();
     ambientRef.current.loop = true;
     ambientRef.current.preload = "auto";
-    
+
     return () => {
       if (ambientRef.current) {
         ambientRef.current.pause();
@@ -170,19 +173,22 @@ export default function JungleAdventureSettingsPanelV2({
   // Handle ambient sound changes
   useEffect(() => {
     if (!ambientRef.current) return;
-    
+
     if (settings.ambient === "off") {
       ambientRef.current.pause();
       ambientRef.current.currentTime = 0;
       return;
     }
-    
+
     const src = SOUND_FILES.ambient[settings.ambient];
     if (ambientRef.current.src !== location.origin + src) {
       ambientRef.current.src = src;
     }
-    
-    ambientRef.current.volume = Math.max(0, Math.min(1, settings.ambientVolume));
+
+    ambientRef.current.volume = Math.max(
+      0,
+      Math.min(1, settings.ambientVolume),
+    );
     ambientRef.current.play().catch(() => {
       // Autoplay may be blocked
     });
@@ -191,7 +197,10 @@ export default function JungleAdventureSettingsPanelV2({
   // Handle reduced motion preference
   useEffect(() => {
     const shouldReduceMotion = settings.reducedMotion || prefersReducedMotion;
-    document.documentElement.classList.toggle("reduce-motion", shouldReduceMotion);
+    document.documentElement.classList.toggle(
+      "reduce-motion",
+      shouldReduceMotion,
+    );
   }, [settings.reducedMotion, prefersReducedMotion]);
 
   // Haptic feedback helper
@@ -237,7 +246,8 @@ export default function JungleAdventureSettingsPanelV2({
 
   // Preview voice
   function previewVoice() {
-    const sampleText = "Hello! Let's explore the jungle together and discover amazing words!";
+    const sampleText =
+      "Hello! Let's explore the jungle together and discover amazing words!";
     audioService.pronounceWord(sampleText, {
       onStart: () => playUISound(SOUND_FILES.ui.voicePreview),
     });
@@ -276,7 +286,7 @@ export default function JungleAdventureSettingsPanelV2({
         className={cn(
           "relative w-[min(720px,92vw)] max-h-[85vh] overflow-hidden rounded-xl shadow-2xl",
           "bg-gradient-to-br from-amber-50/95 via-orange-50/95 to-yellow-50/95 backdrop-blur-lg",
-          "border-2 border-orange-200/60"
+          "border-2 border-orange-200/60",
         )}
         style={{
           backgroundImage: `
@@ -293,7 +303,9 @@ export default function JungleAdventureSettingsPanelV2({
               <span className="text-2xl">🛠️</span>
               <div>
                 <h2 className="text-xl font-bold">Jungle Settings</h2>
-                <p className="text-white/90 text-sm">Customize your adventure</p>
+                <p className="text-white/90 text-sm">
+                  Customize your adventure
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -316,10 +328,12 @@ export default function JungleAdventureSettingsPanelV2({
         {/* Content */}
         <div className="flex flex-col h-[calc(85vh-80px)]">
           <ScrollArea className="flex-1 p-4">
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "" : "grid grid-cols-2 gap-4"
-            )}>
+            <div
+              className={cn(
+                "space-y-4",
+                isMobile ? "" : "grid grid-cols-2 gap-4",
+              )}
+            >
               {/* 🎵 Sound & Voice Section */}
               <SettingsSection
                 title="🎵 Sound & Voice"
@@ -327,7 +341,7 @@ export default function JungleAdventureSettingsPanelV2({
                 isMobile={isMobile}
                 defaultOpen
               >
-                <SettingRow 
+                <SettingRow
                   label="UI Sounds"
                   control={
                     <Switch
@@ -336,13 +350,15 @@ export default function JungleAdventureSettingsPanelV2({
                     />
                   }
                 />
-                
+
                 <SettingRow
                   label="Ambient Jungle"
                   control={
                     <Select
                       value={settings.ambient}
-                      onValueChange={(v) => markDirty({ ambient: v as Settings["ambient"] })}
+                      onValueChange={(v) =>
+                        markDirty({ ambient: v as Settings["ambient"] })
+                      }
                     >
                       <SelectTrigger className="w-40">
                         <SelectValue />
@@ -359,10 +375,14 @@ export default function JungleAdventureSettingsPanelV2({
                   }
                 />
 
-                <SettingRow label={`Ambient Volume ${Math.round(settings.ambientVolume * 100)}%`}>
+                <SettingRow
+                  label={`Ambient Volume ${Math.round(settings.ambientVolume * 100)}%`}
+                >
                   <Slider
                     value={[settings.ambientVolume * 100]}
-                    onValueChange={([v]) => markDirty({ ambientVolume: v / 100 })}
+                    onValueChange={([v]) =>
+                      markDirty({ ambientVolume: v / 100 })
+                    }
                     max={100}
                     step={5}
                     className="flex-1"
@@ -374,7 +394,9 @@ export default function JungleAdventureSettingsPanelV2({
                   control={
                     <Select
                       value={settings.voice}
-                      onValueChange={(v) => markDirty({ voice: v as Settings["voice"] })}
+                      onValueChange={(v) =>
+                        markDirty({ voice: v as Settings["voice"] })
+                      }
                     >
                       <SelectTrigger className="w-40">
                         <SelectValue />
@@ -388,7 +410,9 @@ export default function JungleAdventureSettingsPanelV2({
                   }
                 />
 
-                <SettingRow label={`Speech Speed ×${settings.speechRate.toFixed(1)}`}>
+                <SettingRow
+                  label={`Speech Speed ×${settings.speechRate.toFixed(1)}`}
+                >
                   <Slider
                     min={50}
                     max={150}
@@ -428,7 +452,9 @@ export default function JungleAdventureSettingsPanelV2({
                   control={
                     <Select
                       value={settings.theme}
-                      onValueChange={(v) => markDirty({ theme: v as Settings["theme"] })}
+                      onValueChange={(v) =>
+                        markDirty({ theme: v as Settings["theme"] })
+                      }
                     >
                       <SelectTrigger className="w-40">
                         <SelectValue />
@@ -486,7 +512,9 @@ export default function JungleAdventureSettingsPanelV2({
                   control={
                     <Select
                       value={settings.difficulty}
-                      onValueChange={(v) => markDirty({ difficulty: v as Settings["difficulty"] })}
+                      onValueChange={(v) =>
+                        markDirty({ difficulty: v as Settings["difficulty"] })
+                      }
                     >
                       <SelectTrigger className="w-32">
                         <SelectValue />
@@ -530,7 +558,9 @@ export default function JungleAdventureSettingsPanelV2({
                   control={
                     <Switch
                       checked={settings.parentGateEnabled}
-                      onCheckedChange={(v) => markDirty({ parentGateEnabled: v })}
+                      onCheckedChange={(v) =>
+                        markDirty({ parentGateEnabled: v })
+                      }
                     />
                   }
                 />
@@ -542,7 +572,9 @@ export default function JungleAdventureSettingsPanelV2({
                 icon={<Accessibility className="w-4 h-4" />}
                 isMobile={isMobile}
               >
-                <SettingRow label={`Text Size ×${settings.textScale.toFixed(1)}`}>
+                <SettingRow
+                  label={`Text Size ×${settings.textScale.toFixed(1)}`}
+                >
                   <Slider
                     min={90}
                     max={130}
@@ -591,10 +623,7 @@ export default function JungleAdventureSettingsPanelV2({
                 Reset
               </Button>
               <div className="flex gap-2">
-                <Button 
-                  variant="ghost" 
-                  onClick={() => onOpenChange(false)}
-                >
+                <Button variant="ghost" onClick={() => onOpenChange(false)}>
                   Cancel
                 </Button>
                 <Button
