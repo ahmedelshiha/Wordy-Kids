@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -495,7 +501,11 @@ export default function Index({ initialProfile }: IndexProps) {
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
-      if (selectedCategory && selectedCategory !== lastCategoryRef.current && currentDashboardWords.length === 0) {
+      if (
+        selectedCategory &&
+        selectedCategory !== lastCategoryRef.current &&
+        currentDashboardWords.length === 0
+      ) {
         lastCategoryRef.current = selectedCategory;
         generateFreshWords();
       }
@@ -535,7 +545,11 @@ export default function Index({ initialProfile }: IndexProps) {
     const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
 
     // Prevent infinite loops by checking if we already regenerated for this count
-    if (shouldRegenerate && dashboardSession && wordsCompleted !== lastRegenerationCountRef.current) {
+    if (
+      shouldRegenerate &&
+      dashboardSession &&
+      wordsCompleted !== lastRegenerationCountRef.current
+    ) {
       console.log(
         `Regenerating dashboard words after ${wordsCompleted} completed words`,
       );
@@ -673,9 +687,12 @@ export default function Index({ initialProfile }: IndexProps) {
     if (
       (rememberedCount > 0 || forgottenCount > 0) &&
       (rememberedCount !== lastSaveCountRef.current.remembered ||
-       forgottenCount !== lastSaveCountRef.current.forgotten)
+        forgottenCount !== lastSaveCountRef.current.forgotten)
     ) {
-      lastSaveCountRef.current = { remembered: rememberedCount, forgotten: forgottenCount };
+      lastSaveCountRef.current = {
+        remembered: rememberedCount,
+        forgotten: forgottenCount,
+      };
 
       persistenceService.queueSave(
         {
@@ -686,7 +703,12 @@ export default function Index({ initialProfile }: IndexProps) {
         "high",
       );
     }
-  }, [rememberedWords.size, forgottenWords.size, currentProgress, persistenceService]);
+  }, [
+    rememberedWords.size,
+    forgottenWords.size,
+    currentProgress,
+    persistenceService,
+  ]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
