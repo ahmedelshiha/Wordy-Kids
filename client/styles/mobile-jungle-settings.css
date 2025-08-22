@@ -277,6 +277,45 @@
   .jungle-switch [role="switch"][data-state="checked"] span {
     transform: translateX(20px);
   }
+
+  /* Reduce spacing for mobile settings sections */
+  [data-radix-accordion-content] {
+    padding-bottom: 8px !important;
+  }
+
+  /* Reduce ScrollArea viewport bottom gap */
+  [data-radix-scroll-area-viewport] {
+    padding-bottom: 0 !important;
+  }
+
+  /* Compact accordion spacing on mobile */
+  .jungle-mobile-settings-dialog [data-radix-accordion-content] > div {
+    gap: 12px !important;
+  }
+
+  /* Reduce footer spacing on mobile */
+  .jungle-mobile-settings-dialog .border-t {
+    padding: 12px !important;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .jungle-mobile-settings-dialog {
+    width: 90vw;
+    max-width: 600px;
+    max-height: 75vh;
+  }
+
+  /* Reduce ScrollArea padding for tablets */
+  [data-radix-scroll-area-viewport] {
+    padding: 12px !important;
+  }
+
+  /* Compact accordion content for tablets */
+  [data-radix-accordion-content] {
+    padding-bottom: 12px !important;
+  }
 }
 
 /* Extra small screens */

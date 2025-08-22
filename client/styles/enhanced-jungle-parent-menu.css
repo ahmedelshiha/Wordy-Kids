@@ -1,0 +1,415 @@
+/* Enhanced Jungle Parent Menu - Comprehensive Adventure Theme */
+
+/* Global jungle parent menu animations */
+@keyframes jungle-shimmer {
+  0%,
+  100% {
+    background-position: -200px 0;
+  }
+  50% {
+    background-position: 200px 0;
+  }
+}
+
+@keyframes jungle-glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(76, 175, 80, 0.3),
+      0 0 40px rgba(255, 193, 7, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(76, 175, 80, 0.5),
+      0 0 60px rgba(255, 193, 7, 0.4),
+      inset 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes jungle-firefly-dance {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(15px, -10px) scale(1.2);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-5px, -20px) scale(0.9);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-15px, -5px) scale(1.1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes jungle-leaves-sway {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateY(0px);
+  }
+  33% {
+    transform: rotate(5deg) translateY(-8px);
+  }
+  66% {
+    transform: rotate(-3deg) translateY(4px);
+  }
+}
+
+@keyframes jungle-button-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.005);
+    filter: brightness(1.05);
+  }
+}
+
+/* Enhanced parent menu container */
+.jungle-parent-menu-container {
+  animation: jungle-glow-pulse 4s ease-in-out infinite;
+}
+
+/* Firefly enhancements */
+.jungle-firefly {
+  animation: jungle-firefly-dance 6s ease-in-out infinite;
+  filter: blur(0.5px);
+}
+
+.jungle-firefly:nth-child(2n) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+
+.jungle-firefly:nth-child(3n) {
+  animation-delay: -4s;
+  animation-duration: 8s;
+}
+
+/* Floating leaves enhancement */
+.jungle-floating-leaf {
+  animation: jungle-leaves-sway 5s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.jungle-floating-leaf:nth-child(2n) {
+  animation-delay: -1.5s;
+  animation-duration: 6s;
+}
+
+.jungle-floating-leaf:nth-child(3n) {
+  animation-delay: -3s;
+  animation-duration: 7s;
+}
+
+/* Enhanced button styles */
+.jungle-parent-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: jungle-button-breathe 8s ease-in-out infinite;
+}
+
+.jungle-parent-button:hover {
+  animation-play-state: paused;
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.1) saturate(1.1);
+}
+
+.jungle-parent-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.jungle-parent-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.jungle-parent-button:hover::before {
+  left: 100%;
+}
+
+/* Enhanced jungle creatures animations */
+.jungle-creature {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.jungle-creature:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Woodland texture enhancements */
+.jungle-wood-texture {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 69, 19, 0.1) 0px,
+      rgba(139, 69, 19, 0.1) 2px,
+      transparent 2px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(160, 82, 45, 0.08) 0px,
+      rgba(160, 82, 45, 0.08) 1px,
+      transparent 1px,
+      transparent 12px
+    ),
+    linear-gradient(
+      135deg,
+      rgba(222, 184, 135, 0.1) 0%,
+      rgba(210, 180, 140, 0.1) 50%,
+      rgba(205, 175, 130, 0.1) 100%
+    );
+  position: relative;
+}
+
+.jungle-wood-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 25% 25%,
+      rgba(139, 69, 19, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 75% 75%,
+      rgba(160, 82, 45, 0.03) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+  .jungle-parent-menu-container {
+    margin: 0 12px;
+  }
+
+  .jungle-parent-button {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+
+  .jungle-firefly {
+    width: 3px;
+    height: 3px;
+  }
+
+  .jungle-floating-leaf {
+    font-size: 20px;
+  }
+
+  .jungle-creature {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 769px) {
+  .jungle-parent-menu-container {
+    min-width: 480px;
+  }
+
+  .jungle-parent-button {
+    padding: 20px 24px;
+    font-size: 18px;
+  }
+
+  .jungle-firefly {
+    width: 4px;
+    height: 4px;
+  }
+
+  .jungle-floating-leaf {
+    font-size: 28px;
+  }
+
+  .jungle-creature {
+    font-size: 20px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .jungle-parent-menu-container {
+    border-width: 6px;
+    border-color: #000;
+    animation: none;
+  }
+
+  .jungle-parent-button {
+    border: 3px solid #000;
+    animation: none;
+  }
+
+  .jungle-firefly,
+  .jungle-floating-leaf,
+  .jungle-creature {
+    animation: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-parent-menu-container,
+  .jungle-parent-button,
+  .jungle-firefly,
+  .jungle-floating-leaf,
+  .jungle-creature {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .jungle-parent-button:hover {
+    transform: none;
+  }
+}
+
+/* Dark mode adaptations */
+@media (prefers-color-scheme: dark) {
+  .jungle-parent-menu-container {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 30, 20, 0.98) 0%,
+      rgba(30, 40, 30, 0.95) 50%,
+      rgba(25, 35, 25, 0.98) 100%
+    ) !important;
+    border-color: #4a5d23;
+  }
+
+  .jungle-wood-texture {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        rgba(139, 69, 19, 0.2) 0px,
+        rgba(139, 69, 19, 0.2) 2px,
+        transparent 2px,
+        transparent 8px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(160, 82, 45, 0.15) 0px,
+        rgba(160, 82, 45, 0.15) 1px,
+        transparent 1px,
+        transparent 12px
+      );
+  }
+}
+
+/* Focus accessibility enhancements */
+.jungle-parent-button:focus-visible {
+  outline: 3px solid #4ade80;
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 6px rgba(74, 222, 128, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .jungle-parent-button {
+    min-height: 60px;
+    padding: 18px 24px;
+  }
+
+  .jungle-parent-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Print styles */
+@media print {
+  .jungle-parent-menu-container {
+    background: white !important;
+    border: 2px solid #000;
+    animation: none;
+  }
+
+  .jungle-firefly,
+  .jungle-floating-leaf,
+  .jungle-creature {
+    display: none;
+  }
+
+  .jungle-parent-button {
+    background: white !important;
+    border: 2px solid #000;
+    color: #000 !important;
+  }
+}
+
+/* Keyboard navigation enhancements */
+.jungle-parent-button:focus {
+  z-index: 10;
+}
+
+/* Loading state enhancement */
+.jungle-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.jungle-loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(76, 175, 80, 0.3),
+    transparent
+  );
+  animation: jungle-shimmer 2s infinite;
+}
+
+/* Enhanced mobile portrait optimizations */
+@media (max-width: 480px) and (orientation: portrait) {
+  .jungle-parent-menu-container {
+    width: 98vw;
+    max-height: 85vh;
+    margin: 0 1vw;
+  }
+
+  .jungle-parent-button {
+    padding: 14px 18px;
+    font-size: 15px;
+    margin: 8px 0;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .jungle-parent-menu-container {
+    max-height: 90vh;
+    padding: 20px;
+  }
+}
