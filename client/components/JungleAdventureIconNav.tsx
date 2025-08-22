@@ -126,13 +126,6 @@ export default function JungleAdventureIconNav({
                 duration: 0.2,
               }}
               style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: "0",
-                minWidth: "48px",
-                minHeight: "48px",
-                // Ensure touch area is adequate
                 touchAction: "manipulation",
               }}
             >
