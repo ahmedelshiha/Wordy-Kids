@@ -185,8 +185,8 @@ export default function JungleAdventureNavV3({
           backdropFilter: "blur(8px)",
         }}
       >
-        {/* Navigation Bar - Mobile ultra-reduced, Desktop increased more */}
-        <div className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[1px] md:min-h-[42px]"> {/* Mobile: 1px (unchanged), Desktop: 28.125px -> 42px (+49%) */}
+        {/* Navigation Bar - Mobile reduced by 50%, Desktop unchanged */}
+        <div className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[0.5px] md:min-h-[42px]"> {/* Mobile: 1px -> 0.5px (-50%), Desktop: 42px (unchanged) */}
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 bottom-1 gap-4">
             {items.map((item) => {
