@@ -176,10 +176,14 @@ export default function JungleAdventureNavV3({
   return (
     <>
       <nav
-        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 ${
+        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 opacity-100 ${
           pauseAnimations ? "jng-nav-animations-paused" : ""
         }`}
         aria-label="Jungle Adventure Navigation"
+        style={{
+          backgroundColor: 'rgba(22, 101, 52, 0.95)', // Fallback solid background
+          backdropFilter: 'blur(8px)',
+        }}
       >
         {/* Navigation Bar */}
         <div className="flex items-end px-2 py-2 relative min-h-[60px]">
