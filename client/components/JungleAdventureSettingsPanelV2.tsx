@@ -318,7 +318,7 @@ export default function JungleAdventureSettingsPanelV2({
           "border-2 border-orange-200/60",
           isMobile
             ? "w-[min(380px,95vw)] max-h-[75vh]"
-            : "w-[min(800px,90vw)] max-h-[80vh]",
+            : "w-[min(700px,85vw)] max-h-[75vh]",
         )}
         style={{
           backgroundImage: `
@@ -364,13 +364,13 @@ export default function JungleAdventureSettingsPanelV2({
               "flex-1 min-h-0 jungle-settings-category",
               isMobile
                 ? "max-h-[calc(75vh-120px)] p-3 jungle-mobile-scrollarea"
-                : "max-h-[calc(80vh-140px)] p-4 jungle-settings-scrollarea",
+                : "max-h-[calc(75vh-130px)] p-3 jungle-settings-scrollarea",
             )}
           >
             <div
               className={cn(
-                isMobile ? "space-y-2" : "space-y-3",
-                isMobile ? "" : "grid grid-cols-2 gap-3 auto-rows-min",
+                isMobile ? "space-y-2" : "space-y-2.5",
+                isMobile ? "" : "grid grid-cols-2 gap-2.5 auto-rows-min",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
@@ -756,7 +756,7 @@ export default function JungleAdventureSettingsPanelV2({
           <div
             className={cn(
               "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
-              isMobile ? "p-3" : "p-3",
+              isMobile ? "p-3" : "px-3 py-2.5",
             )}
           >
             <div
@@ -872,16 +872,16 @@ function SettingsSection({
   }
 
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-80">
-      <CardHeader className="pb-2 pt-3 flex-shrink-0">
+    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-72">
+      <CardHeader className="pb-1.5 pt-2.5 flex-shrink-0">
         <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
           {icon}
           <span>{title}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pt-0 pb-3 min-h-0 jungle-category-container">
-        <ScrollArea className="h-full pr-3 jungle-category-content jungle-settings-scrollarea">
-          <div className="space-y-3">{children}</div>
+      <CardContent className="flex-1 pt-0 pb-2.5 min-h-0 jungle-category-container">
+        <ScrollArea className="h-full pr-2.5 jungle-category-content jungle-settings-scrollarea">
+          <div className="space-y-2.5">{children}</div>
         </ScrollArea>
       </CardContent>
     </Card>
