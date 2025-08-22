@@ -140,14 +140,6 @@ export default function JungleAdventureIconNav({
                 src={item.iconSrc}
                 alt={item.label}
                 className="jungle-nav-icon"
-                style={{
-                  width: "12vw",
-                  maxWidth: "48px",
-                  height: "auto",
-                  // Float above the bar
-                  transform: "translateY(-20px)", // Desktop default
-                  filter: "drop-shadow(0 3px 3px rgba(0,0,0,0.25))",
-                }}
                 animate={{
                   scale: isTapped ? 1.1 : 1,
                 }}
@@ -161,13 +153,7 @@ export default function JungleAdventureIconNav({
               <motion.span
                 className="jungle-nav-label"
                 style={{
-                  fontSize: "3vw",
-                  maxFontSize: "14px",
-                  lineHeight: "1.1em",
                   color: item.labelColor,
-                  fontWeight: "500",
-                  textShadow: "0 1px 2px rgba(0,0,0,0.5)",
-                  marginTop: "-16px", // Bring label closer to icon
                 }}
                 animate={{
                   color: isTapped ? (item.labelColor === "#FFD700" ? "#FFED4A" : "#F7FAFC") : item.labelColor,
