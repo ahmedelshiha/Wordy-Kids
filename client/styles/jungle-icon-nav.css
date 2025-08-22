@@ -118,7 +118,7 @@
   .jungle-icon-nav-item:hover .jungle-nav-icon {
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
             drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
-    transform: translateY(-45px) scale(1.05);
+    transform: translateY(-68px) scale(1.05);
   }
 
   .jungle-icon-nav-item:hover .jungle-nav-label {
@@ -129,7 +129,7 @@
   /* Mobile hover adjustments */
   @media (max-width: 767px) {
     .jungle-icon-nav-item:hover .jungle-nav-icon {
-      transform: translateY(-55px) scale(1.05);
+      transform: translateY(-83px) scale(1.05);
     }
   }
 }
