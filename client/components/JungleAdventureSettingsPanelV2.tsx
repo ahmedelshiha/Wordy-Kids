@@ -431,7 +431,7 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     className={cn(
                       "flex-1",
-                      isMobile && "touch-manipulation h-6",
+                      isMobile ? "touch-manipulation h-6" : "h-4",
                     )}
                   />
                 </SettingRow>
@@ -472,7 +472,7 @@ export default function JungleAdventureSettingsPanelV2({
                     onValueChange={([v]) => markDirty({ speechRate: v / 100 })}
                     className={cn(
                       "flex-1",
-                      isMobile && "touch-manipulation h-6",
+                      isMobile ? "touch-manipulation h-6" : "h-4",
                     )}
                   />
                 </SettingRow>
@@ -666,7 +666,7 @@ export default function JungleAdventureSettingsPanelV2({
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
                     className={cn(
                       "flex-1",
-                      isMobile && "touch-manipulation h-6",
+                      isMobile ? "touch-manipulation h-6" : "h-4",
                     )}
                   />
                 </SettingRow>
@@ -682,7 +682,7 @@ export default function JungleAdventureSettingsPanelV2({
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
                     className={cn(
                       "flex-1",
-                      isMobile && "touch-manipulation h-6",
+                      isMobile ? "touch-manipulation h-6" : "h-4",
                     )}
                   />
                 </SettingRow>
@@ -718,7 +718,7 @@ export default function JungleAdventureSettingsPanelV2({
                     onValueChange={([v]) => markDirty({ textScale: v / 100 })}
                     className={cn(
                       "flex-1",
-                      isMobile && "touch-manipulation h-6",
+                      isMobile ? "touch-manipulation h-6" : "h-4",
                     )}
                   />
                 </SettingRow>
