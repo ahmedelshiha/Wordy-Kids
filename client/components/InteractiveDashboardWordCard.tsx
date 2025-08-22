@@ -1875,7 +1875,7 @@ export function InteractiveDashboardWordCard({
                       Animals: "🐵",
                       Nature: "🌿",
                       Food: "🍎",
-                      Objects: "��",
+                      Objects: "🎯",
                       Colors: "🌈",
                       Body: "👤",
                       Family: "👨‍👩‍👧‍👦",
