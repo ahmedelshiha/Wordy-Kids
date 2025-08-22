@@ -14,6 +14,7 @@ import { JungleAdventureParentDashboard } from "@/components/JungleAdventurePare
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "@/styles/jungle-nav-v3-animations.css";
+import "@/styles/jungle-theme.css";
 
 export type JungleNavItem = {
   id: string;
