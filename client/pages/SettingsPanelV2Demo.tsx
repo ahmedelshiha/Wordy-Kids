@@ -1,13 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
+import JungleThemeOverlay from "@/components/JungleThemeOverlay";
+import { JungleAdventureThemeManager, JungleTheme } from "@/lib/JungleAdventureThemeManager";
+import "@/styles/jungle-theme.css";
 
 export default function SettingsPanelV2Demo() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<JungleTheme>('parchment');
+  const [overlays, setOverlays] = useState(JungleAdventureThemeManager.getOverlays());
+  const [showOverlays, setShowOverlays] = useState(true);
+
+  // Initialize theme system
+  useEffect(() => {
+    JungleAdventureThemeManager.init();
+    setCurrentTheme(JungleAdventureThemeManager.getTheme());
+  }, []);
+
+  // Update theme when changed
+  const handleThemeChange = (theme: JungleTheme) => {
+    setCurrentTheme(theme);
+    JungleAdventureThemeManager.applyTheme(theme);
+  };
+
+  // Update overlays when changed
+  const handleOverlayChange = (key: keyof typeof overlays, value: boolean) => {
+    const newOverlays = { ...overlays, [key]: value };
+    setOverlays(newOverlays);
+    JungleAdventureThemeManager.applyOverlays(newOverlays);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-orange-50 p-4">
+    <div className="min-h-screen jng-surface p-4 relative">
+      {/* Jungle Theme Overlays */}
+      {showOverlays && (
+        <JungleThemeOverlay
+          fireflies={overlays.fireflies}
+          fog={overlays.fog}
+          glow={overlays.glow}
+          ripples={overlays.ripples}
+          seed={42}
+        />
+      )}
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-green-800 mb-4">
