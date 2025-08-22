@@ -228,7 +228,7 @@ export default function JungleAdventureNavV3({
             aria-label="Parent Menu - Access family controls and settings"
             aria-expanded={showParentMenu}
             aria-haspopup="dialog"
-            style={{ minHeight: "64px", minWidth: "64px" }}
+            style={{ minHeight: "45px", minWidth: "45px" }}
           >
             <span
               className="jng-nav-icon-totem drop-shadow-lg"
