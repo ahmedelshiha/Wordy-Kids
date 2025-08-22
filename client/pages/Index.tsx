@@ -4095,38 +4095,26 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Parent Options Dialog */}
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
         <DialogContent
-          className="sm:max-w-md max-w-[95vw] w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto"
+          className="sm:max-w-md max-w-[95vw] w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto border-0 p-0"
           style={{
             background: `
               linear-gradient(135deg,
-                rgba(255, 248, 220, 0.95) 0%,
-                rgba(250, 240, 200, 0.98) 100%
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(252, 248, 237, 0.98) 100%
               )
             `,
-            border: "3px solid",
-            borderImage: `linear-gradient(
-              45deg,
-              #8B4513 0%,
-              #A0522D 25%,
-              #CD853F 50%,
-              #A0522D 75%,
-              #8B4513 100%
-            ) 1`,
-            borderRadius: "16px",
+            borderRadius: "20px",
             boxShadow: `
-              inset 0 2px 4px rgba(160, 82, 45, 0.15),
-              0 8px 25px rgba(139, 69, 19, 0.4),
-              0 0 30px rgba(255, 193, 7, 0.2)
+              0 4px 20px rgba(139, 69, 19, 0.15),
+              0 1px 3px rgba(0, 0, 0, 0.1)
             `,
+            backdropFilter: "blur(16px)",
           }}
         >
-          {/* Jungle Background Elements */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
-            <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
-            <div className="absolute bottom-2 left-4 text-sm opacity-20">
-              🌱
-            </div>
+          {/* Subtle Jungle Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[20px]">
+            <div className="absolute top-3 right-3 text-xl opacity-15 animate-gentle-emoji-float">🌿</div>
+            <div className="absolute bottom-3 left-3 text-lg opacity-12">🍃</div>
           </div>
 
           <DialogHeader className="relative z-10">
