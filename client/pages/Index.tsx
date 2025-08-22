@@ -1555,7 +1555,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (accuracy === 100) {
         achievementTitle = "Perfect Category Mastery! 🏆";
         achievementIcon = "🏆";
-        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🎁 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
+        achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n�� Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
         achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
@@ -3486,7 +3486,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Deep in the mystical jungle lie
                                           powerful vowel crystals! Choose your
                                           adventure difficulty and unlock the
-                                          ancient secrets of A, E, I, O, U! ���🔮
+                                          ancient secrets of A, E, I, O, U! ✨🔮
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
@@ -3755,7 +3755,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setShowMatchingGame(false);
                                       setFeedback({
                                         type: "celebration",
-                                        title: "Matching Game Complete! ���✨",
+                                        title: "Matching Game Complete! 🎉✨",
                                         message: `You matched ${score} pairs in ${timeSpent} seconds!`,
                                         points: score * 15,
                                         onContinue: () => setFeedback(null),
