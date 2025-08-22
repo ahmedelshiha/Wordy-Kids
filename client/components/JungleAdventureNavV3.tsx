@@ -288,8 +288,9 @@ export default function JungleAdventureNavV3({
                   <span
                     className={`${animalClass} ${
                       isActive ? "active" : ""
-                    } drop-shadow-lg text-[2.08rem] md:text-[2.34rem]`}
+                    } drop-shadow-lg`}
                     style={{
+                      fontSize: TOTEM_ICON_SIZE.mobileBase, // Mobile: 2.91rem
                       textShadow: isActive
                         ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                         : "0 0 8px rgba(255,255,255,0.3)",
