@@ -318,7 +318,7 @@ export default function JungleAdventureSettingsPanelV2({
           "border-2 border-orange-200/60",
           isMobile
             ? "w-[min(360px,95vw)] max-h-[75vh]"
-            : "w-[min(720px,92vw)] max-h-[85vh]"
+            : "w-[min(720px,92vw)] max-h-[85vh]",
         )}
         style={{
           backgroundImage: `
@@ -359,9 +359,13 @@ export default function JungleAdventureSettingsPanelV2({
 
         {/* Content */}
         <div className="flex flex-col min-h-0">
-          <ScrollArea className={cn(
-            isMobile ? "max-h-[calc(75vh-140px)] p-3" : "max-h-[calc(85vh-160px)] p-4"
-          )}>
+          <ScrollArea
+            className={cn(
+              isMobile
+                ? "max-h-[calc(75vh-140px)] p-3"
+                : "max-h-[calc(85vh-160px)] p-4",
+            )}
+          >
             <div
               className={cn(
                 isMobile ? "space-y-2" : "space-y-4",
@@ -712,14 +716,18 @@ export default function JungleAdventureSettingsPanelV2({
           </ScrollArea>
 
           {/* Footer */}
-          <div className={cn(
-            "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
-            isMobile ? "p-3" : "p-4"
-          )}>
-            <div className={cn(
-              "flex items-center",
-              isMobile ? "flex-col gap-2" : "justify-between"
-            )}>
+          <div
+            className={cn(
+              "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
+              isMobile ? "p-3" : "p-4",
+            )}
+          >
+            <div
+              className={cn(
+                "flex items-center",
+                isMobile ? "flex-col gap-2" : "justify-between",
+              )}
+            >
               {isMobile ? (
                 <>
                   <div className="flex gap-2 w-full">
@@ -848,7 +856,9 @@ function SettingRow({
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium text-green-800">{label}</div>
         {description && (
-          <div className="text-xs text-green-600 mt-0.5 leading-tight">{description}</div>
+          <div className="text-xs text-green-600 mt-0.5 leading-tight">
+            {description}
+          </div>
         )}
       </div>
       <div className="flex-shrink-0">{control ?? children}</div>
