@@ -887,16 +887,13 @@ function SettingsSection({
             isMobile ? "px-3 pb-3" : "px-4 pb-4"
           )}
         >
-          <ScrollArea
-            className={cn(
-              "pr-3",
-              isMobile
-                ? "max-h-60 jungle-mobile-category jungle-mobile-scrollarea"
-                : "max-h-80 jungle-category-content jungle-settings-scrollarea"
-            )}
-          >
+          {isMobile ? (
+            <ScrollArea className="max-h-60 pr-3 jungle-mobile-category jungle-mobile-scrollarea">
+              <div className="space-y-2.5">{children}</div>
+            </ScrollArea>
+          ) : (
             <div className="space-y-2.5">{children}</div>
-          </ScrollArea>
+          )}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
