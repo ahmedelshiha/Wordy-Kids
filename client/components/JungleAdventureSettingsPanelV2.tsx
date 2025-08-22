@@ -624,7 +624,7 @@ export default function JungleAdventureSettingsPanelV2({
                       <SelectContent>
                         <SelectItem value="parchment">📜 Parchment</SelectItem>
                         <SelectItem value="jungle">���� Jungle</SelectItem>
-                        <SelectItem value="canopy">��️ Canopy</SelectItem>
+                        <SelectItem value="canopy">🌫️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
                         <SelectItem value="sunset">🌅 Sunset</SelectItem>
                       </SelectContent>
@@ -762,17 +762,18 @@ export default function JungleAdventureSettingsPanelV2({
                   }
                 />
 
-                <SettingRow label={`Daily Goal: ${settings.dailyGoal} cards`}>
-                  <Slider
+                <SettingRow label="Daily Goal">
+                  <EnhancedSlider
                     min={5}
                     max={50}
                     step={5}
                     value={[settings.dailyGoal]}
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                    size="md"
+                    variant="success"
+                    tooltipFormatter={(v) => `${v} cards`}
+                    hapticFeedback={settings.haptics}
+                    className="flex-1"
                   />
                 </SettingRow>
 
