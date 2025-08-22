@@ -317,8 +317,8 @@ export default function JungleAdventureSettingsPanelV2({
           "bg-gradient-to-br from-amber-50/95 via-orange-50/95 to-yellow-50/95 backdrop-blur-lg",
           "border-2 border-orange-200/60",
           isMobile
-            ? "w-[min(360px,95vw)] max-h-[75vh]"
-            : "w-[min(720px,92vw)] max-h-[85vh]",
+            ? "w-[min(380px,95vw)] max-h-[75vh]"
+            : "w-[min(800px,90vw)] max-h-[80vh]",
         )}
         style={{
           backgroundImage: `
@@ -362,14 +362,14 @@ export default function JungleAdventureSettingsPanelV2({
           <ScrollArea
             className={cn(
               isMobile
-                ? "max-h-[calc(75vh-140px)] p-3"
-                : "max-h-[calc(85vh-160px)] p-4",
+                ? "max-h-[calc(75vh-120px)] p-3"
+                : "max-h-[calc(80vh-140px)] p-4",
             )}
           >
             <div
               className={cn(
-                isMobile ? "space-y-2" : "space-y-4",
-                isMobile ? "" : "grid grid-cols-2 gap-4",
+                isMobile ? "space-y-2" : "space-y-3",
+                isMobile ? "" : "grid grid-cols-2 gap-3",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
@@ -385,6 +385,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Switch
                       checked={settings.uiSounds}
                       onCheckedChange={(v) => markDirty({ uiSounds: v })}
+                      className={cn(isMobile && "scale-110 touch-manipulation")}
                     />
                   }
                 />
@@ -398,7 +399,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ ambient: v as Settings["ambient"] })
                       }
                     >
-                      <SelectTrigger className="w-40">
+                      <SelectTrigger
+                        className={cn(
+                          "w-40",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -423,7 +429,10 @@ export default function JungleAdventureSettingsPanelV2({
                     }
                     max={100}
                     step={5}
-                    className="flex-1"
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -436,7 +445,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ voice: v as Settings["voice"] })
                       }
                     >
-                      <SelectTrigger className="w-40">
+                      <SelectTrigger
+                        className={cn(
+                          "w-40",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -457,7 +471,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={10}
                     value={[settings.speechRate * 100]}
                     onValueChange={([v]) => markDirty({ speechRate: v / 100 })}
-                    className="flex-1"
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -494,7 +511,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ theme: v as JungleTheme })
                       }
                     >
-                      <SelectTrigger className="w-40">
+                      <SelectTrigger
+                        className={cn(
+                          "w-40",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -539,10 +561,10 @@ export default function JungleAdventureSettingsPanelV2({
                 />
 
                 {/* Overlay Effects */}
-                <div className="pt-3 border-t border-orange-200/50">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
-                    <span className="text-sm font-medium text-green-800">
+                <div className="pt-2 border-t border-orange-200/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-3 h-3 text-amber-600" />
+                    <span className="text-xs font-medium text-green-800">
                       Animated Overlays
                     </span>
                   </div>
@@ -620,7 +642,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ difficulty: v as Settings["difficulty"] })
                       }
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger
+                        className={cn(
+                          "w-32",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -639,7 +666,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.dailyGoal]}
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
-                    className="flex-1"
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -652,7 +682,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
-                    className="flex-1"
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -685,7 +718,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.textScale * 100]}
                     onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                    className="flex-1"
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -719,7 +755,7 @@ export default function JungleAdventureSettingsPanelV2({
           <div
             className={cn(
               "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
-              isMobile ? "p-3" : "p-4",
+              isMobile ? "p-3" : "p-3",
             )}
           >
             <div
@@ -734,7 +770,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Button
                       variant="outline"
                       onClick={handleReset}
-                      className="flex items-center gap-1 text-xs px-3 py-2 h-8"
+                      className="flex items-center gap-1 text-xs px-4 py-3 h-10 touch-manipulation"
                       size="sm"
                     >
                       <RotateCcw className="w-3 h-3" />
@@ -743,7 +779,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Button
                       variant="ghost"
                       onClick={() => onOpenChange(false)}
-                      className="text-xs px-3 py-2 h-8"
+                      className="text-xs px-4 py-3 h-10 touch-manipulation"
                       size="sm"
                     >
                       Cancel
@@ -751,11 +787,11 @@ export default function JungleAdventureSettingsPanelV2({
                     <Button
                       disabled={!dirty}
                       onClick={handleSave}
-                      className="flex items-center gap-1 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-xs px-3 py-2 h-8 flex-1"
+                      className="flex items-center gap-1 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-xs px-4 py-3 h-10 flex-1 touch-manipulation"
                       size="sm"
                     >
                       <Save className="w-3 h-3" />
-                      Save & Apply
+                      Save
                     </Button>
                   </div>
                 </>
@@ -808,19 +844,24 @@ function SettingsSection({
 }) {
   if (isMobile) {
     return (
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        defaultValue={defaultOpen ? "item-1" : undefined}
+      >
         <AccordionItem
           value="item-1"
-          className="border rounded-lg bg-white/70 backdrop-blur-sm"
+          className="border rounded-lg bg-white/80 backdrop-blur-sm shadow-sm"
         >
-          <AccordionTrigger className="px-3 py-2 hover:no-underline text-sm">
+          <AccordionTrigger className="px-3 py-3 hover:no-underline text-sm touch-manipulation">
             <div className="flex items-center gap-2 font-medium text-green-800">
               {icon}
               <span>{title}</span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-3 pb-3">
-            <div className="space-y-3">{children}</div>
+            <div className="space-y-2.5">{children}</div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -829,13 +870,13 @@ function SettingsSection({
 
   return (
     <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base text-green-800 flex items-center gap-2">
+      <CardHeader className="pb-2 pt-3">
+        <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
           {icon}
           <span>{title}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 pt-0">{children}</CardContent>
+      <CardContent className="space-y-3 pt-0 pb-3">{children}</CardContent>
     </Card>
   );
 }
@@ -854,9 +895,9 @@ function SettingRow({
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-green-800">{label}</div>
+        <div className="text-xs font-medium text-green-800">{label}</div>
         {description && (
-          <div className="text-xs text-green-600 mt-0.5 leading-tight">
+          <div className="text-xs text-green-600 mt-0.5 leading-tight opacity-80">
             {description}
           </div>
         )}

@@ -4095,64 +4095,55 @@ export default function Index({ initialProfile }: IndexProps) {
       {/* Parent Options Dialog */}
       <Dialog open={showParentOptions} onOpenChange={setShowParentOptions}>
         <DialogContent
-          className="sm:max-w-md max-w-[95vw] w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto"
+          className="sm:max-w-md max-w-[95vw] w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto border-0 p-0"
           style={{
             background: `
               linear-gradient(135deg,
-                rgba(255, 248, 220, 0.95) 0%,
-                rgba(250, 240, 200, 0.98) 100%
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(252, 248, 237, 0.98) 100%
               )
             `,
-            border: "3px solid",
-            borderImage: `linear-gradient(
-              45deg,
-              #8B4513 0%,
-              #A0522D 25%,
-              #CD853F 50%,
-              #A0522D 75%,
-              #8B4513 100%
-            ) 1`,
-            borderRadius: "16px",
+            borderRadius: "20px",
             boxShadow: `
-              inset 0 2px 4px rgba(160, 82, 45, 0.15),
-              0 8px 25px rgba(139, 69, 19, 0.4),
-              0 0 30px rgba(255, 193, 7, 0.2)
+              0 4px 20px rgba(139, 69, 19, 0.15),
+              0 1px 3px rgba(0, 0, 0, 0.1)
             `,
+            backdropFilter: "blur(16px)",
           }}
         >
-          {/* Jungle Background Elements */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-2 left-2 text-lg opacity-20">🌿</div>
-            <div className="absolute top-4 right-4 text-sm opacity-25">🍃</div>
-            <div className="absolute bottom-2 left-4 text-sm opacity-20">
-              🌱
+          {/* Subtle Jungle Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[20px]">
+            <div className="absolute top-3 right-3 text-xl opacity-15 animate-gentle-emoji-float">
+              🌿
+            </div>
+            <div className="absolute bottom-3 left-3 text-lg opacity-12">
+              🍃
             </div>
           </div>
 
-          <DialogHeader className="relative z-10">
+          <DialogHeader className="relative z-10 p-6 pb-4">
             <DialogTitle
-              className="flex items-center gap-2 text-xl font-bold"
+              className="flex items-center gap-3 text-xl font-bold"
               id="parent-menu-title"
             >
               <span
-                className="text-2xl filter drop-shadow-sm"
-                style={{ textShadow: "0 1px 2px rgba(139, 69, 19, 0.3)" }}
+                className="text-2xl animate-gentle-emoji-float"
                 aria-hidden="true"
               >
-                🪵
+                🌿
               </span>
-              <span style={{ color: "#8B4513" }}>Parent Menu</span>
+              <span className="text-jungle-dark">Parent Menu</span>
             </DialogTitle>
             <DialogDescription
-              style={{ color: "#A0522D" }}
+              className="text-jungle mt-2 text-sm"
               id="parent-menu-description"
             >
-              Access family dashboard, jungle settings, and adventure controls.
+              Access family dashboard, settings, and adventure controls.
             </DialogDescription>
           </DialogHeader>
 
           <div
-            className="space-y-3 relative z-10"
+            className="px-6 pb-6 space-y-3 relative z-10"
             role="navigation"
             aria-labelledby="parent-menu-title"
           >
@@ -4169,28 +4160,15 @@ export default function Index({ initialProfile }: IndexProps) {
                   // Add smooth scroll to top when switching to parent dashboard
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                className="flex items-center gap-3 p-4 h-auto justify-start text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[64px] w-full touch-manipulation bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle shadow-md hover:shadow-lg"
                 aria-label="Open Parent Dashboard - View detailed progress, analytics, and manage learning goals"
                 role="button"
                 tabIndex={0}
-                style={{
-                  background: `
-                    linear-gradient(135deg,
-                      #8B4513 0%,
-                      #A0522D 50%,
-                      #8B4513 100%
-                    )
-                  `,
-                  boxShadow: `
-                    inset 0 1px 2px rgba(139, 69, 19, 0.2),
-                    0 4px 12px rgba(139, 69, 19, 0.3)
-                  `,
-                }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-200/10 to-orange-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
                   <span
-                    className="text-2xl filter drop-shadow-sm"
+                    className="text-2xl animate-gentle-breath"
                     role="img"
                     aria-label="Owl icon"
                   >
@@ -4200,8 +4178,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     <div className="font-semibold text-base sm:text-lg leading-tight">
                       Parent Dashboard
                     </div>
-                    <div className="text-xs sm:text-sm text-amber-100 leading-tight">
-                      🌟 View progress, analytics, and learning adventures
+                    <div className="text-xs sm:text-sm text-green-100 leading-tight opacity-90">
+                      View progress and learning adventures
                     </div>
                   </div>
                 </div>
@@ -4217,42 +4195,22 @@ export default function Index({ initialProfile }: IndexProps) {
                     navigator.vibrate(50);
                   }
                 }}
-                className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                className="flex items-center gap-3 p-4 h-auto justify-start text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[64px] w-full touch-manipulation bg-gradient-to-r from-sky to-sky-dark hover:from-sky-dark hover:to-sky shadow-md hover:shadow-lg"
                 aria-label="Open Jungle Settings - Configure app preferences, safety controls, and adventure options"
                 role="button"
                 tabIndex={0}
-                style={{
-                  background: `
-                    linear-gradient(135deg,
-                      #228B22 0%,
-                      #32CD32 50%,
-                      #228B22 100%
-                    )
-                  `,
-                  boxShadow: `
-                    inset 0 1px 2px rgba(34, 139, 34, 0.2),
-                    0 4px 12px rgba(34, 139, 34, 0.3)
-                  `,
-                }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-200/10 to-emerald-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
                   <div className="relative">
-                    <Settings
-                      className="w-6 h-6"
-                      style={{
-                        filter: "drop-shadow(0 1px 2px rgba(139, 69, 19, 0.3))",
-                        color: "#CD853F",
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full" />
+                    <Settings className="w-6 h-6 text-white" />
                   </div>
                   <div className="text-left flex-1 min-w-0">
                     <div className="font-semibold text-base sm:text-lg leading-tight">
                       Jungle Settings
                     </div>
-                    <div className="text-xs sm:text-sm text-green-100 leading-tight">
-                      🛠️ Configure adventure preferences and safety controls
+                    <div className="text-xs sm:text-sm text-blue-100 leading-tight opacity-90">
+                      Configure adventure preferences
                     </div>
                   </div>
                 </div>
@@ -4260,14 +4218,14 @@ export default function Index({ initialProfile }: IndexProps) {
 
               {/* Dynamic Authentication Button */}
               <div
-                className="pt-2 border-t border-amber-300/30"
+                className="pt-3 border-t border-jungle/20"
                 role="group"
                 aria-label="Authentication options"
               >
                 <DynamicAuthButton
                   variant="mobile"
                   onAction={() => setShowParentOptions(false)}
-                  className="border-2 border-amber-300/50"
+                  className="border border-jungle/30 rounded-xl bg-white/60 hover:bg-white/80 transition-all duration-300"
                 />
               </div>
             </div>
