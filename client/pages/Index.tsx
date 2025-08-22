@@ -3102,7 +3102,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                               I Remember!
                                                             </div>
                                                             <div className="text-xs opacity-90 hidden sm:block">
-                                                              Awesome! ���
+                                                              Awesome! 🎉
                                                             </div>
                                                           </div>
                                                         </div>
@@ -3205,7 +3205,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🍃
                                     </div>
                                     <div className="jungle-leaves-float">
-                                      ���
+                                      🌿
                                     </div>
                                     <div className="jungle-leaves-float">
                                       🍃
@@ -4139,7 +4139,7 @@ export default function Index({ initialProfile }: IndexProps) {
           </DialogHeader>
 
           <div
-            className="space-y-3 relative z-10"
+            className="px-6 pb-6 space-y-3 relative z-10"
             role="navigation"
             aria-labelledby="parent-menu-title"
           >
