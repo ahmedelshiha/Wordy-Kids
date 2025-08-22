@@ -232,14 +232,21 @@ export default function JungleAdventureNavV3({
             <motion.button
               whileTap={shouldAnimate ? { scale: 0.9 } : {}}
               whileHover={shouldAnimate ? { scale: 1.05 } : {}}
-              className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
+              className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200 relative"
               onClick={() => setShowParentMenu(true)}
               aria-label="Parent Menu - Access family controls and settings"
               aria-expanded={showParentMenu}
               aria-haspopup="dialog"
             >
+              {/* Vine Wrap Animation */}
+              <div className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? 'vine-active' : ''}`}>
+                <span className="vine-wrap vine-wrap-1">🌿</span>
+                <span className="vine-wrap vine-wrap-2">🌿</span>
+                <span className="vine-wrap vine-wrap-3">🌿</span>
+              </div>
+
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[3.51rem] ${
+                className={`jng-nav-icon-totem drop-shadow-lg text-[3.51rem] relative z-10 ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
@@ -249,7 +256,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-0 font-medium leading-tight">
+              <span className="text-xs mt-0 font-medium leading-tight relative z-10">
                 Parents
               </span>
             </motion.button>
@@ -298,14 +305,21 @@ export default function JungleAdventureNavV3({
             <motion.button
               whileTap={shouldAnimate ? { scale: 0.9 } : {}}
               whileHover={shouldAnimate ? { scale: 1.05 } : {}}
-              className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200"
+              className="jng-nav-icon-container flex flex-col items-center text-yellow-300 transition-colors duration-200 hover:text-yellow-200 relative"
               onClick={() => setShowParentMenu(true)}
               aria-label="Parent Menu - Access family controls and settings"
               aria-expanded={showParentMenu}
               aria-haspopup="dialog"
             >
+              {/* Vine Wrap Animation - Mobile */}
+              <div className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? 'vine-active' : ''}`}>
+                <span className="vine-wrap vine-wrap-1">🌿</span>
+                <span className="vine-wrap vine-wrap-2">🌿</span>
+                <span className="vine-wrap vine-wrap-3">🌿</span>
+              </div>
+
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[3.12rem] md:text-[3.51rem] ${
+                className={`jng-nav-icon-totem drop-shadow-lg text-[3.12rem] md:text-[3.51rem] relative z-10 ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
@@ -315,7 +329,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-0 font-medium leading-tight">
+              <span className="text-xs mt-0 font-medium leading-tight relative z-10">
                 Parents
               </span>
             </motion.button>
