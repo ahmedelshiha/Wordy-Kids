@@ -3,13 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
 import JungleThemeOverlay from "@/components/JungleThemeOverlay";
-import { JungleAdventureThemeManager, JungleTheme } from "@/lib/JungleAdventureThemeManager";
+import {
+  JungleAdventureThemeManager,
+  JungleTheme,
+} from "@/lib/JungleAdventureThemeManager";
 import "@/styles/jungle-theme.css";
 
 export default function SettingsPanelV2Demo() {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<JungleTheme>('parchment');
-  const [overlays, setOverlays] = useState(JungleAdventureThemeManager.getOverlays());
+  const [currentTheme, setCurrentTheme] = useState<JungleTheme>("parchment");
+  const [overlays, setOverlays] = useState(
+    JungleAdventureThemeManager.getOverlays(),
+  );
   const [showOverlays, setShowOverlays] = useState(true);
 
   // Initialize theme system
@@ -49,27 +54,29 @@ export default function SettingsPanelV2Demo() {
             🛠️ Jungle Adventure Settings Panel V2
           </h1>
           <p className="text-lg text-white/90 mb-6 drop-shadow">
-            Enhanced with theme system, animated overlays, and full accessibility
+            Enhanced with theme system, animated overlays, and full
+            accessibility
           </p>
 
           {/* Theme Selector */}
           <div className="mb-6 bg-white/20 backdrop-blur-sm rounded-lg p-4 inline-block">
             <h3 className="text-white font-semibold mb-3">🎨 Theme Preview</h3>
             <div className="flex gap-2 flex-wrap justify-center">
-              {(['parchment', 'jungle', 'canopy', 'river', 'sunset'] as const).map(theme => (
+              {(
+                ["parchment", "jungle", "canopy", "river", "sunset"] as const
+              ).map((theme) => (
                 <Button
                   key={theme}
-                  variant={currentTheme === theme ? 'default' : 'outline'}
+                  variant={currentTheme === theme ? "default" : "outline"}
                   size="sm"
                   onClick={() => handleThemeChange(theme)}
-                  className={`${currentTheme === theme ? 'bg-white text-black' : 'text-white border-white/50 hover:bg-white/20'}`}
+                  className={`${currentTheme === theme ? "bg-white text-black" : "text-white border-white/50 hover:bg-white/20"}`}
                 >
-                  {theme === 'parchment' && '📜'}
-                  {theme === 'jungle' && '🌿'}
-                  {theme === 'canopy' && '🌫️'}
-                  {theme === 'river' && '🌊'}
-                  {theme === 'sunset' && '🌅'}
-                  {' '}
+                  {theme === "parchment" && "📜"}
+                  {theme === "jungle" && "🌿"}
+                  {theme === "canopy" && "🌫️"}
+                  {theme === "river" && "🌊"}
+                  {theme === "sunset" && "🌅"}{" "}
                   {theme.charAt(0).toUpperCase() + theme.slice(1)}
                 </Button>
               ))}
@@ -78,32 +85,37 @@ export default function SettingsPanelV2Demo() {
 
           {/* Overlay Controls */}
           <div className="mb-6 bg-white/20 backdrop-blur-sm rounded-lg p-4 inline-block ml-4">
-            <h3 className="text-white font-semibold mb-3">✨ Animated Overlays</h3>
+            <h3 className="text-white font-semibold mb-3">
+              ✨ Animated Overlays
+            </h3>
             <div className="flex gap-3 flex-wrap justify-center items-center">
               <Button
-                variant={showOverlays ? 'default' : 'outline'}
+                variant={showOverlays ? "default" : "outline"}
                 size="sm"
                 onClick={() => setShowOverlays(!showOverlays)}
-                className={`${showOverlays ? 'bg-white text-black' : 'text-white border-white/50 hover:bg-white/20'}`}
+                className={`${showOverlays ? "bg-white text-black" : "text-white border-white/50 hover:bg-white/20"}`}
               >
-                {showOverlays ? '👁️ Hide' : '👁️ Show'} Overlays
+                {showOverlays ? "👁️ Hide" : "👁️ Show"} Overlays
               </Button>
-              {(['fireflies', 'fog', 'glow', 'ripples'] as const).map(overlay => (
-                <Button
-                  key={overlay}
-                  variant={overlays[overlay] ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => handleOverlayChange(overlay, !overlays[overlay])}
-                  className={`${overlays[overlay] ? 'bg-white text-black' : 'text-white border-white/50 hover:bg-white/20'}`}
-                >
-                  {overlay === 'fireflies' && '🌟'}
-                  {overlay === 'fog' && '🌫️'}
-                  {overlay === 'glow' && '✨'}
-                  {overlay === 'ripples' && '💧'}
-                  {' '}
-                  {overlay.charAt(0).toUpperCase() + overlay.slice(1)}
-                </Button>
-              ))}
+              {(["fireflies", "fog", "glow", "ripples"] as const).map(
+                (overlay) => (
+                  <Button
+                    key={overlay}
+                    variant={overlays[overlay] ? "default" : "outline"}
+                    size="sm"
+                    onClick={() =>
+                      handleOverlayChange(overlay, !overlays[overlay])
+                    }
+                    className={`${overlays[overlay] ? "bg-white text-black" : "text-white border-white/50 hover:bg-white/20"}`}
+                  >
+                    {overlay === "fireflies" && "🌟"}
+                    {overlay === "fog" && "🌫️"}
+                    {overlay === "glow" && "✨"}
+                    {overlay === "ripples" && "💧"}{" "}
+                    {overlay.charAt(0).toUpperCase() + overlay.slice(1)}
+                  </Button>
+                ),
+              )}
             </div>
           </div>
 
@@ -261,8 +273,8 @@ export default function SettingsPanelV2Demo() {
         <div className="mt-8 text-center">
           <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 inline-block">
             <p className="text-sm text-white/90 mb-4">
-              🎯 Interactive demo with live theme switching and animated overlays.
-              Settings persist across sessions!
+              🎯 Interactive demo with live theme switching and animated
+              overlays. Settings persist across sessions!
             </p>
             <div className="flex justify-center gap-4 text-sm flex-wrap">
               <span className="flex items-center gap-1 text-white/80">

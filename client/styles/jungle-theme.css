@@ -1,22 +1,27 @@
 :root {
   --jng-bg: #0e3a2a;
-  --jng-overlay-opacity: .55;
+  --jng-overlay-opacity: 0.55;
   --jng-overlay-speed: 1;
-  --jng-firefly-opacity: .9;
-  --jng-fog-opacity: .35;
-  --jng-glow-opacity: .25;
-  --jng-ripples-opacity: .25;
-  --jng-grain-opacity: .05;
+  --jng-firefly-opacity: 0.9;
+  --jng-fog-opacity: 0.35;
+  --jng-glow-opacity: 0.25;
+  --jng-ripples-opacity: 0.25;
+  --jng-grain-opacity: 0.05;
 
   /* Theme variables */
   --jng-theme-primary: #1f8a5e;
   --jng-theme-secondary: #0e3a2a;
   --jng-theme-accent: #ffd54a;
-  --jng-theme-parchment: url('/textures/parchment.png');
-  --jng-theme-jungle: linear-gradient(180deg,#0f5132,#083b2b);
-  --jng-theme-canopy: radial-gradient(120% 90% at 50% 0%, #cde7d8 0%, #7fbf9e 35%, #1b5e40 80%);
-  --jng-theme-river: linear-gradient(180deg,#b3e5fc,#0288d1 70%,#01579b);
-  --jng-theme-sunset: linear-gradient(180deg,#ffcc80,#fb8c00 60%, #6d4c41);
+  --jng-theme-parchment: url("/textures/parchment.png");
+  --jng-theme-jungle: linear-gradient(180deg, #0f5132, #083b2b);
+  --jng-theme-canopy: radial-gradient(
+    120% 90% at 50% 0%,
+    #cde7d8 0%,
+    #7fbf9e 35%,
+    #1b5e40 80%
+  );
+  --jng-theme-river: linear-gradient(180deg, #b3e5fc, #0288d1 70%, #01579b);
+  --jng-theme-sunset: linear-gradient(180deg, #ffcc80, #fb8c00 60%, #6d4c41);
 }
 
 /* Container class that picks a background per theme */
@@ -26,63 +31,135 @@
   overflow: hidden;
 }
 
-.jng-theme-parchment { background-image: var(--jng-theme-parchment); background-size: cover; background-position:center; }
-.jng-theme-jungle    { background: var(--jng-theme-jungle); }
-.jng-theme-canopy    { background: var(--jng-theme-canopy); }
-.jng-theme-river     { background: var(--jng-theme-river); }
-.jng-theme-sunset    { background: var(--jng-theme-sunset); }
+.jng-theme-parchment {
+  background-image: var(--jng-theme-parchment);
+  background-size: cover;
+  background-position: center;
+}
+.jng-theme-jungle {
+  background: var(--jng-theme-jungle);
+}
+.jng-theme-canopy {
+  background: var(--jng-theme-canopy);
+}
+.jng-theme-river {
+  background: var(--jng-theme-river);
+}
+.jng-theme-sunset {
+  background: var(--jng-theme-sunset);
+}
 
 /* Grain (subtle) */
 .jng-surface::before {
   content: "";
-  position: absolute; inset: 0;
-  background-image: url('/textures/glow.png');
+  position: absolute;
+  inset: 0;
+  background-image: url("/textures/glow.png");
   opacity: var(--jng-grain-opacity);
   pointer-events: none;
   mix-blend-mode: soft-light;
 }
 
 /* Core overlay layer container */
-.jng-overlays { position:absolute; inset:0; pointer-events:none; }
+.jng-overlays {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 
-.jng-layer { position:absolute; inset:0; background-repeat: repeat; background-size: 512px 512px; opacity: var(--jng-overlay-opacity); }
+.jng-layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 512px 512px;
+  opacity: var(--jng-overlay-opacity);
+}
 
-.jng-fireflies { background-image: url('/textures/firefly.png'); opacity: var(--jng-firefly-opacity); animation: jng-firefly 14s calc(var(--seed,0s)) infinite ease-in-out; }
-.jng-fog       { background-image: url('/textures/fog.png'); opacity: var(--jng-fog-opacity); animation: jng-fog 30s linear infinite; }
-.jng-glow      { background-image: url('/textures/glow.png'); opacity: var(--jng-glow-opacity); animation: jng-glow 18s ease-in-out infinite; mix-blend-mode: screen; }
-.jng-ripples   { background-image: url('/textures/ripples.png'); opacity: var(--jng-ripples-opacity); animation: jng-ripples 22s ease-in-out infinite; mix-blend-mode: overlay; }
+.jng-fireflies {
+  background-image: url("/textures/firefly.png");
+  opacity: var(--jng-firefly-opacity);
+  animation: jng-firefly 14s calc(var(--seed, 0s)) infinite ease-in-out;
+}
+.jng-fog {
+  background-image: url("/textures/fog.png");
+  opacity: var(--jng-fog-opacity);
+  animation: jng-fog 30s linear infinite;
+}
+.jng-glow {
+  background-image: url("/textures/glow.png");
+  opacity: var(--jng-glow-opacity);
+  animation: jng-glow 18s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+.jng-ripples {
+  background-image: url("/textures/ripples.png");
+  opacity: var(--jng-ripples-opacity);
+  animation: jng-ripples 22s ease-in-out infinite;
+  mix-blend-mode: overlay;
+}
 
 @keyframes jng-firefly {
-  0%   { transform: translate(0,0) scale(1);   }
-  25%  { transform: translate(12px,-18px) scale(1.05); }
-  50%  { transform: translate(0,-4px)  scale(1.02); }
-  75%  { transform: translate(-10px, 8px) scale(0.98); }
-  100% { transform: translate(0,0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(12px, -18px) scale(1.05);
+  }
+  50% {
+    transform: translate(0, -4px) scale(1.02);
+  }
+  75% {
+    transform: translate(-10px, 8px) scale(0.98);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @keyframes jng-fog {
-  0%   { transform: translateX(-30px); }
-  100% { transform: translateX(60px); }
+  0% {
+    transform: translateX(-30px);
+  }
+  100% {
+    transform: translateX(60px);
+  }
 }
 
 @keyframes jng-glow {
-  0%,100% { opacity: .18; }
-  50%     { opacity: .28; }
+  0%,
+  100% {
+    opacity: 0.18;
+  }
+  50% {
+    opacity: 0.28;
+  }
 }
 
 @keyframes jng-ripples {
-  0%   { transform: translateY(0) scale(1); }
-  50%  { transform: translateY(-6px) scale(1.01); }
-  100% { transform: translateY(0) scale(1); }
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.01);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Reduced motion & mobile tuning */
 @media (prefers-reduced-motion: reduce) {
-  .jng-layer { animation: none !important; }
+  .jng-layer {
+    animation: none !important;
+  }
 }
 @media (max-width: 768px) {
-  .jng-layer { opacity: calc(var(--jng-overlay-opacity) * .75); }
-  .jng-fog   { opacity: .25; }
+  .jng-layer {
+    opacity: calc(var(--jng-overlay-opacity) * 0.75);
+  }
+  .jng-fog {
+    opacity: 0.25;
+  }
 }
 
 /* Navigation breathing animations and micro-movements */
@@ -91,68 +168,134 @@
 }
 
 .jng-nav-icon-owl {
-  animation: jng-nav-breathing 6s ease-in-out infinite, jng-owl-movements 12s ease-in-out infinite;
+  animation:
+    jng-nav-breathing 6s ease-in-out infinite,
+    jng-owl-movements 12s ease-in-out infinite;
 }
 
 .jng-nav-icon-parrot {
-  animation: jng-nav-breathing 6s ease-in-out infinite, jng-parrot-movements 12s ease-in-out infinite;
+  animation:
+    jng-nav-breathing 6s ease-in-out infinite,
+    jng-parrot-movements 12s ease-in-out infinite;
 }
 
 .jng-nav-icon-monkey {
-  animation: jng-nav-breathing 6s ease-in-out infinite, jng-monkey-movements 14s ease-in-out infinite;
+  animation:
+    jng-nav-breathing 6s ease-in-out infinite,
+    jng-monkey-movements 14s ease-in-out infinite;
 }
 
 .jng-nav-icon-elephant {
-  animation: jng-nav-breathing 6s ease-in-out infinite, jng-elephant-movements 15s ease-in-out infinite;
+  animation:
+    jng-nav-breathing 6s ease-in-out infinite,
+    jng-elephant-movements 15s ease-in-out infinite;
 }
 
 .jng-nav-icon-totem {
-  animation: jng-nav-breathing 6s ease-in-out infinite, jng-totem-movements 8s ease-in-out infinite;
+  animation:
+    jng-nav-breathing 6s ease-in-out infinite,
+    jng-totem-movements 8s ease-in-out infinite;
 }
 
 /* Base breathing animation */
 @keyframes jng-nav-breathing {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 /* Animal-specific micro-movements */
 @keyframes jng-owl-movements {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.02) rotate(-2deg); }
-  50% { transform: scale(1.05) rotate(0deg); }
-  75% { transform: scale(1.02) rotate(2deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.02) rotate(-2deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.02) rotate(2deg);
+  }
 }
 
 @keyframes jng-parrot-movements {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  20% { transform: scale(1.02) rotate(-3deg); }
-  40% { transform: scale(1.05) rotate(1deg); }
-  60% { transform: scale(1.03) rotate(-1deg); }
-  80% { transform: scale(1.05) rotate(2deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.02) rotate(-3deg);
+  }
+  40% {
+    transform: scale(1.05) rotate(1deg);
+  }
+  60% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+  80% {
+    transform: scale(1.05) rotate(2deg);
+  }
 }
 
 @keyframes jng-monkey-movements {
-  0%, 100% { transform: scale(1) translateY(0); }
-  14% { transform: scale(1.02) translateY(-2px); }
-  28% { transform: scale(1.05) translateY(0); }
-  42% { transform: scale(1.03) translateY(-1px); }
-  56% { transform: scale(1.05) translateY(0); }
-  70% { transform: scale(1.02) translateY(-3px); }
-  84% { transform: scale(1.05) translateY(0); }
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  14% {
+    transform: scale(1.02) translateY(-2px);
+  }
+  28% {
+    transform: scale(1.05) translateY(0);
+  }
+  42% {
+    transform: scale(1.03) translateY(-1px);
+  }
+  56% {
+    transform: scale(1.05) translateY(0);
+  }
+  70% {
+    transform: scale(1.02) translateY(-3px);
+  }
+  84% {
+    transform: scale(1.05) translateY(0);
+  }
 }
 
 @keyframes jng-elephant-movements {
-  0%, 100% { transform: scale(1) rotateY(0deg); }
-  25% { transform: scale(1.02) rotateY(-5deg); }
-  50% { transform: scale(1.05) rotateY(0deg); }
-  75% { transform: scale(1.02) rotateY(5deg); }
+  0%,
+  100% {
+    transform: scale(1) rotateY(0deg);
+  }
+  25% {
+    transform: scale(1.02) rotateY(-5deg);
+  }
+  50% {
+    transform: scale(1.05) rotateY(0deg);
+  }
+  75% {
+    transform: scale(1.02) rotateY(5deg);
+  }
 }
 
 @keyframes jng-totem-movements {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  33% { transform: scale(1.03) rotate(-1deg); }
-  66% { transform: scale(1.05) rotate(1deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    transform: scale(1.03) rotate(-1deg);
+  }
+  66% {
+    transform: scale(1.05) rotate(1deg);
+  }
 }
 
 /* Disable animations when reduced motion is preferred */
@@ -187,8 +330,18 @@
 }
 
 /* Dark mode theme adjustments */
-.dark .jng-theme-parchment { filter: brightness(0.7) sepia(0.3); }
-.dark .jng-theme-jungle    { filter: brightness(0.8); }
-.dark .jng-theme-canopy    { filter: brightness(0.7); }
-.dark .jng-theme-river     { filter: brightness(0.6); }
-.dark .jng-theme-sunset    { filter: brightness(0.7) hue-rotate(10deg); }
+.dark .jng-theme-parchment {
+  filter: brightness(0.7) sepia(0.3);
+}
+.dark .jng-theme-jungle {
+  filter: brightness(0.8);
+}
+.dark .jng-theme-canopy {
+  filter: brightness(0.7);
+}
+.dark .jng-theme-river {
+  filter: brightness(0.6);
+}
+.dark .jng-theme-sunset {
+  filter: brightness(0.7) hue-rotate(10deg);
+}

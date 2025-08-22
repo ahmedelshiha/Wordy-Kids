@@ -45,7 +45,11 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
-import { JungleAdventureThemeManager, JungleTheme, OverlaySettings } from "@/lib/JungleAdventureThemeManager";
+import {
+  JungleAdventureThemeManager,
+  JungleTheme,
+  OverlaySettings,
+} from "@/lib/JungleAdventureThemeManager";
 import "@/styles/jungle-theme.css";
 
 // Settings type definition
@@ -529,7 +533,9 @@ export default function JungleAdventureSettingsPanelV2({
                 <div className="pt-3 border-t border-orange-200/50">
                   <div className="flex items-center gap-2 mb-3">
                     <Sparkles className="w-4 h-4 text-amber-600" />
-                    <span className="text-sm font-medium text-green-800">Animated Overlays</span>
+                    <span className="text-sm font-medium text-green-800">
+                      Animated Overlays
+                    </span>
                   </div>
 
                   <SettingRow
@@ -539,7 +545,7 @@ export default function JungleAdventureSettingsPanelV2({
                         checked={settings.overlays.fireflies}
                         onCheckedChange={(v) =>
                           markDirty({
-                            overlays: { ...settings.overlays, fireflies: v }
+                            overlays: { ...settings.overlays, fireflies: v },
                           })
                         }
                       />
@@ -553,7 +559,7 @@ export default function JungleAdventureSettingsPanelV2({
                         checked={settings.overlays.fog}
                         onCheckedChange={(v) =>
                           markDirty({
-                            overlays: { ...settings.overlays, fog: v }
+                            overlays: { ...settings.overlays, fog: v },
                           })
                         }
                       />
@@ -567,7 +573,7 @@ export default function JungleAdventureSettingsPanelV2({
                         checked={settings.overlays.glow}
                         onCheckedChange={(v) =>
                           markDirty({
-                            overlays: { ...settings.overlays, glow: v }
+                            overlays: { ...settings.overlays, glow: v },
                           })
                         }
                       />
@@ -581,7 +587,7 @@ export default function JungleAdventureSettingsPanelV2({
                         checked={settings.overlays.ripples}
                         onCheckedChange={(v) =>
                           markDirty({
-                            overlays: { ...settings.overlays, ripples: v }
+                            overlays: { ...settings.overlays, ripples: v },
                           })
                         }
                       />
