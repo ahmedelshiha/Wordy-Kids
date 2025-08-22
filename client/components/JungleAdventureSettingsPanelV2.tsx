@@ -58,10 +58,13 @@ type Settings = {
   speechRate: number; // 0.5..1.5
 
   // Theme & Motion
-  theme: "jungle" | "canopy" | "parchment" | "river" | "sunset";
+  theme: JungleTheme;
   darkMode: boolean;
   reducedMotion: boolean;
   highContrast: boolean;
+
+  // Overlay Effects
+  overlays: OverlaySettings;
 
   // Learning & Family
   difficulty: "easy" | "normal" | "hard";
