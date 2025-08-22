@@ -27,7 +27,7 @@
   position: relative;
   /* Ensure adequate touch target */
   padding-bottom: 8px;
-  padding-top: 50px; /* Account for much higher floating icons (45px + margin) */
+  padding-top: 75px; /* Account for extremely high floating icons (68px + margin) */
 }
 
 .jungle-nav-icon {
@@ -69,7 +69,7 @@
 
   .jungle-icon-nav-item {
     min-width: 44px;
-    padding-top: 60px; /* Account for much higher floating on mobile (55px + margin) */
+    padding-top: 90px; /* Account for extremely high floating on mobile (83px + margin) */
   }
 
   .jungle-nav-label {
@@ -197,7 +197,7 @@
 
   .jungle-icon-nav-item {
     min-width: 40px;
-    padding-top: 55px; /* Account for much higher floating (50px + margin) */
+    padding-top: 82px; /* Account for extremely high floating (75px + margin) */
   }
 
   .jungle-nav-label {
