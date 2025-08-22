@@ -188,7 +188,10 @@ export default function JungleAdventureNavV3({
         }}
       >
         {/* Navigation Bar - Mobile reduced by 50%, Desktop unchanged */}
-        <div className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[0.5px] md:min-h-[42px]">
+        <div
+          className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[0.5px] md:min-h-[42px]"
+          style={{ overflow: "visible" }}
+        >
           {" "}
           {/* Mobile: 1px -> 0.5px (-50%), Desktop: 42px (unchanged) */}
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
