@@ -49,12 +49,12 @@ interface JungleAdventureNavV3Props {
 }
 
 const DEFAULT_ITEMS: JungleNavItem[] = [
-  { id: "dashboard", label: "Home Tree", emoji: "🦉", ariaLabel: "Dashboard" },
-  { id: "learn", label: "Word Jungle", emoji: "🦜", ariaLabel: "Learning" },
-  { id: "quiz", label: "Quiz Adventure", emoji: "🐵", ariaLabel: "Quiz Games" },
+  { id: "dashboard", label: "Home", emoji: "🦉", ariaLabel: "Dashboard" },
+  { id: "learn", label: "Words", emoji: "🦜", ariaLabel: "Learning" },
+  { id: "quiz", label: "Quiz", emoji: "🐵", ariaLabel: "Quiz Games" },
   {
     id: "achievements",
-    label: "Trophy Grove",
+    label: "Trophy",
     emoji: "🐘",
     ariaLabel: "Achievements",
   },
@@ -92,8 +92,8 @@ function getAnimalAnimationClass(emoji: string): string {
 
 // Enhanced totem icon sizes - Larger than bar, rising like jungle totems
 const TOTEM_ICON_SIZE = {
-  base: "2.34rem", // Increased by 30% from 1.8rem
-  mobileBase: "2.08rem", // Increased by 30% from 1.6rem
+  base: "3.28rem", // Increased by 40% from 2.34rem (2.34 * 1.4 = 3.276)
+  mobileBase: "2.91rem", // Increased by 40% from 2.08rem (2.08 * 1.4 = 2.912)
   active: "scale-110",
   hover: "scale-115",
   tap: "scale-95",
@@ -176,7 +176,7 @@ export default function JungleAdventureNavV3({
   return (
     <>
       <nav
-        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 opacity-100 ${
+        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 opacity-100 jng-nav-container-reduced ${
           pauseAnimations ? "jng-nav-animations-paused" : ""
         }`}
         aria-label="Jungle Adventure Navigation"
@@ -185,8 +185,8 @@ export default function JungleAdventureNavV3({
           backdropFilter: "blur(8px)",
         }}
       >
-        {/* Navigation Bar */}
-        <div className="flex items-end px-2 py-0.5 md:py-1 relative min-h-[35px] md:min-h-[50px]">
+        {/* Navigation Bar - Reduced by 50% */}
+        <div className="flex items-end px-2 py-0.5 md:py-1 relative min-h-[17.5px] md:min-h-[25px]"> {/* 50% reduction: 35px->17.5px, 50px->25px */}
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 bottom-1 gap-4">
             {items.map((item) => {
