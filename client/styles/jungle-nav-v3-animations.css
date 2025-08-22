@@ -87,7 +87,7 @@
   }
 }
 
-/* 🪵 Parent Totem - Rare Firefly Shimmer Glow (every ~16s) */
+/* �� Parent Totem - Rare Firefly Shimmer Glow (every ~16s) */
 @keyframes totemFireflyShimmer {
   0%,
   88%,
@@ -251,18 +251,19 @@
   transform: translateY(-12px) !important;
 }
 
-/* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Reduced Height by 30%) */
+/* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Ultra-Compact) */
 .jng-nav-icon-container {
   position: relative;
-  /* Reduced space by 30% while maintaining totem lift effect */
-  min-height: 46px; /* Reduced from 65px by 30% (65px - 19.5px = 45.5px ≈ 46px) */
+  /* Ultra-compact design with no margin between icon and label */
+  min-height: 42px; /* Further reduced for compact fit */
   min-width: 50px; /* Slightly wider for better touch targets */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end; /* Align to bottom to keep labels in bar */
-  padding-bottom: 2px; /* Further reduced padding for ultra-compact design */
+  padding-bottom: 1px; /* Minimal padding for ultra-compact design */
   overflow: visible; /* Ensure totems can rise above container */
+  gap: 0; /* Remove any gap between icon and label */
 }
 
 /* Parent Menu Icon (🪵 Totem) - Mystical Jungle Guardian */
