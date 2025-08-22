@@ -96,7 +96,7 @@ export default function JungleAdventureIconNav({
       aria-label="Jungle Adventure Navigation"
       style={{
         backgroundColor: "#0b6623", // Dark jungle green
-        height: "64px",
+        height: "70px", // Increased height for floating icons
         overflow: "visible", // Allow icons to float above
         boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.3)",
       }}
