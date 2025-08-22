@@ -97,6 +97,8 @@ import {
   WordHistory,
   SystematicWordSelection,
 } from "@/lib/enhancedWordSelection";
+import JungleThemeOverlay from "@/components/JungleThemeOverlay";
+import { JungleAdventureThemeManager } from "@/lib/JungleAdventureThemeManager";
 import {
   DashboardWordGenerator,
   DashboardWordSession,
@@ -1826,7 +1828,7 @@ export default function Index({ initialProfile }: IndexProps) {
       //   response.achievements.forEach((achievement) => {
       //     notifications.push({
       //       type: "achievement",
-      //       title: `🏆 Achievement Unlocked!`,
+      //       title: `���� Achievement Unlocked!`,
       //       message: achievement,
       //       points: 25,
       //     });
@@ -1957,8 +1959,22 @@ export default function Index({ initialProfile }: IndexProps) {
     });
   };
 
+  // Initialize jungle theme system
+  useEffect(() => {
+    JungleAdventureThemeManager.init();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
+    <div className="min-h-screen jng-surface relative overflow-x-hidden">
+      {/* Jungle Theme Overlay */}
+      <JungleThemeOverlay
+        fireflies={JungleAdventureThemeManager.getOverlays().fireflies}
+        fog={JungleAdventureThemeManager.getOverlays().fog}
+        glow={JungleAdventureThemeManager.getOverlays().glow}
+        ripples={JungleAdventureThemeManager.getOverlays().ripples}
+        seed={123}
+      />
+
       {/* Session Restoration Modal */}
       {showSessionRestoration && sessionRestorationData && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -3940,7 +3956,7 @@ export default function Index({ initialProfile }: IndexProps) {
           <MagicalPortalEffect
             isActive={backgroundAnimationsEnabled && activeTab === "learn"}
             intensity="medium"
-            particleEmojis={["🌟", "🌈", "✨", "💫", "🔮", "🎊", "🦄", "🎉"]}
+            particleEmojis={["🌟", "🌈", "✨", "💫", "����", "🎊", "🦄", "🎉"]}
           />
 
           {/* Enhanced Reward Celebration */}
