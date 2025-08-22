@@ -402,8 +402,7 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          "w-40",
-                          isMobile && "h-10 touch-manipulation",
+                          isMobile ? "w-40 h-10 touch-manipulation" : "w-36 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -448,8 +447,7 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          "w-40",
-                          isMobile && "h-10 touch-manipulation",
+                          isMobile ? "w-40 h-10 touch-manipulation" : "w-36 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -515,8 +513,7 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          "w-40",
-                          isMobile && "h-10 touch-manipulation",
+                          isMobile ? "w-40 h-10 touch-manipulation" : "w-36 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -646,8 +643,7 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          "w-32",
-                          isMobile && "h-10 touch-manipulation",
+                          isMobile ? "w-32 h-10 touch-manipulation" : "w-28 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
