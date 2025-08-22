@@ -313,9 +313,12 @@ export default function JungleAdventureSettingsPanelV2({
         exit={{ opacity: 0, y: 20, scale: 0.98 }}
         transition={{ type: "spring", stiffness: 280, damping: 26 }}
         className={cn(
-          "relative w-[min(720px,92vw)] max-h-[85vh] overflow-hidden rounded-xl shadow-2xl",
+          "relative overflow-hidden rounded-xl shadow-2xl",
           "bg-gradient-to-br from-amber-50/95 via-orange-50/95 to-yellow-50/95 backdrop-blur-lg",
           "border-2 border-orange-200/60",
+          isMobile
+            ? "w-[min(360px,95vw)] max-h-[75vh]"
+            : "w-[min(720px,92vw)] max-h-[85vh]"
         )}
         style={{
           backgroundImage: `
@@ -355,11 +358,17 @@ export default function JungleAdventureSettingsPanelV2({
         </div>
 
         {/* Content */}
-        <div className="flex flex-col h-[calc(85vh-80px)]">
-          <ScrollArea className="flex-1 p-4">
+        <div className={cn(
+          "flex flex-col",
+          isMobile ? "h-[calc(75vh-70px)]" : "h-[calc(85vh-80px)]"
+        )}>
+          <ScrollArea className={cn(
+            "flex-1",
+            isMobile ? "p-3" : "p-4"
+          )}>
             <div
               className={cn(
-                "space-y-4",
+                isMobile ? "space-y-2" : "space-y-4",
                 isMobile ? "" : "grid grid-cols-2 gap-4",
               )}
             >
@@ -707,29 +716,70 @@ export default function JungleAdventureSettingsPanelV2({
           </ScrollArea>
 
           {/* Footer */}
-          <div className="border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95 p-4">
-            <div className="flex justify-between items-center">
-              <Button
-                variant="outline"
-                onClick={handleReset}
-                className="flex items-center gap-2"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Reset
-              </Button>
-              <div className="flex gap-2">
-                <Button variant="ghost" onClick={() => onOpenChange(false)}>
-                  Cancel
-                </Button>
-                <Button
-                  disabled={!dirty}
-                  onClick={handleSave}
-                  className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600"
-                >
-                  <Save className="w-4 h-4" />
-                  Save & Apply
-                </Button>
-              </div>
+          <div className={cn(
+            "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
+            isMobile ? "p-3" : "p-4"
+          )}>
+            <div className={cn(
+              "flex items-center",
+              isMobile ? "flex-col gap-2" : "justify-between"
+            )}>
+              {isMobile ? (
+                <>
+                  <div className="flex gap-2 w-full">
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="flex items-center gap-1 text-xs px-3 py-2 h-8"
+                      size="sm"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      Reset
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => onOpenChange(false)}
+                      className="text-xs px-3 py-2 h-8"
+                      size="sm"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      disabled={!dirty}
+                      onClick={handleSave}
+                      className="flex items-center gap-1 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-xs px-3 py-2 h-8 flex-1"
+                      size="sm"
+                    >
+                      <Save className="w-3 h-3" />
+                      Save & Apply
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={handleReset}
+                    className="flex items-center gap-2"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Reset
+                  </Button>
+                  <div className="flex gap-2">
+                    <Button variant="ghost" onClick={() => onOpenChange(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      disabled={!dirty}
+                      onClick={handleSave}
+                      className="flex items-center gap-2 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600"
+                    >
+                      <Save className="w-4 h-4" />
+                      Save & Apply
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -759,14 +809,14 @@ function SettingsSection({
           value="item-1"
           className="border rounded-lg bg-white/70 backdrop-blur-sm"
         >
-          <AccordionTrigger className="px-4 py-3 hover:no-underline">
+          <AccordionTrigger className="px-3 py-2 hover:no-underline text-sm">
             <div className="flex items-center gap-2 font-medium text-green-800">
               {icon}
               <span>{title}</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="px-4 pb-4">
-            <div className="space-y-4">{children}</div>
+          <AccordionContent className="px-3 pb-3">
+            <div className="space-y-3">{children}</div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -798,11 +848,11 @@ function SettingRow({
   control?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center justify-between gap-2">
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium text-green-800">{label}</div>
         {description && (
-          <div className="text-xs text-green-600 mt-0.5">{description}</div>
+          <div className="text-xs text-green-600 mt-0.5 leading-tight">{description}</div>
         )}
       </div>
       <div className="flex-shrink-0">{control ?? children}</div>
