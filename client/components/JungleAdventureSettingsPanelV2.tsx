@@ -539,10 +539,10 @@ export default function JungleAdventureSettingsPanelV2({
                 />
 
                 {/* Overlay Effects */}
-                <div className="pt-3 border-t border-orange-200/50">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
-                    <span className="text-sm font-medium text-green-800">
+                <div className="pt-2 border-t border-orange-200/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-3 h-3 text-amber-600" />
+                    <span className="text-xs font-medium text-green-800">
                       Animated Overlays
                     </span>
                   </div>
