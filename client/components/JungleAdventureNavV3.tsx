@@ -179,7 +179,7 @@ export default function JungleAdventureNavV3({
         aria-label="Jungle Adventure Navigation"
       >
         {/* Navigation Bar */}
-        <div className="flex justify-around items-end px-4 py-3">
+        <div className="flex justify-around items-end px-4 py-2">
           {items.map((item) => {
             const isActive = item.id === activeId;
             const animalClass = getAnimalAnimationClass(item.emoji);
