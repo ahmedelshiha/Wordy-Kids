@@ -581,7 +581,7 @@ export default function JungleAdventureSettingsPanelV2({
                   </div>
 
                   <SettingRow
-                    label="Fireflies ��"
+                    label="Fireflies ✨"
                     control={
                       <Switch
                         checked={settings.overlays.fireflies}
@@ -664,7 +664,7 @@ export default function JungleAdventureSettingsPanelV2({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="easy">🌱 Easy</SelectItem>
-                        <SelectItem value="normal">���� Normal</SelectItem>
+                        <SelectItem value="normal">🌿 Normal</SelectItem>
                         <SelectItem value="hard">🌳 Hard</SelectItem>
                       </SelectContent>
                     </Select>
