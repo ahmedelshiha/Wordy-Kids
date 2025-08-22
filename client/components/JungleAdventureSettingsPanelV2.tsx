@@ -423,7 +423,7 @@ export default function JungleAdventureSettingsPanelV2({
                     }
                     max={100}
                     step={5}
-                    className="flex-1"
+                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
                   />
                 </SettingRow>
 
