@@ -386,7 +386,9 @@ export default function JungleAdventureSettingsPanelV2({
                     <Switch
                       checked={settings.uiSounds}
                       onCheckedChange={(v) => markDirty({ uiSounds: v })}
-                      className={cn(isMobile ? "scale-110 touch-manipulation" : "scale-90")}
+                      className={cn(
+                        isMobile ? "scale-110 touch-manipulation" : "scale-90",
+                      )}
                     />
                   }
                 />
@@ -402,7 +404,9 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          isMobile ? "w-40 h-10 touch-manipulation" : "w-36 h-8 text-xs",
+                          isMobile
+                            ? "w-40 h-10 touch-manipulation"
+                            : "w-36 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -447,7 +451,9 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          isMobile ? "w-40 h-10 touch-manipulation" : "w-36 h-8 text-xs",
+                          isMobile
+                            ? "w-40 h-10 touch-manipulation"
+                            : "w-36 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -478,7 +484,11 @@ export default function JungleAdventureSettingsPanelV2({
                 </SettingRow>
 
                 <div className="flex gap-2 pt-1.5">
-                  <Button size="sm" onClick={previewVoice} className="flex-1 h-8 text-xs">
+                  <Button
+                    size="sm"
+                    onClick={previewVoice}
+                    className="flex-1 h-8 text-xs"
+                  >
                     <Play className="w-3 h-3 mr-1.5" />
                     Preview
                   </Button>
@@ -513,7 +523,9 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          isMobile ? "w-40 h-10 touch-manipulation" : "w-36 h-8 text-xs",
+                          isMobile
+                            ? "w-40 h-10 touch-manipulation"
+                            : "w-36 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -643,7 +655,9 @@ export default function JungleAdventureSettingsPanelV2({
                     >
                       <SelectTrigger
                         className={cn(
-                          isMobile ? "w-32 h-10 touch-manipulation" : "w-28 h-8 text-xs",
+                          isMobile
+                            ? "w-32 h-10 touch-manipulation"
+                            : "w-28 h-8 text-xs",
                         )}
                       >
                         <SelectValue />

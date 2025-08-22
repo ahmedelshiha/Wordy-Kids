@@ -226,119 +226,119 @@ export default function MobileJungleSettingsPanel({
           <ScrollArea className="flex-1 min-h-0 max-h-[calc(80vh-120px)] jungle-mobile-category jungle-mobile-scrollarea">
             <motion.div
               className="p-4 space-y-4"
-            style={{
-              backgroundImage: `
+              style={{
+                backgroundImage: `
                 radial-gradient(circle at 10% 20%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 90% 80%, rgba(160, 82, 45, 0.05) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(222, 184, 135, 0.05) 0%, rgba(245, 245, 220, 0.05) 100%)
               `,
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            {/* Background Music Setting */}
-            <Card className="jungle-setting-card bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-sm flex-shrink-0">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between min-h-0">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="p-2 bg-green-100 rounded-full flex-shrink-0">
-                      {settings.backgroundMusic ? (
-                        <Music className="w-5 h-5 text-green-600" />
-                      ) : (
-                        <VolumeX className="w-5 h-5 text-gray-500" />
-                      )}
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              {/* Background Music Setting */}
+              <Card className="jungle-setting-card bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-sm flex-shrink-0">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between min-h-0">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="p-2 bg-green-100 rounded-full flex-shrink-0">
+                        {settings.backgroundMusic ? (
+                          <Music className="w-5 h-5 text-green-600" />
+                        ) : (
+                          <VolumeX className="w-5 h-5 text-gray-500" />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-green-800 truncate">
+                          🎵 Background Music
+                        </h3>
+                        <p className="text-sm text-green-600 truncate">
+                          Peaceful jungle sounds
+                        </p>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-green-800 truncate">
-                        🎵 Background Music
-                      </h3>
-                      <p className="text-sm text-green-600 truncate">
-                        Peaceful jungle sounds
-                      </p>
-                    </div>
+                    <Switch
+                      checked={settings.backgroundMusic}
+                      onCheckedChange={(value) =>
+                        updateSetting("backgroundMusic", value)
+                      }
+                      className="jungle-switch flex-shrink-0"
+                    />
                   </div>
-                  <Switch
-                    checked={settings.backgroundMusic}
-                    onCheckedChange={(value) =>
-                      updateSetting("backgroundMusic", value)
-                    }
-                    className="jungle-switch flex-shrink-0"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Sound Effects Setting */}
-            <Card className="jungle-setting-card bg-gradient-to-r from-blue-50 to-sky-50 border-blue-200 shadow-sm flex-shrink-0">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between min-h-0">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="p-2 bg-blue-100 rounded-full flex-shrink-0">
-                      {settings.soundEffects ? (
-                        <Volume2 className="w-5 h-5 text-blue-600" />
-                      ) : (
-                        <VolumeX className="w-5 h-5 text-gray-500" />
-                      )}
+              {/* Sound Effects Setting */}
+              <Card className="jungle-setting-card bg-gradient-to-r from-blue-50 to-sky-50 border-blue-200 shadow-sm flex-shrink-0">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between min-h-0">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="p-2 bg-blue-100 rounded-full flex-shrink-0">
+                        {settings.soundEffects ? (
+                          <Volume2 className="w-5 h-5 text-blue-600" />
+                        ) : (
+                          <VolumeX className="w-5 h-5 text-gray-500" />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-blue-800 truncate">
+                          🔊 Sound Effects
+                        </h3>
+                        <p className="text-sm text-blue-600 truncate">
+                          Button clicks and game sounds
+                        </p>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-blue-800 truncate">
-                        🔊 Sound Effects
-                      </h3>
-                      <p className="text-sm text-blue-600 truncate">
-                        Button clicks and game sounds
-                      </p>
-                    </div>
+                    <Switch
+                      checked={settings.soundEffects}
+                      onCheckedChange={(value) =>
+                        updateSetting("soundEffects", value)
+                      }
+                      className="jungle-switch flex-shrink-0"
+                    />
                   </div>
-                  <Switch
-                    checked={settings.soundEffects}
-                    onCheckedChange={(value) =>
-                      updateSetting("soundEffects", value)
-                    }
-                    className="jungle-switch flex-shrink-0"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Reduced Motion Setting */}
-            <Card className="jungle-setting-card bg-gradient-to-r from-purple-50 to-violet-50 border-purple-200 shadow-sm flex-shrink-0">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between min-h-0">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="p-2 bg-purple-100 rounded-full flex-shrink-0">
-                      <Eye className="w-5 h-5 text-purple-600" />
+              {/* Reduced Motion Setting */}
+              <Card className="jungle-setting-card bg-gradient-to-r from-purple-50 to-violet-50 border-purple-200 shadow-sm flex-shrink-0">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between min-h-0">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="p-2 bg-purple-100 rounded-full flex-shrink-0">
+                        <Eye className="w-5 h-5 text-purple-600" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-purple-800 truncate">
+                          👁️ Reduced Motion
+                        </h3>
+                        <p className="text-sm text-purple-600 truncate">
+                          Less animations for comfort
+                        </p>
+                      </div>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-purple-800 truncate">
-                        👁️ Reduced Motion
-                      </h3>
-                      <p className="text-sm text-purple-600 truncate">
-                        Less animations for comfort
-                      </p>
-                    </div>
+                    <Switch
+                      checked={settings.reducedMotion}
+                      onCheckedChange={(value) =>
+                        updateSetting("reducedMotion", value)
+                      }
+                      className="jungle-switch flex-shrink-0"
+                    />
                   </div>
-                  <Switch
-                    checked={settings.reducedMotion}
-                    onCheckedChange={(value) =>
-                      updateSetting("reducedMotion", value)
-                    }
-                    className="jungle-switch flex-shrink-0"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Bottom decoration */}
-            <div className="flex justify-center pt-4 pb-2">
-              <div className="flex items-center gap-2 text-amber-600 opacity-60">
-                <Leaf className="w-4 h-4" />
-                <span className="text-xs">
-                  Made with 💚 for jungle explorers
-                </span>
-                <Leaf className="w-4 h-4 scale-x-[-1]" />
+              {/* Bottom decoration */}
+              <div className="flex justify-center pt-4 pb-2">
+                <div className="flex items-center gap-2 text-amber-600 opacity-60">
+                  <Leaf className="w-4 h-4" />
+                  <span className="text-xs">
+                    Made with 💚 for jungle explorers
+                  </span>
+                  <Leaf className="w-4 h-4 scale-x-[-1]" />
+                </div>
               </div>
-            </div>
             </motion.div>
           </ScrollArea>
         </div>
