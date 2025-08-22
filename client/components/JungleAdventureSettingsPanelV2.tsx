@@ -406,7 +406,7 @@ export default function JungleAdventureSettingsPanelV2({
                         className={cn(
                           isMobile
                             ? "w-40 h-10 touch-manipulation"
-                            : "w-36 h-8 text-xs",
+                            : "w-32 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -453,7 +453,7 @@ export default function JungleAdventureSettingsPanelV2({
                         className={cn(
                           isMobile
                             ? "w-40 h-10 touch-manipulation"
-                            : "w-36 h-8 text-xs",
+                            : "w-32 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -525,7 +525,7 @@ export default function JungleAdventureSettingsPanelV2({
                         className={cn(
                           isMobile
                             ? "w-40 h-10 touch-manipulation"
-                            : "w-36 h-8 text-xs",
+                            : "w-32 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
