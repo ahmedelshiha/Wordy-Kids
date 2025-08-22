@@ -7,7 +7,7 @@
   width: 100%;
   z-index: 50;
   background-color: #0b6623; /* Dark jungle green */
-  height: 49px; /* Reduced height by 30% (70px * 0.7 = 49px) */
+  height: 60px; /* Slightly taller to accommodate floating icons */
   overflow: visible; /* Allow icons to float above */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -27,20 +27,23 @@
   position: relative;
   /* Ensure adequate touch target */
   padding-bottom: 8px;
-  padding-top: 75px; /* Account for extremely high floating icons (68px + margin) */
+  padding-top: 35px; /* Account for floating icons */
 }
 
 .jungle-nav-icon {
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float 68px above the bar (50% increase from 45px) */
-  transform: translateY(-68px);
+  /* Desktop: Float higher above the bar */
+  transform: translateY(-35px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  /* Higher z-index to appear above navigation bar */
+  position: relative;
+  z-index: 60;
 }
 
 .jungle-nav-label {
@@ -49,7 +52,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -58px; /* Bring label closer to extremely high floating icon */
+  margin-top: -15px; /* Bring label closer to floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -61,21 +64,21 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float 83px above the bar (50% increase from 55px) */
-    transform: translateY(-83px);
+    /* Mobile: Float higher above the bar */
+    transform: translateY(-40px);
     /* 20% larger than before */
     max-width: 53px;
   }
 
   .jungle-icon-nav-item {
     min-width: 44px;
-    padding-top: 90px; /* Account for extremely high floating on mobile (83px + margin) */
+    padding-top: 40px; /* Account for floating icons */
   }
 
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -73px; /* Adjust for extremely high floating icons on mobile */
+    margin-top: -20px; /* Adjust for floating icons */
   }
 }
 

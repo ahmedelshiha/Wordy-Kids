@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -489,10 +495,18 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   };
 
+  // Track last category to prevent unnecessary regeneration
+  const lastCategoryRef = useRef<string>("");
+
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
-      if (selectedCategory && currentDashboardWords.length === 0) {
+      if (
+        selectedCategory &&
+        selectedCategory !== lastCategoryRef.current &&
+        currentDashboardWords.length === 0
+      ) {
+        lastCategoryRef.current = selectedCategory;
         generateFreshWords();
       }
     };
@@ -522,20 +536,29 @@ export default function Index({ initialProfile }: IndexProps) {
     initializeDashboardWords();
   }, []); // Run only once on mount
 
+  // Track last regeneration count to prevent infinite loops
+  const lastRegenerationCountRef = useRef(0);
+
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
     const wordsCompleted = rememberedWords.size;
     const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
 
-    if (shouldRegenerate && dashboardSession) {
+    // Prevent infinite loops by checking if we already regenerated for this count
+    if (
+      shouldRegenerate &&
+      dashboardSession &&
+      wordsCompleted !== lastRegenerationCountRef.current
+    ) {
       console.log(
         `Regenerating dashboard words after ${wordsCompleted} completed words`,
       );
+      lastRegenerationCountRef.current = wordsCompleted;
       generateDashboardWords();
     }
-  }, [rememberedWords.size]); // Trigger when remembered words count changes
+  }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
 
-  // Update current progress for goals tracking
+  // Update current progress for goals tracking (using stable dependencies)
   useEffect(() => {
     const totalWordsLearned = rememberedWords.size;
     const totalAttempts = rememberedWords.size + forgottenWords.size;
@@ -550,7 +573,7 @@ export default function Index({ initialProfile }: IndexProps) {
       sessionCount: dailySessionCount,
       accuracy: accuracy,
     });
-  }, [rememberedWords, forgottenWords, dailySessionCount]);
+  }, [rememberedWords.size, forgottenWords.size, dailySessionCount]); // Use .size instead of full Set objects
 
   // Load saved learning goals on mount
   useEffect(() => {
@@ -613,7 +636,7 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [sessionPersistence, isSessionInitialized]);
 
-  // Auto-save session data
+  // Auto-save session data (stabilized to prevent infinite loops)
   const saveSessionData = useCallback(() => {
     if (!isSessionInitialized) return;
 
@@ -649,43 +672,28 @@ export default function Index({ initialProfile }: IndexProps) {
 
     persistenceService.queueSave(sessionData, "medium");
     setLastAutoSave(Date.now());
-  }, [
-    isSessionInitialized,
-    activeTab,
-    currentWordIndex,
-    selectedCategory,
-    learningMode,
-    userRole,
-    forgottenWords,
-    rememberedWords,
-    excludedWordIds,
-    currentProgress,
-    dailySessionCount,
-    currentProfile,
-    childStats,
-    currentSessionId,
-    learningGoals,
-    currentDashboardWords,
-    customWords,
-    practiceWords,
-    userWordHistory,
-    sessionNumber,
-    lastSystematicSelection,
-    dashboardSession,
-    dashboardSessionNumber,
-    showQuiz,
-    selectedQuizType,
-    showMatchingGame,
-    gameMode,
-    showPracticeGame,
-    persistenceService,
-  ]);
+  }, [persistenceService, isSessionInitialized]); // Minimal dependencies to prevent infinite loops
 
   // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
 
-  // Force save on critical actions
+  // Force save on critical actions (with debouncing to prevent infinite loops)
+  const lastSaveCountRef = useRef({ remembered: 0, forgotten: 0 });
+
   useEffect(() => {
-    if (rememberedWords.size > 0 || forgottenWords.size > 0) {
+    const rememberedCount = rememberedWords.size;
+    const forgottenCount = forgottenWords.size;
+
+    // Only save if the counts actually changed to prevent infinite loops
+    if (
+      (rememberedCount > 0 || forgottenCount > 0) &&
+      (rememberedCount !== lastSaveCountRef.current.remembered ||
+        forgottenCount !== lastSaveCountRef.current.forgotten)
+    ) {
+      lastSaveCountRef.current = {
+        remembered: rememberedCount,
+        forgotten: forgottenCount,
+      };
+
       persistenceService.queueSave(
         {
           forgottenWords: Array.from(forgottenWords),

@@ -14,7 +14,7 @@
     /* Emerald light */ #34d399 100% /* Emerald lighter */
   );
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Allow icons to float above the bar */
 }
 
 .jungle-nav-container::before {
@@ -472,6 +472,39 @@
   animation-delay: 2s;
 }
 
+/* ===== FLOATING ICONS ABOVE BAR ===== */
+.jungle-animal-icon {
+  position: relative;
+  z-index: 60; /* Above the nav background */
+  transform: translateY(-20px); /* Float above the bar */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+/* Mobile floating adjustments */
+@media (max-width: 767px) {
+  .jungle-nav-mobile .jungle-animal-icon {
+    transform: translateY(-25px); /* Higher float on mobile */
+    z-index: 60;
+  }
+}
+
+/* Tablet floating adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .jungle-nav-tablet .jungle-animal-icon {
+    transform: translateY(-30px); /* Medium float on tablet */
+    z-index: 60;
+  }
+}
+
+/* Desktop floating adjustments */
+@media (min-width: 1024px) {
+  .jungle-nav-desktop .jungle-animal-icon {
+    transform: translateY(-35px); /* Highest float on desktop */
+    z-index: 60;
+  }
+}
+
 /* ===== LABELS AND TYPOGRAPHY ===== */
 .jungle-nav-label {
   color: white;
@@ -555,6 +588,7 @@
     gap: 0.5rem;
     min-width: 120px;
     padding: 1rem;
+    padding-top: 40px; /* Extra space for floating icons */
   }
 
   .jungle-nav-desktop .jungle-animal-icon {
@@ -592,6 +626,7 @@
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
+    padding-top: 35px; /* Extra space for floating icons */
     min-width: 80px;
   }
 
@@ -630,6 +665,7 @@
     align-items: center;
     gap: 0.125rem;
     padding: 0.5rem 0.25rem;
+    padding-top: 30px; /* Extra space for floating icons */
     flex: 1;
     max-width: 80px;
   }

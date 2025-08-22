@@ -51,12 +51,12 @@
 @import "./styles/jungle-adventure-parent-dashboard.css";
 @import "./styles/jungle-adventure-desktop-layout.css";
 
+/* Import Jungle Adventure Theme System */
+@import "./styles/jungle-theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Jungle Adventure Theme System */
-@import "./styles/jungle-theme.css";
 
 @layer utilities {
   /* Custom scrollbar styles */
