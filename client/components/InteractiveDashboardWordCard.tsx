@@ -1653,13 +1653,13 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "��� What creature lives in our jungle?",
+                          "🐸 What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
                           "🐯 Which powerful jungle hunter do you see?",
                           "🐘 Can you identify this jungle giant?",
-                          "���� What striped jungle dweller is this?",
+                          "🦓 What striped jungle dweller is this?",
                         ],
                         hard: [
                           "🐲 What legendary jungle creature awaits?",
