@@ -197,6 +197,11 @@
     animation: breathingMobile 9s ease-in-out infinite;
   }
 
+  /* Larger parent totem gets gentler breathing on mobile */
+  .jng-nav-icon-totem {
+    animation: breathingMobileTotem 9s ease-in-out infinite;
+  }
+
   /* Only apply micro-movements on higher-end mobile devices */
   @media (min-resolution: 2dppx) {
     .jng-nav-icon-owl {
