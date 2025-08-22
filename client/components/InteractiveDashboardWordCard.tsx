@@ -1521,7 +1521,7 @@ export function InteractiveDashboardWordCard({
                     const percentage = Math.round((wordsLearned / goal) * 100);
 
                     if (wordsLearned >= goal) {
-                      if (wordsLearned >= goal * 2) return "���";
+                      if (wordsLearned >= goal * 2) return "🏆";
                       if (wordsLearned >= goal * 1.5) return "🚀";
                       return "🌟";
                     }
@@ -1659,7 +1659,7 @@ export function InteractiveDashboardWordCard({
                           "🦁 What majestic jungle animal is this?",
                           "🐯 Which powerful jungle hunter do you see?",
                           "🐘 Can you identify this jungle giant?",
-                          "🦓 What striped jungle dweller is this?",
+                          "���� What striped jungle dweller is this?",
                         ],
                         hard: [
                           "🐲 What legendary jungle creature awaits?",
