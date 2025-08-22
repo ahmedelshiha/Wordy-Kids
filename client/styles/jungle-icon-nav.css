@@ -61,8 +61,8 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float 55px above the bar for better visibility */
-    transform: translateY(-55px);
+    /* Mobile: Float 83px above the bar (50% increase from 55px) */
+    transform: translateY(-83px);
     /* 20% larger than before */
     max-width: 53px;
   }
