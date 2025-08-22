@@ -588,6 +588,7 @@
     gap: 0.5rem;
     min-width: 120px;
     padding: 1rem;
+    padding-top: 40px; /* Extra space for floating icons */
   }
 
   .jungle-nav-desktop .jungle-animal-icon {
@@ -625,6 +626,7 @@
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
+    padding-top: 35px; /* Extra space for floating icons */
     min-width: 80px;
   }
 
@@ -663,6 +665,7 @@
     align-items: center;
     gap: 0.125rem;
     padding: 0.5rem 0.25rem;
+    padding-top: 30px; /* Extra space for floating icons */
     flex: 1;
     max-width: 80px;
   }
