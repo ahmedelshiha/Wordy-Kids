@@ -165,6 +165,17 @@ function saveSettings(s: Settings) {
   // Apply sound settings
   setSoundEnabled(s.uiSounds);
   setUIInteractionSoundsEnabled(s.uiSounds);
+
+  // Apply voice settings to audioService
+  if (audioService) {
+    audioService.setVoiceType(s.voice);
+    // Store speech rate for global use
+    (window as any).jungleAudioSettings = {
+      speechRate: s.speechRate,
+      voice: s.voice,
+      ambientVolume: s.ambientVolume,
+    };
+  }
 }
 
 // Component props
