@@ -49,7 +49,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -35px; /* Bring label closer to much higher floating icon */
+  margin-top: -58px; /* Bring label closer to extremely high floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -75,7 +75,7 @@
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -45px; /* Adjust for much higher floating icons on mobile */
+    margin-top: -73px; /* Adjust for extremely high floating icons on mobile */
   }
 }
 
