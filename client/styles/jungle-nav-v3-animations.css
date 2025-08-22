@@ -2,11 +2,12 @@
 
 /* Subtle Breathing Animation for All Icons */
 @keyframes subtleBreathing {
-  0%, 100% { 
-    transform: scale(1); 
+  0%,
+  100% {
+    transform: scale(1);
   }
-  50% { 
-    transform: scale(1.05); 
+  50% {
+    transform: scale(1.05);
   }
 }
 
@@ -14,34 +15,40 @@
 
 /* 🦜 Parrot - Head Tilt (every 15s) */
 @keyframes parrotHeadTilt {
-  0%, 88%, 100% { 
-    transform: rotate(0deg); 
+  0%,
+  88%,
+  100% {
+    transform: rotate(0deg);
   }
-  94% { 
-    transform: rotate(3deg); 
+  94% {
+    transform: rotate(3deg);
   }
 }
 
 /* 🐵 Monkey - Tail Wiggle (every 12s) */
 @keyframes monkeyTailWiggle {
-  0%, 90%, 100% { 
-    transform: rotate(0deg); 
+  0%,
+  90%,
+  100% {
+    transform: rotate(0deg);
   }
-  95% { 
-    transform: rotate(2deg); 
+  95% {
+    transform: rotate(2deg);
   }
-  97% { 
-    transform: rotate(-1deg); 
+  97% {
+    transform: rotate(-1deg);
   }
 }
 
 /* 🐘 Elephant - Ear Flap (every 18s) */
 @keyframes elephantEarFlap {
-  0%, 92%, 100% { 
-    transform: scaleX(1); 
+  0%,
+  92%,
+  100% {
+    transform: scaleX(1);
   }
-  96% { 
-    transform: scaleX(1.03); 
+  96% {
+    transform: scaleX(1.03);
   }
 }
 
@@ -58,21 +65,21 @@
 
 /* Animal-Specific Micro-Movement Classes */
 .jng-nav-icon-parrot {
-  animation: 
+  animation:
     subtleBreathing 8s ease-in-out infinite,
     parrotHeadTilt 15s ease-in-out infinite;
   animation-delay: 0s, 2s; /* Stagger the head tilt */
 }
 
 .jng-nav-icon-monkey {
-  animation: 
+  animation:
     subtleBreathing 8s ease-in-out infinite,
     monkeyTailWiggle 12s ease-in-out infinite;
   animation-delay: 0s, 3s; /* Stagger the tail wiggle */
 }
 
 .jng-nav-icon-elephant {
-  animation: 
+  animation:
     subtleBreathing 8s ease-in-out infinite,
     elephantEarFlap 18s ease-in-out infinite;
   animation-delay: 0s, 5s; /* Stagger the ear flap */
@@ -103,23 +110,23 @@
   .jng-nav-icon-elephant {
     animation: subtleBreathing 8s ease-in-out infinite;
   }
-  
+
   /* Only apply micro-movements on higher-end mobile devices */
   @media (min-resolution: 2dppx) {
     .jng-nav-icon-parrot {
-      animation: 
+      animation:
         subtleBreathing 8s ease-in-out infinite,
         parrotHeadTilt 20s ease-in-out infinite; /* Slower on mobile */
     }
-    
+
     .jng-nav-icon-monkey {
-      animation: 
+      animation:
         subtleBreathing 8s ease-in-out infinite,
         monkeyTailWiggle 16s ease-in-out infinite; /* Slower on mobile */
     }
-    
+
     .jng-nav-icon-elephant {
-      animation: 
+      animation:
         subtleBreathing 8s ease-in-out infinite,
         elephantEarFlap 22s ease-in-out infinite; /* Slower on mobile */
     }
@@ -134,13 +141,13 @@
   .jng-nav-icon-elephant {
     animation: none !important;
   }
-  
+
   /* Keep subtle transform effects for interaction feedback */
   .jng-nav-v3-icon:hover {
     transform: scale(1.05);
     transition: transform 0.2s ease;
   }
-  
+
   .jng-nav-v3-icon:active {
     transform: scale(0.98);
     transition: transform 0.1s ease;
@@ -170,15 +177,14 @@
 /* Parent Menu Icon (Totem) Special Animation */
 .jng-nav-icon-totem {
   animation: subtleBreathing 10s ease-in-out infinite; /* Slightly slower for totem */
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
 }
 
 .jng-nav-icon-totem:hover {
   animation-play-state: paused;
   transform: scale(1.12);
-  filter: 
-    drop-shadow(0 3px 6px rgba(0,0,0,0.4))
-    drop-shadow(0 0 15px rgba(255,193,7,0.5));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 15px rgba(255, 193, 7, 0.5));
 }
 
 /* Battery-Friendly Optimization */
@@ -187,15 +193,15 @@
   .jng-nav-v3-icon {
     animation-duration: 12s; /* Slower breathing on small devices */
   }
-  
+
   .jng-nav-icon-parrot {
     animation-duration: 12s, 25s; /* Much slower micro-movements */
   }
-  
+
   .jng-nav-icon-monkey {
     animation-duration: 12s, 20s;
   }
-  
+
   .jng-nav-icon-elephant {
     animation-duration: 12s, 30s;
   }
@@ -204,8 +210,6 @@
 /* Dark mode considerations (if applicable) */
 @media (prefers-color-scheme: dark) {
   .jng-nav-v3-icon {
-    filter: 
-      drop-shadow(0 2px 4px rgba(0,0,0,0.5))
-      brightness(1.1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)) brightness(1.1);
   }
 }

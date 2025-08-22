@@ -93,7 +93,7 @@ const ENHANCED_ICON_SIZE = {
   base: "3.6rem", // Keeping original enhanced size despite reduced navigation height
   active: "scale-110",
   hover: "scale-115",
-  tap: "scale-95"
+  tap: "scale-95",
 };
 
 export default function JungleAdventureNavV3({
@@ -235,7 +235,8 @@ export default function JungleAdventureNavV3({
               style={{
                 fontSize: ENHANCED_ICON_SIZE.base,
                 filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.4))",
-                textShadow: "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
+                textShadow:
+                  "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 marginBottom: "1px", // Reduced totem-lift effect for compact nav
               }}
             >
