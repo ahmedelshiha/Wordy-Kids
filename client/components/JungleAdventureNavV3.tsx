@@ -209,7 +209,7 @@ export default function JungleAdventureNavV3({
                     textShadow: isActive
                       ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                       : "0 0 8px rgba(255,255,255,0.3)",
-                    marginBottom: "2px", // Totem-lift effect
+                    marginBottom: "1px", // Reduced totem-lift effect for compact nav
                   }}
                 >
                   {item.emoji}
