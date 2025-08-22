@@ -363,13 +363,13 @@ export default function JungleAdventureSettingsPanelV2({
             className={cn(
               isMobile
                 ? "max-h-[calc(75vh-140px)] p-3"
-                : "max-h-[calc(85vh-160px)] p-4",
+                : "max-h-[calc(80vh-140px)] p-4",
             )}
           >
             <div
               className={cn(
-                isMobile ? "space-y-2" : "space-y-4",
-                isMobile ? "" : "grid grid-cols-2 gap-4",
+                isMobile ? "space-y-2" : "space-y-3",
+                isMobile ? "" : "grid grid-cols-2 gap-3",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
