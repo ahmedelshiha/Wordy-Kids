@@ -35,7 +35,7 @@
 
 /* Animal-Specific Rare Idle Micro-Movements - Jungle Totem Life */
 
-/* 🦉 Owl - Blink (every ~12s) */
+/* ��� Owl - Blink (every ~12s) */
 @keyframes owlBlink {
   0%,
   91%,
@@ -341,11 +341,13 @@
   cursor: pointer;
 }
 
-/* Mobile-specific navigation container - 30% height reduction */
+/* Mobile-specific navigation container - Accommodate 20px elevated icons */
 @media (max-width: 767px) {
   .jng-nav-icon-container {
-    min-height: 29px; /* 30% reduction from 42px (42 * 0.7 = 29.4px ≈ 29px) */
-    padding-bottom: 0.5px; /* Even more minimal padding for mobile */
+    min-height: 50px; /* Accommodate 20px elevated icons on mobile */
+    min-width: 55px; /* Adequate touch target on mobile */
+    padding-bottom: 1px; /* Minimal padding for mobile */
+    padding-top: 20px; /* Top padding to accommodate elevated icons */
   }
 
   /* Icons positioned 20px above bar on mobile for pop-out effect */
