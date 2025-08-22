@@ -239,7 +239,7 @@ export default function JungleAdventureNavV3({
               aria-haspopup="dialog"
             >
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[2.34rem] ${
+                className={`jng-nav-icon-totem drop-shadow-lg text-[3.51rem] ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
