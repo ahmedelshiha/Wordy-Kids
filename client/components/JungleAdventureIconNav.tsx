@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import "@/styles/jungle-icon-nav.css";
 
 export type IconNavItem = {
   id: string;
