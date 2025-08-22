@@ -4113,8 +4113,12 @@ export default function Index({ initialProfile }: IndexProps) {
         >
           {/* Subtle Jungle Background Elements */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[20px]">
-            <div className="absolute top-3 right-3 text-xl opacity-15 animate-gentle-emoji-float">🌿</div>
-            <div className="absolute bottom-3 left-3 text-lg opacity-12">🍃</div>
+            <div className="absolute top-3 right-3 text-xl opacity-15 animate-gentle-emoji-float">
+              🌿
+            </div>
+            <div className="absolute bottom-3 left-3 text-lg opacity-12">
+              🍃
+            </div>
           </div>
 
           <DialogHeader className="relative z-10 p-6 pb-4">
@@ -4199,9 +4203,7 @@ export default function Index({ initialProfile }: IndexProps) {
                 <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
                   <div className="relative">
-                    <Settings
-                      className="w-6 h-6 text-white"
-                    />
+                    <Settings className="w-6 h-6 text-white" />
                   </div>
                   <div className="text-left flex-1 min-w-0">
                     <div className="font-semibold text-base sm:text-lg leading-tight">

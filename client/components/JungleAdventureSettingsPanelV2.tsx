@@ -399,7 +399,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ ambient: v as Settings["ambient"] })
                       }
                     >
-                      <SelectTrigger className={cn("w-40", isMobile && "h-10 touch-manipulation")}>
+                      <SelectTrigger
+                        className={cn(
+                          "w-40",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -424,7 +429,10 @@ export default function JungleAdventureSettingsPanelV2({
                     }
                     max={100}
                     step={5}
-                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -437,7 +445,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ voice: v as Settings["voice"] })
                       }
                     >
-                      <SelectTrigger className={cn("w-40", isMobile && "h-10 touch-manipulation")}>
+                      <SelectTrigger
+                        className={cn(
+                          "w-40",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -458,7 +471,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={10}
                     value={[settings.speechRate * 100]}
                     onValueChange={([v]) => markDirty({ speechRate: v / 100 })}
-                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -495,7 +511,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ theme: v as JungleTheme })
                       }
                     >
-                      <SelectTrigger className={cn("w-40", isMobile && "h-10 touch-manipulation")}>
+                      <SelectTrigger
+                        className={cn(
+                          "w-40",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -621,7 +642,12 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ difficulty: v as Settings["difficulty"] })
                       }
                     >
-                      <SelectTrigger className={cn("w-32", isMobile && "h-10 touch-manipulation")}>
+                      <SelectTrigger
+                        className={cn(
+                          "w-32",
+                          isMobile && "h-10 touch-manipulation",
+                        )}
+                      >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -640,7 +666,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.dailyGoal]}
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
-                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -653,7 +682,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
-                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -686,7 +718,10 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.textScale * 100]}
                     onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
+                    className={cn(
+                      "flex-1",
+                      isMobile && "touch-manipulation h-6",
+                    )}
                   />
                 </SettingRow>
 
@@ -809,7 +844,12 @@ function SettingsSection({
 }) {
   if (isMobile) {
     return (
-      <Accordion type="single" collapsible className="w-full" defaultValue={defaultOpen ? "item-1" : undefined}>
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        defaultValue={defaultOpen ? "item-1" : undefined}
+      >
         <AccordionItem
           value="item-1"
           className="border rounded-lg bg-white/80 backdrop-blur-sm shadow-sm"
