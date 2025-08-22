@@ -3302,7 +3302,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           jungle quiz! 3D effects, power-ups,
                                           achievements, dynamic music, and
                                           immersive gaming that rivals premium
-                                          mobile games! ����✨🌟
+                                          mobile games! 🚀✨🌟
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
