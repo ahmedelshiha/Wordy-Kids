@@ -18,12 +18,17 @@
     gap: 0.5rem;
   }
 
-  /* Ensure proper grid responsiveness */
-  .jungle-settings-dialog .grid.grid-cols-2 {
-    grid-template-columns: 1fr 1fr;
+  /* Ensure proper grid responsiveness for 3-column layout */
+  .jungle-settings-dialog .grid.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
     align-items: start;
-    /* Allow grid items to have flexible height for accordions */
+    /* Allow grid items to have flexible height for expanded categories */
     grid-auto-rows: auto;
+  }
+
+  /* Compact desktop category cards for expanded view */
+  .jungle-settings-dialog .bg-white\/70 {
+    min-height: fit-content;
   }
 
   /* Desktop accordion category enhancements */
