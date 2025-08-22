@@ -126,9 +126,18 @@ const SOUND_FILES = {
 function loadSettings(): Settings {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return DEFAULTS;
-    const parsed = JSON.parse(raw);
-    return { ...DEFAULTS, ...parsed };
+    let parsed = raw ? JSON.parse(raw) : {};
+
+    // Integrate with theme manager
+    const themeFromManager = JungleAdventureThemeManager.getTheme();
+    const overlaysFromManager = JungleAdventureThemeManager.getOverlays();
+
+    return {
+      ...DEFAULTS,
+      ...parsed,
+      theme: themeFromManager,
+      overlays: overlaysFromManager,
+    };
   } catch {
     return DEFAULTS;
   }
@@ -145,7 +154,10 @@ function saveSettings(s: Settings) {
   document.documentElement.classList.toggle("dark", s.darkMode);
   document.documentElement.classList.toggle("hc", s.highContrast);
   document.documentElement.classList.toggle("reduce-motion", s.reducedMotion);
-  document.documentElement.setAttribute("data-jungle-theme", s.theme);
+
+  // Apply theme and overlays through theme manager
+  JungleAdventureThemeManager.applyTheme(s.theme);
+  JungleAdventureThemeManager.applyOverlays(s.overlays);
 
   // Apply sound settings
   setSoundEnabled(s.uiSounds);
