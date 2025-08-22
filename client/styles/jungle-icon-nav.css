@@ -34,8 +34,8 @@
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float 45px above the bar for better visibility */
-  transform: translateY(-45px);
+  /* Desktop: Float 68px above the bar (50% increase from 45px) */
+  transform: translateY(-68px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
