@@ -84,8 +84,8 @@ export default function JungleAdventureIconNav({
     };
 
     updateTranslateY();
-    window.addEventListener('resize', updateTranslateY);
-    return () => window.removeEventListener('resize', updateTranslateY);
+    window.addEventListener("resize", updateTranslateY);
+    return () => window.removeEventListener("resize", updateTranslateY);
   }, []);
 
   const handleNavigation = (itemId: string) => {
