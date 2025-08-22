@@ -34,8 +34,8 @@
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float above the bar for visibility */
-  transform: translateY(-25px);
+  /* Desktop: Float higher above the bar */
+  transform: translateY(-35px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
@@ -64,8 +64,8 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float above the bar for better visibility */
-    transform: translateY(-30px);
+    /* Mobile: Float higher above the bar */
+    transform: translateY(-40px);
     /* 20% larger than before */
     max-width: 53px;
   }
