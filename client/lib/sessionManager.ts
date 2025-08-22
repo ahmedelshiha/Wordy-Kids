@@ -76,11 +76,12 @@ export class SessionManager {
 
     if (this.sessionState) {
       const totalCards = this.sessionState.currentSessionCards;
-      const sessionDuration = Date.now() - this.sessionState.startTime.getTime();
-      
+      const sessionDuration =
+        Date.now() - this.sessionState.startTime.getTime();
+
       // Update daily progress
       this.updateDailyProgress(totalCards);
-      
+
       // Track achievement progress
       if (totalCards > 0) {
         EnhancedAchievementTracker.trackActivity({
@@ -140,15 +141,20 @@ export class SessionManager {
    * Check if time limit is approaching (last 2 minutes)
    */
   public isTimeApproaching(): boolean {
-    if (!this.sessionState || this.sessionState.timeRemaining === 0) return false;
-    return this.sessionState.timeRemaining <= 2 && this.sessionState.timeRemaining > 0;
+    if (!this.sessionState || this.sessionState.timeRemaining === 0)
+      return false;
+    return (
+      this.sessionState.timeRemaining <= 2 &&
+      this.sessionState.timeRemaining > 0
+    );
   }
 
   /**
    * Check if time is up
    */
   public isTimeUp(): boolean {
-    if (!this.sessionState || this.sessionState.timeRemaining === 0) return false;
+    if (!this.sessionState || this.sessionState.timeRemaining === 0)
+      return false;
     return this.sessionState.timeRemaining <= 0;
   }
 
@@ -157,7 +163,10 @@ export class SessionManager {
    */
   public getDailyProgress(): number {
     if (!this.sessionState) return 0;
-    return Math.min(1, this.sessionState.dailyCards / this.sessionState.dailyTarget);
+    return Math.min(
+      1,
+      this.sessionState.dailyCards / this.sessionState.dailyTarget,
+    );
   }
 
   /**
@@ -179,11 +188,11 @@ export class SessionManager {
    */
   private getCurrentSettings(): SessionSettings {
     const audioSettings = getCurrentAudioSettings();
-    
+
     // Get other settings from localStorage
     const settingsStr = localStorage.getItem("jungleAdventureSettings");
     const settings = settingsStr ? JSON.parse(settingsStr) : {};
-    
+
     return {
       dailyGoal: settings.dailyGoal || 10,
       timeLimitMin: settings.timeLimitMin || 0,
@@ -199,7 +208,7 @@ export class SessionManager {
     const today = new Date().toDateString();
     const dailyProgressStr = localStorage.getItem("jungleDailyProgress");
     const dailyProgress = dailyProgressStr ? JSON.parse(dailyProgressStr) : {};
-    
+
     return dailyProgress[today] || 0;
   }
 
@@ -210,7 +219,7 @@ export class SessionManager {
     const today = new Date().toDateString();
     const dailyProgressStr = localStorage.getItem("jungleDailyProgress");
     const dailyProgress = dailyProgressStr ? JSON.parse(dailyProgressStr) : {};
-    
+
     dailyProgress[today] = (dailyProgress[today] || 0) + additionalCards;
     localStorage.setItem("jungleDailyProgress", JSON.stringify(dailyProgress));
 
@@ -230,7 +239,10 @@ export class SessionManager {
     this.timeUpdateInterval = setInterval(() => {
       if (!this.sessionState || this.sessionState.timeRemaining === 0) return;
 
-      this.sessionState.timeRemaining = Math.max(0, this.sessionState.timeRemaining - 1/60); // Decrease by 1 second
+      this.sessionState.timeRemaining = Math.max(
+        0,
+        this.sessionState.timeRemaining - 1 / 60,
+      ); // Decrease by 1 second
 
       // Show warning at 2 minutes
       if (this.isTimeApproaching() && !this.sessionState.isTimeUpWarningShown) {
@@ -251,7 +263,7 @@ export class SessionManager {
    */
   private notifyGoalReached(): void {
     if (!this.sessionState) return;
-    this.goalCheckCallbacks.forEach(callback => {
+    this.goalCheckCallbacks.forEach((callback) => {
       try {
         callback(this.sessionState!);
       } catch (error) {
@@ -265,7 +277,7 @@ export class SessionManager {
    */
   private notifyTimeWarning(): void {
     if (!this.sessionState) return;
-    this.timeWarningCallbacks.forEach(callback => {
+    this.timeWarningCallbacks.forEach((callback) => {
       try {
         callback(this.sessionState!);
       } catch (error) {
@@ -280,7 +292,7 @@ export class SessionManager {
   private notifyTimeUp(): void {
     if (!this.sessionState) return;
     console.log("⏰ Time limit reached!");
-    this.timeWarningCallbacks.forEach(callback => {
+    this.timeWarningCallbacks.forEach((callback) => {
       try {
         callback(this.sessionState!);
       } catch (error) {
@@ -300,7 +312,7 @@ export class SessionManager {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    Object.keys(dailyProgress).forEach(dateStr => {
+    Object.keys(dailyProgress).forEach((dateStr) => {
       const date = new Date(dateStr);
       if (date < thirtyDaysAgo) {
         delete dailyProgress[dateStr];

@@ -182,7 +182,9 @@ function saveSettings(s: Settings) {
   (window as any).sessionManager = sessionManager;
 
   // Notify any active session about settings change
-  console.log("📚 Settings updated - session will use new values on next start");
+  console.log(
+    "📚 Settings updated - session will use new values on next start",
+  );
 }
 
 // Helper function to get current audio settings for use throughout the app

@@ -9,7 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useSessionManager } from "@/hooks/use-session-manager";
-import { getCurrentAudioSettings, pronounceWordWithSettings } from "./JungleAdventureSettingsPanelV2";
+import {
+  getCurrentAudioSettings,
+  pronounceWordWithSettings,
+} from "./JungleAdventureSettingsPanelV2";
 
 export function SettingsTestPanel() {
   const [testResults, setTestResults] = useState<Record<string, boolean>>({});
@@ -29,17 +32,17 @@ export function SettingsTestPanel() {
     try {
       const audioSettings = getCurrentAudioSettings();
       console.log("🔊 Current audio settings:", audioSettings);
-      
+
       // Test speech rate
       await pronounceWordWithSettings("Testing speech rate setting", {
         onStart: () => console.log("✅ Speech started with current settings"),
         onEnd: () => console.log("✅ Speech completed"),
       });
-      
-      setTestResults(prev => ({ ...prev, audio: true }));
+
+      setTestResults((prev) => ({ ...prev, audio: true }));
     } catch (error) {
       console.error("❌ Audio test failed:", error);
-      setTestResults(prev => ({ ...prev, audio: false }));
+      setTestResults((prev) => ({ ...prev, audio: false }));
     }
   };
 
@@ -52,10 +55,10 @@ export function SettingsTestPanel() {
         endSession();
         console.log("✅ Session ended successfully");
       }
-      setTestResults(prev => ({ ...prev, session: true }));
+      setTestResults((prev) => ({ ...prev, session: true }));
     } catch (error) {
       console.error("❌ Session test failed:", error);
-      setTestResults(prev => ({ ...prev, session: false }));
+      setTestResults((prev) => ({ ...prev, session: false }));
     }
   };
 
@@ -64,33 +67,37 @@ export function SettingsTestPanel() {
       if (isSessionActive) {
         recordCardCompleted();
         console.log("✅ Card completion recorded");
-        setTestResults(prev => ({ ...prev, dailyGoal: true }));
+        setTestResults((prev) => ({ ...prev, dailyGoal: true }));
       } else {
         console.log("⚠️ Start a session first to test daily goal");
-        setTestResults(prev => ({ ...prev, dailyGoal: false }));
+        setTestResults((prev) => ({ ...prev, dailyGoal: false }));
       }
     } catch (error) {
       console.error("❌ Daily goal test failed:", error);
-      setTestResults(prev => ({ ...prev, dailyGoal: false }));
+      setTestResults((prev) => ({ ...prev, dailyGoal: false }));
     }
   };
 
   const testAmbientVolume = () => {
     try {
       const audioSettings = getCurrentAudioSettings();
-      const ambientElement = document.querySelector("audio") as HTMLAudioElement;
-      
+      const ambientElement = document.querySelector(
+        "audio",
+      ) as HTMLAudioElement;
+
       if (ambientElement) {
         ambientElement.volume = audioSettings.ambientVolume;
-        console.log(`✅ Ambient volume set to ${Math.round(audioSettings.ambientVolume * 100)}%`);
-        setTestResults(prev => ({ ...prev, ambient: true }));
+        console.log(
+          `✅ Ambient volume set to ${Math.round(audioSettings.ambientVolume * 100)}%`,
+        );
+        setTestResults((prev) => ({ ...prev, ambient: true }));
       } else {
         console.log("⚠️ No ambient audio element found");
-        setTestResults(prev => ({ ...prev, ambient: false }));
+        setTestResults((prev) => ({ ...prev, ambient: false }));
       }
     } catch (error) {
       console.error("❌ Ambient volume test failed:", error);
-      setTestResults(prev => ({ ...prev, ambient: false }));
+      setTestResults((prev) => ({ ...prev, ambient: false }));
     }
   };
 
@@ -117,7 +124,9 @@ export function SettingsTestPanel() {
                 <>
                   <div>Speech Rate: {settings.speechRate}x</div>
                   <div>Voice: {settings.voice}</div>
-                  <div>Ambient Vol: {Math.round(settings.ambientVolume * 100)}%</div>
+                  <div>
+                    Ambient Vol: {Math.round(settings.ambientVolume * 100)}%
+                  </div>
                 </>
               );
             })()}
@@ -147,7 +156,7 @@ export function SettingsTestPanel() {
               </>
             )}
           </div>
-          
+
           {sessionState && (
             <div className="space-y-1">
               <div className="flex justify-between text-sm">
@@ -162,9 +171,9 @@ export function SettingsTestPanel() {
         {/* Test Buttons */}
         <div className="space-y-3">
           <h3 className="font-semibold">Functionality Tests:</h3>
-          
+
           <div className="grid grid-cols-1 gap-2">
-            <Button 
+            <Button
               onClick={runAudioTest}
               variant="outline"
               className="justify-between"
@@ -172,8 +181,8 @@ export function SettingsTestPanel() {
               <span>Test Speech Rate & Voice</span>
               <span>{getTestStatus("audio")}</span>
             </Button>
-            
-            <Button 
+
+            <Button
               onClick={testAmbientVolume}
               variant="outline"
               className="justify-between"
@@ -181,8 +190,8 @@ export function SettingsTestPanel() {
               <span>Test Ambient Volume</span>
               <span>{getTestStatus("ambient")}</span>
             </Button>
-            
-            <Button 
+
+            <Button
               onClick={runSessionTest}
               variant="outline"
               className="justify-between"
@@ -190,8 +199,8 @@ export function SettingsTestPanel() {
               <span>{isSessionActive ? "End Session" : "Start Session"}</span>
               <span>{getTestStatus("session")}</span>
             </Button>
-            
-            <Button 
+
+            <Button
               onClick={runDailyGoalTest}
               variant="outline"
               className="justify-between"
@@ -207,11 +216,20 @@ export function SettingsTestPanel() {
         <div className="space-y-2">
           <h3 className="font-semibold">Live Status:</h3>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <div className={`p-2 rounded ${isDailyGoalReached ? "bg-green-100" : "bg-gray-100"}`}>
+            <div
+              className={`p-2 rounded ${isDailyGoalReached ? "bg-green-100" : "bg-gray-100"}`}
+            >
               Daily Goal: {isDailyGoalReached ? "✅ Reached" : "🎯 In Progress"}
             </div>
-            <div className={`p-2 rounded ${isTimeApproaching ? "bg-yellow-100" : "bg-gray-100"}`}>
-              Time Status: {isTimeUp ? "⏰ Time Up" : isTimeApproaching ? "⚠️ Running Low" : "✅ OK"}
+            <div
+              className={`p-2 rounded ${isTimeApproaching ? "bg-yellow-100" : "bg-gray-100"}`}
+            >
+              Time Status:{" "}
+              {isTimeUp
+                ? "⏰ Time Up"
+                : isTimeApproaching
+                  ? "⚠️ Running Low"
+                  : "✅ OK"}
             </div>
           </div>
         </div>

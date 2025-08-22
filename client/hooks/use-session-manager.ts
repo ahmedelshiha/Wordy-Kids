@@ -20,7 +20,7 @@ export interface UseSessionManagerReturn {
 
 export function useSessionManager(): UseSessionManagerReturn {
   const [sessionState, setSessionState] = useState<SessionState | null>(
-    sessionManager.getSessionState()
+    sessionManager.getSessionState(),
   );
   const [, forceUpdate] = useState({});
 
@@ -35,20 +35,29 @@ export function useSessionManager(): UseSessionManagerReturn {
     const handleGoalReached = (state: SessionState) => {
       console.log("🎯 Daily goal reached!", state);
       triggerUpdate();
-      
+
       // You can add celebration effects here
-      if (typeof window !== "undefined" && (window as any).showAchievementToast) {
-        (window as any).showAchievementToast("🎯 Daily Goal Reached!", "Congratulations! You've completed your daily learning goal!");
+      if (
+        typeof window !== "undefined" &&
+        (window as any).showAchievementToast
+      ) {
+        (window as any).showAchievementToast(
+          "🎯 Daily Goal Reached!",
+          "Congratulations! You've completed your daily learning goal!",
+        );
       }
     };
 
     const handleTimeWarning = (state: SessionState) => {
       console.log("⏰ Time warning!", state);
       triggerUpdate();
-      
+
       // Show time warning notification
       if (typeof window !== "undefined" && (window as any).showTimeWarning) {
-        (window as any).showTimeWarning("⏰ Time Running Out!", "You have 2 minutes left in your session!");
+        (window as any).showTimeWarning(
+          "⏰ Time Running Out!",
+          "You have 2 minutes left in your session!",
+        );
       }
     };
 
@@ -98,7 +107,9 @@ export function useSessionManager(): UseSessionManagerReturn {
  */
 export function useSessionProgress() {
   const [progress, setProgress] = useState(sessionManager.getDailyProgress());
-  const [goalReached, setGoalReached] = useState(sessionManager.isDailyGoalReached());
+  const [goalReached, setGoalReached] = useState(
+    sessionManager.isDailyGoalReached(),
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
