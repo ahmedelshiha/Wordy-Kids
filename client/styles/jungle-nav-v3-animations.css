@@ -4,10 +4,10 @@
 @keyframes breathing {
   0%,
   100% {
-    transform: translateY(-12px) scale(1);
+    transform: translateY(-24px) scale(1);
   }
   50% {
-    transform: translateY(-12px) scale(1.05);
+    transform: translateY(-24px) scale(1.05);
   }
 }
 
@@ -15,10 +15,10 @@
 @keyframes breathingMobile {
   0%,
   100% {
-    transform: translateY(-16px) scale(1);
+    transform: translateY(-20px) scale(1);
   }
   50% {
-    transform: translateY(-16px) scale(1.05);
+    transform: translateY(-20px) scale(1.05);
   }
 }
 
@@ -26,10 +26,10 @@
 @keyframes breathingMobileTotem {
   0%,
   100% {
-    transform: translateY(-16px) scale(1);
+    transform: translateY(-20px) scale(1);
   }
   50% {
-    transform: translateY(-16px) scale(1.03); /* Reduced breathing for larger button */
+    transform: translateY(-20px) scale(1.03); /* Reduced breathing for larger button */
   }
 }
 
@@ -40,13 +40,13 @@
   0%,
   91%,
   100% {
-    transform: translateY(-12px) scaleY(1);
+    transform: translateY(-24px) scaleY(1);
   }
   93% {
-    transform: translateY(-12px) scaleY(0.8);
+    transform: translateY(-24px) scaleY(0.8);
   }
   95% {
-    transform: translateY(-12px) scaleY(1);
+    transform: translateY(-24px) scaleY(1);
   }
 }
 
@@ -55,13 +55,13 @@
   0%,
   89%,
   100% {
-    transform: translateY(-12px) rotate(0deg);
+    transform: translateY(-24px) rotate(0deg);
   }
   93% {
-    transform: translateY(-12px) rotate(4deg);
+    transform: translateY(-24px) rotate(4deg);
   }
   97% {
-    transform: translateY(-12px) rotate(-2deg);
+    transform: translateY(-24px) rotate(-2deg);
   }
 }
 
@@ -70,16 +70,16 @@
   0%,
   87%,
   100% {
-    transform: translateY(-12px) rotate(0deg);
+    transform: translateY(-24px) rotate(0deg);
   }
   91% {
-    transform: translateY(-12px) rotate(3deg);
+    transform: translateY(-24px) rotate(3deg);
   }
   95% {
-    transform: translateY(-12px) rotate(-2deg);
+    transform: translateY(-24px) rotate(-2deg);
   }
   99% {
-    transform: translateY(-12px) rotate(1deg);
+    transform: translateY(-24px) rotate(1deg);
   }
 }
 
@@ -88,13 +88,13 @@
   0%,
   90%,
   100% {
-    transform: translateY(-12px) scaleX(1);
+    transform: translateY(-24px) scaleX(1);
   }
   94% {
-    transform: translateY(-12px) scaleX(1.06);
+    transform: translateY(-24px) scaleX(1.06);
   }
   98% {
-    transform: translateY(-12px) scaleX(1.02);
+    transform: translateY(-24px) scaleX(1.02);
   }
 }
 
@@ -103,17 +103,17 @@
   0%,
   88%,
   100% {
-    transform: translateY(-12px) scale(1);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    transform: translateY(-24px) scale(1);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   }
   92% {
-    transform: translateY(-12px) scale(1.015); /* Slightly reduced scale for larger button */
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    transform: translateY(-24px) scale(1.015); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 18px rgba(255, 193, 7, 0.7));
   }
   96% {
-    transform: translateY(-12px) scale(1.008); /* Slightly reduced scale for larger button */
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    transform: translateY(-24px) scale(1.008); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 24px rgba(255, 193, 7, 0.5));
   }
 }
@@ -127,10 +127,10 @@
   /* GPU acceleration for better performance */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Default totem position - rise above navigation bar */
-  transform: translateY(-12px);
-  /* Soft jungle glow base */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  /* Default totem position - rise above navigation bar (24px for pop-out effect) */
+  transform: translateY(-24px);
+  /* Enhanced drop shadow for pop-out look */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 /* Animal-Specific Totem Classes - Each Animal Has Unique Life */
@@ -166,23 +166,23 @@
 .jng-nav-v3-icon.active {
   animation-duration: 6s; /* Slightly faster breathing when active */
   /* Enhanced jungle glow for active state */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
 }
 
 /* Hover State Enhancement - Totem Awakening */
 .jng-nav-v3-icon:hover {
-  transform: translateY(-12px) scale(1.15);
-  /* Soft jungle glow aura on hover */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+  transform: translateY(-24px) scale(1.15);
+  /* Enhanced drop shadow for pop-out look on hover */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
   transition: all 0.2s ease-out;
 }
 
 /* Touch/Tap State - Totem Press */
 .jng-nav-v3-icon:active {
-  transform: translateY(-12px) scale(0.95);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  transform: translateY(-24px) scale(0.95);
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   transition: all 0.1s ease-out;
 }
 
@@ -239,28 +239,28 @@
   .jng-nav-icon-elephant,
   .jng-nav-icon-totem {
     animation: none !important;
-    /* Maintain totem position even without animation - desktop */
-    transform: translateY(-12px) !important;
+    /* Maintain elevated totem position even without animation - desktop */
+    transform: translateY(-24px) !important;
   }
 
   /* Keep subtle transform effects for interaction feedback - desktop */
   .jng-nav-v3-icon:hover {
-    transform: translateY(-12px) scale(1.05) !important;
+    transform: translateY(-24px) scale(1.05) !important;
     transition: transform 0.2s ease;
   }
 
   .jng-nav-icon-totem:hover {
-    transform: translateY(-12px) scale(1.03) !important; /* Adjusted for larger parent button */
+    transform: translateY(-24px) scale(1.03) !important; /* Adjusted for larger parent button */
     transition: transform 0.2s ease;
   }
 
   .jng-nav-v3-icon:active {
-    transform: translateY(-12px) scale(0.98) !important;
+    transform: translateY(-24px) scale(0.98) !important;
     transition: transform 0.1s ease;
   }
 
   .jng-nav-icon-totem:active {
-    transform: translateY(-12px) scale(0.96) !important; /* Adjusted for larger parent button */
+    transform: translateY(-24px) scale(0.96) !important; /* Adjusted for larger parent button */
     transition: transform 0.1s ease;
   }
 
@@ -273,26 +273,26 @@
     .jng-nav-icon-elephant,
     .jng-nav-icon-totem {
       /* Higher totem position on mobile even with reduced motion */
-      transform: translateY(-16px) !important;
+      transform: translateY(-20px) !important;
     }
 
     .jng-nav-v3-icon:hover {
-      transform: translateY(-16px) scale(1.05) !important;
+      transform: translateY(-20px) scale(1.05) !important;
       transition: transform 0.2s ease;
     }
 
     .jng-nav-icon-totem:hover {
-      transform: translateY(-16px) scale(1.03) !important; /* Adjusted for larger parent button */
+      transform: translateY(-20px) scale(1.03) !important; /* Adjusted for larger parent button */
       transition: transform 0.2s ease;
     }
 
     .jng-nav-v3-icon:active {
-      transform: translateY(-16px) scale(0.98) !important;
+      transform: translateY(-20px) scale(0.98) !important;
       transition: transform 0.1s ease;
     }
 
     .jng-nav-icon-totem:active {
-      transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
+      transform: translateY(-20px) scale(0.96) !important; /* Adjusted for larger parent button */
       transition: transform 0.1s ease;
     }
   }
@@ -306,8 +306,8 @@
 .jng-nav-animations-paused .jng-nav-icon-elephant,
 .jng-nav-animations-paused .jng-nav-icon-totem {
   animation-play-state: paused !important;
-  /* Maintain totem position when paused - desktop */
-  transform: translateY(-12px) !important;
+  /* Maintain elevated totem position when paused - desktop */
+  transform: translateY(-24px) !important;
 }
 
 /* Mobile paused state - higher position */
@@ -319,58 +319,63 @@
   .jng-nav-animations-paused .jng-nav-icon-elephant,
   .jng-nav-animations-paused .jng-nav-icon-totem {
     /* Higher totem position when paused on mobile */
-    transform: translateY(-16px) !important;
+    transform: translateY(-20px) !important;
   }
 }
 
 /* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Ultra-Compact) */
 .jng-nav-icon-container {
   position: relative;
-  /* Ultra-compact design with no margin between icon and label */
-  min-height: 42px; /* Further reduced for compact fit */
-  min-width: 50px; /* Slightly wider for better touch targets */
+  /* Container sized to maintain touch areas within navigation bar */
+  min-height: 60px; /* Increased to accommodate 24px elevated icons */
+  min-width: 60px; /* Wider for better touch targets with elevated icons */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end; /* Align to bottom to keep labels in bar */
-  padding-bottom: 1px; /* Minimal padding for ultra-compact design */
+  padding-bottom: 2px; /* Padding to ensure labels stay in bar area */
+  padding-top: 24px; /* Top padding to accommodate elevated icons */
   overflow: visible; /* Ensure totems can rise above container */
   gap: 0; /* Remove any gap between icon and label */
+  /* Ensure click/touch area covers the elevated icon */
+  cursor: pointer;
 }
 
-/* Mobile-specific navigation container - 30% height reduction */
+/* Mobile-specific navigation container - Accommodate 20px elevated icons */
 @media (max-width: 767px) {
   .jng-nav-icon-container {
-    min-height: 29px; /* 30% reduction from 42px (42 * 0.7 = 29.4px ≈ 29px) */
-    padding-bottom: 0.5px; /* Even more minimal padding for mobile */
+    min-height: 50px; /* Accommodate 20px elevated icons on mobile */
+    min-width: 55px; /* Adequate touch target on mobile */
+    padding-bottom: 1px; /* Minimal padding for mobile */
+    padding-top: 20px; /* Top padding to accommodate elevated icons */
   }
 
-  /* Move icons up by 30% more on mobile (30% of 12px = 3.6px additional) */
+  /* Icons positioned 20px above bar on mobile for pop-out effect */
   .jng-nav-v3-icon,
   .jng-nav-icon-owl,
   .jng-nav-icon-parrot,
   .jng-nav-icon-monkey,
   .jng-nav-icon-elephant,
   .jng-nav-icon-totem {
-    /* 30% higher totem position on mobile: -12px - 3.6px = -15.6px ≈ -16px */
-    transform: translateY(-16px) !important;
+    /* 20px elevation on mobile for playful floating effect */
+    transform: translateY(-20px) !important;
   }
 
-  /* Update hover and active states for mobile higher position */
+  /* Update hover and active states for mobile elevated position */
   .jng-nav-v3-icon:hover {
-    transform: translateY(-16px) scale(1.15) !important;
+    transform: translateY(-20px) scale(1.15) !important;
   }
 
   .jng-nav-icon-totem:hover {
-    transform: translateY(-16px) scale(1.08) !important; /* Adjusted for larger parent button */
+    transform: translateY(-20px) scale(1.08) !important; /* Adjusted for larger parent button */
   }
 
   .jng-nav-v3-icon:active {
-    transform: translateY(-16px) scale(0.95) !important;
+    transform: translateY(-20px) scale(0.95) !important;
   }
 
   .jng-nav-icon-totem:active {
-    transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
+    transform: translateY(-20px) scale(0.96) !important; /* Adjusted for larger parent button */
   }
 }
 
@@ -380,28 +385,28 @@
     breathing 7s ease-in-out infinite,
     totemFireflyShimmer 16s ease-in-out infinite; /* Firefly shimmer effect */
   animation-delay: 0s, 6s; /* Stagger the shimmer */
-  transform: translateY(-12px); /* Same totem lift as others */
+  transform: translateY(-24px); /* Elevated totem position for pop-out effect */
   filter: drop-shadow(
-    0 4px 8px rgba(0, 0, 0, 0.4)
-  ); /* Stronger shadow for larger size */
+    0 4px 4px rgba(0, 0, 0, 0.25)
+  ); /* Enhanced drop shadow for pop-out look */
 }
 
 .jng-nav-icon-totem:hover {
-  transform: translateY(-12px) scale(1.1); /* Reduced hover scale since button is already 50% larger */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+  transform: translateY(-24px) scale(1.1); /* Elevated position with hover scale */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 16px rgba(251, 191, 36, 0.4)); /* Enhanced glow for larger button */
   transition: all 0.2s ease-out;
 }
 
 .jng-nav-icon-totem:active {
-  transform: translateY(-12px) scale(0.98); /* Adjusted for larger button */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  transform: translateY(-24px) scale(0.98); /* Elevated position with active scale */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   transition: all 0.1s ease-out;
 }
 
 /* Active Parent Menu State */
 .jng-nav-icon-totem.active {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 20px rgba(255, 193, 7, 0.6)); /* Enhanced active glow */
 }
 
@@ -539,17 +544,19 @@
 
 /* Ensure optimal spacing with new container heights */
 @media (min-width: 768px) {
-  /* Desktop: increased height (37.5px) provides more breathing room */
+  /* Desktop: adequate height for 24px elevated icons */
   .jng-nav-icon-container {
-    min-height: 45px; /* Slightly increased for desktop comfort with taller container */
+    min-height: 65px; /* Adequate height for 24px elevated icons */
+    padding-top: 26px; /* Top padding to accommodate elevated icons */
   }
 }
 
 @media (max-width: 767px) {
-  /* Mobile: reduced container height (8.75px) - ensure icons still position well */
+  /* Mobile: adequate container height for 20px elevated icons */
   .jng-nav-icon-container {
-    min-height: 26px; /* Slightly reduced for mobile compact design */
-    padding-bottom: 0px; /* Remove padding for ultra-compact mobile */
+    min-height: 52px; /* Adequate height for 20px elevated icons */
+    padding-bottom: 1px; /* Minimal padding for mobile compact design */
+    padding-top: 22px; /* Top padding to accommodate elevated icons */
   }
 }
 
@@ -557,18 +564,18 @@
 @media (prefers-color-scheme: dark) {
   .jng-nav-v3-icon,
   .jng-nav-icon-totem {
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) brightness(1.1);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25)) brightness(1.1);
   }
 
   .jng-nav-v3-icon:hover,
   .jng-nav-icon-totem:hover {
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 12px rgba(251, 191, 36, 0.4)) brightness(1.1);
   }
 
   .jng-nav-v3-icon.active,
   .jng-nav-icon-totem.active {
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 15px rgba(251, 191, 36, 0.45)) brightness(1.1);
   }
 
