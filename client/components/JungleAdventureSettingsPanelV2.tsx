@@ -436,7 +436,7 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ voice: v as Settings["voice"] })
                       }
                     >
-                      <SelectTrigger className="w-40">
+                      <SelectTrigger className={cn("w-40", isMobile && "h-10 touch-manipulation")}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
