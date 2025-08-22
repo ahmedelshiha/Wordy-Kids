@@ -1670,7 +1670,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Nature: {
                         easy: [
-                          "�� What jungle treasure is this?",
+                          "🌸 What jungle treasure is this?",
                           "🌺 Which jungle bloom do you see?",
                           "🍃 Can you name this jungle wonder?",
                           "🌳 What grows in our jungle home?",
@@ -1682,8 +1682,8 @@ export function InteractiveDashboardWordCard({
                           "🌴 What tropical jungle beauty is this?",
                         ],
                         hard: [
-                          "���� What powerful jungle force awaits?",
-                          "�� Which jungle phenomenon do you see?",
+                          "⚡ What powerful jungle force awaits?",
+                          "🌟 Which jungle phenomenon do you see?",
                           "🌊 Can you name this jungle mystery?",
                           "🔥 What fierce jungle element is this?",
                         ],
