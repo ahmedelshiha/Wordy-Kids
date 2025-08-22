@@ -358,13 +358,9 @@ export default function JungleAdventureSettingsPanelV2({
         </div>
 
         {/* Content */}
-        <div className={cn(
-          "flex flex-col",
-          isMobile ? "h-[calc(75vh-70px)]" : "h-[calc(85vh-80px)]"
-        )}>
+        <div className="flex flex-col min-h-0">
           <ScrollArea className={cn(
-            "flex-1",
-            isMobile ? "p-3" : "p-4"
+            isMobile ? "max-h-[calc(75vh-140px)] p-3" : "max-h-[calc(85vh-160px)] p-4"
           )}>
             <div
               className={cn(
@@ -625,7 +621,7 @@ export default function JungleAdventureSettingsPanelV2({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="easy">🌱 Easy</SelectItem>
-                        <SelectItem value="normal">🌿 Normal</SelectItem>
+                        <SelectItem value="normal">���� Normal</SelectItem>
                         <SelectItem value="hard">🌳 Hard</SelectItem>
                       </SelectContent>
                     </Select>
