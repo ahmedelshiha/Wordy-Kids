@@ -158,7 +158,7 @@
 /* Enhanced Totem-Lift Effect */
 .jng-nav-icon-container {
   position: relative;
-  margin-bottom: 4px; /* Extra space for lifted effect */
+  margin-bottom: 3px; /* Proportionally reduced space for lifted effect */
   min-height: 45px; /* Reduced height for compact navigation */
   min-width: 45px; /* Reduced width for compact navigation */
   display: flex;
