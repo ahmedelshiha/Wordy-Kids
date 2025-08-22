@@ -479,9 +479,9 @@ export default function JungleAdventureSettingsPanelV2({
                   />
                 </SettingRow>
 
-                <div className="flex gap-2 pt-2">
-                  <Button size="sm" onClick={previewVoice} className="flex-1">
-                    <Play className="w-4 h-4 mr-2" />
+                <div className="flex gap-2 pt-1.5">
+                  <Button size="sm" onClick={previewVoice} className="flex-1 h-8 text-xs">
+                    <Play className="w-3 h-3 mr-1.5" />
                     Preview
                   </Button>
                   {settings.ambient !== "off" && (
@@ -489,8 +489,9 @@ export default function JungleAdventureSettingsPanelV2({
                       variant="secondary"
                       size="sm"
                       onClick={() => markDirty({ ambient: "off" })}
+                      className="h-8 text-xs"
                     >
-                      <Square className="w-4 h-4 mr-2" />
+                      <Square className="w-3 h-3 mr-1.5" />
                       Stop
                     </Button>
                   )}
@@ -562,8 +563,8 @@ export default function JungleAdventureSettingsPanelV2({
                 />
 
                 {/* Overlay Effects */}
-                <div className="pt-2 border-t border-orange-200/50">
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="pt-1.5 border-t border-orange-200/50">
+                  <div className="flex items-center gap-1.5 mb-1.5">
                     <Sparkles className="w-3 h-3 text-amber-600" />
                     <span className="text-xs font-medium text-green-800">
                       Animated Overlays
