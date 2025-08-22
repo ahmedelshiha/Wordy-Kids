@@ -318,7 +318,7 @@ export default function JungleAdventureSettingsPanelV2({
           "border-2 border-orange-200/60",
           isMobile
             ? "w-[min(360px,95vw)] max-h-[75vh]"
-            : "w-[min(720px,92vw)] max-h-[85vh]",
+            : "w-[min(800px,90vw)] max-h-[80vh]",
         )}
         style={{
           backgroundImage: `
