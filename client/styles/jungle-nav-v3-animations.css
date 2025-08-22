@@ -4,10 +4,10 @@
 @keyframes breathing {
   0%,
   100% {
-    transform: translateY(-12px) scale(1);
+    transform: translateY(-24px) scale(1);
   }
   50% {
-    transform: translateY(-12px) scale(1.05);
+    transform: translateY(-24px) scale(1.05);
   }
 }
 
@@ -15,10 +15,10 @@
 @keyframes breathingMobile {
   0%,
   100% {
-    transform: translateY(-16px) scale(1);
+    transform: translateY(-20px) scale(1);
   }
   50% {
-    transform: translateY(-16px) scale(1.05);
+    transform: translateY(-20px) scale(1.05);
   }
 }
 
@@ -26,10 +26,10 @@
 @keyframes breathingMobileTotem {
   0%,
   100% {
-    transform: translateY(-16px) scale(1);
+    transform: translateY(-20px) scale(1);
   }
   50% {
-    transform: translateY(-16px) scale(1.03); /* Reduced breathing for larger button */
+    transform: translateY(-20px) scale(1.03); /* Reduced breathing for larger button */
   }
 }
 
