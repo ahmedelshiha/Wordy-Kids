@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
+import { EnhancedSlider } from "@/components/ui/enhanced-slider";
 import {
   Select,
   SelectContent,
