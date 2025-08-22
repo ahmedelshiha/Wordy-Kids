@@ -69,6 +69,24 @@ export default function JungleAdventureIconNav({
   className = "",
 }: JungleAdventureIconNavProps) {
   const [tappedItem, setTappedItem] = useState<string | null>(null);
+  const [translateY, setTranslateY] = useState(-55);
+
+  // Update translateY based on screen size
+  useEffect(() => {
+    const updateTranslateY = () => {
+      if (window.innerWidth <= 374) {
+        setTranslateY(-95); // Very small screens
+      } else if (window.innerWidth <= 767) {
+        setTranslateY(-60); // Mobile
+      } else {
+        setTranslateY(-55); // Desktop
+      }
+    };
+
+    updateTranslateY();
+    window.addEventListener('resize', updateTranslateY);
+    return () => window.removeEventListener('resize', updateTranslateY);
+  }, []);
 
   const handleNavigation = (itemId: string) => {
     // Set tapped state for visual feedback
