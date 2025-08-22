@@ -321,14 +321,20 @@
   }
 
   /* Update hover and active states for mobile higher position */
-  .jng-nav-v3-icon:hover,
-  .jng-nav-icon-totem:hover {
+  .jng-nav-v3-icon:hover {
     transform: translateY(-16px) scale(1.15) !important;
   }
 
-  .jng-nav-v3-icon:active,
-  .jng-nav-icon-totem:active {
+  .jng-nav-icon-totem:hover {
+    transform: translateY(-16px) scale(1.08) !important; /* Adjusted for larger parent button */
+  }
+
+  .jng-nav-v3-icon:active {
     transform: translateY(-16px) scale(0.95) !important;
+  }
+
+  .jng-nav-icon-totem:active {
+    transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
   }
 }
 
