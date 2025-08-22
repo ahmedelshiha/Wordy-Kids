@@ -1,0 +1,579 @@
+/* JungleAdventureNavV3 Enhanced Animations - Immersive Jungle Totems */
+
+/* Enhanced Breathing Animation for All Icons - Natural Life-Like Effect */
+@keyframes breathing {
+  0%,
+  100% {
+    transform: translateY(-12px) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.05);
+  }
+}
+
+/* Mobile-optimized breathing (9s for battery efficiency) - Higher position */
+@keyframes breathingMobile {
+  0%,
+  100% {
+    transform: translateY(-16px) scale(1);
+  }
+  50% {
+    transform: translateY(-16px) scale(1.05);
+  }
+}
+
+/* Mobile-optimized breathing for larger parent totem */
+@keyframes breathingMobileTotem {
+  0%,
+  100% {
+    transform: translateY(-16px) scale(1);
+  }
+  50% {
+    transform: translateY(-16px) scale(1.03); /* Reduced breathing for larger button */
+  }
+}
+
+/* Animal-Specific Rare Idle Micro-Movements - Jungle Totem Life */
+
+/* 🦉 Owl - Blink (every ~12s) */
+@keyframes owlBlink {
+  0%,
+  91%,
+  100% {
+    transform: translateY(-12px) scaleY(1);
+  }
+  93% {
+    transform: translateY(-12px) scaleY(0.8);
+  }
+  95% {
+    transform: translateY(-12px) scaleY(1);
+  }
+}
+
+/* 🦜 Parrot - Head Tilt (every ~14s) */
+@keyframes parrotHeadTilt {
+  0%,
+  89%,
+  100% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+  93% {
+    transform: translateY(-12px) rotate(4deg);
+  }
+  97% {
+    transform: translateY(-12px) rotate(-2deg);
+  }
+}
+
+/* 🐵 Monkey - Tail Wiggle (every ~10s) */
+@keyframes monkeyTailWiggle {
+  0%,
+  87%,
+  100% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+  91% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+  95% {
+    transform: translateY(-12px) rotate(-2deg);
+  }
+  99% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+/* 🐘 Elephant - Ear Flap (every ~15s) */
+@keyframes elephantEarFlap {
+  0%,
+  90%,
+  100% {
+    transform: translateY(-12px) scaleX(1);
+  }
+  94% {
+    transform: translateY(-12px) scaleX(1.06);
+  }
+  98% {
+    transform: translateY(-12px) scaleX(1.02);
+  }
+}
+
+/* 🪵 Parent Totem - Rare Firefly Shimmer Glow (every ~16s) - Enhanced for Larger Size */
+@keyframes totemFireflyShimmer {
+  0%,
+  88%,
+  100% {
+    transform: translateY(-12px) scale(1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+  }
+  92% {
+    transform: translateY(-12px) scale(1.015); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+      drop-shadow(0 0 18px rgba(255, 193, 7, 0.7));
+  }
+  96% {
+    transform: translateY(-12px) scale(1.008); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+      drop-shadow(0 0 24px rgba(255, 193, 7, 0.5));
+  }
+}
+
+/* Base Icon Styles - Jungle Totem Foundation */
+.jng-nav-v3-icon {
+  animation: breathing 7s ease-in-out infinite;
+  transform-origin: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, filter;
+  /* GPU acceleration for better performance */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Default totem position - rise above navigation bar */
+  transform: translateY(-12px);
+  /* Soft jungle glow base */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* Animal-Specific Totem Classes - Each Animal Has Unique Life */
+.jng-nav-icon-owl {
+  animation:
+    breathing 7s ease-in-out infinite,
+    owlBlink 12s ease-in-out infinite;
+  animation-delay: 0s, 3s; /* Stagger the blink */
+}
+
+.jng-nav-icon-parrot {
+  animation:
+    breathing 7s ease-in-out infinite,
+    parrotHeadTilt 14s ease-in-out infinite;
+  animation-delay: 0s, 4s; /* Stagger the head tilt */
+}
+
+.jng-nav-icon-monkey {
+  animation:
+    breathing 7s ease-in-out infinite,
+    monkeyTailWiggle 10s ease-in-out infinite;
+  animation-delay: 0s, 2s; /* Stagger the tail wiggle */
+}
+
+.jng-nav-icon-elephant {
+  animation:
+    breathing 7s ease-in-out infinite,
+    elephantEarFlap 15s ease-in-out infinite;
+  animation-delay: 0s, 5s; /* Stagger the ear flap */
+}
+
+/* Active State Enhancement - Glowing Totem */
+.jng-nav-v3-icon.active {
+  animation-duration: 6s; /* Slightly faster breathing when active */
+  /* Enhanced jungle glow for active state */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
+}
+
+/* Hover State Enhancement - Totem Awakening */
+.jng-nav-v3-icon:hover {
+  transform: translateY(-12px) scale(1.15);
+  /* Soft jungle glow aura on hover */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
+  transition: all 0.2s ease-out;
+}
+
+/* Touch/Tap State - Totem Press */
+.jng-nav-v3-icon:active {
+  transform: translateY(-12px) scale(0.95);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  transition: all 0.1s ease-out;
+}
+
+/* Mobile Performance Optimization - Battery-Friendly Totems */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  /* Use 9s breathing cycle on mobile for battery efficiency */
+  .jng-nav-v3-icon,
+  .jng-nav-icon-owl,
+  .jng-nav-icon-parrot,
+  .jng-nav-icon-monkey,
+  .jng-nav-icon-elephant {
+    animation: breathingMobile 9s ease-in-out infinite;
+  }
+
+  /* Larger parent totem gets gentler breathing on mobile */
+  .jng-nav-icon-totem {
+    animation: breathingMobileTotem 9s ease-in-out infinite;
+  }
+
+  /* Only apply micro-movements on higher-end mobile devices */
+  @media (min-resolution: 2dppx) {
+    .jng-nav-icon-owl {
+      animation:
+        breathingMobile 9s ease-in-out infinite,
+        owlBlink 18s ease-in-out infinite; /* Slower on mobile */
+    }
+
+    .jng-nav-icon-parrot {
+      animation:
+        breathingMobile 9s ease-in-out infinite,
+        parrotHeadTilt 20s ease-in-out infinite; /* Slower on mobile */
+    }
+
+    .jng-nav-icon-monkey {
+      animation:
+        breathingMobile 9s ease-in-out infinite,
+        monkeyTailWiggle 16s ease-in-out infinite; /* Slower on mobile */
+    }
+
+    .jng-nav-icon-elephant {
+      animation:
+        breathingMobile 9s ease-in-out infinite,
+        elephantEarFlap 22s ease-in-out infinite; /* Slower on mobile */
+    }
+  }
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .jng-nav-v3-icon,
+  .jng-nav-icon-owl,
+  .jng-nav-icon-parrot,
+  .jng-nav-icon-monkey,
+  .jng-nav-icon-elephant,
+  .jng-nav-icon-totem {
+    animation: none !important;
+    /* Maintain totem position even without animation - desktop */
+    transform: translateY(-12px) !important;
+  }
+
+  /* Keep subtle transform effects for interaction feedback - desktop */
+  .jng-nav-v3-icon:hover {
+    transform: translateY(-12px) scale(1.05) !important;
+    transition: transform 0.2s ease;
+  }
+
+  .jng-nav-icon-totem:hover {
+    transform: translateY(-12px) scale(1.03) !important; /* Adjusted for larger parent button */
+    transition: transform 0.2s ease;
+  }
+
+  .jng-nav-v3-icon:active {
+    transform: translateY(-12px) scale(0.98) !important;
+    transition: transform 0.1s ease;
+  }
+
+  .jng-nav-icon-totem:active {
+    transform: translateY(-12px) scale(0.96) !important; /* Adjusted for larger parent button */
+    transition: transform 0.1s ease;
+  }
+
+  /* Mobile accessibility overrides for higher position */
+  @media (max-width: 767px) {
+    .jng-nav-v3-icon,
+    .jng-nav-icon-owl,
+    .jng-nav-icon-parrot,
+    .jng-nav-icon-monkey,
+    .jng-nav-icon-elephant,
+    .jng-nav-icon-totem {
+      /* Higher totem position on mobile even with reduced motion */
+      transform: translateY(-16px) !important;
+    }
+
+    .jng-nav-v3-icon:hover {
+      transform: translateY(-16px) scale(1.05) !important;
+      transition: transform 0.2s ease;
+    }
+
+    .jng-nav-icon-totem:hover {
+      transform: translateY(-16px) scale(1.03) !important; /* Adjusted for larger parent button */
+      transition: transform 0.2s ease;
+    }
+
+    .jng-nav-v3-icon:active {
+      transform: translateY(-16px) scale(0.98) !important;
+      transition: transform 0.1s ease;
+    }
+
+    .jng-nav-icon-totem:active {
+      transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
+      transition: transform 0.1s ease;
+    }
+  }
+}
+
+/* Paused State (when animations are globally paused) */
+.jng-nav-animations-paused .jng-nav-v3-icon,
+.jng-nav-animations-paused .jng-nav-icon-owl,
+.jng-nav-animations-paused .jng-nav-icon-parrot,
+.jng-nav-animations-paused .jng-nav-icon-monkey,
+.jng-nav-animations-paused .jng-nav-icon-elephant,
+.jng-nav-animations-paused .jng-nav-icon-totem {
+  animation-play-state: paused !important;
+  /* Maintain totem position when paused - desktop */
+  transform: translateY(-12px) !important;
+}
+
+/* Mobile paused state - higher position */
+@media (max-width: 767px) {
+  .jng-nav-animations-paused .jng-nav-v3-icon,
+  .jng-nav-animations-paused .jng-nav-icon-owl,
+  .jng-nav-animations-paused .jng-nav-icon-parrot,
+  .jng-nav-animations-paused .jng-nav-icon-monkey,
+  .jng-nav-animations-paused .jng-nav-icon-elephant,
+  .jng-nav-animations-paused .jng-nav-icon-totem {
+    /* Higher totem position when paused on mobile */
+    transform: translateY(-16px) !important;
+  }
+}
+
+/* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Ultra-Compact) */
+.jng-nav-icon-container {
+  position: relative;
+  /* Ultra-compact design with no margin between icon and label */
+  min-height: 42px; /* Further reduced for compact fit */
+  min-width: 50px; /* Slightly wider for better touch targets */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* Align to bottom to keep labels in bar */
+  padding-bottom: 1px; /* Minimal padding for ultra-compact design */
+  overflow: visible; /* Ensure totems can rise above container */
+  gap: 0; /* Remove any gap between icon and label */
+}
+
+/* Mobile-specific navigation container - 30% height reduction */
+@media (max-width: 767px) {
+  .jng-nav-icon-container {
+    min-height: 29px; /* 30% reduction from 42px (42 * 0.7 = 29.4px ≈ 29px) */
+    padding-bottom: 0.5px; /* Even more minimal padding for mobile */
+  }
+
+  /* Move icons up by 30% more on mobile (30% of 12px = 3.6px additional) */
+  .jng-nav-v3-icon,
+  .jng-nav-icon-owl,
+  .jng-nav-icon-parrot,
+  .jng-nav-icon-monkey,
+  .jng-nav-icon-elephant,
+  .jng-nav-icon-totem {
+    /* 30% higher totem position on mobile: -12px - 3.6px = -15.6px ≈ -16px */
+    transform: translateY(-16px) !important;
+  }
+
+  /* Update hover and active states for mobile higher position */
+  .jng-nav-v3-icon:hover {
+    transform: translateY(-16px) scale(1.15) !important;
+  }
+
+  .jng-nav-icon-totem:hover {
+    transform: translateY(-16px) scale(1.08) !important; /* Adjusted for larger parent button */
+  }
+
+  .jng-nav-v3-icon:active {
+    transform: translateY(-16px) scale(0.95) !important;
+  }
+
+  .jng-nav-icon-totem:active {
+    transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
+  }
+}
+
+/* Parent Menu Icon (🪵 Totem) - Mystical Jungle Guardian - 50% Larger */
+.jng-nav-icon-totem {
+  animation:
+    breathing 7s ease-in-out infinite,
+    totemFireflyShimmer 16s ease-in-out infinite; /* Firefly shimmer effect */
+  animation-delay: 0s, 6s; /* Stagger the shimmer */
+  transform: translateY(-12px); /* Same totem lift as others */
+  filter: drop-shadow(
+    0 4px 8px rgba(0, 0, 0, 0.4)
+  ); /* Stronger shadow for larger size */
+}
+
+.jng-nav-icon-totem:hover {
+  transform: translateY(-12px) scale(1.1); /* Reduced hover scale since button is already 50% larger */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 16px rgba(251, 191, 36, 0.4)); /* Enhanced glow for larger button */
+  transition: all 0.2s ease-out;
+}
+
+.jng-nav-icon-totem:active {
+  transform: translateY(-12px) scale(0.98); /* Adjusted for larger button */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  transition: all 0.1s ease-out;
+}
+
+/* Active Parent Menu State */
+.jng-nav-icon-totem.active {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 20px rgba(255, 193, 7, 0.6)); /* Enhanced active glow */
+}
+
+/* Battery-Friendly Optimization for Small Devices */
+@media (max-height: 667px) and (max-width: 375px) {
+  /* iPhone SE and smaller devices - reduce animation frequency */
+  .jng-nav-v3-icon,
+  .jng-nav-icon-totem {
+    animation-duration: 12s; /* Much slower breathing on small devices */
+  }
+
+  .jng-nav-icon-owl {
+    animation-duration: 12s, 30s; /* Much slower micro-movements */
+  }
+
+  .jng-nav-icon-parrot {
+    animation-duration: 12s, 35s;
+  }
+
+  .jng-nav-icon-monkey {
+    animation-duration: 12s, 25s;
+  }
+
+  .jng-nav-icon-elephant {
+    animation-duration: 12s, 40s;
+  }
+
+  .jng-nav-icon-totem {
+    animation-duration: 12s, 45s; /* Slowest shimmer on small devices */
+  }
+}
+
+/* Vine Wrap Animation - Jungle Immersion Enhancement */
+.vine-wrap-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.vine-wrap {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.8) rotate(0deg);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 1.2rem;
+  will-change: transform, opacity;
+}
+
+/* Vine positioning around the log */
+.vine-wrap-1 {
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8) rotate(-15deg);
+}
+
+.vine-wrap-2 {
+  bottom: -8px;
+  right: -4px;
+  transform: scale(0.8) rotate(45deg);
+}
+
+.vine-wrap-3 {
+  bottom: -6px;
+  left: -4px;
+  transform: scale(0.8) rotate(-30deg);
+}
+
+/* Active vine animation - Quick wrapping effect */
+.vine-active .vine-wrap {
+  opacity: 1;
+  transform: scale(1.2);
+  animation: vine-quick-wrap 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.vine-active .vine-wrap-1 {
+  transform: translateX(-50%) scale(1.2) rotate(25deg);
+  animation-delay: 0s;
+}
+
+.vine-active .vine-wrap-2 {
+  transform: scale(1.2) rotate(135deg);
+  animation-delay: 0.1s;
+}
+
+.vine-active .vine-wrap-3 {
+  transform: scale(1.2) rotate(-120deg);
+  animation-delay: 0.2s;
+}
+
+/* Vine quick wrap keyframes */
+@keyframes vine-quick-wrap {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) rotate(0deg);
+  }
+  30% {
+    opacity: 0.8;
+    transform: scale(1.4) rotate(180deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(320deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2) rotate(360deg);
+  }
+}
+
+/* Enhanced mobile vine effects */
+@media (max-width: 767px) {
+  .vine-wrap {
+    font-size: 1.1rem; /* Slightly smaller on mobile */
+  }
+
+  .vine-active .vine-wrap {
+    animation-duration: 0.6s; /* Faster on mobile for better responsiveness */
+  }
+
+  /* Add subtle vine persistence on mobile for better immersion */
+  .vine-active .vine-wrap {
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+}
+
+/* Navigation container size adjustments */
+.jng-nav-container-reduced {
+  /* Container height adjustments handled via Tailwind min-h classes */
+  transform: scale(1);
+  transform-origin: bottom;
+}
+
+/* Ensure optimal spacing with new container heights */
+@media (min-width: 768px) {
+  /* Desktop: increased height (37.5px) provides more breathing room */
+  .jng-nav-icon-container {
+    min-height: 45px; /* Slightly increased for desktop comfort with taller container */
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile: reduced container height (8.75px) - ensure icons still position well */
+  .jng-nav-icon-container {
+    min-height: 26px; /* Slightly reduced for mobile compact design */
+    padding-bottom: 0px; /* Remove padding for ultra-compact mobile */
+  }
+}
+
+/* Dark mode considerations - Enhanced Totem Visibility */
+@media (prefers-color-scheme: dark) {
+  .jng-nav-v3-icon,
+  .jng-nav-icon-totem {
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)) brightness(1.1);
+  }
+
+  .jng-nav-v3-icon:hover,
+  .jng-nav-icon-totem:hover {
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+      drop-shadow(0 0 12px rgba(251, 191, 36, 0.4)) brightness(1.1);
+  }
+
+  .jng-nav-v3-icon.active,
+  .jng-nav-icon-totem.active {
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
+      drop-shadow(0 0 15px rgba(251, 191, 36, 0.45)) brightness(1.1);
+  }
+
+  /* Dark mode vine visibility */
+  .vine-wrap {
+    filter: brightness(1.1) drop-shadow(0 0 4px rgba(76, 175, 80, 0.3));
+  }
+}

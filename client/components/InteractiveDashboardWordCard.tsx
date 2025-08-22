@@ -400,7 +400,7 @@ export function InteractiveDashboardWordCard({
   // Debounced pronunciation function to prevent double-play
   const playPronunciationDebounced = (isManual = false) => {
     console.log(
-      `��� Audio call: ${isManual ? "Manual" : "Auto"}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`,
+      `🔊 Audio call: ${isManual ? "Manual" : "Auto"}, audioPlayedForHint: ${audioPlayedForHint}, isPlaying: ${isPlaying}`,
     );
 
     // Clear any existing audio timeout
@@ -1085,7 +1085,7 @@ export function InteractiveDashboardWordCard({
     if (currentWord?.emoji) {
       // Show feedback overlay if user has answered
       if (feedbackType) {
-        const feedbackEmoji = feedbackType === "remembered" ? "���" : "💪";
+        const feedbackEmoji = feedbackType === "remembered" ? "😊" : "💪";
         const feedbackColor =
           feedbackType === "remembered"
             ? "from-green-100 to-green-200"
@@ -1521,7 +1521,7 @@ export function InteractiveDashboardWordCard({
                     const percentage = Math.round((wordsLearned / goal) * 100);
 
                     if (wordsLearned >= goal) {
-                      if (wordsLearned >= goal * 2) return "���";
+                      if (wordsLearned >= goal * 2) return "🏆";
                       if (wordsLearned >= goal * 1.5) return "🚀";
                       return "🌟";
                     }
@@ -1555,7 +1555,7 @@ export function InteractiveDashboardWordCard({
                       }
                       if (percentage >= 90)
                         return "🌟 Almost there, superstar!";
-                      if (percentage >= 75) return "��� You're doing great!";
+                      if (percentage >= 75) return "⭐ You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
                       return "🌟 Ready for an adventure?";
@@ -1653,7 +1653,7 @@ export function InteractiveDashboardWordCard({
                           "🐵 What jungle friend is this?",
                           "🦜 Which animal companion do you see?",
                           "🐨 Can you name this jungle buddy?",
-                          "��� What creature lives in our jungle?",
+                          "🐸 What creature lives in our jungle?",
                         ],
                         medium: [
                           "🦁 What majestic jungle animal is this?",
@@ -1670,7 +1670,7 @@ export function InteractiveDashboardWordCard({
                       },
                       Nature: {
                         easy: [
-                          "�� What jungle treasure is this?",
+                          "🌸 What jungle treasure is this?",
                           "🌺 Which jungle bloom do you see?",
                           "🍃 Can you name this jungle wonder?",
                           "🌳 What grows in our jungle home?",
@@ -1682,8 +1682,8 @@ export function InteractiveDashboardWordCard({
                           "🌴 What tropical jungle beauty is this?",
                         ],
                         hard: [
-                          "���� What powerful jungle force awaits?",
-                          "�� Which jungle phenomenon do you see?",
+                          "⚡ What powerful jungle force awaits?",
+                          "🌟 Which jungle phenomenon do you see?",
                           "🌊 Can you name this jungle mystery?",
                           "🔥 What fierce jungle element is this?",
                         ],
@@ -1723,7 +1723,7 @@ export function InteractiveDashboardWordCard({
                         ],
                         hard: [
                           "⚔️ What legendary jungle artifact is this?",
-                          "������ Which ancient jungle relic awaits?",
+                          "🏺 Which ancient jungle relic awaits?",
                           "🔮 Can you name this mystical jungle object?",
                           "👑 What sacred jungle treasure is this?",
                         ],
@@ -1845,7 +1845,7 @@ export function InteractiveDashboardWordCard({
                     const difficulty = currentWord.difficulty || "medium";
                     const difficultyEmojis = {
                       easy: "🌱",
-                      medium: "⚡",
+                      medium: "⭐",
                       hard: "🔥",
                     };
                     const difficultyNames = {
@@ -1875,7 +1875,7 @@ export function InteractiveDashboardWordCard({
                       Animals: "🐵",
                       Nature: "🌿",
                       Food: "🍎",
-                      Objects: "��",
+                      Objects: "🎯",
                       Colors: "🌈",
                       Body: "👤",
                       Family: "👨‍👩‍👧‍👦",
@@ -2060,7 +2060,7 @@ export function InteractiveDashboardWordCard({
                               animationDelay: "0s",
                             }}
                           >
-                            🌿
+                            🌟
                           </motion.div>
                           <motion.div
                             animate={{

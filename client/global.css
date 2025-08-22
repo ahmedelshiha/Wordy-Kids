@@ -19,6 +19,9 @@
 /* Import AI card mobile enhancements */
 @import "./styles/ai-card-mobile-enhancements.css";
 
+/* Import JungleAdventureNavV3 animations */
+@import "./styles/jungle-nav-v3-animations.css";
+
 /* Import enhanced magical menu styles */
 @import "./styles/enhanced-magical-menu.css";
 
@@ -46,12 +49,14 @@
 
 /* Import Jungle Adventure Desktop Styles */
 @import "./styles/jungle-adventure-parent-dashboard.css";
-@import "./styles/jungle-adventure-settings.css";
 @import "./styles/jungle-adventure-desktop-layout.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import Jungle Adventure Theme System */
+@import "./styles/jungle-theme.css";
 
 @layer utilities {
   /* Custom scrollbar styles */
