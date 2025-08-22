@@ -294,6 +294,7 @@ export default function JungleAdventureSettingsPanelV2({
 
   // Update settings with dirty tracking
   function markDirty(next: Partial<Settings>) {
+    console.log("🔧 Settings changed:", next);
     setSettings((s) => ({ ...s, ...next }));
     setDirty(true);
     hapticTap();
