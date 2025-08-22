@@ -184,6 +184,7 @@ export default function JungleAdventureNavV3({
         style={{
           backgroundColor: "rgba(22, 101, 52, 0.95)", // Fallback solid background
           backdropFilter: "blur(8px)",
+          overflow: "visible", // Allow icons to float above the bar
         }}
       >
         {/* Navigation Bar - Mobile reduced by 50%, Desktop unchanged */}
