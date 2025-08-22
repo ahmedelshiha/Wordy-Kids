@@ -854,9 +854,9 @@ function SettingRow({
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-green-800">{label}</div>
+        <div className="text-xs font-medium text-green-800">{label}</div>
         {description && (
-          <div className="text-xs text-green-600 mt-0.5 leading-tight">
+          <div className="text-xs text-green-600 mt-0.5 leading-tight opacity-80">
             {description}
           </div>
         )}
