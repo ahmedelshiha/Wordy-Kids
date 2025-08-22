@@ -71,15 +71,15 @@ export default function JungleAdventureIconNav({
   const [tappedItem, setTappedItem] = useState<string | null>(null);
   const [translateY, setTranslateY] = useState(-55);
 
-  // Update translateY based on screen size
+  // Update translateY based on screen size - slightly lower positioning
   useEffect(() => {
     const updateTranslateY = () => {
       if (window.innerWidth <= 374) {
-        setTranslateY(-95); // Very small screens
+        setTranslateY(-75); // Very small screens - brought down 20px
       } else if (window.innerWidth <= 767) {
-        setTranslateY(-60); // Mobile
+        setTranslateY(-45); // Mobile - brought down 15px
       } else {
-        setTranslateY(-55); // Desktop
+        setTranslateY(-40); // Desktop - brought down 15px
       }
     };
 
