@@ -1085,7 +1085,7 @@ export function InteractiveDashboardWordCard({
     if (currentWord?.emoji) {
       // Show feedback overlay if user has answered
       if (feedbackType) {
-        const feedbackEmoji = feedbackType === "remembered" ? "���" : "💪";
+        const feedbackEmoji = feedbackType === "remembered" ? "😊" : "💪";
         const feedbackColor =
           feedbackType === "remembered"
             ? "from-green-100 to-green-200"
@@ -2060,7 +2060,7 @@ export function InteractiveDashboardWordCard({
                               animationDelay: "0s",
                             }}
                           >
-                            🌿
+                            ���
                           </motion.div>
                           <motion.div
                             animate={{
