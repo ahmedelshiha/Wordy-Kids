@@ -302,7 +302,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
             {/* MOBILE: Accordion; DESKTOP: sections visible */}
             <div className={cn("space-y-4 py-4", isMobile ? "" : "grid grid-cols-2 gap-4")}>
               {/* 1) SOUND & VOICE */}
-              <Section title="🎵 Sound & Voice" defaultOpen>
+              <Section title="🎵 Sound & Voice" isMobile={isMobile} defaultOpen>
                 <Row
                   label="UI Sounds"
                   control={
@@ -387,7 +387,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
               </Section>
 
               {/* 2) THEME & MOTION */}
-              <Section title="🎨 Theme & Motion">
+              <Section title="🎨 Theme & Motion" isMobile={isMobile}>
                 <Row
                   label="Theme"
                   control={
@@ -408,7 +408,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     </Select>
                   }
                 />
-                <Row 
+                <Row
                   label="Dark Mode"
                   control={
                     <Switch
@@ -417,7 +417,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     />
                   }
                 />
-                <Row 
+                <Row
                   label="Reduced Motion"
                   control={
                     <Switch
@@ -426,7 +426,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     />
                   }
                 />
-                <Row 
+                <Row
                   label="High Contrast"
                   control={
                     <Switch
@@ -438,7 +438,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
               </Section>
 
               {/* 3) LEARNING & FAMILY */}
-              <Section title="📚 Learning & Family">
+              <Section title="📚 Learning & Family" isMobile={isMobile}>
                 <Row
                   label="Difficulty"
                   control={
@@ -473,7 +473,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     className="flex-1"
                   />
                 </Row>
-                <Row 
+                <Row
                   label="Parent Gate"
                   control={
                     <Switch
@@ -485,7 +485,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
               </Section>
 
               {/* 4) ACCESSIBILITY */}
-              <Section title="♿ Accessibility">
+              <Section title="♿ Accessibility" isMobile={isMobile}>
                 <Row label={`Text Size ×${settings.textScale.toFixed(1)}`}>
                   <Slider
                     min={90} max={130} step={5}
@@ -494,7 +494,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     className="flex-1"
                   />
                 </Row>
-                <Row 
+                <Row
                   label="Haptics (mobile)"
                   control={
                     <Switch
@@ -503,7 +503,7 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
                     />
                   }
                 />
-                <Row 
+                <Row
                   label="Captions / Labels"
                   control={
                     <Switch
@@ -542,9 +542,8 @@ export default function JungleAdventureSettingsPanelV2({ open, onOpenChange }: P
 
 /* ---------- helpers ---------- */
 
-function Section({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
+function Section({ title, children, isMobile, defaultOpen = false }: { title: string; children: React.ReactNode; isMobile: boolean; defaultOpen?: boolean }) {
   // auto-collapsing accordion on mobile
-  const isMobile = useMobileDevice().isMobile;
   if (isMobile) {
     return (
       <Accordion type="single" collapsible className="w-full">
