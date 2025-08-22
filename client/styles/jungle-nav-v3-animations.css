@@ -87,23 +87,23 @@
   }
 }
 
-/* 🪵 Parent Totem - Rare Firefly Shimmer Glow (every ~16s) */
+/* 🪵 Parent Totem - Rare Firefly Shimmer Glow (every ~16s) - Enhanced for Larger Size */
 @keyframes totemFireflyShimmer {
   0%,
   88%,
   100% {
     transform: translateY(-12px) scale(1);
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
   }
   92% {
-    transform: translateY(-12px) scale(1.02);
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
-      drop-shadow(0 0 15px rgba(255, 193, 7, 0.6));
+    transform: translateY(-12px) scale(1.015); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+      drop-shadow(0 0 18px rgba(255, 193, 7, 0.7));
   }
   96% {
-    transform: translateY(-12px) scale(1.01);
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
-      drop-shadow(0 0 20px rgba(255, 193, 7, 0.4));
+    transform: translateY(-12px) scale(1.008); /* Slightly reduced scale for larger button */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+      drop-shadow(0 0 24px rgba(255, 193, 7, 0.5));
   }
 }
 
