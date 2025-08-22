@@ -223,11 +223,11 @@
   .jng-nav-icon-elephant,
   .jng-nav-icon-totem {
     animation: none !important;
-    /* Maintain totem position even without animation */
+    /* Maintain totem position even without animation - desktop */
     transform: translateY(-12px) !important;
   }
 
-  /* Keep subtle transform effects for interaction feedback */
+  /* Keep subtle transform effects for interaction feedback - desktop */
   .jng-nav-v3-icon:hover {
     transform: translateY(-12px) scale(1.05) !important;
     transition: transform 0.2s ease;
@@ -236,6 +236,29 @@
   .jng-nav-v3-icon:active {
     transform: translateY(-12px) scale(0.98) !important;
     transition: transform 0.1s ease;
+  }
+
+  /* Mobile accessibility overrides for higher position */
+  @media (max-width: 767px) {
+    .jng-nav-v3-icon,
+    .jng-nav-icon-owl,
+    .jng-nav-icon-parrot,
+    .jng-nav-icon-monkey,
+    .jng-nav-icon-elephant,
+    .jng-nav-icon-totem {
+      /* Higher totem position on mobile even with reduced motion */
+      transform: translateY(-16px) !important;
+    }
+
+    .jng-nav-v3-icon:hover {
+      transform: translateY(-16px) scale(1.05) !important;
+      transition: transform 0.2s ease;
+    }
+
+    .jng-nav-v3-icon:active {
+      transform: translateY(-16px) scale(0.98) !important;
+      transition: transform 0.1s ease;
+    }
   }
 }
 
