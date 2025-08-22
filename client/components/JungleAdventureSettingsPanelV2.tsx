@@ -364,7 +364,7 @@ export default function JungleAdventureSettingsPanelV2({
               "flex-1 min-h-0 jungle-settings-category",
               isMobile
                 ? "max-h-[calc(75vh-120px)] p-3 jungle-mobile-scrollarea"
-                : "max-h-[calc(75vh-130px)] p-3 jungle-settings-scrollarea",
+                : "max-h-[calc(75vh-110px)] p-3 jungle-settings-scrollarea",
             )}
           >
             <div
@@ -883,7 +883,7 @@ function SettingsSection({
   }
 
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-72">
+    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-96">
       <CardHeader className="pb-1.5 pt-2.5 flex-shrink-0">
         <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
           {icon}
