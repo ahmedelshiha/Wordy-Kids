@@ -34,8 +34,7 @@
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float higher above the bar */
-  transform: translateY(-55px);
+  /* Desktop: Elevation handled by Framer Motion */
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
