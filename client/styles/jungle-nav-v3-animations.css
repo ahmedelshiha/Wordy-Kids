@@ -326,16 +326,19 @@
 /* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Ultra-Compact) */
 .jng-nav-icon-container {
   position: relative;
-  /* Ultra-compact design with no margin between icon and label */
-  min-height: 42px; /* Further reduced for compact fit */
-  min-width: 50px; /* Slightly wider for better touch targets */
+  /* Container sized to maintain touch areas within navigation bar */
+  min-height: 60px; /* Increased to accommodate 24px elevated icons */
+  min-width: 60px; /* Wider for better touch targets with elevated icons */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end; /* Align to bottom to keep labels in bar */
-  padding-bottom: 1px; /* Minimal padding for ultra-compact design */
+  padding-bottom: 2px; /* Padding to ensure labels stay in bar area */
+  padding-top: 24px; /* Top padding to accommodate elevated icons */
   overflow: visible; /* Ensure totems can rise above container */
   gap: 0; /* Remove any gap between icon and label */
+  /* Ensure click/touch area covers the elevated icon */
+  cursor: pointer;
 }
 
 /* Mobile-specific navigation container - 30% height reduction */
