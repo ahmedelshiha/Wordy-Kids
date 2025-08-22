@@ -317,7 +317,7 @@ export default function JungleAdventureSettingsPanelV2({
           "bg-gradient-to-br from-amber-50/95 via-orange-50/95 to-yellow-50/95 backdrop-blur-lg",
           "border-2 border-orange-200/60",
           isMobile
-            ? "w-[min(360px,95vw)] max-h-[75vh]"
+            ? "w-[min(380px,95vw)] max-h-[75vh]"
             : "w-[min(800px,90vw)] max-h-[80vh]",
         )}
         style={{
