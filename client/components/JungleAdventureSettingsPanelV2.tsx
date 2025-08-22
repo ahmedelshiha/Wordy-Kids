@@ -494,7 +494,7 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ theme: v as JungleTheme })
                       }
                     >
-                      <SelectTrigger className="w-40">
+                      <SelectTrigger className={cn("w-40", isMobile && "h-10 touch-manipulation")}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
