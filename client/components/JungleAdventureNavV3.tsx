@@ -92,8 +92,8 @@ function getAnimalAnimationClass(emoji: string): string {
 
 // Enhanced totem icon sizes - Larger than bar, rising like jungle totems
 const TOTEM_ICON_SIZE = {
-  base: "1.8rem", // 1.6-1.8rem as specified, 20-25% taller than nav bar
-  mobileBase: "1.6rem", // Slightly smaller on mobile for better fit
+  base: "2.34rem", // Increased by 30% from 1.8rem
+  mobileBase: "2.08rem", // Increased by 30% from 1.6rem
   active: "scale-110",
   hover: "scale-115",
   tap: "scale-95",
@@ -304,7 +304,7 @@ export default function JungleAdventureNavV3({
                       onClick={() => handleParentAction("dashboard")}
                     >
                       <span className="flex items-center gap-2">
-                        📊 Parent Dashboard
+                        ��� Parent Dashboard
                       </span>
                     </Button>
                   )}
