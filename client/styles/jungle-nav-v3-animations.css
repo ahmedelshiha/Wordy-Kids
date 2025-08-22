@@ -552,10 +552,11 @@
 }
 
 @media (max-width: 767px) {
-  /* Mobile: reduced container height (8.75px) - ensure icons still position well */
+  /* Mobile: adequate container height for 20px elevated icons */
   .jng-nav-icon-container {
-    min-height: 26px; /* Slightly reduced for mobile compact design */
-    padding-bottom: 0px; /* Remove padding for ultra-compact mobile */
+    min-height: 52px; /* Adequate height for 20px elevated icons */
+    padding-bottom: 1px; /* Minimal padding for mobile compact design */
+    padding-top: 22px; /* Top padding to accommodate elevated icons */
   }
 }
 
