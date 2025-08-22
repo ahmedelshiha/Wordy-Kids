@@ -11,10 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
 import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
+import { EnhancedJungleParentMenuDialog } from "@/components/EnhancedJungleParentMenuDialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "@/styles/jungle-nav-v3-animations.css";
 import "@/styles/jungle-theme.css";
+import "@/styles/enhanced-jungle-parent-menu.css";
 
 export type JungleNavItem = {
   id: string;
