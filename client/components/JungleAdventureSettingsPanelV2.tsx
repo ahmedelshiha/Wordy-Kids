@@ -829,13 +829,13 @@ function SettingsSection({
 
   return (
     <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base text-green-800 flex items-center gap-2">
+      <CardHeader className="pb-2 pt-3">
+        <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
           {icon}
           <span>{title}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 pt-0">{children}</CardContent>
+      <CardContent className="space-y-3 pt-0 pb-3">{children}</CardContent>
     </Card>
   );
 }
