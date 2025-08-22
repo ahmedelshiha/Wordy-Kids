@@ -1828,7 +1828,7 @@ export default function Index({ initialProfile }: IndexProps) {
       //   response.achievements.forEach((achievement) => {
       //     notifications.push({
       //       type: "achievement",
-      //       title: `���� Achievement Unlocked!`,
+      //       title: `🏆 Achievement Unlocked!`,
       //       message: achievement,
       //       points: 25,
       //     });
@@ -3486,7 +3486,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           Deep in the mystical jungle lie
                                           powerful vowel crystals! Choose your
                                           adventure difficulty and unlock the
-                                          ancient secrets of A, E, I, O, U! ✨🔮
+                                          ancient secrets of A, E, I, O, U! ���🔮
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
