@@ -618,7 +618,7 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [sessionPersistence, isSessionInitialized]);
 
-  // Auto-save session data
+  // Auto-save session data (stabilized to prevent infinite loops)
   const saveSessionData = useCallback(() => {
     if (!isSessionInitialized) return;
 
@@ -654,37 +654,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
     persistenceService.queueSave(sessionData, "medium");
     setLastAutoSave(Date.now());
-  }, [
-    isSessionInitialized,
-    activeTab,
-    currentWordIndex,
-    selectedCategory,
-    learningMode,
-    userRole,
-    forgottenWords,
-    rememberedWords,
-    excludedWordIds,
-    currentProgress,
-    dailySessionCount,
-    currentProfile,
-    childStats,
-    currentSessionId,
-    learningGoals,
-    currentDashboardWords,
-    customWords,
-    practiceWords,
-    userWordHistory,
-    sessionNumber,
-    lastSystematicSelection,
-    dashboardSession,
-    dashboardSessionNumber,
-    showQuiz,
-    selectedQuizType,
-    showMatchingGame,
-    gameMode,
-    showPracticeGame,
-    persistenceService,
-  ]);
+  }, [persistenceService, isSessionInitialized]); // Minimal dependencies to prevent infinite loops
 
   // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
 
