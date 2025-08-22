@@ -626,7 +626,7 @@ export default function JungleAdventureSettingsPanelV2({
                         <SelectItem value="jungle">���� Jungle</SelectItem>
                         <SelectItem value="canopy">🌫️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
-                        <SelectItem value="sunset">🌅 Sunset</SelectItem>
+                        <SelectItem value="sunset">���� Sunset</SelectItem>
                       </SelectContent>
                     </Select>
                   }
@@ -778,17 +778,20 @@ export default function JungleAdventureSettingsPanelV2({
                 </SettingRow>
 
                 <SettingRow
-                  label={`Time Limit: ${settings.timeLimitMin === 0 ? "Off" : `${settings.timeLimitMin} min`}`}
+                  label="Time Limit"
                 >
-                  <Slider
+                  <EnhancedSlider
                     min={0}
                     max={60}
                     step={5}
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
+                    size="md"
+                    variant={settings.timeLimitMin === 0 ? "default" : "warning"}
+                    tooltipFormatter={(v) => v === 0 ? "Off" : `${v} min`}
+                    hapticFeedback={settings.haptics}
                     className={cn(
                       "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
                       settings.timeLimitMin === 0 && "opacity-75",
                     )}
                   />
