@@ -233,8 +233,18 @@
     transition: transform 0.2s ease;
   }
 
+  .jng-nav-icon-totem:hover {
+    transform: translateY(-12px) scale(1.03) !important; /* Adjusted for larger parent button */
+    transition: transform 0.2s ease;
+  }
+
   .jng-nav-v3-icon:active {
     transform: translateY(-12px) scale(0.98) !important;
+    transition: transform 0.1s ease;
+  }
+
+  .jng-nav-icon-totem:active {
+    transform: translateY(-12px) scale(0.96) !important; /* Adjusted for larger parent button */
     transition: transform 0.1s ease;
   }
 
