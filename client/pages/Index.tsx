@@ -489,10 +489,14 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   };
 
+  // Track last category to prevent unnecessary regeneration
+  const lastCategoryRef = useRef<string>("");
+
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
-      if (selectedCategory && currentDashboardWords.length === 0) {
+      if (selectedCategory && selectedCategory !== lastCategoryRef.current && currentDashboardWords.length === 0) {
+        lastCategoryRef.current = selectedCategory;
         generateFreshWords();
       }
     };
