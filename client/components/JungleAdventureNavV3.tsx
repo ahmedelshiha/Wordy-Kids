@@ -224,7 +224,7 @@ export default function JungleAdventureNavV3({
           </div>
 
           {/* Desktop Parent Menu Button - Right Side */}
-          <div className="hidden md:block absolute right-2">
+          <div className="hidden md:block absolute right-2 bottom-2">
             <motion.button
               whileTap={shouldAnimate ? { scale: 0.9 } : {}}
               whileHover={shouldAnimate ? { scale: 1.05 } : {}}
