@@ -370,7 +370,7 @@ export default function JungleAdventureSettingsPanelV2({
               className={cn(
                 isMobile
                   ? "space-y-2"
-                  : "grid grid-cols-3 gap-3 auto-rows-min",
+                  : "grid grid-cols-2 xl:grid-cols-3 gap-3 auto-rows-min",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
