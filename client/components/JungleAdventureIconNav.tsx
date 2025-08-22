@@ -249,7 +249,11 @@ export default function JungleAdventureIconNav({
       <EnhancedJungleParentMenuDialog
         isOpen={showParentMenu}
         onClose={() => setShowParentMenu(false)}
-        parentDialogSections={{ dashboard: true, settings: true, signOut: true }}
+        parentDialogSections={{
+          dashboard: true,
+          settings: true,
+          signOut: true,
+        }}
         isGuest={isGuest}
         onParentAction={handleParentAction}
         className="enhanced-jungle-parent-menu"

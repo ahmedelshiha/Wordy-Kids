@@ -10,7 +10,8 @@
 
 /* Ambient Jungle Atmosphere - Breathing Background */
 @keyframes jungleAmbienceBreath {
-  0%, 100% {
+  0%,
+  100% {
     background-size: 100% 100%;
     filter: hue-rotate(0deg) brightness(1);
   }
@@ -22,7 +23,8 @@
 
 /* Floating Leaf Gentle Sway */
 @keyframes gentleLeafSway {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg) scale(1);
   }
   25% {
@@ -38,7 +40,8 @@
 
 /* Butterfly Flutter */
 @keyframes butterflyFlutter {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) rotate(0deg);
   }
   25% {
@@ -54,7 +57,8 @@
 
 /* Firefly Glow Pulse */
 @keyframes fireflyGlow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
     filter: drop-shadow(0 0 4px rgba(255, 255, 0, 0.4));
@@ -100,14 +104,15 @@
 
 /* Totem Mystical Glow */
 @keyframes totemMysticalGlow {
-  0%, 100% {
-    text-shadow: 
+  0%,
+  100% {
+    text-shadow:
       0 0 10px rgba(255, 193, 7, 0.5),
       0 0 20px rgba(255, 193, 7, 0.3),
       0 0 30px rgba(139, 69, 19, 0.2);
   }
   50% {
-    text-shadow: 
+    text-shadow:
       0 0 15px rgba(255, 193, 7, 0.8),
       0 0 30px rgba(255, 193, 7, 0.5),
       0 0 45px rgba(139, 69, 19, 0.3),
@@ -162,16 +167,22 @@
 }
 
 .enhanced-jungle-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   width: 0;
   height: 0;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.4s ease, height 0.4s ease;
+  transition:
+    width 0.4s ease,
+    height 0.4s ease;
   pointer-events: none;
   z-index: 1;
 }
@@ -202,24 +213,24 @@
   .enhanced-jungle-dialog-container {
     animation-duration: 12s; /* Slower on mobile */
   }
-  
+
   .enhanced-jungle-foliage-leaf {
     animation-duration: 8s;
   }
-  
+
   .enhanced-jungle-foliage-butterfly {
     animation-duration: 6s;
   }
-  
+
   .enhanced-jungle-foliage-sparkle {
     animation-duration: 4s;
   }
-  
+
   /* Simplify complex animations on smaller screens */
   .enhanced-jungle-button::before {
     display: none; /* Remove complex ripple on mobile */
   }
-  
+
   .enhanced-jungle-totem:hover {
     transform: scale(1.05) rotate(2deg); /* Reduced hover effect */
   }
@@ -230,7 +241,7 @@
   .enhanced-jungle-dialog-container {
     animation-duration: 10s;
   }
-  
+
   .enhanced-jungle-button:hover::before {
     width: 250px;
     height: 250px;
@@ -242,20 +253,20 @@
   .enhanced-jungle-dialog-container {
     animation-duration: 6s; /* Faster and more dynamic on large screens */
   }
-  
+
   .enhanced-jungle-foliage-leaf {
     animation-duration: 4s;
   }
-  
+
   .enhanced-jungle-foliage-butterfly {
     animation-duration: 3s;
   }
-  
+
   .enhanced-jungle-button:hover::before {
     width: 400px;
     height: 400px;
   }
-  
+
   .enhanced-jungle-totem:hover {
     transform: scale(1.15) rotate(8deg);
   }
@@ -270,16 +281,16 @@
   .enhanced-jungle-totem {
     animation: none !important;
   }
-  
+
   .enhanced-jungle-button::before {
     display: none;
   }
-  
+
   .enhanced-jungle-totem:hover {
     transform: scale(1.02);
     transition: transform 0.2s ease;
   }
-  
+
   .enhanced-jungle-button:hover {
     transform: translateY(-1px);
     transition: transform 0.2s ease;
@@ -291,11 +302,11 @@
   .enhanced-jungle-button:hover::before {
     display: none; /* Remove hover effects on touch devices */
   }
-  
+
   .enhanced-jungle-totem:hover {
     transform: none; /* No hover transform on touch */
   }
-  
+
   /* Add larger touch targets */
   .enhanced-jungle-button {
     min-height: 56px; /* Minimum touch target size */
@@ -308,11 +319,11 @@
   .enhanced-jungle-dialog-container {
     filter: brightness(0.9) contrast(1.1);
   }
-  
+
   .enhanced-jungle-totem {
     filter: brightness(1.1) contrast(1.05);
   }
-  
+
   .enhanced-jungle-foliage-sparkle {
     animation: fireflyGlow 3s ease-in-out infinite;
     filter: brightness(1.2);
@@ -331,7 +342,7 @@
     color: black !important;
     filter: none !important;
   }
-  
+
   .enhanced-jungle-button {
     background: white !important;
     color: black !important;
@@ -343,24 +354,32 @@
 .enhanced-jungle-button:focus-visible {
   outline: 3px solid #fbbf24;
   outline-offset: 2px;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(251, 191, 36, 0.5),
     0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Enhanced Close Button */
 .enhanced-jungle-close-button {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.9), rgba(245, 158, 11, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.9),
+    rgba(245, 158, 11, 0.95)
+  );
   border: 2px solid rgba(139, 69, 19, 0.3);
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
 }
 
 .enhanced-jungle-close-button:hover {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(217, 119, 6, 1));
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.95),
+    rgba(217, 119, 6, 1)
+  );
   border-color: rgba(139, 69, 19, 0.5);
   transform: scale(1.1) rotate(90deg);
-  box-shadow: 
+  box-shadow:
     0 6px 16px rgba(139, 69, 19, 0.4),
     0 0 20px rgba(251, 191, 36, 0.5);
 }
@@ -375,7 +394,7 @@
 }
 
 .enhanced-jungle-loading::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -412,24 +431,41 @@
   pointer-events: none;
 }
 
-.enhanced-jungle-particle:nth-child(1) { animation-delay: 0s; }
-.enhanced-jungle-particle:nth-child(2) { animation-delay: 1s; }
-.enhanced-jungle-particle:nth-child(3) { animation-delay: 2s; }
-.enhanced-jungle-particle:nth-child(4) { animation-delay: 3s; }
-.enhanced-jungle-particle:nth-child(5) { animation-delay: 4s; }
-.enhanced-jungle-particle:nth-child(6) { animation-delay: 5s; }
-.enhanced-jungle-particle:nth-child(7) { animation-delay: 6s; }
-.enhanced-jungle-particle:nth-child(8) { animation-delay: 7s; }
+.enhanced-jungle-particle:nth-child(1) {
+  animation-delay: 0s;
+}
+.enhanced-jungle-particle:nth-child(2) {
+  animation-delay: 1s;
+}
+.enhanced-jungle-particle:nth-child(3) {
+  animation-delay: 2s;
+}
+.enhanced-jungle-particle:nth-child(4) {
+  animation-delay: 3s;
+}
+.enhanced-jungle-particle:nth-child(5) {
+  animation-delay: 4s;
+}
+.enhanced-jungle-particle:nth-child(6) {
+  animation-delay: 5s;
+}
+.enhanced-jungle-particle:nth-child(7) {
+  animation-delay: 6s;
+}
+.enhanced-jungle-particle:nth-child(8) {
+  animation-delay: 7s;
+}
 
 /* Enhanced Button Glow Effects */
 .enhanced-jungle-button-glow {
   position: absolute;
   inset: -2px;
-  background: linear-gradient(45deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.1) 25%, 
-    rgba(255, 255, 255, 0.2) 50%, 
-    rgba(255, 255, 255, 0.1) 75%, 
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 75%,
     transparent 100%
   );
   border-radius: inherit;
@@ -445,7 +481,8 @@
 }
 
 @keyframes jungleButtonGlowSweep {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(-100%) rotate(45deg);
   }
   50% {
@@ -459,7 +496,8 @@
 }
 
 @keyframes jungleContainerBreath {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     filter: brightness(1);
   }
@@ -487,7 +525,8 @@
 }
 
 @keyframes jungleTextShimmer {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -531,27 +570,33 @@
 }
 
 .enhanced-jungle-border-glow::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   padding: 2px;
-  background: linear-gradient(45deg, 
-    rgba(251, 191, 36, 0.5), 
-    rgba(139, 69, 19, 0.3), 
+  background: linear-gradient(
+    45deg,
+    rgba(251, 191, 36, 0.5),
+    rgba(139, 69, 19, 0.3),
     rgba(76, 175, 80, 0.4),
     rgba(251, 191, 36, 0.5)
   );
   background-size: 400% 400%;
   border-radius: inherit;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   mask-composite: xor;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   animation: jungleBorderGlow 3s ease-in-out infinite;
 }
 
 @keyframes jungleBorderGlow {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {

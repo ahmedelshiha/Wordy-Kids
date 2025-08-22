@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
-import { X, BarChart3, Settings, LogOut, UserPlus, Sparkles } from "lucide-react";
+import {
+  X,
+  BarChart3,
+  Settings,
+  LogOut,
+  UserPlus,
+  Sparkles,
+} from "lucide-react";
 
 interface ParentDialogSections {
   dashboard: boolean;
@@ -32,12 +39,42 @@ const JUNGLE_PARTICLES = [
 
 // Background foliage elements
 const BACKGROUND_FOLIAGE = [
-  { emoji: "🌴", position: { top: "10%", left: "5%" }, size: "text-3xl", opacity: 0.15 },
-  { emoji: "🌿", position: { top: "20%", right: "8%" }, size: "text-2xl", opacity: 0.2 },
-  { emoji: "🍃", position: { bottom: "15%", left: "10%" }, size: "text-xl", opacity: 0.18 },
-  { emoji: "🌺", position: { top: "60%", right: "12%" }, size: "text-2xl", opacity: 0.16 },
-  { emoji: "🌱", position: { bottom: "25%", right: "6%" }, size: "text-lg", opacity: 0.14 },
-  { emoji: "🦋", position: { top: "35%", left: "8%" }, size: "text-xl", opacity: 0.12 },
+  {
+    emoji: "🌴",
+    position: { top: "10%", left: "5%" },
+    size: "text-3xl",
+    opacity: 0.15,
+  },
+  {
+    emoji: "🌿",
+    position: { top: "20%", right: "8%" },
+    size: "text-2xl",
+    opacity: 0.2,
+  },
+  {
+    emoji: "🍃",
+    position: { bottom: "15%", left: "10%" },
+    size: "text-xl",
+    opacity: 0.18,
+  },
+  {
+    emoji: "🌺",
+    position: { top: "60%", right: "12%" },
+    size: "text-2xl",
+    opacity: 0.16,
+  },
+  {
+    emoji: "🌱",
+    position: { bottom: "25%", right: "6%" },
+    size: "text-lg",
+    opacity: 0.14,
+  },
+  {
+    emoji: "🦋",
+    position: { top: "35%", left: "8%" },
+    size: "text-xl",
+    opacity: 0.12,
+  },
 ];
 
 export function EnhancedJungleParentMenuDialog({
@@ -77,7 +114,7 @@ export function EnhancedJungleParentMenuDialog({
     if (navigator.vibrate) {
       navigator.vibrate([10, 20, 10]);
     }
-    
+
     handleClose();
     setTimeout(() => {
       onParentAction(action);
@@ -148,9 +185,9 @@ export function EnhancedJungleParentMenuDialog({
         <motion.div
           className={`relative w-[90%] max-w-md text-center ${className}`}
           initial={{ scale: 0.7, opacity: 0, y: 50, rotateX: -15 }}
-          animate={{ 
-            scale: isClosing ? 0.8 : 1, 
-            opacity: isClosing ? 0 : 1, 
+          animate={{
+            scale: isClosing ? 0.8 : 1,
+            opacity: isClosing ? 0 : 1,
             y: isClosing ? 30 : 0,
             rotateX: 0,
           }}
@@ -202,15 +239,20 @@ export function EnhancedJungleParentMenuDialog({
                     opacity: foliage.opacity,
                   }}
                   initial={{ scale: 0, rotate: -180 }}
-                  animate={{ 
-                    scale: 1, 
+                  animate={{
+                    scale: 1,
                     rotate: 0,
                     y: [0, -8, 0],
                   }}
-                  transition={{ 
+                  transition={{
                     scale: { delay: index * 0.1, duration: 0.6 },
                     rotate: { delay: index * 0.1, duration: 0.6 },
-                    y: { delay: index * 0.1 + 1, duration: 4, repeat: Infinity, ease: "easeInOut" }
+                    y: {
+                      delay: index * 0.1 + 1,
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
                   }}
                 >
                   {foliage.emoji}
@@ -224,29 +266,33 @@ export function EnhancedJungleParentMenuDialog({
                 <motion.div
                   key={particle.id}
                   className="absolute text-lg select-none"
-                  initial={{ 
-                    opacity: 0, 
+                  initial={{
+                    opacity: 0,
                     scale: 0,
                     x: Math.random() * 300,
                     y: Math.random() * 400,
                   }}
-                  animate={particlesAnimating ? {
-                    opacity: [0, 0.8, 0.6, 0],
-                    scale: [0, 1.2, 1, 0.8],
-                    x: [
-                      Math.random() * 300,
-                      Math.random() * 300,
-                      Math.random() * 300,
-                      Math.random() * 300,
-                    ],
-                    y: [
-                      Math.random() * 400,
-                      Math.random() * 400,
-                      Math.random() * 400,
-                      Math.random() * 400,
-                    ],
-                    rotate: [0, 180, 360, 540],
-                  } : {}}
+                  animate={
+                    particlesAnimating
+                      ? {
+                          opacity: [0, 0.8, 0.6, 0],
+                          scale: [0, 1.2, 1, 0.8],
+                          x: [
+                            Math.random() * 300,
+                            Math.random() * 300,
+                            Math.random() * 300,
+                            Math.random() * 300,
+                          ],
+                          y: [
+                            Math.random() * 400,
+                            Math.random() * 400,
+                            Math.random() * 400,
+                            Math.random() * 400,
+                          ],
+                          rotate: [0, 180, 360, 540],
+                        }
+                      : {}
+                  }
                   transition={{
                     delay: particle.delay,
                     duration: 8,
@@ -279,20 +325,20 @@ export function EnhancedJungleParentMenuDialog({
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
-                <motion.h2 
+                <motion.h2
                   className="text-2xl font-bold text-green-900 flex items-center justify-center gap-3"
-                  animate={{ 
+                  animate={{
                     textShadow: [
                       "0 2px 4px rgba(0,0,0,0.2)",
                       "0 2px 8px rgba(139,69,19,0.3)",
                       "0 2px 4px rgba(0,0,0,0.2)",
-                    ]
+                    ],
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
                   <motion.span
                     className="text-3xl"
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.1, 1],
                       rotate: [0, 5, -5, 0],
                     }}
@@ -302,7 +348,7 @@ export function EnhancedJungleParentMenuDialog({
                   </motion.span>
                   <span>Parent Zone</span>
                 </motion.h2>
-                <motion.p 
+                <motion.p
                   className="text-green-700 text-sm mt-2 opacity-80"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.8 }}
@@ -316,16 +362,16 @@ export function EnhancedJungleParentMenuDialog({
               <div className="flex flex-col gap-4">
                 {buttonConfig.map((button, index) => {
                   if (!button.show) return null;
-                  
+
                   const Icon = button.icon;
-                  
+
                   return (
                     <motion.div
                       key={button.id}
                       initial={{ x: -50, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
-                      transition={{ 
-                        delay: 0.3 + index * 0.1, 
+                      transition={{
+                        delay: 0.3 + index * 0.1,
                         duration: 0.6,
                         type: "spring",
                         stiffness: 100,
@@ -333,7 +379,11 @@ export function EnhancedJungleParentMenuDialog({
                     >
                       <Button
                         className={`relative overflow-hidden w-full p-5 rounded-xl bg-gradient-to-r ${button.gradient} hover:${button.hoverGradient} text-white shadow-xl hover:shadow-2xl transition-all duration-300 group border-2 border-white/20 hover:border-white/40`}
-                        onClick={() => handleParentAction(button.id as "dashboard" | "settings" | "logout")}
+                        onClick={() =>
+                          handleParentAction(
+                            button.id as "dashboard" | "settings" | "logout",
+                          )
+                        }
                         onMouseEnter={() => setHoveredButton(button.id)}
                         onMouseLeave={() => setHoveredButton(null)}
                         style={{
@@ -350,31 +400,43 @@ export function EnhancedJungleParentMenuDialog({
                           style={{
                             background: `radial-gradient(circle at center, ${button.glowColor} 0%, transparent 70%)`,
                           }}
-                          animate={hoveredButton === button.id ? {
-                            scale: [1, 1.5, 1],
-                          } : {}}
+                          animate={
+                            hoveredButton === button.id
+                              ? {
+                                  scale: [1, 1.5, 1],
+                                }
+                              : {}
+                          }
                           transition={{ duration: 2, repeat: Infinity }}
                         />
-                        
+
                         {/* Button Content */}
                         <div className="relative z-10 flex items-center gap-4">
                           <div className="flex items-center gap-3">
-                            <motion.span 
+                            <motion.span
                               className="text-2xl"
-                              animate={hoveredButton === button.id ? {
-                                scale: [1, 1.2, 1],
-                                rotate: [0, 10, -10, 0],
-                              } : {}}
+                              animate={
+                                hoveredButton === button.id
+                                  ? {
+                                      scale: [1, 1.2, 1],
+                                      rotate: [0, 10, -10, 0],
+                                    }
+                                  : {}
+                              }
                               transition={{ duration: 0.6 }}
                             >
                               {button.emoji}
                             </motion.span>
                             <Icon className="w-5 h-5" />
                           </div>
-                          
+
                           <div className="flex-1 text-left">
-                            <div className="font-semibold text-lg">{button.label}</div>
-                            <div className="text-sm opacity-90 font-normal">{button.description}</div>
+                            <div className="font-semibold text-lg">
+                              {button.label}
+                            </div>
+                            <div className="text-sm opacity-90 font-normal">
+                              {button.description}
+                            </div>
                           </div>
                         </div>
 
@@ -382,7 +444,11 @@ export function EnhancedJungleParentMenuDialog({
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
                           initial={{ x: "-100%" }}
-                          animate={hoveredButton === button.id ? { x: "100%" } : { x: "-100%" }}
+                          animate={
+                            hoveredButton === button.id
+                              ? { x: "100%" }
+                              : { x: "-100%" }
+                          }
                           transition={{ duration: 0.8 }}
                         />
                       </Button>
@@ -399,7 +465,7 @@ export function EnhancedJungleParentMenuDialog({
                 transition={{ delay: 0.8 }}
               >
                 <motion.span
-                  animate={{ 
+                  animate={{
                     rotate: [0, 360],
                     scale: [1, 1.1, 1],
                   }}
@@ -407,9 +473,11 @@ export function EnhancedJungleParentMenuDialog({
                 >
                   🌟
                 </motion.span>
-                <span className="text-xs font-medium">Jungle Adventure Family Hub</span>
+                <span className="text-xs font-medium">
+                  Jungle Adventure Family Hub
+                </span>
                 <motion.span
-                  animate={{ 
+                  animate={{
                     rotate: [360, 0],
                     scale: [1, 1.1, 1],
                   }}
