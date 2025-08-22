@@ -1,5 +1,49 @@
 /* Jungle Adventure Settings Panel Styles */
 
+/* Enhanced Scrolling Support */
+.jungle-settings-scrollarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(76, 175, 80, 0.3) rgba(76, 175, 80, 0.1);
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar-track {
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 4px;
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.jungle-settings-scrollarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #388e3c, #689f38);
+}
+
+/* Smooth scrolling for better UX */
+.jungle-settings-category {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+/* Category Container Enhancements */
+.jungle-category-container {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.jungle-category-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 /* Main Dialog Enhancements */
 .jungle-settings-dialog {
   background: linear-gradient(
