@@ -178,6 +178,25 @@ function saveSettings(s: Settings) {
   }
 }
 
+// Helper function to get current audio settings for use throughout the app
+export function getCurrentAudioSettings() {
+  const settings = loadSettings();
+  return {
+    speechRate: settings.speechRate,
+    voice: settings.voice,
+    ambientVolume: settings.ambientVolume,
+  };
+}
+
+// Helper function to pronounce word with current settings
+export function pronounceWordWithSettings(word: string, options: any = {}) {
+  const audioSettings = getCurrentAudioSettings();
+  return audioService.pronounceWord(word, {
+    rate: audioSettings.speechRate,
+    ...options,
+  });
+}
+
 // Component props
 type Props = {
   open: boolean;
