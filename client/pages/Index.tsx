@@ -658,9 +658,21 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
 
-  // Force save on critical actions
+  // Force save on critical actions (with debouncing to prevent infinite loops)
+  const lastSaveCountRef = useRef({ remembered: 0, forgotten: 0 });
+
   useEffect(() => {
-    if (rememberedWords.size > 0 || forgottenWords.size > 0) {
+    const rememberedCount = rememberedWords.size;
+    const forgottenCount = forgottenWords.size;
+
+    // Only save if the counts actually changed to prevent infinite loops
+    if (
+      (rememberedCount > 0 || forgottenCount > 0) &&
+      (rememberedCount !== lastSaveCountRef.current.remembered ||
+       forgottenCount !== lastSaveCountRef.current.forgotten)
+    ) {
+      lastSaveCountRef.current = { remembered: rememberedCount, forgotten: forgottenCount };
+
       persistenceService.queueSave(
         {
           forgottenWords: Array.from(forgottenWords),
@@ -670,12 +682,7 @@ export default function Index({ initialProfile }: IndexProps) {
         "high",
       );
     }
-  }, [
-    rememberedWords.size,
-    forgottenWords.size,
-    currentProgress,
-    persistenceService,
-  ]);
+  }, [rememberedWords.size, forgottenWords.size, currentProgress, persistenceService]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
