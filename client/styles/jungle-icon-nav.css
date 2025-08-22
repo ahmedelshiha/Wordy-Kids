@@ -203,7 +203,7 @@
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -40px; /* Adjust for much higher floating icons on very small screens */
+    margin-top: -65px; /* Adjust for extremely high floating icons on very small screens */
   }
 }
 
