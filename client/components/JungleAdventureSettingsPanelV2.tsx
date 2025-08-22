@@ -355,12 +355,11 @@ export default function JungleAdventureSettingsPanelV2({
         </div>
 
         {/* Content */}
-        <div className="flex flex-col h-[calc(85vh-80px)]">
-          <ScrollArea className="flex-1 p-4">
+        <div className={cn("flex flex-col", isMobile ? "h-[calc(72vh-64px)]" : "h-[calc(85vh-80px)]")}>
+          <ScrollArea className={cn("flex-1", isMobile ? "px-3 py-2" : "p-4")}>
             <div
               className={cn(
-                "space-y-4",
-                isMobile ? "" : "grid grid-cols-2 gap-4",
+                isMobile ? "space-y-3" : "space-y-4 grid grid-cols-2 gap-4",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
@@ -707,7 +706,7 @@ export default function JungleAdventureSettingsPanelV2({
           </ScrollArea>
 
           {/* Footer */}
-          <div className="border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95 p-4">
+          <div className={cn("border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95", isMobile ? "p-3" : "p-4")}>
             <div className="flex justify-between items-center">
               <Button
                 variant="outline"
@@ -765,7 +764,7 @@ function SettingsSection({
               <span>{title}</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="px-4 pb-4">
+          <AccordionContent className={cn("px-4", isMobile ? "pb-2" : "pb-4")}>
             <div className="space-y-4">{children}</div>
           </AccordionContent>
         </AccordionItem>
