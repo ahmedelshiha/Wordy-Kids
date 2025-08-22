@@ -507,21 +507,22 @@ export default function JungleAdventureSettingsPanelV2({
                 />
 
                 <SettingRow
-                  label={`Ambient Volume ${Math.round(settings.ambientVolume * 100)}%`}
+                  label="Ambient Volume"
                 >
-                  <Slider
+                  <EnhancedSlider
                     value={[settings.ambientVolume * 100]}
                     onValueChange={([v]) =>
                       markDirty({ ambientVolume: v / 100 })
                     }
                     max={100}
+                    min={0}
                     step={5}
                     disabled={settings.ambient === "off"}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                      settings.ambient === "off" && "opacity-50 pointer-events-none",
-                    )}
+                    size="md"
+                    variant="jungle"
+                    tooltipFormatter={(v) => `${Math.round(v)}%`}
+                    hapticFeedback={settings.haptics}
+                    className="flex-1"
                   />
                 </SettingRow>
 
