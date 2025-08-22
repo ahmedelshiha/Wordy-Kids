@@ -685,7 +685,7 @@ export default function JungleAdventureSettingsPanelV2({
                     step={5}
                     value={[settings.textScale * 100]}
                     onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                    className="flex-1"
+                    className={cn("flex-1", isMobile && "touch-manipulation h-6")}
                   />
                 </SettingRow>
 
