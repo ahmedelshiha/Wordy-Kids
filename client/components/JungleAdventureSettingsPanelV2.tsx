@@ -225,10 +225,13 @@ export default function JungleAdventureSettingsPanelV2({
   const [dirty, setDirty] = useState(false);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize ambient audio and theme manager
+  // Initialize theme manager and global ambient audio
   useEffect(() => {
     JungleAdventureThemeManager.init();
+    globalAmbientAudio.init();
     saveSettings(settings);
+
+    // Keep local ambient ref for preview purposes only
     ambientRef.current = new Audio();
     ambientRef.current.loop = true;
     ambientRef.current.preload = "auto";
