@@ -49,12 +49,12 @@ interface JungleAdventureNavV3Props {
 }
 
 const DEFAULT_ITEMS: JungleNavItem[] = [
-  { id: "dashboard", label: "Home Tree", emoji: "🦉", ariaLabel: "Dashboard" },
-  { id: "learn", label: "Word Jungle", emoji: "🦜", ariaLabel: "Learning" },
-  { id: "quiz", label: "Quiz Adventure", emoji: "🐵", ariaLabel: "Quiz Games" },
+  { id: "dashboard", label: "Home", emoji: "🦉", ariaLabel: "Dashboard" },
+  { id: "learn", label: "Words", emoji: "🦜", ariaLabel: "Learning" },
+  { id: "quiz", label: "Quiz", emoji: "🐵", ariaLabel: "Quiz Games" },
   {
     id: "achievements",
-    label: "Trophy Grove",
+    label: "Trophy",
     emoji: "🐘",
     ariaLabel: "Achievements",
   },
@@ -92,8 +92,8 @@ function getAnimalAnimationClass(emoji: string): string {
 
 // Enhanced totem icon sizes - Larger than bar, rising like jungle totems
 const TOTEM_ICON_SIZE = {
-  base: "2.34rem", // Increased by 30% from 1.8rem
-  mobileBase: "2.08rem", // Increased by 30% from 1.6rem
+  base: "3.28rem", // Increased by 40% from 2.34rem (2.34 * 1.4 = 3.276)
+  mobileBase: "2.91rem", // Increased by 40% from 2.08rem (2.08 * 1.4 = 2.912)
   active: "scale-110",
   hover: "scale-115",
   tap: "scale-95",
@@ -176,7 +176,7 @@ export default function JungleAdventureNavV3({
   return (
     <>
       <nav
-        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 opacity-100 ${
+        className={`fixed bottom-0 left-0 w-full bg-gradient-to-t from-green-900 via-green-800 to-green-700 shadow-lg z-50 border-t-2 border-green-600 opacity-100 jng-nav-container-reduced ${
           pauseAnimations ? "jng-nav-animations-paused" : ""
         }`}
         aria-label="Jungle Adventure Navigation"
@@ -185,8 +185,10 @@ export default function JungleAdventureNavV3({
           backdropFilter: "blur(8px)",
         }}
       >
-        {/* Navigation Bar */}
-        <div className="flex items-end px-2 py-0.5 md:py-1 relative min-h-[35px] md:min-h-[50px]">
+        {/* Navigation Bar - Mobile reduced by 50%, Desktop unchanged */}
+        <div className="flex items-end px-2 py-0 md:py-1.5 relative min-h-[0.5px] md:min-h-[42px]">
+          {" "}
+          {/* Mobile: 1px -> 0.5px (-50%), Desktop: 42px (unchanged) */}
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 bottom-1 gap-4">
             {items.map((item) => {
@@ -210,8 +212,9 @@ export default function JungleAdventureNavV3({
                   <span
                     className={`${animalClass} ${
                       isActive ? "active" : ""
-                    } drop-shadow-lg text-[2.08rem] md:text-[2.34rem]`}
+                    } drop-shadow-lg`}
                     style={{
+                      fontSize: TOTEM_ICON_SIZE.base, // Desktop: 3.28rem
                       textShadow: isActive
                         ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                         : "0 0 8px rgba(255,255,255,0.3)",
@@ -219,14 +222,13 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-0 font-medium leading-tight">
+                  <span className="text-xs mt-[-3px] font-medium leading-tight">
                     {item.label}
                   </span>
                 </motion.button>
               );
             })}
           </div>
-
           {/* Desktop Parent Menu Button - Right Side */}
           <div className="hidden md:block absolute right-2 bottom-1">
             <motion.button
@@ -248,22 +250,22 @@ export default function JungleAdventureNavV3({
               </div>
 
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[3.51rem] relative z-10 ${
+                className={`jng-nav-icon-totem drop-shadow-lg relative z-10 ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
+                  fontSize: "4.91rem", // Desktop: 3.51rem * 1.4 = 4.914rem
                   textShadow:
                     "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 }}
               >
                 🪵
               </span>
-              <span className="text-xs mt-0 font-medium leading-tight relative z-10">
-                Parents
+              <span className="text-xs mt-[-3px] font-medium leading-tight relative z-10">
+                Family
               </span>
             </motion.button>
           </div>
-
           {/* Mobile Layout: Distributed layout for smaller screens */}
           <div className="flex md:hidden justify-around w-full">
             {items.map((item) => {
@@ -287,8 +289,9 @@ export default function JungleAdventureNavV3({
                   <span
                     className={`${animalClass} ${
                       isActive ? "active" : ""
-                    } drop-shadow-lg text-[2.08rem] md:text-[2.34rem]`}
+                    } drop-shadow-lg`}
                     style={{
+                      fontSize: TOTEM_ICON_SIZE.mobileBase, // Mobile: 2.91rem
                       textShadow: isActive
                         ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                         : "0 0 8px rgba(255,255,255,0.3)",
@@ -296,7 +299,7 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-0 font-medium leading-tight">
+                  <span className="text-xs mt-[-3px] font-medium leading-tight">
                     {item.label}
                   </span>
                 </motion.button>
@@ -323,18 +326,19 @@ export default function JungleAdventureNavV3({
               </div>
 
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg text-[3.12rem] md:text-[3.51rem] relative z-10 ${
+                className={`jng-nav-icon-totem drop-shadow-lg relative z-10 ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
+                  fontSize: "4.37rem", // Mobile: 3.12rem * 1.4 = 4.368rem
                   textShadow:
                     "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 }}
               >
                 🪵
               </span>
-              <span className="text-xs mt-0 font-medium leading-tight relative z-10">
-                Parents
+              <span className="text-xs mt-[-3px] font-medium leading-tight relative z-10">
+                Family
               </span>
             </motion.button>
           </div>
