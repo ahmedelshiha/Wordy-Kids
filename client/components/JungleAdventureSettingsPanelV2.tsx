@@ -362,7 +362,7 @@ export default function JungleAdventureSettingsPanelV2({
           <ScrollArea
             className={cn(
               isMobile
-                ? "max-h-[calc(75vh-140px)] p-3"
+                ? "max-h-[calc(75vh-120px)] p-3"
                 : "max-h-[calc(80vh-140px)] p-4",
             )}
           >
