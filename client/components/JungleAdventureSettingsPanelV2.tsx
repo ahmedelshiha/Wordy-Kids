@@ -361,6 +361,7 @@ export default function JungleAdventureSettingsPanelV2({
         <div className="flex flex-col min-h-0">
           <ScrollArea
             className={cn(
+              "flex-1 min-h-0",
               isMobile
                 ? "max-h-[calc(75vh-120px)] p-3"
                 : "max-h-[calc(80vh-140px)] p-4",
@@ -369,7 +370,7 @@ export default function JungleAdventureSettingsPanelV2({
             <div
               className={cn(
                 isMobile ? "space-y-2" : "space-y-3",
-                isMobile ? "" : "grid grid-cols-2 gap-3",
+                isMobile ? "" : "grid grid-cols-2 gap-3 auto-rows-min",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
@@ -861,7 +862,9 @@ function SettingsSection({
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-3 pb-3">
-            <div className="space-y-2.5">{children}</div>
+            <ScrollArea className="max-h-60 pr-3">
+              <div className="space-y-2.5">{children}</div>
+            </ScrollArea>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -869,14 +872,18 @@ function SettingsSection({
   }
 
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50">
-      <CardHeader className="pb-2 pt-3">
+    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-80">
+      <CardHeader className="pb-2 pt-3 flex-shrink-0">
         <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
           {icon}
           <span>{title}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3 pt-0 pb-3">{children}</CardContent>
+      <CardContent className="flex-1 pt-0 pb-3 min-h-0">
+        <ScrollArea className="h-full pr-3">
+          <div className="space-y-3">{children}</div>
+        </ScrollArea>
+      </CardContent>
     </Card>
   );
 }
