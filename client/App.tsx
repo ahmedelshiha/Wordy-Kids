@@ -11,7 +11,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import Login from "./pages/Login";
 import LoginForm from "./pages/LoginForm";
 import SignUp from "./pages/SignUp";
-import AppPage from "./pages/App";
+import MainAppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
@@ -131,9 +131,9 @@ const App = () => {
                         element={
                           <ErrorBoundary
                             fallbackType="kid"
-                            componentName="AppPage"
+                            componentName="MainAppPage"
                           >
-                            <AppPage />
+                            <MainAppPage />
                           </ErrorBoundary>
                         }
                       />
