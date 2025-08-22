@@ -530,11 +530,27 @@
   }
 }
 
-/* Reduced navigation container size - 50% reduction */
+/* Navigation container size adjustments */
 .jng-nav-container-reduced {
-  /* The container height is already reduced in the component via min-h classes */
+  /* Container height adjustments handled via Tailwind min-h classes */
   transform: scale(1);
   transform-origin: bottom;
+}
+
+/* Ensure optimal spacing with new container heights */
+@media (min-width: 768px) {
+  /* Desktop: increased height (37.5px) provides more breathing room */
+  .jng-nav-icon-container {
+    min-height: 45px; /* Slightly increased for desktop comfort with taller container */
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile: reduced container height (8.75px) - ensure icons still position well */
+  .jng-nav-icon-container {
+    min-height: 26px; /* Slightly reduced for mobile compact design */
+    padding-bottom: 0px; /* Remove padding for ultra-compact mobile */
+  }
 }
 
 /* Dark mode considerations - Enhanced Totem Visibility */
