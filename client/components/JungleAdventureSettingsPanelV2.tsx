@@ -244,9 +244,16 @@ export default function JungleAdventureSettingsPanelV2({
     };
   }, []);
 
-  // Handle ambient sound changes
+  // Handle ambient sound preview (local audio for settings panel preview only)
   useEffect(() => {
     if (!ambientRef.current) return;
+
+    // Only play preview if the settings panel is open
+    if (!open) {
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+      return;
+    }
 
     if (settings.ambient === "off") {
       ambientRef.current.pause();
@@ -264,9 +271,10 @@ export default function JungleAdventureSettingsPanelV2({
       Math.min(1, settings.ambientVolume),
     );
     ambientRef.current.play().catch(() => {
-      // Autoplay may be blocked
+      // Autoplay may be blocked - this is normal for preview
+      console.log("Preview autoplay blocked - user needs to interact first");
     });
-  }, [settings.ambient, settings.ambientVolume]);
+  }, [settings.ambient, settings.ambientVolume, open]);
 
   // Handle reduced motion preference
   useEffect(() => {
