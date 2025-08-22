@@ -219,7 +219,7 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-1 font-medium leading-tight">
+                  <span className="text-xs mt-0 font-medium leading-tight">
                     {item.label}
                   </span>
                 </motion.button>
@@ -249,7 +249,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-1 font-medium leading-tight">
+              <span className="text-xs mt-0 font-medium leading-tight">
                 Parents
               </span>
             </motion.button>
@@ -287,7 +287,7 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-1 font-medium leading-tight">
+                  <span className="text-xs mt-0 font-medium leading-tight">
                     {item.label}
                   </span>
                 </motion.button>
@@ -315,7 +315,7 @@ export default function JungleAdventureNavV3({
               >
                 🪵
               </span>
-              <span className="text-xs mt-1 font-medium leading-tight">
+              <span className="text-xs mt-0 font-medium leading-tight">
                 Parents
               </span>
             </motion.button>
@@ -408,7 +408,7 @@ export default function JungleAdventureNavV3({
                     >
                       <span className="flex items-center gap-2">
                         {isGuest
-                          ? "✨ Sign Up / Register"
+                          ? "�� Sign Up / Register"
                           : "🌿 Goodbye & Log Off"}
                       </span>
                     </Button>
