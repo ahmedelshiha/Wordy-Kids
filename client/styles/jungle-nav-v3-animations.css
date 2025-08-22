@@ -270,8 +270,21 @@
 .jng-nav-animations-paused .jng-nav-icon-elephant,
 .jng-nav-animations-paused .jng-nav-icon-totem {
   animation-play-state: paused !important;
-  /* Maintain totem position when paused */
+  /* Maintain totem position when paused - desktop */
   transform: translateY(-12px) !important;
+}
+
+/* Mobile paused state - higher position */
+@media (max-width: 767px) {
+  .jng-nav-animations-paused .jng-nav-v3-icon,
+  .jng-nav-animations-paused .jng-nav-icon-owl,
+  .jng-nav-animations-paused .jng-nav-icon-parrot,
+  .jng-nav-animations-paused .jng-nav-icon-monkey,
+  .jng-nav-animations-paused .jng-nav-icon-elephant,
+  .jng-nav-animations-paused .jng-nav-icon-totem {
+    /* Higher totem position when paused on mobile */
+    transform: translateY(-16px) !important;
+  }
 }
 
 /* Enhanced Totem-Lift Effect - Icons Rise Above Navigation Bar (Ultra-Compact) */
