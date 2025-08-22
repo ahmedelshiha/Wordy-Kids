@@ -477,7 +477,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Select
                       value={settings.theme}
                       onValueChange={(v) =>
-                        markDirty({ theme: v as Settings["theme"] })
+                        markDirty({ theme: v as JungleTheme })
                       }
                     >
                       <SelectTrigger className="w-40">
@@ -523,6 +523,70 @@ export default function JungleAdventureSettingsPanelV2({
                     />
                   }
                 />
+
+                {/* Overlay Effects */}
+                <div className="pt-3 border-t border-orange-200/50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <span className="text-sm font-medium text-green-800">Animated Overlays</span>
+                  </div>
+
+                  <SettingRow
+                    label="Fireflies 🌟"
+                    control={
+                      <Switch
+                        checked={settings.overlays.fireflies}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, fireflies: v }
+                          })
+                        }
+                      />
+                    }
+                  />
+
+                  <SettingRow
+                    label="Fog 🌫️"
+                    control={
+                      <Switch
+                        checked={settings.overlays.fog}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, fog: v }
+                          })
+                        }
+                      />
+                    }
+                  />
+
+                  <SettingRow
+                    label="Glow ✨"
+                    control={
+                      <Switch
+                        checked={settings.overlays.glow}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, glow: v }
+                          })
+                        }
+                      />
+                    }
+                  />
+
+                  <SettingRow
+                    label="Ripples 💧"
+                    control={
+                      <Switch
+                        checked={settings.overlays.ripples}
+                        onCheckedChange={(v) =>
+                          markDirty({
+                            overlays: { ...settings.overlays, ripples: v }
+                          })
+                        }
+                      />
+                    }
+                  />
+                </div>
               </SettingsSection>
 
               {/* 📚 Learning & Family Section */}
