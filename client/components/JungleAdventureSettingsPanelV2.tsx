@@ -715,51 +715,53 @@ export default function JungleAdventureSettingsPanelV2({
                 />
               </SettingsSection>
 
-              {/* ♿ Accessibility Section */}
-              <SettingsSection
-                title="♿ Accessibility"
-                icon={<Accessibility className="w-4 h-4" />}
-                isMobile={isMobile}
-              >
-                <SettingRow
-                  label={`Text Size ×${settings.textScale.toFixed(1)}`}
+              {/* ♿ Accessibility Section - Mobile Only */}
+              {isMobile && (
+                <SettingsSection
+                  title="♿ Accessibility"
+                  icon={<Accessibility className="w-4 h-4" />}
+                  isMobile={isMobile}
                 >
-                  <Slider
-                    min={90}
-                    max={130}
-                    step={5}
-                    value={[settings.textScale * 100]}
-                    onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                  <SettingRow
+                    label={`Text Size ×${settings.textScale.toFixed(1)}`}
+                  >
+                    <Slider
+                      min={90}
+                      max={130}
+                      step={5}
+                      value={[settings.textScale * 100]}
+                      onValueChange={([v]) => markDirty({ textScale: v / 100 })}
+                      className={cn(
+                        "flex-1",
+                        isMobile ? "touch-manipulation h-6" : "h-4",
+                      )}
+                    />
+                  </SettingRow>
+
+                  <SettingRow
+                    label="Haptic Feedback"
+                    description="Vibration feedback on mobile devices"
+                    control={
+                      <Switch
+                        checked={settings.haptics}
+                        onCheckedChange={(v) => markDirty({ haptics: v })}
+                        disabled={!hasHaptic}
+                      />
+                    }
                   />
-                </SettingRow>
 
-                <SettingRow
-                  label="Haptic Feedback"
-                  description="Vibration feedback on mobile devices"
-                  control={
-                    <Switch
-                      checked={settings.haptics}
-                      onCheckedChange={(v) => markDirty({ haptics: v })}
-                      disabled={!hasHaptic}
-                    />
-                  }
-                />
-
-                <SettingRow
-                  label="Captions & Labels"
-                  description="Show additional text descriptions"
-                  control={
-                    <Switch
-                      checked={settings.captions}
-                      onCheckedChange={(v) => markDirty({ captions: v })}
-                    />
-                  }
-                />
-              </SettingsSection>
+                  <SettingRow
+                    label="Captions & Labels"
+                    description="Show additional text descriptions"
+                    control={
+                      <Switch
+                        checked={settings.captions}
+                        onCheckedChange={(v) => markDirty({ captions: v })}
+                      />
+                    }
+                  />
+                </SettingsSection>
+              )}
             </div>
           </ScrollArea>
 
