@@ -304,7 +304,7 @@ export default function JungleAdventureIconNav({
             </div>
 
             <motion.div
-              className="relative w-[95%] max-w-lg mx-auto text-center overflow-hidden"
+              className="jungle-parent-menu-container jungle-wood-texture relative w-[95%] max-w-lg mx-auto text-center overflow-hidden"
               initial={{ scale: 0.7, opacity: 0, y: 50, rotateX: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0, rotateX: 0 }}
               exit={{ scale: 0.7, opacity: 0, y: 50, rotateX: 15 }}
