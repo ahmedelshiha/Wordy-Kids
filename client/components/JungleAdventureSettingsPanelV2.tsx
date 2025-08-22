@@ -734,7 +734,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Button
                       variant="outline"
                       onClick={handleReset}
-                      className="flex items-center gap-1 text-xs px-3 py-2 h-8"
+                      className="flex items-center gap-1 text-xs px-4 py-3 h-10 touch-manipulation"
                       size="sm"
                     >
                       <RotateCcw className="w-3 h-3" />
@@ -743,7 +743,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Button
                       variant="ghost"
                       onClick={() => onOpenChange(false)}
-                      className="text-xs px-3 py-2 h-8"
+                      className="text-xs px-4 py-3 h-10 touch-manipulation"
                       size="sm"
                     >
                       Cancel
@@ -751,11 +751,11 @@ export default function JungleAdventureSettingsPanelV2({
                     <Button
                       disabled={!dirty}
                       onClick={handleSave}
-                      className="flex items-center gap-1 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-xs px-3 py-2 h-8 flex-1"
+                      className="flex items-center gap-1 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-xs px-4 py-3 h-10 flex-1 touch-manipulation"
                       size="sm"
                     >
                       <Save className="w-3 h-3" />
-                      Save & Apply
+                      Save
                     </Button>
                   </div>
                 </>
