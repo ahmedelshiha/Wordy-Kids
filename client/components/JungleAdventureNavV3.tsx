@@ -182,7 +182,7 @@ export default function JungleAdventureNavV3({
         aria-label="Jungle Adventure Navigation"
       >
         {/* Navigation Bar */}
-        <div className="flex justify-around items-end px-2 py-0.5">
+        <div className="flex justify-around items-end px-2 py-0">
           {items.map((item) => {
             const isActive = item.id === activeId;
             const animalClass = getAnimalAnimationClass(item.emoji);
@@ -304,7 +304,7 @@ export default function JungleAdventureNavV3({
                       onClick={() => handleParentAction("dashboard")}
                     >
                       <span className="flex items-center gap-2">
-                        ��� Parent Dashboard
+                        📊 Parent Dashboard
                       </span>
                     </Button>
                   )}
