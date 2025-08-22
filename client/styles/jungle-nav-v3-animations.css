@@ -273,26 +273,26 @@
     .jng-nav-icon-elephant,
     .jng-nav-icon-totem {
       /* Higher totem position on mobile even with reduced motion */
-      transform: translateY(-16px) !important;
+      transform: translateY(-20px) !important;
     }
 
     .jng-nav-v3-icon:hover {
-      transform: translateY(-16px) scale(1.05) !important;
+      transform: translateY(-20px) scale(1.05) !important;
       transition: transform 0.2s ease;
     }
 
     .jng-nav-icon-totem:hover {
-      transform: translateY(-16px) scale(1.03) !important; /* Adjusted for larger parent button */
+      transform: translateY(-20px) scale(1.03) !important; /* Adjusted for larger parent button */
       transition: transform 0.2s ease;
     }
 
     .jng-nav-v3-icon:active {
-      transform: translateY(-16px) scale(0.98) !important;
+      transform: translateY(-20px) scale(0.98) !important;
       transition: transform 0.1s ease;
     }
 
     .jng-nav-icon-totem:active {
-      transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
+      transform: translateY(-20px) scale(0.96) !important; /* Adjusted for larger parent button */
       transition: transform 0.1s ease;
     }
   }
@@ -306,8 +306,8 @@
 .jng-nav-animations-paused .jng-nav-icon-elephant,
 .jng-nav-animations-paused .jng-nav-icon-totem {
   animation-play-state: paused !important;
-  /* Maintain totem position when paused - desktop */
-  transform: translateY(-12px) !important;
+  /* Maintain elevated totem position when paused - desktop */
+  transform: translateY(-24px) !important;
 }
 
 /* Mobile paused state - higher position */
@@ -319,7 +319,7 @@
   .jng-nav-animations-paused .jng-nav-icon-elephant,
   .jng-nav-animations-paused .jng-nav-icon-totem {
     /* Higher totem position when paused on mobile */
-    transform: translateY(-16px) !important;
+    transform: translateY(-20px) !important;
   }
 }
 
@@ -380,28 +380,28 @@
     breathing 7s ease-in-out infinite,
     totemFireflyShimmer 16s ease-in-out infinite; /* Firefly shimmer effect */
   animation-delay: 0s, 6s; /* Stagger the shimmer */
-  transform: translateY(-12px); /* Same totem lift as others */
+  transform: translateY(-24px); /* Elevated totem position for pop-out effect */
   filter: drop-shadow(
-    0 4px 8px rgba(0, 0, 0, 0.4)
-  ); /* Stronger shadow for larger size */
+    0 4px 4px rgba(0, 0, 0, 0.25)
+  ); /* Enhanced drop shadow for pop-out look */
 }
 
 .jng-nav-icon-totem:hover {
-  transform: translateY(-12px) scale(1.1); /* Reduced hover scale since button is already 50% larger */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+  transform: translateY(-24px) scale(1.1); /* Elevated position with hover scale */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 16px rgba(251, 191, 36, 0.4)); /* Enhanced glow for larger button */
   transition: all 0.2s ease-out;
 }
 
 .jng-nav-icon-totem:active {
-  transform: translateY(-12px) scale(0.98); /* Adjusted for larger button */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.5));
+  transform: translateY(-24px) scale(0.98); /* Elevated position with active scale */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   transition: all 0.1s ease-out;
 }
 
 /* Active Parent Menu State */
 .jng-nav-icon-totem.active {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 20px rgba(255, 193, 7, 0.6)); /* Enhanced active glow */
 }
 
