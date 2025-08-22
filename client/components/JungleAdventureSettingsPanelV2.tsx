@@ -221,7 +221,11 @@ export default function JungleAdventureSettingsPanelV2({
   onOpenChange,
 }: Props) {
   const { isMobile, hasHaptic, prefersReducedMotion } = useMobileDevice();
-  const [settings, setSettings] = useState<Settings>(loadSettings());
+  const [settings, setSettings] = useState<Settings>(() => {
+    const loadedSettings = loadSettings();
+    console.log("🔧 Initial settings loaded:", loadedSettings);
+    return loadedSettings;
+  });
   const [dirty, setDirty] = useState(false);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
 
