@@ -1579,7 +1579,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
         achievementTitle = "Category Challenger! 💪";
-        achievementIcon = "��";
+        achievementIcon = "💪";
         achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!`;
       }
 
@@ -3242,7 +3242,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               <p className="text-sm text-jungle-dark mt-1">
                                                 Your personal jungle companion
                                                 creates adventures just for you!
-                                                🧙‍♂️✨
+                                                🧙��♂️✨
                                               </p>
                                             </div>
                                           </div>
@@ -4191,42 +4191,24 @@ export default function Index({ initialProfile }: IndexProps) {
                     navigator.vibrate(50);
                   }
                 }}
-                className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 h-auto justify-start text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[60px] w-full touch-manipulation"
+                className="flex items-center gap-3 p-4 h-auto justify-start text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden min-h-[64px] w-full touch-manipulation bg-gradient-to-r from-sky to-sky-dark hover:from-sky-dark hover:to-sky shadow-md hover:shadow-lg"
                 aria-label="Open Jungle Settings - Configure app preferences, safety controls, and adventure options"
                 role="button"
                 tabIndex={0}
-                style={{
-                  background: `
-                    linear-gradient(135deg,
-                      #228B22 0%,
-                      #32CD32 50%,
-                      #228B22 100%
-                    )
-                  `,
-                  boxShadow: `
-                    inset 0 1px 2px rgba(34, 139, 34, 0.2),
-                    0 4px 12px rgba(34, 139, 34, 0.3)
-                  `,
-                }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-200/10 to-emerald-200/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                 <div className="relative z-10 flex items-center gap-3 w-full">
                   <div className="relative">
                     <Settings
-                      className="w-6 h-6"
-                      style={{
-                        filter: "drop-shadow(0 1px 2px rgba(139, 69, 19, 0.3))",
-                        color: "#CD853F",
-                      }}
+                      className="w-6 h-6 text-white"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full" />
                   </div>
                   <div className="text-left flex-1 min-w-0">
                     <div className="font-semibold text-base sm:text-lg leading-tight">
                       Jungle Settings
                     </div>
-                    <div className="text-xs sm:text-sm text-green-100 leading-tight">
-                      🛠️ Configure adventure preferences and safety controls
+                    <div className="text-xs sm:text-sm text-blue-100 leading-tight opacity-90">
+                      Configure adventure preferences
                     </div>
                   </div>
                 </div>
