@@ -1723,7 +1723,7 @@ export function InteractiveDashboardWordCard({
                         ],
                         hard: [
                           "⚔️ What legendary jungle artifact is this?",
-                          "������ Which ancient jungle relic awaits?",
+                          "🏺 Which ancient jungle relic awaits?",
                           "🔮 Can you name this mystical jungle object?",
                           "👑 What sacred jungle treasure is this?",
                         ],
@@ -1845,7 +1845,7 @@ export function InteractiveDashboardWordCard({
                     const difficulty = currentWord.difficulty || "medium";
                     const difficultyEmojis = {
                       easy: "🌱",
-                      medium: "⚡",
+                      medium: "���",
                       hard: "🔥",
                     };
                     const difficultyNames = {
