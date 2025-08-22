@@ -3972,59 +3972,40 @@ export default function Index({ initialProfile }: IndexProps) {
             />
           )}
 
-          {/* Adventure Navigation */}
+          {/* Adventure Navigation - New PNG Icon Navigation */}
           {userRole === "child" && (
-            <JungleAdventureNavV3
-              activeId={activeTab}
-              onNavigate={setActiveTab}
-              pauseAnimations={showSettings}
-              parentDialogSections={{
-                dashboard: true,
-                settings: true,
-                signOut: !isGuest,
-              }}
-              onParentDashboard={() => {
-                setUserRole("parent");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              onParentSettings={() => {
-                setShowSettings(true);
-                if (navigator.vibrate) {
-                  navigator.vibrate(50);
+            <JungleAdventureIconNav
+              activeId={
+                // Map old tab IDs to new navigation IDs
+                activeTab === "dashboard" ? "home" :
+                activeTab === "learn" ? "jungle" :
+                activeTab === "quiz" ? "quiz" :
+                activeTab === "achievements" ? "trophy" :
+                activeTab
+              }
+              onNavigate={(newId) => {
+                // Map new navigation IDs back to old tab IDs
+                const tabMapping = {
+                  "home": "dashboard",
+                  "jungle": "learn",
+                  "quiz": "quiz",
+                  "trophy": "achievements",
+                  "parents": "parent-menu"
+                };
+
+                if (newId === "parents") {
+                  // Handle parent navigation - open settings
+                  setShowSettings(true);
+                  if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                  }
+                } else {
+                  const mappedTab = tabMapping[newId as keyof typeof tabMapping];
+                  if (mappedTab) {
+                    setActiveTab(mappedTab);
+                  }
                 }
               }}
-              onParentSignOut={() => {
-                logout();
-              }}
-              onParentRegister={() => {
-                navigate("/signup");
-              }}
-              items={[
-                {
-                  id: "dashboard",
-                  label: "Home Tree",
-                  emoji: "🦉",
-                  ariaLabel: "Dashboard",
-                },
-                {
-                  id: "learn",
-                  label: "Word Jungle",
-                  emoji: "��",
-                  ariaLabel: "Learning",
-                },
-                {
-                  id: "quiz",
-                  label: "Quiz Adventure",
-                  emoji: "🐵",
-                  ariaLabel: "Quiz Games",
-                },
-                {
-                  id: "achievements",
-                  label: "Trophy Grove",
-                  emoji: "🐘",
-                  ariaLabel: "Achievements",
-                },
-              ]}
             />
           )}
 
