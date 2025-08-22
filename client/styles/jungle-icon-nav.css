@@ -32,10 +32,10 @@
 
 .jungle-nav-icon {
   width: 12vw;
-  max-width: 48px;
+  max-width: 58px;
   height: auto;
-  /* Desktop: Float 20px above the bar */
-  transform: translateY(-20px);
+  /* Desktop: Float 28px above the bar (40% increase from -20px) */
+  transform: translateY(-28px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
@@ -61,10 +61,10 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float 28px above the bar */
-    transform: translateY(-28px);
-    /* Slightly smaller max size on very small screens */
-    max-width: 44px;
+    /* Mobile: Float 39px above the bar (40% increase from -28px) */
+    transform: translateY(-39px);
+    /* 20% larger than before */
+    max-width: 53px;
   }
 
   .jungle-icon-nav-item {
@@ -82,7 +82,7 @@
 /* Tablet adjustments */
 @media (min-width: 768px) and (max-width: 1024px) {
   .jungle-nav-icon {
-    max-width: 52px;
+    max-width: 62px;
   }
 
   .jungle-nav-label {
@@ -94,7 +94,7 @@
 /* Large desktop adjustments */
 @media (min-width: 1025px) {
   .jungle-nav-icon {
-    max-width: 56px;
+    max-width: 67px;
   }
 
   .jungle-nav-label {
@@ -116,9 +116,9 @@
 /* Hover effects for desktop */
 @media (hover: hover) {
   .jungle-icon-nav-item:hover .jungle-nav-icon {
-    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)) 
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
             drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
-    transform: translateY(-20px) scale(1.05);
+    transform: translateY(-28px) scale(1.05);
   }
 
   .jungle-icon-nav-item:hover .jungle-nav-label {
@@ -129,7 +129,7 @@
   /* Mobile hover adjustments */
   @media (max-width: 767px) {
     .jungle-icon-nav-item:hover .jungle-nav-icon {
-      transform: translateY(-28px) scale(1.05);
+      transform: translateY(-39px) scale(1.05);
     }
   }
 }
@@ -191,8 +191,8 @@
 /* Very small screens (below 375px) */
 @media (max-width: 374px) {
   .jungle-nav-icon {
-    max-width: 40px;
-    transform: translateY(-24px);
+    max-width: 48px;
+    transform: translateY(-34px);
   }
 
   .jungle-icon-nav-item {
@@ -210,7 +210,7 @@
 /* Large screens (4K and above) */
 @media (min-width: 2560px) {
   .jungle-nav-icon {
-    max-width: 64px;
+    max-width: 77px;
   }
 
   .jungle-nav-label {
