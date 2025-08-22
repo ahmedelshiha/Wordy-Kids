@@ -79,7 +79,7 @@ import { JungleAdventureParentDashboard } from "@/components/JungleAdventurePare
 import { UnifiedVowelGame } from "@/components/games/UnifiedVowelGame";
 import { WordCreator } from "@/components/WordCreator";
 import { AdventureDashboard } from "@/components/AdventureDashboard";
-import JungleAdventureNavV2 from "@/components/JungleAdventureNavV2";
+import JungleAdventureNavV3 from "@/components/JungleAdventureNavV3";
 import { EnhancedAchievementsPage } from "./EnhancedAchievementsPage";
 import { adventureService } from "@/lib/adventureService";
 import { goalProgressTracker } from "@/lib/goalProgressTracker";
@@ -3286,7 +3286,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           jungle quiz! 3D effects, power-ups,
                                           achievements, dynamic music, and
                                           immersive gaming that rivals premium
-                                          mobile games! 🎮✨🌟
+                                          mobile games! ����✨🌟
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
@@ -3957,14 +3957,10 @@ export default function Index({ initialProfile }: IndexProps) {
 
           {/* Adventure Navigation */}
           {userRole === "child" && (
-            <JungleAdventureNavV2
+            <JungleAdventureNavV3
               activeId={activeTab}
-              showParentMenuOnDesktop={true}
               onNavigate={setActiveTab}
               pauseAnimations={showSettings}
-              iconSize={52}
-              iconLift={18}
-              showParentMenuIcon={true}
               parentDialogSections={{
                 dashboard: true,
                 settings: true,

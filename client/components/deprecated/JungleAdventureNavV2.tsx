@@ -1,3 +1,12 @@
+// 🚨 Deprecated: Use JungleAdventureNavV3.tsx instead
+// This component has been moved to deprecated folder as part of navigation upgrade
+// Migration to V3 includes:
+// - Enhanced jungle theming with proper gradients
+// - Improved parent menu integration
+// - Better mobile/desktop responsive design
+// - Optimized performance and accessibility
+// - Simplified prop interface
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 // Safe lucide-react imports (no Map)
@@ -16,7 +25,7 @@ import {
   LogOut,
   UserPlus,
 } from "lucide-react";
-import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
