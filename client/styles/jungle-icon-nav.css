@@ -192,7 +192,7 @@
 @media (max-width: 374px) {
   .jungle-nav-icon {
     max-width: 48px;
-    transform: translateY(-50px);
+    transform: translateY(-75px);
   }
 
   .jungle-icon-nav-item {
