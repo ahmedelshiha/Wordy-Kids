@@ -1,0 +1,227 @@
+/* Jungle Adventure Icon Navigation Styles */
+
+.jungle-icon-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: #0b6623; /* Dark jungle green */
+  height: 64px;
+  overflow: visible; /* Allow icons to float above */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.jungle-icon-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 48px;
+  min-height: 48px;
+  touch-action: manipulation;
+  position: relative;
+  /* Ensure adequate touch target */
+  padding-bottom: 8px;
+  padding-top: 24px; /* Account for floating icons */
+}
+
+.jungle-nav-icon {
+  width: 12vw;
+  max-width: 48px;
+  height: auto;
+  /* Desktop: Float 20px above the bar */
+  transform: translateY(-20px);
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
+  transition: all 0.2s ease;
+  /* Ensure crisp rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.jungle-nav-label {
+  font-size: 3vw;
+  max-font-size: 14px;
+  line-height: 1.1em;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  margin-top: -16px; /* Bring label closer to icon */
+  transition: color 0.2s ease;
+  /* Prevent text selection on touch */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 767px) {
+  .jungle-nav-icon {
+    /* Mobile: Float 28px above the bar */
+    transform: translateY(-28px);
+    /* Slightly smaller max size on very small screens */
+    max-width: 44px;
+  }
+
+  .jungle-icon-nav-item {
+    min-width: 44px;
+    padding-top: 32px; /* Account for higher floating on mobile */
+  }
+
+  .jungle-nav-label {
+    font-size: 2.8vw;
+    max-font-size: 12px;
+    margin-top: -20px; /* Adjust for higher floating icons */
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .jungle-nav-icon {
+    max-width: 52px;
+  }
+
+  .jungle-nav-label {
+    font-size: 2.5vw;
+    max-font-size: 13px;
+  }
+}
+
+/* Large desktop adjustments */
+@media (min-width: 1025px) {
+  .jungle-nav-icon {
+    max-width: 56px;
+  }
+
+  .jungle-nav-label {
+    font-size: 14px; /* Fixed size on large screens */
+  }
+}
+
+/* Active state styling */
+.jungle-icon-nav-item[aria-current="page"] .jungle-nav-icon {
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)) 
+          drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+}
+
+.jungle-icon-nav-item[aria-current="page"] .jungle-nav-label {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
+               0 0 4px rgba(255, 215, 0, 0.4);
+}
+
+/* Hover effects for desktop */
+@media (hover: hover) {
+  .jungle-icon-nav-item:hover .jungle-nav-icon {
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)) 
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+    transform: translateY(-20px) scale(1.05);
+  }
+
+  .jungle-icon-nav-item:hover .jungle-nav-label {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
+                 0 0 4px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Mobile hover adjustments */
+  @media (max-width: 767px) {
+    .jungle-icon-nav-item:hover .jungle-nav-icon {
+      transform: translateY(-28px) scale(1.05);
+    }
+  }
+}
+
+/* Focus styles for accessibility */
+.jungle-icon-nav-item:focus {
+  outline: none;
+}
+
+.jungle-icon-nav-item:focus .jungle-nav-icon {
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25)) 
+          drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+}
+
+.jungle-icon-nav-item:focus .jungle-nav-label {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
+               0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .jungle-nav-icon {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+  }
+
+  .jungle-nav-label {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    font-weight: 600;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jungle-nav-icon,
+  .jungle-nav-label {
+    transition: none;
+  }
+
+  .jungle-icon-nav-item {
+    transition: none;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .jungle-icon-nav {
+    background-color: #0a5b1f; /* Slightly darker for dark mode */
+  }
+
+  .jungle-nav-icon {
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.4)) brightness(1.1);
+  }
+
+  .jungle-nav-label {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Very small screens (below 375px) */
+@media (max-width: 374px) {
+  .jungle-nav-icon {
+    max-width: 40px;
+    transform: translateY(-24px);
+  }
+
+  .jungle-icon-nav-item {
+    min-width: 40px;
+    padding-top: 28px;
+  }
+
+  .jungle-nav-label {
+    font-size: 2.5vw;
+    max-font-size: 11px;
+    margin-top: -18px;
+  }
+}
+
+/* Large screens (4K and above) */
+@media (min-width: 2560px) {
+  .jungle-nav-icon {
+    max-width: 64px;
+  }
+
+  .jungle-nav-label {
+    font-size: 16px;
+  }
+
+  .jungle-icon-nav {
+    height: 72px;
+  }
+
+  .jungle-icon-nav-item {
+    padding-top: 28px;
+  }
+}
