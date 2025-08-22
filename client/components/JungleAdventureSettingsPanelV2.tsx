@@ -854,48 +854,53 @@ function SettingsSection({
   isMobile: boolean;
   defaultOpen?: boolean;
 }) {
-  if (isMobile) {
-    return (
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full"
-        defaultValue={defaultOpen ? "item-1" : undefined}
-      >
-        <AccordionItem
-          value="item-1"
-          className="border rounded-lg bg-white/80 backdrop-blur-sm shadow-sm"
-        >
-          <AccordionTrigger className="px-3 py-3 hover:no-underline text-sm touch-manipulation">
-            <div className="flex items-center gap-2 font-medium text-green-800">
-              {icon}
-              <span>{title}</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-3 pb-3">
-            <ScrollArea className="max-h-60 pr-3 jungle-mobile-category jungle-mobile-scrollarea">
-              <div className="space-y-2.5">{children}</div>
-            </ScrollArea>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    );
-  }
-
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-96">
-      <CardHeader className="pb-1.5 pt-2.5 flex-shrink-0">
-        <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
-          {icon}
-          <span>{title}</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pt-0 pb-2.5 min-h-0 jungle-category-container">
-        <ScrollArea className="h-full pr-2.5 jungle-category-content jungle-settings-scrollarea">
-          <div className="space-y-2.5">{children}</div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full"
+      defaultValue={defaultOpen ? "item-1" : undefined}
+    >
+      <AccordionItem
+        value="item-1"
+        className={cn(
+          "border rounded-lg backdrop-blur-sm shadow-sm",
+          isMobile
+            ? "bg-white/80"
+            : "bg-white/70 border-orange-200/50"
+        )}
+      >
+        <AccordionTrigger
+          className={cn(
+            "hover:no-underline font-medium text-green-800",
+            isMobile
+              ? "px-3 py-3 text-sm touch-manipulation"
+              : "px-4 py-4 text-base"
+          )}
+        >
+          <div className="flex items-center gap-2">
+            {icon}
+            <span>{title}</span>
+          </div>
+        </AccordionTrigger>
+        <AccordionContent
+          className={cn(
+            isMobile ? "px-3 pb-3" : "px-4 pb-4"
+          )}
+        >
+          <ScrollArea
+            className={cn(
+              "pr-3",
+              isMobile
+                ? "max-h-60 jungle-mobile-category jungle-mobile-scrollarea"
+                : "max-h-80 jungle-category-content jungle-settings-scrollarea"
+            )}
+          >
+            <div className="space-y-2.5">{children}</div>
+          </ScrollArea>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
 
