@@ -88,13 +88,15 @@ export default function MobileJungleSettingsPanel({
       case "backgroundMusic":
         setSoundEnabled(value);
         if (value) {
-          playSoundIfEnabled("jungle-ambient", 0.3);
+          // Play a success sound to indicate background music is enabled
+          playSoundIfEnabled.success();
         }
         break;
       case "soundEffects":
         setUIInteractionSoundsEnabled(value);
         if (value) {
-          playSoundIfEnabled("ui-click", 0.5);
+          // Play a click sound to indicate sound effects are enabled
+          playSoundIfEnabled.click();
         }
         break;
       case "reducedMotion":
