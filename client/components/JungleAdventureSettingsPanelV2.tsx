@@ -178,10 +178,11 @@ function saveSettings(s: Settings) {
     };
   }
 
+  // Make session manager globally available
+  (window as any).sessionManager = sessionManager;
+
   // Notify any active session about settings change
-  if ((window as any).sessionManager) {
-    console.log("📚 Settings updated - session will use new values on next start");
-  }
+  console.log("📚 Settings updated - session will use new values on next start");
 }
 
 // Helper function to get current audio settings for use throughout the app
