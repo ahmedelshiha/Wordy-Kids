@@ -243,7 +243,7 @@ export default function JungleAdventureNavV3({
               <div
                 className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? "vine-active" : ""}`}
               >
-                <span className="vine-wrap vine-wrap-1">��</span>
+                <span className="vine-wrap vine-wrap-1">🌿</span>
                 <span className="vine-wrap vine-wrap-2">🌿</span>
                 <span className="vine-wrap vine-wrap-3">🌿</span>
               </div>
@@ -299,7 +299,7 @@ export default function JungleAdventureNavV3({
                   >
                     {item.emoji}
                   </span>
-                  <span className="text-xs mt-0 font-medium leading-tight">
+                  <span className="text-xs mt-[-3px] font-medium leading-tight">
                     {item.label}
                   </span>
                 </motion.button>
