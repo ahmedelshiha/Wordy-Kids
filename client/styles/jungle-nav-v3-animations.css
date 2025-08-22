@@ -272,6 +272,17 @@
     min-height: 29px; /* 30% reduction from 42px (42 * 0.7 = 29.4px ≈ 29px) */
     padding-bottom: 0.5px; /* Even more minimal padding for mobile */
   }
+
+  /* Ensure icons maintain position despite reduced container */
+  .jng-nav-v3-icon,
+  .jng-nav-icon-owl,
+  .jng-nav-icon-parrot,
+  .jng-nav-icon-monkey,
+  .jng-nav-icon-elephant,
+  .jng-nav-icon-totem {
+    /* Keep totem position unchanged on mobile */
+    transform: translateY(-12px) !important;
+  }
 }
 
 /* Parent Menu Icon (🪵 Totem) - Mystical Jungle Guardian */
