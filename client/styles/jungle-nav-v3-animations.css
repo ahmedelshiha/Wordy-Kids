@@ -127,10 +127,10 @@
   /* GPU acceleration for better performance */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Default totem position - rise above navigation bar */
-  transform: translateY(-12px);
-  /* Soft jungle glow base */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  /* Default totem position - rise above navigation bar (24px for pop-out effect) */
+  transform: translateY(-24px);
+  /* Enhanced drop shadow for pop-out look */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 /* Animal-Specific Totem Classes - Each Animal Has Unique Life */
@@ -166,23 +166,23 @@
 .jng-nav-v3-icon.active {
   animation-duration: 6s; /* Slightly faster breathing when active */
   /* Enhanced jungle glow for active state */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
 }
 
 /* Hover State Enhancement - Totem Awakening */
 .jng-nav-v3-icon:hover {
-  transform: translateY(-12px) scale(1.15);
-  /* Soft jungle glow aura on hover */
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+  transform: translateY(-24px) scale(1.15);
+  /* Enhanced drop shadow for pop-out look on hover */
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25))
     drop-shadow(0 0 12px rgba(251, 191, 36, 0.35));
   transition: all 0.2s ease-out;
 }
 
 /* Touch/Tap State - Totem Press */
 .jng-nav-v3-icon:active {
-  transform: translateY(-12px) scale(0.95);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  transform: translateY(-24px) scale(0.95);
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   transition: all 0.1s ease-out;
 }
 
