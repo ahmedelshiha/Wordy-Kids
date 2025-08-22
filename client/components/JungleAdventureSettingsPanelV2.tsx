@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -45,6 +44,7 @@ import {
   useMobileDevice,
   triggerHapticFeedback,
 } from "@/hooks/use-mobile-device";
+import { sessionManager } from "@/lib/sessionManager";
 import {
   JungleAdventureThemeManager,
   JungleTheme,
@@ -166,6 +166,44 @@ function saveSettings(s: Settings) {
   // Apply sound settings
   setSoundEnabled(s.uiSounds);
   setUIInteractionSoundsEnabled(s.uiSounds);
+
+  // Apply voice settings to audioService
+  if (audioService) {
+    audioService.setVoiceType(s.voice);
+    // Store speech rate for global use
+    (window as any).jungleAudioSettings = {
+      speechRate: s.speechRate,
+      voice: s.voice,
+      ambientVolume: s.ambientVolume,
+    };
+  }
+
+  // Make session manager globally available
+  (window as any).sessionManager = sessionManager;
+
+  // Notify any active session about settings change
+  console.log(
+    "📚 Settings updated - session will use new values on next start",
+  );
+}
+
+// Helper function to get current audio settings for use throughout the app
+export function getCurrentAudioSettings() {
+  const settings = loadSettings();
+  return {
+    speechRate: settings.speechRate,
+    voice: settings.voice,
+    ambientVolume: settings.ambientVolume,
+  };
+}
+
+// Helper function to pronounce word with current settings
+export function pronounceWordWithSettings(word: string, options: any = {}) {
+  const audioSettings = getCurrentAudioSettings();
+  return audioService.pronounceWord(word, {
+    rate: audioSettings.speechRate,
+    ...options,
+  });
 }
 
 // Component props
@@ -278,6 +316,7 @@ export default function JungleAdventureSettingsPanelV2({
     const sampleText =
       "Hello! Let's explore the jungle together and discover amazing words!";
     audioService.pronounceWord(sampleText, {
+      rate: settings.speechRate,
       onStart: () => playUISound(SOUND_FILES.ui.voicePreview),
     });
   }
@@ -318,7 +357,7 @@ export default function JungleAdventureSettingsPanelV2({
           "border-2 border-orange-200/60",
           isMobile
             ? "w-[min(380px,95vw)] max-h-[75vh]"
-            : "w-[min(700px,85vw)] max-h-[75vh]",
+            : "w-[min(900px,90vw)] max-h-[85vh]",
         )}
         style={{
           backgroundImage: `
@@ -364,13 +403,14 @@ export default function JungleAdventureSettingsPanelV2({
               "flex-1 min-h-0 jungle-settings-category",
               isMobile
                 ? "max-h-[calc(75vh-120px)] p-3 jungle-mobile-scrollarea"
-                : "max-h-[calc(75vh-110px)] p-3 jungle-settings-scrollarea",
+                : "max-h-[calc(85vh-100px)] p-3 jungle-settings-scrollarea",
             )}
           >
             <div
               className={cn(
-                isMobile ? "space-y-2" : "space-y-2.5",
-                isMobile ? "" : "grid grid-cols-2 gap-2.5 auto-rows-min",
+                isMobile
+                  ? "space-y-2"
+                  : "grid grid-cols-2 xl:grid-cols-3 gap-3 auto-rows-min",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
@@ -406,7 +446,7 @@ export default function JungleAdventureSettingsPanelV2({
                         className={cn(
                           isMobile
                             ? "w-40 h-10 touch-manipulation"
-                            : "w-36 h-8 text-xs",
+                            : "w-32 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -453,7 +493,7 @@ export default function JungleAdventureSettingsPanelV2({
                         className={cn(
                           isMobile
                             ? "w-40 h-10 touch-manipulation"
-                            : "w-36 h-8 text-xs",
+                            : "w-32 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
@@ -525,14 +565,14 @@ export default function JungleAdventureSettingsPanelV2({
                         className={cn(
                           isMobile
                             ? "w-40 h-10 touch-manipulation"
-                            : "w-36 h-8 text-xs",
+                            : "w-32 h-8 text-xs",
                         )}
                       >
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="parchment">📜 Parchment</SelectItem>
-                        <SelectItem value="jungle">🌿 Jungle</SelectItem>
+                        <SelectItem value="jungle">���� Jungle</SelectItem>
                         <SelectItem value="canopy">🌫️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
                         <SelectItem value="sunset">🌅 Sunset</SelectItem>
@@ -581,7 +621,7 @@ export default function JungleAdventureSettingsPanelV2({
                   </div>
 
                   <SettingRow
-                    label="Fireflies ��"
+                    label="Fireflies ✨"
                     control={
                       <Switch
                         checked={settings.overlays.fireflies}
@@ -664,7 +704,7 @@ export default function JungleAdventureSettingsPanelV2({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="easy">🌱 Easy</SelectItem>
-                        <SelectItem value="normal">���� Normal</SelectItem>
+                        <SelectItem value="normal">🌿 Normal</SelectItem>
                         <SelectItem value="hard">🌳 Hard</SelectItem>
                       </SelectContent>
                     </Select>
@@ -715,51 +755,53 @@ export default function JungleAdventureSettingsPanelV2({
                 />
               </SettingsSection>
 
-              {/* ♿ Accessibility Section */}
-              <SettingsSection
-                title="♿ Accessibility"
-                icon={<Accessibility className="w-4 h-4" />}
-                isMobile={isMobile}
-              >
-                <SettingRow
-                  label={`Text Size ×${settings.textScale.toFixed(1)}`}
+              {/* ♿ Accessibility Section - Mobile Only */}
+              {isMobile && (
+                <SettingsSection
+                  title="♿ Accessibility"
+                  icon={<Accessibility className="w-4 h-4" />}
+                  isMobile={isMobile}
                 >
-                  <Slider
-                    min={90}
-                    max={130}
-                    step={5}
-                    value={[settings.textScale * 100]}
-                    onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                  <SettingRow
+                    label={`Text Size ×${settings.textScale.toFixed(1)}`}
+                  >
+                    <Slider
+                      min={90}
+                      max={130}
+                      step={5}
+                      value={[settings.textScale * 100]}
+                      onValueChange={([v]) => markDirty({ textScale: v / 100 })}
+                      className={cn(
+                        "flex-1",
+                        isMobile ? "touch-manipulation h-6" : "h-4",
+                      )}
+                    />
+                  </SettingRow>
+
+                  <SettingRow
+                    label="Haptic Feedback"
+                    description="Vibration feedback on mobile devices"
+                    control={
+                      <Switch
+                        checked={settings.haptics}
+                        onCheckedChange={(v) => markDirty({ haptics: v })}
+                        disabled={!hasHaptic}
+                      />
+                    }
                   />
-                </SettingRow>
 
-                <SettingRow
-                  label="Haptic Feedback"
-                  description="Vibration feedback on mobile devices"
-                  control={
-                    <Switch
-                      checked={settings.haptics}
-                      onCheckedChange={(v) => markDirty({ haptics: v })}
-                      disabled={!hasHaptic}
-                    />
-                  }
-                />
-
-                <SettingRow
-                  label="Captions & Labels"
-                  description="Show additional text descriptions"
-                  control={
-                    <Switch
-                      checked={settings.captions}
-                      onCheckedChange={(v) => markDirty({ captions: v })}
-                    />
-                  }
-                />
-              </SettingsSection>
+                  <SettingRow
+                    label="Captions & Labels"
+                    description="Show additional text descriptions"
+                    control={
+                      <Switch
+                        checked={settings.captions}
+                        onCheckedChange={(v) => markDirty({ captions: v })}
+                      />
+                    }
+                  />
+                </SettingsSection>
+              )}
             </div>
           </ScrollArea>
 
@@ -855,6 +897,7 @@ function SettingsSection({
   defaultOpen?: boolean;
 }) {
   if (isMobile) {
+    // Mobile: Keep accordion behavior
     return (
       <Accordion
         type="single"
@@ -882,20 +925,22 @@ function SettingsSection({
     );
   }
 
+  // Desktop: Show all content expanded with compact card layout
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-orange-200/50 flex flex-col max-h-96">
-      <CardHeader className="pb-1.5 pt-2.5 flex-shrink-0">
-        <CardTitle className="text-sm font-semibold text-green-800 flex items-center gap-2">
+    <div className="bg-white/70 backdrop-blur-sm border border-orange-200/50 rounded-lg shadow-sm">
+      {/* Category Header - Always visible, non-clickable */}
+      <div className="px-3 py-2 border-b border-orange-200/30 bg-gradient-to-r from-green-50/50 to-yellow-50/50">
+        <div className="flex items-center gap-2 font-medium text-green-800 text-sm">
           {icon}
           <span>{title}</span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pt-0 pb-2.5 min-h-0 jungle-category-container">
-        <ScrollArea className="h-full pr-2.5 jungle-category-content jungle-settings-scrollarea">
-          <div className="space-y-2.5">{children}</div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+
+      {/* Category Content - Always expanded */}
+      <div className="px-3 py-2.5">
+        <div className="space-y-2">{children}</div>
+      </div>
+    </div>
   );
 }
 

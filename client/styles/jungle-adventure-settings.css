@@ -18,10 +18,59 @@
     gap: 0.5rem;
   }
 
-  /* Ensure proper grid responsiveness */
-  .jungle-settings-dialog .grid.grid-cols-2 {
-    grid-template-columns: 1fr 1fr;
+  /* Ensure proper grid responsiveness for 3-column layout */
+  .jungle-settings-dialog .grid.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
     align-items: start;
+    /* Allow grid items to have flexible height for expanded categories */
+    grid-auto-rows: auto;
+    gap: 0.75rem;
+  }
+
+  /* Compact desktop category cards for expanded view */
+  .jungle-settings-dialog .bg-white\/70 {
+    min-height: fit-content;
+  }
+
+  /* Optimize category headers for desktop */
+  .jungle-settings-dialog .bg-gradient-to-r {
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Compact controls for desktop */
+  .jungle-settings-dialog .w-36 {
+    width: 8rem;
+  }
+}
+
+/* Medium desktop screens - 2 columns */
+@media (min-width: 768px) and (max-width: 1200px) {
+  .jungle-settings-dialog {
+    max-width: 750px;
+  }
+
+  .jungle-settings-dialog .grid.grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Larger desktop screens - optimize for 3 columns */
+@media (min-width: 1200px) {
+  .jungle-settings-dialog {
+    max-width: 950px;
+  }
+
+  /* Desktop accordion category enhancements */
+  .jungle-settings-category {
+    /* Enable smooth scrolling and proper overflow handling */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  /* Desktop accordion content spacing */
+  .jungle-settings-dialog [data-state="open"] {
+    /* Ensure expanded accordions have proper spacing */
+    margin-bottom: 0.5rem;
   }
 }
 
