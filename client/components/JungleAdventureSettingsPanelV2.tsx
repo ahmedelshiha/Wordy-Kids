@@ -620,7 +620,7 @@ export default function JungleAdventureSettingsPanelV2({
                         markDirty({ difficulty: v as Settings["difficulty"] })
                       }
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className={cn("w-32", isMobile && "h-10 touch-manipulation")}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
