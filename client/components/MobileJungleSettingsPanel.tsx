@@ -222,9 +222,10 @@ export default function MobileJungleSettingsPanel({
         </motion.div>
 
         {/* Scrollable Settings Content */}
-        <ScrollArea className="flex-1 max-h-[60vh]">
-          <motion.div
-            className="p-4 space-y-4"
+        <div className="flex flex-col min-h-0 flex-1">
+          <ScrollArea className="flex-1 min-h-0 max-h-[calc(80vh-120px)]">
+            <motion.div
+              className="p-4 space-y-4"
             style={{
               backgroundImage: `
                 radial-gradient(circle at 10% 20%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
@@ -237,22 +238,22 @@ export default function MobileJungleSettingsPanel({
             transition={{ delay: 0.2 }}
           >
             {/* Background Music Setting */}
-            <Card className="jungle-setting-card bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-sm">
+            <Card className="jungle-setting-card bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-sm flex-shrink-0">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-green-100 rounded-full">
+                <div className="flex items-center justify-between min-h-0">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="p-2 bg-green-100 rounded-full flex-shrink-0">
                       {settings.backgroundMusic ? (
                         <Music className="w-5 h-5 text-green-600" />
                       ) : (
                         <VolumeX className="w-5 h-5 text-gray-500" />
                       )}
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-green-800">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold text-green-800 truncate">
                         🎵 Background Music
                       </h3>
-                      <p className="text-sm text-green-600">
+                      <p className="text-sm text-green-600 truncate">
                         Peaceful jungle sounds
                       </p>
                     </div>
@@ -262,29 +263,29 @@ export default function MobileJungleSettingsPanel({
                     onCheckedChange={(value) =>
                       updateSetting("backgroundMusic", value)
                     }
-                    className="jungle-switch"
+                    className="jungle-switch flex-shrink-0"
                   />
                 </div>
               </CardContent>
             </Card>
 
             {/* Sound Effects Setting */}
-            <Card className="jungle-setting-card bg-gradient-to-r from-blue-50 to-sky-50 border-blue-200 shadow-sm">
+            <Card className="jungle-setting-card bg-gradient-to-r from-blue-50 to-sky-50 border-blue-200 shadow-sm flex-shrink-0">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-100 rounded-full">
+                <div className="flex items-center justify-between min-h-0">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="p-2 bg-blue-100 rounded-full flex-shrink-0">
                       {settings.soundEffects ? (
                         <Volume2 className="w-5 h-5 text-blue-600" />
                       ) : (
                         <VolumeX className="w-5 h-5 text-gray-500" />
                       )}
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-blue-800">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold text-blue-800 truncate">
                         🔊 Sound Effects
                       </h3>
-                      <p className="text-sm text-blue-600">
+                      <p className="text-sm text-blue-600 truncate">
                         Button clicks and game sounds
                       </p>
                     </div>
@@ -294,25 +295,25 @@ export default function MobileJungleSettingsPanel({
                     onCheckedChange={(value) =>
                       updateSetting("soundEffects", value)
                     }
-                    className="jungle-switch"
+                    className="jungle-switch flex-shrink-0"
                   />
                 </div>
               </CardContent>
             </Card>
 
             {/* Reduced Motion Setting */}
-            <Card className="jungle-setting-card bg-gradient-to-r from-purple-50 to-violet-50 border-purple-200 shadow-sm">
+            <Card className="jungle-setting-card bg-gradient-to-r from-purple-50 to-violet-50 border-purple-200 shadow-sm flex-shrink-0">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-purple-100 rounded-full">
+                <div className="flex items-center justify-between min-h-0">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="p-2 bg-purple-100 rounded-full flex-shrink-0">
                       <Eye className="w-5 h-5 text-purple-600" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-purple-800">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold text-purple-800 truncate">
                         👁️ Reduced Motion
                       </h3>
-                      <p className="text-sm text-purple-600">
+                      <p className="text-sm text-purple-600 truncate">
                         Less animations for comfort
                       </p>
                     </div>
@@ -322,7 +323,7 @@ export default function MobileJungleSettingsPanel({
                     onCheckedChange={(value) =>
                       updateSetting("reducedMotion", value)
                     }
-                    className="jungle-switch"
+                    className="jungle-switch flex-shrink-0"
                   />
                 </div>
               </CardContent>
@@ -338,8 +339,9 @@ export default function MobileJungleSettingsPanel({
                 <Leaf className="w-4 h-4 scale-x-[-1]" />
               </div>
             </div>
-          </motion.div>
-        </ScrollArea>
+            </motion.div>
+          </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );
