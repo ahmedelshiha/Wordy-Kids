@@ -1,7 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
+import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import "@/styles/jungle-icon-nav.css";
 
 export type IconNavItem = {
@@ -70,6 +81,12 @@ export default function JungleAdventureIconNav({
 }: JungleAdventureIconNavProps) {
   const [tappedItem, setTappedItem] = useState<string | null>(null);
   const [translateY, setTranslateY] = useState(-55);
+  const [showParentMenu, setShowParentMenu] = useState(false);
+  const [showParentDashboard, setShowParentDashboard] = useState(false);
+  const [showSettingsPanel, setShowSettingsPanel] = useState(false);
+
+  const { isGuest } = useAuth();
+  const navigate = useNavigate();
 
   // Update translateY based on screen size - slightly lower positioning
   useEffect(() => {
@@ -100,11 +117,43 @@ export default function JungleAdventureIconNav({
     // Reset tapped state after animation
     setTimeout(() => setTappedItem(null), 300);
 
+    // Special handling for parent menu
+    if (itemId === "parents") {
+      setShowParentMenu(true);
+      return;
+    }
+
     const item = items.find((i) => i.id === itemId);
     if (item?.onClick) {
       item.onClick();
     } else if (onNavigate) {
       onNavigate(itemId);
+    }
+  };
+
+  const handleParentAction = (action: string) => {
+    setShowParentMenu(false);
+
+    // Add haptic feedback
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
+    }
+
+    switch (action) {
+      case "dashboard":
+        setShowParentDashboard(true);
+        break;
+      case "settings":
+        setShowSettingsPanel(true);
+        break;
+      case "logout":
+        if (isGuest) {
+          navigate("/signup");
+        } else {
+          // Handle logout functionality
+          navigate("/");
+        }
+        break;
     }
   };
 
