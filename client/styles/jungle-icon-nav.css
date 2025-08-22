@@ -27,15 +27,15 @@
   position: relative;
   /* Ensure adequate touch target */
   padding-bottom: 8px;
-  padding-top: 30px; /* Account for 24px floating icons plus margin */
+  padding-top: 36px; /* Account for 30px floating icons plus margin */
 }
 
 .jungle-nav-icon {
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float 24px above the bar for playful pop-out effect */
-  transform: translateY(-24px);
+  /* Desktop: Float 30px above the bar for playful pop-out effect */
+  transform: translateY(-30px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
@@ -49,7 +49,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -14px; /* Bring label closer to floating icon */
+  margin-top: -20px; /* Bring label closer to floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -61,21 +61,21 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float 20px above the bar for playful pop-out effect */
-    transform: translateY(-20px);
+    /* Mobile: Float 25px above the bar for playful pop-out effect */
+    transform: translateY(-25px);
     /* 20% larger than before */
     max-width: 53px;
   }
 
   .jungle-icon-nav-item {
     min-width: 44px;
-    padding-top: 26px; /* Account for 20px floating icons on mobile plus margin */
+    padding-top: 31px; /* Account for 25px floating icons on mobile plus margin */
   }
 
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -10px; /* Adjust for 20px floating icons on mobile */
+    margin-top: -15px; /* Adjust for 25px floating icons on mobile */
   }
 }
 
@@ -119,7 +119,7 @@
   .jungle-icon-nav-item:hover .jungle-nav-icon {
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25))
       drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
-    transform: translateY(-24px) scale(1.05);
+    transform: translateY(-30px) scale(1.05);
   }
 
   .jungle-icon-nav-item:hover .jungle-nav-label {
@@ -131,7 +131,7 @@
   /* Mobile hover adjustments */
   @media (max-width: 767px) {
     .jungle-icon-nav-item:hover .jungle-nav-icon {
-      transform: translateY(-20px) scale(1.05);
+      transform: translateY(-25px) scale(1.05);
     }
   }
 }
@@ -195,18 +195,18 @@
 @media (max-width: 374px) {
   .jungle-nav-icon {
     max-width: 48px;
-    transform: translateY(-18px);
+    transform: translateY(-22px);
   }
 
   .jungle-icon-nav-item {
     min-width: 40px;
-    padding-top: 24px; /* Account for 18px floating icons on very small screens plus margin */
+    padding-top: 28px; /* Account for 22px floating icons on very small screens plus margin */
   }
 
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -8px; /* Adjust for 18px floating icons on very small screens */
+    margin-top: -12px; /* Adjust for 22px floating icons on very small screens */
   }
 }
 
@@ -225,6 +225,6 @@
   }
 
   .jungle-icon-nav-item {
-    padding-top: 30px; /* Account for 24px floating larger icons */
+    padding-top: 36px; /* Account for 30px floating larger icons */
   }
 }
