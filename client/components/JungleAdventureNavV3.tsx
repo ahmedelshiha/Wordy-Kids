@@ -206,7 +206,7 @@ export default function JungleAdventureNavV3({
                   <span
                     className={`${animalClass} ${
                       isActive ? "active" : ""
-                    } drop-shadow-lg text-[2.34rem]`}
+                    } drop-shadow-lg text-[2.08rem] md:text-[2.34rem]`}
                     style={{
                       textShadow: isActive
                         ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
@@ -235,11 +235,10 @@ export default function JungleAdventureNavV3({
               aria-haspopup="dialog"
             >
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg ${
+                className={`jng-nav-icon-totem drop-shadow-lg text-[2.34rem] ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
-                  fontSize: TOTEM_ICON_SIZE.base,
                   textShadow:
                     "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 }}
@@ -275,9 +274,8 @@ export default function JungleAdventureNavV3({
                   <span
                     className={`${animalClass} ${
                       isActive ? "active" : ""
-                    } drop-shadow-lg`}
+                    } drop-shadow-lg text-[2.08rem] md:text-[2.34rem]`}
                     style={{
-                      fontSize: TOTEM_ICON_SIZE.mobileBase,
                       textShadow: isActive
                         ? "0 0 12px rgba(255,255,255,0.4), 0 0 20px rgba(255,193,7,0.3)"
                         : "0 0 8px rgba(255,255,255,0.3)",
@@ -303,11 +301,10 @@ export default function JungleAdventureNavV3({
               aria-haspopup="dialog"
             >
               <span
-                className={`jng-nav-icon-totem drop-shadow-lg ${
+                className={`jng-nav-icon-totem drop-shadow-lg text-[2.08rem] md:text-[2.34rem] ${
                   showParentMenu ? "active" : ""
                 }`}
                 style={{
-                  fontSize: TOTEM_ICON_SIZE.mobileBase,
                   textShadow:
                     "0 0 15px rgba(255,193,7,0.5), 0 0 25px rgba(255,193,7,0.2)",
                 }}
