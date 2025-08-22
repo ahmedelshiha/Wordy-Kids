@@ -213,7 +213,7 @@ export default function SettingsPanelV2Demo() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="bg-gradient-to-br from-green-100 to-green-200 border-green-300">
+          <Card className="bg-gradient-to-br from-green-100/90 to-green-200/90 border-green-300 backdrop-blur-sm shadow-xl">
             <CardContent className="p-4 text-center">
               <div className="text-2xl mb-2">🎵</div>
               <div className="font-semibold text-green-800">Sound & Voice</div>
@@ -223,19 +223,19 @@ export default function SettingsPanelV2Demo() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-yellow-100 to-yellow-200 border-yellow-300">
+          <Card className="bg-gradient-to-br from-yellow-100/90 to-yellow-200/90 border-yellow-300 backdrop-blur-sm shadow-xl">
             <CardContent className="p-4 text-center">
               <div className="text-2xl mb-2">🎨</div>
               <div className="font-semibold text-yellow-800">
                 Theme & Motion
               </div>
               <div className="text-xs text-yellow-700">
-                Visual themes, dark mode, animations
+                Visual themes, overlays, animations
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-100 to-blue-200 border-blue-300">
+          <Card className="bg-gradient-to-br from-blue-100/90 to-blue-200/90 border-blue-300 backdrop-blur-sm shadow-xl">
             <CardContent className="p-4 text-center">
               <div className="text-2xl mb-2">📚</div>
               <div className="font-semibold text-blue-800">
@@ -247,7 +247,7 @@ export default function SettingsPanelV2Demo() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-100 to-purple-200 border-purple-300">
+          <Card className="bg-gradient-to-br from-purple-100/90 to-purple-200/90 border-purple-300 backdrop-blur-sm shadow-xl">
             <CardContent className="p-4 text-center">
               <div className="text-2xl mb-2">♿</div>
               <div className="font-semibold text-purple-800">Accessibility</div>
@@ -259,20 +259,25 @@ export default function SettingsPanelV2Demo() {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600 mb-4">
-            🎯 This demo shows the V2 settings panel in action. Try it on
-            different devices to see the responsive behavior!
-          </p>
-          <div className="flex justify-center gap-4 text-sm">
-            <span className="flex items-center gap-1">
-              📱 <span>Mobile: Accordion</span>
-            </span>
-            <span className="flex items-center gap-1">
-              💻 <span>Desktop: Cards</span>
-            </span>
-            <span className="flex items-center gap-1">
-              🎮 <span>Touch: Haptics</span>
-            </span>
+          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 inline-block">
+            <p className="text-sm text-white/90 mb-4">
+              🎯 Interactive demo with live theme switching and animated overlays.
+              Settings persist across sessions!
+            </p>
+            <div className="flex justify-center gap-4 text-sm flex-wrap">
+              <span className="flex items-center gap-1 text-white/80">
+                📱 <span>Mobile: Accordion</span>
+              </span>
+              <span className="flex items-center gap-1 text-white/80">
+                💻 <span>Desktop: Cards</span>
+              </span>
+              <span className="flex items-center gap-1 text-white/80">
+                🎮 <span>Touch: Haptics</span>
+              </span>
+              <span className="flex items-center gap-1 text-white/80">
+                ✨ <span>Live: Theme Previews</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
