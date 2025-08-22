@@ -368,8 +368,8 @@ export default function JungleAdventureSettingsPanelV2({
           >
             <div
               className={cn(
-                isMobile ? "space-y-2" : "space-y-2.5",
-                isMobile ? "" : "grid grid-cols-2 gap-2.5 auto-rows-min",
+                "space-y-2.5",
+                !isMobile && "grid grid-cols-2 gap-2.5",
               )}
             >
               {/* 🎵 Sound & Voice Section */}
