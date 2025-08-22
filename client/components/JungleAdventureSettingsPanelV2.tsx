@@ -719,7 +719,7 @@ export default function JungleAdventureSettingsPanelV2({
           <div
             className={cn(
               "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
-              isMobile ? "p-3" : "p-4",
+              isMobile ? "p-3" : "p-3",
             )}
           >
             <div
