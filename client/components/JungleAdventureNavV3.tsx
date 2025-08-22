@@ -181,8 +181,8 @@ export default function JungleAdventureNavV3({
         }`}
         aria-label="Jungle Adventure Navigation"
         style={{
-          backgroundColor: 'rgba(22, 101, 52, 0.95)', // Fallback solid background
-          backdropFilter: 'blur(8px)',
+          backgroundColor: "rgba(22, 101, 52, 0.95)", // Fallback solid background
+          backdropFilter: "blur(8px)",
         }}
       >
         {/* Navigation Bar */}
@@ -239,7 +239,9 @@ export default function JungleAdventureNavV3({
               aria-haspopup="dialog"
             >
               {/* Vine Wrap Animation */}
-              <div className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? 'vine-active' : ''}`}>
+              <div
+                className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? "vine-active" : ""}`}
+              >
                 <span className="vine-wrap vine-wrap-1">🌿</span>
                 <span className="vine-wrap vine-wrap-2">🌿</span>
                 <span className="vine-wrap vine-wrap-3">🌿</span>
@@ -312,7 +314,9 @@ export default function JungleAdventureNavV3({
               aria-haspopup="dialog"
             >
               {/* Vine Wrap Animation - Mobile */}
-              <div className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? 'vine-active' : ''}`}>
+              <div
+                className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? "vine-active" : ""}`}
+              >
                 <span className="vine-wrap vine-wrap-1">🌿</span>
                 <span className="vine-wrap vine-wrap-2">🌿</span>
                 <span className="vine-wrap vine-wrap-3">🌿</span>

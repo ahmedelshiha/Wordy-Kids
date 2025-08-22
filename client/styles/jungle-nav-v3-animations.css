@@ -381,11 +381,13 @@
     totemFireflyShimmer 16s ease-in-out infinite; /* Firefly shimmer effect */
   animation-delay: 0s, 6s; /* Stagger the shimmer */
   transform: translateY(-12px); /* Same totem lift as others */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); /* Stronger shadow for larger size */
+  filter: drop-shadow(
+    0 4px 8px rgba(0, 0, 0, 0.4)
+  ); /* Stronger shadow for larger size */
 }
 
 .jng-nav-icon-totem:hover {
-  transform: translateY(-12px) scale(1.10); /* Reduced hover scale since button is already 50% larger */
+  transform: translateY(-12px) scale(1.1); /* Reduced hover scale since button is already 50% larger */
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
     drop-shadow(0 0 16px rgba(251, 191, 36, 0.4)); /* Enhanced glow for larger button */
   transition: all 0.2s ease-out;
