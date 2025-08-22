@@ -185,8 +185,8 @@ export default function JungleAdventureNavV3({
           backdropFilter: "blur(8px)",
         }}
       >
-        {/* Navigation Bar - Both Mobile & Desktop reduced by 50% */}
-        <div className="flex items-end px-2 py-0.25 md:py-0.75 relative min-h-[4.375px] md:min-h-[18.75px]"> {/* Mobile: 8.75px -> 4.375px (-50%), Desktop: 37.5px -> 18.75px (-50%) */}
+        {/* Navigation Bar - Mobile reduced by 50% */}
+        <div className="flex items-end px-2 py-0.125 md:py-0.75 relative min-h-[2.1875px] md:min-h-[18.75px]"> {/* Mobile: 4.375px -> 2.1875px (-50%), Desktop: 18.75px (unchanged) */}
           {/* Desktop Layout: Centered main icons + right-positioned parent icon */}
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 bottom-1 gap-4">
             {items.map((item) => {
@@ -244,7 +244,7 @@ export default function JungleAdventureNavV3({
                 className={`vine-wrap-container absolute inset-0 pointer-events-none ${showParentMenu ? "vine-active" : ""}`}
               >
                 <span className="vine-wrap vine-wrap-1">🌿</span>
-                <span className="vine-wrap vine-wrap-2">🌿</span>
+                <span className="vine-wrap vine-wrap-2">����</span>
                 <span className="vine-wrap vine-wrap-3">🌿</span>
               </div>
 
@@ -378,7 +378,7 @@ export default function JungleAdventureNavV3({
               {/* Jungle Background Elements */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <div className="absolute top-2 left-2 text-lg opacity-20">
-                  ���
+                  🌿
                 </div>
                 <div className="absolute top-4 right-4 text-sm opacity-25">
                   🍃
