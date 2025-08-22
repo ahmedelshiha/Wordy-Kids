@@ -781,6 +781,7 @@ export default function JungleAdventureSettingsPanelV2({
                     className={cn(
                       "flex-1",
                       isMobile ? "touch-manipulation h-6" : "h-4",
+                      settings.timeLimitMin === 0 && "opacity-75",
                     )}
                   />
                 </SettingRow>
