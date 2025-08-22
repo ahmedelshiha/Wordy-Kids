@@ -7,7 +7,7 @@
   width: 100%;
   z-index: 50;
   background-color: #0b6623; /* Dark jungle green */
-  height: 70px; /* Taller to accommodate higher floating icons */
+  height: 60px; /* Slightly taller to accommodate floating icons */
   overflow: visible; /* Allow icons to float above */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -27,15 +27,15 @@
   position: relative;
   /* Ensure adequate touch target */
   padding-bottom: 8px;
-  padding-top: 50px; /* Account for higher floating icons */
+  padding-top: 35px; /* Account for floating icons */
 }
 
 .jungle-nav-icon {
   width: 12vw;
   max-width: 58px;
   height: auto;
-  /* Desktop: Float higher above the bar */
-  transform: translateY(-40px);
+  /* Desktop: Float above the bar for visibility */
+  transform: translateY(-25px);
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
   transition: all 0.2s ease;
   /* Ensure crisp rendering */
@@ -52,7 +52,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -30px; /* Bring label closer to higher floating icon */
+  margin-top: -15px; /* Bring label closer to floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -64,21 +64,21 @@
 /* Mobile-specific adjustments */
 @media (max-width: 767px) {
   .jungle-nav-icon {
-    /* Mobile: Float higher above the bar */
-    transform: translateY(-45px);
+    /* Mobile: Float above the bar for better visibility */
+    transform: translateY(-30px);
     /* 20% larger than before */
     max-width: 53px;
   }
 
   .jungle-icon-nav-item {
     min-width: 44px;
-    padding-top: 55px; /* Account for higher floating icons */
+    padding-top: 40px; /* Account for floating icons */
   }
 
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -35px; /* Adjust for higher floating icons */
+    margin-top: -20px; /* Adjust for floating icons */
   }
 }
 
