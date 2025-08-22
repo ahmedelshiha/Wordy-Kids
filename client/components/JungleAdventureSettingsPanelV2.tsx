@@ -40,6 +40,7 @@ import {
   playSoundIfEnabled,
 } from "@/lib/soundEffects";
 import { audioService, VoiceType } from "@/lib/audioService";
+import { globalAmbientAudio } from "@/lib/globalAmbientAudio";
 import {
   useMobileDevice,
   triggerHapticFeedback,
