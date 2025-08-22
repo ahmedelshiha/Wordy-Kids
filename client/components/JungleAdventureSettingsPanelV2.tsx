@@ -313,6 +313,12 @@ export default function JungleAdventureSettingsPanelV2({
 
   // Save and apply settings
   function handleSave() {
+    // Stop local preview audio before saving
+    if (ambientRef.current) {
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+    }
+
     saveSettings(settings);
     setDirty(false);
     playUISound(SOUND_FILES.ui.settingsSaved);
