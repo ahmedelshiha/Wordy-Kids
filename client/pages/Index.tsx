@@ -3242,7 +3242,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                               <p className="text-sm text-jungle-dark mt-1">
                                                 Your personal jungle companion
                                                 creates adventures just for you!
-                                                🧙��♂️✨
+                                                🧙‍♂️✨
                                               </p>
                                             </div>
                                           </div>
@@ -4216,14 +4216,14 @@ export default function Index({ initialProfile }: IndexProps) {
 
               {/* Dynamic Authentication Button */}
               <div
-                className="pt-2 border-t border-amber-300/30"
+                className="pt-3 border-t border-jungle/20"
                 role="group"
                 aria-label="Authentication options"
               >
                 <DynamicAuthButton
                   variant="mobile"
                   onAction={() => setShowParentOptions(false)}
-                  className="border-2 border-amber-300/50"
+                  className="border border-jungle/30 rounded-xl bg-white/60 hover:bg-white/80 transition-all duration-300"
                 />
               </div>
             </div>
