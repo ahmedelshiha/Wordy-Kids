@@ -386,7 +386,7 @@ export default function JungleAdventureSettingsPanelV2({
                     <Switch
                       checked={settings.uiSounds}
                       onCheckedChange={(v) => markDirty({ uiSounds: v })}
-                      className={cn(isMobile && "scale-110 touch-manipulation")}
+                      className={cn(isMobile ? "scale-110 touch-manipulation" : "scale-90")}
                     />
                   }
                 />
