@@ -558,11 +558,11 @@
 /* Very Small Desktop Screens */
 @media (min-width: 768px) and (max-height: 700px) {
   .jungle-settings-dialog {
-    max-height: 90vh;
+    max-height: 95vh;
   }
 
   .jungle-category-container {
-    max-height: 16rem; /* Reduce from 18rem (72) to 16rem */
+    max-height: 20rem; /* Increase to accommodate more content */
   }
 }
 
