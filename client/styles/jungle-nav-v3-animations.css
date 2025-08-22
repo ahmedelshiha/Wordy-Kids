@@ -159,8 +159,8 @@
 .jng-nav-icon-container {
   position: relative;
   margin-bottom: 4px; /* Extra space for lifted effect */
-  min-height: 64px; /* Ensure proper touch target */
-  min-width: 64px; /* Ensure proper touch target */
+  min-height: 45px; /* Reduced height for compact navigation */
+  min-width: 45px; /* Reduced width for compact navigation */
   display: flex;
   flex-direction: column;
   align-items: center;
