@@ -7,7 +7,7 @@
   width: 100%;
   z-index: 50;
   background-color: #0b6623; /* Dark jungle green */
-  height: 64px;
+  height: 70px; /* Increased height to better accommodate floating icons */
   overflow: visible; /* Allow icons to float above */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
@@ -27,7 +27,7 @@
   position: relative;
   /* Ensure adequate touch target */
   padding-bottom: 8px;
-  padding-top: 32px; /* Account for higher floating icons (28px + margin) */
+  padding-top: 50px; /* Account for much higher floating icons (45px + margin) */
 }
 
 .jungle-nav-icon {
@@ -49,7 +49,7 @@
   line-height: 1.1em;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: -20px; /* Bring label closer to higher floating icon */
+  margin-top: -35px; /* Bring label closer to much higher floating icon */
   transition: color 0.2s ease;
   /* Prevent text selection on touch */
   user-select: none;
@@ -69,13 +69,13 @@
 
   .jungle-icon-nav-item {
     min-width: 44px;
-    padding-top: 43px; /* Account for higher floating on mobile (39px + margin) */
+    padding-top: 60px; /* Account for much higher floating on mobile (55px + margin) */
   }
 
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -28px; /* Adjust for higher floating icons on mobile */
+    margin-top: -45px; /* Adjust for much higher floating icons on mobile */
   }
 }
 
@@ -197,13 +197,13 @@
 
   .jungle-icon-nav-item {
     min-width: 40px;
-    padding-top: 38px; /* Account for higher floating (34px + margin) */
+    padding-top: 55px; /* Account for much higher floating (50px + margin) */
   }
 
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -24px; /* Adjust for higher floating icons on very small screens */
+    margin-top: -40px; /* Adjust for much higher floating icons on very small screens */
   }
 }
 
