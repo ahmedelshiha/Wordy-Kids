@@ -819,18 +819,19 @@ export default function JungleAdventureSettingsPanelV2({
                   isMobile={isMobile}
                 >
                   <SettingRow
-                    label={`Text Size ×${settings.textScale.toFixed(1)}`}
+                    label="Text Size"
                   >
-                    <Slider
+                    <EnhancedSlider
                       min={90}
                       max={130}
                       step={5}
                       value={[settings.textScale * 100]}
                       onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                      className={cn(
-                        "flex-1",
-                        isMobile ? "touch-manipulation h-6" : "h-4",
-                      )}
+                      size="lg"
+                      variant="default"
+                      tooltipFormatter={(v) => `×${(v / 100).toFixed(1)}`}
+                      hapticFeedback={settings.haptics}
+                      className="flex-1"
                     />
                   </SettingRow>
 
