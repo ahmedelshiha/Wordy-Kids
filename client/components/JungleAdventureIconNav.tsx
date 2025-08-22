@@ -151,10 +151,10 @@ export default function JungleAdventureIconNav({
                 src={item.iconSrc}
                 alt={item.label}
                 className="jungle-nav-icon"
-                initial={{ y: -55 }}
+                initial={{ y: translateY }}
                 animate={{
                   scale: isTapped ? 1.1 : 1,
-                  y: -55, // Maintain elevated position during animations
+                  y: translateY, // Maintain elevated position during animations
                 }}
                 transition={{
                   type: "spring",
