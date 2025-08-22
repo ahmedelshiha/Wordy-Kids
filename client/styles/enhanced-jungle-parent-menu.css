@@ -2,7 +2,8 @@
 
 /* Global jungle parent menu animations */
 @keyframes jungle-shimmer {
-  0%, 100% {
+  0%,
+  100% {
     background-position: -200px 0;
   }
   50% {
@@ -11,14 +12,15 @@
 }
 
 @keyframes jungle-glow-pulse {
-  0%, 100% {
-    box-shadow: 
+  0%,
+  100% {
+    box-shadow:
       0 0 20px rgba(76, 175, 80, 0.3),
       0 0 40px rgba(255, 193, 7, 0.2),
       inset 0 0 20px rgba(255, 255, 255, 0.1);
   }
   50% {
-    box-shadow: 
+    box-shadow:
       0 0 30px rgba(76, 175, 80, 0.5),
       0 0 60px rgba(255, 193, 7, 0.4),
       inset 0 0 30px rgba(255, 255, 255, 0.2);
@@ -49,7 +51,8 @@
 }
 
 @keyframes jungle-leaves-sway {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(-5deg) translateY(0px);
   }
   33% {
@@ -61,7 +64,8 @@
 }
 
 @keyframes jungle-button-breathe {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     filter: brightness(1);
   }
@@ -127,7 +131,7 @@
 }
 
 .jungle-parent-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -159,7 +163,7 @@
 
 /* Woodland texture enhancements */
 .jungle-wood-texture {
-  background-image: 
+  background-image:
     repeating-linear-gradient(
       0deg,
       rgba(139, 69, 19, 0.1) 0px,
@@ -184,18 +188,18 @@
 }
 
 .jungle-wood-texture::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: 
+  background:
     radial-gradient(
-      ellipse at 25% 25%, 
-      rgba(139, 69, 19, 0.05) 0%, 
+      ellipse at 25% 25%,
+      rgba(139, 69, 19, 0.05) 0%,
       transparent 50%
     ),
     radial-gradient(
-      ellipse at 75% 75%, 
-      rgba(160, 82, 45, 0.03) 0%, 
+      ellipse at 75% 75%,
+      rgba(160, 82, 45, 0.03) 0%,
       transparent 50%
     );
   pointer-events: none;
@@ -206,21 +210,21 @@
   .jungle-parent-menu-container {
     margin: 0 12px;
   }
-  
+
   .jungle-parent-button {
     padding: 16px 20px;
     font-size: 16px;
   }
-  
+
   .jungle-firefly {
     width: 3px;
     height: 3px;
   }
-  
+
   .jungle-floating-leaf {
     font-size: 20px;
   }
-  
+
   .jungle-creature {
     font-size: 16px;
   }
@@ -230,21 +234,21 @@
   .jungle-parent-menu-container {
     min-width: 480px;
   }
-  
+
   .jungle-parent-button {
     padding: 20px 24px;
     font-size: 18px;
   }
-  
+
   .jungle-firefly {
     width: 4px;
     height: 4px;
   }
-  
+
   .jungle-floating-leaf {
     font-size: 28px;
   }
-  
+
   .jungle-creature {
     font-size: 20px;
   }
@@ -257,12 +261,12 @@
     border-color: #000;
     animation: none;
   }
-  
+
   .jungle-parent-button {
     border: 3px solid #000;
     animation: none;
   }
-  
+
   .jungle-firefly,
   .jungle-floating-leaf,
   .jungle-creature {
@@ -280,7 +284,7 @@
     animation: none !important;
     transition: none !important;
   }
-  
+
   .jungle-parent-button:hover {
     transform: none;
   }
@@ -297,9 +301,9 @@
     ) !important;
     border-color: #4a5d23;
   }
-  
+
   .jungle-wood-texture {
-    background-image: 
+    background-image:
       repeating-linear-gradient(
         0deg,
         rgba(139, 69, 19, 0.2) 0px,
@@ -321,7 +325,7 @@
 .jungle-parent-button:focus-visible {
   outline: 3px solid #4ade80;
   outline-offset: 2px;
-  box-shadow: 
+  box-shadow:
     0 0 0 6px rgba(74, 222, 128, 0.2),
     0 8px 16px rgba(0, 0, 0, 0.3);
 }
@@ -332,7 +336,7 @@
     min-height: 60px;
     padding: 18px 24px;
   }
-  
+
   .jungle-parent-button:active {
     transform: scale(0.95);
     transition: transform 0.1s ease;
@@ -346,13 +350,13 @@
     border: 2px solid #000;
     animation: none;
   }
-  
+
   .jungle-firefly,
   .jungle-floating-leaf,
   .jungle-creature {
     display: none;
   }
-  
+
   .jungle-parent-button {
     background: white !important;
     border: 2px solid #000;
@@ -372,7 +376,7 @@
 }
 
 .jungle-loading::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -394,7 +398,7 @@
     max-height: 85vh;
     margin: 0 1vw;
   }
-  
+
   .jungle-parent-button {
     padding: 14px 18px;
     font-size: 15px;

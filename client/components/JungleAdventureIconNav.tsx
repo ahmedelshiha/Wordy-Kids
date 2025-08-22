@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import JungleAdventureParentDashboard from "@/components/JungleAdventureParentDashboard";
 import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
-import "@/styles/jungle-icon-nav.css\";\nimport \"@/styles/enhanced-jungle-parent-menu.css\";\nimport \"@/styles/jungle-parent-menu-buttons.css";
+import '@/styles/jungle-icon-nav.css";\nimport "@/styles/enhanced-jungle-parent-menu.css";\nimport "@/styles/jungle-parent-menu-buttons.css';
 
 export type IconNavItem = {
   id: string;
@@ -361,7 +361,10 @@ export default function JungleAdventureIconNav({
               />
 
               {/* Enhanced jungle decorative elements */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ borderRadius: "20px" }}>
+              <div
+                className="absolute inset-0 pointer-events-none overflow-hidden"
+                style={{ borderRadius: "20px" }}
+              >
                 {/* Corner vines */}
                 <div className="absolute top-0 left-0 text-3xl opacity-25 transform -rotate-12">
                   🌿
@@ -496,7 +499,9 @@ export default function JungleAdventureIconNav({
                         <span className="text-2xl">📊</span>
                         <span className="flex flex-col items-start">
                           <span className="font-bold">Parent Dashboard</span>
-                          <span className="text-xs opacity-90">Monitor progress & insights</span>
+                          <span className="text-xs opacity-90">
+                            Monitor progress & insights
+                          </span>
                         </span>
                       </span>
                     </Button>
@@ -535,7 +540,9 @@ export default function JungleAdventureIconNav({
                         <span className="text-2xl">⚙️</span>
                         <span className="flex flex-col items-start">
                           <span className="font-bold">Jungle Settings</span>
-                          <span className="text-xs opacity-90">Customize adventure experience</span>
+                          <span className="text-xs opacity-90">
+                            Customize adventure experience
+                          </span>
                         </span>
                       </span>
                     </Button>

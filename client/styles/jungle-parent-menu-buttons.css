@@ -12,7 +12,7 @@
   animation-play-state: paused;
   transform: translateY(-3px) scale(1.02) !important;
   filter: brightness(1.1) saturate(1.1);
-  box-shadow: 
+  box-shadow:
     0 12px 24px rgba(0, 0, 0, 0.3),
     inset 0 2px 6px rgba(255, 255, 255, 0.3),
     inset 0 -2px 6px rgba(0, 0, 0, 0.1) !important;
@@ -24,7 +24,7 @@
 }
 
 .jungle-parent-menu-container button[class*="w-full px-6 py-4"]::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -56,7 +56,7 @@
 .jungle-parent-menu-container button[class*="w-full px-6 py-4"]:focus-visible {
   outline: 3px solid #4ade80 !important;
   outline-offset: 3px;
-  box-shadow: 
+  box-shadow:
     0 0 0 6px rgba(74, 222, 128, 0.3),
     0 8px 16px rgba(0, 0, 0, 0.3) !important;
   animation-play-state: paused;
@@ -64,7 +64,7 @@
 
 /* Enhanced floating elements in parent menu */
 .jungle-parent-menu-container .absolute.w-1.h-1 {
-  box-shadow: 
+  box-shadow:
     0 0 12px rgba(255, 255, 0, 0.9),
     0 0 24px rgba(255, 255, 0, 0.6),
     0 0 36px rgba(255, 255, 0, 0.3);
@@ -91,7 +91,7 @@
     font-size: 16px !important;
     min-height: 60px;
   }
-  
+
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"]:hover {
     transform: translateY(-2px) scale(1.01) !important;
   }
@@ -110,7 +110,7 @@
     border: 3px solid #000 !important;
     animation: none;
   }
-  
+
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"]:hover {
     animation: none;
     transform: none !important;
@@ -123,11 +123,11 @@
     animation: none !important;
     transition: none !important;
   }
-  
+
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"]:hover {
     transform: none !important;
   }
-  
+
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"]::before {
     transition: none !important;
   }
@@ -139,7 +139,7 @@
     min-height: 64px;
     padding: 18px 24px !important;
   }
-  
+
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"]:active {
     transform: scale(0.95) !important;
     transition: transform 0.1s ease;
@@ -151,7 +151,7 @@
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"] > span {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
-  
+
   .jungle-parent-menu-container button[class*="w-full px-6 py-4"]::before {
     background: linear-gradient(
       90deg,
