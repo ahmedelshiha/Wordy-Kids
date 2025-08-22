@@ -355,7 +355,12 @@ export default function JungleAdventureSettingsPanelV2({
         </div>
 
         {/* Content */}
-        <div className={cn("flex flex-col", isMobile ? "h-[calc(72vh-64px)]" : "h-[calc(85vh-80px)]")}>
+        <div
+          className={cn(
+            "flex flex-col",
+            isMobile ? "h-[calc(72vh-64px)]" : "h-[calc(85vh-80px)]",
+          )}
+        >
           <ScrollArea className={cn("flex-1", isMobile ? "px-3 py-2" : "p-4")}>
             <div
               className={cn(
@@ -706,7 +711,12 @@ export default function JungleAdventureSettingsPanelV2({
           </ScrollArea>
 
           {/* Footer */}
-          <div className={cn("border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95", isMobile ? "p-3" : "p-4")}>
+          <div
+            className={cn(
+              "border-t bg-gradient-to-r from-amber-50/95 to-yellow-50/95",
+              isMobile ? "p-3" : "p-4",
+            )}
+          >
             <div className="flex justify-between items-center">
               <Button
                 variant="outline"
