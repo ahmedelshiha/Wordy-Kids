@@ -176,6 +176,11 @@ function saveSettings(s: Settings) {
       ambientVolume: s.ambientVolume,
     };
   }
+
+  // Notify any active session about settings change
+  if ((window as any).sessionManager) {
+    console.log("📚 Settings updated - session will use new values on next start");
+  }
 }
 
 // Helper function to get current audio settings for use throughout the app
@@ -563,7 +568,7 @@ export default function JungleAdventureSettingsPanelV2({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="parchment">📜 Parchment</SelectItem>
-                        <SelectItem value="jungle">🌿 Jungle</SelectItem>
+                        <SelectItem value="jungle">���� Jungle</SelectItem>
                         <SelectItem value="canopy">🌫️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
                         <SelectItem value="sunset">🌅 Sunset</SelectItem>
