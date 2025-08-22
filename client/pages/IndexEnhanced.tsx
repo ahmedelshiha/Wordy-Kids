@@ -14,7 +14,7 @@ import { EncouragingFeedback } from "@/components/EncouragingFeedback";
 import { GameLikeLearning } from "@/components/GameLikeLearning";
 import { WordMatchingGame } from "@/components/WordMatchingGame";
 import { VocabularyBuilder } from "@/components/VocabularyBuilder";
-import { JungleAdventureSettingsPanel } from "@/components/JungleAdventureSettingsPanel";
+import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import { FloatingHelpMenu } from "@/components/FloatingHelpMenu";
@@ -822,10 +822,9 @@ export default function IndexEnhanced() {
 
       {/* Settings Panel */}
       {showSettings && (
-        <JungleAdventureSettingsPanel
-          isOpen={showSettings}
-          onClose={() => setShowSettings(false)}
-          userRole="child"
+        <JungleAdventureSettingsPanelV2
+          open={showSettings}
+          onOpenChange={setShowSettings}
         />
       )}
 

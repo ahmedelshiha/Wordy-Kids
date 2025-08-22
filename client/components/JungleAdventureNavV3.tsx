@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { JungleAdventureSettingsPanel } from "@/components/JungleAdventureSettingsPanel";
+import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
 import { JungleAdventureParentDashboard } from "@/components/JungleAdventureParentDashboard";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -473,9 +473,9 @@ export default function JungleAdventureNavV3({
       {/* Settings Panel Popup */}
       <AnimatePresence>
         {showSettingsPanel && (
-          <JungleAdventureSettingsPanel
-            isOpen={showSettingsPanel}
-            onClose={() => setShowSettingsPanel(false)}
+          <JungleAdventureSettingsPanelV2
+            open={showSettingsPanel}
+            onOpenChange={setShowSettingsPanel}
           />
         )}
       </AnimatePresence>

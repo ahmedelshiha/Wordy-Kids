@@ -56,7 +56,7 @@ import {
   Binoculars,
 } from "lucide-react";
 import { JungleAdventureParentDashboard } from "./JungleAdventureParentDashboard";
-import { JungleAdventureSettingsPanel } from "./JungleAdventureSettingsPanel";
+import JungleAdventureSettingsPanelV2 from "./JungleAdventureSettingsPanelV2";
 import { cn } from "@/lib/utils";
 import "@/styles/jungle-adventure-desktop-layout.css";
 
@@ -737,10 +737,9 @@ export const JungleAdventureDesktopLayout: React.FC<
       </Dialog>
 
       {/* Settings Dialog */}
-      <JungleAdventureSettingsPanel
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-        userRole={userRole}
+      <JungleAdventureSettingsPanelV2
+        open={showSettings}
+        onOpenChange={setShowSettings}
       />
     </div>
   );

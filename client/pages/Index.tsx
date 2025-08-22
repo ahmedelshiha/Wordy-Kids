@@ -51,7 +51,7 @@ import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 // Old achievement dialog system removed - now using LightweightAchievementProvider
 import { useEnhancedAchievementDialog } from "@/hooks/use-enhanced-achievement-dialog";
-import { JungleAdventureSettingsPanel } from "@/components/JungleAdventureSettingsPanel";
+import JungleAdventureSettingsPanelV2 from "@/components/JungleAdventureSettingsPanelV2";
 import { FloatingBubbles } from "@/components/FloatingBubbles";
 import { CelebrationEffect } from "@/components/CelebrationEffect";
 import {
@@ -3890,9 +3890,9 @@ export default function Index({ initialProfile }: IndexProps) {
           )}
 
           {/* Settings Panel */}
-          <JungleAdventureSettingsPanel
-            isOpen={showSettings}
-            onClose={() => setShowSettings(false)}
+          <JungleAdventureSettingsPanelV2
+            open={showSettings}
+            onOpenChange={setShowSettings}
             userRole="child"
           />
 
