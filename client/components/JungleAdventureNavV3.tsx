@@ -214,7 +214,7 @@ export default function JungleAdventureNavV3({
                 >
                   {item.emoji}
                 </span>
-                <span className="text-xs mt-1 font-medium">{item.label}</span>
+                <span className="text-xs mt-0.5 font-medium">{item.label}</span>
               </motion.button>
             );
           })}
