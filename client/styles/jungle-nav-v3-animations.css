@@ -239,28 +239,28 @@
   .jng-nav-icon-elephant,
   .jng-nav-icon-totem {
     animation: none !important;
-    /* Maintain totem position even without animation - desktop */
-    transform: translateY(-12px) !important;
+    /* Maintain elevated totem position even without animation - desktop */
+    transform: translateY(-24px) !important;
   }
 
   /* Keep subtle transform effects for interaction feedback - desktop */
   .jng-nav-v3-icon:hover {
-    transform: translateY(-12px) scale(1.05) !important;
+    transform: translateY(-24px) scale(1.05) !important;
     transition: transform 0.2s ease;
   }
 
   .jng-nav-icon-totem:hover {
-    transform: translateY(-12px) scale(1.03) !important; /* Adjusted for larger parent button */
+    transform: translateY(-24px) scale(1.03) !important; /* Adjusted for larger parent button */
     transition: transform 0.2s ease;
   }
 
   .jng-nav-v3-icon:active {
-    transform: translateY(-12px) scale(0.98) !important;
+    transform: translateY(-24px) scale(0.98) !important;
     transition: transform 0.1s ease;
   }
 
   .jng-nav-icon-totem:active {
-    transform: translateY(-12px) scale(0.96) !important; /* Adjusted for larger parent button */
+    transform: translateY(-24px) scale(0.96) !important; /* Adjusted for larger parent button */
     transition: transform 0.1s ease;
   }
 
@@ -345,32 +345,32 @@
     padding-bottom: 0.5px; /* Even more minimal padding for mobile */
   }
 
-  /* Move icons up by 30% more on mobile (30% of 12px = 3.6px additional) */
+  /* Icons positioned 20px above bar on mobile for pop-out effect */
   .jng-nav-v3-icon,
   .jng-nav-icon-owl,
   .jng-nav-icon-parrot,
   .jng-nav-icon-monkey,
   .jng-nav-icon-elephant,
   .jng-nav-icon-totem {
-    /* 30% higher totem position on mobile: -12px - 3.6px = -15.6px ≈ -16px */
-    transform: translateY(-16px) !important;
+    /* 20px elevation on mobile for playful floating effect */
+    transform: translateY(-20px) !important;
   }
 
-  /* Update hover and active states for mobile higher position */
+  /* Update hover and active states for mobile elevated position */
   .jng-nav-v3-icon:hover {
-    transform: translateY(-16px) scale(1.15) !important;
+    transform: translateY(-20px) scale(1.15) !important;
   }
 
   .jng-nav-icon-totem:hover {
-    transform: translateY(-16px) scale(1.08) !important; /* Adjusted for larger parent button */
+    transform: translateY(-20px) scale(1.08) !important; /* Adjusted for larger parent button */
   }
 
   .jng-nav-v3-icon:active {
-    transform: translateY(-16px) scale(0.95) !important;
+    transform: translateY(-20px) scale(0.95) !important;
   }
 
   .jng-nav-icon-totem:active {
-    transform: translateY(-16px) scale(0.96) !important; /* Adjusted for larger parent button */
+    transform: translateY(-20px) scale(0.96) !important; /* Adjusted for larger parent button */
   }
 }
 
