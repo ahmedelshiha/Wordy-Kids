@@ -434,6 +434,109 @@
   }
 }
 
+/* Vine Wrap Animation - Jungle Immersion Enhancement */
+.vine-wrap-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.vine-wrap {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.8) rotate(0deg);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 1.2rem;
+  will-change: transform, opacity;
+}
+
+/* Vine positioning around the log */
+.vine-wrap-1 {
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8) rotate(-15deg);
+}
+
+.vine-wrap-2 {
+  bottom: -8px;
+  right: -4px;
+  transform: scale(0.8) rotate(45deg);
+}
+
+.vine-wrap-3 {
+  bottom: -6px;
+  left: -4px;
+  transform: scale(0.8) rotate(-30deg);
+}
+
+/* Active vine animation - Quick wrapping effect */
+.vine-active .vine-wrap {
+  opacity: 1;
+  transform: scale(1.2);
+  animation: vine-quick-wrap 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.vine-active .vine-wrap-1 {
+  transform: translateX(-50%) scale(1.2) rotate(25deg);
+  animation-delay: 0s;
+}
+
+.vine-active .vine-wrap-2 {
+  transform: scale(1.2) rotate(135deg);
+  animation-delay: 0.1s;
+}
+
+.vine-active .vine-wrap-3 {
+  transform: scale(1.2) rotate(-120deg);
+  animation-delay: 0.2s;
+}
+
+/* Vine quick wrap keyframes */
+@keyframes vine-quick-wrap {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) rotate(0deg);
+  }
+  30% {
+    opacity: 0.8;
+    transform: scale(1.4) rotate(180deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(320deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2) rotate(360deg);
+  }
+}
+
+/* Enhanced mobile vine effects */
+@media (max-width: 767px) {
+  .vine-wrap {
+    font-size: 1.1rem; /* Slightly smaller on mobile */
+  }
+
+  .vine-active .vine-wrap {
+    animation-duration: 0.6s; /* Faster on mobile for better responsiveness */
+  }
+
+  /* Add subtle vine persistence on mobile for better immersion */
+  .vine-active .vine-wrap {
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+}
+
+/* Reduced navigation container size - 50% reduction */
+.jng-nav-container-reduced {
+  /* The container height is already reduced in the component via min-h classes */
+  transform: scale(1);
+  transform-origin: bottom;
+}
+
 /* Dark mode considerations - Enhanced Totem Visibility */
 @media (prefers-color-scheme: dark) {
   .jng-nav-v3-icon,
@@ -451,5 +554,10 @@
   .jng-nav-icon-totem.active {
     filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6))
       drop-shadow(0 0 15px rgba(251, 191, 36, 0.45)) brightness(1.1);
+  }
+
+  /* Dark mode vine visibility */
+  .vine-wrap {
+    filter: brightness(1.1) drop-shadow(0 0 4px rgba(76, 175, 80, 0.3));
   }
 }
