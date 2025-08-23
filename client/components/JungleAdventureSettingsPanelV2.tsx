@@ -360,8 +360,21 @@ export default function JungleAdventureSettingsPanelV2({
         onOpenChange(false);
       }
     }
+
+    // Show keyboard help on F1 or ?
+    function onHelp(e: KeyboardEvent) {
+      if (open && (e.key === "F1" || (e.key === "?" && !e.shiftKey))) {
+        e.preventDefault();
+        console.log("🎮 Keyboard shortcuts: Tab to navigate, Arrow keys to adjust sliders, Space/Enter to activate buttons, Esc to close");
+      }
+    }
+
     window.addEventListener("keydown", onEsc);
-    return () => window.removeEventListener("keydown", onEsc);
+    window.addEventListener("keydown", onHelp);
+    return () => {
+      window.removeEventListener("keydown", onEsc);
+      window.removeEventListener("keydown", onHelp);
+    };
   }, [open, onOpenChange]);
 
   // Handle panel close cleanup
