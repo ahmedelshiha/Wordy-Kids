@@ -427,7 +427,6 @@ export function ChildFriendlyCategorySelector({
 
   const handleCategoryHover = (categoryId: string) => {
     setHoveredCategory(categoryId);
-    audioService.playWhooshSound();
   };
 
   const getPersonalizedMessage = () => {
