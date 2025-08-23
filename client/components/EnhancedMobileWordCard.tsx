@@ -721,7 +721,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
         <CardContent
           className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl p-4 sm:p-5 flex flex-col text-white"
           style={{
-            transform: "scale(-1, 1)",
+            backfaceVisibility: "hidden",
           }}
         >
           {/* Enhanced Back Header */}
