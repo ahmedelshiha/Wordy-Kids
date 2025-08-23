@@ -544,8 +544,6 @@ export function EnhancedCategorySelector({
       return;
     }
 
-    audioService.playCheerSound();
-
     // Haptic feedback
     if ("vibrate" in navigator) {
       navigator.vibrate([50, 100, 50]);
