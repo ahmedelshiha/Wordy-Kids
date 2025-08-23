@@ -522,6 +522,15 @@ export class AudioService {
     } = {},
   ): void {
     try {
+      // Import sanitization helper inline to avoid circular dependencies
+      const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+      // Sanitize input to prevent "[object Object]" errors
+      const sanitizedWord = sanitizeTTSInput(word);
+      if (!sanitizedWord) {
+        logSpeechError("audioService.pronounceWordWithoutVoiceSelection", word, "Empty word after sanitization");
+        return;
+      }
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
       // Validate and clamp parameters to safe ranges
