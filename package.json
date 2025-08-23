@@ -19,6 +19,7 @@
     "start:dev": "node dist/server/node-build.mjs",
     "deploy:render": "npm run build && npm start",
     "health-check": "curl -f http://localhost:$PORT/health || exit 1",
+    "verify-deployment": "node scripts/verify-deployment.js",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc",
