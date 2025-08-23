@@ -86,19 +86,32 @@ export function JungleAdventureNav({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Audio system (optional)
+  // Audio system using AssetManager
   const playSound = useCallback(
-    (soundType: string) => {
+    async (soundType: string) => {
       if (!navState.deviceCapabilities.sounds) return;
 
       try {
-        const audio = new Audio(jungleTheme.sounds.interactions[soundType]);
-        audio.volume = 0.3;
-        audio.play().catch(() => {
-          // Silently fail if audio can't play
-        });
-      } catch {
-        // Ignore audio errors
+        // Use AssetManager for better audio handling with fallbacks
+        const { playEducationalSoundIfEnabled } = await import('@/lib/soundEffects');
+
+        switch (soundType) {
+          case 'success':
+            await playEducationalSoundIfEnabled.success();
+            break;
+          case 'click':
+            await playEducationalSoundIfEnabled.uiSound('click');
+            break;
+          case 'hover':
+            await playEducationalSoundIfEnabled.uiSound('open');
+            break;
+          default:
+            // For any other sounds, try to play them as UI sounds
+            await playEducationalSoundIfEnabled.uiSound('click');
+        }
+      } catch (error) {
+        // Silently fail if audio can't play - this is expected behavior
+        console.debug('Audio playback failed:', error);
       }
     },
     [navState.deviceCapabilities.sounds],
