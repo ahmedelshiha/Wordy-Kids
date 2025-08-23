@@ -213,6 +213,9 @@ export class AssetManager {
           }
         } catch (error) {
           console.warn(`Failed to validate asset ${asset}:`, error);
+          if (error instanceof Error && error.message.includes('Failed to fetch')) {
+            networkErrorCount++;
+          }
           missing.push(asset);
         }
       });
@@ -441,7 +444,7 @@ export class AudioManager {
     );
 
     await Promise.all(loadPromises);
-    console.log("�� Common sounds preloaded");
+    console.log("✅ Common sounds preloaded");
   }
 
   // Stop all playing audio
