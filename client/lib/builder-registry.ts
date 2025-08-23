@@ -1,19 +1,36 @@
 // client/lib/builder-registry.ts
 import { Builder } from '@builder.io/react'
+import React from 'react'
 
-// Import your educational components - we'll create fallback components if they don't exist
+// Create fallback component factory
+const createFallbackComponent = (componentName: string) => {
+  return React.forwardRef<HTMLDivElement, any>((props, ref) => {
+    return React.createElement('div', {
+      ref,
+      className: 'p-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50',
+      style: { minHeight: '100px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
+    }, [
+      React.createElement('h3', {
+        key: 'title',
+        className: 'font-bold text-gray-600 mb-2'
+      }, `📚 ${componentName}`),
+      React.createElement('p', {
+        key: 'desc',
+        className: 'text-sm text-gray-500 text-center'
+      }, 'Educational component placeholder'),
+      props.children
+    ])
+  })
+}
+
+// Import components with fallbacks
 const importComponent = (componentPath: string, fallbackName: string) => {
   try {
-    return require(componentPath).default || require(componentPath)[fallbackName]
+    const component = require(componentPath)
+    return component.default || component[fallbackName] || createFallbackComponent(fallbackName)
   } catch (error) {
-    console.warn(`Component ${componentPath} not found, using fallback`)
-    return ({ children, ...props }: any) => (
-      <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
-        <h3 className="font-bold text-gray-600">📚 {fallbackName}</h3>
-        <p className="text-sm text-gray-500">Educational component placeholder</p>
-        {children}
-      </div>
-    )
+    console.warn(`Component ${componentPath} not found, using fallback for ${fallbackName}`)
+    return createFallbackComponent(fallbackName)
   }
 }
 
