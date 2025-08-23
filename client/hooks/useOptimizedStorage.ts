@@ -123,7 +123,7 @@ export function useOptimizedStorage<T>(
         );
       }
     },
-    [key, options.expiry, options.priority, options.compress],
+    [key], // Reduced dependencies to prevent re-creation
   );
 
   return [value, setStoredValue, { loading, error }];
