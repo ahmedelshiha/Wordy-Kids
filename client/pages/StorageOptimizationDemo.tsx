@@ -43,15 +43,15 @@ export const StorageOptimizationDemo: React.FC = () => {
   const [wordId, setWordId] = useState("");
   const [wordData, setWordData] = useState("");
 
-  const handleUpdateDemo = () => {
+  const handleUpdateDemo = useCallback(() => {
     setDemoValue({
       ...demoValue,
       message: newMessage || demoValue.message,
       count: demoValue.count + 1,
     });
-  };
+  }, [demoValue, newMessage, setDemoValue]);
 
-  const handleAddWord = () => {
+  const handleAddWord = useCallback(() => {
     if (wordId && wordData) {
       try {
         const parsedData = JSON.parse(wordData);
@@ -62,9 +62,9 @@ export const StorageOptimizationDemo: React.FC = () => {
         alert("Invalid JSON data");
       }
     }
-  };
+  }, [wordId, wordData, cacheWord]);
 
-  const handleGetWord = async () => {
+  const handleGetWord = useCallback(async () => {
     if (wordId) {
       const word = await getCachedWord(wordId);
       if (word) {
@@ -73,7 +73,7 @@ export const StorageOptimizationDemo: React.FC = () => {
         alert("Word not found in cache");
       }
     }
-  };
+  }, [wordId, getCachedWord]);
 
   return (
     <div className="container mx-auto p-6 space-y-6">
