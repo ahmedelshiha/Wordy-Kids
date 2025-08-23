@@ -299,6 +299,10 @@ const App = () => {
                         path="/storage-optimization-demo"
                         element={<StorageOptimizationDemo />}
                       />
+                      <Route
+                        path="/StorageOptimizationDemo"
+                        element={<StorageOptimizationDemo />}
+                      />
 
                       {/* Builder.io Dynamic Pages */}
                       <Route
