@@ -1,3 +1,6 @@
+// SECURITY FIX FOR LOGIN - Updated client/pages/LoginForm.tsx
+// This works with the new secure password hashing system
+
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +25,48 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigationHistory } from "@/hooks/useNavigationHistory";
+
+// SECURITY IMPROVEMENT: Import crypto-js for password verification
+import CryptoJS from 'crypto-js';
+
+// Import the same security utilities used in SignUp
+const SecurityUtils = {
+  hashPassword: (password: string, salt: string): string => {
+    return CryptoJS.PBKDF2(password, salt, {
+      keySize: 512/32,
+      iterations: 10000
+    }).toString();
+  },
+
+  verifyPassword: (password: string, storedHash: string, salt: string): boolean => {
+    const hash = SecurityUtils.hashPassword(password, salt);
+    return hash === storedHash;
+  },
+
+  // Generate salt and hash for legacy user migration
+  generateSalt: (): string => {
+    return CryptoJS.lib.WordArray.random(128/8).toString();
+  },
+
+  generateSecureId: (): string => {
+    return CryptoJS.lib.WordArray.random(16).toString();
+  }
+};
+
+interface UserData {
+  id: string;
+  name: string;
+  email: string;
+  age?: number;
+  username?: string;
+  passwordHash: string;
+  salt: string;
+  createdAt: string;
+  lastLogin?: string;
+  isParent?: boolean;
+  // Legacy field for migration
+  password?: string;
+}
 
 interface FormErrors {
   email?: string;
@@ -101,13 +146,8 @@ export default function LoginForm() {
   // Enhanced password validation with security standards
   const validatePassword = (password: string) => {
     if (!password) return "Password is required";
-    if (password.length < 6)
-      return "Password must be at least 6 characters for security";
     if (password.length > 128)
       return "Password is too long (max 128 characters)";
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      return "Password should contain uppercase, lowercase, and numbers for better security";
-    }
     return null;
   };
 
@@ -186,6 +226,45 @@ export default function LoginForm() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle legacy users (those with plaintext passwords) - migrate them to secure format
+  const handleLegacyLogin = async (users: UserData[], email: string, password: string): Promise<boolean> => {
+    const legacyUser = users.find(u => 
+      u.email?.toLowerCase() === email.toLowerCase() && u.password === password
+    );
+
+    if (legacyUser) {
+      // Migrate legacy user to secure format
+      console.log('⚠️ Migrating legacy user to secure password storage');
+      
+      const salt = SecurityUtils.generateSalt();
+      const passwordHash = SecurityUtils.hashPassword(password, salt);
+      
+      const migratedUser: UserData = {
+        id: legacyUser.id || SecurityUtils.generateSecureId(),
+        name: legacyUser.name || legacyUser.username || email.split("@")[0],
+        email: legacyUser.email,
+        age: legacyUser.age,
+        username: legacyUser.username,
+        passwordHash: passwordHash,
+        salt: salt,
+        createdAt: legacyUser.createdAt || new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+        isParent: legacyUser.isParent
+      };
+
+      // Remove legacy user and add migrated user
+      const updatedUsers = users.filter(u => u.email !== legacyUser.email);
+      updatedUsers.push(migratedUser);
+      localStorage.setItem("wordAdventureUsers", JSON.stringify(updatedUsers));
+
+      console.log('✅ Legacy user successfully migrated and logged in');
+      return true;
+    }
+    
+    return false;
+  };
+
+  // SECURE LOGIN HANDLER
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -207,36 +286,33 @@ export default function LoginForm() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1200));
 
-      const registeredUsers = JSON.parse(
-        localStorage.getItem("wordAdventureUsers") || "[]",
-      );
-      const user = registeredUsers.find(
-        (u: any) => u.email === email && u.password === password,
+      // Get stored users
+      const storedUsers: UserData[] = JSON.parse(
+        localStorage.getItem("wordAdventureUsers") || "[]"
       );
 
+      // Check for demo users first
       const isDemoUser =
         (email === "demo@example.com" && password === "Demo123") ||
         (email === "alex@example.com" && password === "Alex123") ||
         (email === "sam@example.com" && password === "Sam123");
 
-      if (user || isDemoUser) {
-        // Handle remember me
+      if (isDemoUser) {
+        // Handle demo user login
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
         } else {
           localStorage.removeItem("rememberedEmail");
         }
 
-        // Create user profile for auth context
         const userProfile = {
-          id: user?.id || `demo-${email.split("@")[0]}`,
-          name: user?.name || email.split("@")[0],
+          id: `demo-${email.split("@")[0]}`,
+          name: email.split("@")[0],
           email: email,
           type: "parent" as const,
           isGuest: false,
         };
 
-        // Login using auth context
         login(userProfile);
 
         setMessage({
@@ -245,7 +321,6 @@ export default function LoginForm() {
         });
 
         setTimeout(() => {
-          // Check if there's a returnTo parameter or state
           const returnTo =
             new URLSearchParams(location.search).get("returnTo") ||
             location.state?.from;
@@ -256,20 +331,121 @@ export default function LoginForm() {
               loginSuccess: true,
               userEmail: email,
             },
-            replace: true, // Replace to avoid back button going to login
+            replace: true,
           });
         }, 1000);
-      } else {
+        return;
+      }
+
+      // Find user by email
+      const user = storedUsers.find(
+        u => u.email.toLowerCase() === email.toLowerCase().trim()
+      );
+
+      if (!user) {
         setErrors({
-          general:
-            "Invalid email or password. Please check your credentials and try again.",
+          general: "No account found with this email address",
         });
         setMessage({
           type: "error",
-          text: "Login failed. Please check your credentials.",
+          text: "No account found with this email address",
         });
+        setIsLoading(false);
+        return;
       }
+
+      let isPasswordValid = false;
+      let userToLogin = user;
+
+      // Check if user has secure password hash
+      if (user.passwordHash && user.salt) {
+        // SECURITY IMPROVEMENT: Verify password using hash and salt
+        isPasswordValid = SecurityUtils.verifyPassword(
+          password,
+          user.passwordHash,
+          user.salt
+        );
+      } else if (user.password) {
+        // Legacy user with plaintext password - migrate them
+        if (user.password === password) {
+          const migrationSuccess = await handleLegacyLogin(storedUsers, email, password);
+          if (migrationSuccess) {
+            // Re-get updated user data after migration
+            const updatedUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
+            userToLogin = updatedUsers.find((u: UserData) => u.email.toLowerCase() === email.toLowerCase());
+            isPasswordValid = true;
+          }
+        }
+      }
+
+      if (!isPasswordValid) {
+        setErrors({
+          general: "Invalid password",
+        });
+        setMessage({
+          type: "error",
+          text: "Invalid password. Please check your credentials.",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      // Update last login time
+      const updatedUser = {
+        ...userToLogin,
+        lastLogin: new Date().toISOString()
+      };
+
+      // Update the user in storage
+      const allUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
+      const updatedUsers = allUsers.map((u: UserData) => 
+        u.id === userToLogin.id ? updatedUser : u
+      );
+      localStorage.setItem("wordAdventureUsers", JSON.stringify(updatedUsers));
+
+      // Handle remember me
+      if (rememberMe) {
+        localStorage.setItem("rememberedEmail", email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
+
+      // Create user profile for auth context
+      const userProfile = {
+        id: userToLogin.id,
+        name: userToLogin.name || userToLogin.username || email.split("@")[0],
+        email: email,
+        type: "parent" as const,
+        isGuest: false,
+      };
+
+      // Login using auth context
+      login(userProfile);
+
+      setMessage({
+        type: "success",
+        text: "Welcome back! Taking you to your dashboard...",
+      });
+
+      console.log('✅ User logged in successfully with secure authentication');
+
+      setTimeout(() => {
+        // Check if there's a returnTo parameter or state
+        const returnTo =
+          new URLSearchParams(location.search).get("returnTo") ||
+          location.state?.from;
+        const targetRoute = returnTo && returnTo !== "/" ? returnTo : "/app";
+
+        navigate(targetRoute, {
+          state: {
+            loginSuccess: true,
+            userEmail: email,
+          },
+          replace: true, // Replace to avoid back button going to login
+        });
+      }, 1000);
     } catch (error) {
+      console.error('Login error:', error);
       setMessage({
         type: "error",
         text: "Something went wrong. Please try again.",
@@ -692,6 +868,13 @@ export default function LoginForm() {
             </Button>
           </CardContent>
         </Card>
+
+        {/* Security Notice */}
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-xs text-blue-700 text-center font-medium font-['Baloo_2']">
+            🔒 Secure login with encrypted password protection
+          </p>
+        </div>
       </div>
     </div>
   );
