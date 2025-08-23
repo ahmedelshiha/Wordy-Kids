@@ -109,19 +109,32 @@ export function useJungleNavAnimations(
     };
   }, []);
 
-  // Play animal sound
+  // Play animal sound with AssetManager fallback
   const playAnimalSound = useCallback(
     async (animal: string): Promise<void> => {
-      if (!enableSounds || !isAudioInitialized) return;
+      if (!enableSounds) return;
 
       try {
+        // First try pre-loaded audio
         const audio = audioRef.current[animal];
-        if (audio) {
+        if (audio && isAudioInitialized) {
           audio.currentTime = 0;
           await audio.play();
+          return;
         }
+
+        // Fallback: Use AssetManager for on-demand loading
+        const { AudioManager } = await import('@/lib/assetManager');
+        await AudioManager.playAnimalSound(animal, 0.3);
       } catch (error) {
         console.warn(`Failed to play ${animal} sound:`, error);
+        // Final fallback: Try with synthesized sound if available
+        try {
+          const { playSoundIfEnabled } = await import('@/lib/soundEffects');
+          playSoundIfEnabled.success();
+        } catch (fallbackError) {
+          console.debug('All audio fallbacks failed, continuing silently');
+        }
       }
     },
     [enableSounds, isAudioInitialized],
