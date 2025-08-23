@@ -3,6 +3,7 @@
 ## 🚀 Render Deployment Instructions
 
 ### Prerequisites
+
 - [Render account](https://render.com) (free tier available)
 - Your code pushed to GitHub/GitLab repository
 - Environment variables ready
@@ -19,10 +20,12 @@
 ### Step 2: Create Render Service
 
 1. **Login to Render Dashboard:**
+
    - Go to [render.com](https://render.com)
    - Sign in with GitHub/GitLab
 
 2. **Create New Web Service:**
+
    - Click "New +" → "Web Service"
    - Connect your repository (wordy-kids)
    - Choose your repository
@@ -68,7 +71,9 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
 ## 📋 Post-Deployment Verification Checklist
 
 ### Security Verification
+
 - [ ] **Test Signup/Login Flow:**
+
   ```
   1. Go to https://your-app.onrender.com
   2. Create new account
@@ -90,14 +95,15 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
   2. Go to Lighthouse tab
   3. Run audit for: Performance, Accessibility, SEO, Best Practices
   4. **Record baseline scores:**
-     - Performance: ___/100
-     - Accessibility: ___/100  
-     - SEO: ___/100
-     - Best Practices: ___/100
+     - Performance: \_\_\_/100
+     - Accessibility: \_\_\_/100
+     - SEO: \_\_\_/100
+     - Best Practices: \_\_\_/100
 
 ### Builder.io Assets Verification
 
 - [ ] **Check Media Loading:**
+
   ```
   1. Navigate through app features
   2. Verify all images load correctly
@@ -127,16 +133,18 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
 ### If Deployment Fails:
 
 1. **Check Build Logs:**
+
    - Go to Render Dashboard → Your Service → Events
    - Review build/deploy logs for errors
 
 2. **Immediate Rollback:**
+
    ```bash
    # Option 1: Revert to previous commit
    git revert HEAD
    git push origin main
    # Render will auto-deploy previous version
-   
+
    # Option 2: Deploy specific commit
    # In Render Dashboard:
    # Settings → Deploy → Manual Deploy → Enter commit SHA
@@ -153,6 +161,7 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
    ```
 
 ### Downtime Mitigation:
+
 - Render provides **zero-downtime deployments**
 - Old version runs until new version is healthy
 - Built-in health checks prevent bad deployments
@@ -162,42 +171,43 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
 ### Phase 2 Setup:
 
 1. **Install Builder.io SDK:**
+
    ```bash
    npm install @builder.io/react @builder.io/sdk
    ```
 
 2. **Register Components:**
+
    ```typescript
    // client/lib/builder-registry.ts
-   import { Builder } from '@builder.io/react';
-   import { WordCard } from '@/components/WordCard';
-   import { GameHub } from '@/components/games/GameHub';
-   
+   import { Builder } from "@builder.io/react";
+   import { WordCard } from "@/components/WordCard";
+   import { GameHub } from "@/components/games/GameHub";
+
    Builder.registerComponent(WordCard, {
-     name: 'WordCard',
+     name: "WordCard",
      inputs: [
-       { name: 'word', type: 'string' },
-       { name: 'difficulty', type: 'string' }
-     ]
+       { name: "word", type: "string" },
+       { name: "difficulty", type: "string" },
+     ],
    });
-   
+
    Builder.registerComponent(GameHub, {
-     name: 'GameHub',
-     inputs: [
-       { name: 'gameType', type: 'string' }
-     ]
+     name: "GameHub",
+     inputs: [{ name: "gameType", type: "string" }],
    });
    ```
 
 3. **Add BuilderComponent:**
+
    ```typescript
    // client/components/BuilderContent.tsx
    import { BuilderComponent } from '@builder.io/react';
-   
+
    export function BuilderContent({ model = 'page' }) {
      return (
-       <BuilderComponent 
-         model={model} 
+       <BuilderComponent
+         model={model}
          apiKey={import.meta.env.VITE_BUILDER_IO_API_KEY}
        />
      );
@@ -212,6 +222,7 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
    ```
 
 ### Benefits of Builder.io Integration:
+
 - **Content Management:** Update app content without code deployment
 - **A/B Testing:** Test different learning experiences
 - **Visual Editor:** Non-technical team members can edit content
@@ -221,12 +232,14 @@ PING_MESSAGE=Wordy Kids API is healthy! 🦁
 ## 🔍 Monitoring & Maintenance
 
 ### Recommended Tools:
+
 - **Error Tracking:** Add Sentry for production error monitoring
 - **Analytics:** Google Analytics or Mixpanel for user behavior
 - **Uptime Monitoring:** UptimeRobot for service availability
 - **Performance:** Web Vitals monitoring
 
 ### Regular Maintenance:
+
 - [ ] Weekly dependency updates
 - [ ] Monthly security audits
 - [ ] Quarterly performance reviews
