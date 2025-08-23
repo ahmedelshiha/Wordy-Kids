@@ -42,6 +42,10 @@ import {
   Trophy,
   Settings,
   Sparkles,
+  Clock,
+  Timer,
+  HelpCircle,
+  RotateCcw,
 } from 'lucide-react';
 
 // Mock data for demonstration
