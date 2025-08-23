@@ -501,10 +501,7 @@ export default function Index({ initialProfile }: IndexProps) {
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
-      if (
-        selectedCategory &&
-        selectedCategory !== lastCategoryRef.current
-      ) {
+      if (selectedCategory && selectedCategory !== lastCategoryRef.current) {
         lastCategoryRef.current = selectedCategory;
         generateFreshWords();
       }

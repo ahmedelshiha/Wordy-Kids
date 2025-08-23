@@ -518,7 +518,11 @@ export function InteractiveDashboardWordCard({
                     : String(errorDetails || "No error details provided"),
             };
 
-            console.error("Speech synthesis failed for word:", currentWord.word, errorInfo);
+            console.error(
+              "Speech synthesis failed for word:",
+              currentWord.word,
+              errorInfo,
+            );
             setIsPlaying(false);
 
             // Fallback: try with basic audioService
@@ -622,7 +626,11 @@ export function InteractiveDashboardWordCard({
                 : String(mainError),
         };
 
-        console.error("Main speech synthesis failed for word:", currentWord.word, mainErrorInfo);
+        console.error(
+          "Main speech synthesis failed for word:",
+          currentWord.word,
+          mainErrorInfo,
+        );
         setIsPlaying(false);
       }
     }

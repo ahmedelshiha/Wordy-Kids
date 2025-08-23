@@ -423,8 +423,8 @@ export class AudioService {
 
       utterance.onerror = (event) => {
         console.error("Speech synthesis error for word:", word, {
-          error: event.error || 'Unknown error',
-          message: event.message || 'No message',
+          error: event.error || "Unknown error",
+          message: event.message || "No message",
           eventType: event.type,
           voice: voice?.name,
           voiceURI: voice?.voiceURI,
@@ -551,21 +551,25 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error (default voice) for word:", word, {
-          error: event.error || 'Unknown error',
-          message: event.message || 'No message',
-          type: event.type,
-          timeStamp: event.timeStamp,
-          word: word,
-          voice: voice?.name || "default",
-          voiceURI: voice?.voiceURI,
-          speechState: {
-            speaking: this.speechSynthesis.speaking,
-            pending: this.speechSynthesis.pending,
-            paused: this.speechSynthesis.paused,
+        console.error(
+          "Speech synthesis error (default voice) for word:",
+          word,
+          {
+            error: event.error || "Unknown error",
+            message: event.message || "No message",
+            type: event.type,
+            timeStamp: event.timeStamp,
+            word: word,
+            voice: voice?.name || "default",
+            voiceURI: voice?.voiceURI,
+            speechState: {
+              speaking: this.speechSynthesis.speaking,
+              pending: this.speechSynthesis.pending,
+              paused: this.speechSynthesis.paused,
+            },
+            timestamp: new Date().toISOString(),
           },
-          timestamp: new Date().toISOString(),
-        });
+        );
         try {
           options.onError?.();
         } catch (error) {

@@ -460,8 +460,8 @@ export class EnhancedAudioService {
 
       utterance.onerror = (event) => {
         console.error("Speech synthesis error for word:", word, {
-          error: event.error || 'Unknown error',
-          message: event.message || 'No message',
+          error: event.error || "Unknown error",
+          message: event.message || "No message",
           voiceType: voiceType,
           voice: voice?.name,
           rate: rate,
@@ -575,8 +575,12 @@ export class EnhancedAudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error(`Preview error for ${voiceType}:`, event.error || 'Unknown error', event);
-        reject(new Error(`Preview error: ${event.error || 'Unknown error'}`));
+        console.error(
+          `Preview error for ${voiceType}:`,
+          event.error || "Unknown error",
+          event,
+        );
+        reject(new Error(`Preview error: ${event.error || "Unknown error"}`));
       };
 
       this.speechSynthesis.speak(utterance);
