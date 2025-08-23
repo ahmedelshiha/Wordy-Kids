@@ -20,13 +20,17 @@ import {
 } from "@/hooks/useOptimizedStorage";
 import { StorageHealthDashboard } from "@/components/StorageHealthDashboard";
 
+// Stable default values to prevent re-renders
+const DEMO_DEFAULT_VALUE = { message: "Hello World!", count: 0 };
+const DEMO_OPTIONS = { priority: "medium" as const, compress: true };
+
 export const StorageOptimizationDemo: React.FC = () => {
   // Example usage of different storage hooks
   const [demoValue, setDemoValue, { loading: demoLoading, error: demoError }] =
     useOptimizedStorage(
       "demo_key",
-      { message: "Hello World!", count: 0 },
-      { priority: "medium", compress: true },
+      DEMO_DEFAULT_VALUE,
+      DEMO_OPTIONS,
     );
 
   const { progress, updateProgress, addWordLearned, addAchievement } =

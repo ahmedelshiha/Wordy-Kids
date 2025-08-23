@@ -372,9 +372,12 @@ export function useStorageHealth() {
 
   // Auto-refresh health report periodically
   useEffect(() => {
-    const interval = setInterval(refreshHealth, 5 * 60 * 1000); // Every 5 minutes
+    const interval = setInterval(() => {
+      setHealthReport(localStorageManager.getHealthReport());
+      setLastCheck(Date.now());
+    }, 5 * 60 * 1000); // Every 5 minutes
     return () => clearInterval(interval);
-  }, [refreshHealth]);
+  }, []); // Empty dependency array to prevent recreation
 
   return {
     healthReport,
