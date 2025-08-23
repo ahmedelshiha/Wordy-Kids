@@ -67,6 +67,38 @@ const App = () => {
         );
       }
 
+      // Initialize Asset Management System
+      const initializeAssets = async () => {
+        try {
+          console.log("🔍 Validating assets...");
+
+          // Check all assets on app startup
+          const validation = await AssetManager.validateAllAssets();
+
+          if (validation.missing.length > 0) {
+            console.warn("⚠️ Missing assets:", validation.missing);
+          }
+
+          if (Object.keys(validation.mappings).length > 0) {
+            console.log("🔄 Asset mappings applied:", validation.mappings);
+          }
+
+          // Preload critical assets
+          await AssetManager.preloadCriticalAssets();
+
+          // Preload common sounds
+          await AudioManager.preloadCommonSounds();
+
+          console.log("✅ Asset system initialized successfully");
+        } catch (error) {
+          console.warn("⚠️ Asset system initialization failed:", error);
+          // Don't block app startup if asset system fails
+        }
+      };
+
+      // Initialize assets asynchronously to not block app startup
+      initializeAssets();
+
       // Migrate legacy settings to unified jungle settings
       migrateLegacySettings();
     }
