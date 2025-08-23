@@ -11,6 +11,11 @@ import { AssetManager, AudioManager } from "./lib/assetManager";
 // LocalStorage optimization system
 import { localStorageManager } from "./lib/localStorageManager";
 
+// Builder.io integration
+import { builder } from "@builder.io/react";
+import { BuilderPageWrapper, EducationalPageWrapper, MarketingPageWrapper } from "./components/BuilderPageWrapper";
+import { initializeBuilderRegistry } from "./lib/builder-registry";
+
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -67,7 +72,7 @@ const App = () => {
         console.log("✅ Builder.io initialized successfully");
       } else {
         console.warn(
-          "⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
+          "⚠�� Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
         );
       }
 
@@ -304,6 +309,56 @@ const App = () => {
                         element={<StorageOptimizationDemo />}
                       />
 
+                      {/* Builder.io Educational Content Routes */}
+                      <Route
+                        path="/learn/:lesson"
+                        element={
+                          <EducationalPageWrapper
+                            model="educational-lesson"
+                            childAge={6}
+                            learningLevel="beginner"
+                            fallbackContent={
+                              <div className="p-8 text-center">
+                                <h2 className="text-2xl font-bold mb-4">🎓 Lesson Coming Soon!</h2>
+                                <p className="text-gray-600">This educational content is being prepared for you.</p>
+                                <div className="mt-4 text-4xl">📚</div>
+                              </div>
+                            }
+                          />
+                        }
+                      />
+
+                      <Route
+                        path="/activities/:activity"
+                        element={
+                          <EducationalPageWrapper
+                            model="learning-activity"
+                            fallbackContent={
+                              <div className="p-8 text-center">
+                                <h2 className="text-2xl font-bold mb-4">🎮 Activity Loading...</h2>
+                                <p className="text-gray-600">Get ready for a fun learning adventure!</p>
+                                <div className="mt-4 text-4xl">🌟</div>
+                              </div>
+                            }
+                          />
+                        }
+                      />
+
+                      <Route
+                        path="/about"
+                        element={<MarketingPageWrapper model="marketing-page" />}
+                      />
+
+                      <Route
+                        path="/pricing"
+                        element={<MarketingPageWrapper model="marketing-page" />}
+                      />
+
+                      <Route
+                        path="/parents"
+                        element={<MarketingPageWrapper model="parent-info-page" />}
+                      />
+
                       {/* Builder.io Dynamic Pages */}
                       <Route
                         path="/page/*"
@@ -311,15 +366,15 @@ const App = () => {
                       />
                       <Route
                         path="/lesson/*"
-                        element={<BuilderPageWrapper model="lesson" />}
+                        element={<EducationalPageWrapper model="educational-lesson" />}
                       />
                       <Route
                         path="/game/*"
-                        element={<BuilderPageWrapper model="game" />}
+                        element={<EducationalPageWrapper model="learning-activity" />}
                       />
                       <Route
-                        path="/builder/*"
-                        element={<BuilderPageWrapper />}
+                        path="/builder/:slug"
+                        element={<BuilderPageWrapper model="page" />}
                       />
 
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
