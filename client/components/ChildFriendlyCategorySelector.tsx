@@ -903,7 +903,6 @@ export function ChildFriendlyCategorySelector({
         <Button
           size="lg"
           onClick={() => {
-            audioService.playCheerSound();
             onSelectCategory(selectedCategory);
           }}
           disabled={!selectedCategory || selectedCategory === ""}
