@@ -230,7 +230,20 @@ export class AssetManager {
         ]);
       } catch (error) {
         console.warn(`Batch validation failed:`, error);
+        if (error instanceof Error && error.message.includes('Failed to fetch')) {
+          networkErrorCount += batchSize;
+        }
         // Continue with next batch
+      }
+
+      // If too many network errors in development, return optimistic result
+      if (isDevelopment && networkErrorCount > 10) {
+        console.warn(`Too many network errors (${networkErrorCount}) in development mode. Assuming all assets exist.`);
+        return {
+          missing: [],
+          found: allAssets,
+          mappings: {}
+        };
       }
 
       // Small delay between batches to prevent overwhelming the server
