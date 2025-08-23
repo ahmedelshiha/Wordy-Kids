@@ -11,8 +11,7 @@ import { AssetManager, AudioManager } from "./lib/assetManager";
 // LocalStorage optimization system
 import { localStorageManager } from "./lib/localStorageManager";
 
-// Builder.io integration
-import { builder } from "@builder.io/react";
+// Builder.io integration - builder already imported above
 import {
   BuilderPageWrapper,
   EducationalPageWrapper,
