@@ -229,6 +229,13 @@ const App = () => {
                         element={<SettingsPanelV2Demo />}
                       />
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
+
+                      {/* Builder.io Dynamic Pages */}
+                      <Route path="/page/*" element={<BuilderPageWrapper model="page" />} />
+                      <Route path="/lesson/*" element={<BuilderPageWrapper model="lesson" />} />
+                      <Route path="/game/*" element={<BuilderPageWrapper model="game" />} />
+                      <Route path="/builder/*" element={<BuilderPageWrapper />} />
+
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
