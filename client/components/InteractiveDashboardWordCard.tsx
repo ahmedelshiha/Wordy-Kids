@@ -518,7 +518,7 @@ export function InteractiveDashboardWordCard({
                     : String(errorDetails || "No error details provided"),
             };
 
-            console.error("Speech synthesis failed for word:", errorInfo);
+            console.error("Speech synthesis failed for word:", currentWord.word, errorInfo);
             setIsPlaying(false);
 
             // Fallback: try with basic audioService
@@ -572,6 +572,7 @@ export function InteractiveDashboardWordCard({
 
                   console.error(
                     "Fallback audioService also failed for word:",
+                    currentWord.word,
                     fallbackErrorInfo,
                   );
                   setIsPlaying(false);
@@ -596,7 +597,8 @@ export function InteractiveDashboardWordCard({
               };
 
               console.error(
-                "Fallback speech synthesis also failed:",
+                "Fallback speech synthesis also failed for word:",
+                currentWord.word,
                 catchErrorInfo,
               );
               setIsPlaying(false);
@@ -620,7 +622,7 @@ export function InteractiveDashboardWordCard({
                 : String(mainError),
         };
 
-        console.error("Main speech synthesis failed:", mainErrorInfo);
+        console.error("Main speech synthesis failed for word:", currentWord.word, mainErrorInfo);
         setIsPlaying(false);
       }
     }
