@@ -316,6 +316,10 @@ const App = () => {
                         path="/StorageOptimizationDemo"
                         element={<StorageOptimizationDemo />}
                       />
+                      <Route
+                        path="/enhanced-forms-demo"
+                        element={<ExampleForm />}
+                      />
 
                       {/* Builder.io Educational Content Routes */}
                       <Route
