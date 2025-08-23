@@ -468,7 +468,7 @@ export const JungleAdventureWordCard: React.FC<
 
                 {word.pronunciation && (
                   <p className="text-lg sm:text-xl opacity-95 font-semibold leading-tight bg-white/20 backdrop-blur-md rounded-full px-4 py-2 border border-white/30">
-                    🗣️ {word.pronunciation}
+                    🗣��� {word.pronunciation}
                   </p>
                 )}
               </div>
@@ -505,7 +505,7 @@ export const JungleAdventureWordCard: React.FC<
         {/* BACK CARD - Jungle Explorer Details */}
         <Card
           className={cn(
-            "absolute inset-0 w-full h-full backface-hidden rotate-y-180",
+            "absolute inset-0 w-full h-full",
             "bg-gradient-to-br from-slate-800 via-green-900 to-slate-900 rounded-xl overflow-hidden shadow-2xl",
             "border-4 border-green-400/30",
             "jungle-adventure-back",
