@@ -8,6 +8,9 @@ import "./components/builder-registry";
 // Asset management system
 import { AssetManager, AudioManager } from "./lib/assetManager";
 
+// LocalStorage optimization system
+import { localStorageManager } from "./lib/localStorageManager";
+
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -65,6 +68,25 @@ const App = () => {
         console.warn(
           "⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
         );
+      }
+
+      // Initialize localStorage Optimization System
+      try {
+        console.log("🗄️ Initializing localStorage optimization system...");
+        // The localStorageManager is automatically initialized when imported
+        // Run initial cleanup and health check
+        const healthReport = localStorageManager.getHealthReport();
+        console.log("📊 Storage Health:", healthReport.status);
+
+        if (healthReport.status === 'warning' || healthReport.status === 'critical') {
+          console.warn("⚠️ Storage issues detected:", healthReport.issues);
+          // Auto-cleanup if storage is in poor health
+          localStorageManager.cleanup(true);
+        }
+
+        console.log("✅ LocalStorage optimization system initialized");
+      } catch (error) {
+        console.warn("⚠️ LocalStorage optimization system initialization failed:", error);
       }
 
       // Initialize Asset Management System
