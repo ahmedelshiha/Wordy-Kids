@@ -433,6 +433,11 @@ export default function JungleAdventureSettingsPanelV2({
                 <p className="text-white/90 text-sm">
                   Customize your adventure
                 </p>
+                {!isMobile && (
+                  <p className="text-white/70 text-xs mt-1">
+                    💡 Use arrow keys on sliders, Tab to navigate, ? for help
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -713,7 +718,7 @@ export default function JungleAdventureSettingsPanelV2({
                   />
 
                   <SettingRow
-                    label="Glow ✨"
+                    label="Glow ��"
                     control={
                       <Switch
                         checked={settings.overlays.glow}
