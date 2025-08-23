@@ -89,28 +89,8 @@ export function useUserProgress(userId: string) {
 
   const [progress, setProgress, { loading, error }] = useOptimizedStorage(
     progressKey,
-    {
-      level: 1,
-      experience: 0,
-      wordsLearned: [],
-      achievements: [],
-      streakDays: 0,
-      lastPlayed: null as string | null,
-      totalPlayTime: 0,
-      favoriteWords: [],
-      difficultyPreference: "medium" as "easy" | "medium" | "hard",
-      soundEnabled: true,
-      parentalControls: {
-        timeLimit: 60, // minutes
-        allowedCategories: ["animals", "colors", "shapes", "numbers"],
-      },
-    },
-    {
-      priority: "high",
-      expiry: 365 * 24 * 60 * 60 * 1000, // 1 year
-      syncAcrossTabs: true,
-      compress: true,
-    },
+    DEFAULT_USER_PROGRESS,
+    USER_PROGRESS_OPTIONS
   );
 
   const updateProgress = useCallback(
