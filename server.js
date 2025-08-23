@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 async function importServer() {
   try {
     // Try production build first
-    const { createServer } = await import("./dist/server/production.mjs");
+    const { createServer } = await import("./dist/server/node-build.mjs");
     return createServer;
   } catch (e) {
     // Fallback for development
