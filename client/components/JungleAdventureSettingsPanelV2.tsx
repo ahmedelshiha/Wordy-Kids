@@ -1041,7 +1041,9 @@ function SettingRow({
           </div>
         )}
       </div>
-      <div className="flex flex-1 min-w-0 max-w-[140px]">{control ?? children}</div>
+      <div className="flex flex-1 min-w-0 max-w-[140px]">
+        {control ?? children}
+      </div>
     </div>
   );
 }
