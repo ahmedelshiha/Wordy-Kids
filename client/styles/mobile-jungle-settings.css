@@ -73,6 +73,39 @@
   background: linear-gradient(135deg, #2e7d32, #558b2f);
 }
 
+/* Main settings panel scrollarea optimizations */
+.jungle-mobile-main-scrollarea {
+  /* Ensure smooth scrolling for the main panel */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  /* Improve performance */
+  contain: layout style paint;
+  will-change: scroll-position;
+
+  /* Enhanced touch scrolling */
+  touch-action: pan-y;
+}
+
+/* Ensure accordion items don't interfere with scrolling */
+.jungle-mobile-main-scrollarea .space-y-2 > * {
+  /* Prevent nested scroll conflicts */
+  overscroll-behavior: auto;
+}
+
+/* Better spacing for mobile accordion items */
+@media (max-width: 768px) {
+  .jungle-mobile-main-scrollarea .space-y-2 {
+    gap: 0.75rem; /* Increased spacing between sections for better touch targets */
+  }
+
+  /* Ensure Theme & Motion section has enough space */
+  .jungle-mobile-main-scrollarea [data-radix-accordion-item] {
+    margin-bottom: 0.5rem;
+  }
+}
+
 .jungle-mobile-settings-dialog {
   background: linear-gradient(
     135deg,
