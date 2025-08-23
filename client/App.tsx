@@ -13,7 +13,11 @@ import { localStorageManager } from "./lib/localStorageManager";
 
 // Builder.io integration
 import { builder } from "@builder.io/react";
-import { BuilderPageWrapper, EducationalPageWrapper, MarketingPageWrapper } from "./components/BuilderPageWrapper";
+import {
+  BuilderPageWrapper,
+  EducationalPageWrapper,
+  MarketingPageWrapper,
+} from "./components/BuilderPageWrapper";
 import { initializeBuilderRegistry } from "./lib/builder-registry";
 
 import { Toaster } from "@/components/ui/toaster";
@@ -66,7 +70,9 @@ const App = () => {
       setIsClient(true);
 
       // Initialize Builder.io with API key
-      const builderKey = import.meta.env.VITE_BUILDER_PUBLIC_KEY || import.meta.env.VITE_PUBLIC_BUILDER_KEY;
+      const builderKey =
+        import.meta.env.VITE_BUILDER_PUBLIC_KEY ||
+        import.meta.env.VITE_PUBLIC_BUILDER_KEY;
       if (builderKey && builderKey !== "__BUILDER_PUBLIC_KEY__") {
         builder.init(builderKey);
         initializeBuilderRegistry();
@@ -322,8 +328,13 @@ const App = () => {
                             learningLevel="beginner"
                             fallbackContent={
                               <div className="p-8 text-center">
-                                <h2 className="text-2xl font-bold mb-4">🎓 Lesson Coming Soon!</h2>
-                                <p className="text-gray-600">This educational content is being prepared for you.</p>
+                                <h2 className="text-2xl font-bold mb-4">
+                                  🎓 Lesson Coming Soon!
+                                </h2>
+                                <p className="text-gray-600">
+                                  This educational content is being prepared for
+                                  you.
+                                </p>
                                 <div className="mt-4 text-4xl">📚</div>
                               </div>
                             }
@@ -338,8 +349,12 @@ const App = () => {
                             model="learning-activity"
                             fallbackContent={
                               <div className="p-8 text-center">
-                                <h2 className="text-2xl font-bold mb-4">🎮 Activity Loading...</h2>
-                                <p className="text-gray-600">Get ready for a fun learning adventure!</p>
+                                <h2 className="text-2xl font-bold mb-4">
+                                  🎮 Activity Loading...
+                                </h2>
+                                <p className="text-gray-600">
+                                  Get ready for a fun learning adventure!
+                                </p>
                                 <div className="mt-4 text-4xl">🌟</div>
                               </div>
                             }
@@ -349,17 +364,23 @@ const App = () => {
 
                       <Route
                         path="/about"
-                        element={<MarketingPageWrapper model="marketing-page" />}
+                        element={
+                          <MarketingPageWrapper model="marketing-page" />
+                        }
                       />
 
                       <Route
                         path="/pricing"
-                        element={<MarketingPageWrapper model="marketing-page" />}
+                        element={
+                          <MarketingPageWrapper model="marketing-page" />
+                        }
                       />
 
                       <Route
                         path="/parents"
-                        element={<MarketingPageWrapper model="parent-info-page" />}
+                        element={
+                          <MarketingPageWrapper model="parent-info-page" />
+                        }
                       />
 
                       {/* Builder.io Dynamic Pages */}
@@ -369,11 +390,15 @@ const App = () => {
                       />
                       <Route
                         path="/lesson/*"
-                        element={<EducationalPageWrapper model="educational-lesson" />}
+                        element={
+                          <EducationalPageWrapper model="educational-lesson" />
+                        }
                       />
                       <Route
                         path="/game/*"
-                        element={<EducationalPageWrapper model="learning-activity" />}
+                        element={
+                          <EducationalPageWrapper model="learning-activity" />
+                        }
                       />
                       <Route
                         path="/builder/:slug"
