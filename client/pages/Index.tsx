@@ -547,7 +547,6 @@ export default function Index({ initialProfile }: IndexProps) {
     // Prevent infinite loops by checking if we already regenerated for this count
     if (
       shouldRegenerate &&
-      dashboardSession &&
       wordsCompleted !== lastRegenerationCountRef.current
     ) {
       console.log(
@@ -556,7 +555,7 @@ export default function Index({ initialProfile }: IndexProps) {
       lastRegenerationCountRef.current = wordsCompleted;
       generateDashboardWords();
     }
-  }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
+  }, [rememberedWords.size]); // Remove dashboardSession to prevent infinite loop
 
   // Update current progress for goals tracking (using stable dependencies)
   useEffect(() => {
@@ -3670,7 +3669,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                       setFeedback({
                                         type: "celebration",
                                         title:
-                                          "Epic Adventure Complete! 🚀👑✨",
+                                          "Epic Adventure Complete! 🚀👑���",
                                         message: `Incredible performance! Score: ${score.toLocaleString()} points
 🎯 Accuracy: ${stats.accuracy || 0}%
 ⚡ Max Streak: ${stats.maxStreak || 0}
@@ -3692,7 +3691,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                 <div className="space-y-6">
                                   <div className="flex items-center justify-between md:justify-center md:relative">
                                     <h2 className="text-2xl font-bold text-gray-800">
-                                      🌱 Word Garden
+                                      ��� Word Garden
                                     </h2>
                                     <Button
                                       onClick={() => setShowExitDialog(true)}
@@ -4170,7 +4169,7 @@ export default function Index({ initialProfile }: IndexProps) {
                     role="img"
                     aria-label="Owl icon"
                   >
-                    🦉
+                    ���
                   </span>
                   <div className="text-left flex-1 min-w-0">
                     <div className="font-semibold text-base sm:text-lg leading-tight">
