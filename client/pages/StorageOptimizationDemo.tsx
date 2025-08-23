@@ -27,11 +27,7 @@ const DEMO_OPTIONS = { priority: "medium" as const, compress: true };
 export const StorageOptimizationDemo: React.FC = () => {
   // Example usage of different storage hooks
   const [demoValue, setDemoValue, { loading: demoLoading, error: demoError }] =
-    useOptimizedStorage(
-      "demo_key",
-      DEMO_DEFAULT_VALUE,
-      DEMO_OPTIONS,
-    );
+    useOptimizedStorage("demo_key", DEMO_DEFAULT_VALUE, DEMO_OPTIONS);
 
   const { progress, updateProgress, addWordLearned, addAchievement } =
     useUserProgress("demo_user");

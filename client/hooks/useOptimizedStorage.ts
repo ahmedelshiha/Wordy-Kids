@@ -13,19 +13,19 @@ const DEFAULT_USER_PROGRESS = {
   lastPlayed: null as string | null,
   totalPlayTime: 0,
   favoriteWords: [],
-  difficultyPreference: 'medium' as 'easy' | 'medium' | 'hard',
+  difficultyPreference: "medium" as "easy" | "medium" | "hard",
   soundEnabled: true,
   parentalControls: {
     timeLimit: 60, // minutes
-    allowedCategories: ['animals', 'colors', 'shapes', 'numbers']
-  }
+    allowedCategories: ["animals", "colors", "shapes", "numbers"],
+  },
 };
 
 const USER_PROGRESS_OPTIONS = {
-  priority: 'high' as const,
+  priority: "high" as const,
   expiry: 365 * 24 * 60 * 60 * 1000, // 1 year
   syncAcrossTabs: true,
-  compress: true
+  compress: true,
 };
 
 const DEFAULT_GAME_SETTINGS = {
@@ -33,20 +33,20 @@ const DEFAULT_GAME_SETTINGS = {
   soundEffects: true,
   music: true,
   animations: true,
-  theme: 'jungle' as 'jungle' | 'ocean' | 'space' | 'farm',
-  language: 'en',
+  theme: "jungle" as "jungle" | "ocean" | "space" | "farm",
+  language: "en",
   autoAdvance: false,
   showHints: true,
-  difficulty: 'medium' as 'easy' | 'medium' | 'hard',
-  fontSize: 'medium' as 'small' | 'medium' | 'large',
+  difficulty: "medium" as "easy" | "medium" | "hard",
+  fontSize: "medium" as "small" | "medium" | "large",
   highContrast: false,
-  reducedMotion: false
+  reducedMotion: false,
 };
 
 const GAME_SETTINGS_OPTIONS = {
-  priority: 'high' as const,
+  priority: "high" as const,
   syncAcrossTabs: true,
-  expiry: 30 * 24 * 60 * 60 * 1000 // 30 days
+  expiry: 30 * 24 * 60 * 60 * 1000, // 30 days
 };
 
 // Hook for storing and retrieving data with automatic optimization
@@ -136,7 +136,7 @@ export function useUserProgress(userId: string) {
   const [progress, setProgress, { loading, error }] = useOptimizedStorage(
     progressKey,
     DEFAULT_USER_PROGRESS,
-    USER_PROGRESS_OPTIONS
+    USER_PROGRESS_OPTIONS,
   );
 
   const updateProgress = useCallback(
@@ -201,7 +201,7 @@ export function useGameSettings() {
   const [settings, setSettings, { loading, error }] = useOptimizedStorage(
     "game_settings",
     DEFAULT_GAME_SETTINGS,
-    GAME_SETTINGS_OPTIONS
+    GAME_SETTINGS_OPTIONS,
   );
 
   const updateSetting = useCallback(
@@ -381,10 +381,13 @@ export function useStorageHealth() {
 
   // Auto-refresh health report periodically
   useEffect(() => {
-    const interval = setInterval(() => {
-      setHealthReport(localStorageManager.getHealthReport());
-      setLastCheck(Date.now());
-    }, 5 * 60 * 1000); // Every 5 minutes
+    const interval = setInterval(
+      () => {
+        setHealthReport(localStorageManager.getHealthReport());
+        setLastCheck(Date.now());
+      },
+      5 * 60 * 1000,
+    ); // Every 5 minutes
     return () => clearInterval(interval);
   }, []); // Empty dependency array to prevent recreation
 
