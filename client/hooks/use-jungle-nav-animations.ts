@@ -39,13 +39,16 @@ export function useJungleNavAnimations(
   // Animation timers and cleanup
   const animationRefs = useRef<Map<HTMLElement, number>>(new Map());
 
-  // Initialize audio system
+  // Initialize audio system using AssetManager
   useEffect(() => {
     if (!enableSounds) return;
 
-    const initializeAudio = () => {
+    const initializeAudio = async () => {
       try {
-        // Preload animal sounds
+        // Import AssetManager for smart audio loading
+        const { AudioManager } = await import('@/lib/assetManager');
+
+        // Preload animal sounds with automatic fallbacks
         const animalSounds = {
           owl: "/sounds/owl-hoot.mp3",
           parrot: "/sounds/parrot-chirp.mp3",
@@ -53,16 +56,24 @@ export function useJungleNavAnimations(
           elephant: "/sounds/elephant-trumpet.mp3",
         };
 
-        Object.entries(animalSounds).forEach(([animal, soundPath]) => {
-          const audio = new Audio(soundPath);
-          audio.preload = "metadata";
-          audio.volume = 0.3;
-          audioRef.current[animal] = audio;
+        // Load audio files using AssetManager for automatic path correction
+        const loadPromises = Object.entries(animalSounds).map(async ([animal, soundPath]) => {
+          try {
+            const audio = await AudioManager.loadAudio(soundPath);
+            audio.volume = 0.3;
+            audioRef.current[animal] = audio;
+          } catch (error) {
+            console.warn(`Failed to load ${animal} sound:`, error);
+            // AssetManager will have already tried fallbacks, so we can skip this animal sound
+          }
         });
 
+        await Promise.all(loadPromises);
         setIsAudioInitialized(true);
+        console.log('✅ Jungle navigation audio initialized with AssetManager');
       } catch (error) {
         console.warn("Audio initialization failed:", error);
+        setIsAudioInitialized(false);
       }
     };
 
