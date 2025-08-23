@@ -326,7 +326,21 @@ export class AudioService {
       onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
-    if (!this.isEnabled || !word?.trim()) return;
+    // Import sanitization helper inline to avoid circular dependencies
+    const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+    // Sanitize input to prevent "[object Object]" errors
+    const sanitizedWord = sanitizeTTSInput(word);
+    if (!this.isEnabled || !sanitizedWord) {
+      if (!sanitizedWord) {
+        logSpeechError(
+          "audioService.pronounceWord",
+          word,
+          "Empty word after sanitization",
+        );
+      }
+      return;
+    }
 
     // Check if speech synthesis is supported and available
     if (!this.isSupported || !this.speechSynthesis) {
@@ -389,7 +403,7 @@ export class AudioService {
         this.loadVoices();
       }
 
-      const utterance = new SpeechSynthesisUtterance(word.trim());
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
 
       // Set voice properties with validation
       utterance.rate = rate;
@@ -512,6 +526,19 @@ export class AudioService {
     } = {},
   ): void {
     try {
+      // Import sanitization helper inline to avoid circular dependencies
+      const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+      // Sanitize input to prevent "[object Object]" errors
+      const sanitizedWord = sanitizeTTSInput(word);
+      if (!sanitizedWord) {
+        logSpeechError(
+          "audioService.pronounceWordWithoutVoiceSelection",
+          word,
+          "Empty word after sanitization",
+        );
+        return;
+      }
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);
 
       // Validate and clamp parameters to safe ranges
@@ -525,7 +552,7 @@ export class AudioService {
       );
       const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
-      const utterance = new SpeechSynthesisUtterance(word.trim());
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
       utterance.rate = rate;
       utterance.pitch = pitch;
       utterance.volume = volume;

@@ -187,7 +187,7 @@ export function InteractiveDashboardWordCard({
     accuracy: 0,
     sessionStartTime: Date.now(),
   });
-  const [sessionWords, setSessionWords] = useState<any[]>([]);
+  const [sessionWords, setSessionWords] = useState<Word[]>([]);
   const [showSessionComplete, setShowSessionComplete] = useState(false);
   const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
     [],
@@ -491,7 +491,23 @@ export function InteractiveDashboardWordCard({
           throw new Error("Enhanced audio service not available");
         }
 
-        enhancedAudioService.pronounceWord(currentWord.word, {
+        // Validate word before speech synthesis
+        const wordToSpeak = currentWord?.word;
+        if (
+          !wordToSpeak ||
+          typeof wordToSpeak !== "string" ||
+          wordToSpeak.trim().length === 0
+        ) {
+          console.error("Invalid word for speech synthesis:", {
+            currentWord,
+            wordToSpeak,
+            type: typeof wordToSpeak,
+          });
+          setIsPlaying(false);
+          return;
+        }
+
+        enhancedAudioService.pronounceWord(wordToSpeak, {
           onStart: () => {
             console.log("Speech started successfully");
             setIsPlaying(true);
@@ -1758,7 +1774,7 @@ export function InteractiveDashboardWordCard({
                       25: "🌟 You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
-                      90: "👑 Final jungle challenges await!",
+                      90: "�� Final jungle challenges await!",
                     };
 
                     // Get category-specific prompts or use defaults
@@ -1922,7 +1938,7 @@ export function InteractiveDashboardWordCard({
                       emoji = "🏆";
                       title = "Jungle Hero";
                     } else if (accuracy >= 50) {
-                      emoji = "🌟";
+                      emoji = "��";
                       title = "Explorer";
                     } else {
                       emoji = "🌱";
@@ -2361,7 +2377,7 @@ export function InteractiveDashboardWordCard({
                             animationDelay: "0.6s",
                           }}
                         >
-                          ✨
+                          ��
                         </motion.span>
                       </motion.div>
                     </div>

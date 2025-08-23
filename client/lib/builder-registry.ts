@@ -1,5 +1,5 @@
 // client/lib/builder-registry.ts
-import { Builder } from "@builder.io/react";
+import { Builder, builder } from "@builder.io/react";
 import React from "react";
 
 // Create fallback component factory
@@ -590,32 +590,8 @@ export const initializeBuilderRegistry = () => {
     "✅ Builder.io component registry initialized with 9 educational components",
   );
 
-  // Configure Builder.io for educational context
-  Builder.configure({
-    // Enable custom targeting for educational content
-    customTargeting: {
-      age: {
-        type: "number",
-        friendlyName: "Child Age",
-        description: "Target content by child age (3-12)",
-      },
-      learningLevel: {
-        type: "enum",
-        values: ["beginner", "intermediate", "advanced"],
-        friendlyName: "Learning Level",
-      },
-      interests: {
-        type: "list",
-        friendlyName: "Learning Interests",
-        description: "Child's educational interests (animals, colors, etc.)",
-      },
-      parentalMode: {
-        type: "boolean",
-        friendlyName: "Parental Mode",
-        description: "Whether content is for parents or children",
-      },
-    },
-  });
+  // Note: Configuration removed as builder.configure() is not available in this version
+  // Component registrations above are sufficient for basic Builder.io functionality
 };
 
 export default Builder;

@@ -116,10 +116,24 @@ function useConfetti() {
 
 // --------- Speech ---------
 function speakWord(word: string, funny = false, fallback?: string) {
+  // Import sanitization helper
+  const { sanitizeTTSInput, logSpeechError } = require("../../lib/speechUtils");
+
+  // Sanitize input to prevent "[object Object]" errors
+  const sanitizedWord = sanitizeTTSInput(word);
+  if (!sanitizedWord) {
+    logSpeechError(
+      "ListenAndGuessGame.speakWord",
+      word,
+      "Empty word after sanitization",
+    );
+    return;
+  }
+
   const synth =
     typeof window !== "undefined" ? window.speechSynthesis : undefined;
   if (synth && typeof SpeechSynthesisUtterance !== "undefined") {
-    const u = new SpeechSynthesisUtterance(word);
+    const u = new SpeechSynthesisUtterance(sanitizedWord);
     // Kid‑friendly voices if available
     const voices = synth.getVoices();
     // Try a child‑like voice (heuristic)

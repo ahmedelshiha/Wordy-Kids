@@ -872,7 +872,22 @@ export class EnhancedJungleAudioSystem {
       }
 
       try {
-        const utterance = new SpeechSynthesisUtterance(word);
+        // Import sanitization helper inline to avoid circular dependencies
+        const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+        // Sanitize input to prevent "[object Object]" errors
+        const sanitizedWord = sanitizeTTSInput(word);
+        if (!sanitizedWord) {
+          logSpeechError(
+            "enhancedJungleAudioSystem.speakWordWithEffects",
+            word,
+            "Empty word after sanitization",
+          );
+          reject(new Error("Empty word after sanitization"));
+          return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(sanitizedWord);
 
         // Apply voice settings
         utterance.voice = this.voiceSettings.voice;
@@ -917,7 +932,22 @@ export class EnhancedJungleAudioSystem {
         return;
       }
 
-      const utterance = new SpeechSynthesisUtterance(word);
+      // Import sanitization helper inline to avoid circular dependencies
+      const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+      // Sanitize input to prevent "[object Object]" errors
+      const sanitizedWord = sanitizeTTSInput(word);
+      if (!sanitizedWord) {
+        logSpeechError(
+          "enhancedJungleAudioSystem.speakWord",
+          word,
+          "Empty word after sanitization",
+        );
+        reject(new Error("Empty word after sanitization"));
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
 
       utterance.voice = this.voiceSettings.voice;
       utterance.rate = options?.rate || this.voiceSettings.rate;
