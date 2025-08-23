@@ -34,6 +34,7 @@
     "npm": ">=8.0.0"
   },
   "dependencies": {
+    "@builder.io/react": "^8.2.6",
     "@types/crypto-js": "^4.2.2",
     "crypto-js": "^4.2.0",
     "dotenv": "^17.2.0",
