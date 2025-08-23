@@ -1,11 +1,11 @@
 // FormActions Component for form submission, navigation, and action buttons
 // Provides consistent styling and behavior for form controls
 
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeft,
   ChevronRight,
@@ -22,14 +22,20 @@ import {
   HelpCircle,
   Sparkles,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 export interface ActionButton {
   id: string;
   label: string;
   onClick: () => void | Promise<void>;
-  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-  size?: 'default' | 'sm' | 'lg' | 'icon';
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+  size?: "default" | "sm" | "lg" | "icon";
   icon?: React.ComponentType<{ className?: string }>;
   disabled?: boolean;
   loading?: boolean;
@@ -39,7 +45,7 @@ export interface ActionButton {
   confirmMessage?: string;
   successMessage?: string;
   // Educational features
-  difficulty?: 'easy' | 'medium' | 'hard';
+  difficulty?: "easy" | "medium" | "hard";
   points?: number;
   celebration?: boolean;
 }
@@ -50,22 +56,22 @@ export interface FormActionsProps {
   onCancel?: () => void;
   onReset?: () => void;
   onSave?: () => void;
-  
+
   // Navigation (for multi-step forms)
   onNext?: () => void;
   onPrevious?: () => void;
   canGoNext?: boolean;
   canGoPrevious?: boolean;
-  
+
   // Form state
   isSubmitting?: boolean;
   isValid?: boolean;
   isDirty?: boolean;
   hasErrors?: boolean;
-  
+
   // Custom actions
   customActions?: ActionButton[];
-  
+
   // Labels and text
   submitLabel?: string;
   cancelLabel?: string;
@@ -73,63 +79,64 @@ export interface FormActionsProps {
   previousLabel?: string;
   saveLabel?: string;
   resetLabel?: string;
-  
+
   // Layout
-  layout?: 'inline' | 'stacked' | 'spread' | 'center';
-  spacing?: 'compact' | 'normal' | 'relaxed';
-  
+  layout?: "inline" | "stacked" | "spread" | "center";
+  spacing?: "compact" | "normal" | "relaxed";
+
   // Visual styling
-  theme?: 'jungle' | 'ocean' | 'space' | 'rainbow';
-  variant?: 'default' | 'floating' | 'sticky' | 'minimal';
-  
+  theme?: "jungle" | "ocean" | "space" | "rainbow";
+  variant?: "default" | "floating" | "sticky" | "minimal";
+
   // Educational features
   showProgress?: boolean;
   currentStep?: number;
   totalSteps?: number;
   pointsEarned?: number;
   celebrateSuccess?: boolean;
-  
+
   // Accessibility
   ariaLabel?: string;
-  
+
   className?: string;
   id?: string;
 }
 
 const themeStyles = {
   jungle: {
-    primary: 'bg-jungle hover:bg-jungle-dark text-white',
-    secondary: 'border-jungle text-jungle hover:bg-jungle/10',
-    accent: 'text-jungle',
+    primary: "bg-jungle hover:bg-jungle-dark text-white",
+    secondary: "border-jungle text-jungle hover:bg-jungle/10",
+    accent: "text-jungle",
   },
   ocean: {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-    secondary: 'border-blue-600 text-blue-600 hover:bg-blue-50',
-    accent: 'text-blue-600',
+    primary: "bg-blue-600 hover:bg-blue-700 text-white",
+    secondary: "border-blue-600 text-blue-600 hover:bg-blue-50",
+    accent: "text-blue-600",
   },
   space: {
-    primary: 'bg-purple-600 hover:bg-purple-700 text-white',
-    secondary: 'border-purple-600 text-purple-600 hover:bg-purple-50',
-    accent: 'text-purple-600',
+    primary: "bg-purple-600 hover:bg-purple-700 text-white",
+    secondary: "border-purple-600 text-purple-600 hover:bg-purple-50",
+    accent: "text-purple-600",
   },
   rainbow: {
-    primary: 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white',
-    secondary: 'border-pink-500 text-pink-600 hover:bg-pink-50',
-    accent: 'text-pink-600',
+    primary:
+      "bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white",
+    secondary: "border-pink-500 text-pink-600 hover:bg-pink-50",
+    accent: "text-pink-600",
   },
 };
 
 const layoutStyles = {
-  inline: 'flex items-center gap-3',
-  stacked: 'flex flex-col gap-3',
-  spread: 'flex items-center justify-between',
-  center: 'flex items-center justify-center gap-3',
+  inline: "flex items-center gap-3",
+  stacked: "flex flex-col gap-3",
+  spread: "flex items-center justify-between",
+  center: "flex items-center justify-center gap-3",
 };
 
 const spacingStyles = {
-  compact: 'gap-2',
-  normal: 'gap-3',
-  relaxed: 'gap-4',
+  compact: "gap-2",
+  normal: "gap-3",
+  relaxed: "gap-4",
 };
 
 const FormActions: React.FC<FormActionsProps> = ({
@@ -138,48 +145,48 @@ const FormActions: React.FC<FormActionsProps> = ({
   onCancel,
   onReset,
   onSave,
-  
+
   // Navigation
   onNext,
   onPrevious,
   canGoNext = true,
   canGoPrevious = true,
-  
+
   // Form state
   isSubmitting = false,
   isValid = true,
   isDirty = false,
   hasErrors = false,
-  
+
   // Custom actions
   customActions = [],
-  
+
   // Labels
-  submitLabel = 'Submit',
-  cancelLabel = 'Cancel',
-  nextLabel = 'Next',
-  previousLabel = 'Previous',
-  saveLabel = 'Save',
-  resetLabel = 'Reset',
-  
+  submitLabel = "Submit",
+  cancelLabel = "Cancel",
+  nextLabel = "Next",
+  previousLabel = "Previous",
+  saveLabel = "Save",
+  resetLabel = "Reset",
+
   // Layout
-  layout = 'inline',
-  spacing = 'normal',
-  
+  layout = "inline",
+  spacing = "normal",
+
   // Visual styling
-  theme = 'jungle',
-  variant = 'default',
-  
+  theme = "jungle",
+  variant = "default",
+
   // Educational features
   showProgress = false,
   currentStep,
   totalSteps,
   pointsEarned = 0,
   celebrateSuccess = false,
-  
+
   // Accessibility
-  ariaLabel = 'Form actions',
-  
+  ariaLabel = "Form actions",
+
   className,
   id,
 }) => {
@@ -199,22 +206,22 @@ const FormActions: React.FC<FormActionsProps> = ({
     if (action.confirmMessage) {
       if (!confirm(action.confirmMessage)) return;
     }
-    
+
     try {
       await action.onClick();
-      
+
       if (action.successMessage) {
         // Show success feedback (you might want to use a toast library)
         console.log(action.successMessage);
       }
-      
+
       // Celebration for educational features
       if (action.celebration && action.points) {
         setCelebrationActive(true);
         setTimeout(() => setCelebrationActive(false), 1500);
       }
     } catch (error) {
-      console.error('Action failed:', error);
+      console.error("Action failed:", error);
     }
   };
 
@@ -223,7 +230,7 @@ const FormActions: React.FC<FormActionsProps> = ({
     if (action.hidden) return null;
 
     const Icon = action.icon;
-    
+
     return (
       <motion.div
         key={action.id}
@@ -234,15 +241,15 @@ const FormActions: React.FC<FormActionsProps> = ({
         whileTap={{ scale: 0.98 }}
       >
         <Button
-          variant={action.variant || 'outline'}
-          size={action.size || 'default'}
+          variant={action.variant || "outline"}
+          size={action.size || "default"}
           disabled={action.disabled || action.loading}
           onClick={() => handleActionWithConfirmation(action)}
           className={cn(
-            'relative',
-            action.difficulty === 'hard' && 'ring-2 ring-red-300',
-            action.difficulty === 'medium' && 'ring-2 ring-yellow-300',
-            action.difficulty === 'easy' && 'ring-2 ring-green-300'
+            "relative",
+            action.difficulty === "hard" && "ring-2 ring-red-300",
+            action.difficulty === "medium" && "ring-2 ring-yellow-300",
+            action.difficulty === "easy" && "ring-2 ring-green-300",
           )}
           title={action.tooltip}
         >
@@ -250,7 +257,7 @@ const FormActions: React.FC<FormActionsProps> = ({
             <motion.div
               className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
               animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
           ) : (
             <>
@@ -276,24 +283,24 @@ const FormActions: React.FC<FormActionsProps> = ({
     const baseClasses = cn(
       layoutStyles[layout],
       spacingStyles[spacing],
-      className
+      className,
     );
 
     switch (variant) {
-      case 'floating':
+      case "floating":
         return cn(
           baseClasses,
-          'fixed bottom-6 right-6 bg-white shadow-lg rounded-lg p-4 border z-50'
+          "fixed bottom-6 right-6 bg-white shadow-lg rounded-lg p-4 border z-50",
         );
-      case 'sticky':
+      case "sticky":
         return cn(
           baseClasses,
-          'sticky bottom-0 bg-white border-t p-4 backdrop-blur-sm'
+          "sticky bottom-0 bg-white border-t p-4 backdrop-blur-sm",
         );
-      case 'minimal':
-        return cn(baseClasses, 'p-2');
+      case "minimal":
+        return cn(baseClasses, "p-2");
       default:
-        return cn(baseClasses, 'p-4');
+        return cn(baseClasses, "p-4");
     }
   };
 
@@ -308,7 +315,9 @@ const FormActions: React.FC<FormActionsProps> = ({
       {showProgress && currentStep && totalSteps && (
         <div className="flex-1 max-w-xs">
           <div className="flex justify-between text-xs text-gray-600 mb-1">
-            <span>Step {currentStep} of {totalSteps}</span>
+            <span>
+              Step {currentStep} of {totalSteps}
+            </span>
             <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
@@ -367,11 +376,7 @@ const FormActions: React.FC<FormActionsProps> = ({
 
         {/* Primary actions */}
         {onCancel && (
-          <Button
-            variant="outline"
-            onClick={onCancel}
-            disabled={isSubmitting}
-          >
+          <Button variant="outline" onClick={onCancel} disabled={isSubmitting}>
             <X className="w-4 h-4 mr-2" />
             {cancelLabel}
           </Button>
@@ -389,24 +394,22 @@ const FormActions: React.FC<FormActionsProps> = ({
         )}
 
         {onSubmit && (
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button
               onClick={onSubmit}
               disabled={!isValid || hasErrors || isSubmitting}
-              className={cn(
-                styles.primary,
-                'relative overflow-hidden'
-              )}
+              className={cn(styles.primary, "relative overflow-hidden")}
             >
               {isSubmitting ? (
                 <>
                   <motion.div
                     className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   />
                   Submitting...
                 </>
@@ -444,7 +447,7 @@ const FormActions: React.FC<FormActionsProps> = ({
             initial={{ opacity: 0, scale: 0, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0, x: 20 }}
-            transition={{ type: 'spring', stiffness: 400 }}
+            transition={{ type: "spring", stiffness: 400 }}
           >
             <Zap className="w-4 h-4" />
             <span className="font-bold">{pointsEarned} points earned!</span>
@@ -453,7 +456,7 @@ const FormActions: React.FC<FormActionsProps> = ({
       )}
 
       {/* Form status indicators */}
-      {variant !== 'minimal' && (
+      {variant !== "minimal" && (
         <div className="flex items-center gap-2 text-xs">
           {isDirty && (
             <Badge variant="outline" className="text-blue-600 border-blue-300">
@@ -466,7 +469,10 @@ const FormActions: React.FC<FormActionsProps> = ({
             </Badge>
           )}
           {isValid && !hasErrors && isDirty && (
-            <Badge variant="outline" className="text-green-600 border-green-300">
+            <Badge
+              variant="outline"
+              className="text-green-600 border-green-300"
+            >
               ✅ Ready to submit
             </Badge>
           )}

@@ -115,14 +115,15 @@ const App = () => {
           console.log("🔍 Validating assets...");
 
           // Use Promise.allSettled to ensure no individual failure blocks the entire process
-          const [validationResult, preloadResult, audioResult] = await Promise.allSettled([
-            AssetManager.validateAllAssets(),
-            AssetManager.preloadCriticalAssets(),
-            AudioManager.preloadCommonSounds()
-          ]);
+          const [validationResult, preloadResult, audioResult] =
+            await Promise.allSettled([
+              AssetManager.validateAllAssets(),
+              AssetManager.preloadCriticalAssets(),
+              AudioManager.preloadCommonSounds(),
+            ]);
 
           // Handle validation result
-          if (validationResult.status === 'fulfilled') {
+          if (validationResult.status === "fulfilled") {
             const validation = validationResult.value;
             if (validation.missing.length > 0) {
               console.warn("⚠️ Missing assets:", validation.missing);
@@ -131,19 +132,24 @@ const App = () => {
               console.log("🔄 Asset mappings applied:", validation.mappings);
             }
           } else {
-            console.warn("⚠️ Asset validation failed:", validationResult.reason);
+            console.warn(
+              "⚠️ Asset validation failed:",
+              validationResult.reason,
+            );
           }
 
           // Handle preload results
-          if (preloadResult.status === 'rejected') {
+          if (preloadResult.status === "rejected") {
             console.warn("⚠️ Asset preloading failed:", preloadResult.reason);
           }
 
-          if (audioResult.status === 'rejected') {
+          if (audioResult.status === "rejected") {
             console.warn("⚠️ Audio preloading failed:", audioResult.reason);
           }
 
-          console.log("✅ Asset system initialization completed (some operations may have failed)");
+          console.log(
+            "✅ Asset system initialization completed (some operations may have failed)",
+          );
         } catch (error) {
           console.warn("⚠️ Asset system initialization failed:", error);
           // Don't block app startup if asset system fails
@@ -152,7 +158,7 @@ const App = () => {
 
       // Initialize assets asynchronously to not block app startup - use setTimeout to ensure it doesn't block render
       setTimeout(() => {
-        initializeAssets().catch(error => {
+        initializeAssets().catch((error) => {
           console.warn("⚠️ Deferred asset initialization failed:", error);
         });
       }, 100);
@@ -222,220 +228,220 @@ const App = () => {
   return (
     <ErrorBoundary fallbackType="parent" componentName="App">
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundary
-          componentName="TooltipProvider"
-          fallbackType="minimal"
-        >
+        <ErrorBoundary componentName="TooltipProvider" fallbackType="minimal">
           <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <WordDatabaseNotifications />
-          <CompactWordDatabaseNotifications />
-          <BrowserRouter>
-            <AuthProvider>
-              <LightweightAchievementProvider>
-                <NavigationGuard>
-                  <ErrorBoundary fallbackType="parent" componentName="Routes">
-                    <Routes>
-                      <Route path="/" element={<LoginForm />} />
-                      <Route path="/login" element={<LoginForm />} />
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route
-                        path="/app"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="kid"
-                            componentName="MainAppPage"
-                          >
-                            <MainAppPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route path="/profile" element={<Login />} />
-                      <Route
-                        path="/admin"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="AdminPage"
-                          >
-                            <AdminPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/word-card-demo"
-                        element={<EnhancedWordCardDemo />}
-                      />
-                      <Route
-                        path="/word-garden-demo"
-                        element={<WordGardenDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-demo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/WordAdventureDemo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-test"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/WordAdventureTest"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/speech-diagnostics"
-                        element={<SpeechDiagnostics />}
-                      />
-                      <Route
-                        path="/ai-integration-demo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/AIIntegrationDemo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/ai-word-recommendation-demo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/AIWordRecommendationDemo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/ai-system-test"
-                        element={<AISystemTest />}
-                      />
-                      <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
-                      />
-                      <Route
-                        path="/error-boundary-test"
-                        element={<ErrorBoundaryTest />}
-                      />
-                      <Route
-                        path="/mobile-settings-demo"
-                        element={<MobileSettingsDemo />}
-                      />
-                      <Route
-                        path="/settings-panel-v2-demo"
-                        element={<SettingsPanelV2Demo />}
-                      />
-                      <Route path="/icon-nav-test" element={<IconNavTest />} />
-                      <Route
-                        path="/storage-optimization-demo"
-                        element={<StorageOptimizationDemo />}
-                      />
-                      <Route
-                        path="/StorageOptimizationDemo"
-                        element={<StorageOptimizationDemo />}
-                      />
-                      <Route
-                        path="/enhanced-forms-demo"
-                        element={<ExampleForm />}
-                      />
+            <Toaster />
+            <Sonner />
+            <WordDatabaseNotifications />
+            <CompactWordDatabaseNotifications />
+            <BrowserRouter>
+              <AuthProvider>
+                <LightweightAchievementProvider>
+                  <NavigationGuard>
+                    <ErrorBoundary fallbackType="parent" componentName="Routes">
+                      <Routes>
+                        <Route path="/" element={<LoginForm />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route
+                          path="/app"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="kid"
+                              componentName="MainAppPage"
+                            >
+                              <MainAppPage />
+                            </ErrorBoundary>
+                          }
+                        />
+                        <Route path="/profile" element={<Login />} />
+                        <Route
+                          path="/admin"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="parent"
+                              componentName="AdminPage"
+                            >
+                              <AdminPage />
+                            </ErrorBoundary>
+                          }
+                        />
+                        <Route
+                          path="/word-card-demo"
+                          element={<EnhancedWordCardDemo />}
+                        />
+                        <Route
+                          path="/word-garden-demo"
+                          element={<WordGardenDemo />}
+                        />
+                        <Route
+                          path="/word-adventure-demo"
+                          element={<WordAdventureDemo />}
+                        />
+                        <Route
+                          path="/WordAdventureDemo"
+                          element={<WordAdventureDemo />}
+                        />
+                        <Route
+                          path="/word-adventure-test"
+                          element={<WordAdventureTest />}
+                        />
+                        <Route
+                          path="/WordAdventureTest"
+                          element={<WordAdventureTest />}
+                        />
+                        <Route
+                          path="/speech-diagnostics"
+                          element={<SpeechDiagnostics />}
+                        />
+                        <Route
+                          path="/ai-integration-demo"
+                          element={<AIIntegrationDemo />}
+                        />
+                        <Route
+                          path="/AIIntegrationDemo"
+                          element={<AIIntegrationDemo />}
+                        />
+                        <Route
+                          path="/ai-word-recommendation-demo"
+                          element={<AIWordRecommendationDemo />}
+                        />
+                        <Route
+                          path="/AIWordRecommendationDemo"
+                          element={<AIWordRecommendationDemo />}
+                        />
+                        <Route
+                          path="/ai-system-test"
+                          element={<AISystemTest />}
+                        />
+                        <Route
+                          path="/jungle-adventure-word-card-demo"
+                          element={<JungleAdventureWordCardDemo />}
+                        />
+                        <Route
+                          path="/error-boundary-test"
+                          element={<ErrorBoundaryTest />}
+                        />
+                        <Route
+                          path="/mobile-settings-demo"
+                          element={<MobileSettingsDemo />}
+                        />
+                        <Route
+                          path="/settings-panel-v2-demo"
+                          element={<SettingsPanelV2Demo />}
+                        />
+                        <Route
+                          path="/icon-nav-test"
+                          element={<IconNavTest />}
+                        />
+                        <Route
+                          path="/storage-optimization-demo"
+                          element={<StorageOptimizationDemo />}
+                        />
+                        <Route
+                          path="/StorageOptimizationDemo"
+                          element={<StorageOptimizationDemo />}
+                        />
+                        <Route
+                          path="/enhanced-forms-demo"
+                          element={<ExampleForm />}
+                        />
 
-                      {/* Builder.io Educational Content Routes */}
-                      <Route
-                        path="/learn/:lesson"
-                        element={
-                          <EducationalPageWrapper
-                            model="educational-lesson"
-                            childAge={6}
-                            learningLevel="beginner"
-                            fallbackContent={
-                              <div className="p-8 text-center">
-                                <h2 className="text-2xl font-bold mb-4">
-                                  🎓 Lesson Coming Soon!
-                                </h2>
-                                <p className="text-gray-600">
-                                  This educational content is being prepared for
-                                  you.
-                                </p>
-                                <div className="mt-4 text-4xl">📚</div>
-                              </div>
-                            }
-                          />
-                        }
-                      />
+                        {/* Builder.io Educational Content Routes */}
+                        <Route
+                          path="/learn/:lesson"
+                          element={
+                            <EducationalPageWrapper
+                              model="educational-lesson"
+                              childAge={6}
+                              learningLevel="beginner"
+                              fallbackContent={
+                                <div className="p-8 text-center">
+                                  <h2 className="text-2xl font-bold mb-4">
+                                    🎓 Lesson Coming Soon!
+                                  </h2>
+                                  <p className="text-gray-600">
+                                    This educational content is being prepared
+                                    for you.
+                                  </p>
+                                  <div className="mt-4 text-4xl">📚</div>
+                                </div>
+                              }
+                            />
+                          }
+                        />
 
-                      <Route
-                        path="/activities/:activity"
-                        element={
-                          <EducationalPageWrapper
-                            model="learning-activity"
-                            fallbackContent={
-                              <div className="p-8 text-center">
-                                <h2 className="text-2xl font-bold mb-4">
-                                  🎮 Activity Loading...
-                                </h2>
-                                <p className="text-gray-600">
-                                  Get ready for a fun learning adventure!
-                                </p>
-                                <div className="mt-4 text-4xl">🌟</div>
-                              </div>
-                            }
-                          />
-                        }
-                      />
+                        <Route
+                          path="/activities/:activity"
+                          element={
+                            <EducationalPageWrapper
+                              model="learning-activity"
+                              fallbackContent={
+                                <div className="p-8 text-center">
+                                  <h2 className="text-2xl font-bold mb-4">
+                                    🎮 Activity Loading...
+                                  </h2>
+                                  <p className="text-gray-600">
+                                    Get ready for a fun learning adventure!
+                                  </p>
+                                  <div className="mt-4 text-4xl">🌟</div>
+                                </div>
+                              }
+                            />
+                          }
+                        />
 
-                      <Route
-                        path="/about"
-                        element={
-                          <MarketingPageWrapper model="marketing-page" />
-                        }
-                      />
+                        <Route
+                          path="/about"
+                          element={
+                            <MarketingPageWrapper model="marketing-page" />
+                          }
+                        />
 
-                      <Route
-                        path="/pricing"
-                        element={
-                          <MarketingPageWrapper model="marketing-page" />
-                        }
-                      />
+                        <Route
+                          path="/pricing"
+                          element={
+                            <MarketingPageWrapper model="marketing-page" />
+                          }
+                        />
 
-                      <Route
-                        path="/parents"
-                        element={
-                          <MarketingPageWrapper model="parent-info-page" />
-                        }
-                      />
+                        <Route
+                          path="/parents"
+                          element={
+                            <MarketingPageWrapper model="parent-info-page" />
+                          }
+                        />
 
-                      {/* Builder.io Dynamic Pages */}
-                      <Route
-                        path="/page/*"
-                        element={<BuilderPageWrapper model="page" />}
-                      />
-                      <Route
-                        path="/lesson/*"
-                        element={
-                          <EducationalPageWrapper model="educational-lesson" />
-                        }
-                      />
-                      <Route
-                        path="/game/*"
-                        element={
-                          <EducationalPageWrapper model="learning-activity" />
-                        }
-                      />
-                      <Route
-                        path="/builder/:slug"
-                        element={<BuilderPageWrapper model="page" />}
-                      />
+                        {/* Builder.io Dynamic Pages */}
+                        <Route
+                          path="/page/*"
+                          element={<BuilderPageWrapper model="page" />}
+                        />
+                        <Route
+                          path="/lesson/*"
+                          element={
+                            <EducationalPageWrapper model="educational-lesson" />
+                          }
+                        />
+                        <Route
+                          path="/game/*"
+                          element={
+                            <EducationalPageWrapper model="learning-activity" />
+                          }
+                        />
+                        <Route
+                          path="/builder/:slug"
+                          element={<BuilderPageWrapper model="page" />}
+                        />
 
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </ErrorBoundary>
-                </NavigationGuard>
-              </LightweightAchievementProvider>
-            </AuthProvider>
-          </BrowserRouter>
+                        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </ErrorBoundary>
+                  </NavigationGuard>
+                </LightweightAchievementProvider>
+              </AuthProvider>
+            </BrowserRouter>
           </TooltipProvider>
         </ErrorBoundary>
       </QueryClientProvider>

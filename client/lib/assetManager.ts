@@ -74,7 +74,7 @@ export class AssetManager {
       const response = await fetch(assetPath, {
         method: "HEAD",
         signal: controller.signal,
-        cache: 'no-cache'
+        cache: "no-cache",
       });
 
       clearTimeout(timeoutId);
@@ -84,15 +84,20 @@ export class AssetManager {
     } catch (error) {
       // Handle network errors gracefully
       if (error instanceof Error) {
-        if (error.name === 'AbortError') {
+        if (error.name === "AbortError") {
           console.warn(`Asset validation timeout for ${assetPath}`);
-        } else if (error.message.includes('Failed to fetch')) {
-          console.warn(`Network error validating asset ${assetPath} - assuming exists for development`);
+        } else if (error.message.includes("Failed to fetch")) {
+          console.warn(
+            `Network error validating asset ${assetPath} - assuming exists for development`,
+          );
           // In development, assume assets exist to prevent blocking
           this.assetCache.set(assetPath, true);
           return true;
         } else {
-          console.warn(`Asset validation failed for ${assetPath}:`, error.message);
+          console.warn(
+            `Asset validation failed for ${assetPath}:`,
+            error.message,
+          );
         }
       }
       this.assetCache.set(assetPath, false);
@@ -147,7 +152,8 @@ export class AssetManager {
     mappings: Record<string, string>;
   }> {
     // In development mode, skip validation if network issues occur
-    const isDevelopment = import.meta.env.DEV || import.meta.env.MODE === 'development';
+    const isDevelopment =
+      import.meta.env.DEV || import.meta.env.MODE === "development";
 
     const allAssets = [
       // Core animal sounds
@@ -213,7 +219,10 @@ export class AssetManager {
           }
         } catch (error) {
           console.warn(`Failed to validate asset ${asset}:`, error);
-          if (error instanceof Error && error.message.includes('Failed to fetch')) {
+          if (
+            error instanceof Error &&
+            error.message.includes("Failed to fetch")
+          ) {
             networkErrorCount++;
           }
           missing.push(asset);
@@ -225,12 +234,18 @@ export class AssetManager {
         await Promise.race([
           Promise.all(batchPromises),
           new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Batch validation timeout')), 10000)
-          )
+            setTimeout(
+              () => reject(new Error("Batch validation timeout")),
+              10000,
+            ),
+          ),
         ]);
       } catch (error) {
         console.warn(`Batch validation failed:`, error);
-        if (error instanceof Error && error.message.includes('Failed to fetch')) {
+        if (
+          error instanceof Error &&
+          error.message.includes("Failed to fetch")
+        ) {
           networkErrorCount += batchSize;
         }
         // Continue with next batch
@@ -238,17 +253,19 @@ export class AssetManager {
 
       // If too many network errors in development, return optimistic result
       if (isDevelopment && networkErrorCount > 10) {
-        console.warn(`Too many network errors (${networkErrorCount}) in development mode. Assuming all assets exist.`);
+        console.warn(
+          `Too many network errors (${networkErrorCount}) in development mode. Assuming all assets exist.`,
+        );
         return {
           missing: [],
           found: allAssets,
-          mappings: {}
+          mappings: {},
         };
       }
 
       // Small delay between batches to prevent overwhelming the server
       if (i + batchSize < allAssets.length) {
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
       }
     }
 
@@ -274,7 +291,7 @@ export class AssetManager {
 
         const response = await fetch(correctedPath, {
           signal: controller.signal,
-          cache: 'force-cache'
+          cache: "force-cache",
         });
 
         clearTimeout(timeoutId);
@@ -282,12 +299,17 @@ export class AssetManager {
         if (response.ok) {
           console.log(`✅ Preloaded: ${assetPath}`);
         } else {
-          console.warn(`⚠️ Failed to preload (${response.status}): ${assetPath}`);
+          console.warn(
+            `⚠️ Failed to preload (${response.status}): ${assetPath}`,
+          );
         }
       } catch (error) {
-        if (error instanceof Error && error.name === 'AbortError') {
+        if (error instanceof Error && error.name === "AbortError") {
           console.warn(`⏰ Preload timeout: ${assetPath}`);
-        } else if (error instanceof Error && error.message.includes('Failed to fetch')) {
+        } else if (
+          error instanceof Error &&
+          error.message.includes("Failed to fetch")
+        ) {
           console.warn(`🌐 Network error preloading: ${assetPath}`);
         } else {
           console.warn(`⚠️ Failed to preload: ${assetPath}`, error);

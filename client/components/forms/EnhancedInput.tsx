@@ -1,12 +1,12 @@
 // Enhanced Input Component for Educational Applications
 // Extends base Input with advanced features, validation, and theming
 
-import React, { forwardRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
-import { FormField, FormFieldProps, useFormField } from './FormField';
-import { FormValidator } from '@/lib/form-validation';
+import React, { forwardRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { FormField, FormFieldProps, useFormField } from "./FormField";
+import { FormValidator } from "@/lib/form-validation";
 import {
   Eye,
   EyeOff,
@@ -21,11 +21,19 @@ import {
   Zap,
   Volume2,
   VolumeX,
-} from 'lucide-react';
+} from "lucide-react";
 
-export interface EnhancedInputProps extends Omit<FormFieldProps, 'children'> {
+export interface EnhancedInputProps extends Omit<FormFieldProps, "children"> {
   // Base input props
-  type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'search' | 'url' | 'date';
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "tel"
+    | "number"
+    | "search"
+    | "url"
+    | "date";
   placeholder?: string;
   value?: string;
   defaultValue?: string;
@@ -39,27 +47,27 @@ export interface EnhancedInputProps extends Omit<FormFieldProps, 'children'> {
   maxLength?: number;
   minLength?: number;
   pattern?: string;
-  
+
   // Enhanced features
   leftIcon?: React.ComponentType<{ className?: string }>;
   rightIcon?: React.ComponentType<{ className?: string }>;
   showPasswordToggle?: boolean;
-  autoFormat?: 'phone' | 'creditCard' | 'none';
+  autoFormat?: "phone" | "creditCard" | "none";
   realTimeValidation?: boolean;
   validationDelay?: number; // ms
   successSounds?: boolean;
-  
+
   // Educational features
   pronounceLabel?: boolean;
   showCharacterCount?: boolean;
   strengthMeter?: boolean; // for passwords
-  inputAssistance?: 'auto' | 'manual' | 'off';
-  
+  inputAssistance?: "auto" | "manual" | "off";
+
   // Child-friendly features
   funMode?: boolean;
   emojiValidation?: boolean;
-  colorTheme?: 'jungle' | 'ocean' | 'space' | 'rainbow';
-  
+  colorTheme?: "jungle" | "ocean" | "space" | "rainbow";
+
   // Accessibility
   ariaLabel?: string;
   ariaInvalid?: boolean;
@@ -78,34 +86,34 @@ const iconMap = {
 
 const colorThemes = {
   jungle: {
-    focus: 'focus:ring-jungle/50 focus:border-jungle',
-    valid: 'border-jungle text-jungle',
-    invalid: 'border-red-500 text-red-700',
+    focus: "focus:ring-jungle/50 focus:border-jungle",
+    valid: "border-jungle text-jungle",
+    invalid: "border-red-500 text-red-700",
   },
   ocean: {
-    focus: 'focus:ring-blue-500/50 focus:border-blue-500',
-    valid: 'border-blue-500 text-blue-700',
-    invalid: 'border-red-500 text-red-700',
+    focus: "focus:ring-blue-500/50 focus:border-blue-500",
+    valid: "border-blue-500 text-blue-700",
+    invalid: "border-red-500 text-red-700",
   },
   space: {
-    focus: 'focus:ring-purple-500/50 focus:border-purple-500',
-    valid: 'border-purple-500 text-purple-700',
-    invalid: 'border-red-500 text-red-700',
+    focus: "focus:ring-purple-500/50 focus:border-purple-500",
+    valid: "border-purple-500 text-purple-700",
+    invalid: "border-red-500 text-red-700",
   },
   rainbow: {
-    focus: 'focus:ring-pink-500/50 focus:border-pink-500',
-    valid: 'border-green-500 text-green-700',
-    invalid: 'border-red-500 text-red-700',
+    focus: "focus:ring-pink-500/50 focus:border-pink-500",
+    valid: "border-green-500 text-green-700",
+    invalid: "border-red-500 text-red-700",
   },
 };
 
 export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
   (
     {
-      type = 'text',
+      type = "text",
       placeholder,
       value: controlledValue,
-      defaultValue = '',
+      defaultValue = "",
       onChange,
       onBlur,
       onFocus,
@@ -116,27 +124,27 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
       maxLength,
       minLength,
       pattern,
-      
+
       // Enhanced features
       leftIcon: LeftIcon,
       rightIcon: RightIcon,
       showPasswordToggle = false,
-      autoFormat = 'none',
+      autoFormat = "none",
       realTimeValidation = true,
       validationDelay = 500,
       successSounds = false,
-      
+
       // Educational features
       pronounceLabel = false,
       showCharacterCount = false,
       strengthMeter = false,
-      inputAssistance = 'auto',
-      
+      inputAssistance = "auto",
+
       // Child-friendly features
       funMode = false,
       emojiValidation = false,
-      colorTheme = 'jungle',
-      
+      colorTheme = "jungle",
+
       // Form field props
       label,
       description,
@@ -146,16 +154,16 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
       required = false,
       id,
       className,
-      theme = 'jungle',
+      theme = "jungle",
       difficulty,
-      encouragementLevel = 'moderate',
-      
+      encouragementLevel = "moderate",
+
       // Accessibility
       ariaLabel,
       ariaInvalid,
       ...props
     },
-    ref
+    ref,
   ) => {
     // State management
     const [internalValue, setInternalValue] = useState(defaultValue);
@@ -163,9 +171,10 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
     const [isFocused, setIsFocused] = useState(false);
     const [characterCount, setCharacterCount] = useState(0);
     const [isSoundEnabled, setIsSoundEnabled] = useState(successSounds);
-    
-    const value = controlledValue !== undefined ? controlledValue : internalValue;
-    
+
+    const value =
+      controlledValue !== undefined ? controlledValue : internalValue;
+
     // Form field state management
     const {
       error: validationError,
@@ -183,9 +192,9 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
     // Auto-formatting functions
     const formatValue = (inputValue: string): string => {
       switch (autoFormat) {
-        case 'phone':
+        case "phone":
           return FormValidator.validateAndFormatPhone(inputValue).formatted;
-        case 'creditCard':
+        case "creditCard":
           return FormValidator.validateCreditCard(inputValue).formatted;
         default:
           return inputValue;
@@ -198,28 +207,39 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
 
       const timeoutId = setTimeout(() => {
         switch (type) {
-          case 'email':
+          case "email":
             validate(() => FormValidator.validateEmail(value));
             break;
-          case 'tel':
+          case "tel":
             validate(() => FormValidator.validateAndFormatPhone(value));
             break;
-          case 'password':
+          case "password":
             if (strengthMeter) {
               validate(() => FormValidator.validatePasswordStrength(value));
             }
             break;
           default:
             if (required && value.trim().length === 0) {
-              validate(() => ({ isValid: false, message: '🌟 This field is needed for your jungle adventure!' }));
+              validate(() => ({
+                isValid: false,
+                message: "🌟 This field is needed for your jungle adventure!",
+              }));
             } else if (value.trim().length > 0) {
-              validate(() => ({ isValid: true, message: '✅ Perfect!' }));
+              validate(() => ({ isValid: true, message: "✅ Perfect!" }));
             }
         }
       }, validationDelay);
 
       return () => clearTimeout(timeoutId);
-    }, [value, type, realTimeValidation, validationDelay, strengthMeter, required, validate]);
+    }, [
+      value,
+      type,
+      realTimeValidation,
+      validationDelay,
+      strengthMeter,
+      required,
+      validate,
+    ]);
 
     // Character count tracking
     useEffect(() => {
@@ -229,23 +249,23 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
     // Handle input change
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       let newValue = e.target.value;
-      
+
       // Apply formatting
-      if (autoFormat !== 'none') {
+      if (autoFormat !== "none") {
         newValue = formatValue(newValue);
       }
-      
+
       // Update internal state
       if (controlledValue === undefined) {
         setInternalValue(newValue);
       }
-      
+
       setFieldValue(newValue);
       onChange?.(newValue);
 
       // Play success sound if enabled and valid
-      if (isSoundEnabled && isValid && 'speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance('Great!');
+      if (isSoundEnabled && isValid && "speechSynthesis" in window) {
+        const utterance = new SpeechSynthesisUtterance("Great!");
         utterance.volume = 0.3;
         speechSynthesis.speak(utterance);
       }
@@ -255,9 +275,9 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
       onFocus?.(e);
-      
+
       // Pronounce label for accessibility
-      if (pronounceLabel && label && 'speechSynthesis' in window) {
+      if (pronounceLabel && label && "speechSynthesis" in window) {
         const utterance = new SpeechSynthesisUtterance(`Enter ${label}`);
         utterance.volume = 0.5;
         speechSynthesis.speak(utterance);
@@ -276,20 +296,20 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
 
     // Password strength indicator
     const renderPasswordStrength = () => {
-      if (type !== 'password' || !strengthMeter || !value) return null;
-      
+      if (type !== "password" || !strengthMeter || !value) return null;
+
       const strength = FormValidator.validatePasswordStrength(value);
       const strengthColors = {
-        weak: 'bg-red-500',
-        medium: 'bg-yellow-500',
-        strong: 'bg-green-500',
+        weak: "bg-red-500",
+        medium: "bg-yellow-500",
+        strong: "bg-green-500",
       };
 
       return (
         <motion.div
           className="mt-2 space-y-2"
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
+          animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
         >
           <div className="flex space-x-1">
@@ -297,21 +317,23 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
               <div
                 key={level}
                 className={cn(
-                  'h-2 flex-1 rounded-full transition-colors duration-300',
+                  "h-2 flex-1 rounded-full transition-colors duration-300",
                   level <= Object.values(strength.checks).filter(Boolean).length
                     ? strengthColors[strength.strength]
-                    : 'bg-gray-200'
+                    : "bg-gray-200",
                 )}
               />
             ))}
           </div>
           <div className="flex items-center justify-between text-xs">
-            <span className={cn(
-              'font-medium',
-              strength.strength === 'weak' && 'text-red-600',
-              strength.strength === 'medium' && 'text-yellow-600',
-              strength.strength === 'strong' && 'text-green-600'
-            )}>
+            <span
+              className={cn(
+                "font-medium",
+                strength.strength === "weak" && "text-red-600",
+                strength.strength === "medium" && "text-yellow-600",
+                strength.strength === "strong" && "text-green-600",
+              )}
+            >
               {strength.message}
             </span>
           </div>
@@ -340,19 +362,29 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
           {/* Left Icon */}
           {DefaultIcon && (
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
-              <DefaultIcon className={cn(
-                'w-4 h-4 transition-colors duration-200',
-                isFocused ? themes.focus.split(' ')[1].replace('focus:', '') : 'text-gray-400',
-                error && 'text-red-500',
-                success && 'text-jungle'
-              )} />
+              <DefaultIcon
+                className={cn(
+                  "w-4 h-4 transition-colors duration-200",
+                  isFocused
+                    ? themes.focus.split(" ")[1].replace("focus:", "")
+                    : "text-gray-400",
+                  error && "text-red-500",
+                  success && "text-jungle",
+                )}
+              />
             </div>
           )}
 
           {/* Input Field */}
           <Input
             ref={ref}
-            type={showPasswordToggle && type === 'password' ? (showPassword ? 'text' : 'password') : type}
+            type={
+              showPasswordToggle && type === "password"
+                ? showPassword
+                  ? "text"
+                  : "password"
+                : type
+            }
             placeholder={placeholder}
             value={value}
             onChange={handleChange}
@@ -369,16 +401,20 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
             aria-invalid={ariaInvalid || !!error}
             aria-describedby={`${id}-description`}
             className={cn(
-              'border-0 bg-transparent focus:ring-0 focus:outline-none transition-all duration-200',
-              DefaultIcon && 'pl-10',
-              (showPasswordToggle || RightIcon || showCharacterCount || isSoundEnabled) && 'pr-20',
-              !DefaultIcon && !showPasswordToggle && !RightIcon && 'px-4',
-              'text-base py-3 h-auto',
-              funMode && 'text-lg font-medium',
+              "border-0 bg-transparent focus:ring-0 focus:outline-none transition-all duration-200",
+              DefaultIcon && "pl-10",
+              (showPasswordToggle ||
+                RightIcon ||
+                showCharacterCount ||
+                isSoundEnabled) &&
+                "pr-20",
+              !DefaultIcon && !showPasswordToggle && !RightIcon && "px-4",
+              "text-base py-3 h-auto",
+              funMode && "text-lg font-medium",
               isFocused && themes.focus,
               error && themes.invalid,
               success && themes.valid,
-              disabled && 'opacity-50 cursor-not-allowed'
+              disabled && "opacity-50 cursor-not-allowed",
             )}
           />
 
@@ -388,8 +424,10 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
             {showCharacterCount && maxLength && (
               <motion.span
                 className={cn(
-                  'text-xs font-medium px-2 py-1 rounded-full',
-                  characterCount > maxLength * 0.8 ? 'text-orange-600 bg-orange-100' : 'text-gray-500 bg-gray-100'
+                  "text-xs font-medium px-2 py-1 rounded-full",
+                  characterCount > maxLength * 0.8
+                    ? "text-orange-600 bg-orange-100"
+                    : "text-gray-500 bg-gray-100",
                 )}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -404,7 +442,7 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
                 type="button"
                 onClick={() => setIsSoundEnabled(!isSoundEnabled)}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-                aria-label={`${isSoundEnabled ? 'Disable' : 'Enable'} success sounds`}
+                aria-label={`${isSoundEnabled ? "Disable" : "Enable"} success sounds`}
               >
                 {isSoundEnabled ? (
                   <Volume2 className="w-4 h-4 text-jungle" />
@@ -415,12 +453,12 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
             )}
 
             {/* Password Toggle */}
-            {showPasswordToggle && type === 'password' && (
+            {showPasswordToggle && type === "password" && (
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
                   <EyeOff className="w-4 h-4 text-gray-500" />
@@ -432,10 +470,12 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
 
             {/* Right Icon */}
             {RightIcon && (
-              <RightIcon className={cn(
-                'w-4 h-4 transition-colors duration-200',
-                isFocused ? 'text-jungle' : 'text-gray-400'
-              )} />
+              <RightIcon
+                className={cn(
+                  "w-4 h-4 transition-colors duration-200",
+                  isFocused ? "text-jungle" : "text-gray-400",
+                )}
+              />
             )}
           </div>
 
@@ -447,8 +487,12 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <div className="absolute -top-2 -right-2 text-lg animate-bounce">✨</div>
-              <div className="absolute -top-2 -left-2 text-lg animate-pulse">🌟</div>
+              <div className="absolute -top-2 -right-2 text-lg animate-bounce">
+                ✨
+              </div>
+              <div className="absolute -top-2 -left-2 text-lg animate-pulse">
+                🌟
+              </div>
             </motion.div>
           )}
 
@@ -463,19 +507,17 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
               <motion.div
                 className="w-4 h-4 border-2 border-jungle/30 border-t-jungle rounded-full"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               />
             </motion.div>
           )}
         </div>
 
         {/* Password Strength Meter */}
-        <AnimatePresence>
-          {renderPasswordStrength()}
-        </AnimatePresence>
+        <AnimatePresence>{renderPasswordStrength()}</AnimatePresence>
 
         {/* Input Assistance */}
-        {inputAssistance === 'auto' && isFocused && type === 'email' && (
+        {inputAssistance === "auto" && isFocused && type === "email" && (
           <motion.div
             className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700"
             initial={{ opacity: 0, y: -10 }}
@@ -487,9 +529,9 @@ export const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
         )}
       </FormField>
     );
-  }
+  },
 );
 
-EnhancedInput.displayName = 'EnhancedInput';
+EnhancedInput.displayName = "EnhancedInput";
 
 export default EnhancedInput;

@@ -1,12 +1,12 @@
 // Enhanced Checkbox Component for Educational Applications
 // Extends base Checkbox with animations, sounds, and child-friendly features
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Checkbox } from '@/components/ui/checkbox';
-import { FormField, FormFieldProps } from './FormField';
-import { Badge } from '@/components/ui/badge';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
+import { FormField, FormFieldProps } from "./FormField";
+import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle,
   Circle,
@@ -18,47 +18,48 @@ import {
   Award,
   Volume2,
   VolumeX,
-} from 'lucide-react';
+} from "lucide-react";
 
-export interface EnhancedCheckboxProps extends Omit<FormFieldProps, 'children'> {
+export interface EnhancedCheckboxProps
+  extends Omit<FormFieldProps, "children"> {
   // Basic checkbox props
   checked?: boolean;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   indeterminate?: boolean;
-  
+
   // Label and content
   label: string;
   sublabel?: string;
   image?: string;
   emoji?: string;
   icon?: React.ComponentType<{ className?: string }>;
-  
+
   // Enhanced features
-  variant?: 'default' | 'card' | 'button' | 'image';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  color?: 'jungle' | 'ocean' | 'space' | 'rainbow' | 'custom';
-  
+  variant?: "default" | "card" | "button" | "image";
+  size?: "sm" | "md" | "lg" | "xl";
+  color?: "jungle" | "ocean" | "space" | "rainbow" | "custom";
+
   // Educational features
   pronounceLabel?: boolean;
   showPoints?: boolean;
   points?: number;
-  difficulty?: 'easy' | 'medium' | 'hard';
+  difficulty?: "easy" | "medium" | "hard";
   category?: string;
-  
+
   // Child-friendly features
   celebrationAnimation?: boolean;
   successSound?: boolean;
   funMode?: boolean;
   emojiReaction?: boolean;
-  
+
   // Gamification
   unlockable?: boolean;
   locked?: boolean;
   requirement?: string;
   badge?: string;
-  
+
   // Accessibility
   ariaLabel?: string;
   ariaDescribedBy?: string;
@@ -66,75 +67,80 @@ export interface EnhancedCheckboxProps extends Omit<FormFieldProps, 'children'> 
 
 const sizeStyles = {
   sm: {
-    container: 'p-2',
-    checkbox: 'w-4 h-4',
-    label: 'text-sm',
-    sublabel: 'text-xs',
-    emoji: 'text-base',
+    container: "p-2",
+    checkbox: "w-4 h-4",
+    label: "text-sm",
+    sublabel: "text-xs",
+    emoji: "text-base",
   },
   md: {
-    container: 'p-3',
-    checkbox: 'w-5 h-5',
-    label: 'text-base',
-    sublabel: 'text-sm',
-    emoji: 'text-lg',
+    container: "p-3",
+    checkbox: "w-5 h-5",
+    label: "text-base",
+    sublabel: "text-sm",
+    emoji: "text-lg",
   },
   lg: {
-    container: 'p-4',
-    checkbox: 'w-6 h-6',
-    label: 'text-lg',
-    sublabel: 'text-base',
-    emoji: 'text-xl',
+    container: "p-4",
+    checkbox: "w-6 h-6",
+    label: "text-lg",
+    sublabel: "text-base",
+    emoji: "text-xl",
   },
   xl: {
-    container: 'p-6',
-    checkbox: 'w-8 h-8',
-    label: 'text-xl',
-    sublabel: 'text-lg',
-    emoji: 'text-2xl',
+    container: "p-6",
+    checkbox: "w-8 h-8",
+    label: "text-xl",
+    sublabel: "text-lg",
+    emoji: "text-2xl",
   },
 };
 
 const colorThemes = {
   jungle: {
-    checked: 'bg-jungle border-jungle text-white',
-    unchecked: 'border-jungle/30 hover:border-jungle/50',
-    card: 'border-jungle/30 bg-jungle/5 hover:bg-jungle/10',
-    checkedCard: 'border-jungle bg-jungle/20',
+    checked: "bg-jungle border-jungle text-white",
+    unchecked: "border-jungle/30 hover:border-jungle/50",
+    card: "border-jungle/30 bg-jungle/5 hover:bg-jungle/10",
+    checkedCard: "border-jungle bg-jungle/20",
   },
   ocean: {
-    checked: 'bg-blue-500 border-blue-500 text-white',
-    unchecked: 'border-blue-300 hover:border-blue-400',
-    card: 'border-blue-200 bg-blue-50 hover:bg-blue-100',
-    checkedCard: 'border-blue-500 bg-blue-100',
+    checked: "bg-blue-500 border-blue-500 text-white",
+    unchecked: "border-blue-300 hover:border-blue-400",
+    card: "border-blue-200 bg-blue-50 hover:bg-blue-100",
+    checkedCard: "border-blue-500 bg-blue-100",
   },
   space: {
-    checked: 'bg-purple-500 border-purple-500 text-white',
-    unchecked: 'border-purple-300 hover:border-purple-400',
-    card: 'border-purple-200 bg-purple-50 hover:bg-purple-100',
-    checkedCard: 'border-purple-500 bg-purple-100',
+    checked: "bg-purple-500 border-purple-500 text-white",
+    unchecked: "border-purple-300 hover:border-purple-400",
+    card: "border-purple-200 bg-purple-50 hover:bg-purple-100",
+    checkedCard: "border-purple-500 bg-purple-100",
   },
   rainbow: {
-    checked: 'bg-gradient-to-r from-pink-500 to-purple-500 border-pink-500 text-white',
-    unchecked: 'border-pink-300 hover:border-pink-400',
-    card: 'border-pink-200 bg-gradient-to-r from-pink-50 to-purple-50 hover:from-pink-100 hover:to-purple-100',
-    checkedCard: 'border-pink-500 bg-gradient-to-r from-pink-100 to-purple-100',
+    checked:
+      "bg-gradient-to-r from-pink-500 to-purple-500 border-pink-500 text-white",
+    unchecked: "border-pink-300 hover:border-pink-400",
+    card: "border-pink-200 bg-gradient-to-r from-pink-50 to-purple-50 hover:from-pink-100 hover:to-purple-100",
+    checkedCard: "border-pink-500 bg-gradient-to-r from-pink-100 to-purple-100",
   },
   custom: {
-    checked: 'bg-gray-800 border-gray-800 text-white',
-    unchecked: 'border-gray-300 hover:border-gray-400',
-    card: 'border-gray-200 bg-gray-50 hover:bg-gray-100',
-    checkedCard: 'border-gray-800 bg-gray-100',
+    checked: "bg-gray-800 border-gray-800 text-white",
+    unchecked: "border-gray-300 hover:border-gray-400",
+    card: "border-gray-200 bg-gray-50 hover:bg-gray-100",
+    checkedCard: "border-gray-800 bg-gray-100",
   },
 };
 
 const difficultyBadges = {
-  easy: { emoji: '🌟', color: 'bg-green-100 text-green-700', label: 'Easy' },
-  medium: { emoji: '⚡', color: 'bg-yellow-100 text-yellow-700', label: 'Medium' },
-  hard: { emoji: '🏆', color: 'bg-red-100 text-red-700', label: 'Hard' },
+  easy: { emoji: "🌟", color: "bg-green-100 text-green-700", label: "Easy" },
+  medium: {
+    emoji: "⚡",
+    color: "bg-yellow-100 text-yellow-700",
+    label: "Medium",
+  },
+  hard: { emoji: "🏆", color: "bg-red-100 text-red-700", label: "Hard" },
 };
 
-const celebrationEmojis = ['🎉', '✨', '🌟', '⭐', '💫', '🎊', '🦄', '🌈'];
+const celebrationEmojis = ["🎉", "✨", "🌟", "⭐", "💫", "🎊", "🦄", "🌈"];
 
 export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   checked: controlledChecked,
@@ -142,38 +148,38 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   onChange,
   disabled = false,
   indeterminate = false,
-  
+
   // Content
   label,
   sublabel,
   image,
   emoji,
   icon: Icon,
-  
+
   // Enhanced features
-  variant = 'default',
-  size = 'md',
-  color = 'jungle',
-  
+  variant = "default",
+  size = "md",
+  color = "jungle",
+
   // Educational features
   pronounceLabel = false,
   showPoints = false,
   points = 10,
   difficulty,
   category,
-  
+
   // Child-friendly features
   celebrationAnimation = true,
   successSound = false,
   funMode = false,
   emojiReaction = false,
-  
+
   // Gamification
   unlockable = false,
   locked = false,
   requirement,
   badge,
-  
+
   // Form field props
   id,
   description,
@@ -181,8 +187,8 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   success,
   hint,
   className,
-  theme = 'jungle',
-  
+  theme = "jungle",
+
   // Accessibility
   ariaLabel,
   ariaDescribedBy,
@@ -193,8 +199,9 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   const [showCelebration, setShowCelebration] = useState(false);
   const [earnedPoints, setEarnedPoints] = useState(0);
   const [isSoundEnabled, setIsSoundEnabled] = useState(successSound);
-  
-  const checked = controlledChecked !== undefined ? controlledChecked : internalChecked;
+
+  const checked =
+    controlledChecked !== undefined ? controlledChecked : internalChecked;
   const styles = sizeStyles[size];
   const colors = colorThemes[color];
 
@@ -203,11 +210,11 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
     if (checked && celebrationAnimation && !isAnimating) {
       setIsAnimating(true);
       setShowCelebration(true);
-      
+
       if (showPoints && points > 0) {
-        setEarnedPoints(prev => prev + points);
+        setEarnedPoints((prev) => prev + points);
       }
-      
+
       setTimeout(() => {
         setShowCelebration(false);
         setIsAnimating(false);
@@ -218,23 +225,23 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   // Handle checkbox change
   const handleChange = (newChecked: boolean) => {
     if (disabled || locked) return;
-    
+
     if (controlledChecked === undefined) {
       setInternalChecked(newChecked);
     }
-    
+
     onChange?.(newChecked);
 
     // Play success sound
-    if (newChecked && isSoundEnabled && 'speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance('Great choice!');
+    if (newChecked && isSoundEnabled && "speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance("Great choice!");
       utterance.volume = 0.3;
       utterance.rate = 1.2;
       speechSynthesis.speak(utterance);
     }
 
     // Pronounce label
-    if (newChecked && pronounceLabel && 'speechSynthesis' in window) {
+    if (newChecked && pronounceLabel && "speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(`Selected ${label}`);
       utterance.volume = 0.5;
       speechSynthesis.speak(utterance);
@@ -244,16 +251,16 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   // Render checkbox variants
   const renderCheckbox = () => {
     switch (variant) {
-      case 'card':
+      case "card":
         return (
           <motion.div
             className={cn(
-              'relative border-2 rounded-lg cursor-pointer transition-all duration-200',
+              "relative border-2 rounded-lg cursor-pointer transition-all duration-200",
               styles.container,
               checked ? colors.checkedCard : colors.card,
-              disabled && 'opacity-50 cursor-not-allowed',
-              locked && 'opacity-60 cursor-not-allowed',
-              className
+              disabled && "opacity-50 cursor-not-allowed",
+              locked && "opacity-60 cursor-not-allowed",
+              className,
             )}
             onClick={() => !disabled && !locked && handleChange(!checked)}
             whileHover={funMode && !disabled && !locked ? { scale: 1.02 } : {}}
@@ -264,7 +271,7 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
             aria-describedby={ariaDescribedBy}
             tabIndex={disabled ? -1 : 0}
             onKeyDown={(e) => {
-              if (e.key === ' ' || e.key === 'Enter') {
+              if (e.key === " " || e.key === "Enter") {
                 e.preventDefault();
                 handleChange(!checked);
               }
@@ -286,14 +293,15 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
               {/* Visual content */}
               <div className="flex-shrink-0">
                 {image ? (
-                  <img 
-                    src={image} 
+                  <img
+                    src={image}
                     alt={label}
-                    className={cn('rounded object-cover', 
-                      size === 'sm' && 'w-8 h-8',
-                      size === 'md' && 'w-12 h-12',
-                      size === 'lg' && 'w-16 h-16',
-                      size === 'xl' && 'w-20 h-20'
+                    className={cn(
+                      "rounded object-cover",
+                      size === "sm" && "w-8 h-8",
+                      size === "md" && "w-12 h-12",
+                      size === "lg" && "w-16 h-16",
+                      size === "xl" && "w-20 h-20",
                     )}
                   />
                 ) : emoji ? (
@@ -301,36 +309,40 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                     {emoji}
                   </span>
                 ) : Icon ? (
-                  <Icon className={cn(
-                    size === 'sm' && 'w-6 h-6',
-                    size === 'md' && 'w-8 h-8',
-                    size === 'lg' && 'w-10 h-10',
-                    size === 'xl' && 'w-12 h-12'
-                  )} />
+                  <Icon
+                    className={cn(
+                      size === "sm" && "w-6 h-6",
+                      size === "md" && "w-8 h-8",
+                      size === "lg" && "w-10 h-10",
+                      size === "xl" && "w-12 h-12",
+                    )}
+                  />
                 ) : null}
               </div>
 
               {/* Text content */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className={cn('font-medium truncate', styles.label)}>
+                  <h3 className={cn("font-medium truncate", styles.label)}>
                     {label}
                   </h3>
-                  
+
                   {/* Difficulty badge */}
                   {difficulty && (
                     <Badge
                       variant="outline"
                       className={cn(
-                        'text-xs px-1.5 py-0.5',
-                        difficultyBadges[difficulty].color
+                        "text-xs px-1.5 py-0.5",
+                        difficultyBadges[difficulty].color,
                       )}
                     >
-                      <span className="mr-1">{difficultyBadges[difficulty].emoji}</span>
+                      <span className="mr-1">
+                        {difficultyBadges[difficulty].emoji}
+                      </span>
                       {difficultyBadges[difficulty].label}
                     </Badge>
                   )}
-                  
+
                   {/* Badge */}
                   {badge && (
                     <Badge variant="secondary" className="text-xs">
@@ -338,13 +350,18 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                     </Badge>
                   )}
                 </div>
-                
+
                 {sublabel && (
-                  <p className={cn('text-gray-600 truncate mt-1', styles.sublabel)}>
+                  <p
+                    className={cn(
+                      "text-gray-600 truncate mt-1",
+                      styles.sublabel,
+                    )}
+                  >
                     {sublabel}
                   </p>
                 )}
-                
+
                 {category && (
                   <p className="text-xs text-gray-500 mt-1">
                     Category: {category}
@@ -356,9 +373,9 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
               <div className="flex-shrink-0 relative">
                 <motion.div
                   className={cn(
-                    'border-2 rounded flex items-center justify-center transition-all duration-200',
+                    "border-2 rounded flex items-center justify-center transition-all duration-200",
                     styles.checkbox,
-                    checked ? colors.checked : colors.unchecked
+                    checked ? colors.checked : colors.unchecked,
                   )}
                   animate={{
                     scale: checked ? [1, 1.2, 1] : 1,
@@ -372,7 +389,11 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0, opacity: 0 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 25,
+                        }}
                       >
                         <CheckCircle className="w-full h-full" />
                       </motion.div>
@@ -386,7 +407,7 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                     className="absolute -top-2 -right-2 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center border-2 border-white"
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 400 }}
                   >
                     +{points}
                   </motion.div>
@@ -422,7 +443,7 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                       transition={{
                         duration: 1.5,
                         delay: index * 0.1,
-                        ease: 'easeOut',
+                        ease: "easeOut",
                       }}
                     >
                       {emoji}
@@ -434,20 +455,20 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
           </motion.div>
         );
 
-      case 'button':
+      case "button":
         return (
           <motion.button
             type="button"
             onClick={() => handleChange(!checked)}
             disabled={disabled || locked}
             className={cn(
-              'relative flex items-center gap-3 w-full text-left border-2 rounded-lg transition-all duration-200',
+              "relative flex items-center gap-3 w-full text-left border-2 rounded-lg transition-all duration-200",
               styles.container,
               checked ? colors.checkedCard : colors.card,
-              disabled && 'opacity-50 cursor-not-allowed',
-              locked && 'opacity-60 cursor-not-allowed',
-              'focus:outline-none focus:ring-2 focus:ring-jungle/50',
-              className
+              disabled && "opacity-50 cursor-not-allowed",
+              locked && "opacity-60 cursor-not-allowed",
+              "focus:outline-none focus:ring-2 focus:ring-jungle/50",
+              className,
             )}
             whileHover={funMode && !disabled && !locked ? { scale: 1.02 } : {}}
             whileTap={funMode && !disabled && !locked ? { scale: 0.98 } : {}}
@@ -465,21 +486,23 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                   ) : null}
                 </div>
               )}
-              
+
               <div className="flex-1">
                 <span className={styles.label}>{label}</span>
                 {sublabel && (
-                  <p className={cn('text-gray-600 mt-1', styles.sublabel)}>
+                  <p className={cn("text-gray-600 mt-1", styles.sublabel)}>
                     {sublabel}
                   </p>
                 )}
               </div>
-              
-              <div className={cn(
-                'border-2 rounded flex items-center justify-center flex-shrink-0',
-                styles.checkbox,
-                checked ? colors.checked : colors.unchecked
-              )}>
+
+              <div
+                className={cn(
+                  "border-2 rounded flex items-center justify-center flex-shrink-0",
+                  styles.checkbox,
+                  checked ? colors.checked : colors.unchecked,
+                )}
+              >
                 {checked && <CheckCircle className="w-full h-full" />}
               </div>
             </div>
@@ -488,7 +511,7 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
 
       default:
         return (
-          <div className={cn('flex items-center gap-3', className)}>
+          <div className={cn("flex items-center gap-3", className)}>
             <Checkbox
               id={id}
               checked={checked}
@@ -496,19 +519,19 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
               disabled={disabled || locked}
               className={cn(
                 styles.checkbox,
-                checked ? colors.checked : colors.unchecked
+                checked ? colors.checked : colors.unchecked,
               )}
               aria-label={ariaLabel}
               aria-describedby={ariaDescribedBy}
             />
-            
+
             <label
               htmlFor={id}
               className={cn(
-                'flex items-center gap-2 cursor-pointer',
+                "flex items-center gap-2 cursor-pointer",
                 styles.label,
-                disabled && 'opacity-50 cursor-not-allowed',
-                locked && 'opacity-60 cursor-not-allowed'
+                disabled && "opacity-50 cursor-not-allowed",
+                locked && "opacity-60 cursor-not-allowed",
               )}
             >
               {emoji && <span className={styles.emoji}>{emoji}</span>}
@@ -516,18 +539,18 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
               <div>
                 <span>{label}</span>
                 {sublabel && (
-                  <p className={cn('text-gray-600 mt-0.5', styles.sublabel)}>
+                  <p className={cn("text-gray-600 mt-0.5", styles.sublabel)}>
                     {sublabel}
                   </p>
                 )}
               </div>
-              
+
               {difficulty && (
                 <Badge
                   variant="outline"
                   className={cn(
-                    'text-xs px-1.5 py-0.5 ml-2',
-                    difficultyBadges[difficulty].color
+                    "text-xs px-1.5 py-0.5 ml-2",
+                    difficultyBadges[difficulty].color,
                   )}
                 >
                   {difficultyBadges[difficulty].label}
@@ -541,7 +564,7 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
                 type="button"
                 onClick={() => setIsSoundEnabled(!isSoundEnabled)}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors ml-auto"
-                aria-label={`${isSoundEnabled ? 'Disable' : 'Enable'} success sounds`}
+                aria-label={`${isSoundEnabled ? "Disable" : "Enable"} success sounds`}
               >
                 {isSoundEnabled ? (
                   <Volume2 className="w-4 h-4 text-jungle" />
@@ -556,7 +579,7 @@ export const EnhancedCheckbox: React.FC<EnhancedCheckboxProps> = ({
   };
 
   // For card and button variants, wrap in FormField
-  if (variant === 'card' || variant === 'button') {
+  if (variant === "card" || variant === "button") {
     return (
       <FormField
         id={id}

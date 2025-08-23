@@ -1,31 +1,31 @@
 // Comprehensive Example Form - Demonstrates all enhanced form features
 // This form shows how to integrate all components and features together
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { toast } from 'sonner';
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 
 // Enhanced form components
-import { FormField } from './FormField';
-import EnhancedInput from './EnhancedInput';
-import EnhancedSelect from './EnhancedSelect';
-import EnhancedCheckbox from './EnhancedCheckbox';
-import EnhancedRadioGroup from './EnhancedRadioGroup';
-import FormSection from './FormSection';
-import FormActions from './FormActions';
-import { useEnhancedForm } from './useEnhancedForm';
-import { FormSchemas } from '@/lib/form-validation';
+import { FormField } from "./FormField";
+import EnhancedInput from "./EnhancedInput";
+import EnhancedSelect from "./EnhancedSelect";
+import EnhancedCheckbox from "./EnhancedCheckbox";
+import EnhancedRadioGroup from "./EnhancedRadioGroup";
+import FormSection from "./FormSection";
+import FormActions from "./FormActions";
+import { useEnhancedForm } from "./useEnhancedForm";
+import { FormSchemas } from "@/lib/form-validation";
 
 // Icons
 import {
@@ -47,63 +47,63 @@ import {
   Timer,
   HelpCircle,
   RotateCcw,
-} from 'lucide-react';
+} from "lucide-react";
 
 // Mock data for demonstration
 const interestOptions = [
   {
-    value: 'animals',
-    label: 'Animals',
-    description: 'Learn about wildlife and pets',
-    emoji: '🦁',
-    category: 'Nature',
-    difficulty: 'easy' as const,
+    value: "animals",
+    label: "Animals",
+    description: "Learn about wildlife and pets",
+    emoji: "🦁",
+    category: "Nature",
+    difficulty: "easy" as const,
     popular: true,
     points: 10,
   },
   {
-    value: 'science',
-    label: 'Science',
-    description: 'Explore the wonders of science',
-    emoji: '🔬',
-    category: 'Education',
-    difficulty: 'medium' as const,
+    value: "science",
+    label: "Science",
+    description: "Explore the wonders of science",
+    emoji: "🔬",
+    category: "Education",
+    difficulty: "medium" as const,
     points: 15,
   },
   {
-    value: 'art',
-    label: 'Art & Creativity',
-    description: 'Express yourself through art',
-    emoji: '🎨',
-    category: 'Creative',
-    difficulty: 'easy' as const,
+    value: "art",
+    label: "Art & Creativity",
+    description: "Express yourself through art",
+    emoji: "🎨",
+    category: "Creative",
+    difficulty: "easy" as const,
     points: 10,
   },
   {
-    value: 'music',
-    label: 'Music',
-    description: 'Learn instruments and rhythm',
-    emoji: '🎵',
-    category: 'Creative',
-    difficulty: 'medium' as const,
+    value: "music",
+    label: "Music",
+    description: "Learn instruments and rhythm",
+    emoji: "🎵",
+    category: "Creative",
+    difficulty: "medium" as const,
     points: 15,
   },
   {
-    value: 'sports',
-    label: 'Sports',
-    description: 'Stay active and healthy',
-    emoji: '⚽',
-    category: 'Physical',
-    difficulty: 'medium' as const,
+    value: "sports",
+    label: "Sports",
+    description: "Stay active and healthy",
+    emoji: "⚽",
+    category: "Physical",
+    difficulty: "medium" as const,
     points: 15,
   },
   {
-    value: 'reading',
-    label: 'Reading',
-    description: 'Discover amazing stories',
-    emoji: '📚',
-    category: 'Education',
-    difficulty: 'easy' as const,
+    value: "reading",
+    label: "Reading",
+    description: "Discover amazing stories",
+    emoji: "📚",
+    category: "Education",
+    difficulty: "easy" as const,
     recommended: true,
     points: 10,
   },
@@ -111,46 +111,46 @@ const interestOptions = [
 
 const learningStyleOptions = [
   {
-    value: 'visual',
-    label: 'Visual Learner',
-    description: 'I learn best with pictures, diagrams, and colors',
-    emoji: '👀',
-    difficulty: 'easy' as const,
+    value: "visual",
+    label: "Visual Learner",
+    description: "I learn best with pictures, diagrams, and colors",
+    emoji: "👀",
+    difficulty: "easy" as const,
   },
   {
-    value: 'auditory',
-    label: 'Auditory Learner',
-    description: 'I learn best by listening and discussing',
-    emoji: '👂',
-    difficulty: 'easy' as const,
+    value: "auditory",
+    label: "Auditory Learner",
+    description: "I learn best by listening and discussing",
+    emoji: "👂",
+    difficulty: "easy" as const,
   },
   {
-    value: 'kinesthetic',
-    label: 'Hands-on Learner',
-    description: 'I learn best by doing and moving',
-    emoji: '🤲',
-    difficulty: 'medium' as const,
+    value: "kinesthetic",
+    label: "Hands-on Learner",
+    description: "I learn best by doing and moving",
+    emoji: "🤲",
+    difficulty: "medium" as const,
   },
   {
-    value: 'mixed',
-    label: 'Mixed Style',
-    description: 'I like to learn in different ways',
-    emoji: '🌈',
-    difficulty: 'easy' as const,
+    value: "mixed",
+    label: "Mixed Style",
+    description: "I like to learn in different ways",
+    emoji: "🌈",
+    difficulty: "easy" as const,
     recommended: true,
   },
 ];
 
 const difficultyOptions = [
-  { value: 'beginner', label: 'Beginner', emoji: '🌱' },
-  { value: 'intermediate', label: 'Intermediate', emoji: '🌿' },
-  { value: 'advanced', label: 'Advanced', emoji: '🌳' },
+  { value: "beginner", label: "Beginner", emoji: "🌱" },
+  { value: "intermediate", label: "Intermediate", emoji: "🌿" },
+  { value: "advanced", label: "Advanced", emoji: "🌳" },
 ];
 
 const reminderOptions = [
-  { value: 'daily', label: 'Daily reminders', emoji: '📅' },
-  { value: 'weekly', label: 'Weekly check-ins', emoji: '📊' },
-  { value: 'monthly', label: 'Monthly progress', emoji: '📈' },
+  { value: "daily", label: "Daily reminders", emoji: "📅" },
+  { value: "weekly", label: "Weekly check-ins", emoji: "📊" },
+  { value: "monthly", label: "Monthly progress", emoji: "📈" },
 ];
 
 interface ExampleFormData {
@@ -160,19 +160,19 @@ interface ExampleFormData {
   parentEmail: string;
   phone: string;
   location: string;
-  
+
   // Learning Preferences
   interests: string[];
   learningStyle: string;
   difficulty: string;
   sessionLength: number;
-  
+
   // Settings
   soundEnabled: boolean;
   animationsEnabled: boolean;
   voiceEnabled: boolean;
   reminders: string[];
-  
+
   // Parental Controls
   screenTimeLimit: number;
   contentFiltering: boolean;
@@ -180,14 +180,14 @@ interface ExampleFormData {
 }
 
 const initialValues: ExampleFormData = {
-  childName: '',
+  childName: "",
   age: 6,
-  parentEmail: '',
-  phone: '',
-  location: '',
+  parentEmail: "",
+  phone: "",
+  location: "",
   interests: [],
-  learningStyle: '',
-  difficulty: 'beginner',
+  learningStyle: "",
+  difficulty: "beginner",
   sessionLength: 15,
   soundEnabled: true,
   animationsEnabled: true,
@@ -199,15 +199,17 @@ const initialValues: ExampleFormData = {
 };
 
 export const ExampleForm: React.FC = () => {
-  const [currentDemo, setCurrentDemo] = useState<'full' | 'components' | 'validation'>('full');
+  const [currentDemo, setCurrentDemo] = useState<
+    "full" | "components" | "validation"
+  >("full");
   const [submissionResult, setSubmissionResult] = useState<any>(null);
 
   // Initialize form with enhanced features
   const form = useEnhancedForm(initialValues, {
     schema: FormSchemas.childRegistration,
-    validationMode: 'onChange',
+    validationMode: "onChange",
     validationDelay: 500,
-    persistKey: 'demo-form',
+    persistKey: "demo-form",
     autoSave: true,
     autoSaveInterval: 10000,
     pointsSystem: true,
@@ -219,24 +221,24 @@ export const ExampleForm: React.FC = () => {
     pronunciationEnabled: true,
     onSubmit: async (data) => {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log('Form submitted:', data);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      console.log("Form submitted:", data);
       setSubmissionResult({
         success: true,
         data,
-        message: '🎉 Registration complete! Welcome to Wordy Kids!',
+        message: "🎉 Registration complete! Welcome to Wordy Kids!",
       });
-      
-      toast.success('Registration successful!', {
-        description: 'Welcome to your jungle learning adventure!',
+
+      toast.success("Registration successful!", {
+        description: "Welcome to your jungle learning adventure!",
       });
     },
     onFieldChange: (fieldName, value) => {
-      console.log('Field changed:', fieldName, value);
+      console.log("Field changed:", fieldName, value);
     },
     onStepChange: (step) => {
-      console.log('Step changed to:', step);
+      console.log("Step changed to:", step);
     },
   });
 
@@ -262,7 +264,7 @@ export const ExampleForm: React.FC = () => {
                 label="Child's Name"
                 placeholder="Enter your child's name"
                 value={form.values.childName}
-                onChange={(value) => form.setFieldValue('childName', value)}
+                onChange={(value) => form.setFieldValue("childName", value)}
                 leftIcon={User}
                 realTimeValidation
                 pronounceLabel
@@ -278,7 +280,9 @@ export const ExampleForm: React.FC = () => {
                 label="Age"
                 placeholder="How old are they?"
                 value={form.values.age}
-                onChange={(value) => form.setFieldValue('age', parseInt(value) || 0)}
+                onChange={(value) =>
+                  form.setFieldValue("age", parseInt(value) || 0)
+                }
                 leftIcon={Calendar}
                 realTimeValidation
                 theme="jungle"
@@ -292,7 +296,7 @@ export const ExampleForm: React.FC = () => {
                 label="Parent's Email"
                 placeholder="your.email@example.com"
                 value={form.values.parentEmail}
-                onChange={(value) => form.setFieldValue('parentEmail', value)}
+                onChange={(value) => form.setFieldValue("parentEmail", value)}
                 leftIcon={Mail}
                 realTimeValidation
                 autoFormat="none"
@@ -308,7 +312,7 @@ export const ExampleForm: React.FC = () => {
                 label="Phone Number (Optional)"
                 placeholder="(555) 123-4567"
                 value={form.values.phone}
-                onChange={(value) => form.setFieldValue('phone', value)}
+                onChange={(value) => form.setFieldValue("phone", value)}
                 leftIcon={Phone}
                 autoFormat="phone"
                 realTimeValidation
@@ -340,7 +344,7 @@ export const ExampleForm: React.FC = () => {
                 placeholder="Choose what excites your child..."
                 options={interestOptions}
                 value={form.values.interests}
-                onChange={(value) => form.setFieldValue('interests', value)}
+                onChange={(value) => form.setFieldValue("interests", value)}
                 multiple
                 searchable
                 maxSelections={4}
@@ -363,7 +367,7 @@ export const ExampleForm: React.FC = () => {
                 description="How does your child learn best?"
                 options={learningStyleOptions}
                 value={form.values.learningStyle}
-                onChange={(value) => form.setFieldValue('learningStyle', value)}
+                onChange={(value) => form.setFieldValue("learningStyle", value)}
                 variant="cards"
                 size="md"
                 pronounceOptions
@@ -380,7 +384,7 @@ export const ExampleForm: React.FC = () => {
                 placeholder="Choose starting level..."
                 options={difficultyOptions}
                 value={form.values.difficulty}
-                onChange={(value) => form.setFieldValue('difficulty', value)}
+                onChange={(value) => form.setFieldValue("difficulty", value)}
                 variant="default"
                 theme="jungle"
                 required
@@ -412,7 +416,9 @@ export const ExampleForm: React.FC = () => {
                   sublabel="Fun sounds and audio feedback"
                   emoji="🔊"
                   checked={form.values.soundEnabled}
-                  onChange={(checked) => form.setFieldValue('soundEnabled', checked)}
+                  onChange={(checked) =>
+                    form.setFieldValue("soundEnabled", checked)
+                  }
                   variant="card"
                   size="md"
                   celebrationAnimation
@@ -427,7 +433,9 @@ export const ExampleForm: React.FC = () => {
                   sublabel="Engaging visual animations"
                   emoji="✨"
                   checked={form.values.animationsEnabled}
-                  onChange={(checked) => form.setFieldValue('animationsEnabled', checked)}
+                  onChange={(checked) =>
+                    form.setFieldValue("animationsEnabled", checked)
+                  }
                   variant="card"
                   size="md"
                   celebrationAnimation
@@ -441,7 +449,9 @@ export const ExampleForm: React.FC = () => {
                   sublabel="Spoken instructions and feedback"
                   emoji="🗣️"
                   checked={form.values.voiceEnabled}
-                  onChange={(checked) => form.setFieldValue('voiceEnabled', checked)}
+                  onChange={(checked) =>
+                    form.setFieldValue("voiceEnabled", checked)
+                  }
                   variant="card"
                   size="md"
                   celebrationAnimation
@@ -455,7 +465,9 @@ export const ExampleForm: React.FC = () => {
                   sublabel="Weekly learning summaries"
                   emoji="📊"
                   checked={form.values.progressReports}
-                  onChange={(checked) => form.setFieldValue('progressReports', checked)}
+                  onChange={(checked) =>
+                    form.setFieldValue("progressReports", checked)
+                  }
                   variant="card"
                   size="md"
                   celebrationAnimation
@@ -477,7 +489,9 @@ export const ExampleForm: React.FC = () => {
                   label="Session Length (minutes)"
                   placeholder="15"
                   value={form.values.sessionLength}
-                  onChange={(value) => form.setFieldValue('sessionLength', parseInt(value) || 15)}
+                  onChange={(value) =>
+                    form.setFieldValue("sessionLength", parseInt(value) || 15)
+                  }
                   leftIcon={Clock}
                   theme="jungle"
                   hint="Recommended: 10-30 minutes for optimal learning"
@@ -489,7 +503,9 @@ export const ExampleForm: React.FC = () => {
                   label="Daily Screen Time Limit (minutes)"
                   placeholder="60"
                   value={form.values.screenTimeLimit}
-                  onChange={(value) => form.setFieldValue('screenTimeLimit', parseInt(value) || 60)}
+                  onChange={(value) =>
+                    form.setFieldValue("screenTimeLimit", parseInt(value) || 60)
+                  }
                   leftIcon={Timer}
                   theme="jungle"
                   hint="Healthy screen time for balanced development"
@@ -525,9 +541,17 @@ export const ExampleForm: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <div><strong>Name:</strong> {form.values.childName || 'Not provided'}</div>
-                    <div><strong>Age:</strong> {form.values.age} years old</div>
-                    <div><strong>Parent Email:</strong> {form.values.parentEmail || 'Not provided'}</div>
+                    <div>
+                      <strong>Name:</strong>{" "}
+                      {form.values.childName || "Not provided"}
+                    </div>
+                    <div>
+                      <strong>Age:</strong> {form.values.age} years old
+                    </div>
+                    <div>
+                      <strong>Parent Email:</strong>{" "}
+                      {form.values.parentEmail || "Not provided"}
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -539,9 +563,19 @@ export const ExampleForm: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm">
-                    <div><strong>Interests:</strong> {form.values.interests.length > 0 ? form.values.interests.join(', ') : 'None selected'}</div>
-                    <div><strong>Learning Style:</strong> {form.values.learningStyle || 'Not selected'}</div>
-                    <div><strong>Difficulty:</strong> {form.values.difficulty}</div>
+                    <div>
+                      <strong>Interests:</strong>{" "}
+                      {form.values.interests.length > 0
+                        ? form.values.interests.join(", ")
+                        : "None selected"}
+                    </div>
+                    <div>
+                      <strong>Learning Style:</strong>{" "}
+                      {form.values.learningStyle || "Not selected"}
+                    </div>
+                    <div>
+                      <strong>Difficulty:</strong> {form.values.difficulty}
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -552,13 +586,15 @@ export const ExampleForm: React.FC = () => {
                   className="p-4 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 400 }}
+                  transition={{ type: "spring", stiffness: 400 }}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Trophy className="w-6 h-6 text-yellow-600" />
                       <div>
-                        <h4 className="font-semibold text-yellow-800">Registration Progress</h4>
+                        <h4 className="font-semibold text-yellow-800">
+                          Registration Progress
+                        </h4>
                         <p className="text-sm text-yellow-700">
                           Great job completing the form!
                         </p>
@@ -576,10 +612,14 @@ export const ExampleForm: React.FC = () => {
                 <div className="flex items-start gap-3">
                   <Sparkles className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div className="text-sm">
-                    <h4 className="font-medium text-blue-900 mb-1">Ready to Start Learning!</h4>
+                    <h4 className="font-medium text-blue-900 mb-1">
+                      Ready to Start Learning!
+                    </h4>
                     <p className="text-blue-700">
-                      By submitting this form, you're creating a personalized learning adventure for {form.values.childName || 'your child'}. 
-                      Our jungle friends are excited to meet them! 🦁🌟
+                      By submitting this form, you're creating a personalized
+                      learning adventure for{" "}
+                      {form.values.childName || "your child"}. Our jungle
+                      friends are excited to meet them! 🦁🌟
                     </p>
                   </div>
                 </div>
@@ -615,18 +655,18 @@ export const ExampleForm: React.FC = () => {
         {/* Demo Mode Selector */}
         <div className="flex justify-center gap-2">
           {[
-            { key: 'full', label: 'Full Demo', emoji: '🚀' },
-            { key: 'components', label: 'Components', emoji: '🧩' },
-            { key: 'validation', label: 'Validation', emoji: '✅' },
+            { key: "full", label: "Full Demo", emoji: "🚀" },
+            { key: "components", label: "Components", emoji: "🧩" },
+            { key: "validation", label: "Validation", emoji: "✅" },
           ].map((mode) => (
             <Button
               key={mode.key}
-              variant={currentDemo === mode.key ? 'default' : 'outline'}
+              variant={currentDemo === mode.key ? "default" : "outline"}
               size="sm"
               onClick={() => setCurrentDemo(mode.key as any)}
               className={cn(
-                'transition-all duration-200',
-                currentDemo === mode.key && 'bg-jungle text-white'
+                "transition-all duration-200",
+                currentDemo === mode.key && "bg-jungle text-white",
               )}
             >
               <span className="mr-2">{mode.emoji}</span>
@@ -639,19 +679,28 @@ export const ExampleForm: React.FC = () => {
       {/* Form Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="text-center p-4">
-          <div className="text-2xl font-bold text-jungle">{form.formState.completionPercentage}%</div>
+          <div className="text-2xl font-bold text-jungle">
+            {form.formState.completionPercentage}%
+          </div>
           <div className="text-sm text-gray-600">Complete</div>
         </Card>
         <Card className="text-center p-4">
-          <div className="text-2xl font-bold text-yellow-600">{form.formState.pointsEarned}</div>
+          <div className="text-2xl font-bold text-yellow-600">
+            {form.formState.pointsEarned}
+          </div>
           <div className="text-sm text-gray-600">Points</div>
         </Card>
         <Card className="text-center p-4">
-          <div className="text-2xl font-bold text-blue-600">{Math.floor(form.formState.timeSpent / 60)}:{(form.formState.timeSpent % 60).toString().padStart(2, '0')}</div>
+          <div className="text-2xl font-bold text-blue-600">
+            {Math.floor(form.formState.timeSpent / 60)}:
+            {(form.formState.timeSpent % 60).toString().padStart(2, "0")}
+          </div>
           <div className="text-sm text-gray-600">Time Spent</div>
         </Card>
         <Card className="text-center p-4">
-          <div className="text-2xl font-bold text-purple-600">{form.formState.currentStep}/{form.formState.totalSteps}</div>
+          <div className="text-2xl font-bold text-purple-600">
+            {form.formState.currentStep}/{form.formState.totalSteps}
+          </div>
           <div className="text-sm text-gray-600">Step</div>
         </Card>
       </div>
@@ -665,9 +714,19 @@ export const ExampleForm: React.FC = () => {
           {/* Form Actions */}
           <div className="mt-8">
             <FormActions
-              onNext={form.formState.currentStep < form.formState.totalSteps ? form.nextStep : undefined}
-              onPrevious={form.formState.currentStep > 1 ? form.previousStep : undefined}
-              onSubmit={form.formState.currentStep === form.formState.totalSteps ? form.handleSubmit : undefined}
+              onNext={
+                form.formState.currentStep < form.formState.totalSteps
+                  ? form.nextStep
+                  : undefined
+              }
+              onPrevious={
+                form.formState.currentStep > 1 ? form.previousStep : undefined
+              }
+              onSubmit={
+                form.formState.currentStep === form.formState.totalSteps
+                  ? form.handleSubmit
+                  : undefined
+              }
               canGoNext={form.canGoNext && form.formState.isValid}
               canGoPrevious={form.canGoPrevious}
               isSubmitting={form.formState.isSubmitting}
@@ -683,20 +742,21 @@ export const ExampleForm: React.FC = () => {
               celebrateSuccess={form.formState.pointsEarned > 0}
               customActions={[
                 {
-                  id: 'help',
-                  label: 'Get Help',
+                  id: "help",
+                  label: "Get Help",
                   icon: HelpCircle,
                   onClick: () => form.requestHelp(),
-                  variant: 'ghost',
-                  tooltip: 'Need assistance? Click for help!',
+                  variant: "ghost",
+                  tooltip: "Need assistance? Click for help!",
                 },
                 {
-                  id: 'reset',
-                  label: 'Reset Form',
+                  id: "reset",
+                  label: "Reset Form",
                   icon: RotateCcw,
                   onClick: form.reset,
-                  variant: 'outline',
-                  confirmMessage: 'Are you sure you want to reset the form? All progress will be lost.',
+                  variant: "outline",
+                  confirmMessage:
+                    "Are you sure you want to reset the form? All progress will be lost.",
                   disabled: !form.formState.isDirty,
                 },
               ]}
@@ -716,13 +776,14 @@ export const ExampleForm: React.FC = () => {
           <h3 className="text-xl font-bold text-green-800 mb-2">Success!</h3>
           <p className="text-green-700">{submissionResult.message}</p>
           <div className="mt-4 text-sm text-green-600">
-            <strong>Total Points Earned:</strong> {form.formState.pointsEarned} points
+            <strong>Total Points Earned:</strong> {form.formState.pointsEarned}{" "}
+            points
           </div>
         </motion.div>
       )}
 
       {/* Debug Information (Development) */}
-      {process.env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV === "development" && (
         <details className="mt-8">
           <summary className="cursor-pointer font-medium text-gray-700 mb-4">
             🛠️ Debug Information (Development Only)
@@ -744,15 +805,19 @@ export const ExampleForm: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <pre className="text-xs bg-gray-100 p-3 rounded overflow-auto">
-                  {JSON.stringify({
-                    isValid: form.formState.isValid,
-                    hasErrors: form.formState.hasErrors,
-                    isDirty: form.formState.isDirty,
-                    currentStep: form.formState.currentStep,
-                    pointsEarned: form.formState.pointsEarned,
-                    completionPercentage: form.formState.completionPercentage,
-                    errors: form.errors,
-                  }, null, 2)}
+                  {JSON.stringify(
+                    {
+                      isValid: form.formState.isValid,
+                      hasErrors: form.formState.hasErrors,
+                      isDirty: form.formState.isDirty,
+                      currentStep: form.formState.currentStep,
+                      pointsEarned: form.formState.pointsEarned,
+                      completionPercentage: form.formState.completionPercentage,
+                      errors: form.errors,
+                    },
+                    null,
+                    2,
+                  )}
                 </pre>
               </CardContent>
             </Card>
