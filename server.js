@@ -1,6 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import { createServer } from "./server/index.ts";
+import { createServer } from "./server/production.js";
 import express from "express";
 
 const __filename = fileURLToPath(import.meta.url);
