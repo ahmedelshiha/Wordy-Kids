@@ -973,7 +973,10 @@ function SettingsSection({
   defaultOpen?: boolean;
 }) {
   if (isMobile) {
-    // Mobile: Keep accordion behavior
+    // Mobile: Keep accordion behavior with enhanced scrolling for Theme & Motion
+    const isThemeAndMotion = title.includes("Theme & Motion");
+    const maxHeight = isThemeAndMotion ? "max-h-80" : "max-h-60"; // Increased height for Theme & Motion
+
     return (
       <Accordion
         type="single"
@@ -992,7 +995,13 @@ function SettingsSection({
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-3 pb-3">
-            <ScrollArea className="max-h-60 pr-3 jungle-mobile-category jungle-mobile-scrollarea">
+            <ScrollArea
+              className={cn(
+                maxHeight,
+                "pr-3 jungle-mobile-category jungle-mobile-scrollarea",
+                isThemeAndMotion && "jungle-mobile-theme-motion-scrollarea"
+              )}
+            >
               <div className="space-y-2.5">{children}</div>
             </ScrollArea>
           </AccordionContent>
