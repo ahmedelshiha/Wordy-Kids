@@ -128,19 +128,23 @@ const EnhancedSlider = React.forwardRef<
         </SliderPrimitive.Track>
 
         {/* Thumb */}
-        <SliderPrimitive.Thumb 
+        <SliderPrimitive.Thumb
           className={cn(
             "block rounded-full border-2 ring-offset-background transition-all duration-200",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "focus:outline-none focus:ring-4 focus:ring-opacity-50",
             "disabled:pointer-events-none disabled:opacity-50",
             "hover:scale-110 active:scale-125",
             "shadow-lg hover:shadow-xl active:shadow-2xl",
+            "transform-gpu", // Hardware acceleration for smooth animations
             sizeConfig.thumb,
             colorConfig.thumb,
-            isDragging && "scale-125 shadow-2xl ring-2 ring-offset-2",
-            variant === "jungle" && "ring-green-200",
-            variant === "success" && "ring-emerald-200",
-            variant === "warning" && "ring-amber-200"
+            isDragging && "scale-125 shadow-2xl ring-4 ring-offset-2",
+            // Enhanced focus styles by variant
+            variant === "jungle" && "focus-visible:ring-green-400 focus:ring-green-400",
+            variant === "success" && "focus-visible:ring-emerald-400 focus:ring-emerald-400",
+            variant === "warning" && "focus-visible:ring-amber-400 focus:ring-amber-400",
+            variant === "default" && "focus-visible:ring-blue-400 focus:ring-blue-400"
           )}
         />
 
