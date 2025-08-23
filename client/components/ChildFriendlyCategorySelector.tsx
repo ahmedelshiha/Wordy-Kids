@@ -937,7 +937,7 @@ export function ChildFriendlyCategorySelector({
                   (c) => c.id === selectedCategory,
                 );
                 if (selectedCat) {
-                  audioService.playCheerSound();
+                  // Category selected - sound removed
                 }
               }}
               className="w-14 h-14 rounded-full bg-gradient-to-r from-jungle to-sunshine hover:from-jungle-dark hover:to-sunshine-dark shadow-lg"
