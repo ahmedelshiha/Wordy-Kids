@@ -53,6 +53,7 @@ import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
 import StorageOptimizationDemo from "./pages/StorageOptimizationDemo";
+import ExampleForm from "./components/forms/ExampleForm";
 
 const queryClient = new QueryClient();
 
