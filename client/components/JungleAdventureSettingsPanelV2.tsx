@@ -465,7 +465,7 @@ export default function JungleAdventureSettingsPanelV2({
             className={cn(
               "flex-1 min-h-0 jungle-settings-category",
               isMobile
-                ? "max-h-[calc(75vh-120px)] p-3 jungle-mobile-scrollarea"
+                ? "max-h-[calc(75vh-120px)] p-3 jungle-mobile-scrollarea jungle-mobile-main-scrollarea"
                 : "max-h-[calc(85vh-100px)] p-3 jungle-settings-scrollarea",
             )}
           >
