@@ -118,12 +118,13 @@ const EnhancedSlider = React.forwardRef<
           )}
         >
           {/* Range */}
-          <SliderPrimitive.Range 
+          <SliderPrimitive.Range
             className={cn(
-              "absolute h-full transition-all duration-200",
+              "absolute h-full transition-all duration-300 ease-out",
               colorConfig.range,
-              isDragging && "shadow-lg"
-            )} 
+              "transform-gpu", // Hardware acceleration
+              isDragging && "shadow-lg transition-shadow duration-100"
+            )}
           />
         </SliderPrimitive.Track>
 
