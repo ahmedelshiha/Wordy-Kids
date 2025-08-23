@@ -491,7 +491,15 @@ export function InteractiveDashboardWordCard({
           throw new Error("Enhanced audio service not available");
         }
 
-        enhancedAudioService.pronounceWord(currentWord.word, {
+        // Validate word before speech synthesis
+        const wordToSpeak = currentWord?.word;
+        if (!wordToSpeak || typeof wordToSpeak !== "string" || wordToSpeak.trim().length === 0) {
+          console.error("Invalid word for speech synthesis:", { currentWord, wordToSpeak, type: typeof wordToSpeak });
+          setIsPlaying(false);
+          return;
+        }
+
+        enhancedAudioService.pronounceWord(wordToSpeak, {
           onStart: () => {
             console.log("Speech started successfully");
             setIsPlaying(true);
@@ -2361,7 +2369,7 @@ export function InteractiveDashboardWordCard({
                             animationDelay: "0.6s",
                           }}
                         >
-                          ✨
+                          ��
                         </motion.span>
                       </motion.div>
                     </div>
