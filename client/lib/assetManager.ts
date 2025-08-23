@@ -189,6 +189,9 @@ export class AssetManager {
     const found: string[] = [];
     const mappings: Record<string, string> = {};
 
+    // In development, if we encounter persistent network errors, return mock data
+    let networkErrorCount = 0;
+
     // Process assets in batches to prevent overwhelming the network
     const batchSize = 5;
     for (let i = 0; i < allAssets.length; i += batchSize) {
@@ -438,7 +441,7 @@ export class AudioManager {
     );
 
     await Promise.all(loadPromises);
-    console.log("✅ Common sounds preloaded");
+    console.log("�� Common sounds preloaded");
   }
 
   // Stop all playing audio
