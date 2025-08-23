@@ -187,7 +187,7 @@ export function InteractiveDashboardWordCard({
     accuracy: 0,
     sessionStartTime: Date.now(),
   });
-  const [sessionWords, setSessionWords] = useState<any[]>([]);
+  const [sessionWords, setSessionWords] = useState<Word[]>([]);
   const [showSessionComplete, setShowSessionComplete] = useState(false);
   const [sessionAchievements, setSessionAchievements] = useState<Achievement[]>(
     [],
@@ -1758,7 +1758,7 @@ export function InteractiveDashboardWordCard({
                       25: "🌟 You're exploring well, jungle explorer!",
                       50: "🏆 Halfway through the jungle quest!",
                       75: "⚡ Almost at the jungle summit!",
-                      90: "👑 Final jungle challenges await!",
+                      90: "�� Final jungle challenges await!",
                     };
 
                     // Get category-specific prompts or use defaults
@@ -1922,7 +1922,7 @@ export function InteractiveDashboardWordCard({
                       emoji = "🏆";
                       title = "Jungle Hero";
                     } else if (accuracy >= 50) {
-                      emoji = "🌟";
+                      emoji = "��";
                       title = "Explorer";
                     } else {
                       emoji = "🌱";
