@@ -1,7 +1,19 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import { createServer } from "./dist/server/production.mjs";
 import express from "express";
+
+// Import server creation function based on environment
+async function importServer() {
+  try {
+    // Try production build first
+    const { createServer } = await import("./dist/server/production.mjs");
+    return createServer;
+  } catch (e) {
+    // Fallback for development
+    const { createServer } = await import("./server/index.js");
+    return createServer;
+  }
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
