@@ -551,9 +551,9 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error (default voice):", {
-          error: event.error,
-          message: event.message,
+        console.error("Speech synthesis error (default voice) for word:", word, {
+          error: event.error || 'Unknown error',
+          message: event.message || 'No message',
           type: event.type,
           timeStamp: event.timeStamp,
           word: word,
