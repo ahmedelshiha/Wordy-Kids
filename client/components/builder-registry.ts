@@ -5,6 +5,8 @@
 
 import { Builder } from "@builder.io/react";
 import JungleKidNav from "@/components/JungleKidNav";
+import { EnhancedWordCard } from "@/components/EnhancedWordCard";
+import { AdventureMap } from "@/components/AdventureMap";
 
 // Register JungleKidNav component with Builder.io
 Builder.registerComponent(JungleKidNav, {
