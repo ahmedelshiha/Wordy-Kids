@@ -52,6 +52,15 @@ const App = () => {
     if (typeof window !== "undefined") {
       setIsClient(true);
 
+      // Initialize Builder.io with API key
+      const builderKey = import.meta.env.VITE_PUBLIC_BUILDER_KEY;
+      if (builderKey && builderKey !== '__BUILDER_PUBLIC_KEY__') {
+        builder.init(builderKey);
+        console.log('✅ Builder.io initialized successfully');
+      } else {
+        console.warn('⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file');
+      }
+
       // Migrate legacy settings to unified jungle settings
       migrateLegacySettings();
     }
