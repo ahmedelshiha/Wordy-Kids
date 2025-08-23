@@ -392,14 +392,18 @@ export class EnhancedAudioService {
       return;
     }
 
-    // Validate input
-    if (!word || typeof word !== "string" || word.trim().length === 0) {
-      console.error("Invalid word provided for pronunciation:", word);
+    // Import sanitization helper inline to avoid circular dependencies
+    const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+    // Sanitize input to prevent "[object Object]" errors
+    const sanitizedWord = sanitizeTTSInput(word);
+    if (!sanitizedWord) {
+      logSpeechError("enhancedAudioService.pronounceWord", word, "Empty word after sanitization");
       const validationError = {
         type: "invalid_input",
-        word: word,
+        originalWord: word,
+        sanitizedWord: sanitizedWord,
         wordType: typeof word,
-        wordLength: word ? word.length : 0,
         timestamp: new Date().toISOString(),
       };
       options.onError?.(validationError);
