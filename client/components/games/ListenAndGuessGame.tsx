@@ -116,15 +116,13 @@ function useConfetti() {
 
 // --------- Speech ---------
 function speakWord(word: string, funny = false, fallback?: string) {
-  // Validate and sanitize input
-  if (!word || typeof word !== "string") {
-    console.error("Invalid word provided to speakWord:", word, typeof word);
-    return;
-  }
+  // Import sanitization helper
+  const { sanitizeTTSInput, logSpeechError } = require("../../lib/speechUtils");
 
-  const sanitizedWord = word.trim();
-  if (sanitizedWord.length === 0) {
-    console.error("Empty word provided to speakWord");
+  // Sanitize input to prevent "[object Object]" errors
+  const sanitizedWord = sanitizeTTSInput(word);
+  if (!sanitizedWord) {
+    logSpeechError("ListenAndGuessGame.speakWord", word, "Empty word after sanitization");
     return;
   }
 
