@@ -999,7 +999,7 @@ function SettingsSection({
               className={cn(
                 maxHeight,
                 "pr-3 jungle-mobile-category jungle-mobile-scrollarea",
-                isThemeAndMotion && "jungle-mobile-theme-motion-scrollarea"
+                isThemeAndMotion && "jungle-mobile-theme-motion-scrollarea",
               )}
             >
               <div className="space-y-2.5">{children}</div>
