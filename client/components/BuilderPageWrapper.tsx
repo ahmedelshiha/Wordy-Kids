@@ -1,161 +1,295 @@
-import React from "react";
-import { BuilderComponent, builder, useIsPreviewing } from "@builder.io/react";
-import { useEffect, useState } from "react";
+// client/components/BuilderPageWrapper.tsx
+import React, { useState, useEffect } from 'react'
+import { BuilderComponent, builder, useIsPreviewing } from '@builder.io/react'
+import { ErrorBoundary } from './common/ErrorBoundary'
+
+// Create a simple loading spinner if it doesn't exist
+const LoadingSpinner: React.FC<{ size?: 'sm' | 'lg' }> = ({ size = 'sm' }) => (
+  <div className={`animate-spin rounded-full border-4 border-green-200 border-t-green-600 ${
+    size === 'lg' ? 'h-12 w-12' : 'h-6 w-6'
+  }`}></div>
+)
 
 interface BuilderPageProps {
-  model?: string;
-  content?: any;
-  data?: any;
+  model: string
+  content?: any
+  urlPath?: string
+  children?: React.ReactNode
 }
 
-export const BuilderPageWrapper: React.FC<BuilderPageProps> = ({
-  model = "page",
-  content,
-  data,
+export const BuilderPageWrapper: React.FC<BuilderPageProps> = ({ 
+  model, 
+  content, 
+  urlPath,
+  children 
 }) => {
-  const [pageContent, setPageContent] = useState(content);
-  const isPreviewing = useIsPreviewing();
+  const [builderContent, setBuilderContent] = useState(content)
+  const [isLoading, setIsLoading] = useState(!content)
+  const [error, setError] = useState<string | null>(null)
+  const isPreviewing = useIsPreviewing()
 
   useEffect(() => {
-    // If no content provided, fetch from Builder.io
-    if (!pageContent) {
-      const fetchContent = async () => {
-        try {
-          const content = await builder
-            .get(model, {
-              url: window.location.pathname,
-              ...data,
-            })
-            .toPromise();
-
-          setPageContent(content);
-        } catch (error) {
-          console.error("Error fetching Builder.io content:", error);
-        }
-      };
-
-      fetchContent();
+    // If content is already provided, skip the API call
+    if (content) {
+      setBuilderContent(content)
+      setIsLoading(false)
+      return
     }
-  }, [model, pageContent, data]);
+
+    // Fetch content from Builder.io
+    const fetchContent = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
+
+        const fetchedContent = await builder
+          .get(model, {
+            url: urlPath || window.location.pathname,
+            // Educational targeting options
+            userAttributes: {
+              age: localStorage.getItem('childAge'),
+              learningLevel: localStorage.getItem('learningLevel'),
+              interests: JSON.parse(localStorage.getItem('learningInterests') || '[]'),
+              parentalMode: window.location.pathname.includes('/parents') || window.location.pathname.includes('/admin')
+            }
+          })
+          .toPromise()
+
+        if (fetchedContent) {
+          setBuilderContent(fetchedContent)
+        } else if (!isPreviewing) {
+          setError('Content not found')
+        }
+      } catch (err) {
+        console.error('Error fetching Builder content:', err)
+        setError('Failed to load content')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchContent()
+  }, [model, content, urlPath, isPreviewing])
 
   // Show loading state
-  if (!pageContent && !isPreviewing) {
+  if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading educational content...</p>
-        </div>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-100 to-blue-100">
+        <LoadingSpinner size="lg" />
+        <span className="ml-4 text-lg text-green-800">Loading educational content...</span>
       </div>
-    );
+    )
   }
 
-  // Get current user data for educational context
-  const getCurrentUser = () => {
-    try {
-      const currentUser = localStorage.getItem("wordAdventureCurrentUser");
-      const guestSession = localStorage.getItem("wordAdventureGuestSession");
+  // Show error state
+  if (error && !isPreviewing) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
+        <div className="text-center p-8">
+          <div className="text-6xl mb-4">🏗️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Content Not Found</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
+          {children && (
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-lg font-semibold mb-4">Default Content</h3>
+              {children}
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
 
-      if (currentUser) {
-        return JSON.parse(currentUser);
-      } else if (guestSession === "active") {
-        return {
-          id: "guest-user",
-          name: "Guest Explorer",
-          type: "guest",
-          isGuest: true,
-        };
+  // Render Builder.io content with error boundary
+  return (
+    <ErrorBoundary 
+      fallback={
+        <div className="p-8 text-center">
+          <h2 className="text-xl font-bold text-red-600 mb-4">Content Error</h2>
+          <p className="text-gray-600">There was an issue displaying this content.</p>
+          {children}
+        </div>
       }
-      return null;
-    } catch (error) {
-      console.error("Error getting current user:", error);
-      return null;
+      fallbackType="parent"
+      componentName="BuilderPageWrapper"
+    >
+      <BuilderComponent 
+        model={model} 
+        content={builderContent}
+        // Make educational components available in Builder context
+        context={{ 
+          // Educational data and utilities
+          getCurrentLearningLevel: () => localStorage.getItem('learningLevel') || 'beginner',
+          getChildAge: () => parseInt(localStorage.getItem('childAge') || '5'),
+          getLearningInterests: () => JSON.parse(localStorage.getItem('learningInterests') || '["animals"]'),
+          
+          // Sound management for Builder components
+          playEducationalSound: (soundPath: string) => {
+            try {
+              const audio = new Audio(soundPath)
+              audio.play().catch(console.warn)
+            } catch (error) {
+              console.warn('Could not play audio:', soundPath)
+            }
+          },
+          
+          // Progress tracking
+          updateLearningProgress: (progress: any) => {
+            try {
+              const existing = JSON.parse(localStorage.getItem('learningProgress') || '{}')
+              localStorage.setItem('learningProgress', JSON.stringify({ ...existing, ...progress }))
+            } catch (error) {
+              console.warn('Could not update learning progress')
+            }
+          }
+        }}
+        // Custom CSS for educational styling
+        customComponents={{
+          // Override default Builder styles for educational context
+          section: (props: any) => (
+            <section 
+              {...props} 
+              className={`${props.className || ''} educational-section`}
+              style={{
+                ...props.style,
+                fontFamily: '"Comic Neue", "Fredoka", sans-serif'
+              }}
+            />
+          ),
+          button: (props: any) => (
+            <button
+              {...props}
+              className={`
+                ${props.className || ''} 
+                educational-button
+                bg-gradient-to-r from-green-400 to-blue-500 
+                hover:from-green-500 hover:to-blue-600
+                text-white font-bold py-3 px-6 rounded-full
+                transform transition-all duration-200 
+                hover:scale-105 active:scale-95
+                shadow-lg hover:shadow-xl
+              `}
+            />
+          )
+        }}
+      />
+    </ErrorBoundary>
+  )
+}
+
+// Specialized wrapper for educational pages
+export const EducationalPageWrapper: React.FC<{
+  model: string
+  content?: any
+  childAge?: number
+  learningLevel?: 'beginner' | 'intermediate' | 'advanced'
+  fallbackContent?: React.ReactNode
+}> = ({ 
+  model, 
+  content, 
+  childAge, 
+  learningLevel,
+  fallbackContent 
+}) => {
+  useEffect(() => {
+    // Set educational context for targeting
+    if (childAge) {
+      localStorage.setItem('childAge', childAge.toString())
     }
-  };
-
-  // Get user progress data for educational context
-  const getUserProgress = () => {
-    try {
-      const progress = localStorage.getItem("wordAdventureProgress");
-      const learningStats = localStorage.getItem("learningStats");
-      const childStats = localStorage.getItem("childStats");
-
-      return {
-        progress: progress ? JSON.parse(progress) : {},
-        learningStats: learningStats ? JSON.parse(learningStats) : {},
-        childStats: childStats ? JSON.parse(childStats) : {},
-      };
-    } catch (error) {
-      console.error("Error getting user progress:", error);
-      return {};
+    if (learningLevel) {
+      localStorage.setItem('learningLevel', learningLevel)
     }
-  };
-
-  // Educational context for Builder components
-  const educationalContext = {
-    // User data
-    user: getCurrentUser(),
-
-    // Learning progress and achievements
-    ...getUserProgress(),
-
-    // Educational settings
-    settings: (() => {
-      try {
-        const settings = localStorage.getItem("jungleAdventureSettings");
-        return settings ? JSON.parse(settings) : {};
-      } catch {
-        return {};
-      }
-    })(),
-
-    // Current lesson context
-    currentLesson: (() => {
-      try {
-        const session = localStorage.getItem("wordAdventureSession");
-        return session ? JSON.parse(session) : null;
-      } catch {
-        return null;
-      }
-    })(),
-
-    // Helper functions that Builder components can use
-    // Note: These would need to be bound to actual functions in a real implementation
-    completeLesson: (lessonId: string) => {
-      console.log("Lesson completed:", lessonId);
-      // Integration with actual lesson completion logic
-    },
-
-    updateProgress: (progressData: any) => {
-      console.log("Progress updated:", progressData);
-      // Integration with actual progress tracking
-    },
-
-    playSound: (soundType: string) => {
-      console.log("Playing sound:", soundType);
-      // Integration with audio service
-    },
-
-    // Environment information
-    environment: {
-      isDevelopment: import.meta.env.DEV,
-      isPreview: isPreviewing,
-      timestamp: new Date().toISOString(),
-    },
-  };
+  }, [childAge, learningLevel])
 
   return (
-    <BuilderComponent
-      model={model}
-      content={pageContent}
-      data={{
-        ...data,
-        ...educationalContext,
-      }}
-      // Pass context data that educational components might need
-      context={educationalContext}
-    />
-  );
-};
+    <div className="educational-page-wrapper bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 min-h-screen">
+      <style jsx>{`
+        .educational-page-wrapper {
+          font-family: 'Comic Neue', 'Fredoka', 'Comic Sans MS', cursive;
+        }
+        
+        .educational-section {
+          border-radius: 16px;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .educational-button {
+          font-size: 1.1rem;
+          letter-spacing: 0.025em;
+        }
+        
+        .educational-button:focus {
+          outline: 3px solid #f59e0b;
+          outline-offset: 2px;
+        }
+      `}</style>
+      
+      <BuilderPageWrapper 
+        model={model}
+        content={content}
+      >
+        {fallbackContent}
+      </BuilderPageWrapper>
+    </div>
+  )
+}
 
-export default BuilderPageWrapper;
+// Wrapper specifically for marketing/parent-facing pages
+export const MarketingPageWrapper: React.FC<{
+  model: string
+  content?: any
+}> = ({ model, content }) => {
+  return (
+    <div className="marketing-page-wrapper bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
+      <style jsx>{`
+        .marketing-page-wrapper {
+          font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        .marketing-page-wrapper .educational-button {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 8px;
+          font-weight: 600;
+          padding: 12px 24px;
+          transition: all 0.3s ease;
+        }
+        
+        .marketing-page-wrapper .educational-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+      `}</style>
+      
+      <BuilderPageWrapper 
+        model={model}
+        content={content}
+      >
+        <div className="text-center p-12">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to Wordy Kids</h1>
+          <p className="text-xl text-gray-600 mb-6">Educational adventures that make learning fun!</p>
+          <div className="max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div className="bg-white rounded-lg p-6 shadow-lg">
+                <div className="text-3xl mb-4">📚</div>
+                <h3 className="font-bold text-lg mb-2">Interactive Learning</h3>
+                <p className="text-gray-600">Engaging lessons that adapt to your child's pace</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg">
+                <div className="text-3xl mb-4">🎮</div>
+                <h3 className="font-bold text-lg mb-2">Educational Games</h3>
+                <p className="text-gray-600">Fun activities that make learning feel like play</p>
+              </div>
+              <div className="bg-white rounded-lg p-6 shadow-lg">
+                <div className="text-3xl mb-4">📊</div>
+                <h3 className="font-bold text-lg mb-2">Progress Tracking</h3>
+                <p className="text-gray-600">Monitor your child's learning journey</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </BuilderPageWrapper>
+    </div>
+  )
+}
+
+export default BuilderPageWrapper
