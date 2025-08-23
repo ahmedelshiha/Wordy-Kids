@@ -399,7 +399,7 @@ export class AudioService {
         this.loadVoices();
       }
 
-      const utterance = new SpeechSynthesisUtterance(word.trim());
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
 
       // Set voice properties with validation
       utterance.rate = rate;
