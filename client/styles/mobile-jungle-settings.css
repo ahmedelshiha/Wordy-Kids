@@ -104,6 +104,24 @@
   .jungle-mobile-main-scrollarea [data-radix-accordion-item] {
     margin-bottom: 0.5rem;
   }
+
+  /* Enhanced spacing for Theme & Motion section content */
+  .jungle-mobile-theme-motion-scrollarea .space-y-2\.5 > * {
+    margin-bottom: 0.875rem; /* More spacing between theme controls */
+  }
+
+  /* Better padding for Theme & Motion overlay section */
+  .jungle-mobile-theme-motion-scrollarea .pt-1\.5 {
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Ensure switches have proper touch targets in Theme & Motion */
+  .jungle-mobile-theme-motion-scrollarea [role="switch"] {
+    min-height: 24px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
 }
 
 .jungle-mobile-settings-dialog {
