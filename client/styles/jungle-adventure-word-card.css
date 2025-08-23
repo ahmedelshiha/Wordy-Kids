@@ -6,14 +6,16 @@
   position: relative;
 }
 
-/* Enhanced flip animation for jungle theme - Compatible version */
+/* Enhanced flip animation for jungle theme - 3D rotation version */
 .jungle-adventure-card-flip {
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .jungle-adventure-card-flip.jungle-flipped {
-  transform: scale(-1, 1);
+  transform: rotateY(180deg);
 }
 
 .jungle-adventure-card-flip.jungle-pressed {
