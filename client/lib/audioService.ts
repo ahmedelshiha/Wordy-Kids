@@ -422,11 +422,10 @@ export class AudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", {
-          error: event.error,
-          message: event.message,
+        console.error("Speech synthesis error for word:", word, {
+          error: event.error || 'Unknown error',
+          message: event.message || 'No message',
           eventType: event.type,
-          word: word,
           voice: voice?.name,
           voiceURI: voice?.voiceURI,
           rate,
