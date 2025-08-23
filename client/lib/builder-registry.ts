@@ -1,5 +1,5 @@
 // client/lib/builder-registry.ts
-import { Builder } from "@builder.io/react";
+import { Builder, builder } from "@builder.io/react";
 import React from "react";
 
 // Create fallback component factory
