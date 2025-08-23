@@ -146,6 +146,9 @@ export class AssetManager {
     found: string[];
     mappings: Record<string, string>;
   }> {
+    // In development mode, skip validation if network issues occur
+    const isDevelopment = import.meta.env.DEV || import.meta.env.MODE === 'development';
+
     const allAssets = [
       // Core animal sounds
       "/sounds/owl.mp3",
