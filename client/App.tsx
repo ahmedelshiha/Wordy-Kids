@@ -66,7 +66,7 @@ const App = () => {
       setIsClient(true);
 
       // Initialize Builder.io with API key
-      const builderKey = import.meta.env.VITE_PUBLIC_BUILDER_KEY;
+      const builderKey = import.meta.env.VITE_BUILDER_PUBLIC_KEY || import.meta.env.VITE_PUBLIC_BUILDER_KEY;
       if (builderKey && builderKey !== "__BUILDER_PUBLIC_KEY__") {
         builder.init(builderKey);
         initializeBuilderRegistry();
