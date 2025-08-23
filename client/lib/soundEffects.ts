@@ -286,7 +286,7 @@ export const playUIInteractionSoundIfEnabled = {
 };
 
 // Enhanced Audio Functions using AssetManager
-import { AudioManager, EducationalAudioHelper } from './assetManager';
+import { AudioManager, EducationalAudioHelper } from "./assetManager";
 
 // Educational sound helpers that use actual audio files with fallbacks
 export const playEducationalSoundIfEnabled = {
@@ -312,7 +312,7 @@ export const playEducationalSoundIfEnabled = {
     }
   },
 
-  uiSound: async (soundType: 'open' | 'close' | 'click' = 'click') => {
+  uiSound: async (soundType: "open" | "close" | "click" = "click") => {
     if (isUIInteractionSoundsEnabled()) {
       try {
         await EducationalAudioHelper.playUISound(soundType);
@@ -340,7 +340,7 @@ export const playEducationalSoundIfEnabled = {
       try {
         await EducationalAudioHelper.playAmbientSound(true);
       } catch (error) {
-        console.warn('Could not start ambient sounds:', error);
+        console.warn("Could not start ambient sounds:", error);
       }
     }
   },
@@ -349,13 +349,16 @@ export const playEducationalSoundIfEnabled = {
     try {
       EducationalAudioHelper.stopAmbientSounds();
     } catch (error) {
-      console.warn('Could not stop ambient sounds:', error);
+      console.warn("Could not stop ambient sounds:", error);
     }
-  }
+  },
 };
 
 // Backward compatibility helpers - these use the new system but maintain old interface
-export const playAnimalSoundSafe = async (animalName: string, volume: number = 0.7) => {
+export const playAnimalSoundSafe = async (
+  animalName: string,
+  volume: number = 0.7,
+) => {
   try {
     await AudioManager.playAnimalSound(animalName, volume);
   } catch (error) {
@@ -367,7 +370,10 @@ export const playAnimalSoundSafe = async (animalName: string, volume: number = 0
   }
 };
 
-export const playAudioFileSafe = async (audioPath: string, volume: number = 0.7) => {
+export const playAudioFileSafe = async (
+  audioPath: string,
+  volume: number = 0.7,
+) => {
   try {
     await AudioManager.playAudio(audioPath, { volume });
   } catch (error) {

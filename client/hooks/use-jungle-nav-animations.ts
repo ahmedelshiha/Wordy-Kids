@@ -46,7 +46,7 @@ export function useJungleNavAnimations(
     const initializeAudio = async () => {
       try {
         // Import AssetManager for smart audio loading
-        const { AudioManager } = await import('@/lib/assetManager');
+        const { AudioManager } = await import("@/lib/assetManager");
 
         // Preload animal sounds with automatic fallbacks
         const animalSounds = {
@@ -57,20 +57,22 @@ export function useJungleNavAnimations(
         };
 
         // Load audio files using AssetManager for automatic path correction
-        const loadPromises = Object.entries(animalSounds).map(async ([animal, soundPath]) => {
-          try {
-            const audio = await AudioManager.loadAudio(soundPath);
-            audio.volume = 0.3;
-            audioRef.current[animal] = audio;
-          } catch (error) {
-            console.warn(`Failed to load ${animal} sound:`, error);
-            // AssetManager will have already tried fallbacks, so we can skip this animal sound
-          }
-        });
+        const loadPromises = Object.entries(animalSounds).map(
+          async ([animal, soundPath]) => {
+            try {
+              const audio = await AudioManager.loadAudio(soundPath);
+              audio.volume = 0.3;
+              audioRef.current[animal] = audio;
+            } catch (error) {
+              console.warn(`Failed to load ${animal} sound:`, error);
+              // AssetManager will have already tried fallbacks, so we can skip this animal sound
+            }
+          },
+        );
 
         await Promise.all(loadPromises);
         setIsAudioInitialized(true);
-        console.log('✅ Jungle navigation audio initialized with AssetManager');
+        console.log("✅ Jungle navigation audio initialized with AssetManager");
       } catch (error) {
         console.warn("Audio initialization failed:", error);
         setIsAudioInitialized(false);
@@ -124,16 +126,16 @@ export function useJungleNavAnimations(
         }
 
         // Fallback: Use AssetManager for on-demand loading
-        const { AudioManager } = await import('@/lib/assetManager');
+        const { AudioManager } = await import("@/lib/assetManager");
         await AudioManager.playAnimalSound(animal, 0.3);
       } catch (error) {
         console.warn(`Failed to play ${animal} sound:`, error);
         // Final fallback: Try with synthesized sound if available
         try {
-          const { playSoundIfEnabled } = await import('@/lib/soundEffects');
+          const { playSoundIfEnabled } = await import("@/lib/soundEffects");
           playSoundIfEnabled.success();
         } catch (fallbackError) {
-          console.debug('All audio fallbacks failed, continuing silently');
+          console.debug("All audio fallbacks failed, continuing silently");
         }
       }
     },
