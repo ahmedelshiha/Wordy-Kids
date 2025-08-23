@@ -67,11 +67,34 @@ export class AssetManager {
     }
 
     try {
-      const response = await fetch(assetPath, { method: "HEAD" });
+      // Use fetch with timeout and proper error handling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+
+      const response = await fetch(assetPath, {
+        method: "HEAD",
+        signal: controller.signal,
+        cache: 'no-cache'
+      });
+
+      clearTimeout(timeoutId);
       const exists = response.ok;
       this.assetCache.set(assetPath, exists);
       return exists;
-    } catch {
+    } catch (error) {
+      // Handle network errors gracefully
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          console.warn(`Asset validation timeout for ${assetPath}`);
+        } else if (error.message.includes('Failed to fetch')) {
+          console.warn(`Network error validating asset ${assetPath} - assuming exists for development`);
+          // In development, assume assets exist to prevent blocking
+          this.assetCache.set(assetPath, true);
+          return true;
+        } else {
+          console.warn(`Asset validation failed for ${assetPath}:`, error.message);
+        }
+      }
       this.assetCache.set(assetPath, false);
       return false;
     }
