@@ -79,7 +79,10 @@ const App = () => {
         const healthReport = localStorageManager.getHealthReport();
         console.log("📊 Storage Health:", healthReport.status);
 
-        if (healthReport.status === 'warning' || healthReport.status === 'critical') {
+        if (
+          healthReport.status === "warning" ||
+          healthReport.status === "critical"
+        ) {
           console.warn("⚠️ Storage issues detected:", healthReport.issues);
           // Auto-cleanup if storage is in poor health
           localStorageManager.cleanup(true);
@@ -87,7 +90,10 @@ const App = () => {
 
         console.log("✅ LocalStorage optimization system initialized");
       } catch (error) {
-        console.warn("⚠️ LocalStorage optimization system initialization failed:", error);
+        console.warn(
+          "⚠️ LocalStorage optimization system initialization failed:",
+          error,
+        );
       }
 
       // Initialize Asset Management System

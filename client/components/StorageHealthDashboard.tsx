@@ -1,21 +1,27 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  Database, 
-  HardDrive, 
-  Trash2, 
-  Zap, 
-  Download, 
-  Upload, 
-  AlertTriangle, 
-  CheckCircle, 
-  AlertCircle 
-} from 'lucide-react';
-import { useStorageHealth } from '@/hooks/useOptimizedStorage';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Database,
+  HardDrive,
+  Trash2,
+  Zap,
+  Download,
+  Upload,
+  AlertTriangle,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
+import { useStorageHealth } from "@/hooks/useOptimizedStorage";
 
 export const StorageHealthDashboard: React.FC = () => {
   const {
@@ -25,17 +31,17 @@ export const StorageHealthDashboard: React.FC = () => {
     runCleanup,
     runOptimization,
     exportData,
-    importData
+    importData,
   } = useStorageHealth();
 
   const { status, issues, recommendations, stats } = healthReport;
 
   const formatBytes = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const formatDate = (timestamp: number) => {
@@ -44,19 +50,27 @@ export const StorageHealthDashboard: React.FC = () => {
 
   const getStatusIcon = () => {
     switch (status) {
-      case 'healthy': return <CheckCircle className="h-5 w-5 text-green-500" />;
-      case 'warning': return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
-      case 'critical': return <AlertCircle className="h-5 w-5 text-red-500" />;
-      default: return <Database className="h-5 w-5" />;
+      case "healthy":
+        return <CheckCircle className="h-5 w-5 text-green-500" />;
+      case "warning":
+        return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
+      case "critical":
+        return <AlertCircle className="h-5 w-5 text-red-500" />;
+      default:
+        return <Database className="h-5 w-5" />;
     }
   };
 
   const getStatusColor = () => {
     switch (status) {
-      case 'healthy': return 'bg-green-500';
-      case 'warning': return 'bg-yellow-500';
-      case 'critical': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case "healthy":
+        return "bg-green-500";
+      case "warning":
+        return "bg-yellow-500";
+      case "critical":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
@@ -67,7 +81,7 @@ export const StorageHealthDashboard: React.FC = () => {
     if (file) {
       importData(file).then((result: any) => {
         if (result.success) {
-          alert('Data imported successfully!');
+          alert("Data imported successfully!");
         } else {
           alert(`Import failed: ${result.error}`);
         }
@@ -93,8 +107,14 @@ export const StorageHealthDashboard: React.FC = () => {
           <CardTitle className="flex items-center space-x-2">
             {getStatusIcon()}
             <span>Storage Health Status</span>
-            <Badge 
-              variant={status === 'healthy' ? 'default' : status === 'warning' ? 'secondary' : 'destructive'}
+            <Badge
+              variant={
+                status === "healthy"
+                  ? "default"
+                  : status === "warning"
+                    ? "secondary"
+                    : "destructive"
+              }
             >
               {status.toUpperCase()}
             </Badge>
@@ -118,13 +138,15 @@ export const StorageHealthDashboard: React.FC = () => {
 
           {/* Issues and Recommendations */}
           {issues.length > 0 && (
-            <Alert variant={status === 'critical' ? 'destructive' : 'default'}>
+            <Alert variant={status === "critical" ? "destructive" : "default"}>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
                 <strong>Issues detected:</strong>
                 <ul className="mt-2 list-disc list-inside">
                   {issues.map((issue, index) => (
-                    <li key={index} className="text-sm">{issue}</li>
+                    <li key={index} className="text-sm">
+                      {issue}
+                    </li>
                   ))}
                 </ul>
               </AlertDescription>
@@ -138,7 +160,9 @@ export const StorageHealthDashboard: React.FC = () => {
                 <strong>Recommendations:</strong>
                 <ul className="mt-2 list-disc list-inside">
                   {recommendations.map((rec, index) => (
-                    <li key={index} className="text-sm">{rec}</li>
+                    <li key={index} className="text-sm">
+                      {rec}
+                    </li>
                   ))}
                 </ul>
               </AlertDescription>
@@ -163,16 +187,22 @@ export const StorageHealthDashboard: React.FC = () => {
             <CardTitle className="text-sm font-medium">Storage Used</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatBytes(stats.totalSize)}</div>
+            <div className="text-2xl font-bold">
+              {formatBytes(stats.totalSize)}
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Available Space</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Available Space
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatBytes(stats.availableSpace)}</div>
+            <div className="text-2xl font-bold">
+              {formatBytes(stats.availableSpace)}
+            </div>
           </CardContent>
         </Card>
 
@@ -181,7 +211,9 @@ export const StorageHealthDashboard: React.FC = () => {
             <CardTitle className="text-sm font-medium">Expired Items</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-500">{stats.expiredItems}</div>
+            <div className="text-2xl font-bold text-red-500">
+              {stats.expiredItems}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -196,11 +228,13 @@ export const StorageHealthDashboard: React.FC = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Button 
+            <Button
               onClick={async () => {
                 const result = await runCleanup();
                 if (result.success) {
-                  alert(`Cleanup completed! Removed ${result.removedCount} items.`);
+                  alert(
+                    `Cleanup completed! Removed ${result.removedCount} items.`,
+                  );
                 } else {
                   alert(`Cleanup failed: ${result.error}`);
                 }
@@ -212,11 +246,13 @@ export const StorageHealthDashboard: React.FC = () => {
               <span>Run Cleanup</span>
             </Button>
 
-            <Button 
+            <Button
               onClick={async () => {
                 const result = await runOptimization();
                 if (result.success) {
-                  alert(`Optimization completed! Processed ${result.itemsProcessed} items, reclaimed ${formatBytes(result.spaceReclaimed)}.`);
+                  alert(
+                    `Optimization completed! Processed ${result.itemsProcessed} items, reclaimed ${formatBytes(result.spaceReclaimed)}.`,
+                  );
                 } else {
                   alert(`Optimization failed: ${result.error}`);
                 }
@@ -228,11 +264,11 @@ export const StorageHealthDashboard: React.FC = () => {
               <span>Optimize</span>
             </Button>
 
-            <Button 
+            <Button
               onClick={() => {
                 const result = exportData();
                 if (result.success) {
-                  alert('Data exported successfully!');
+                  alert("Data exported successfully!");
                 } else {
                   alert(`Export failed: ${result.error}`);
                 }
@@ -245,7 +281,11 @@ export const StorageHealthDashboard: React.FC = () => {
             </Button>
 
             <label className="flex items-center space-x-2 cursor-pointer">
-              <Button asChild variant="outline" className="flex items-center space-x-2">
+              <Button
+                asChild
+                variant="outline"
+                className="flex items-center space-x-2"
+              >
                 <span>
                   <Upload className="h-4 w-4" />
                   <span>Import Data</span>
@@ -261,10 +301,19 @@ export const StorageHealthDashboard: React.FC = () => {
           </div>
 
           <div className="text-sm text-muted-foreground space-y-1">
-            <p><strong>Cleanup:</strong> Removes expired and low-priority items</p>
-            <p><strong>Optimize:</strong> Recompresses data and reorganizes storage</p>
-            <p><strong>Export:</strong> Downloads a backup of all your data</p>
-            <p><strong>Import:</strong> Restores data from a backup file</p>
+            <p>
+              <strong>Cleanup:</strong> Removes expired and low-priority items
+            </p>
+            <p>
+              <strong>Optimize:</strong> Recompresses data and reorganizes
+              storage
+            </p>
+            <p>
+              <strong>Export:</strong> Downloads a backup of all your data
+            </p>
+            <p>
+              <strong>Import:</strong> Restores data from a backup file
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -279,13 +328,13 @@ export const StorageHealthDashboard: React.FC = () => {
             <div>
               <p className="text-sm font-medium">Oldest Item</p>
               <p className="text-sm text-muted-foreground">
-                {stats.oldestItem ? formatDate(stats.oldestItem) : 'No data'}
+                {stats.oldestItem ? formatDate(stats.oldestItem) : "No data"}
               </p>
             </div>
             <div>
               <p className="text-sm font-medium">Newest Item</p>
               <p className="text-sm text-muted-foreground">
-                {stats.newestItem ? formatDate(stats.newestItem) : 'No data'}
+                {stats.newestItem ? formatDate(stats.newestItem) : "No data"}
               </p>
             </div>
           </div>

@@ -4,7 +4,7 @@ interface StorageItem<T = any> {
   data: T;
   timestamp: number;
   expiry?: number;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   compressed?: boolean;
   version: string;
 }
@@ -37,8 +37,8 @@ class LocalStorageManager {
       compressionThreshold: 1024, // 1KB
       defaultExpiry: 7 * 24 * 60 * 60 * 1000, // 7 days
       cleanupInterval: 60 * 60 * 1000, // 1 hour
-      version: '1.0.0',
-      ...config
+      version: "1.0.0",
+      ...config,
     };
 
     this.compressionEnabled = this.checkCompressionSupport();
@@ -50,28 +50,31 @@ class LocalStorageManager {
    * Store data with automatic compression and expiry
    */
   setItem<T>(
-    key: string, 
-    data: T, 
+    key: string,
+    data: T,
     options: {
       expiry?: number;
-      priority?: 'high' | 'medium' | 'low';
+      priority?: "high" | "medium" | "low";
       compress?: boolean;
-    } = {}
+    } = {},
   ): boolean {
     try {
       const item: StorageItem<T> = {
         data,
         timestamp: Date.now(),
         expiry: options.expiry || this.config.defaultExpiry,
-        priority: options.priority || 'medium',
-        version: this.config.version
+        priority: options.priority || "medium",
+        version: this.config.version,
       };
 
       let serialized = JSON.stringify(item);
-      
+
       // Auto-compress if data is large enough
-      if (this.compressionEnabled && 
-          (options.compress || serialized.length > this.config.compressionThreshold)) {
+      if (
+        this.compressionEnabled &&
+        (options.compress ||
+          serialized.length > this.config.compressionThreshold)
+      ) {
         try {
           const compressed = this.compress(serialized);
           if (compressed.length < serialized.length) {
@@ -79,7 +82,7 @@ class LocalStorageManager {
             serialized = compressed;
           }
         } catch (e) {
-          console.warn('Compression failed for', key, e);
+          console.warn("Compression failed for", key, e);
         }
       }
 
@@ -89,28 +92,31 @@ class LocalStorageManager {
       }
 
       localStorage.setItem(this.getPrefixedKey(key), serialized);
-      
+
       // Update metadata
       this.updateMetadata();
-      
+
       return true;
     } catch (error) {
-      console.error('Failed to store item:', key, error);
-      
+      console.error("Failed to store item:", key, error);
+
       // Try emergency cleanup
       this.emergencyCleanup();
-      
+
       // Retry once
       try {
-        localStorage.setItem(this.getPrefixedKey(key), JSON.stringify({
-          data,
-          timestamp: Date.now(),
-          priority: options.priority || 'high',
-          version: this.config.version
-        }));
+        localStorage.setItem(
+          this.getPrefixedKey(key),
+          JSON.stringify({
+            data,
+            timestamp: Date.now(),
+            priority: options.priority || "high",
+            version: this.config.version,
+          }),
+        );
         return true;
       } catch (retryError) {
-        console.error('Failed to store item after cleanup:', key, retryError);
+        console.error("Failed to store item after cleanup:", key, retryError);
         return false;
       }
     }
@@ -123,7 +129,7 @@ class LocalStorageManager {
     try {
       const prefixedKey = this.getPrefixedKey(key);
       let serialized = localStorage.getItem(prefixedKey);
-      
+
       if (!serialized) {
         return defaultValue || null;
       }
@@ -150,7 +156,7 @@ class LocalStorageManager {
           const decompressed = this.decompress(serialized);
           item = JSON.parse(decompressed);
         } catch (e) {
-          console.error('Decompression failed for', key, e);
+          console.error("Decompression failed for", key, e);
           this.removeItem(key);
           return defaultValue || null;
         }
@@ -158,12 +164,16 @@ class LocalStorageManager {
 
       // Update access timestamp for LRU
       item.timestamp = Date.now();
-      localStorage.setItem(prefixedKey, item.compressed ? 
-        this.compress(JSON.stringify(item)) : JSON.stringify(item));
+      localStorage.setItem(
+        prefixedKey,
+        item.compressed
+          ? this.compress(JSON.stringify(item))
+          : JSON.stringify(item),
+      );
 
       return item.data;
     } catch (error) {
-      console.error('Failed to retrieve item:', key, error);
+      console.error("Failed to retrieve item:", key, error);
       return defaultValue || null;
     }
   }
@@ -176,7 +186,7 @@ class LocalStorageManager {
       localStorage.removeItem(this.getPrefixedKey(key));
       this.updateMetadata();
     } catch (error) {
-      console.error('Failed to remove item:', key, error);
+      console.error("Failed to remove item:", key, error);
     }
   }
 
@@ -205,11 +215,11 @@ class LocalStorageManager {
       availableSpace: 0,
       oldestItem: Date.now(),
       newestItem: 0,
-      expiredItems: 0
+      expiredItems: 0,
     };
 
     const prefix = this.getPrefix();
-    
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (!key?.startsWith(prefix)) continue;
@@ -224,7 +234,7 @@ class LocalStorageManager {
         const parsed: StorageItem = JSON.parse(item);
         stats.oldestItem = Math.min(stats.oldestItem, parsed.timestamp);
         stats.newestItem = Math.max(stats.newestItem, parsed.timestamp);
-        
+
         if (this.isExpired(parsed)) {
           stats.expiredItems++;
         }
@@ -234,7 +244,7 @@ class LocalStorageManager {
     }
 
     stats.availableSpace = this.config.maxSize - stats.totalSize;
-    
+
     return stats;
   }
 
@@ -243,7 +253,7 @@ class LocalStorageManager {
    */
   cleanup(force: boolean = false): number {
     let removedCount = 0;
-    const items: Array<{key: string, item: StorageItem, size: number}> = [];
+    const items: Array<{ key: string; item: StorageItem; size: number }> = [];
     const prefix = this.getPrefix();
 
     // Collect all items
@@ -259,7 +269,7 @@ class LocalStorageManager {
         items.push({
           key: key.slice(prefix.length),
           item,
-          size: serialized.length * 2
+          size: serialized.length * 2,
         });
       } catch (e) {
         // Remove corrupted items
@@ -269,7 +279,7 @@ class LocalStorageManager {
     }
 
     // Remove expired items
-    for (const {key, item} of items) {
+    for (const { key, item } of items) {
       if (this.isExpired(item)) {
         this.removeItem(key);
         removedCount++;
@@ -284,21 +294,21 @@ class LocalStorageManager {
         const priorityWeight = { high: 3, medium: 2, low: 1 };
         const aPriority = priorityWeight[a.item.priority] || 2;
         const bPriority = priorityWeight[b.item.priority] || 2;
-        
+
         if (aPriority !== bPriority) {
           return aPriority - bPriority; // Lower priority first
         }
-        
+
         return a.item.timestamp - b.item.timestamp; // Older first
       });
 
       // Remove items until we have enough space
       const targetSize = this.config.maxSize * 0.6;
       let currentSize = stats.totalSize;
-      
-      for (const {key, item} of items) {
+
+      for (const { key, item } of items) {
         if (currentSize <= targetSize) break;
-        if (item.priority !== 'high') {
+        if (item.priority !== "high") {
           this.removeItem(key);
           currentSize -= this.getItemSize(key);
           removedCount++;
@@ -307,8 +317,10 @@ class LocalStorageManager {
     }
 
     this.updateMetadata();
-    console.log(`LocalStorage cleanup completed. Removed ${removedCount} items.`);
-    
+    console.log(
+      `LocalStorage cleanup completed. Removed ${removedCount} items.`,
+    );
+
     return removedCount;
   }
 
@@ -316,8 +328,8 @@ class LocalStorageManager {
    * Emergency cleanup when storage is full
    */
   private emergencyCleanup(): void {
-    console.warn('Emergency localStorage cleanup triggered');
-    
+    console.warn("Emergency localStorage cleanup triggered");
+
     // Remove all low priority items immediately
     const prefix = this.getPrefix();
     const keysToRemove: string[] = [];
@@ -331,7 +343,7 @@ class LocalStorageManager {
 
       try {
         const item: StorageItem = JSON.parse(serialized);
-        if (item.priority === 'low' || this.isExpired(item)) {
+        if (item.priority === "low" || this.isExpired(item)) {
           keysToRemove.push(key);
         }
       } catch (e) {
@@ -339,11 +351,11 @@ class LocalStorageManager {
       }
     }
 
-    keysToRemove.forEach(key => {
+    keysToRemove.forEach((key) => {
       try {
         localStorage.removeItem(key);
       } catch (e) {
-        console.error('Failed to remove item during emergency cleanup:', key);
+        console.error("Failed to remove item during emergency cleanup:", key);
       }
     });
   }
@@ -360,11 +372,11 @@ class LocalStorageManager {
       const result = {
         itemsProcessed: 0,
         spaceReclaimed: 0,
-        errors: 0
+        errors: 0,
       };
 
       const prefix = this.getPrefix();
-      const itemsToProcess: Array<{key: string, data: any}> = [];
+      const itemsToProcess: Array<{ key: string; data: any }> = [];
 
       // Collect items that need optimization
       for (let i = 0; i < localStorage.length; i++) {
@@ -373,7 +385,7 @@ class LocalStorageManager {
 
         const originalKey = key.slice(prefix.length);
         const data = this.getItem(originalKey);
-        
+
         if (data !== null) {
           itemsToProcess.push({ key: originalKey, data });
         }
@@ -389,15 +401,15 @@ class LocalStorageManager {
 
         for (let i = start; i < end; i++) {
           const { key, data } = itemsToProcess[i];
-          
+
           try {
             const oldSize = this.getItemSize(key);
             this.removeItem(key);
-            
+
             // Re-store with current compression settings
             const success = this.setItem(key, data, {
               compress: true,
-              priority: 'medium'
+              priority: "medium",
             });
 
             if (success) {
@@ -409,7 +421,7 @@ class LocalStorageManager {
             }
           } catch (error) {
             result.errors++;
-            console.error('Error optimizing item:', key, error);
+            console.error("Error optimizing item:", key, error);
           }
         }
 
@@ -443,11 +455,11 @@ class LocalStorageManager {
       }
     }
 
-    keysToRemove.forEach(key => {
+    keysToRemove.forEach((key) => {
       try {
         localStorage.removeItem(key);
       } catch (e) {
-        console.error('Failed to remove key:', key);
+        console.error("Failed to remove key:", key);
       }
     });
 
@@ -467,7 +479,7 @@ class LocalStorageManager {
 
       const originalKey = key.slice(prefix.length);
       const value = this.getItem(originalKey);
-      
+
       if (value !== null) {
         data[originalKey] = value;
       }
@@ -476,7 +488,7 @@ class LocalStorageManager {
     return JSON.stringify({
       version: this.config.version,
       timestamp: Date.now(),
-      data
+      data,
     });
   }
 
@@ -486,9 +498,9 @@ class LocalStorageManager {
   importData(jsonData: string): boolean {
     try {
       const backup = JSON.parse(jsonData);
-      
+
       if (!backup.data) {
-        throw new Error('Invalid backup format');
+        throw new Error("Invalid backup format");
       }
 
       // Clear existing data
@@ -496,12 +508,12 @@ class LocalStorageManager {
 
       // Import data
       for (const [key, value] of Object.entries(backup.data)) {
-        this.setItem(key, value, { priority: 'high' });
+        this.setItem(key, value, { priority: "high" });
       }
 
       return true;
     } catch (error) {
-      console.error('Failed to import data:', error);
+      console.error("Failed to import data:", error);
       return false;
     }
   }
@@ -513,7 +525,7 @@ class LocalStorageManager {
 
   // Private helper methods
   private getPrefix(): string {
-    return 'wordy_kids_v1_';
+    return "wordy_kids_v1_";
   }
 
   private isExpired(item: StorageItem): boolean {
@@ -533,7 +545,7 @@ class LocalStorageManager {
   private freeSpace(requiredSize: number): void {
     const stats = this.getStats();
     const spaceNeeded = requiredSize - stats.availableSpace;
-    
+
     if (spaceNeeded <= 0) return;
 
     this.cleanup(true);
@@ -561,7 +573,7 @@ class LocalStorageManager {
 
   private checkCompressionSupport(): boolean {
     try {
-      const test = 'aaaaa';
+      const test = "aaaaa";
       const compressed = this.compress(test);
       const decompressed = this.decompress(compressed);
       return decompressed === test;
@@ -570,17 +582,21 @@ class LocalStorageManager {
     }
   }
 
-  private migrateLegacyItem<T>(key: string, serialized: string, defaultValue?: T): T | null {
+  private migrateLegacyItem<T>(
+    key: string,
+    serialized: string,
+    defaultValue?: T,
+  ): T | null {
     try {
       // Try to parse as direct JSON (legacy format)
       const data = JSON.parse(serialized);
-      
+
       // Re-store in new format
-      this.setItem(key, data, { priority: 'medium' });
-      
+      this.setItem(key, data, { priority: "medium" });
+
       return data;
     } catch (error) {
-      console.warn('Failed to migrate legacy item:', key);
+      console.warn("Failed to migrate legacy item:", key);
       this.removeItem(key);
       return defaultValue || null;
     }
@@ -588,9 +604,9 @@ class LocalStorageManager {
 
   private migrateData(): void {
     // Migration logic for version updates
-    const metadataKey = this.getPrefixedKey('_metadata');
+    const metadataKey = this.getPrefixedKey("_metadata");
     const metadata = localStorage.getItem(metadataKey);
-    
+
     if (!metadata) {
       // First time setup
       this.updateMetadata();
@@ -600,12 +616,17 @@ class LocalStorageManager {
     try {
       const parsed = JSON.parse(metadata);
       if (parsed.version !== this.config.version) {
-        console.log('Migrating localStorage from', parsed.version, 'to', this.config.version);
+        console.log(
+          "Migrating localStorage from",
+          parsed.version,
+          "to",
+          this.config.version,
+        );
         // Perform any necessary migrations here
         this.updateMetadata();
       }
     } catch (error) {
-      console.error('Failed to parse metadata, resetting:', error);
+      console.error("Failed to parse metadata, resetting:", error);
       this.updateMetadata();
     }
   }
@@ -614,16 +635,16 @@ class LocalStorageManager {
     const metadata = {
       version: this.config.version,
       lastCleanup: Date.now(),
-      stats: this.getStats()
+      stats: this.getStats(),
     };
 
     try {
       localStorage.setItem(
-        this.getPrefixedKey('_metadata'), 
-        JSON.stringify(metadata)
+        this.getPrefixedKey("_metadata"),
+        JSON.stringify(metadata),
       );
     } catch (error) {
-      console.error('Failed to update metadata:', error);
+      console.error("Failed to update metadata:", error);
     }
   }
 
@@ -637,8 +658,8 @@ class LocalStorageManager {
     }, this.config.cleanupInterval);
 
     // Cleanup on page unload
-    if (typeof window !== 'undefined') {
-      window.addEventListener('beforeunload', () => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeunload", () => {
         this.cleanup();
         if (this.cleanupTimer) {
           clearInterval(this.cleanupTimer);
@@ -651,7 +672,7 @@ class LocalStorageManager {
    * Get storage health information
    */
   getHealthReport(): {
-    status: 'healthy' | 'warning' | 'critical';
+    status: "healthy" | "warning" | "critical";
     issues: string[];
     recommendations: string[];
     stats: StorageStats;
@@ -659,42 +680,42 @@ class LocalStorageManager {
     const stats = this.getStats();
     const issues: string[] = [];
     const recommendations: string[] = [];
-    
-    let status: 'healthy' | 'warning' | 'critical' = 'healthy';
+
+    let status: "healthy" | "warning" | "critical" = "healthy";
 
     // Check storage usage
     const usagePercent = (stats.totalSize / this.config.maxSize) * 100;
-    
+
     if (usagePercent > 90) {
-      status = 'critical';
+      status = "critical";
       issues.push(`Storage usage critical: ${usagePercent.toFixed(1)}%`);
-      recommendations.push('Run cleanup or increase storage limit');
+      recommendations.push("Run cleanup or increase storage limit");
     } else if (usagePercent > 70) {
-      status = 'warning';
+      status = "warning";
       issues.push(`Storage usage high: ${usagePercent.toFixed(1)}%`);
-      recommendations.push('Consider running cleanup');
+      recommendations.push("Consider running cleanup");
     }
 
     // Check expired items
     if (stats.expiredItems > 0) {
-      if (status === 'healthy') status = 'warning';
+      if (status === "healthy") status = "warning";
       issues.push(`${stats.expiredItems} expired items found`);
-      recommendations.push('Run cleanup to remove expired items');
+      recommendations.push("Run cleanup to remove expired items");
     }
 
     // Check for very old items (>30 days)
-    const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
     if (stats.oldestItem < thirtyDaysAgo) {
-      if (status === 'healthy') status = 'warning';
-      issues.push('Very old items detected (>30 days)');
-      recommendations.push('Consider data archival or cleanup');
+      if (status === "healthy") status = "warning";
+      issues.push("Very old items detected (>30 days)");
+      recommendations.push("Consider data archival or cleanup");
     }
 
     return {
       status,
       issues,
       recommendations,
-      stats
+      stats,
     };
   }
 }
@@ -705,7 +726,7 @@ export const localStorageManager = new LocalStorageManager({
   compressionThreshold: 1024, // 1KB
   defaultExpiry: 7 * 24 * 60 * 60 * 1000, // 7 days
   cleanupInterval: 60 * 60 * 1000, // 1 hour
-  version: '1.0.0'
+  version: "1.0.0",
 });
 
 export default LocalStorageManager;

@@ -1,40 +1,49 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  useOptimizedStorage, 
-  useUserProgress, 
-  useGameSettings, 
-  useWordCache 
-} from '@/hooks/useOptimizedStorage';
-import { StorageHealthDashboard } from '@/components/StorageHealthDashboard';
+import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  useOptimizedStorage,
+  useUserProgress,
+  useGameSettings,
+  useWordCache,
+} from "@/hooks/useOptimizedStorage";
+import { StorageHealthDashboard } from "@/components/StorageHealthDashboard";
 
 export const StorageOptimizationDemo: React.FC = () => {
   // Example usage of different storage hooks
-  const [demoValue, setDemoValue, { loading: demoLoading, error: demoError }] = useOptimizedStorage(
-    'demo_key',
-    { message: 'Hello World!', count: 0 },
-    { priority: 'medium', compress: true }
-  );
+  const [demoValue, setDemoValue, { loading: demoLoading, error: demoError }] =
+    useOptimizedStorage(
+      "demo_key",
+      { message: "Hello World!", count: 0 },
+      { priority: "medium", compress: true },
+    );
 
-  const { progress, updateProgress, addWordLearned, addAchievement } = useUserProgress('demo_user');
+  const { progress, updateProgress, addWordLearned, addAchievement } =
+    useUserProgress("demo_user");
   const { settings, updateSetting } = useGameSettings();
-  const { getCachedWord, cacheWord, clearWordCache, cacheSize } = useWordCache();
+  const { getCachedWord, cacheWord, clearWordCache, cacheSize } =
+    useWordCache();
 
-  const [newMessage, setNewMessage] = useState('');
-  const [wordId, setWordId] = useState('');
-  const [wordData, setWordData] = useState('');
+  const [newMessage, setNewMessage] = useState("");
+  const [wordId, setWordId] = useState("");
+  const [wordData, setWordData] = useState("");
 
   const handleUpdateDemo = () => {
     setDemoValue({
       ...demoValue,
       message: newMessage || demoValue.message,
-      count: demoValue.count + 1
+      count: demoValue.count + 1,
     });
   };
 
@@ -43,10 +52,10 @@ export const StorageOptimizationDemo: React.FC = () => {
       try {
         const parsedData = JSON.parse(wordData);
         cacheWord(wordId, parsedData);
-        setWordId('');
-        setWordData('');
+        setWordId("");
+        setWordData("");
       } catch (e) {
-        alert('Invalid JSON data');
+        alert("Invalid JSON data");
       }
     }
   };
@@ -57,7 +66,7 @@ export const StorageOptimizationDemo: React.FC = () => {
       if (word) {
         alert(`Word found: ${JSON.stringify(word, null, 2)}`);
       } else {
-        alert('Word not found in cache');
+        alert("Word not found in cache");
       }
     }
   };
@@ -84,13 +93,16 @@ export const StorageOptimizationDemo: React.FC = () => {
             <CardHeader>
               <CardTitle>useOptimizedStorage Hook</CardTitle>
               <CardDescription>
-                Basic storage with automatic compression, expiry, and cross-tab sync
+                Basic storage with automatic compression, expiry, and cross-tab
+                sync
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {demoLoading && <Badge variant="secondary">Loading...</Badge>}
-              {demoError && <Badge variant="destructive">Error: {demoError}</Badge>}
-              
+              {demoError && (
+                <Badge variant="destructive">Error: {demoError}</Badge>
+              )}
+
               <div className="space-y-2">
                 <Label>Current Value:</Label>
                 <pre className="bg-muted p-2 rounded text-sm">
@@ -135,7 +147,7 @@ export const StorageOptimizationDemo: React.FC = () => {
                     placeholder="word_123"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="wordData">Word Data (JSON):</Label>
                   <Textarea
@@ -179,44 +191,56 @@ export const StorageOptimizationDemo: React.FC = () => {
                 </div>
                 <div className="space-y-1">
                   <Label>Experience</Label>
-                  <div className="text-2xl font-bold">{progress.experience}</div>
+                  <div className="text-2xl font-bold">
+                    {progress.experience}
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <Label>Words Learned</Label>
-                  <div className="text-2xl font-bold">{progress.wordsLearned.length}</div>
+                  <div className="text-2xl font-bold">
+                    {progress.wordsLearned.length}
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <Label>Achievements</Label>
-                  <div className="text-2xl font-bold">{progress.achievements.length}</div>
+                  <div className="text-2xl font-bold">
+                    {progress.achievements.length}
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <Label>Streak Days</Label>
-                  <div className="text-2xl font-bold">{progress.streakDays}</div>
+                  <div className="text-2xl font-bold">
+                    {progress.streakDays}
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <Label>Total Play Time</Label>
-                  <div className="text-2xl font-bold">{progress.totalPlayTime}min</div>
+                  <div className="text-2xl font-bold">
+                    {progress.totalPlayTime}min
+                  </div>
                 </div>
               </div>
 
               <div className="flex gap-2">
-                <Button 
-                  onClick={() => addWordLearned('cat', 3)}
+                <Button
+                  onClick={() => addWordLearned("cat", 3)}
                   variant="outline"
                 >
                   Learn Word "cat"
                 </Button>
-                <Button 
-                  onClick={() => addAchievement('first_word')}
+                <Button
+                  onClick={() => addAchievement("first_word")}
                   variant="outline"
                 >
                   Add Achievement
                 </Button>
-                <Button 
-                  onClick={() => updateProgress({ 
-                    streakDays: progress.streakDays + 1,
-                    totalPlayTime: progress.totalPlayTime + 15
-                  })}
+                <Button
+                  onClick={() =>
+                    updateProgress({
+                      streakDays: progress.streakDays + 1,
+                      totalPlayTime: progress.totalPlayTime + 15,
+                    })
+                  }
                   variant="outline"
                 >
                   Update Stats
@@ -266,7 +290,9 @@ export const StorageOptimizationDemo: React.FC = () => {
                     max="1"
                     step="0.1"
                     value={settings.volume}
-                    onChange={(e) => updateSetting('volume', parseFloat(e.target.value))}
+                    onChange={(e) =>
+                      updateSetting("volume", parseFloat(e.target.value))
+                    }
                     className="w-full"
                   />
                 </div>
@@ -275,7 +301,9 @@ export const StorageOptimizationDemo: React.FC = () => {
                   <Label>Theme</Label>
                   <select
                     value={settings.theme}
-                    onChange={(e) => updateSetting('theme', e.target.value as any)}
+                    onChange={(e) =>
+                      updateSetting("theme", e.target.value as any)
+                    }
                     className="w-full p-2 border rounded"
                   >
                     <option value="jungle">Jungle</option>
@@ -289,7 +317,9 @@ export const StorageOptimizationDemo: React.FC = () => {
                   <Label>Difficulty</Label>
                   <select
                     value={settings.difficulty}
-                    onChange={(e) => updateSetting('difficulty', e.target.value as any)}
+                    onChange={(e) =>
+                      updateSetting("difficulty", e.target.value as any)
+                    }
                     className="w-full p-2 border rounded"
                   >
                     <option value="easy">Easy</option>
@@ -302,7 +332,9 @@ export const StorageOptimizationDemo: React.FC = () => {
                   <Label>Font Size</Label>
                   <select
                     value={settings.fontSize}
-                    onChange={(e) => updateSetting('fontSize', e.target.value as any)}
+                    onChange={(e) =>
+                      updateSetting("fontSize", e.target.value as any)
+                    }
                     className="w-full p-2 border rounded"
                   >
                     <option value="small">Small</option>
@@ -316,19 +348,23 @@ export const StorageOptimizationDemo: React.FC = () => {
                 <Label>Toggle Settings</Label>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {[
-                    ['soundEffects', 'Sound Effects'],
-                    ['music', 'Music'],
-                    ['animations', 'Animations'],
-                    ['autoAdvance', 'Auto Advance'],
-                    ['showHints', 'Show Hints'],
-                    ['highContrast', 'High Contrast'],
-                    ['reducedMotion', 'Reduced Motion']
+                    ["soundEffects", "Sound Effects"],
+                    ["music", "Music"],
+                    ["animations", "Animations"],
+                    ["autoAdvance", "Auto Advance"],
+                    ["showHints", "Show Hints"],
+                    ["highContrast", "High Contrast"],
+                    ["reducedMotion", "Reduced Motion"],
                   ].map(([key, label]) => (
                     <label key={key} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
-                        checked={settings[key as keyof typeof settings] as boolean}
-                        onChange={(e) => updateSetting(key as any, e.target.checked)}
+                        checked={
+                          settings[key as keyof typeof settings] as boolean
+                        }
+                        onChange={(e) =>
+                          updateSetting(key as any, e.target.checked)
+                        }
                       />
                       <span className="text-sm">{label}</span>
                     </label>
