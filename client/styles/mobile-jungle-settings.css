@@ -33,6 +33,97 @@
   overscroll-behavior-y: contain;
 }
 
+/* Enhanced scrolling for Theme & Motion category */
+.jungle-mobile-theme-motion-scrollarea {
+  /* Enhanced smooth scrolling for Theme & Motion section */
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  /* Better touch scrolling momentum on iOS */
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translateZ(0);
+
+  /* Ensure content is properly contained */
+  contain: layout style paint;
+}
+
+.jungle-mobile-theme-motion-scrollarea::-webkit-scrollbar {
+  width: 8px; /* Slightly wider for better visibility */
+}
+
+.jungle-mobile-theme-motion-scrollarea::-webkit-scrollbar-track {
+  background: rgba(76, 175, 80, 0.15);
+  border-radius: 4px;
+}
+
+.jungle-mobile-theme-motion-scrollarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.jungle-mobile-theme-motion-scrollarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #388e3c, #689f38);
+  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.5);
+}
+
+.jungle-mobile-theme-motion-scrollarea::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, #2e7d32, #558b2f);
+}
+
+/* Main settings panel scrollarea optimizations */
+.jungle-mobile-main-scrollarea {
+  /* Ensure smooth scrolling for the main panel */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  /* Improve performance */
+  contain: layout style paint;
+  will-change: scroll-position;
+
+  /* Enhanced touch scrolling */
+  touch-action: pan-y;
+}
+
+/* Ensure accordion items don't interfere with scrolling */
+.jungle-mobile-main-scrollarea .space-y-2 > * {
+  /* Prevent nested scroll conflicts */
+  overscroll-behavior: auto;
+}
+
+/* Better spacing for mobile accordion items */
+@media (max-width: 768px) {
+  .jungle-mobile-main-scrollarea .space-y-2 {
+    gap: 0.75rem; /* Increased spacing between sections for better touch targets */
+  }
+
+  /* Ensure Theme & Motion section has enough space */
+  .jungle-mobile-main-scrollarea [data-radix-accordion-item] {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Enhanced spacing for Theme & Motion section content */
+  .jungle-mobile-theme-motion-scrollarea .space-y-2\.5 > * {
+    margin-bottom: 0.875rem; /* More spacing between theme controls */
+  }
+
+  /* Better padding for Theme & Motion overlay section */
+  .jungle-mobile-theme-motion-scrollarea .pt-1\.5 {
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Ensure switches have proper touch targets in Theme & Motion */
+  .jungle-mobile-theme-motion-scrollarea [role="switch"] {
+    min-height: 24px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+}
+
 .jungle-mobile-settings-dialog {
   background: linear-gradient(
     135deg,

@@ -1342,10 +1342,8 @@ export default function Index({ initialProfile }: IndexProps) {
     // Clear current dashboard words to force regeneration
     setCurrentDashboardWords([]);
 
-    // Play transition sound for better feedback
+    // Provide haptic feedback for category changes
     if (categoryId !== previousCategory) {
-      audioService.playWhooshSound();
-
       // Light haptic feedback
       if (navigator.vibrate) {
         navigator.vibrate(50);

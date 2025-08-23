@@ -544,8 +544,6 @@ export function EnhancedCategorySelector({
       return;
     }
 
-    audioService.playCheerSound();
-
     // Haptic feedback
     if ("vibrate" in navigator) {
       navigator.vibrate([50, 100, 50]);
@@ -572,7 +570,6 @@ export function EnhancedCategorySelector({
     if (reduceMotion) return;
 
     setHoveredCategory(categoryId);
-    audioService.playWhooshSound();
 
     // Subtle haptic feedback on hover (mobile)
     if ("vibrate" in navigator && window.innerWidth <= 768) {
@@ -1357,7 +1354,6 @@ export function EnhancedCategorySelector({
         <Button
           size="lg"
           onClick={() => {
-            audioService.playCheerSound();
             if ("vibrate" in navigator) {
               navigator.vibrate([100, 50, 100]);
             }
