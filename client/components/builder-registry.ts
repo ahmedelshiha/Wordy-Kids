@@ -176,8 +176,10 @@ Builder.registerComponent(JungleKidNav, {
 Builder.registerComponent(EnhancedWordCard, {
   name: "Enhanced Word Card",
   friendlyName: "📚 Educational Word Card",
-  description: "Interactive word learning card with audio, definitions, and mastery tracking",
-  image: "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
+  description:
+    "Interactive word learning card with audio, definitions, and mastery tracking",
+  image:
+    "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
 
   inputs: [
     {
@@ -192,7 +194,7 @@ Builder.registerComponent(EnhancedWordCard, {
           type: "number",
           required: true,
           defaultValue: 1,
-          description: "Unique identifier for the word"
+          description: "Unique identifier for the word",
         },
         {
           name: "word",
@@ -200,14 +202,14 @@ Builder.registerComponent(EnhancedWordCard, {
           type: "string",
           required: true,
           defaultValue: "adventure",
-          description: "The word to display and teach"
+          description: "The word to display and teach",
         },
         {
           name: "pronunciation",
           friendlyName: "Pronunciation Guide",
           type: "string",
           defaultValue: "ad-VEN-cher",
-          description: "Phonetic pronunciation guide"
+          description: "Phonetic pronunciation guide",
         },
         {
           name: "definition",
@@ -215,35 +217,42 @@ Builder.registerComponent(EnhancedWordCard, {
           type: "text",
           required: true,
           defaultValue: "An exciting or unusual experience",
-          description: "Clear definition of the word"
+          description: "Clear definition of the word",
         },
         {
           name: "example",
           friendlyName: "Example Sentence",
           type: "text",
           defaultValue: "We went on an adventure in the jungle",
-          description: "Example sentence using the word"
+          description: "Example sentence using the word",
         },
         {
           name: "funFact",
           friendlyName: "Fun Fact",
           type: "text",
-          description: "Interesting fact about the word"
+          description: "Interesting fact about the word",
         },
         {
           name: "emoji",
           friendlyName: "Word Emoji",
           type: "string",
           defaultValue: "🗺️",
-          description: "Visual emoji representation"
+          description: "Visual emoji representation",
         },
         {
           name: "category",
           friendlyName: "Category",
           type: "string",
-          enum: ["animals", "nature", "actions", "emotions", "objects", "places"],
+          enum: [
+            "animals",
+            "nature",
+            "actions",
+            "emotions",
+            "objects",
+            "places",
+          ],
           defaultValue: "actions",
-          description: "Word category"
+          description: "Word category",
         },
         {
           name: "difficulty",
@@ -251,37 +260,37 @@ Builder.registerComponent(EnhancedWordCard, {
           type: "string",
           enum: ["easy", "medium", "hard"],
           defaultValue: "medium",
-          description: "Learning difficulty"
+          description: "Learning difficulty",
         },
         {
           name: "imageUrl",
           friendlyName: "Word Image",
           type: "file",
           allowedFileTypes: ["jpg", "png", "gif", "svg"],
-          description: "Visual representation image"
-        }
-      ]
+          description: "Visual representation image",
+        },
+      ],
     },
     {
       name: "showDefinition",
       friendlyName: "Show Definition Initially",
       type: "boolean",
       defaultValue: false,
-      description: "Whether to show definition immediately"
+      description: "Whether to show definition immediately",
     },
     {
       name: "showVocabularyBuilder",
       friendlyName: "Show Vocabulary Builder",
       type: "boolean",
       defaultValue: true,
-      description: "Enable vocabulary building features"
+      description: "Enable vocabulary building features",
     },
     {
       name: "className",
       friendlyName: "CSS Classes",
       type: "string",
-      description: "Additional CSS classes for custom styling"
-    }
+      description: "Additional CSS classes for custom styling",
+    },
   ],
 
   canHaveChildren: false,
@@ -289,16 +298,18 @@ Builder.registerComponent(EnhancedWordCard, {
 
   defaultStyles: {
     maxWidth: "400px",
-    margin: "0 auto"
-  }
+    margin: "0 auto",
+  },
 });
 
 // Register Adventure Map component
 Builder.registerComponent(AdventureMap, {
   name: "Adventure Map",
   friendlyName: "🗺️ Adventure Learning Map",
-  description: "Interactive adventure map for word rescue games and exploration",
-  image: "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
+  description:
+    "Interactive adventure map for word rescue games and exploration",
+  image:
+    "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
 
   inputs: [
     {
@@ -310,32 +321,38 @@ Builder.registerComponent(AdventureMap, {
         {
           name: "id",
           type: "string",
-          required: true
+          required: true,
         },
         {
           name: "word",
           type: "string",
-          required: true
+          required: true,
         },
         {
           name: "zone",
           type: "string",
-          enum: ["word_forest", "memory_castle", "vocabulary_village", "dragon_peak", "crystal_caves"],
-          defaultValue: "word_forest"
+          enum: [
+            "word_forest",
+            "memory_castle",
+            "vocabulary_village",
+            "dragon_peak",
+            "crystal_caves",
+          ],
+          defaultValue: "word_forest",
         },
         {
           name: "difficulty",
           type: "string",
           enum: ["easy", "medium", "hard"],
-          defaultValue: "medium"
+          defaultValue: "medium",
         },
         {
           name: "status",
           type: "string",
           enum: ["captured", "rescued", "mastered"],
-          defaultValue: "captured"
-        }
-      ]
+          defaultValue: "captured",
+        },
+      ],
     },
     {
       name: "wordHero",
@@ -347,41 +364,47 @@ Builder.registerComponent(AdventureMap, {
           name: "name",
           type: "string",
           defaultValue: "Word Explorer",
-          description: "Hero's name"
+          description: "Hero's name",
         },
         {
           name: "level",
           type: "number",
           defaultValue: 1,
-          description: "Hero's level"
+          description: "Hero's level",
         },
         {
           name: "health",
           type: "number",
           defaultValue: 100,
-          description: "Hero's health points"
+          description: "Hero's health points",
         },
         {
           name: "experience",
           type: "number",
           defaultValue: 0,
-          description: "Hero's experience points"
+          description: "Hero's experience points",
         },
         {
           name: "currentZone",
           type: "string",
-          enum: ["word_forest", "memory_castle", "vocabulary_village", "dragon_peak", "crystal_caves"],
+          enum: [
+            "word_forest",
+            "memory_castle",
+            "vocabulary_village",
+            "dragon_peak",
+            "crystal_caves",
+          ],
           defaultValue: "word_forest",
-          description: "Current zone location"
-        }
-      ]
+          description: "Current zone location",
+        },
+      ],
     },
     {
       name: "className",
       friendlyName: "CSS Classes",
       type: "string",
-      description: "Additional CSS classes for custom styling"
-    }
+      description: "Additional CSS classes for custom styling",
+    },
   ],
 
   canHaveChildren: false,
@@ -389,14 +412,14 @@ Builder.registerComponent(AdventureMap, {
 
   defaultStyles: {
     width: "100%",
-    minHeight: "500px"
-  }
+    minHeight: "500px",
+  },
 });
 
 // Export for potential external use
 export { JungleKidNav, EnhancedWordCard, AdventureMap };
 
-console.log('✅ Builder.io educational components registered successfully');
+console.log("✅ Builder.io educational components registered successfully");
 
 /**
  * Usage in Builder.io:

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./global.css";
 
 // Builder.io initialization
-import { builder } from '@builder.io/react';
-import './components/builder-registry';
+import { builder } from "@builder.io/react";
+import "./components/builder-registry";
 
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
@@ -55,11 +55,13 @@ const App = () => {
 
       // Initialize Builder.io with API key
       const builderKey = import.meta.env.VITE_PUBLIC_BUILDER_KEY;
-      if (builderKey && builderKey !== '__BUILDER_PUBLIC_KEY__') {
+      if (builderKey && builderKey !== "__BUILDER_PUBLIC_KEY__") {
         builder.init(builderKey);
-        console.log('✅ Builder.io initialized successfully');
+        console.log("✅ Builder.io initialized successfully");
       } else {
-        console.warn('⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file');
+        console.warn(
+          "⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
+        );
       }
 
       // Migrate legacy settings to unified jungle settings
@@ -231,10 +233,22 @@ const App = () => {
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
 
                       {/* Builder.io Dynamic Pages */}
-                      <Route path="/page/*" element={<BuilderPageWrapper model="page" />} />
-                      <Route path="/lesson/*" element={<BuilderPageWrapper model="lesson" />} />
-                      <Route path="/game/*" element={<BuilderPageWrapper model="game" />} />
-                      <Route path="/builder/*" element={<BuilderPageWrapper />} />
+                      <Route
+                        path="/page/*"
+                        element={<BuilderPageWrapper model="page" />}
+                      />
+                      <Route
+                        path="/lesson/*"
+                        element={<BuilderPageWrapper model="lesson" />}
+                      />
+                      <Route
+                        path="/game/*"
+                        element={<BuilderPageWrapper model="game" />}
+                      />
+                      <Route
+                        path="/builder/*"
+                        element={<BuilderPageWrapper />}
+                      />
 
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
