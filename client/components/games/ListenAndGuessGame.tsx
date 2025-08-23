@@ -122,7 +122,11 @@ function speakWord(word: string, funny = false, fallback?: string) {
   // Sanitize input to prevent "[object Object]" errors
   const sanitizedWord = sanitizeTTSInput(word);
   if (!sanitizedWord) {
-    logSpeechError("ListenAndGuessGame.speakWord", word, "Empty word after sanitization");
+    logSpeechError(
+      "ListenAndGuessGame.speakWord",
+      word,
+      "Empty word after sanitization",
+    );
     return;
   }
 

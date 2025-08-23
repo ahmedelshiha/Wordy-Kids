@@ -398,7 +398,11 @@ export class EnhancedAudioService {
     // Sanitize input to prevent "[object Object]" errors
     const sanitizedWord = sanitizeTTSInput(word);
     if (!sanitizedWord) {
-      logSpeechError("enhancedAudioService.pronounceWord", word, "Empty word after sanitization");
+      logSpeechError(
+        "enhancedAudioService.pronounceWord",
+        word,
+        "Empty word after sanitization",
+      );
       const validationError = {
         type: "invalid_input",
         originalWord: word,

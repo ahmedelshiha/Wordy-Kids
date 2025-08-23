@@ -493,8 +493,16 @@ export function InteractiveDashboardWordCard({
 
         // Validate word before speech synthesis
         const wordToSpeak = currentWord?.word;
-        if (!wordToSpeak || typeof wordToSpeak !== "string" || wordToSpeak.trim().length === 0) {
-          console.error("Invalid word for speech synthesis:", { currentWord, wordToSpeak, type: typeof wordToSpeak });
+        if (
+          !wordToSpeak ||
+          typeof wordToSpeak !== "string" ||
+          wordToSpeak.trim().length === 0
+        ) {
+          console.error("Invalid word for speech synthesis:", {
+            currentWord,
+            wordToSpeak,
+            type: typeof wordToSpeak,
+          });
           setIsPlaying(false);
           return;
         }

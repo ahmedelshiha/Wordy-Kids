@@ -5,7 +5,7 @@
 /**
  * Sanitizes input for text-to-speech to ensure we always get a valid string.
  * Prevents "[object Object]" errors by properly handling various input types.
- * 
+ *
  * @param input - Any input that should be converted to speech text
  * @returns A safe string for text-to-speech synthesis
  */
@@ -31,13 +31,16 @@ export function sanitizeTTSInput(input: any): string {
     if (typeof input.word === "string" && input.word.trim()) {
       return input.word.trim();
     }
-    
+
     if (typeof input.text === "string" && input.text.trim()) {
       return input.text.trim();
     }
 
     // Check for custom toString method (not the default Object.prototype.toString)
-    if (typeof input.toString === "function" && input.toString !== Object.prototype.toString) {
+    if (
+      typeof input.toString === "function" &&
+      input.toString !== Object.prototype.toString
+    ) {
       try {
         const result = input.toString();
         if (typeof result === "string" && result !== "[object Object]") {
@@ -63,15 +66,19 @@ export function sanitizeTTSInput(input: any): string {
 
 /**
  * Creates a safe SpeechSynthesisUtterance with sanitized text input
- * 
+ *
  * @param input - Text or object to convert to speech
  * @returns SpeechSynthesisUtterance with sanitized text, or null if input is empty
  */
-export function createSafeUtterance(input: any): SpeechSynthesisUtterance | null {
+export function createSafeUtterance(
+  input: any,
+): SpeechSynthesisUtterance | null {
   const text = sanitizeTTSInput(input);
-  
+
   if (!text || text.length === 0) {
-    console.warn("Cannot create utterance: empty text after sanitization", { originalInput: input });
+    console.warn("Cannot create utterance: empty text after sanitization", {
+      originalInput: input,
+    });
     return null;
   }
 
@@ -80,22 +87,32 @@ export function createSafeUtterance(input: any): SpeechSynthesisUtterance | null
 
 /**
  * Logs speech synthesis errors in a standardized way
- * 
+ *
  * @param context - Context where the error occurred
  * @param originalInput - The original input that caused the error
  * @param error - The error that occurred
  */
-export function logSpeechError(context: string, originalInput: any, error: any): void {
+export function logSpeechError(
+  context: string,
+  originalInput: any,
+  error: any,
+): void {
   const errorInfo = {
     context,
-    originalInput: typeof originalInput === "object" ? JSON.stringify(originalInput) : originalInput,
+    originalInput:
+      typeof originalInput === "object"
+        ? JSON.stringify(originalInput)
+        : originalInput,
     inputType: typeof originalInput,
     timestamp: new Date().toISOString(),
-    error: error instanceof Error ? {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    } : String(error),
+    error:
+      error instanceof Error
+        ? {
+            name: error.name,
+            message: error.message,
+            stack: error.stack,
+          }
+        : String(error),
   };
 
   console.error(`Speech synthesis error in ${context}:`, errorInfo);

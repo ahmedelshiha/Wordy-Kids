@@ -333,7 +333,11 @@ export class AudioService {
     const sanitizedWord = sanitizeTTSInput(word);
     if (!this.isEnabled || !sanitizedWord) {
       if (!sanitizedWord) {
-        logSpeechError("audioService.pronounceWord", word, "Empty word after sanitization");
+        logSpeechError(
+          "audioService.pronounceWord",
+          word,
+          "Empty word after sanitization",
+        );
       }
       return;
     }
@@ -528,7 +532,11 @@ export class AudioService {
       // Sanitize input to prevent "[object Object]" errors
       const sanitizedWord = sanitizeTTSInput(word);
       if (!sanitizedWord) {
-        logSpeechError("audioService.pronounceWordWithoutVoiceSelection", word, "Empty word after sanitization");
+        logSpeechError(
+          "audioService.pronounceWordWithoutVoiceSelection",
+          word,
+          "Empty word after sanitization",
+        );
         return;
       }
       const voiceDefaults = this.getVoiceDefaults(this.selectedVoiceType);

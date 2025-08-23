@@ -878,7 +878,11 @@ export class EnhancedJungleAudioSystem {
         // Sanitize input to prevent "[object Object]" errors
         const sanitizedWord = sanitizeTTSInput(word);
         if (!sanitizedWord) {
-          logSpeechError("enhancedJungleAudioSystem.speakWordWithEffects", word, "Empty word after sanitization");
+          logSpeechError(
+            "enhancedJungleAudioSystem.speakWordWithEffects",
+            word,
+            "Empty word after sanitization",
+          );
           reject(new Error("Empty word after sanitization"));
           return;
         }
@@ -934,7 +938,11 @@ export class EnhancedJungleAudioSystem {
       // Sanitize input to prevent "[object Object]" errors
       const sanitizedWord = sanitizeTTSInput(word);
       if (!sanitizedWord) {
-        logSpeechError("enhancedJungleAudioSystem.speakWord", word, "Empty word after sanitization");
+        logSpeechError(
+          "enhancedJungleAudioSystem.speakWord",
+          word,
+          "Empty word after sanitization",
+        );
         reject(new Error("Empty word after sanitization"));
         return;
       }
