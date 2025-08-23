@@ -575,8 +575,8 @@ export class EnhancedAudioService {
       };
 
       utterance.onerror = (event) => {
-        console.error(`Preview error for ${voiceType}:`, event);
-        reject(new Error(`Preview error: ${event.error}`));
+        console.error(`Preview error for ${voiceType}:`, event.error || 'Unknown error', event);
+        reject(new Error(`Preview error: ${event.error || 'Unknown error'}`));
       };
 
       this.speechSynthesis.speak(utterance);
