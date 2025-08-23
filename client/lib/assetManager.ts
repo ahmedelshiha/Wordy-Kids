@@ -216,12 +216,31 @@ export class AssetManager {
     const preloadPromises = criticalAssets.map(async (assetPath) => {
       try {
         const correctedPath = await this.getAssetPath(assetPath);
-        const response = await fetch(correctedPath);
+
+        // Add timeout for preloading
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout for preload
+
+        const response = await fetch(correctedPath, {
+          signal: controller.signal,
+          cache: 'force-cache'
+        });
+
+        clearTimeout(timeoutId);
+
         if (response.ok) {
           console.log(`✅ Preloaded: ${assetPath}`);
+        } else {
+          console.warn(`⚠️ Failed to preload (${response.status}): ${assetPath}`);
         }
       } catch (error) {
-        console.warn(`⚠️ Failed to preload: ${assetPath}`, error);
+        if (error instanceof Error && error.name === 'AbortError') {
+          console.warn(`⏰ Preload timeout: ${assetPath}`);
+        } else if (error instanceof Error && error.message.includes('Failed to fetch')) {
+          console.warn(`🌐 Network error preloading: ${assetPath}`);
+        } else {
+          console.warn(`⚠️ Failed to preload: ${assetPath}`, error);
+        }
       }
     });
 
