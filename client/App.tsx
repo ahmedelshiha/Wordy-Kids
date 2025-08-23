@@ -8,6 +8,18 @@ import "./components/builder-registry";
 // Asset management system
 import { AssetManager, AudioManager } from "./lib/assetManager";
 
+// LocalStorage optimization system
+import { localStorageManager } from "./lib/localStorageManager";
+
+// Builder.io integration
+import { builder } from "@builder.io/react";
+import {
+  BuilderPageWrapper,
+  EducationalPageWrapper,
+  MarketingPageWrapper,
+} from "./components/BuilderPageWrapper";
+import { initializeBuilderRegistry } from "./lib/builder-registry";
+
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -41,6 +53,7 @@ import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
+import StorageOptimizationDemo from "./pages/StorageOptimizationDemo";
 import BuilderPageWrapper from "./components/BuilderPageWrapper";
 
 const queryClient = new QueryClient();
@@ -57,13 +70,43 @@ const App = () => {
       setIsClient(true);
 
       // Initialize Builder.io with API key
-      const builderKey = import.meta.env.VITE_PUBLIC_BUILDER_KEY;
+      const builderKey =
+        import.meta.env.VITE_BUILDER_PUBLIC_KEY ||
+        import.meta.env.VITE_PUBLIC_BUILDER_KEY;
       if (builderKey && builderKey !== "__BUILDER_PUBLIC_KEY__") {
         builder.init(builderKey);
-        console.log("✅ Builder.io initialized successfully");
+        initializeBuilderRegistry();
+        console.log("✅ Builder.io initialized with educational components");
       } else {
         console.warn(
-          "⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
+          "⚠�� Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
+        );
+        // Initialize registry anyway for fallback components
+        initializeBuilderRegistry();
+      }
+
+      // Initialize localStorage Optimization System
+      try {
+        console.log("🗄️ Initializing localStorage optimization system...");
+        // The localStorageManager is automatically initialized when imported
+        // Run initial cleanup and health check
+        const healthReport = localStorageManager.getHealthReport();
+        console.log("📊 Storage Health:", healthReport.status);
+
+        if (
+          healthReport.status === "warning" ||
+          healthReport.status === "critical"
+        ) {
+          console.warn("⚠️ Storage issues detected:", healthReport.issues);
+          // Auto-cleanup if storage is in poor health
+          localStorageManager.cleanup(true);
+        }
+
+        console.log("✅ LocalStorage optimization system initialized");
+      } catch (error) {
+        console.warn(
+          "⚠️ LocalStorage optimization system initialization failed:",
+          error,
         );
       }
 
@@ -266,6 +309,79 @@ const App = () => {
                         element={<SettingsPanelV2Demo />}
                       />
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
+                      <Route
+                        path="/storage-optimization-demo"
+                        element={<StorageOptimizationDemo />}
+                      />
+                      <Route
+                        path="/StorageOptimizationDemo"
+                        element={<StorageOptimizationDemo />}
+                      />
+
+                      {/* Builder.io Educational Content Routes */}
+                      <Route
+                        path="/learn/:lesson"
+                        element={
+                          <EducationalPageWrapper
+                            model="educational-lesson"
+                            childAge={6}
+                            learningLevel="beginner"
+                            fallbackContent={
+                              <div className="p-8 text-center">
+                                <h2 className="text-2xl font-bold mb-4">
+                                  🎓 Lesson Coming Soon!
+                                </h2>
+                                <p className="text-gray-600">
+                                  This educational content is being prepared for
+                                  you.
+                                </p>
+                                <div className="mt-4 text-4xl">📚</div>
+                              </div>
+                            }
+                          />
+                        }
+                      />
+
+                      <Route
+                        path="/activities/:activity"
+                        element={
+                          <EducationalPageWrapper
+                            model="learning-activity"
+                            fallbackContent={
+                              <div className="p-8 text-center">
+                                <h2 className="text-2xl font-bold mb-4">
+                                  🎮 Activity Loading...
+                                </h2>
+                                <p className="text-gray-600">
+                                  Get ready for a fun learning adventure!
+                                </p>
+                                <div className="mt-4 text-4xl">🌟</div>
+                              </div>
+                            }
+                          />
+                        }
+                      />
+
+                      <Route
+                        path="/about"
+                        element={
+                          <MarketingPageWrapper model="marketing-page" />
+                        }
+                      />
+
+                      <Route
+                        path="/pricing"
+                        element={
+                          <MarketingPageWrapper model="marketing-page" />
+                        }
+                      />
+
+                      <Route
+                        path="/parents"
+                        element={
+                          <MarketingPageWrapper model="parent-info-page" />
+                        }
+                      />
 
                       {/* Builder.io Dynamic Pages */}
                       <Route
@@ -274,15 +390,19 @@ const App = () => {
                       />
                       <Route
                         path="/lesson/*"
-                        element={<BuilderPageWrapper model="lesson" />}
+                        element={
+                          <EducationalPageWrapper model="educational-lesson" />
+                        }
                       />
                       <Route
                         path="/game/*"
-                        element={<BuilderPageWrapper model="game" />}
+                        element={
+                          <EducationalPageWrapper model="learning-activity" />
+                        }
                       />
                       <Route
-                        path="/builder/*"
-                        element={<BuilderPageWrapper />}
+                        path="/builder/:slug"
+                        element={<BuilderPageWrapper model="page" />}
                       />
 
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
