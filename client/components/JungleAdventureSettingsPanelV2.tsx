@@ -365,7 +365,9 @@ export default function JungleAdventureSettingsPanelV2({
     function onHelp(e: KeyboardEvent) {
       if (open && (e.key === "F1" || (e.key === "?" && !e.shiftKey))) {
         e.preventDefault();
-        console.log("🎮 Keyboard shortcuts: Tab to navigate, Arrow keys to adjust sliders, Space/Enter to activate buttons, Esc to close");
+        console.log(
+          "🎮 Keyboard shortcuts: Tab to navigate, Arrow keys to adjust sliders, Space/Enter to activate buttons, Esc to close",
+        );
       }
     }
 
@@ -524,9 +526,7 @@ export default function JungleAdventureSettingsPanelV2({
                   }
                 />
 
-                <SettingRow
-                  label="Ambient Volume"
-                >
+                <SettingRow label="Ambient Volume">
                   <EnhancedSlider
                     value={[settings.ambientVolume * 100]}
                     onValueChange={([v]) =>
@@ -574,8 +574,11 @@ export default function JungleAdventureSettingsPanelV2({
                 <SettingRow
                   label="Speech Speed"
                   description={
-                    settings.speechRate < 0.8 ? "Slower" :
-                    settings.speechRate > 1.2 ? "Faster" : "Normal"
+                    settings.speechRate < 0.8
+                      ? "Slower"
+                      : settings.speechRate > 1.2
+                        ? "Faster"
+                        : "Normal"
                   }
                 >
                   <EnhancedSlider
@@ -795,9 +798,7 @@ export default function JungleAdventureSettingsPanelV2({
                   />
                 </SettingRow>
 
-                <SettingRow
-                  label="Time Limit"
-                >
+                <SettingRow label="Time Limit">
                   <EnhancedSlider
                     min={0}
                     max={60}
@@ -805,8 +806,10 @@ export default function JungleAdventureSettingsPanelV2({
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
                     size="md"
-                    variant={settings.timeLimitMin === 0 ? "default" : "warning"}
-                    tooltipFormatter={(v) => v === 0 ? "Off" : `${v} min`}
+                    variant={
+                      settings.timeLimitMin === 0 ? "default" : "warning"
+                    }
+                    tooltipFormatter={(v) => (v === 0 ? "Off" : `${v} min`)}
                     hapticFeedback={settings.haptics}
                     className={cn(
                       "flex-1",
@@ -836,9 +839,7 @@ export default function JungleAdventureSettingsPanelV2({
                   icon={<Accessibility className="w-4 h-4" />}
                   isMobile={isMobile}
                 >
-                  <SettingRow
-                    label="Text Size"
-                  >
+                  <SettingRow label="Text Size">
                     <EnhancedSlider
                       min={90}
                       max={130}

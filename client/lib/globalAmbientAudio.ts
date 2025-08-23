@@ -6,7 +6,7 @@
 // Sound files mapping - must match the settings panel
 const AMBIENT_SOUND_FILES = {
   birds: "/sounds/jungle-birds.mp3",
-  rain: "/sounds/jungle-rain.mp3", 
+  rain: "/sounds/jungle-rain.mp3",
   wind: "/sounds/jungle-wind.mp3",
   waterfall: "/sounds/jungle-waterfall.mp3",
   insects: "/sounds/jungle-insects.mp3",
@@ -43,7 +43,7 @@ class GlobalAmbientAudioManager {
 
     // Load current settings and apply them
     this.loadSettingsAndApply();
-    
+
     this.isInitialized = true;
     console.log("🌿 Global Ambient Audio Manager initialized");
   }
@@ -58,7 +58,7 @@ class GlobalAmbientAudioManager {
         const settings = JSON.parse(settingsStr);
         const ambient = settings.ambient || "off";
         const ambientVolume = settings.ambientVolume ?? 0.35;
-        
+
         this.setAmbientSound(ambient, ambientVolume);
       }
     } catch (error) {
@@ -69,7 +69,10 @@ class GlobalAmbientAudioManager {
   /**
    * Set the ambient sound and volume
    */
-  public setAmbientSound(sound: AmbientSoundType, volume: number = this.currentVolume): void {
+  public setAmbientSound(
+    sound: AmbientSoundType,
+    volume: number = this.currentVolume,
+  ): void {
     if (!this.audioElement) {
       console.warn("Audio manager not initialized");
       return;
@@ -97,13 +100,18 @@ class GlobalAmbientAudioManager {
 
     // Set volume and play
     this.audioElement.volume = this.currentVolume;
-    
+
     // Play the sound
     this.audioElement.play().catch((error) => {
-      console.warn("Could not play ambient sound (this is normal if user hasn't interacted with page yet):", error);
+      console.warn(
+        "Could not play ambient sound (this is normal if user hasn't interacted with page yet):",
+        error,
+      );
     });
 
-    console.log(`🎵 Playing ambient sound: ${sound} at volume ${Math.round(this.currentVolume * 100)}%`);
+    console.log(
+      `🎵 Playing ambient sound: ${sound} at volume ${Math.round(this.currentVolume * 100)}%`,
+    );
   }
 
   /**
@@ -115,7 +123,7 @@ class GlobalAmbientAudioManager {
     this.audioElement.pause();
     this.audioElement.currentTime = 0;
     this.currentSound = "off";
-    
+
     console.log("🔇 Stopped ambient sound");
   }
 
@@ -124,10 +132,12 @@ class GlobalAmbientAudioManager {
    */
   public setVolume(volume: number): void {
     this.currentVolume = Math.max(0, Math.min(1, volume));
-    
+
     if (this.audioElement && this.currentSound !== "off") {
       this.audioElement.volume = this.currentVolume;
-      console.log(`🔊 Ambient volume set to ${Math.round(this.currentVolume * 100)}%`);
+      console.log(
+        `🔊 Ambient volume set to ${Math.round(this.currentVolume * 100)}%`,
+      );
     }
   }
 
@@ -155,7 +165,10 @@ class GlobalAmbientAudioManager {
   /**
    * Update settings from the settings panel
    */
-  public updateFromSettings(ambient: AmbientSoundType, ambientVolume: number): void {
+  public updateFromSettings(
+    ambient: AmbientSoundType,
+    ambientVolume: number,
+  ): void {
     this.setAmbientSound(ambient, ambientVolume);
   }
 
