@@ -75,6 +75,8 @@ const App = () => {
         console.warn(
           "⚠�� Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
         );
+        // Initialize registry anyway for fallback components
+        initializeBuilderRegistry();
       }
 
       // Initialize localStorage Optimization System
