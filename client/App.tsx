@@ -69,7 +69,8 @@ const App = () => {
       const builderKey = import.meta.env.VITE_PUBLIC_BUILDER_KEY;
       if (builderKey && builderKey !== "__BUILDER_PUBLIC_KEY__") {
         builder.init(builderKey);
-        console.log("✅ Builder.io initialized successfully");
+        initializeBuilderRegistry();
+        console.log("✅ Builder.io initialized with educational components");
       } else {
         console.warn(
           "⚠�� Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
