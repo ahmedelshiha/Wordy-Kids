@@ -3,6 +3,52 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { localStorageManager } from "../lib/localStorageManager";
 
+// Stable default values to prevent re-renders
+const DEFAULT_USER_PROGRESS = {
+  level: 1,
+  experience: 0,
+  wordsLearned: [],
+  achievements: [],
+  streakDays: 0,
+  lastPlayed: null as string | null,
+  totalPlayTime: 0,
+  favoriteWords: [],
+  difficultyPreference: 'medium' as 'easy' | 'medium' | 'hard',
+  soundEnabled: true,
+  parentalControls: {
+    timeLimit: 60, // minutes
+    allowedCategories: ['animals', 'colors', 'shapes', 'numbers']
+  }
+};
+
+const USER_PROGRESS_OPTIONS = {
+  priority: 'high' as const,
+  expiry: 365 * 24 * 60 * 60 * 1000, // 1 year
+  syncAcrossTabs: true,
+  compress: true
+};
+
+const DEFAULT_GAME_SETTINGS = {
+  volume: 0.8,
+  soundEffects: true,
+  music: true,
+  animations: true,
+  theme: 'jungle' as 'jungle' | 'ocean' | 'space' | 'farm',
+  language: 'en',
+  autoAdvance: false,
+  showHints: true,
+  difficulty: 'medium' as 'easy' | 'medium' | 'hard',
+  fontSize: 'medium' as 'small' | 'medium' | 'large',
+  highContrast: false,
+  reducedMotion: false
+};
+
+const GAME_SETTINGS_OPTIONS = {
+  priority: 'high' as const,
+  syncAcrossTabs: true,
+  expiry: 30 * 24 * 60 * 60 * 1000 // 30 days
+};
+
 // Hook for storing and retrieving data with automatic optimization
 export function useOptimizedStorage<T>(
   key: string,
@@ -154,25 +200,8 @@ export function useUserProgress(userId: string) {
 export function useGameSettings() {
   const [settings, setSettings, { loading, error }] = useOptimizedStorage(
     "game_settings",
-    {
-      volume: 0.8,
-      soundEffects: true,
-      music: true,
-      animations: true,
-      theme: "jungle" as "jungle" | "ocean" | "space" | "farm",
-      language: "en",
-      autoAdvance: false,
-      showHints: true,
-      difficulty: "medium" as "easy" | "medium" | "hard",
-      fontSize: "medium" as "small" | "medium" | "large",
-      highContrast: false,
-      reducedMotion: false,
-    },
-    {
-      priority: "high",
-      syncAcrossTabs: true,
-      expiry: 30 * 24 * 60 * 60 * 1000, // 30 days
-    },
+    DEFAULT_GAME_SETTINGS,
+    GAME_SETTINGS_OPTIONS
   );
 
   const updateSetting = useCallback(
