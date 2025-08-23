@@ -1354,7 +1354,6 @@ export function EnhancedCategorySelector({
         <Button
           size="lg"
           onClick={() => {
-            audioService.playCheerSound();
             if ("vibrate" in navigator) {
               navigator.vibrate([100, 50, 100]);
             }
