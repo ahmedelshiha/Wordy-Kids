@@ -591,7 +591,7 @@ export const initializeBuilderRegistry = () => {
   );
 
   // Configure Builder.io for educational context
-  Builder.configure({
+  builder.configure({
     // Enable custom targeting for educational content
     customTargeting: {
       age: {
