@@ -26,6 +26,7 @@
     "scan:emojis": "node scripts/scan-emojis.js",
     "lint:emojis": "npm run scan:emojis",
     "check:map-conflicts": "node scripts/check-map-conflicts.js",
+    "check:assets": "node scripts/checkAssets.js",
     "precommit": "npm run lint:emojis && npm run check:map-conflicts && npm run typecheck"
   },
   "engines": {
@@ -33,7 +34,6 @@
     "npm": ">=8.0.0"
   },
   "dependencies": {
-    "@builder.io/react": "^8.2.6",
     "@types/crypto-js": "^4.2.2",
     "crypto-js": "^4.2.0",
     "dotenv": "^17.2.0",
