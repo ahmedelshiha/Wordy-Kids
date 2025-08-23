@@ -570,7 +570,6 @@ export function EnhancedCategorySelector({
     if (reduceMotion) return;
 
     setHoveredCategory(categoryId);
-    audioService.playWhooshSound();
 
     // Subtle haptic feedback on hover (mobile)
     if ("vibrate" in navigator && window.innerWidth <= 768) {
