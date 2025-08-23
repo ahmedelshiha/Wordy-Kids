@@ -186,18 +186,47 @@ export class AssetManager {
     const found: string[] = [];
     const mappings: Record<string, string> = {};
 
-    for (const asset of allAssets) {
-      const correctedPath = await this.getAssetPath(asset);
+    // Process assets in batches to prevent overwhelming the network
+    const batchSize = 5;
+    for (let i = 0; i < allAssets.length; i += batchSize) {
+      const batch = allAssets.slice(i, i + batchSize);
 
-      if (correctedPath !== asset) {
-        mappings[asset] = correctedPath;
+      const batchPromises = batch.map(async (asset) => {
+        try {
+          const correctedPath = await this.getAssetPath(asset);
+
+          if (correctedPath !== asset) {
+            mappings[asset] = correctedPath;
+          }
+
+          const exists = await this.validateAsset(correctedPath);
+          if (exists) {
+            found.push(asset);
+          } else {
+            missing.push(asset);
+          }
+        } catch (error) {
+          console.warn(`Failed to validate asset ${asset}:`, error);
+          missing.push(asset);
+        }
+      });
+
+      // Process batch with timeout
+      try {
+        await Promise.race([
+          Promise.all(batchPromises),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Batch validation timeout')), 10000)
+          )
+        ]);
+      } catch (error) {
+        console.warn(`Batch validation failed:`, error);
+        // Continue with next batch
       }
 
-      const exists = await this.validateAsset(correctedPath);
-      if (exists) {
-        found.push(asset);
-      } else {
-        missing.push(asset);
+      // Small delay between batches to prevent overwhelming the server
+      if (i + batchSize < allAssets.length) {
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
 
