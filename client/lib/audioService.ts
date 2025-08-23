@@ -544,7 +544,7 @@ export class AudioService {
       );
       const volume = Math.max(0, Math.min(1, options.volume ?? 1.0));
 
-      const utterance = new SpeechSynthesisUtterance(word.trim());
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
       utterance.rate = rate;
       utterance.pitch = pitch;
       utterance.volume = volume;
