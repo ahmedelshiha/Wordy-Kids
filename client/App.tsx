@@ -38,6 +38,7 @@ import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
+import BuilderPageWrapper from "./components/BuilderPageWrapper";
 
 const queryClient = new QueryClient();
 
