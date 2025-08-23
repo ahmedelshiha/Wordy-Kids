@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./global.css";
 
 // Builder.io initialization
-import { builder } from "@builder.io/react";
 import "./components/builder-registry";
 
 // Asset management system
