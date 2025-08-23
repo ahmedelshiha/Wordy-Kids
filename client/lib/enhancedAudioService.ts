@@ -430,7 +430,7 @@ export class EnhancedAudioService {
       // Cancel any ongoing speech safely
       this.speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(word.trim());
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
       utterance.rate = rate;
       utterance.pitch = pitch;
       utterance.volume = volume;
