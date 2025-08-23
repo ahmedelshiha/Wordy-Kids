@@ -422,7 +422,6 @@ export function ChildFriendlyCategorySelector({
   }, []);
 
   const handleCategoryClick = (categoryId: string) => {
-    audioService.playCheerSound();
     onSelectCategory(categoryId);
   };
 
