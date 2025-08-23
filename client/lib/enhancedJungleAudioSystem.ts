@@ -872,7 +872,21 @@ export class EnhancedJungleAudioSystem {
       }
 
       try {
-        const utterance = new SpeechSynthesisUtterance(word);
+        // Validate and sanitize input
+        if (!word || typeof word !== "string") {
+          console.error("Invalid word provided to speakWordWithEffects:", word, typeof word);
+          reject(new Error(`Invalid word input: expected string, got ${typeof word}`));
+          return;
+        }
+
+        const sanitizedWord = word.trim();
+        if (sanitizedWord.length === 0) {
+          console.error("Empty word provided to speakWordWithEffects");
+          reject(new Error("Empty word provided"));
+          return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(sanitizedWord);
 
         // Apply voice settings
         utterance.voice = this.voiceSettings.voice;
