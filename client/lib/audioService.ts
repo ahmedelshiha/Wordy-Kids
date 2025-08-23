@@ -326,7 +326,17 @@ export class AudioService {
       onError?: (errorDetails?: any) => void;
     } = {},
   ): void {
-    if (!this.isEnabled || !word?.trim()) return;
+    // Import sanitization helper inline to avoid circular dependencies
+    const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+    // Sanitize input to prevent "[object Object]" errors
+    const sanitizedWord = sanitizeTTSInput(word);
+    if (!this.isEnabled || !sanitizedWord) {
+      if (!sanitizedWord) {
+        logSpeechError("audioService.pronounceWord", word, "Empty word after sanitization");
+      }
+      return;
+    }
 
     // Check if speech synthesis is supported and available
     if (!this.isSupported || !this.speechSynthesis) {
