@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
+import { EnhancedSlider } from "@/components/ui/enhanced-slider";
 import {
   Select,
   SelectContent,
@@ -40,6 +41,7 @@ import {
   playSoundIfEnabled,
 } from "@/lib/soundEffects";
 import { audioService, VoiceType } from "@/lib/audioService";
+import { globalAmbientAudio } from "@/lib/globalAmbientAudio";
 import {
   useMobileDevice,
   triggerHapticFeedback,
@@ -178,6 +180,9 @@ function saveSettings(s: Settings) {
     };
   }
 
+  // Apply ambient sound settings globally
+  globalAmbientAudio.updateFromSettings(s.ambient, s.ambientVolume);
+
   // Make session manager globally available
   (window as any).sessionManager = sessionManager;
 
@@ -217,14 +222,21 @@ export default function JungleAdventureSettingsPanelV2({
   onOpenChange,
 }: Props) {
   const { isMobile, hasHaptic, prefersReducedMotion } = useMobileDevice();
-  const [settings, setSettings] = useState<Settings>(loadSettings());
+  const [settings, setSettings] = useState<Settings>(() => {
+    const loadedSettings = loadSettings();
+    console.log("🔧 Initial settings loaded:", loadedSettings);
+    return loadedSettings;
+  });
   const [dirty, setDirty] = useState(false);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize ambient audio and theme manager
+  // Initialize theme manager and global ambient audio
   useEffect(() => {
     JungleAdventureThemeManager.init();
+    globalAmbientAudio.init();
     saveSettings(settings);
+
+    // Keep local ambient ref for preview purposes only
     ambientRef.current = new Audio();
     ambientRef.current.loop = true;
     ambientRef.current.preload = "auto";
@@ -237,9 +249,16 @@ export default function JungleAdventureSettingsPanelV2({
     };
   }, []);
 
-  // Handle ambient sound changes
+  // Handle ambient sound preview (local audio for settings panel preview only)
   useEffect(() => {
     if (!ambientRef.current) return;
+
+    // Only play preview if the settings panel is open
+    if (!open) {
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+      return;
+    }
 
     if (settings.ambient === "off") {
       ambientRef.current.pause();
@@ -257,9 +276,10 @@ export default function JungleAdventureSettingsPanelV2({
       Math.min(1, settings.ambientVolume),
     );
     ambientRef.current.play().catch(() => {
-      // Autoplay may be blocked
+      // Autoplay may be blocked - this is normal for preview
+      console.log("Preview autoplay blocked - user needs to interact first");
     });
-  }, [settings.ambient, settings.ambientVolume]);
+  }, [settings.ambient, settings.ambientVolume, open]);
 
   // Handle reduced motion preference
   useEffect(() => {
@@ -279,6 +299,7 @@ export default function JungleAdventureSettingsPanelV2({
 
   // Update settings with dirty tracking
   function markDirty(next: Partial<Settings>) {
+    console.log("🔧 Settings changed:", next);
     setSettings((s) => ({ ...s, ...next }));
     setDirty(true);
     hapticTap();
@@ -298,6 +319,12 @@ export default function JungleAdventureSettingsPanelV2({
 
   // Save and apply settings
   function handleSave() {
+    // Stop local preview audio before saving
+    if (ambientRef.current) {
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+    }
+
     saveSettings(settings);
     setDirty(false);
     playUISound(SOUND_FILES.ui.settingsSaved);
@@ -321,14 +348,45 @@ export default function JungleAdventureSettingsPanelV2({
     });
   }
 
-  // Close on ESC
+  // Close on ESC and handle cleanup
   useEffect(() => {
     function onEsc(e: KeyboardEvent) {
-      if (open && e.key === "Escape") onOpenChange(false);
+      if (open && e.key === "Escape") {
+        // Stop preview audio when closing
+        if (ambientRef.current) {
+          ambientRef.current.pause();
+          ambientRef.current.currentTime = 0;
+        }
+        onOpenChange(false);
+      }
     }
+
+    // Show keyboard help on F1 or ?
+    function onHelp(e: KeyboardEvent) {
+      if (open && (e.key === "F1" || (e.key === "?" && !e.shiftKey))) {
+        e.preventDefault();
+        console.log(
+          "🎮 Keyboard shortcuts: Tab to navigate, Arrow keys to adjust sliders, Space/Enter to activate buttons, Esc to close",
+        );
+      }
+    }
+
     window.addEventListener("keydown", onEsc);
-    return () => window.removeEventListener("keydown", onEsc);
+    window.addEventListener("keydown", onHelp);
+    return () => {
+      window.removeEventListener("keydown", onEsc);
+      window.removeEventListener("keydown", onHelp);
+    };
   }, [open, onOpenChange]);
+
+  // Handle panel close cleanup
+  useEffect(() => {
+    if (!open && ambientRef.current) {
+      // Stop preview audio when panel is closed
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+    }
+  }, [open]);
 
   if (!open) return null;
 
@@ -377,6 +435,11 @@ export default function JungleAdventureSettingsPanelV2({
                 <p className="text-white/90 text-sm">
                   Customize your adventure
                 </p>
+                {!isMobile && (
+                  <p className="text-white/70 text-xs mt-1">
+                    💡 Use arrow keys on sliders, Tab to navigate, ? for help
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -463,20 +526,21 @@ export default function JungleAdventureSettingsPanelV2({
                   }
                 />
 
-                <SettingRow
-                  label={`Ambient Volume ${Math.round(settings.ambientVolume * 100)}%`}
-                >
-                  <Slider
+                <SettingRow label="Ambient Volume">
+                  <EnhancedSlider
                     value={[settings.ambientVolume * 100]}
                     onValueChange={([v]) =>
                       markDirty({ ambientVolume: v / 100 })
                     }
                     max={100}
+                    min={0}
                     step={5}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                    disabled={settings.ambient === "off"}
+                    size="md"
+                    variant="jungle"
+                    tooltipFormatter={(v) => `${Math.round(v)}%`}
+                    hapticFeedback={settings.haptics}
+                    className="flex-1"
                   />
                 </SettingRow>
 
@@ -508,18 +572,26 @@ export default function JungleAdventureSettingsPanelV2({
                 />
 
                 <SettingRow
-                  label={`Speech Speed ×${settings.speechRate.toFixed(1)}`}
+                  label="Speech Speed"
+                  description={
+                    settings.speechRate < 0.8
+                      ? "Slower"
+                      : settings.speechRate > 1.2
+                        ? "Faster"
+                        : "Normal"
+                  }
                 >
-                  <Slider
+                  <EnhancedSlider
                     min={50}
                     max={150}
                     step={10}
                     value={[settings.speechRate * 100]}
                     onValueChange={([v]) => markDirty({ speechRate: v / 100 })}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                    size="md"
+                    variant="jungle"
+                    tooltipFormatter={(v) => `×${(v / 100).toFixed(1)}`}
+                    hapticFeedback={settings.haptics}
+                    className="flex-1"
                   />
                 </SettingRow>
 
@@ -575,7 +647,7 @@ export default function JungleAdventureSettingsPanelV2({
                         <SelectItem value="jungle">���� Jungle</SelectItem>
                         <SelectItem value="canopy">🌫️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
-                        <SelectItem value="sunset">🌅 Sunset</SelectItem>
+                        <SelectItem value="sunset">���� Sunset</SelectItem>
                       </SelectContent>
                     </Select>
                   }
@@ -649,7 +721,7 @@ export default function JungleAdventureSettingsPanelV2({
                   />
 
                   <SettingRow
-                    label="Glow ✨"
+                    label="Glow ��"
                     control={
                       <Switch
                         checked={settings.overlays.glow}
@@ -711,32 +783,37 @@ export default function JungleAdventureSettingsPanelV2({
                   }
                 />
 
-                <SettingRow label={`Daily Goal: ${settings.dailyGoal} cards`}>
-                  <Slider
+                <SettingRow label="Daily Goal">
+                  <EnhancedSlider
                     min={5}
                     max={50}
                     step={5}
                     value={[settings.dailyGoal]}
                     onValueChange={([v]) => markDirty({ dailyGoal: v })}
-                    className={cn(
-                      "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
-                    )}
+                    size="md"
+                    variant="success"
+                    tooltipFormatter={(v) => `${v} cards`}
+                    hapticFeedback={settings.haptics}
+                    className="flex-1"
                   />
                 </SettingRow>
 
-                <SettingRow
-                  label={`Time Limit: ${settings.timeLimitMin === 0 ? "Off" : `${settings.timeLimitMin} min`}`}
-                >
-                  <Slider
+                <SettingRow label="Time Limit">
+                  <EnhancedSlider
                     min={0}
                     max={60}
                     step={5}
                     value={[settings.timeLimitMin]}
                     onValueChange={([v]) => markDirty({ timeLimitMin: v })}
+                    size="md"
+                    variant={
+                      settings.timeLimitMin === 0 ? "default" : "warning"
+                    }
+                    tooltipFormatter={(v) => (v === 0 ? "Off" : `${v} min`)}
+                    hapticFeedback={settings.haptics}
                     className={cn(
                       "flex-1",
-                      isMobile ? "touch-manipulation h-6" : "h-4",
+                      settings.timeLimitMin === 0 && "opacity-75",
                     )}
                   />
                 </SettingRow>
@@ -762,19 +839,18 @@ export default function JungleAdventureSettingsPanelV2({
                   icon={<Accessibility className="w-4 h-4" />}
                   isMobile={isMobile}
                 >
-                  <SettingRow
-                    label={`Text Size ×${settings.textScale.toFixed(1)}`}
-                  >
-                    <Slider
+                  <SettingRow label="Text Size">
+                    <EnhancedSlider
                       min={90}
                       max={130}
                       step={5}
                       value={[settings.textScale * 100]}
                       onValueChange={([v]) => markDirty({ textScale: v / 100 })}
-                      className={cn(
-                        "flex-1",
-                        isMobile ? "touch-manipulation h-6" : "h-4",
-                      )}
+                      size="lg"
+                      variant="default"
+                      tooltipFormatter={(v) => `×${(v / 100).toFixed(1)}`}
+                      hapticFeedback={settings.haptics}
+                      className="flex-1"
                     />
                   </SettingRow>
 
