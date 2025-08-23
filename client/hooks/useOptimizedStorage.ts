@@ -33,7 +33,7 @@ export function useOptimizedStorage<T>(
     } finally {
       setLoading(false);
     }
-  }, [key, defaultValue]);
+  }, [key]); // Remove defaultValue from dependencies to prevent infinite loops
 
   // Set up cross-tab synchronization
   useEffect(() => {
@@ -54,7 +54,7 @@ export function useOptimizedStorage<T>(
 
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
-  }, [key, defaultValue]);
+  }, [key]); // Remove defaultValue from dependencies
 
   const setStoredValue = useCallback(
     (newValue: T) => {
