@@ -5,6 +5,8 @@
 
 import { Builder } from "@builder.io/react";
 import JungleKidNav from "@/components/JungleKidNav";
+import { EnhancedWordCard } from "@/components/EnhancedWordCard";
+import { AdventureMap } from "@/components/AdventureMap";
 
 // Register JungleKidNav component with Builder.io
 Builder.registerComponent(JungleKidNav, {
@@ -59,7 +61,7 @@ Builder.registerComponent(JungleKidNav, {
           name: "icon",
           friendlyName: "Icon/Emoji",
           type: "string",
-          defaultValue: "🌟",
+          defaultValue: "����",
           description: "Emoji or icon to display (e.g., 🦉, 🦜, 🐵, 🐘)",
         },
         {
@@ -170,22 +172,283 @@ Builder.registerComponent(JungleKidNav, {
   },
 });
 
+// Register Enhanced Word Card component
+Builder.registerComponent(EnhancedWordCard, {
+  name: "Enhanced Word Card",
+  friendlyName: "📚 Educational Word Card",
+  description:
+    "Interactive word learning card with audio, definitions, and mastery tracking",
+  image:
+    "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
+
+  inputs: [
+    {
+      name: "word",
+      friendlyName: "Word Data",
+      type: "object",
+      required: true,
+      subFields: [
+        {
+          name: "id",
+          friendlyName: "Word ID",
+          type: "number",
+          required: true,
+          defaultValue: 1,
+          description: "Unique identifier for the word",
+        },
+        {
+          name: "word",
+          friendlyName: "Word Text",
+          type: "string",
+          required: true,
+          defaultValue: "adventure",
+          description: "The word to display and teach",
+        },
+        {
+          name: "pronunciation",
+          friendlyName: "Pronunciation Guide",
+          type: "string",
+          defaultValue: "ad-VEN-cher",
+          description: "Phonetic pronunciation guide",
+        },
+        {
+          name: "definition",
+          friendlyName: "Definition",
+          type: "text",
+          required: true,
+          defaultValue: "An exciting or unusual experience",
+          description: "Clear definition of the word",
+        },
+        {
+          name: "example",
+          friendlyName: "Example Sentence",
+          type: "text",
+          defaultValue: "We went on an adventure in the jungle",
+          description: "Example sentence using the word",
+        },
+        {
+          name: "funFact",
+          friendlyName: "Fun Fact",
+          type: "text",
+          description: "Interesting fact about the word",
+        },
+        {
+          name: "emoji",
+          friendlyName: "Word Emoji",
+          type: "string",
+          defaultValue: "🗺️",
+          description: "Visual emoji representation",
+        },
+        {
+          name: "category",
+          friendlyName: "Category",
+          type: "string",
+          enum: [
+            "animals",
+            "nature",
+            "actions",
+            "emotions",
+            "objects",
+            "places",
+          ],
+          defaultValue: "actions",
+          description: "Word category",
+        },
+        {
+          name: "difficulty",
+          friendlyName: "Difficulty Level",
+          type: "string",
+          enum: ["easy", "medium", "hard"],
+          defaultValue: "medium",
+          description: "Learning difficulty",
+        },
+        {
+          name: "imageUrl",
+          friendlyName: "Word Image",
+          type: "file",
+          allowedFileTypes: ["jpg", "png", "gif", "svg"],
+          description: "Visual representation image",
+        },
+      ],
+    },
+    {
+      name: "showDefinition",
+      friendlyName: "Show Definition Initially",
+      type: "boolean",
+      defaultValue: false,
+      description: "Whether to show definition immediately",
+    },
+    {
+      name: "showVocabularyBuilder",
+      friendlyName: "Show Vocabulary Builder",
+      type: "boolean",
+      defaultValue: true,
+      description: "Enable vocabulary building features",
+    },
+    {
+      name: "className",
+      friendlyName: "CSS Classes",
+      type: "string",
+      description: "Additional CSS classes for custom styling",
+    },
+  ],
+
+  canHaveChildren: false,
+  tags: ["education", "vocabulary", "learning", "words", "interactive"],
+
+  defaultStyles: {
+    maxWidth: "400px",
+    margin: "0 auto",
+  },
+});
+
+// Register Adventure Map component
+Builder.registerComponent(AdventureMap, {
+  name: "Adventure Map",
+  friendlyName: "🗺️ Adventure Learning Map",
+  description:
+    "Interactive adventure map for word rescue games and exploration",
+  image:
+    "https://cdn.builder.io/api/v1/image/assets%2Fpwgjf0RoYWbdnJSbpBAjXNRMe9F2%2Ffb27a7c790324294af8be1c35fe30f4d",
+
+  inputs: [
+    {
+      name: "wordsNeedingRescue",
+      friendlyName: "Words to Rescue",
+      type: "list",
+      description: "List of words that need to be rescued in the adventure",
+      subFields: [
+        {
+          name: "id",
+          type: "string",
+          required: true,
+        },
+        {
+          name: "word",
+          type: "string",
+          required: true,
+        },
+        {
+          name: "zone",
+          type: "string",
+          enum: [
+            "word_forest",
+            "memory_castle",
+            "vocabulary_village",
+            "dragon_peak",
+            "crystal_caves",
+          ],
+          defaultValue: "word_forest",
+        },
+        {
+          name: "difficulty",
+          type: "string",
+          enum: ["easy", "medium", "hard"],
+          defaultValue: "medium",
+        },
+        {
+          name: "status",
+          type: "string",
+          enum: ["captured", "rescued", "mastered"],
+          defaultValue: "captured",
+        },
+      ],
+    },
+    {
+      name: "wordHero",
+      friendlyName: "Word Hero Character",
+      type: "object",
+      description: "The hero character exploring the map",
+      subFields: [
+        {
+          name: "name",
+          type: "string",
+          defaultValue: "Word Explorer",
+          description: "Hero's name",
+        },
+        {
+          name: "level",
+          type: "number",
+          defaultValue: 1,
+          description: "Hero's level",
+        },
+        {
+          name: "health",
+          type: "number",
+          defaultValue: 100,
+          description: "Hero's health points",
+        },
+        {
+          name: "experience",
+          type: "number",
+          defaultValue: 0,
+          description: "Hero's experience points",
+        },
+        {
+          name: "currentZone",
+          type: "string",
+          enum: [
+            "word_forest",
+            "memory_castle",
+            "vocabulary_village",
+            "dragon_peak",
+            "crystal_caves",
+          ],
+          defaultValue: "word_forest",
+          description: "Current zone location",
+        },
+      ],
+    },
+    {
+      name: "className",
+      friendlyName: "CSS Classes",
+      type: "string",
+      description: "Additional CSS classes for custom styling",
+    },
+  ],
+
+  canHaveChildren: false,
+  tags: ["education", "adventure", "map", "games", "interactive"],
+
+  defaultStyles: {
+    width: "100%",
+    minHeight: "500px",
+  },
+});
+
 // Export for potential external use
-export { JungleKidNav };
+export { JungleKidNav, EnhancedWordCard, AdventureMap };
+
+console.log("✅ Builder.io educational components registered successfully");
 
 /**
  * Usage in Builder.io:
  *
+ * 🌿 JUNGLE KID NAVIGATION:
  * 1. Drag "Jungle Kid Navigation" from the component library
  * 2. Configure animals, sounds, and animations in the visual editor
  * 3. Set custom menu items or use defaults (🦉 Home, 🦜 Learn, 🐵 Play, 🐘 Achievements)
  * 4. Choose theme: "jungle" for full experience, "simple" for basic navigation
  * 5. Configure accessibility and performance settings as needed
  *
- * The component automatically:
- * - Adapts to screen size (desktop/tablet/mobile)
- * - Optimizes performance based on device capabilities
- * - Provides accessibility features (ARIA, keyboard navigation)
- * - Respects user motion preferences
- * - Includes parent gate for family controls
+ * 📚 ENHANCED WORD CARD:
+ * 1. Drag "Educational Word Card" from the component library
+ * 2. Configure word data: text, definition, pronunciation, example
+ * 3. Set difficulty level and category
+ * 4. Upload word image or choose emoji representation
+ * 5. Enable/disable vocabulary builder features
+ *
+ * 🗺️ ADVENTURE MAP:
+ * 1. Drag "Adventure Learning Map" from the component library
+ * 2. Configure words to rescue across different zones
+ * 3. Set up word hero character with level and stats
+ * 4. Customize adventure zones and difficulty levels
+ * 5. Enable interactive exploration features
+ *
+ * The components automatically:
+ * - Adapt to screen size (desktop/tablet/mobile)
+ * - Optimize performance based on device capabilities
+ * - Provide accessibility features (ARIA, keyboard navigation)
+ * - Respect user motion preferences
+ * - Include educational progress tracking
  */

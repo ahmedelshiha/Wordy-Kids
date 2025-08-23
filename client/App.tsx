@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./global.css";
 
+// Builder.io initialization
+import { builder } from "@builder.io/react";
+import "./components/builder-registry";
+
+// Asset management system
+import { AssetManager, AudioManager } from "./lib/assetManager";
+
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -34,6 +41,7 @@ import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
+import BuilderPageWrapper from "./components/BuilderPageWrapper";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +55,49 @@ const App = () => {
     // Ensure we're properly hydrated on the client
     if (typeof window !== "undefined") {
       setIsClient(true);
+
+      // Initialize Builder.io with API key
+      const builderKey = import.meta.env.VITE_PUBLIC_BUILDER_KEY;
+      if (builderKey && builderKey !== "__BUILDER_PUBLIC_KEY__") {
+        builder.init(builderKey);
+        console.log("✅ Builder.io initialized successfully");
+      } else {
+        console.warn(
+          "⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
+        );
+      }
+
+      // Initialize Asset Management System
+      const initializeAssets = async () => {
+        try {
+          console.log("🔍 Validating assets...");
+
+          // Check all assets on app startup
+          const validation = await AssetManager.validateAllAssets();
+
+          if (validation.missing.length > 0) {
+            console.warn("⚠️ Missing assets:", validation.missing);
+          }
+
+          if (Object.keys(validation.mappings).length > 0) {
+            console.log("🔄 Asset mappings applied:", validation.mappings);
+          }
+
+          // Preload critical assets
+          await AssetManager.preloadCriticalAssets();
+
+          // Preload common sounds
+          await AudioManager.preloadCommonSounds();
+
+          console.log("✅ Asset system initialized successfully");
+        } catch (error) {
+          console.warn("⚠️ Asset system initialization failed:", error);
+          // Don't block app startup if asset system fails
+        }
+      };
+
+      // Initialize assets asynchronously to not block app startup
+      initializeAssets();
 
       // Migrate legacy settings to unified jungle settings
       migrateLegacySettings();
@@ -215,6 +266,25 @@ const App = () => {
                         element={<SettingsPanelV2Demo />}
                       />
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
+
+                      {/* Builder.io Dynamic Pages */}
+                      <Route
+                        path="/page/*"
+                        element={<BuilderPageWrapper model="page" />}
+                      />
+                      <Route
+                        path="/lesson/*"
+                        element={<BuilderPageWrapper model="lesson" />}
+                      />
+                      <Route
+                        path="/game/*"
+                        element={<BuilderPageWrapper model="game" />}
+                      />
+                      <Route
+                        path="/builder/*"
+                        element={<BuilderPageWrapper />}
+                      />
+
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>

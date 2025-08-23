@@ -284,3 +284,103 @@ export const playUIInteractionSoundIfEnabled = {
   whoosh: () => isUIInteractionSoundsEnabled() && soundEffects.playHover(),
   click: () => isUIInteractionSoundsEnabled() && soundEffects.playClick(),
 };
+
+// Enhanced Audio Functions using AssetManager
+import { AudioManager, EducationalAudioHelper } from "./assetManager";
+
+// Educational sound helpers that use actual audio files with fallbacks
+export const playEducationalSoundIfEnabled = {
+  success: async () => {
+    if (soundEnabled) {
+      try {
+        await EducationalAudioHelper.playSuccess();
+      } catch (error) {
+        // Fallback to synthesized sound
+        soundEffects.playSuccess();
+      }
+    }
+  },
+
+  encouragement: async () => {
+    if (soundEnabled) {
+      try {
+        await EducationalAudioHelper.playEncouragement();
+      } catch (error) {
+        // Fallback to synthesized sound
+        soundEffects.playError();
+      }
+    }
+  },
+
+  uiSound: async (soundType: "open" | "close" | "click" = "click") => {
+    if (isUIInteractionSoundsEnabled()) {
+      try {
+        await EducationalAudioHelper.playUISound(soundType);
+      } catch (error) {
+        // Fallback to synthesized sound
+        soundEffects.playClick();
+      }
+    }
+  },
+
+  animalSound: async (animalName: string) => {
+    if (soundEnabled) {
+      try {
+        await AudioManager.playAnimalSound(animalName);
+      } catch (error) {
+        console.warn(`Could not play animal sound for ${animalName}:`, error);
+        // Fallback to general success sound
+        soundEffects.playSuccess();
+      }
+    }
+  },
+
+  ambientStart: async () => {
+    if (soundEnabled) {
+      try {
+        await EducationalAudioHelper.playAmbientSound(true);
+      } catch (error) {
+        console.warn("Could not start ambient sounds:", error);
+      }
+    }
+  },
+
+  ambientStop: () => {
+    try {
+      EducationalAudioHelper.stopAmbientSounds();
+    } catch (error) {
+      console.warn("Could not stop ambient sounds:", error);
+    }
+  },
+};
+
+// Backward compatibility helpers - these use the new system but maintain old interface
+export const playAnimalSoundSafe = async (
+  animalName: string,
+  volume: number = 0.7,
+) => {
+  try {
+    await AudioManager.playAnimalSound(animalName, volume);
+  } catch (error) {
+    console.warn(`Failed to play ${animalName} sound:`, error);
+    // Fallback to synthesized sound
+    if (soundEnabled) {
+      soundEffects.playSuccess();
+    }
+  }
+};
+
+export const playAudioFileSafe = async (
+  audioPath: string,
+  volume: number = 0.7,
+) => {
+  try {
+    await AudioManager.playAudio(audioPath, { volume });
+  } catch (error) {
+    console.warn(`Failed to play audio file ${audioPath}:`, error);
+    // Fallback to synthesized sound
+    if (soundEnabled) {
+      soundEffects.playClick();
+    }
+  }
+};

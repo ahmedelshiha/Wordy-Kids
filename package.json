@@ -26,6 +26,7 @@
     "scan:emojis": "node scripts/scan-emojis.js",
     "lint:emojis": "npm run scan:emojis",
     "check:map-conflicts": "node scripts/check-map-conflicts.js",
+    "check:assets": "node scripts/checkAssets.js",
     "precommit": "npm run lint:emojis && npm run check:map-conflicts && npm run typecheck"
   },
   "engines": {
