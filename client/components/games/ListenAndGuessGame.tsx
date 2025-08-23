@@ -116,10 +116,22 @@ function useConfetti() {
 
 // --------- Speech ---------
 function speakWord(word: string, funny = false, fallback?: string) {
+  // Validate and sanitize input
+  if (!word || typeof word !== "string") {
+    console.error("Invalid word provided to speakWord:", word, typeof word);
+    return;
+  }
+
+  const sanitizedWord = word.trim();
+  if (sanitizedWord.length === 0) {
+    console.error("Empty word provided to speakWord");
+    return;
+  }
+
   const synth =
     typeof window !== "undefined" ? window.speechSynthesis : undefined;
   if (synth && typeof SpeechSynthesisUtterance !== "undefined") {
-    const u = new SpeechSynthesisUtterance(word);
+    const u = new SpeechSynthesisUtterance(sanitizedWord);
     // Kid‑friendly voices if available
     const voices = synth.getVoices();
     // Try a child‑like voice (heuristic)
