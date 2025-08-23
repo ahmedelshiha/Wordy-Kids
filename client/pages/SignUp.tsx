@@ -1,7 +1,16 @@
 // SECURITY FIX FOR WORDY KIDS - Secure SignUp with password hashing
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, User, Mail, Lock, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Eye,
+  EyeOff,
+  User,
+  Mail,
+  Lock,
+  Calendar,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,27 +18,27 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 
 // SECURITY IMPROVEMENT: Use crypto-js for client-side hashing
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 // Secure password hashing utility
 const SecurityUtils = {
   // Generate a random salt for each password
   generateSalt: (): string => {
-    return CryptoJS.lib.WordArray.random(128/8).toString();
+    return CryptoJS.lib.WordArray.random(128 / 8).toString();
   },
 
   // Hash password with salt using PBKDF2 (secure for client-side)
   hashPassword: (password: string, salt: string): string => {
     return CryptoJS.PBKDF2(password, salt, {
-      keySize: 512/32,
-      iterations: 10000
+      keySize: 512 / 32,
+      iterations: 10000,
     }).toString();
   },
 
   // Generate secure user ID
   generateSecureId: (): string => {
     return CryptoJS.lib.WordArray.random(16).toString();
-  }
+  },
 };
 
 interface UserData {
@@ -38,8 +47,8 @@ interface UserData {
   name: string;
   email: string;
   age: number;
-  passwordHash: string;  // Store hash instead of plaintext
-  salt: string;          // Store salt for verification
+  passwordHash: string; // Store hash instead of plaintext
+  salt: string; // Store salt for verification
   createdAt: string;
   lastLogin?: string;
   isParent?: boolean;
@@ -62,7 +71,7 @@ export default function SignUp() {
     confirmPassword: "",
     birthDate: "",
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,20 +83,20 @@ export default function SignUp() {
   // Password strength validation
   const validatePassword = (password: string): string[] => {
     const issues: string[] = [];
-    
+
     if (password.length < 6) {
-      issues.push('Password must be at least 6 characters long');
+      issues.push("Password must be at least 6 characters long");
     }
     if (!/(?=.*[a-z])/.test(password)) {
-      issues.push('Password must contain at least one lowercase letter');
+      issues.push("Password must contain at least one lowercase letter");
     }
     if (!/(?=.*[A-Z])/.test(password)) {
-      issues.push('Password must contain at least one uppercase letter');
+      issues.push("Password must contain at least one uppercase letter");
     }
     if (!/(?=.*\d)/.test(password)) {
-      issues.push('Password must contain at least one number');
+      issues.push("Password must contain at least one number");
     }
-    
+
     return issues;
   };
 
@@ -122,7 +131,7 @@ export default function SignUp() {
       ...formData,
       [e.target.name]: value,
     });
-    
+
     // Clear any existing messages when user starts typing
     if (message) {
       setMessage(null);
@@ -133,11 +142,13 @@ export default function SignUp() {
   const checkExistingUser = (email: string): boolean => {
     try {
       const existingUsers: UserData[] = JSON.parse(
-        localStorage.getItem("wordAdventureUsers") || "[]"
+        localStorage.getItem("wordAdventureUsers") || "[]",
       );
-      return existingUsers.some(user => user.email.toLowerCase() === email.toLowerCase());
+      return existingUsers.some(
+        (user) => user.email.toLowerCase() === email.toLowerCase(),
+      );
     } catch (error) {
-      console.error('Error checking existing users:', error);
+      console.error("Error checking existing users:", error);
       return false;
     }
   };
@@ -283,35 +294,41 @@ export default function SignUp() {
       try {
         // SECURITY IMPROVEMENT: Generate salt and hash password
         const salt = SecurityUtils.generateSalt();
-        const passwordHash = SecurityUtils.hashPassword(formData.password, salt);
-        
+        const passwordHash = SecurityUtils.hashPassword(
+          formData.password,
+          salt,
+        );
+
         const newUser: UserData = {
           id: SecurityUtils.generateSecureId(),
           username: formData.email.split("@")[0], // Use email prefix as username
           name: formData.childName.trim(),
           email: formData.email.toLowerCase().trim(),
           age: actualAge,
-          passwordHash: passwordHash,  // Store hash, NOT plaintext
-          salt: salt,                  // Store salt for verification
+          passwordHash: passwordHash, // Store hash, NOT plaintext
+          salt: salt, // Store salt for verification
           createdAt: new Date().toISOString(),
           isParent: true,
         };
 
         // Get existing users and add new user
         const existingUsers: UserData[] = JSON.parse(
-          localStorage.getItem("wordAdventureUsers") || "[]"
+          localStorage.getItem("wordAdventureUsers") || "[]",
         );
-        
+
         existingUsers.push(newUser);
 
         // SECURITY IMPROVEMENT: Store users with hashed passwords
-        localStorage.setItem("wordAdventureUsers", JSON.stringify(existingUsers));
+        localStorage.setItem(
+          "wordAdventureUsers",
+          JSON.stringify(existingUsers),
+        );
 
         // Create child profile for parent dashboard
         const existingChildren = JSON.parse(
           localStorage.getItem("parentDashboardChildren") || "[]",
         );
-        
+
         const newChild = {
           id: Date.now().toString(),
           name: formData.childName.trim(),
@@ -358,18 +375,19 @@ export default function SignUp() {
           text: `🎉 Welcome to the jungle adventure! ${formData.childName} is ready to explore and learn!`,
         });
 
-        console.log('✅ User registered successfully with secure password storage');
+        console.log(
+          "✅ User registered successfully with secure password storage",
+        );
 
         // Navigate to login page after successful creation
         setTimeout(() => {
           navigate("/");
         }, 1500);
-        
       } catch (error) {
-        console.error('Signup error:', error);
+        console.error("Signup error:", error);
         setMessage({
           type: "error",
-          text: 'An error occurred during signup. Please try again.',
+          text: "An error occurred during signup. Please try again.",
         });
       } finally {
         setIsLoading(false);

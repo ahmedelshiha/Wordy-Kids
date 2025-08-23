@@ -27,30 +27,34 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigationHistory } from "@/hooks/useNavigationHistory";
 
 // SECURITY IMPROVEMENT: Import crypto-js for password verification
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 // Import the same security utilities used in SignUp
 const SecurityUtils = {
   hashPassword: (password: string, salt: string): string => {
     return CryptoJS.PBKDF2(password, salt, {
-      keySize: 512/32,
-      iterations: 10000
+      keySize: 512 / 32,
+      iterations: 10000,
     }).toString();
   },
 
-  verifyPassword: (password: string, storedHash: string, salt: string): boolean => {
+  verifyPassword: (
+    password: string,
+    storedHash: string,
+    salt: string,
+  ): boolean => {
     const hash = SecurityUtils.hashPassword(password, salt);
     return hash === storedHash;
   },
 
   // Generate salt and hash for legacy user migration
   generateSalt: (): string => {
-    return CryptoJS.lib.WordArray.random(128/8).toString();
+    return CryptoJS.lib.WordArray.random(128 / 8).toString();
   },
 
   generateSecureId: (): string => {
     return CryptoJS.lib.WordArray.random(16).toString();
-  }
+  },
 };
 
 interface UserData {
@@ -227,18 +231,24 @@ export default function LoginForm() {
   };
 
   // Handle legacy users (those with plaintext passwords) - migrate them to secure format
-  const handleLegacyLogin = async (users: UserData[], email: string, password: string): Promise<boolean> => {
-    const legacyUser = users.find(u => 
-      u.email?.toLowerCase() === email.toLowerCase() && u.password === password
+  const handleLegacyLogin = async (
+    users: UserData[],
+    email: string,
+    password: string,
+  ): Promise<boolean> => {
+    const legacyUser = users.find(
+      (u) =>
+        u.email?.toLowerCase() === email.toLowerCase() &&
+        u.password === password,
     );
 
     if (legacyUser) {
       // Migrate legacy user to secure format
-      console.log('⚠️ Migrating legacy user to secure password storage');
-      
+      console.log("⚠️ Migrating legacy user to secure password storage");
+
       const salt = SecurityUtils.generateSalt();
       const passwordHash = SecurityUtils.hashPassword(password, salt);
-      
+
       const migratedUser: UserData = {
         id: legacyUser.id || SecurityUtils.generateSecureId(),
         name: legacyUser.name || legacyUser.username || email.split("@")[0],
@@ -249,18 +259,18 @@ export default function LoginForm() {
         salt: salt,
         createdAt: legacyUser.createdAt || new Date().toISOString(),
         lastLogin: new Date().toISOString(),
-        isParent: legacyUser.isParent
+        isParent: legacyUser.isParent,
       };
 
       // Remove legacy user and add migrated user
-      const updatedUsers = users.filter(u => u.email !== legacyUser.email);
+      const updatedUsers = users.filter((u) => u.email !== legacyUser.email);
       updatedUsers.push(migratedUser);
       localStorage.setItem("wordAdventureUsers", JSON.stringify(updatedUsers));
 
-      console.log('✅ Legacy user successfully migrated and logged in');
+      console.log("✅ Legacy user successfully migrated and logged in");
       return true;
     }
-    
+
     return false;
   };
 
@@ -288,7 +298,7 @@ export default function LoginForm() {
 
       // Get stored users
       const storedUsers: UserData[] = JSON.parse(
-        localStorage.getItem("wordAdventureUsers") || "[]"
+        localStorage.getItem("wordAdventureUsers") || "[]",
       );
 
       // Check for demo users first
@@ -339,7 +349,7 @@ export default function LoginForm() {
 
       // Find user by email
       const user = storedUsers.find(
-        u => u.email.toLowerCase() === email.toLowerCase().trim()
+        (u) => u.email.toLowerCase() === email.toLowerCase().trim(),
       );
 
       if (!user) {
@@ -363,16 +373,24 @@ export default function LoginForm() {
         isPasswordValid = SecurityUtils.verifyPassword(
           password,
           user.passwordHash,
-          user.salt
+          user.salt,
         );
       } else if (user.password) {
         // Legacy user with plaintext password - migrate them
         if (user.password === password) {
-          const migrationSuccess = await handleLegacyLogin(storedUsers, email, password);
+          const migrationSuccess = await handleLegacyLogin(
+            storedUsers,
+            email,
+            password,
+          );
           if (migrationSuccess) {
             // Re-get updated user data after migration
-            const updatedUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
-            userToLogin = updatedUsers.find((u: UserData) => u.email.toLowerCase() === email.toLowerCase());
+            const updatedUsers = JSON.parse(
+              localStorage.getItem("wordAdventureUsers") || "[]",
+            );
+            userToLogin = updatedUsers.find(
+              (u: UserData) => u.email.toLowerCase() === email.toLowerCase(),
+            );
             isPasswordValid = true;
           }
         }
@@ -393,13 +411,15 @@ export default function LoginForm() {
       // Update last login time
       const updatedUser = {
         ...userToLogin,
-        lastLogin: new Date().toISOString()
+        lastLogin: new Date().toISOString(),
       };
 
       // Update the user in storage
-      const allUsers = JSON.parse(localStorage.getItem("wordAdventureUsers") || "[]");
-      const updatedUsers = allUsers.map((u: UserData) => 
-        u.id === userToLogin.id ? updatedUser : u
+      const allUsers = JSON.parse(
+        localStorage.getItem("wordAdventureUsers") || "[]",
+      );
+      const updatedUsers = allUsers.map((u: UserData) =>
+        u.id === userToLogin.id ? updatedUser : u,
       );
       localStorage.setItem("wordAdventureUsers", JSON.stringify(updatedUsers));
 
@@ -427,7 +447,7 @@ export default function LoginForm() {
         text: "Welcome back! Taking you to your dashboard...",
       });
 
-      console.log('✅ User logged in successfully with secure authentication');
+      console.log("✅ User logged in successfully with secure authentication");
 
       setTimeout(() => {
         // Check if there's a returnTo parameter or state
@@ -445,7 +465,7 @@ export default function LoginForm() {
         });
       }, 1000);
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       setMessage({
         type: "error",
         text: "Something went wrong. Please try again.",
