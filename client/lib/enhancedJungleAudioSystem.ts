@@ -872,17 +872,14 @@ export class EnhancedJungleAudioSystem {
       }
 
       try {
-        // Validate and sanitize input
-        if (!word || typeof word !== "string") {
-          console.error("Invalid word provided to speakWordWithEffects:", word, typeof word);
-          reject(new Error(`Invalid word input: expected string, got ${typeof word}`));
-          return;
-        }
+        // Import sanitization helper inline to avoid circular dependencies
+        const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
 
-        const sanitizedWord = word.trim();
-        if (sanitizedWord.length === 0) {
-          console.error("Empty word provided to speakWordWithEffects");
-          reject(new Error("Empty word provided"));
+        // Sanitize input to prevent "[object Object]" errors
+        const sanitizedWord = sanitizeTTSInput(word);
+        if (!sanitizedWord) {
+          logSpeechError("enhancedJungleAudioSystem.speakWordWithEffects", word, "Empty word after sanitization");
+          reject(new Error("Empty word after sanitization"));
           return;
         }
 
