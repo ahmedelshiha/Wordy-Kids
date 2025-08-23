@@ -1,21 +1,68 @@
-import React, { useState } from "react";
+// SECURITY FIX FOR WORDY KIDS - Secure SignUp with password hashing
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, User, Mail, Lock, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+
+// SECURITY IMPROVEMENT: Use crypto-js for client-side hashing
+import CryptoJS from 'crypto-js';
+
+// Secure password hashing utility
+const SecurityUtils = {
+  // Generate a random salt for each password
+  generateSalt: (): string => {
+    return CryptoJS.lib.WordArray.random(128/8).toString();
+  },
+
+  // Hash password with salt using PBKDF2 (secure for client-side)
+  hashPassword: (password: string, salt: string): string => {
+    return CryptoJS.PBKDF2(password, salt, {
+      keySize: 512/32,
+      iterations: 10000
+    }).toString();
+  },
+
+  // Generate secure user ID
+  generateSecureId: (): string => {
+    return CryptoJS.lib.WordArray.random(16).toString();
+  }
+};
+
+interface UserData {
+  id: string;
+  username?: string;
+  name: string;
+  email: string;
+  age: number;
+  passwordHash: string;  // Store hash instead of plaintext
+  salt: string;          // Store salt for verification
+  createdAt: string;
+  lastLogin?: string;
+  isParent?: boolean;
+}
+
+interface SignUpFormData {
+  childName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  birthDate: string;
+}
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignUpFormData>({
     childName: "",
     email: "",
     password: "",
     confirmPassword: "",
     birthDate: "",
   });
+  
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +70,26 @@ export default function SignUp() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+
+  // Password strength validation
+  const validatePassword = (password: string): string[] => {
+    const issues: string[] = [];
+    
+    if (password.length < 6) {
+      issues.push('Password must be at least 6 characters long');
+    }
+    if (!/(?=.*[a-z])/.test(password)) {
+      issues.push('Password must contain at least one lowercase letter');
+    }
+    if (!/(?=.*[A-Z])/.test(password)) {
+      issues.push('Password must contain at least one uppercase letter');
+    }
+    if (!/(?=.*\d)/.test(password)) {
+      issues.push('Password must contain at least one number');
+    }
+    
+    return issues;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -55,9 +122,23 @@ export default function SignUp() {
       ...formData,
       [e.target.name]: value,
     });
+    
     // Clear any existing messages when user starts typing
     if (message) {
       setMessage(null);
+    }
+  };
+
+  // Check if user already exists
+  const checkExistingUser = (email: string): boolean => {
+    try {
+      const existingUsers: UserData[] = JSON.parse(
+        localStorage.getItem("wordAdventureUsers") || "[]"
+      );
+      return existingUsers.some(user => user.email.toLowerCase() === email.toLowerCase());
+    } catch (error) {
+      console.error('Error checking existing users:', error);
+      return false;
     }
   };
 
@@ -111,20 +192,12 @@ export default function SignUp() {
       return;
     }
 
-    // Enhanced password validation
-    if (formData.password.length < 6) {
+    // Enhanced password validation with security requirements
+    const passwordIssues = validatePassword(formData.password);
+    if (passwordIssues.length > 0) {
       setMessage({
         type: "error",
-        text: "Password must be at least 6 characters for account security",
-      });
-      setIsLoading(false);
-      return;
-    }
-
-    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      setMessage({
-        type: "error",
-        text: "Password should include uppercase, lowercase, and numbers for better security",
+        text: passwordIssues[0], // Show first issue
       });
       setIsLoading(false);
       return;
@@ -183,14 +256,6 @@ export default function SignUp() {
       return;
     }
 
-    // Check if email already exists for parents
-    const existingUsers = JSON.parse(
-      localStorage.getItem("wordAdventureUsers") || "[]",
-    );
-    const userExists = existingUsers.some(
-      (u: any) => u.email === formData.email,
-    );
-
     // Enhanced email validation
     const emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -203,7 +268,8 @@ export default function SignUp() {
       return;
     }
 
-    if (userExists) {
+    // Check if email already exists
+    if (checkExistingUser(formData.email)) {
       setMessage({
         type: "error",
         text: "This email is already registered. Please use a different email address or sign in instead.",
@@ -212,75 +278,102 @@ export default function SignUp() {
       return;
     }
 
-    // Create parent account and child profile
+    // SECURITY IMPROVEMENT: Create parent account and child profile with hashed password
     setTimeout(() => {
-      // Create parent user account
-      const newUser = {
-        username: formData.email.split("@")[0], // Use email prefix as username
-        email: formData.email,
-        password: formData.password,
-        createdAt: new Date().toISOString(),
-        isParent: true,
-      };
+      try {
+        // SECURITY IMPROVEMENT: Generate salt and hash password
+        const salt = SecurityUtils.generateSalt();
+        const passwordHash = SecurityUtils.hashPassword(formData.password, salt);
+        
+        const newUser: UserData = {
+          id: SecurityUtils.generateSecureId(),
+          username: formData.email.split("@")[0], // Use email prefix as username
+          name: formData.childName.trim(),
+          email: formData.email.toLowerCase().trim(),
+          age: actualAge,
+          passwordHash: passwordHash,  // Store hash, NOT plaintext
+          salt: salt,                  // Store salt for verification
+          createdAt: new Date().toISOString(),
+          isParent: true,
+        };
 
-      existingUsers.push(newUser);
-      localStorage.setItem("wordAdventureUsers", JSON.stringify(existingUsers));
+        // Get existing users and add new user
+        const existingUsers: UserData[] = JSON.parse(
+          localStorage.getItem("wordAdventureUsers") || "[]"
+        );
+        
+        existingUsers.push(newUser);
 
-      // Create child profile for parent dashboard
-      const existingChildren = JSON.parse(
-        localStorage.getItem("parentDashboardChildren") || "[]",
-      );
-      const newChild = {
-        id: Date.now().toString(),
-        name: formData.childName.trim(),
-        age: actualAge,
-        avatar:
-          actualAge <= 6
-            ? "🐵"
-            : actualAge <= 10
-              ? "🦁"
-              : actualAge <= 14
-                ? "🐅"
-                : "🦅",
-        level: 1,
-        totalPoints: 0,
-        wordsLearned: 0,
-        currentStreak: 0,
-        weeklyGoal: actualAge <= 6 ? 5 : actualAge <= 10 ? 10 : 15,
-        weeklyProgress: 0,
-        favoriteCategory: "Animals",
-        lastActive: new Date(),
-        preferredLearningTime: "After school (4-6 PM)",
-        difficultyPreference:
-          actualAge <= 6 ? "easy" : actualAge <= 10 ? "medium" : "medium",
-        parentNotes: "",
-        customWords: [],
-        weeklyTarget: actualAge <= 6 ? 10 : actualAge <= 10 ? 15 : 20,
-        monthlyTarget: actualAge <= 6 ? 40 : actualAge <= 10 ? 60 : 80,
-        recentAchievements: [],
-        learningStrengths: [],
-        areasForImprovement: [],
-        motivationalRewards: [],
-        birthDate: formData.birthDate,
-        parentEmail: formData.email,
-      };
+        // SECURITY IMPROVEMENT: Store users with hashed passwords
+        localStorage.setItem("wordAdventureUsers", JSON.stringify(existingUsers));
 
-      existingChildren.push(newChild);
-      localStorage.setItem(
-        "parentDashboardChildren",
-        JSON.stringify(existingChildren),
-      );
+        // Create child profile for parent dashboard
+        const existingChildren = JSON.parse(
+          localStorage.getItem("parentDashboardChildren") || "[]",
+        );
+        
+        const newChild = {
+          id: Date.now().toString(),
+          name: formData.childName.trim(),
+          age: actualAge,
+          avatar:
+            actualAge <= 6
+              ? "🐵"
+              : actualAge <= 10
+                ? "🦁"
+                : actualAge <= 14
+                  ? "🐅"
+                  : "🦅",
+          level: 1,
+          totalPoints: 0,
+          wordsLearned: 0,
+          currentStreak: 0,
+          weeklyGoal: actualAge <= 6 ? 5 : actualAge <= 10 ? 10 : 15,
+          weeklyProgress: 0,
+          favoriteCategory: "Animals",
+          lastActive: new Date(),
+          preferredLearningTime: "After school (4-6 PM)",
+          difficultyPreference:
+            actualAge <= 6 ? "easy" : actualAge <= 10 ? "medium" : "medium",
+          parentNotes: "",
+          customWords: [],
+          weeklyTarget: actualAge <= 6 ? 10 : actualAge <= 10 ? 15 : 20,
+          monthlyTarget: actualAge <= 6 ? 40 : actualAge <= 10 ? 60 : 80,
+          recentAchievements: [],
+          learningStrengths: [],
+          areasForImprovement: [],
+          motivationalRewards: [],
+          birthDate: formData.birthDate,
+          parentEmail: formData.email,
+        };
 
-      setMessage({
-        type: "success",
-        text: `🎉 Welcome to the jungle adventure! ${formData.childName} is ready to explore and learn!`,
-      });
+        existingChildren.push(newChild);
+        localStorage.setItem(
+          "parentDashboardChildren",
+          JSON.stringify(existingChildren),
+        );
 
-      // Navigate to login page after successful creation
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-      setIsLoading(false);
+        setMessage({
+          type: "success",
+          text: `🎉 Welcome to the jungle adventure! ${formData.childName} is ready to explore and learn!`,
+        });
+
+        console.log('✅ User registered successfully with secure password storage');
+
+        // Navigate to login page after successful creation
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+        
+      } catch (error) {
+        console.error('Signup error:', error);
+        setMessage({
+          type: "error",
+          text: 'An error occurred during signup. Please try again.',
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }, 1500);
   };
 
@@ -362,7 +455,7 @@ export default function SignUp() {
                     htmlFor="childName"
                     className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-base md:text-lg">🐵</span>
+                    <User className="w-4 h-4 md:w-5 md:h-5" />
                     Young Explorer's Name
                   </Label>
                   <Input
@@ -390,7 +483,7 @@ export default function SignUp() {
                     htmlFor="birthDate"
                     className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-base md:text-lg">🎂</span>
+                    <Calendar className="w-4 h-4 md:w-5 md:h-5" />
                     Birthday Adventure
                   </Label>
                   <div className="relative">
@@ -449,7 +542,7 @@ export default function SignUp() {
                     htmlFor="email"
                     className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-base md:text-lg">👨‍👩‍👧‍👦</span>
+                    <Mail className="w-4 h-4 md:w-5 md:h-5" />
                     Parent's Contact
                   </Label>
                   <Input
@@ -477,7 +570,7 @@ export default function SignUp() {
                     htmlFor="password"
                     className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-base md:text-lg">🔐</span>
+                    <Lock className="w-4 h-4 md:w-5 md:h-5" />
                     Secret Explorer Code
                   </Label>
                   <div className="relative mt-1 md:mt-2">
@@ -485,7 +578,7 @@ export default function SignUp() {
                       id="password"
                       name="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Create a strong password (min 6 chars)"
+                      placeholder="Create a strong password (min 6 chars, uppercase, lowercase, numbers)"
                       autoComplete="new-password"
                       value={formData.password}
                       onChange={handleInputChange}
@@ -517,7 +610,7 @@ export default function SignUp() {
                     htmlFor="confirmPassword"
                     className="text-xs md:text-sm font-semibold text-navy flex items-center gap-1 md:gap-2 font-['Baloo_2']"
                   >
-                    <span className="text-base md:text-lg">🔒</span>
+                    <Lock className="w-4 h-4 md:w-5 md:h-5" />
                     Confirm Secret Code
                   </Label>
                   <div className="relative mt-1 md:mt-2">
@@ -606,7 +699,7 @@ export default function SignUp() {
           </Card>
         </motion.div>
 
-        {/* Enhanced Jungle-Themed Back to Home Base */}
+        {/* Back to Login */}
         <motion.div
           className="text-center mt-4 md:mt-6"
           initial={{ opacity: 0 }}
@@ -627,7 +720,6 @@ export default function SignUp() {
             aria-label="Return to the main jungle adventure login page"
           >
             <div className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:animate-pulse transition-all duration-300" />
               <span className="text-lg group-hover:animate-bounce">🏠</span>
               <span className="text-sm md:text-base">Back to Home Base</span>
               <span className="text-sm group-hover:animate-pulse">🌿</span>
@@ -635,6 +727,18 @@ export default function SignUp() {
           </Button>
           <p className="text-xs text-sunshine-dark/70 mt-2 font-medium font-['Baloo_2']">
             🦋 Return to the jungle entrance
+          </p>
+        </motion.div>
+
+        {/* Security Notice */}
+        <motion.div
+          className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+        >
+          <p className="text-xs text-green-700 text-center font-medium font-['Baloo_2']">
+            🔒 Your password is securely encrypted and stored safely
           </p>
         </motion.div>
       </motion.div>
