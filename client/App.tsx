@@ -114,32 +114,48 @@ const App = () => {
         try {
           console.log("🔍 Validating assets...");
 
-          // Check all assets on app startup
-          const validation = await AssetManager.validateAllAssets();
+          // Use Promise.allSettled to ensure no individual failure blocks the entire process
+          const [validationResult, preloadResult, audioResult] = await Promise.allSettled([
+            AssetManager.validateAllAssets(),
+            AssetManager.preloadCriticalAssets(),
+            AudioManager.preloadCommonSounds()
+          ]);
 
-          if (validation.missing.length > 0) {
-            console.warn("⚠️ Missing assets:", validation.missing);
+          // Handle validation result
+          if (validationResult.status === 'fulfilled') {
+            const validation = validationResult.value;
+            if (validation.missing.length > 0) {
+              console.warn("⚠️ Missing assets:", validation.missing);
+            }
+            if (Object.keys(validation.mappings).length > 0) {
+              console.log("🔄 Asset mappings applied:", validation.mappings);
+            }
+          } else {
+            console.warn("⚠️ Asset validation failed:", validationResult.reason);
           }
 
-          if (Object.keys(validation.mappings).length > 0) {
-            console.log("🔄 Asset mappings applied:", validation.mappings);
+          // Handle preload results
+          if (preloadResult.status === 'rejected') {
+            console.warn("⚠️ Asset preloading failed:", preloadResult.reason);
           }
 
-          // Preload critical assets
-          await AssetManager.preloadCriticalAssets();
+          if (audioResult.status === 'rejected') {
+            console.warn("⚠️ Audio preloading failed:", audioResult.reason);
+          }
 
-          // Preload common sounds
-          await AudioManager.preloadCommonSounds();
-
-          console.log("✅ Asset system initialized successfully");
+          console.log("✅ Asset system initialization completed (some operations may have failed)");
         } catch (error) {
           console.warn("⚠️ Asset system initialization failed:", error);
           // Don't block app startup if asset system fails
         }
       };
 
-      // Initialize assets asynchronously to not block app startup
-      initializeAssets();
+      // Initialize assets asynchronously to not block app startup - use setTimeout to ensure it doesn't block render
+      setTimeout(() => {
+        initializeAssets().catch(error => {
+          console.warn("⚠️ Deferred asset initialization failed:", error);
+        });
+      }, 100);
 
       // Migrate legacy settings to unified jungle settings
       migrateLegacySettings();
