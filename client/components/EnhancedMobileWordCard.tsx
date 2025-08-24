@@ -193,10 +193,21 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
 
     // Announce to screen readers
     if (accessibilityMode && "speechSynthesis" in window) {
+      // Import sanitization helper to prevent "[object Object]" errors
+      const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+
       const message = isFlipped
         ? `Showing word ${word.word}`
         : `Showing definition for ${word.word}`;
-      const utterance = new SpeechSynthesisUtterance(message);
+
+      // Sanitize input to prevent errors
+      const sanitizedMessage = sanitizeTTSInput(message);
+      if (!sanitizedMessage) {
+        logSpeechError("EnhancedMobileWordCard", message, "Empty message after sanitization");
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(sanitizedMessage);
       utterance.volume = 0.3;
       speechSynthesis.speak(utterance);
     }
