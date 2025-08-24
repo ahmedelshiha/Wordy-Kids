@@ -763,7 +763,7 @@ export function EnhancedAchievementDialog({
                           </div>
                           <div className="w-full bg-white/40 rounded-full h-1 mx-auto overflow-hidden">
                             <motion.div
-                              className="bg-yellow-400/80 h-1 rounded-full"
+                              className="bg-emerald-500 h-1 rounded-full"
                               initial={{ scaleX: 1 }}
                               animate={{
                                 scaleX: timeRemaining / autoCloseDelay,
