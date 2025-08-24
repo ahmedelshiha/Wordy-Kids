@@ -198,10 +198,180 @@ export default {
         "coral-red": "hsl(var(--coral-red))",
         "light-background": "hsl(var(--light-background))",
       },
+      /* ========================================
+       * TYPOGRAPHY
+       * ======================================== */
+      fontFamily: {
+        display: ["var(--font-display)"],
+        body: ["var(--font-body)"],
+        mono: ["var(--font-mono)"],
+      },
+      fontSize: {
+        xs: ["var(--fs-xs)", { lineHeight: "var(--lh-normal)" }],
+        sm: ["var(--fs-sm)", { lineHeight: "var(--lh-normal)" }],
+        base: ["var(--fs-base)", { lineHeight: "var(--lh-normal)" }],
+        lg: ["var(--fs-lg)", { lineHeight: "var(--lh-normal)" }],
+        xl: ["var(--fs-xl)", { lineHeight: "var(--lh-snug)" }],
+        "2xl": ["var(--fs-2xl)", { lineHeight: "var(--lh-snug)" }],
+        "3xl": ["var(--fs-3xl)", { lineHeight: "var(--lh-snug)" }],
+        "4xl": ["var(--fs-4xl)", { lineHeight: "var(--lh-tight)" }],
+        "5xl": ["var(--fs-5xl)", { lineHeight: "var(--lh-tight)" }],
+        "6xl": ["var(--fs-6xl)", { lineHeight: "var(--lh-tight)" }],
+        // Fluid typography
+        "h1-fluid": ["var(--fs-h1-fluid)", { lineHeight: "var(--lh-tight)" }],
+        "h2-fluid": ["var(--fs-h2-fluid)", { lineHeight: "var(--lh-tight)" }],
+        "h3-fluid": ["var(--fs-h3-fluid)", { lineHeight: "var(--lh-snug)" }],
+        "h4-fluid": ["var(--fs-h4-fluid)", { lineHeight: "var(--lh-snug)" }],
+        "h5-fluid": ["var(--fs-h5-fluid)", { lineHeight: "var(--lh-snug)" }],
+        "h6-fluid": ["var(--fs-h6-fluid)", { lineHeight: "var(--lh-normal)" }],
+      },
+      fontWeight: {
+        light: "var(--fw-light)",
+        normal: "var(--fw-regular)",
+        medium: "var(--fw-medium)",
+        semibold: "var(--fw-semibold)",
+        bold: "var(--fw-bold)",
+        extrabold: "var(--fw-extrabold)",
+      },
+      lineHeight: {
+        tight: "var(--lh-tight)",
+        snug: "var(--lh-snug)",
+        normal: "var(--lh-normal)",
+        relaxed: "var(--lh-relaxed)",
+        loose: "var(--lh-loose)",
+      },
+
+      /* ========================================
+       * SPACING
+       * ======================================== */
+      spacing: {
+        1: "var(--sp-1)",
+        2: "var(--sp-2)",
+        3: "var(--sp-3)",
+        4: "var(--sp-4)",
+        5: "var(--sp-5)",
+        6: "var(--sp-6)",
+        8: "var(--sp-8)",
+        10: "var(--sp-10)",
+        12: "var(--sp-12)",
+        16: "var(--sp-16)",
+        20: "var(--sp-20)",
+        24: "var(--sp-24)",
+        // Component-specific spacing
+        "card-sm": "var(--card-padding-sm)",
+        "card": "var(--card-padding)",
+        "card-lg": "var(--card-padding-lg)",
+        "btn-h-xs": "var(--btn-h-xs)",
+        "btn-h-sm": "var(--btn-h-sm)",
+        "btn-h-md": "var(--btn-h-md)",
+        "btn-h-lg": "var(--btn-h-lg)",
+        "btn-h-xl": "var(--btn-h-xl)",
+        "input-h-sm": "var(--input-h-sm)",
+        "input-h-md": "var(--input-h-md)",
+        "input-h-lg": "var(--input-h-lg)",
+        "nav-h-mobile": "var(--nav-h-mobile)",
+        "nav-h-desktop": "var(--nav-h-desktop)",
+      },
+
+      /* ========================================
+       * BORDER RADIUS & SHADOWS
+       * ======================================== */
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        xs: "var(--radius-xs)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+        "2xl": "var(--radius-2xl)",
+        full: "var(--radius-full)",
+        // Legacy support
+        DEFAULT: "var(--radius-lg)",
+      },
+      boxShadow: {
+        xs: "var(--shadow-xs)",
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+        xl: "var(--shadow-xl)",
+        "2xl": "var(--shadow-2xl)",
+        soft: "var(--shadow-soft)",
+        float: "var(--shadow-float)",
+        glow: "var(--shadow-glow)",
+        jungle: "var(--shadow-jungle)",
+        // Legacy support
+        DEFAULT: "var(--shadow-md)",
+      },
+
+      /* ========================================
+       * Z-INDEX
+       * ======================================== */
+      zIndex: {
+        hide: "var(--z-hide)",
+        base: "var(--z-base)",
+        docked: "var(--z-docked)",
+        dropdown: "var(--z-dropdown)",
+        sticky: "var(--z-sticky)",
+        banner: "var(--z-banner)",
+        overlay: "var(--z-overlay)",
+        modal: "var(--z-modal)",
+        popover: "var(--z-popover)",
+        tooltip: "var(--z-tooltip)",
+        toast: "var(--z-toast)",
+        max: "var(--z-max)",
+      },
+
+      /* ========================================
+       * TRANSITIONS & ANIMATIONS
+       * ======================================== */
+      transitionDuration: {
+        instant: "var(--dur-instant)",
+        fast: "var(--dur-fast)",
+        normal: "var(--dur-normal)",
+        slow: "var(--dur-slow)",
+        slower: "var(--dur-slower)",
+        slowest: "var(--dur-slowest)",
+        DEFAULT: "var(--dur-normal)",
+      },
+      transitionTimingFunction: {
+        soft: "var(--ease-soft)",
+        bounce: "var(--ease-bounce)",
+        elastic: "var(--ease-elastic)",
+        DEFAULT: "var(--ease-soft)",
+      },
+      animation: {
+        // Jungle Adventure animations
+        "float": "float-soft 8s ease-in-out infinite",
+        "sway": "leaf-sway 6s ease-in-out infinite alternate",
+        "pop-in": "pop-in var(--dur-normal) var(--ease-soft)",
+        "breath": "gentle-breath 8s ease-in-out infinite",
+        "glow": "serene-glow 12s ease-in-out infinite",
+        "pulse-calm": "calm-pulse 6s ease-in-out infinite",
+        "emoji-float": "gentle-emoji-float 3s ease-in-out infinite",
+        "sparkle": "jungle-sparkle 1.5s ease-in-out infinite",
+        "reveal-up": "reveal-up var(--dur-slow) var(--ease-out)",
+        "fade-in": "fade-in-scale var(--dur-normal) var(--ease-out)",
+        "slide-left": "slide-in-left var(--dur-normal) var(--ease-out)",
+        "slide-right": "slide-in-right var(--dur-normal) var(--ease-out)",
+        "bounce-in": "bounce-in var(--dur-slow) var(--ease-bounce)",
+        "shimmer": "shimmer 2s ease-in-out infinite",
+        "progress": "progress-fill var(--dur-slow) var(--ease-out)",
+        "wiggle": "wiggle 2s ease-in-out",
+        "celebrate": "jungle-celebration 2s ease-in-out",
+        "level-up": "jungle-level-up 3s var(--ease-bounce)",
+        "parallax-slow": "parallax-slow 20s linear infinite",
+        "parallax-medium": "parallax-medium 15s linear infinite",
+        "parallax-fast": "parallax-fast 10s linear infinite",
+
+        // Legacy animations (maintained for compatibility)
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "gentle-bounce": "gentle-bounce 3s ease-in-out infinite",
+        "gentle-float": "gentle-float 4s ease-in-out infinite",
+        "gentle-breath": "gentle-breath 8s ease-in-out infinite",
+        "serene-glow": "serene-glow 12s ease-in-out infinite",
+        "peaceful-hover": "peaceful-hover 0.4s ease-out forwards",
+        "calm-pulse": "calm-pulse 6s ease-in-out infinite",
+        "gentle-emoji-float": "gentle-emoji-float 3s ease-in-out infinite",
       },
       keyframes: {
         "accordion-down": {
