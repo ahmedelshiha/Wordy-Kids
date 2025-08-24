@@ -143,39 +143,49 @@ const CelebrationParticles = React.memo(() => {
   );
 });
 
-// Memoized sparkle effects component
-const SparkleEffects = React.memo(({ show }: { show: boolean }) => (
-  <AnimatePresence>
-    {show && (
-      <>
-        {Array.from({ length: 6 }, (_, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-yellow-300 text-base"
-            initial={{
-              scale: 0,
-              x: 0,
-              y: 0,
-              opacity: 1,
-            }}
-            animate={{
-              scale: [0, 1, 0],
-              x: Math.cos((i * Math.PI * 2) / 6) * 50,
-              y: Math.sin((i * Math.PI * 2) / 6) * 50,
-              opacity: [1, 1, 0],
-            }}
-            transition={{
-              duration: 1.2,
-              delay: i * 0.08,
-            }}
-          >
-            ✨
-          </motion.div>
-        ))}
-      </>
-    )}
-  </AnimatePresence>
-));
+// Enhanced jungle-themed sparkle effects
+const SparkleEffects = React.memo(({ show }: { show: boolean }) => {
+  const sparkleEmojis = ["✨", "🌟", "💫", "⭐", "🌸", "🦋"];
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <>
+          {Array.from({ length: 8 }, (_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-base sm:text-lg z-20"
+              initial={{
+                scale: 0,
+                x: 0,
+                y: 0,
+                opacity: 1,
+                rotate: 0,
+              }}
+              animate={{
+                scale: [0, 1.3, 0.8, 0],
+                x: Math.cos((i * Math.PI * 2) / 8) * (40 + Math.random() * 20),
+                y: Math.sin((i * Math.PI * 2) / 8) * (40 + Math.random() * 20),
+                opacity: [1, 1, 0.8, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 1.5,
+                delay: i * 0.1,
+                ease: "easeOut",
+              }}
+              style={{
+                filter: "drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))",
+              }}
+            >
+              {sparkleEmojis[i % sparkleEmojis.length]}
+            </motion.div>
+          ))}
+        </>
+      )}
+    </AnimatePresence>
+  );
+});
 
 export function EnhancedAchievementPopup({
   achievements,
