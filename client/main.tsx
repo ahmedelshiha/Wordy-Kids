@@ -8,6 +8,10 @@ if (!rootElement) {
   throw new Error("Root element not found");
 }
 
-// Create root without caching to avoid React context issues
+// Create root with React 18 best practices
 const root = createRoot(rootElement);
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
