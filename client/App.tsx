@@ -14,25 +14,18 @@ import SignUp from "./pages/SignUp";
 import MainAppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
-import WordGardenDemo from "./pages/WordGardenDemo";
 import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
-import { JungleAdventureWordCardDemo } from "./pages/JungleAdventureWordCardDemo";
 import {
   WordDatabaseNotifications,
   CompactWordDatabaseNotifications,
 } from "./components/WordDatabaseNotifications";
-import { WordAdventureDemo } from "./pages/WordAdventureDemo";
 import { WordAdventureTest } from "./pages/WordAdventureTest";
-import AIIntegrationDemo from "./pages/AIIntegrationDemo";
-import AIWordRecommendationDemo from "./pages/AIWordRecommendationDemo";
 import AISystemTest from "./pages/AISystemTest";
 import { NavigationGuard } from "./components/NavigationGuard";
 import SpeechDiagnostics from "./components/SpeechDiagnostics";
 import { LightweightAchievementProvider } from "./components/LightweightAchievementProvider";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
-import MobileSettingsDemo from "./pages/MobileSettingsDemo";
-import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
 
 const queryClient = new QueryClient();
