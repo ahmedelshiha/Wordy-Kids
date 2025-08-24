@@ -26,10 +26,17 @@ import {
 export function createServer() {
   const app = express();
 
+  // PHASE 1: UTF-8 Charset Headers - Ensure proper emoji encoding
+  app.use((req, res, next) => {
+    res.charset = 'utf-8';
+    res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+    next();
+  });
+
   // Middleware
   app.use(cors());
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({ charset: 'utf-8' }));
+  app.use(express.urlencoded({ extended: true, charset: 'utf-8' }));
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
