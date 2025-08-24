@@ -116,7 +116,11 @@ function speakWord(word: string, funny = false, fallbackUrl?: string) {
     // Sanitize input to prevent errors
     const sanitizedWord = sanitizeTTSInput(word);
     if (!sanitizedWord) {
-      logSpeechError("WordGarden.speakWord", word, "Empty word after sanitization");
+      logSpeechError(
+        "WordGarden.speakWord",
+        word,
+        "Empty word after sanitization",
+      );
       return;
     }
 

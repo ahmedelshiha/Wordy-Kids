@@ -135,8 +135,11 @@ function speakWord(word: string, funny = false, fallback?: string) {
 
   if (synth && typeof SpeechSynthesisUtterance !== "undefined") {
     // Note: sanitizedWord is already sanitized, but let's ensure it's safe
-    if (!sanitizedWord || typeof sanitizedWord !== 'string') {
-      console.error("ListenAndGuessGame.speakWord: Invalid word input", sanitizedWord);
+    if (!sanitizedWord || typeof sanitizedWord !== "string") {
+      console.error(
+        "ListenAndGuessGame.speakWord: Invalid word input",
+        sanitizedWord,
+      );
       return;
     }
 

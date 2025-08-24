@@ -556,14 +556,21 @@ export function EnhancedCategorySelector({
       );
       if (category) {
         // Import sanitization helper to prevent "[object Object]" errors
-        const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+        const {
+          sanitizeTTSInput,
+          logSpeechError,
+        } = require("@/lib/speechUtils");
 
         const message = `Selected ${category.name} category with ${category.wordCount} words`;
 
         // Sanitize input to prevent errors
         const sanitizedMessage = sanitizeTTSInput(message);
         if (!sanitizedMessage) {
-          logSpeechError("EnhancedCategorySelector", message, "Empty message after sanitization");
+          logSpeechError(
+            "EnhancedCategorySelector",
+            message,
+            "Empty message after sanitization",
+          );
           return;
         }
 

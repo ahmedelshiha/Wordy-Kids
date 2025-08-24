@@ -178,7 +178,11 @@ export function VowelRescue({
     // Sanitize input to prevent errors
     const sanitizedWord = sanitizeTTSInput(wordToSpeak);
     if (!sanitizedWord) {
-      logSpeechError("VowelRescue.playAudio", wordToSpeak, "Empty word after sanitization");
+      logSpeechError(
+        "VowelRescue.playAudio",
+        wordToSpeak,
+        "Empty word after sanitization",
+      );
       return;
     }
 

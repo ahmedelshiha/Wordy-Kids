@@ -285,14 +285,21 @@ export function GameHub({
           // Use speech synthesis for game hub help
           if ("speechSynthesis" in window) {
             // Import sanitization helper to prevent "[object Object]" errors
-            const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+            const {
+              sanitizeTTSInput,
+              logSpeechError,
+            } = require("@/lib/speechUtils");
 
             const message = `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`;
 
             // Sanitize input to prevent errors
             const sanitizedMessage = sanitizeTTSInput(message);
             if (!sanitizedMessage) {
-              logSpeechError("GameHub.onHelpAction", message, "Empty message after sanitization");
+              logSpeechError(
+                "GameHub.onHelpAction",
+                message,
+                "Empty message after sanitization",
+              );
               return;
             }
 

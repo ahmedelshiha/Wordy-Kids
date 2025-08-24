@@ -203,7 +203,11 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
       // Sanitize input to prevent errors
       const sanitizedMessage = sanitizeTTSInput(message);
       if (!sanitizedMessage) {
-        logSpeechError("EnhancedMobileWordCard", message, "Empty message after sanitization");
+        logSpeechError(
+          "EnhancedMobileWordCard",
+          message,
+          "Empty message after sanitization",
+        );
         return;
       }
 

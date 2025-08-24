@@ -196,12 +196,19 @@ export const EnhancedVocabularyBuilder: React.FC<
 
       if ("speechSynthesis" in window) {
         // Import sanitization helper to prevent "[object Object]" errors
-        const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+        const {
+          sanitizeTTSInput,
+          logSpeechError,
+        } = require("@/lib/speechUtils");
 
         // Sanitize input to prevent errors
         const sanitizedMessage = sanitizeTTSInput(message);
         if (!sanitizedMessage) {
-          logSpeechError("EnhancedVocabularyBuilder", message, "Empty message after sanitization");
+          logSpeechError(
+            "EnhancedVocabularyBuilder",
+            message,
+            "Empty message after sanitization",
+          );
           return;
         }
 

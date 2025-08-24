@@ -122,7 +122,11 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
     // Sanitize input to prevent errors
     const sanitizedWord = sanitizeTTSInput(currentWord.word);
     if (!sanitizedWord) {
-      logSpeechError("WordPracticeGame.playPronunciation", currentWord.word, "Empty word after sanitization");
+      logSpeechError(
+        "WordPracticeGame.playPronunciation",
+        currentWord.word,
+        "Empty word after sanitization",
+      );
       return;
     }
 
