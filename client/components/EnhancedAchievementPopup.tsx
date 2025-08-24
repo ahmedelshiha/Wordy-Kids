@@ -474,13 +474,13 @@ export function EnhancedAchievementPopup({
                               : currentAchievement.reward.item}
                           </div>
                           {currentAchievement.reward.type === "sticker" && (
-                            <div className="text-xs text-white/90 animate-bounce mt-1">
-                              ✨ Sticker added! ✨
+                            <div className="text-xs text-emerald-700 animate-bounce mt-1">
+                              ✨ Jungle Sticker Added! ✨
                             </div>
                           )}
                           {currentAchievement.reward.value && (
-                            <div className="text-xs text-white/90 mt-1">
-                              +{currentAchievement.reward.value} points!
+                            <div className="text-xs text-emerald-700 mt-1">
+                              +{currentAchievement.reward.value} adventure points!
                             </div>
                           )}
                         </motion.div>
