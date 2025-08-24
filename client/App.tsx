@@ -63,6 +63,7 @@ import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
 import StorageOptimizationDemo from "./pages/StorageOptimizationDemo";
 import UnifiedPronunciationDemo from "./pages/UnifiedPronunciationDemo";
+import PronunciationEmergencyTest from "./pages/PronunciationEmergencyTest";
 
 const queryClient = new QueryClient();
 
