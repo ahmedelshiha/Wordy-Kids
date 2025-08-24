@@ -527,19 +527,19 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Educational color palette for dark mode */
-    --educational-blue: 220 98% 61%;
-    --educational-blue-light: 220 98% 30%;
-    --educational-purple: 282 83% 71%;
-    --educational-purple-light: 282 83% 30%;
-    --educational-green: 142 76% 36%;
-    --educational-green-light: 142 76% 25%;
-    --educational-orange: 25 95% 53%;
-    --educational-orange-light: 25 95% 30%;
-    --educational-pink: 330 81% 60%;
-    --educational-pink-light: 330 81% 30%;
-    --educational-yellow: 48 96% 53%;
-    --educational-yellow-light: 48 96% 30%;
+    /* Educational color palette for dark mode - Unified with jungle theme */
+    --educational-blue: var(--sky-blue);
+    --educational-blue-light: var(--sky-blue-dark);
+    --educational-purple: var(--playful-purple);
+    --educational-purple-light: 291 64% 30%;
+    --educational-green: var(--jungle-green);
+    --educational-green-light: var(--jungle-green-dark);
+    --educational-orange: var(--bright-orange);
+    --educational-orange-light: 30 100% 30%;
+    --educational-pink: var(--coral-red);
+    --educational-pink-light: 14 100% 30%;
+    --educational-yellow: var(--sunshine-yellow);
+    --educational-yellow-light: var(--sunshine-yellow-dark);
   }
 }
 
