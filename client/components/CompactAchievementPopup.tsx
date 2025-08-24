@@ -49,11 +49,10 @@ interface CompactAchievementPopupProps {
 
 const DIFFICULTY_COLORS = {
   bronze: "from-amber-200 via-orange-300 to-yellow-300", // 🌱 Seed theme
-  silver: "from-gray-300 to-gray-500",
-  gold: "from-yellow-400 to-yellow-500",
-  diamond: "from-blue-400 to-purple-500",
-  rainbow:
-    "from-pink-400 via-purple-400 via-blue-400 via-green-400 to-yellow-400",
+  silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme
+  gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme
+  diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme
+  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // 🌈 Legend theme
 } as const;
 
 const DIFFICULTY_ICONS = {
