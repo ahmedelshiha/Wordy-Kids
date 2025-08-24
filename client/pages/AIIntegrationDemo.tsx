@@ -214,12 +214,12 @@ export default function AIIntegrationDemo() {
                   </div>
 
                   <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
-                    <TrendingUp className="w-5 h-5 text-purple-600 mt-1 flex-shrink-0" />
+                    <TrendingUp className="w-5 h-5 text-berry-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-purple-800">
+                      <h4 className="font-medium text-berry-700">
                         Predictive Analytics
                       </h4>
-                      <p className="text-sm text-purple-700">
+                      <p className="text-sm text-berry-600">
                         Predicts learning outcomes and optimizes difficulty
                         progression in real-time.
                       </p>
@@ -285,7 +285,7 @@ export default function AIIntegrationDemo() {
                     <span className="text-sm font-medium text-text-secondary">
                       Engagement Score
                     </span>
-                    <span className="text-sm font-bold text-purple-600">
+                    <span className="text-sm font-bold text-berry-600">
                       94%
                     </span>
                   </div>
@@ -464,8 +464,8 @@ export default function AIIntegrationDemo() {
                     <Brain className="w-8 h-8 mx-auto mb-2 text-sky-600" />
                     <div className="text-sm font-medium">Smart Selection</div>
                   </div>
-                  <div className="text-center p-4 bg-purple-50 rounded-lg">
-                    <TrendingUp className="w-8 h-8 mx-auto mb-2 text-purple-600" />
+                  <div className="text-center p-4 bg-berry-100 rounded-lg">
+                    <TrendingUp className="w-8 h-8 mx-auto mb-2 text-berry-600" />
                     <div className="text-sm font-medium">Analytics</div>
                   </div>
                   <div className="text-center p-4 bg-green-50 rounded-lg">
