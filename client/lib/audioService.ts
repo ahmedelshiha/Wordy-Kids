@@ -629,7 +629,21 @@ export class AudioService {
 
     this.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(definition);
+    // Import sanitization helper inline to avoid circular dependencies
+    const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+    // Sanitize input to prevent "[object Object]" errors
+    const sanitizedDefinition = sanitizeTTSInput(definition);
+    if (!sanitizedDefinition) {
+      logSpeechError(
+        "audioService.pronounceDefinition",
+        definition,
+        "Empty definition after sanitization",
+      );
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(sanitizedDefinition);
     utterance.rate = rate;
     utterance.pitch = voiceDefaults.pitch * 0.95; // Slightly lower pitch for definitions
     utterance.volume = 1.0;
