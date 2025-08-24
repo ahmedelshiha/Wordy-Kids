@@ -1,17 +1,22 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.simple";
 
-// Create the root only once
+// Inline simple component for testing
+const TestApp = () => {
+  return React.createElement('div', {
+    style: { padding: '20px', fontFamily: 'Arial' }
+  }, [
+    React.createElement('h1', { key: 'h1' }, 'React Test'),
+    React.createElement('p', { key: 'p1' }, 'React is mounting!'),
+    React.createElement('p', { key: 'p2' }, `Time: ${new Date().toLocaleTimeString()}`)
+  ]);
+};
+
+// Create the root
 const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Root element not found");
 }
 
-// Create root with React 18 best practices
 const root = createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+root.render(React.createElement(TestApp));
