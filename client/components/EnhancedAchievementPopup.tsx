@@ -538,11 +538,11 @@ export function EnhancedAchievementPopup({
                           achievements.length > 1 ? handleNext : handleClose
                         }
                         variant="outline"
-                        className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 transition-colors py-1.5 text-xs"
+                        className="flex-1 bg-white/60 text-gray-800 border-white/50 hover:bg-white/80 transition-colors py-1.5 text-xs font-semibold"
                       >
                         {currentIndex < achievements.length - 1
                           ? "Next →"
-                          : "🚀 AWESOME! 🚀"}
+                          : "🌈 INCREDIBLE! 🌈"}
                       </Button>
                     </div>
                   </div>
