@@ -22,6 +22,10 @@
     "scan:emojis": "node scripts/scan-emojis.js",
     "lint:emojis": "npm run scan:emojis",
     "check:map-conflicts": "node scripts/check-map-conflicts.js",
+    "cleanup:auto": "node scripts/cleanup-automation.js",
+    "cleanup:assets": "node scripts/analyze-unused-assets.js",
+    "cleanup:deps": "node scripts/analyze-dependencies.js",
+    "cleanup:full": "npm run cleanup:assets && npm run cleanup:deps && npm run cleanup:auto",
     "precommit": "npm run lint:emojis && npm run check:map-conflicts && npm run typecheck"
   },
   "dependencies": {
