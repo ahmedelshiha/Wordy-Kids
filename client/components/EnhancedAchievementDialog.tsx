@@ -698,7 +698,7 @@ export function EnhancedAchievementDialog({
                               className={`w-2 h-2 rounded-full transition-colors ${
                                 index === currentIndex
                                   ? "bg-yellow-300"
-                                  : "bg-white/30"
+                                  : "bg-emerald-300"
                               }`}
                             />
                           ))}
@@ -732,7 +732,7 @@ export function EnhancedAchievementDialog({
                             <Button
                               onClick={() => setCurrentIndex(currentIndex - 1)}
                               variant="outline"
-                              className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25"
+                              className="flex-1 bg-white/60 text-gray-800 border-white/50 hover:bg-white/80 font-semibold"
                             >
                               ← Previous
                             </Button>
@@ -743,7 +743,7 @@ export function EnhancedAchievementDialog({
                               achievements.length > 1 ? handleNext : handleClose
                             }
                             variant="outline"
-                            className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25"
+                            className="flex-1 bg-white/60 text-gray-800 border-white/50 hover:bg-white/80 font-semibold"
                           >
                             {currentIndex < achievements.length - 1
                               ? "Next Adventure →"
@@ -755,9 +755,9 @@ export function EnhancedAchievementDialog({
                       {/* Auto-close indicator */}
                       {autoCloseDelay > 0 && !isPaused && timeRemaining > 0 && (
                         <div className="text-center">
-                          <div className="text-xs text-white/60 mb-2">
+                          <div className="text-xs text-gray-600 mb-2">
                             Auto-closing in {Math.ceil(timeRemaining / 1000)}s
-                            <div className="text-xs text-white/40">
+                            <div className="text-xs text-gray-500">
                               (hover to pause)
                             </div>
                           </div>
