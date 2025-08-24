@@ -338,12 +338,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Learning goals state and progress tracking
   const [learningGoals, setLearningGoals] = useState<any[]>([]);
-  const [currentProgress, setCurrentProgress] = useState({
-    wordsLearned: 0,
-    wordsRemembered: 0,
-    sessionCount: 0,
-    accuracy: 0,
-  });
   const [dailySessionCount, setDailySessionCount] = useState(0);
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
@@ -704,8 +698,6 @@ export default function Index({ initialProfile }: IndexProps) {
     showPracticeGame,
   ]);
 
-  // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
-
   // Force save on critical actions (with debouncing to prevent infinite loops)
   const lastSaveCountRef = useRef({ remembered: 0, forgotten: 0 });
 
@@ -724,21 +716,21 @@ export default function Index({ initialProfile }: IndexProps) {
         forgotten: forgottenCount,
       };
 
-      persistenceService.queueSave(
-        {
-          forgottenWords: Array.from(forgottenWords),
-          rememberedWords: Array.from(rememberedWords),
-          currentProgress,
-        },
-        "high",
-      );
+      // Use setTimeout to debounce the save and prevent rapid successive calls
+      const timeoutId = setTimeout(() => {
+        persistenceService.queueSave(
+          {
+            forgottenWords: Array.from(forgottenWords),
+            rememberedWords: Array.from(rememberedWords),
+            currentProgress,
+          },
+          "high",
+        );
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
     }
-  }, [
-    rememberedWords.size,
-    forgottenWords.size,
-    currentProgress,
-    persistenceService,
-  ]);
+  }, [rememberedWords.size, forgottenWords.size, persistenceService]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
@@ -789,10 +781,7 @@ export default function Index({ initialProfile }: IndexProps) {
             "Session updated from another tab - progress synced silently",
           );
 
-          // Update current state with latest data (selective update to avoid disruption)
-          if (latestSession.currentProgress) {
-            setCurrentProgress(latestSession.currentProgress);
-          }
+          // Note: currentProgress is now computed via useMemo, no need to set it
           if (latestSession.forgottenWords) {
             setForgottenWords(new Set(latestSession.forgottenWords));
           }
