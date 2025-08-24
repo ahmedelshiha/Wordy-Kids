@@ -514,10 +514,10 @@ export function EnhancedAchievementPopup({
                         >
                           <Button
                             onClick={handleClaimReward}
-                            className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-2 px-3 rounded-lg shadow-lg transition-colors text-sm"
+                            className="w-full bg-emerald-500 text-white hover:bg-emerald-600 font-bold py-2 px-3 rounded-lg shadow-lg transition-colors text-sm transform hover:scale-105"
                           >
                             <Zap className="w-3 h-3 mr-1" />
-                            🎉 CLAIM! 🎉
+                            🌟 COLLECT TREASURE! 🌟
                           </Button>
                         </motion.div>
                       )}
