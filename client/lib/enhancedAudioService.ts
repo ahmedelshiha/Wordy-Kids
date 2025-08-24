@@ -570,7 +570,22 @@ export class EnhancedAudioService {
 
       this.speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(text);
+      // Import sanitization helper inline to avoid circular dependencies
+      const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+      // Sanitize input to prevent "[object Object]" errors
+      const sanitizedText = sanitizeTTSInput(text);
+      if (!sanitizedText) {
+        logSpeechError(
+          "enhancedAudioService.previewVoice",
+          text,
+          "Empty text after sanitization",
+        );
+        reject(new Error("Empty text after sanitization"));
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(sanitizedText);
       utterance.voice = voice;
 
       const voiceDefaults = this.getVoiceDefaults(voiceType);
