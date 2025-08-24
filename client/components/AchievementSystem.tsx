@@ -1034,8 +1034,8 @@ export function AchievementSystem({
                               </div>
                             )}
                             {achievement.unlocked && achievement.reward && (
-                              <div className="bg-white/20 rounded px-2 py-1">
-                                <div className="text-xs text-white">
+                              <div className="bg-white/70 rounded px-2 py-1 shadow-sm">
+                                <div className="text-xs text-gray-800 font-semibold">
                                   🎁 {achievement.reward.item}
                                 </div>
                               </div>
@@ -1107,8 +1107,8 @@ export function AchievementSystem({
                           )}
 
                           {achievement.unlocked && achievement.reward && (
-                            <div className="bg-white/20 rounded-lg p-2">
-                              <div className="text-xs font-semibold text-white/90 mb-1">
+                            <div className="bg-white/70 rounded-lg p-2 shadow-sm">
+                              <div className="text-xs font-semibold text-gray-800 mb-1">
                                 Reward Unlocked:
                               </div>
                               <div className="text-sm text-white">
