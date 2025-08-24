@@ -10,6 +10,15 @@ import { AssetManager, AudioManager } from "./lib/assetManager";
 // LocalStorage optimization system
 import { localStorageManager } from "./lib/localStorageManager";
 
+// Unified Pronunciation System
+import { 
+  PronunciationProvider, 
+  usePronunciation,
+  VOICE_TYPES,
+  SPEECH_RATES 
+} from "./lib/unifiedPronunciationService";
+import { setPronunciationContext } from "./lib/pronunciationMigrationAdapter";
+
 // Builder.io integration
 import { builder } from "@builder.io/react";
 import {
@@ -56,6 +65,212 @@ import StorageOptimizationDemo from "./pages/StorageOptimizationDemo";
 
 const queryClient = new QueryClient();
 
+// Inner App component that uses pronunciation context
+const AppWithPronunciation = () => {
+  const pronunciationContext = usePronunciation();
+
+  useEffect(() => {
+    // Inject pronunciation context into migration adapter
+    setPronunciationContext(pronunciationContext);
+  }, [pronunciationContext]);
+
+  return (
+    <ErrorBoundary fallbackType="parent" componentName="Routes">
+      <Routes>
+        <Route path="/" element={<LoginForm />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/app"
+          element={
+            <ErrorBoundary
+              fallbackType="kid"
+              componentName="MainAppPage"
+            >
+              <MainAppPage />
+            </ErrorBoundary>
+          }
+        />
+        <Route path="/profile" element={<Login />} />
+        <Route
+          path="/admin"
+          element={
+            <ErrorBoundary
+              fallbackType="parent"
+              componentName="AdminPage"
+            >
+              <AdminPage />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/word-card-demo"
+          element={<EnhancedWordCardDemo />}
+        />
+        <Route
+          path="/word-garden-demo"
+          element={<WordGardenDemo />}
+        />
+        <Route
+          path="/word-adventure-demo"
+          element={<WordAdventureDemo />}
+        />
+        <Route
+          path="/WordAdventureDemo"
+          element={<WordAdventureDemo />}
+        />
+        <Route
+          path="/word-adventure-test"
+          element={<WordAdventureTest />}
+        />
+        <Route
+          path="/WordAdventureTest"
+          element={<WordAdventureTest />}
+        />
+        <Route
+          path="/speech-diagnostics"
+          element={<SpeechDiagnostics />}
+        />
+        <Route
+          path="/ai-integration-demo"
+          element={<AIIntegrationDemo />}
+        />
+        <Route
+          path="/AIIntegrationDemo"
+          element={<AIIntegrationDemo />}
+        />
+        <Route
+          path="/ai-word-recommendation-demo"
+          element={<AIWordRecommendationDemo />}
+        />
+        <Route
+          path="/AIWordRecommendationDemo"
+          element={<AIWordRecommendationDemo />}
+        />
+        <Route
+          path="/ai-system-test"
+          element={<AISystemTest />}
+        />
+        <Route
+          path="/jungle-adventure-word-card-demo"
+          element={<JungleAdventureWordCardDemo />}
+        />
+        <Route
+          path="/error-boundary-test"
+          element={<ErrorBoundaryTest />}
+        />
+        <Route
+          path="/mobile-settings-demo"
+          element={<MobileSettingsDemo />}
+        />
+        <Route
+          path="/settings-panel-v2-demo"
+          element={<SettingsPanelV2Demo />}
+        />
+        <Route path="/icon-nav-test" element={<IconNavTest />} />
+        <Route
+          path="/storage-optimization-demo"
+          element={<StorageOptimizationDemo />}
+        />
+        <Route
+          path="/StorageOptimizationDemo"
+          element={<StorageOptimizationDemo />}
+        />
+
+        {/* Builder.io Educational Content Routes */}
+        <Route
+          path="/learn/:lesson"
+          element={
+            <EducationalPageWrapper
+              model="educational-lesson"
+              childAge={6}
+              learningLevel="beginner"
+              fallbackContent={
+                <div className="p-8 text-center">
+                  <h2 className="text-2xl font-bold mb-4">
+                    🎓 Lesson Coming Soon!
+                  </h2>
+                  <p className="text-gray-600">
+                    This educational content is being prepared for
+                    you.
+                  </p>
+                  <div className="mt-4 text-4xl">📚</div>
+                </div>
+              }
+            />
+          }
+        />
+
+        <Route
+          path="/activities/:activity"
+          element={
+            <EducationalPageWrapper
+              model="learning-activity"
+              fallbackContent={
+                <div className="p-8 text-center">
+                  <h2 className="text-2xl font-bold mb-4">
+                    🎮 Activity Loading...
+                  </h2>
+                  <p className="text-gray-600">
+                    Get ready for a fun learning adventure!
+                  </p>
+                  <div className="mt-4 text-4xl">🌟</div>
+                </div>
+              }
+            />
+          }
+        />
+
+        <Route
+          path="/about"
+          element={
+            <MarketingPageWrapper model="marketing-page" />
+          }
+        />
+
+        <Route
+          path="/pricing"
+          element={
+            <MarketingPageWrapper model="marketing-page" />
+          }
+        />
+
+        <Route
+          path="/parents"
+          element={
+            <MarketingPageWrapper model="parent-info-page" />
+          }
+        />
+
+        {/* Builder.io Dynamic Pages */}
+        <Route
+          path="/page/*"
+          element={<BuilderPageWrapper model="page" />}
+        />
+        <Route
+          path="/lesson/*"
+          element={
+            <EducationalPageWrapper model="educational-lesson" />
+          }
+        />
+        <Route
+          path="/game/*"
+          element={
+            <EducationalPageWrapper model="learning-activity" />
+          }
+        />
+        <Route
+          path="/builder/:slug"
+          element={<BuilderPageWrapper model="page" />}
+        />
+
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </ErrorBoundary>
+  );
+};
+
 const App = () => {
   const [isClient, setIsClient] = useState(() => {
     // Initialize based on whether we're in browser
@@ -77,7 +292,7 @@ const App = () => {
         console.log("✅ Builder.io initialized with educational components");
       } else {
         console.warn(
-          "⚠�� Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
+          "⚠️ Builder.io API key not set. Please add VITE_PUBLIC_BUILDER_KEY to your .env file",
         );
         // Initialize registry anyway for fallback components
         initializeBuilderRegistry();
@@ -165,6 +380,10 @@ const App = () => {
       "systematic_progress_reading",
       "systematic_progress_vocabulary",
       "systematic_progress_comprehension",
+      // Add pronunciation-related legacy keys
+      "preferred-voice-type",
+      "audio-enabled",
+      "voice-settings"
     ];
     const jungleKey = "jungleAdventureSettings";
 
@@ -180,8 +399,8 @@ const App = () => {
           } catch {
             newSettings[key] = val; // Keep as string if not JSON
           }
-          // Clean up legacy key
-          localStorage.removeItem(key);
+          // Don't clean up legacy keys yet during migration period
+          // localStorage.removeItem(key);
         }
       });
 
@@ -191,6 +410,29 @@ const App = () => {
         console.log("✅ Migrated legacy settings to unified jungle storage");
       }
     }
+  };
+
+  // Get default pronunciation settings from legacy storage
+  const getDefaultPronunciationSettings = () => {
+    const legacyVoiceType = localStorage.getItem('preferred-voice-type');
+    const legacyAudioEnabled = localStorage.getItem('audio-enabled');
+    
+    return {
+      voiceType: (legacyVoiceType && Object.values(VOICE_TYPES).includes(legacyVoiceType as any)) 
+        ? legacyVoiceType as any
+        : VOICE_TYPES.WOMAN,
+      rate: SPEECH_RATES.SLOW,
+      pitch: 1.1,
+      volume: 0.9,
+      language: 'en-US'
+    };
+  };
+
+  // Handle pronunciation system errors
+  const handlePronunciationError = (error: string) => {
+    console.error('Pronunciation system error:', error);
+    // Log to analytics or error reporting service
+    // Could also show user-friendly notification
   };
 
   // Always render on client side, but show loading during hydration
@@ -206,211 +448,24 @@ const App = () => {
     <ErrorBoundary fallbackType="parent" componentName="App">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <WordDatabaseNotifications />
-          <CompactWordDatabaseNotifications />
-          <BrowserRouter>
-            <AuthProvider>
-              <LightweightAchievementProvider>
-                <NavigationGuard>
-                  <ErrorBoundary fallbackType="parent" componentName="Routes">
-                    <Routes>
-                      <Route path="/" element={<LoginForm />} />
-                      <Route path="/login" element={<LoginForm />} />
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route
-                        path="/app"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="kid"
-                            componentName="MainAppPage"
-                          >
-                            <MainAppPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route path="/profile" element={<Login />} />
-                      <Route
-                        path="/admin"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="AdminPage"
-                          >
-                            <AdminPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/word-card-demo"
-                        element={<EnhancedWordCardDemo />}
-                      />
-                      <Route
-                        path="/word-garden-demo"
-                        element={<WordGardenDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-demo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/WordAdventureDemo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-test"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/WordAdventureTest"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/speech-diagnostics"
-                        element={<SpeechDiagnostics />}
-                      />
-                      <Route
-                        path="/ai-integration-demo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/AIIntegrationDemo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/ai-word-recommendation-demo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/AIWordRecommendationDemo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/ai-system-test"
-                        element={<AISystemTest />}
-                      />
-                      <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
-                      />
-                      <Route
-                        path="/error-boundary-test"
-                        element={<ErrorBoundaryTest />}
-                      />
-                      <Route
-                        path="/mobile-settings-demo"
-                        element={<MobileSettingsDemo />}
-                      />
-                      <Route
-                        path="/settings-panel-v2-demo"
-                        element={<SettingsPanelV2Demo />}
-                      />
-                      <Route path="/icon-nav-test" element={<IconNavTest />} />
-                      <Route
-                        path="/storage-optimization-demo"
-                        element={<StorageOptimizationDemo />}
-                      />
-                      <Route
-                        path="/StorageOptimizationDemo"
-                        element={<StorageOptimizationDemo />}
-                      />
-
-                      {/* Builder.io Educational Content Routes */}
-                      <Route
-                        path="/learn/:lesson"
-                        element={
-                          <EducationalPageWrapper
-                            model="educational-lesson"
-                            childAge={6}
-                            learningLevel="beginner"
-                            fallbackContent={
-                              <div className="p-8 text-center">
-                                <h2 className="text-2xl font-bold mb-4">
-                                  🎓 Lesson Coming Soon!
-                                </h2>
-                                <p className="text-gray-600">
-                                  This educational content is being prepared for
-                                  you.
-                                </p>
-                                <div className="mt-4 text-4xl">📚</div>
-                              </div>
-                            }
-                          />
-                        }
-                      />
-
-                      <Route
-                        path="/activities/:activity"
-                        element={
-                          <EducationalPageWrapper
-                            model="learning-activity"
-                            fallbackContent={
-                              <div className="p-8 text-center">
-                                <h2 className="text-2xl font-bold mb-4">
-                                  🎮 Activity Loading...
-                                </h2>
-                                <p className="text-gray-600">
-                                  Get ready for a fun learning adventure!
-                                </p>
-                                <div className="mt-4 text-4xl">🌟</div>
-                              </div>
-                            }
-                          />
-                        }
-                      />
-
-                      <Route
-                        path="/about"
-                        element={
-                          <MarketingPageWrapper model="marketing-page" />
-                        }
-                      />
-
-                      <Route
-                        path="/pricing"
-                        element={
-                          <MarketingPageWrapper model="marketing-page" />
-                        }
-                      />
-
-                      <Route
-                        path="/parents"
-                        element={
-                          <MarketingPageWrapper model="parent-info-page" />
-                        }
-                      />
-
-                      {/* Builder.io Dynamic Pages */}
-                      <Route
-                        path="/page/*"
-                        element={<BuilderPageWrapper model="page" />}
-                      />
-                      <Route
-                        path="/lesson/*"
-                        element={
-                          <EducationalPageWrapper model="educational-lesson" />
-                        }
-                      />
-                      <Route
-                        path="/game/*"
-                        element={
-                          <EducationalPageWrapper model="learning-activity" />
-                        }
-                      />
-                      <Route
-                        path="/builder/:slug"
-                        element={<BuilderPageWrapper model="page" />}
-                      />
-
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </ErrorBoundary>
-                </NavigationGuard>
-              </LightweightAchievementProvider>
-            </AuthProvider>
-          </BrowserRouter>
+          <PronunciationProvider
+            defaultSettings={getDefaultPronunciationSettings()}
+            onError={handlePronunciationError}
+          >
+            <Toaster />
+            <Sonner />
+            <WordDatabaseNotifications />
+            <CompactWordDatabaseNotifications />
+            <BrowserRouter>
+              <AuthProvider>
+                <LightweightAchievementProvider>
+                  <NavigationGuard>
+                    <AppWithPronunciation />
+                  </NavigationGuard>
+                </LightweightAchievementProvider>
+              </AuthProvider>
+            </BrowserRouter>
+          </PronunciationProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
