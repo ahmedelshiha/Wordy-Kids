@@ -116,7 +116,7 @@ export const AICardContent = React.forwardRef<
       >
         {/* Comprehensive AI Control Header - Mobile Enhanced */}
         {enableAIHeader && (
-          <Card className="bg-gradient-to-r from-blue-50/80 to-purple-50/80 border border-blue-200/60 mb-3 sm:mb-4">
+          <Card className="bg-gradient-to-r from-sky-100/80 to-berry-100/80 border border-sky-200/60 mb-3 sm:mb-4">
             <CardContent className="card-content p-2 sm:p-3 md:p-4">
               <div className="header-controls flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
@@ -127,8 +127,8 @@ export const AICardContent = React.forwardRef<
                         className={cn(
                           "w-5 h-5 sm:w-6 sm:h-6 transition-all duration-300",
                           aiStatus === "active"
-                            ? "text-blue-600"
-                            : "text-gray-400",
+                            ? "text-sky-600"
+                            : "text-text-muted",
                           aiStatus === "loading" && "animate-pulse",
                         )}
                       />
@@ -143,12 +143,12 @@ export const AICardContent = React.forwardRef<
                         className={cn(
                           "text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 whitespace-nowrap",
                           aiStatus === "active" &&
-                            "bg-green-100 text-green-800 border-green-300",
+                            "bg-success-light text-success border-success/30",
                         )}
                       >
                         {aiStatus === "active" && (
                           <div className="flex items-center gap-1.5">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                            <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
                             Active
                           </div>
                         )}
@@ -161,7 +161,7 @@ export const AICardContent = React.forwardRef<
                       {aiStatus === "active" && (
                         <Badge
                           variant="outline"
-                          className="hidden xs:inline-flex text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 bg-blue-50 text-blue-700 border-blue-300 whitespace-nowrap"
+                          className="hidden xs:inline-flex text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 bg-sky-100 text-sky-700 border-sky-300 whitespace-nowrap"
                         >
                           {Math.round(confidenceLevel * 100)}%
                         </Badge>
@@ -174,21 +174,21 @@ export const AICardContent = React.forwardRef<
                     <div className="hidden sm:flex items-center gap-3 md:gap-4 text-xs">
                       {/* Session Progress Counter */}
                       <div className="text-center">
-                        <div className="font-semibold text-blue-600 text-xs sm:text-sm">
+                        <div className="font-semibold text-sky-600 text-xs sm:text-sm">
                           {sessionStats.totalWords ||
                             sessionStats.wordsLearned ||
                             0}
                           /{SESSION_SIZE}
                         </div>
-                        <div className="text-gray-600 text-xs">Progress</div>
+                        <div className="text-text-muted text-xs">Progress</div>
                       </div>
 
                       {/* Accuracy Percentage - Fixed NaN issue */}
                       <div className="text-center">
-                        <div className="font-semibold text-green-600 text-xs sm:text-sm">
+                        <div className="font-semibold text-success text-xs sm:text-sm">
                           {safeAccuracy}%
                         </div>
-                        <div className="text-gray-600 text-xs">Accuracy</div>
+                        <div className="text-text-muted text-xs">Accuracy</div>
                       </div>
                     </div>
                   )}
@@ -220,7 +220,7 @@ export const AICardContent = React.forwardRef<
                   {difficultyAdjustment !== "maintain" && (
                     <Badge
                       variant="outline"
-                      className="text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 bg-orange-50 text-orange-700 border-orange-300 whitespace-nowrap"
+                      className="text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 bg-warning-light text-warning border-warning/30 whitespace-nowrap"
                     >
                       <span className="sm:hidden">
                         {difficultyAdjustment === "increase" ? "⬆️" : "⬇️"}
@@ -267,8 +267,8 @@ export const AICardContent = React.forwardRef<
                     className={cn(
                       "h-7 sm:h-8 px-2 sm:px-3 touch-manipulation",
                       globalAIEnabled
-                        ? "bg-blue-600 hover:bg-blue-700"
-                        : "border-blue-300 text-blue-600 hover:bg-blue-50",
+                        ? "bg-sky-600 hover:bg-sky-700"
+                        : "border-sky-300 text-sky-600 hover:bg-sky-50",
                     )}
                   >
                     <Brain className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1" />
@@ -286,7 +286,7 @@ export const AICardContent = React.forwardRef<
 
               {/* Error Alert - Mobile Enhanced */}
               {showErrorAlert && aiStatus === "error" && aiErrorMessage && (
-                <Alert className="mt-3 border-red-200 bg-red-50">
+                <Alert className="mt-3 border-danger/30 bg-danger-light">
                   <AlertTriangle className="w-4 h-4" />
                   <AlertDescription className="text-sm">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2">
@@ -298,7 +298,7 @@ export const AICardContent = React.forwardRef<
                           variant="link"
                           size="sm"
                           onClick={onRetryAI}
-                          className="p-0 h-auto text-red-700 underline self-start sm:ml-2"
+                          className="p-0 h-auto text-danger underline self-start sm:ml-2"
                         >
                           Retry
                         </Button>
