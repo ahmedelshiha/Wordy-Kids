@@ -761,7 +761,7 @@ export function EnhancedAchievementDialog({
                               (hover to pause)
                             </div>
                           </div>
-                          <div className="w-full bg-white/20 rounded-full h-1 mx-auto overflow-hidden">
+                          <div className="w-full bg-white/40 rounded-full h-1 mx-auto overflow-hidden">
                             <motion.div
                               className="bg-yellow-400/80 h-1 rounded-full"
                               initial={{ scaleX: 1 }}
@@ -777,7 +777,7 @@ export function EnhancedAchievementDialog({
 
                       {/* Achievement counter */}
                       {achievements.length > 1 && (
-                        <div className="text-sm text-white/70">
+                        <div className="text-sm text-gray-600">
                           Achievement {currentIndex + 1} of{" "}
                           {achievements.length}
                         </div>
