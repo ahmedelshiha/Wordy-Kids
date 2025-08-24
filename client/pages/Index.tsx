@@ -894,9 +894,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
       if (latestSession && latestSession.lastSaved > lastAutoSave) {
         // Silently sync progress without disrupting user
-        if (latestSession.currentProgress) {
-          setCurrentProgress(latestSession.currentProgress);
-        }
+        // Note: currentProgress is now computed via useMemo, no need to set it
         setLastAutoSave(latestSession.lastSaved);
       }
     };
@@ -937,9 +935,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (sessionData.excludedWordIds) {
         setExcludedWordIds(new Set(sessionData.excludedWordIds));
       }
-      if (sessionData.currentProgress) {
-        setCurrentProgress(sessionData.currentProgress);
-      }
+      // Note: currentProgress is now computed via useMemo from other state
       if (sessionData.dailySessionCount !== undefined) {
         setDailySessionCount(sessionData.dailySessionCount);
       }
@@ -1080,7 +1076,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "science-star",
         name: "Science Star",
-        icon: "🔬",
+        icon: "����",
         earned: rememberedWords.size >= 15,
         description: "Mastered 10 science words",
       },
