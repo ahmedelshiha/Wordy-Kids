@@ -30,11 +30,11 @@ interface EnhancedAchievementDialogProps {
 }
 
 const DIFFICULTY_COLORS = {
-  bronze: "from-amber-600 via-orange-500 to-amber-700",
-  silver: "from-gray-400 via-gray-300 to-slate-500",
-  gold: "from-yellow-500 via-yellow-400 to-amber-500",
-  diamond: "from-cyan-400 via-blue-500 to-purple-600",
-  legendary: "from-purple-600 via-pink-500 to-red-500",
+  bronze: "from-amber-200 via-orange-300 to-yellow-300", // 🌱 Seed theme - warm sunrise
+  silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme - fresh growth
+  gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme - bright flowers
+  diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme - majestic canopy
+  legendary: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // 🌈 Legend theme - magical aurora
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -570,14 +570,14 @@ export function EnhancedAchievementDialog({
                 onClick={handleClose}
                 variant="ghost"
                 size="sm"
-                className="absolute top-3 right-3 text-white/80 hover:text-white hover:bg-white/20 rounded-full z-20 transition-colors"
+                className="absolute top-3 right-3 text-gray-700 hover:text-gray-900 hover:bg-white/40 rounded-full z-20 transition-colors"
                 aria-label="Close achievement dialog"
               >
                 <X className="w-4 h-4" />
               </Button>
 
               <CardContent
-                className={`text-center relative ${isMobile ? "p-6" : "p-8"} text-white`}
+                className={`text-center relative ${isMobile ? "p-6" : "p-8"} text-gray-800`}
               >
                 {/* Header with trophy icon */}
                 <motion.div
