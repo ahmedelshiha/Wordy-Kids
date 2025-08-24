@@ -810,7 +810,21 @@ export class AudioService {
 
     this.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    // Import sanitization helper inline to avoid circular dependencies
+    const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+    // Sanitize input to prevent "[object Object]" errors
+    const sanitizedText = sanitizeTTSInput(text);
+    if (!sanitizedText) {
+      logSpeechError(
+        "audioService.previewVoice",
+        text,
+        "Empty text after sanitization",
+      );
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(sanitizedText);
     utterance.voice = voice;
 
     // Adjust settings based on voice type
