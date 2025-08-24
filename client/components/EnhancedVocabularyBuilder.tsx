@@ -195,7 +195,17 @@ export const EnhancedVocabularyBuilder: React.FC<
       if (!accessibilitySettings.screenReader) return;
 
       if ("speechSynthesis" in window) {
-        const utterance = new SpeechSynthesisUtterance(message);
+        // Import sanitization helper to prevent "[object Object]" errors
+        const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+
+        // Sanitize input to prevent errors
+        const sanitizedMessage = sanitizeTTSInput(message);
+        if (!sanitizedMessage) {
+          logSpeechError("EnhancedVocabularyBuilder", message, "Empty message after sanitization");
+          return;
+        }
+
+        const utterance = new SpeechSynthesisUtterance(sanitizedMessage);
         utterance.volume = 0.5;
         utterance.rate = 0.8;
         speechSynthesis.speak(utterance);

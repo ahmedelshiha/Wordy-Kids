@@ -284,9 +284,19 @@ export function GameHub({
         onHelpAction={(helpContent) => {
           // Use speech synthesis for game hub help
           if ("speechSynthesis" in window) {
-            const utterance = new SpeechSynthesisUtterance(
-              `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`,
-            );
+            // Import sanitization helper to prevent "[object Object]" errors
+            const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+
+            const message = `${helpContent.title}. ${helpContent.message.replace(/\n/g, ". ").replace(/•/g, "")}`;
+
+            // Sanitize input to prevent errors
+            const sanitizedMessage = sanitizeTTSInput(message);
+            if (!sanitizedMessage) {
+              logSpeechError("GameHub.onHelpAction", message, "Empty message after sanitization");
+              return;
+            }
+
+            const utterance = new SpeechSynthesisUtterance(sanitizedMessage);
             utterance.rate = 0.8;
             utterance.pitch = 1.1;
             speechSynthesis.speak(utterance);
