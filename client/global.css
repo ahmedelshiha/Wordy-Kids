@@ -45,6 +45,7 @@
 
 /* Import Jungle Achievement Theme Styles */
 @import "./styles/jungle-achievement-theme.css";
+@import "./styles/mobile-achievement-enhancements.css";
 @import "./styles/enhanced-jungle-achievement-dialog.css";
 
 /* Import Jungle Adventure Desktop Styles */
