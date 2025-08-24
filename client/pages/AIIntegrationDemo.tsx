@@ -108,11 +108,11 @@ export default function AIIntegrationDemo() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="flex justify-center mb-4">
-          <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4 rounded-full shadow-2xl">
+          <div className="bg-grad-hero p-4 rounded-full shadow-2xl">
             <Brain className="w-12 h-12 text-white" />
           </div>
         </div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+        <h1 className="text-4xl font-bold bg-grad-hero bg-clip-text text-transparent mb-4">
           AI Integration Demo
         </h1>
         <p className="text-xl text-text-secondary max-w-2xl mx-auto">
@@ -256,7 +256,7 @@ export default function AIIntegrationDemo() {
             </Card>
 
             {/* Analytics & Insights */}
-            <Card className="border-success/30 bg-gradient-to-br from-green-50 to-blue-50">
+            <Card className="border-jungle-200 bg-grad-adventure">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-jungle-700">
                   <TrendingUp className="w-5 h-5" />
@@ -493,7 +493,7 @@ export default function AIIntegrationDemo() {
       </Tabs>
 
       {/* Quick Action Footer */}
-      <Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+      <Card className="bg-grad-hero text-text-inverse">
         <CardContent className="p-6 text-center">
           <h3 className="text-xl font-bold mb-2">
             🚀 Ready to Enhance Your App?
@@ -505,7 +505,7 @@ export default function AIIntegrationDemo() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               variant="secondary"
-              className="bg-white text-sky-600 hover:bg-surface-2"
+              className="bg-surface text-sky-600 hover:bg-surface-2"
               onClick={() => (window.location.href = "#demo")}
             >
               <Play className="w-4 h-4 mr-2" />
@@ -513,7 +513,7 @@ export default function AIIntegrationDemo() {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white/10"
+              className="border-surface text-text-inverse hover:bg-surface/10"
               onClick={() => (window.location.href = "/")}
             >
               <ArrowRight className="w-4 h-4 mr-2" />
