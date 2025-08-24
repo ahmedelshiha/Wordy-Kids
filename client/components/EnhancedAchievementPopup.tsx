@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { audioService } from "@/lib/audioService";
 import { EnhancedAchievementTracker } from "@/lib/enhancedAchievementTracker";
+import { JungleMagicalEffects } from "./JungleMagicalEffects";
 
 interface Achievement {
   id: string;
@@ -90,39 +91,57 @@ const CATEGORY_COLORS = {
   session: "bg-gradient-to-r from-purple-400 to-pink-500",
 } as const;
 
-// Memoized celebration particles component
-const CelebrationParticles = React.memo(() => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {Array.from({ length: 12 }, (_, i) => (
+// Enhanced jungle-themed celebration particles
+const CelebrationParticles = React.memo(() => {
+  const jungleEmojis = ["🌟", "✨", "🍃", "🌿", "🦋", "🌺", "💫", "🌈"];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {Array.from({ length: 15 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="absolute text-lg sm:text-xl"
+          initial={{
+            x: typeof window !== "undefined" ? Math.random() * window.innerWidth : 400,
+            y: typeof window !== "undefined" ? window.innerHeight + 50 : 600,
+            rotate: 0,
+            opacity: 0,
+            scale: 0.5,
+          }}
+          animate={{
+            y: -100,
+            rotate: [0, 180, 360],
+            opacity: [0, 1, 1, 0.5, 0],
+            scale: [0.5, 1.2, 1, 0.8, 0.3],
+          }}
+          transition={{
+            duration: 3 + Math.random() * 2,
+            delay: Math.random() * 2,
+            repeat: Infinity,
+            repeatDelay: 5 + Math.random() * 3,
+            ease: "easeOut",
+          }}
+          style={{
+            filter: "drop-shadow(0 0 6px rgba(76, 175, 80, 0.3))",
+          }}
+        >
+          {jungleEmojis[i % jungleEmojis.length]}
+        </motion.div>
+      ))}
+
+      {/* Magical jungle atmosphere */}
       <motion.div
-        key={i}
-        className="absolute text-yellow-400 text-xl"
-        initial={{
-          x:
-            typeof window !== "undefined"
-              ? Math.random() * window.innerWidth
-              : 400,
-          y: typeof window !== "undefined" ? window.innerHeight + 50 : 600,
-          rotate: 0,
-          opacity: 0,
-        }}
-        animate={{
-          y: -50,
-          rotate: 360,
-          opacity: [0, 1, 1, 0],
-        }}
+        className="absolute inset-0 bg-gradient-to-t from-emerald-100/10 via-transparent to-yellow-100/10 rounded-xl"
+        animate={{ opacity: [0.1, 0.3, 0.1] }}
         transition={{
-          duration: 2.5 + Math.random() * 1.5,
-          delay: Math.random() * 1.5,
+          duration: 6,
           repeat: Infinity,
-          repeatDelay: 4 + Math.random() * 3,
+          ease: "easeInOut",
         }}
-      >
-        ⭐
-      </motion.div>
-    ))}
-  </div>
-));
+      />
+    </div>
+  );
+});
 
 // Memoized sparkle effects component
 const SparkleEffects = React.memo(({ show }: { show: boolean }) => (
@@ -398,12 +417,23 @@ export function EnhancedAchievementPopup({
               </Button>
 
               <CardContent className="p-3 sm:p-4 text-center relative">
+                {/* Magical jungle effects overlay */}
+                <JungleMagicalEffects
+                  show={showReward}
+                  variant={currentAchievement.difficulty === "diamond" ? "rainbow" : "fireflies"}
+                  intensity="medium"
+                  className="rounded-xl"
+                />
+
                 {/* Achievement Icon with Animation - Smaller for mobile */}
                 <motion.div
                   initial={{ scale: 0, rotate: -90 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 0.1, type: "spring", duration: 0.4 }}
-                  className="text-4xl sm:text-5xl mb-2 relative flex justify-center"
+                  className="text-4xl sm:text-5xl mb-2 relative flex justify-center z-10"
+                  style={{
+                    filter: "drop-shadow(0 2px 8px rgba(76, 175, 80, 0.3))",
+                  }}
                 >
                   <span>{currentAchievement.icon}</span>
                   <SparkleEffects show={showReward} />
