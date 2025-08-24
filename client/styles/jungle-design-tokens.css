@@ -515,6 +515,97 @@
 }
 
 /* ========================================
+ * UNIFIED JUNGLE THEME UTILITY CLASSES
+ * ======================================== */
+
+/* Educational color utilities using jungle tokens */
+.bg-educational-primary {
+  background: var(--grad-educational-primary);
+  color: hsl(var(--color-text-inverse));
+}
+
+.bg-educational-success {
+  background: var(--grad-educational-success);
+  color: hsl(var(--color-text-inverse));
+}
+
+.bg-educational-warm {
+  background: var(--grad-educational-warm);
+  color: hsl(var(--color-text-inverse));
+}
+
+.text-educational-primary {
+  color: hsl(var(--educational-blue));
+}
+
+.text-educational-accent {
+  color: hsl(var(--educational-purple));
+}
+
+.text-educational-success {
+  color: hsl(var(--educational-green));
+}
+
+/* Quiz adventure utilities */
+.bg-quiz-morning {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--quiz-morning-start)) 0%,
+    hsl(var(--quiz-morning-mid)) 50%,
+    hsl(var(--quiz-morning-end)) 100%
+  );
+}
+
+.bg-quiz-midday {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--quiz-midday-start)) 0%,
+    hsl(var(--quiz-midday-mid)) 50%,
+    hsl(var(--quiz-midday-end)) 100%
+  );
+}
+
+.bg-quiz-evening {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--quiz-evening-start)) 0%,
+    hsl(var(--quiz-evening-mid)) 50%,
+    hsl(var(--quiz-evening-end)) 100%
+  );
+}
+
+.bg-quiz-night {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--quiz-night-start)) 0%,
+    hsl(var(--quiz-night-mid)) 50%,
+    hsl(var(--quiz-night-end)) 100%
+  );
+}
+
+.quiz-treasure-card {
+  background: var(--quiz-option-bg);
+  border: 3px solid var(--quiz-treasure-border);
+  box-shadow: 0 20px 40px var(--quiz-treasure-shadow);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.quiz-treasure-card:hover {
+  box-shadow: 0 30px 60px var(--quiz-treasure-hover-shadow);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.quiz-option-card {
+  background: var(--quiz-option-bg);
+  border: 2px solid var(--quiz-option-border);
+  transition: all 0.3s ease-out;
+}
+
+.quiz-progress-trail {
+  background: var(--quiz-progress-trail);
+}
+
+/* ========================================
  * CONTRAST-SAFE UTILITY CLASSES
  * ======================================== */
 
