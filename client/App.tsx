@@ -105,7 +105,7 @@ const App = () => {
   return (
     <ErrorBoundary fallbackType="parent" componentName="App">
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
+        <TooltipProvider delayDuration={300}>
           <Toaster />
           <Sonner />
           <WordDatabaseNotifications />
