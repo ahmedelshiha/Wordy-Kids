@@ -483,7 +483,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
 
               <Badge
                 variant="outline"
-                className="bg-white/20 border-white/40 text-white text-xs px-3 py-1.5 backdrop-blur-sm"
+                className="bg-white/70 border-white/50 text-gray-800 text-xs px-3 py-1.5 backdrop-blur-sm font-semibold"
               >
                 {word.category}
               </Badge>
