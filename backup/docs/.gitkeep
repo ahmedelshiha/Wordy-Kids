@@ -1,0 +1,11 @@
+# Documentation Archive
+
+This directory contains archived markdown files and documentation older than 6 months.
+
+## Naming Convention
+Files should include timestamp suffix: document_YYYYMMDD.md
+
+## Purpose
+- Archive outdated documentation for reference
+- Keep main documentation current and relevant
+- Preserve development history and decisions
