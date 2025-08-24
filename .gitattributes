@@ -1,0 +1,47 @@
+# Git attributes for proper emoji and Unicode handling
+
+# Ensure all text files are handled with UTF-8 encoding
+* text=auto eol=lf
+
+# Specific file types that must preserve Unicode
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.json text
+*.md text
+*.html text
+*.css text
+*.scss text
+*.less text
+
+# Ensure these files always use LF line endings and UTF-8
+*.ts eol=lf
+*.tsx eol=lf
+*.js eol=lf
+*.jsx eol=lf
+*.json eol=lf
+
+# Binary files that should not be converted
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.svg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+
+# Specific handling for emoji-sensitive files
+client/lib/emojiUtils.ts text eol=lf
+client/components/EmojiText.tsx text eol=lf
+client/pages/EmojiTestPage.tsx text eol=lf
+docs/EMOJI_HANDLING_GUIDE.md text eol=lf
+
+# Ignore generated files from emoji scans
+scripts/emoji-scan-results.json binary
+scripts/emoji-corruption-report.txt text
