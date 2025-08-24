@@ -40,6 +40,22 @@ export function sanitizeTTSInput(input: any): string {
     return String(input);
   }
 
+  // Handle React elements and components
+  if (input && typeof input === "object" && input.$$typeof) {
+    console.warn('React element passed to TTS, extracting children or text content');
+    // Extract text from React children
+    if (input.props && input.props.children) {
+      return sanitizeTTSInput(input.props.children);
+    }
+    return '';
+  }
+
+  // Handle arrays (like React children arrays)
+  if (Array.isArray(input)) {
+    const textParts = input.map(item => sanitizeTTSInput(item)).filter(text => text.trim());
+    return textParts.join(' ');
+  }
+
   // Handle objects with common word/text properties
   if (typeof input === "object" && input !== null) {
     // Check for common word object shapes
@@ -49,6 +65,18 @@ export function sanitizeTTSInput(input: any): string {
 
     if (typeof input.text === "string" && input.text.trim()) {
       return input.text.trim();
+    }
+
+    if (typeof input.content === "string" && input.content.trim()) {
+      return input.content.trim();
+    }
+
+    if (typeof input.label === "string" && input.label.trim()) {
+      return input.label.trim();
+    }
+
+    if (typeof input.value === "string" && input.value.trim()) {
+      return input.value.trim();
     }
 
     // Check for custom toString method (not the default Object.prototype.toString)
@@ -66,13 +94,24 @@ export function sanitizeTTSInput(input: any): string {
       }
     }
 
+    // Log problematic objects for debugging
+    console.warn('Problematic object passed to TTS:', {
+      input,
+      keys: Object.keys(input),
+      constructor: input.constructor?.name
+    });
+
     // Try to serialize the object nicely
     try {
-      return JSON.stringify(input);
+      const jsonString = JSON.stringify(input);
+      if (jsonString !== '{}' && jsonString !== '[]') {
+        return jsonString;
+      }
     } catch (error) {
       console.warn("Error serializing TTS input object:", error);
-      return "[object Object]";
     }
+
+    return "[object Object]";
   }
 
   // Fallback: convert to string
