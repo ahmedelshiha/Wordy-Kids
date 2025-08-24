@@ -64,7 +64,7 @@ export default function AIIntegrationDemo() {
       {
         id: "streak-master",
         name: "Streak Master",
-        icon: "��",
+        icon: "🔥",
         earned: true,
         description: "7-day learning streak",
       },
@@ -193,7 +193,7 @@ export default function AIIntegrationDemo() {
             {/* Core AI Features */}
             <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-blue-800">
+                <CardTitle className="flex items-center gap-2 text-sky-700">
                   <Brain className="w-5 h-5" />
                   Core AI Features
                 </CardTitle>
@@ -201,12 +201,12 @@ export default function AIIntegrationDemo() {
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
-                    <Sparkles className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <Sparkles className="w-5 h-5 text-sky-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-blue-800">
+                      <h4 className="font-medium text-sky-700">
                         Adaptive Word Selection
                       </h4>
-                      <p className="text-sm text-blue-700">
+                      <p className="text-sm text-sky-600">
                         AI analyzes learning patterns to select optimal words
                         based on difficulty, retention rates, and engagement.
                       </p>
@@ -278,7 +278,7 @@ export default function AIIntegrationDemo() {
                     <span className="text-sm font-medium text-text-secondary">
                       Retention Prediction
                     </span>
-                    <span className="text-sm font-bold text-blue-600">87%</span>
+                    <span className="text-sm font-bold text-sky-600">87%</span>
                   </div>
 
                   <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
@@ -407,7 +407,7 @@ export default function AIIntegrationDemo() {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-blue-700">
+                    <h4 className="font-semibold mb-2 text-sky-600">
                       Essential Props
                     </h4>
                     <ul className="text-sm space-y-1">
@@ -460,8 +460,8 @@ export default function AIIntegrationDemo() {
                   Step 3: Features You Get
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <Brain className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                  <div className="text-center p-4 bg-sky-100 rounded-lg">
+                    <Brain className="w-8 h-8 mx-auto mb-2 text-sky-600" />
                     <div className="text-sm font-medium">Smart Selection</div>
                   </div>
                   <div className="text-center p-4 bg-purple-50 rounded-lg">
@@ -505,7 +505,7 @@ export default function AIIntegrationDemo() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               variant="secondary"
-              className="bg-white text-blue-600 hover:bg-surface-2"
+              className="bg-white text-sky-600 hover:bg-surface-2"
               onClick={() => (window.location.href = "#demo")}
             >
               <Play className="w-4 h-4 mr-2" />
