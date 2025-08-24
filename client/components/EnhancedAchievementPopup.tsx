@@ -443,7 +443,7 @@ export function EnhancedAchievementPopup({
                             ? "🏆 SUPER"
                             : currentAchievement.difficulty === "silver"
                               ? "⭐ COOL"
-                              : "🎯 YAY"}
+                              : "���� YAY"}
                     </Badge>
                   </div>
 
@@ -577,8 +577,8 @@ export function EnhancedAchievementPopup({
 
                   {/* Simplified Achievement Counter */}
                   {achievements.length > 1 && (
-                    <div className="text-xs text-white/70 mt-1">
-                      {currentIndex + 1} of {achievements.length} 🏆
+                    <div className="text-xs text-gray-600 mt-1">
+                      {currentIndex + 1} of {achievements.length} 🌟
                     </div>
                   )}
                 </motion.div>
