@@ -384,19 +384,19 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Educational color palette - Enhanced for kids */
-    --educational-blue: 220 98% 61%;
-    --educational-blue-light: 220 98% 85%;
-    --educational-purple: 282 83% 71%;
-    --educational-purple-light: 282 83% 90%;
-    --educational-green: 142 76% 36%;
-    --educational-green-light: 142 76% 85%;
-    --educational-orange: 25 95% 53%;
-    --educational-orange-light: 25 95% 85%;
-    --educational-pink: 330 81% 60%;
-    --educational-pink-light: 330 81% 85%;
-    --educational-yellow: 48 96% 53%;
-    --educational-yellow-light: 48 96% 85%;
+    /* Educational color palette - Now unified with jungle theme */
+    --educational-blue: var(--sky-blue);
+    --educational-blue-light: var(--sky-blue-light);
+    --educational-purple: var(--playful-purple);
+    --educational-purple-light: 291 64% 80%;
+    --educational-green: var(--jungle-green);
+    --educational-green-light: var(--jungle-green-light);
+    --educational-orange: var(--bright-orange);
+    --educational-orange-light: 30 100% 85%;
+    --educational-pink: var(--coral-red);
+    --educational-pink-light: 14 100% 85%;
+    --educational-yellow: var(--sunshine-yellow);
+    --educational-yellow-light: var(--sunshine-yellow-light);
 
     /* Kid-friendly mascot and character colors */
     --mascot-primary: 45 100% 65%; /* Sunny yellow for main mascot */
