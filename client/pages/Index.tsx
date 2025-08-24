@@ -558,8 +558,8 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
 
-  // Update current progress for goals tracking (using stable dependencies)
-  useEffect(() => {
+  // Compute current progress using useMemo to prevent infinite loops
+  const currentProgress = useMemo(() => {
     const totalWordsLearned = rememberedWords.size;
     const totalAttempts = rememberedWords.size + forgottenWords.size;
     const accuracy =
@@ -567,13 +567,13 @@ export default function Index({ initialProfile }: IndexProps) {
         ? Math.round((rememberedWords.size / totalAttempts) * 100)
         : 0;
 
-    setCurrentProgress({
+    return {
       wordsLearned: totalWordsLearned,
       wordsRemembered: rememberedWords.size,
       sessionCount: dailySessionCount,
       accuracy: accuracy,
-    });
-  }, [rememberedWords.size, forgottenWords.size, dailySessionCount]); // Use .size instead of full Set objects
+    };
+  }, [rememberedWords.size, forgottenWords.size, dailySessionCount]);
 
   // Load saved learning goals on mount
   useEffect(() => {
@@ -672,7 +672,37 @@ export default function Index({ initialProfile }: IndexProps) {
 
     persistenceService.queueSave(sessionData, "medium");
     setLastAutoSave(Date.now());
-  }, [persistenceService, isSessionInitialized]); // Minimal dependencies to prevent infinite loops
+  }, [
+    persistenceService,
+    isSessionInitialized,
+    activeTab,
+    currentWordIndex,
+    selectedCategory,
+    learningMode,
+    userRole,
+    forgottenWords,
+    rememberedWords,
+    excludedWordIds,
+    currentProgress,
+    dailySessionCount,
+    currentProfile,
+    childStats,
+    currentSessionId,
+    learningGoals,
+    currentDashboardWords,
+    customWords,
+    practiceWords,
+    userWordHistory,
+    sessionNumber,
+    lastSystematicSelection,
+    dashboardSession,
+    dashboardSessionNumber,
+    showQuiz,
+    selectedQuizType,
+    showMatchingGame,
+    gameMode,
+    showPracticeGame,
+  ]);
 
   // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
 
