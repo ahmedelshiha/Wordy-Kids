@@ -17,7 +17,7 @@ export const setPronunciationContext = (context: any) => {
 // Legacy AudioService compatibility layer
 export const audioService = {
   pronounceWord: async (
-    word: string,
+    word: any,
     options: {
       rate?: number;
       pitch?: number;
@@ -28,8 +28,9 @@ export const audioService = {
     } = {}
   ): Promise<void> => {
     if (!pronunciationContext) {
-      console.warn('Pronunciation context not available, skipping pronunciation');
-      options.onError?.('Pronunciation context not available');
+      const errorMsg = 'Pronunciation context not available';
+      console.warn(errorMsg + ', skipping pronunciation');
+      options.onError?.(errorMsg);
       return;
     }
 
@@ -42,13 +43,14 @@ export const audioService = {
         onEnd: options.onEnd
       });
     } catch (error) {
-      console.error('Legacy audioService pronunciation failed:', error);
-      options.onError?.(error);
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error('Legacy audioService pronunciation failed:', errorMsg, error);
+      options.onError?.(errorMsg);
     }
   },
 
   pronounceDefinition: async (
-    definition: string,
+    definition: any,
     options: {
       rate?: number;
       onStart?: () => void;
@@ -67,7 +69,8 @@ export const audioService = {
         onEnd: options.onEnd
       });
     } catch (error) {
-      console.error('Legacy definition pronunciation failed:', error);
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error('Legacy definition pronunciation failed:', errorMsg, error);
     }
   },
 
@@ -147,7 +150,7 @@ export const audioService = {
 // Enhanced Audio Service compatibility layer
 export const enhancedAudioService = {
   pronounceWord: async (
-    word: string,
+    word: any,
     options: {
       rate?: number;
       pitch?: number;
@@ -159,8 +162,9 @@ export const enhancedAudioService = {
     } = {}
   ): Promise<void> => {
     if (!pronunciationContext) {
-      console.warn('Pronunciation context not available');
-      options.onError?.('Pronunciation context not available');
+      const errorMsg = 'Pronunciation context not available';
+      console.warn(errorMsg);
+      options.onError?.(errorMsg);
       return;
     }
 
@@ -189,8 +193,9 @@ export const enhancedAudioService = {
       if (options.voiceType && options.voiceType !== originalVoiceType) {
         pronunciationContext.setVoicePreference(originalVoiceType);
       }
-      console.error('Enhanced pronunciation failed:', error);
-      options.onError?.(error);
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error('Enhanced pronunciation failed:', errorMsg, error);
+      options.onError?.(errorMsg);
     }
   },
 
@@ -244,7 +249,7 @@ export const enhancedAudioService = {
 // Enhanced Jungle Audio System compatibility (simplified)
 export const enhancedJungleAudioSystem = {
   speakWordWithEffects: async (
-    word: string,
+    word: any,
     options: {
       rate?: number;
       pitch?: number;
@@ -262,7 +267,7 @@ export const enhancedJungleAudioSystem = {
     });
   },
 
-  speakWord: (word: string, options: any = {}): Promise<void> => {
+  speakWord: (word: any, options: any = {}): Promise<void> => {
     return enhancedAudioService.pronounceWord(word, options);
   },
 
