@@ -5,19 +5,19 @@
  * Run with: node scripts/cleanup-console-logs.js
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const FILES_TO_CLEAN = [
-  'client/components/ProductionErrorBoundary.tsx',
-  'client/components/AchievementSystem.tsx',
-  'client/components/EnhancedSupportManagement.tsx',
-  'client/components/VoiceIntegrationTest.tsx',
-  'client/components/EnhancedWordLibrary.tsx',
-  'client/components/ParentLearningAnalyticsEnhanced.tsx',
-  'client/components/EncouragingFeedback.tsx',
-  'client/components/EnhancedUserManagement.tsx',
-  'client/components/SettingsTestPanel.tsx',
+  "client/components/ProductionErrorBoundary.tsx",
+  "client/components/AchievementSystem.tsx",
+  "client/components/EnhancedSupportManagement.tsx",
+  "client/components/VoiceIntegrationTest.tsx",
+  "client/components/EnhancedWordLibrary.tsx",
+  "client/components/ParentLearningAnalyticsEnhanced.tsx",
+  "client/components/EncouragingFeedback.tsx",
+  "client/components/EnhancedUserManagement.tsx",
+  "client/components/SettingsTestPanel.tsx",
 ];
 
 // Patterns to remove (debug/development console.log statements)
@@ -39,7 +39,7 @@ const PRESERVE_PATTERNS = [
 ];
 
 function shouldPreserveLog(line) {
-  return PRESERVE_PATTERNS.some(pattern => pattern.test(line));
+  return PRESERVE_PATTERNS.some((pattern) => pattern.test(line));
 }
 
 function cleanupFile(filePath) {
@@ -48,16 +48,16 @@ function cleanupFile(filePath) {
     return false;
   }
 
-  let content = fs.readFileSync(filePath, 'utf8');
+  let content = fs.readFileSync(filePath, "utf8");
   let changed = false;
 
   // Remove debug console.log patterns
-  DEBUG_PATTERNS.forEach(pattern => {
+  DEBUG_PATTERNS.forEach((pattern) => {
     const matches = content.match(pattern);
     if (matches) {
-      matches.forEach(match => {
+      matches.forEach((match) => {
         if (!shouldPreserveLog(match)) {
-          content = content.replace(match, '// Debug logging removed');
+          content = content.replace(match, "// Debug logging removed");
           changed = true;
         }
       });
@@ -75,21 +75,21 @@ function cleanupFile(filePath) {
 }
 
 function main() {
-  console.log('🧹 Starting console.log cleanup...\n');
-  
+  console.log("🧹 Starting console.log cleanup...\n");
+
   let totalCleaned = 0;
-  
-  FILES_TO_CLEAN.forEach(filePath => {
+
+  FILES_TO_CLEAN.forEach((filePath) => {
     if (cleanupFile(filePath)) {
       totalCleaned++;
     }
   });
 
   console.log(`\n🎉 Cleanup completed! ${totalCleaned} files were cleaned.`);
-  console.log('\n📝 Manual review recommended for:');
-  console.log('   - Error handling console.log statements');
-  console.log('   - Conditional development logging');
-  console.log('   - Console statements in test files');
+  console.log("\n📝 Manual review recommended for:");
+  console.log("   - Error handling console.log statements");
+  console.log("   - Conditional development logging");
+  console.log("   - Console statements in test files");
 }
 
 if (require.main === module) {

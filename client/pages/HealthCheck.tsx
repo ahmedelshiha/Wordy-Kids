@@ -36,21 +36,23 @@ export const HealthCheck: React.FC = () => {
         <CardContent className="space-y-4">
           <div className="flex justify-between items-center">
             <span>React useState:</span>
-            <span className={`font-semibold ${contextWorks ? 'text-green-600' : 'text-red-600'}`}>
+            <span
+              className={`font-semibold ${contextWorks ? "text-green-600" : "text-red-600"}`}
+            >
               {reactState}
             </span>
           </div>
           <div className="flex justify-between items-center">
             <span>Context Status:</span>
-            <span className={`font-semibold ${contextWorks ? 'text-green-600' : 'text-red-600'}`}>
+            <span
+              className={`font-semibold ${contextWorks ? "text-green-600" : "text-red-600"}`}
+            >
               {contextWorks ? "✅ Working" : "❌ Error"}
             </span>
           </div>
           <div className="flex justify-between items-center">
             <span>TooltipProvider:</span>
-            <span className="font-semibold text-green-600">
-              ✅ Safe Mode
-            </span>
+            <span className="font-semibold text-green-600">✅ Safe Mode</span>
           </div>
         </CardContent>
       </Card>

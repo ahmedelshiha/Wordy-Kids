@@ -36,7 +36,6 @@ export function createServer() {
     res.json({ message: ping });
   });
 
-
   // Admin API routes
   app.get("/api/admin/users", getUsers);
   app.post("/api/admin/users", createUser);
