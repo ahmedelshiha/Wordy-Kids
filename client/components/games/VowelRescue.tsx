@@ -168,18 +168,25 @@ export function VowelRescue({
   }, [timeLeft, isTimedMode, gameStarted, gameComplete]);
 
   const playAudio = () => {
-    // Use speech synthesis API with word pronunciation if available
-    if ("speechSynthesis" in window) {
-      const wordToSpeak = currentQuestion.originalWord?.pronunciation
-        ? currentQuestion.originalWord.word
-        : currentQuestion.word;
+    // Use unified pronunciation system
+    const wordToSpeak = currentQuestion.originalWord?.pronunciation
+      ? currentQuestion.originalWord.word
+      : currentQuestion.word;
 
-      const utterance = new SpeechSynthesisUtterance(wordToSpeak);
-      utterance.rate = 0.7;
-      utterance.pitch = 1.2;
-      utterance.volume = 0.8;
-      speechSynthesis.speak(utterance);
-    }
+    // Import and use the unified pronunciation system
+    import("../lib/unifiedPronunciationService").then(({ usePronunciation }) => {
+      // For components outside provider, use direct speech function
+      import("../lib/speechUtils").then(({ sanitizeTTSInput }) => {
+        const sanitizedWord = sanitizeTTSInput(wordToSpeak);
+        if (sanitizedWord && "speechSynthesis" in window) {
+          const utterance = new SpeechSynthesisUtterance(sanitizedWord);
+          utterance.rate = 0.7;
+          utterance.pitch = 1.2;
+          utterance.volume = 0.8;
+          speechSynthesis.speak(utterance);
+        }
+      });
+    });
   };
 
   const handleVowelSelect = (vowel: string, position: number) => {
