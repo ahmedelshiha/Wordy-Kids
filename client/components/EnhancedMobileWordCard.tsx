@@ -549,8 +549,8 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
               <Button
                 size="sm"
                 variant="ghost"
-                className={`text-white hover:bg-white/20 p-2 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-all duration-300 ${
-                  isFavorited ? "scale-110 text-red-300 bg-red-500/20" : ""
+                className={`text-gray-200 hover:bg-white/40 hover:text-gray-800 p-2 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-all duration-300 ${
+                  isFavorited ? "scale-110 text-red-300 bg-red-500/40" : ""
                 }`}
                 onClick={(e) => {
                   e.stopPropagation();
