@@ -52,7 +52,7 @@ const DIFFICULTY_COLORS = {
   silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme
   gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme
   diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme
-  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // ���� Legend theme
+  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // 🌈 Legend theme
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -283,7 +283,7 @@ export function CompactAchievementPopup({
                   </p>
 
                   {/* Minimal Badge */}
-                  <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full mb-2">
+                  <Badge className="bg-white/60 text-emerald-800 border-0 text-xs px-2 py-0.5 rounded-full mb-2 font-bold shadow-sm">
                     {getDifficultyEmoji(currentAchievement.difficulty)}{" "}
                     {currentAchievement.difficulty.toUpperCase()}
                   </Badge>
@@ -294,7 +294,7 @@ export function CompactAchievementPopup({
                       initial={{ scale: 0.9, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.3, type: "spring", duration: 0.2 }}
-                      className="bg-white/20 rounded-lg p-2 mb-2"
+                      className="bg-white/60 rounded-lg p-2 mb-2 border-2 border-white/70 shadow-lg"
                     >
                       <div className="text-xs font-bold text-yellow-200 mb-1">
                         🎁 REWARD!
@@ -306,7 +306,7 @@ export function CompactAchievementPopup({
                           : currentAchievement.reward.item}
                       </div>
                       {currentAchievement.reward.value && (
-                        <div className="text-xs text-white/90">
+                        <div className="text-xs text-emerald-700">
                           +{currentAchievement.reward.value} pts!
                         </div>
                       )}
@@ -320,7 +320,7 @@ export function CompactAchievementPopup({
                         <div
                           key={index}
                           className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                            index === currentIndex ? "bg-white" : "bg-white/30"
+                            index === currentIndex ? "bg-emerald-600" : "bg-emerald-300"
                           }`}
                         />
                       ))}
