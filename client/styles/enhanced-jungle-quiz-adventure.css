@@ -318,16 +318,16 @@
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(232, 245, 232, 0.9) 50%,
-    rgba(255, 255, 255, 0.95) 100%
+    hsl(0 0% 100% / 0.95) 0%,
+    hsl(var(--color-jungle-100) / 0.9) 50%,
+    hsl(0 0% 100% / 0.95) 100%
   );
-  border: 3px solid rgba(76, 175, 80, 0.4);
+  border: 3px solid var(--quiz-treasure-border);
   box-shadow:
-    0 20px 40px rgba(76, 175, 80, 0.2),
-    0 10px 25px rgba(139, 195, 74, 0.1),
-    inset 0 2px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -2px 0 rgba(76, 175, 80, 0.1);
+    0 20px 40px var(--quiz-treasure-shadow),
+    0 10px 25px hsl(var(--color-jungle-400) / 0.1),
+    inset 0 2px 0 hsl(0 0% 100% / 0.7),
+    inset 0 -2px 0 hsl(var(--color-jungle-500) / 0.1);
 }
 
 .jungle-treasure-card:hover {
