@@ -430,7 +430,7 @@ export const EnhancedVocabularyBuilder: React.FC<
               className={`min-h-[48px] px-6 ${
                 accessibilitySettings.highContrast
                   ? "bg-white text-black hover:bg-gray-200"
-                  : "bg-white/20 text-white hover:bg-white/30"
+                  : "bg-slate-800/80 text-white hover:bg-slate-700/90 border border-white/20"
               }`}
               aria-label="Start new session"
             >
@@ -442,7 +442,7 @@ export const EnhancedVocabularyBuilder: React.FC<
               className={`min-h-[48px] px-6 ${
                 accessibilitySettings.highContrast
                   ? "bg-white text-black hover:bg-gray-200"
-                  : "bg-white/20 text-white hover:bg-white/30"
+                  : "bg-slate-800/80 text-white hover:bg-slate-700/90 border border-white/20"
               }`}
               aria-label="Return to word library"
             >
