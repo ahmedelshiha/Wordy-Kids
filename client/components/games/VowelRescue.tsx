@@ -168,25 +168,28 @@ export function VowelRescue({
   }, [timeLeft, isTimedMode, gameStarted, gameComplete]);
 
   const playAudio = () => {
-    // Use unified pronunciation system
+    // Import sanitization helper to prevent "[object Object]" errors
+    const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+
     const wordToSpeak = currentQuestion.originalWord?.pronunciation
       ? currentQuestion.originalWord.word
       : currentQuestion.word;
 
-    // Import and use the unified pronunciation system
-    import("../lib/unifiedPronunciationService").then(({ usePronunciation }) => {
-      // For components outside provider, use direct speech function
-      import("../lib/speechUtils").then(({ sanitizeTTSInput }) => {
-        const sanitizedWord = sanitizeTTSInput(wordToSpeak);
-        if (sanitizedWord && "speechSynthesis" in window) {
-          const utterance = new SpeechSynthesisUtterance(sanitizedWord);
-          utterance.rate = 0.7;
-          utterance.pitch = 1.2;
-          utterance.volume = 0.8;
-          speechSynthesis.speak(utterance);
-        }
-      });
-    });
+    // Sanitize input to prevent errors
+    const sanitizedWord = sanitizeTTSInput(wordToSpeak);
+    if (!sanitizedWord) {
+      logSpeechError("VowelRescue.playAudio", wordToSpeak, "Empty word after sanitization");
+      return;
+    }
+
+    // Use speech synthesis API with sanitized input
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
+      utterance.rate = 0.7;
+      utterance.pitch = 1.2;
+      utterance.volume = 0.8;
+      speechSynthesis.speak(utterance);
+    }
   };
 
   const handleVowelSelect = (vowel: string, position: number) => {
