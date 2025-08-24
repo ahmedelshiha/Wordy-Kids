@@ -571,11 +571,36 @@
     }
   }
 
-  /* Kid-friendly typography system */
+  /* PHASE 3: Emoji-safe font declarations */
+  .emoji-text {
+    font-family:
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Noto Color Emoji",
+      "Android Emoji",
+      "EmojiSymbols",
+      system-ui,
+      sans-serif;
+    font-variant-emoji: unicode;
+    text-rendering: optimizeLegibility;
+  }
+
+  .emoji-fallback {
+    font-family:
+      "Segoe UI Symbol",
+      "Symbola",
+      "DejaVu Sans",
+      sans-serif;
+  }
+
+  /* Kid-friendly typography system with emoji support */
   .font-kid-friendly {
     font-family:
       "Comic Neue",
       "Nunito",
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Noto Color Emoji",
       -apple-system,
       BlinkMacSystemFont,
       sans-serif;
