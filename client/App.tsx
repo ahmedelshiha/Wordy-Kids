@@ -26,6 +26,7 @@ import { LightweightAchievementProvider } from "./components/LightweightAchievem
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import IconNavTest from "./pages/IconNavTest";
+import HealthCheck from "./pages/HealthCheck";
 
 const queryClient = new QueryClient();
 
@@ -167,6 +168,7 @@ const App = () => {
                         element={<ErrorBoundaryTest />}
                       />
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
+                      <Route path="/health" element={<HealthCheck />} />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
