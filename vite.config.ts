@@ -23,9 +23,6 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
   },
-  optimizeDeps: {
-    exclude: ["backup/**/*"],
-  },
   plugins: [react(), expressPlugin()],
   resolve: {
     alias: {
