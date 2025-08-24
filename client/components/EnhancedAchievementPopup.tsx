@@ -69,7 +69,8 @@ const DIFFICULTY_COLORS = {
   silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme - fresh growth
   gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme - bright flowers
   diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme - majestic canopy
-  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 via-yellow-300 to-orange-300", // 🌈 Legend theme - magical aurora
+  rainbow:
+    "from-pink-300 via-purple-300 via-blue-300 via-green-300 via-yellow-300 to-orange-300", // 🌈 Legend theme - magical aurora
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -102,7 +103,10 @@ const CelebrationParticles = React.memo(() => {
           key={i}
           className="absolute text-lg sm:text-xl"
           initial={{
-            x: typeof window !== "undefined" ? Math.random() * window.innerWidth : 400,
+            x:
+              typeof window !== "undefined"
+                ? Math.random() * window.innerWidth
+                : 400,
             y: typeof window !== "undefined" ? window.innerHeight + 50 : 600,
             rotate: 0,
             opacity: 0,
@@ -430,7 +434,11 @@ export function EnhancedAchievementPopup({
                 {/* Magical jungle effects overlay */}
                 <JungleMagicalEffects
                   show={showReward}
-                  variant={currentAchievement.difficulty === "diamond" ? "rainbow" : "fireflies"}
+                  variant={
+                    currentAchievement.difficulty === "diamond"
+                      ? "rainbow"
+                      : "fireflies"
+                  }
                   intensity="medium"
                   className="rounded-xl"
                 />
@@ -520,7 +528,8 @@ export function EnhancedAchievementPopup({
                           )}
                           {currentAchievement.reward.value && (
                             <div className="text-xs text-emerald-700 mt-1">
-                              +{currentAchievement.reward.value} adventure points!
+                              +{currentAchievement.reward.value} adventure
+                              points!
                             </div>
                           )}
                         </motion.div>
@@ -535,7 +544,9 @@ export function EnhancedAchievementPopup({
                         <div
                           key={index}
                           className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                            index === currentIndex ? "bg-emerald-600" : "bg-emerald-300"
+                            index === currentIndex
+                              ? "bg-emerald-600"
+                              : "bg-emerald-300"
                           }`}
                         />
                       ))}

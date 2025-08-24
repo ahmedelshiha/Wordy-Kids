@@ -34,7 +34,8 @@ const DIFFICULTY_COLORS = {
   silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme - fresh growth
   gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme - bright flowers
   diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme - majestic canopy
-  legendary: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // 🌈 Legend theme - magical aurora
+  legendary:
+    "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // 🌈 Legend theme - magical aurora
 } as const;
 
 const DIFFICULTY_ICONS = {

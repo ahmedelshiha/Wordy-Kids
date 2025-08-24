@@ -16,9 +16,12 @@ export const JungleMagicalEffects: React.FC<JungleMagicalEffectsProps> = ({
 }) => {
   const getEffectCount = () => {
     switch (intensity) {
-      case "low": return 8;
-      case "high": return 20;
-      default: return 12;
+      case "low":
+        return 8;
+      case "high":
+        return 20;
+      default:
+        return 12;
     }
   };
 
@@ -27,19 +30,34 @@ export const JungleMagicalEffects: React.FC<JungleMagicalEffectsProps> = ({
       case "fireflies":
         return index % 3 === 0 ? "✨" : index % 3 === 1 ? "🌟" : "💫";
       case "leaves":
-        return index % 4 === 0 ? "🍃" : index % 4 === 1 ? "🌿" : index % 4 === 2 ? "🌱" : "🍀";
+        return index % 4 === 0
+          ? "🍃"
+          : index % 4 === 1
+            ? "🌿"
+            : index % 4 === 2
+              ? "🌱"
+              : "🍀";
       case "sparkles":
         return index % 2 === 0 ? "✨" : "⭐";
       case "rainbow":
-        return index % 6 === 0 ? "🌈" : index % 6 === 1 ? "⭐" : index % 6 === 2 ? "✨" : 
-               index % 6 === 3 ? "🌟" : index % 6 === 4 ? "💫" : "🎨";
+        return index % 6 === 0
+          ? "🌈"
+          : index % 6 === 1
+            ? "⭐"
+            : index % 6 === 2
+              ? "✨"
+              : index % 6 === 3
+                ? "🌟"
+                : index % 6 === 4
+                  ? "💫"
+                  : "🎨";
       default:
         return "✨";
     }
   };
 
   const getAnimationDuration = (index: number) => {
-    return 2 + (index * 0.2) + Math.random() * 1.5;
+    return 2 + index * 0.2 + Math.random() * 1.5;
   };
 
   const getRandomPosition = () => {
@@ -52,11 +70,13 @@ export const JungleMagicalEffects: React.FC<JungleMagicalEffectsProps> = ({
   return (
     <AnimatePresence>
       {show && (
-        <div className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
+        <div
+          className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
+        >
           {Array.from({ length: getEffectCount() }, (_, index) => {
             const startPos = getRandomPosition();
             const endPos = getRandomPosition();
-            
+
             return (
               <motion.div
                 key={`${variant}-${index}`}
@@ -84,10 +104,14 @@ export const JungleMagicalEffects: React.FC<JungleMagicalEffectsProps> = ({
                   delay: index * 0.1,
                   ease: "easeInOut",
                   repeat: variant === "fireflies" ? Infinity : 0,
-                  repeatDelay: variant === "fireflies" ? 3 + Math.random() * 2 : 0,
+                  repeatDelay:
+                    variant === "fireflies" ? 3 + Math.random() * 2 : 0,
                 }}
                 style={{
-                  filter: variant === "fireflies" ? "drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))" : "none",
+                  filter:
+                    variant === "fireflies"
+                      ? "drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))"
+                      : "none",
                 }}
               >
                 {getEffectEmoji(variant, index)}
