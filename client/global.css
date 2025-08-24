@@ -1698,7 +1698,7 @@
 
 /* Optimized kid-friendly component classes for smaller screens */
 .kid-card {
-  @apply bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-purple-200 p-2 lg:p-3 transition-all duration-300 hover:shadow-lg hover:scale-102;
+  @apply bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-purple-200 p-2 lg:p-3 transition-all duration-300 hover:shadow-lg hover:scale-102 text-slate-800;
 }
 
 .kid-nav-item {
