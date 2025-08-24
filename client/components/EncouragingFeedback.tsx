@@ -268,12 +268,12 @@ export function EncouragingFeedback({
             {(feedback.points || feedback.streak) && (
               <div className="flex justify-center gap-2 flex-wrap">
                 {feedback.points && (
-                  <Badge className="bg-white/30 text-white border-white/30 text-sm py-1 px-3">
+                  <Badge className="bg-emerald-500 text-white border-emerald-400 text-sm py-1 px-3 shadow-lg">
                     <Zap className="w-3 h-3 mr-1" />+{feedback.points} points
                   </Badge>
                 )}
                 {feedback.streak && (
-                  <Badge className="bg-white/30 text-white border-white/30 text-sm py-1 px-3">
+                  <Badge className="bg-amber-500 text-white border-amber-400 text-sm py-1 px-3 shadow-lg">
                     <Target className="w-3 h-3 mr-1" />
                     {feedback.streak} day streak
                   </Badge>
@@ -291,7 +291,7 @@ export function EncouragingFeedback({
                   feedback.onTryAgain?.();
                   onClose();
                 }}
-                className="bg-white/20 hover:bg-white/30 text-white border-white/30 px-4 py-2 text-base"
+                className="bg-white/70 hover:bg-white/90 text-gray-800 border-white/50 px-4 py-2 text-base font-semibold"
                 variant="outline"
               >
                 Try Again 🔄
