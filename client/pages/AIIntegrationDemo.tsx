@@ -64,7 +64,7 @@ export default function AIIntegrationDemo() {
       {
         id: "streak-master",
         name: "Streak Master",
-        icon: "🔥",
+        icon: "��",
         earned: true,
         description: "7-day learning streak",
       },
@@ -115,7 +115,7 @@ export default function AIIntegrationDemo() {
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
           AI Integration Demo
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p className="text-xl text-text-secondary max-w-2xl mx-auto">
           Experience the power of AI-enhanced word learning integrated into your
           existing dashboard.
         </p>
@@ -200,7 +200,7 @@ export default function AIIntegrationDemo() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
                     <Sparkles className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium text-blue-800">
@@ -213,7 +213,7 @@ export default function AIIntegrationDemo() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
                     <TrendingUp className="w-5 h-5 text-purple-600 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium text-purple-800">
@@ -226,7 +226,7 @@ export default function AIIntegrationDemo() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
                     <Target className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium text-green-800">
@@ -239,7 +239,7 @@ export default function AIIntegrationDemo() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
                     <Zap className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-medium text-orange-800">
@@ -265,8 +265,8 @@ export default function AIIntegrationDemo() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       Learning Velocity
                     </span>
                     <span className="text-sm font-bold text-green-600">
@@ -274,15 +274,15 @@ export default function AIIntegrationDemo() {
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       Retention Prediction
                     </span>
                     <span className="text-sm font-bold text-blue-600">87%</span>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       Engagement Score
                     </span>
                     <span className="text-sm font-bold text-purple-600">
@@ -290,8 +290,8 @@ export default function AIIntegrationDemo() {
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       AI Confidence
                     </span>
                     <span className="text-sm font-bold text-orange-600">
@@ -322,10 +322,10 @@ export default function AIIntegrationDemo() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-3">
+                  <h4 className="font-semibold text-text mb-3">
                     Standard Word Selection
                   </h4>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <ul className="space-y-2 text-sm text-text-secondary">
                     <li>• Random or category-based selection</li>
                     <li>• Fixed difficulty progression</li>
                     <li>• Generic encouragement messages</li>
@@ -376,8 +376,8 @@ export default function AIIntegrationDemo() {
                 <h3 className="text-lg font-semibold">
                   Step 1: Update LearningDashboard Usage
                 </h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <pre className="text-sm text-gray-800 overflow-x-auto">
+                <div className="bg-surface-2 p-4 rounded-lg">
+                  <pre className="text-sm text-text overflow-x-auto">
                     <code>{`<LearningDashboard
   stats={learningStats}
   userName="Alex"
@@ -412,17 +412,17 @@ export default function AIIntegrationDemo() {
                     </h4>
                     <ul className="text-sm space-y-1">
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">userId</code>{" "}
+                        <code className="bg-surface-2 px-1 rounded">userId</code>{" "}
                         - Unique user identifier
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           enableAIEnhancement
                         </code>{" "}
                         - Toggle AI features
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           userProgress
                         </code>{" "}
                         - Learning progress data
@@ -435,19 +435,19 @@ export default function AIIntegrationDemo() {
                     </h4>
                     <ul className="text-sm space-y-1">
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           selectedCategory
                         </code>{" "}
                         - Current category
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           onSessionComplete
                         </code>{" "}
                         - Session callback
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           childStats
                         </code>{" "}
                         - Performance data
@@ -505,7 +505,7 @@ export default function AIIntegrationDemo() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               variant="secondary"
-              className="bg-white text-blue-600 hover:bg-gray-100"
+              className="bg-white text-blue-600 hover:bg-surface-2"
               onClick={() => (window.location.href = "#demo")}
             >
               <Play className="w-4 h-4 mr-2" />
