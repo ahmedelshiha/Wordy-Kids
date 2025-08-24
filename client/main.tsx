@@ -1,11 +1,17 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.minimal";
+import App from "./App";
 
+// Create the root only once
 const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Root element not found");
 }
 
+// Create root with React 18 best practices
 const root = createRoot(rootElement);
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
