@@ -64,12 +64,11 @@ interface EnhancedAchievementPopupProps {
 }
 
 const DIFFICULTY_COLORS = {
-  bronze: "from-orange-400 to-amber-600",
-  silver: "from-gray-300 to-gray-500",
-  gold: "from-yellow-400 to-yellow-600",
-  diamond: "from-blue-400 to-purple-600",
-  rainbow:
-    "from-pink-400 via-purple-400 via-blue-400 via-green-400 via-yellow-400 to-red-400",
+  bronze: "from-amber-200 via-orange-300 to-yellow-300", // 🌱 Seed theme - warm sunrise
+  silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme - fresh growth
+  gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme - bright flowers
+  diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme - majestic canopy
+  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 via-yellow-300 to-orange-300", // 🌈 Legend theme - magical aurora
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -368,7 +367,7 @@ export function EnhancedAchievementPopup({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-gradient-to-br from-emerald-100/80 via-green-200/70 to-yellow-100/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
         >
           <CelebrationParticles />
 
@@ -385,7 +384,7 @@ export function EnhancedAchievementPopup({
             onTouchEnd={handleMouseLeave}
           >
             <Card
-              className={`bg-gradient-to-br ${difficultyColor} text-white shadow-xl border-0 overflow-hidden rounded-2xl`}
+              className={`bg-gradient-to-br ${difficultyColor} text-gray-800 shadow-xl border-4 border-white/50 overflow-hidden rounded-2xl backdrop-blur-sm`}
             >
               {/* Close Button - Smaller for mobile */}
               <Button
