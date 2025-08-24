@@ -10,6 +10,16 @@
  * @returns A safe string for text-to-speech synthesis
  */
 export function sanitizeTTSInput(input: any): string {
+  // Debug logging for troubleshooting
+  if (process.env.NODE_ENV === 'development') {
+    console.log('sanitizeTTSInput received:', {
+      input,
+      type: typeof input,
+      constructor: input?.constructor?.name,
+      isArray: Array.isArray(input)
+    });
+  }
+
   // Handle null/undefined/empty values
   if (!input && input !== 0) {
     return "";
@@ -22,6 +32,11 @@ export function sanitizeTTSInput(input: any): string {
 
   // Numbers are fine to speak
   if (typeof input === "number") {
+    return String(input);
+  }
+
+  // Handle boolean values
+  if (typeof input === "boolean") {
     return String(input);
   }
 
