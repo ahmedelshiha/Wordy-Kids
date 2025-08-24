@@ -130,13 +130,16 @@ export function createSafeUtterance(
   const text = sanitizeTTSInput(input);
 
   if (!text || text.length === 0) {
-    console.warn("Cannot create utterance: empty text after sanitization", {
-      originalInput: input,
-    });
+    logSpeechError('createSafeUtterance', input, 'Empty text after sanitization');
     return null;
   }
 
-  return new SpeechSynthesisUtterance(text);
+  try {
+    return new SpeechSynthesisUtterance(text);
+  } catch (error) {
+    logSpeechError('createSafeUtterance', input, error);
+    return null;
+  }
 }
 
 /**
