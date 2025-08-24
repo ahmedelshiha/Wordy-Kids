@@ -291,7 +291,7 @@ export function EncouragingFeedback({
                   feedback.onTryAgain?.();
                   onClose();
                 }}
-                className="bg-white/20 hover:bg-white/30 text-white border-white/30 px-4 py-2 text-base"
+                className="bg-slate-800/80 hover:bg-slate-700/90 text-white border-slate-600/50 px-4 py-2 text-base"
                 variant="outline"
               >
                 Try Again 🔄
