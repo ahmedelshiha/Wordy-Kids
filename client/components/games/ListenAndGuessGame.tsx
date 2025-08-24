@@ -132,18 +132,15 @@ function speakWord(word: string, funny = false, fallback?: string) {
 
   const synth =
     typeof window !== "undefined" ? window.speechSynthesis : undefined;
-  // Import sanitization helper to prevent "[object Object]" errors
-  const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
 
   if (synth && typeof SpeechSynthesisUtterance !== "undefined") {
-    // Re-sanitize input to ensure safety (since this function already gets sanitizedWord)
-    const doubleSanitizedWord = sanitizeTTSInput(sanitizedWord);
-    if (!doubleSanitizedWord) {
-      logSpeechError("ListenAndGuessGame.speakWord", sanitizedWord, "Empty word after sanitization");
+    // Note: sanitizedWord is already sanitized, but let's ensure it's safe
+    if (!sanitizedWord || typeof sanitizedWord !== 'string') {
+      console.error("ListenAndGuessGame.speakWord: Invalid word input", sanitizedWord);
       return;
     }
 
-    const u = new SpeechSynthesisUtterance(doubleSanitizedWord);
+    const u = new SpeechSynthesisUtterance(sanitizedWord);
     // Kid‑friendly voices if available
     const voices = synth.getVoices();
     // Try a child‑like voice (heuristic)
