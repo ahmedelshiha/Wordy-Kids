@@ -334,7 +334,7 @@ export function CompactAchievementPopup({
                       !claimed.has(currentAchievement.id) && (
                         <Button
                           onClick={handleClaimReward}
-                          className="w-full bg-white text-gray-800 hover:bg-white/90 font-bold py-1.5 px-3 rounded-lg text-xs"
+                          className="w-full bg-emerald-500 text-white hover:bg-emerald-600 font-bold py-1.5 px-3 rounded-lg text-xs transform hover:scale-105"
                         >
                           🎉 CLAIM! 🎉
                         </Button>
@@ -346,7 +346,7 @@ export function CompactAchievementPopup({
                           achievements.length > 1 ? handleNext : handleClose
                         }
                         variant="outline"
-                        className="flex-1 bg-white/15 text-white border-white/25 hover:bg-white/25 py-1 text-xs"
+                        className="flex-1 bg-white/60 text-gray-800 border-white/50 hover:bg-white/80 py-1 text-xs font-semibold"
                       >
                         {currentIndex < achievements.length - 1
                           ? "Next →"
@@ -357,9 +357,9 @@ export function CompactAchievementPopup({
 
                   {/* Auto-close indicator */}
                   <div className="mt-2">
-                    <div className="w-full bg-white/20 rounded-full h-1 overflow-hidden">
+                    <div className="w-full bg-white/40 rounded-full h-1 overflow-hidden">
                       <motion.div
-                        className="h-full bg-white/40 rounded-full"
+                        className="h-full bg-emerald-500 rounded-full"
                         initial={{ scaleX: 1 }}
                         animate={{ scaleX: 0 }}
                         transition={{ duration: 2, ease: "linear" }}
