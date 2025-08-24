@@ -45,7 +45,7 @@ interface EnhancedWordCardProps {
   className?: string;
 }
 
-export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
+const EnhancedWordCardComponent: React.FC<EnhancedWordCardProps> = ({
   word,
   showDefinition = false,
   onPronounce,
