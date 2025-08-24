@@ -10,6 +10,16 @@
  * @returns A safe string for text-to-speech synthesis
  */
 export function sanitizeTTSInput(input: any): string {
+  // Debug logging for troubleshooting
+  if (process.env.NODE_ENV === "development") {
+    console.log("sanitizeTTSInput received:", {
+      input,
+      type: typeof input,
+      constructor: input?.constructor?.name,
+      isArray: Array.isArray(input),
+    });
+  }
+
   // Handle null/undefined/empty values
   if (!input && input !== 0) {
     return "";
@@ -25,6 +35,31 @@ export function sanitizeTTSInput(input: any): string {
     return String(input);
   }
 
+  // Handle boolean values
+  if (typeof input === "boolean") {
+    return String(input);
+  }
+
+  // Handle React elements and components
+  if (input && typeof input === "object" && input.$$typeof) {
+    console.warn(
+      "React element passed to TTS, extracting children or text content",
+    );
+    // Extract text from React children
+    if (input.props && input.props.children) {
+      return sanitizeTTSInput(input.props.children);
+    }
+    return "";
+  }
+
+  // Handle arrays (like React children arrays)
+  if (Array.isArray(input)) {
+    const textParts = input
+      .map((item) => sanitizeTTSInput(item))
+      .filter((text) => text.trim());
+    return textParts.join(" ");
+  }
+
   // Handle objects with common word/text properties
   if (typeof input === "object" && input !== null) {
     // Check for common word object shapes
@@ -34,6 +69,18 @@ export function sanitizeTTSInput(input: any): string {
 
     if (typeof input.text === "string" && input.text.trim()) {
       return input.text.trim();
+    }
+
+    if (typeof input.content === "string" && input.content.trim()) {
+      return input.content.trim();
+    }
+
+    if (typeof input.label === "string" && input.label.trim()) {
+      return input.label.trim();
+    }
+
+    if (typeof input.value === "string" && input.value.trim()) {
+      return input.value.trim();
     }
 
     // Check for custom toString method (not the default Object.prototype.toString)
@@ -51,13 +98,24 @@ export function sanitizeTTSInput(input: any): string {
       }
     }
 
+    // Log problematic objects for debugging
+    console.warn("Problematic object passed to TTS:", {
+      input,
+      keys: Object.keys(input),
+      constructor: input.constructor?.name,
+    });
+
     // Try to serialize the object nicely
     try {
-      return JSON.stringify(input);
+      const jsonString = JSON.stringify(input);
+      if (jsonString !== "{}" && jsonString !== "[]") {
+        return jsonString;
+      }
     } catch (error) {
       console.warn("Error serializing TTS input object:", error);
-      return "[object Object]";
     }
+
+    return "[object Object]";
   }
 
   // Fallback: convert to string
@@ -76,13 +134,20 @@ export function createSafeUtterance(
   const text = sanitizeTTSInput(input);
 
   if (!text || text.length === 0) {
-    console.warn("Cannot create utterance: empty text after sanitization", {
-      originalInput: input,
-    });
+    logSpeechError(
+      "createSafeUtterance",
+      input,
+      "Empty text after sanitization",
+    );
     return null;
   }
 
-  return new SpeechSynthesisUtterance(text);
+  try {
+    return new SpeechSynthesisUtterance(text);
+  } catch (error) {
+    logSpeechError("createSafeUtterance", input, error);
+    return null;
+  }
 }
 
 /**
@@ -99,11 +164,22 @@ export function logSpeechError(
 ): void {
   const errorInfo = {
     context,
-    originalInput:
-      typeof originalInput === "object"
-        ? JSON.stringify(originalInput)
-        : originalInput,
+    originalInput: (() => {
+      try {
+        if (typeof originalInput === "string") return originalInput;
+        if (typeof originalInput === "number") return originalInput;
+        if (typeof originalInput === "boolean") return originalInput;
+        if (originalInput === null || originalInput === undefined)
+          return originalInput;
+        return JSON.stringify(originalInput, null, 2);
+      } catch (e) {
+        return `[Unserializable ${typeof originalInput}]`;
+      }
+    })(),
     inputType: typeof originalInput,
+    inputConstructor: originalInput?.constructor?.name,
+    isArray: Array.isArray(originalInput),
+    sanitizedInput: sanitizeTTSInput(originalInput),
     timestamp: new Date().toISOString(),
     error:
       error instanceof Error
@@ -112,8 +188,19 @@ export function logSpeechError(
             message: error.message,
             stack: error.stack,
           }
-        : String(error),
+        : typeof error === "object"
+          ? JSON.stringify(error)
+          : String(error),
+    userAgent:
+      typeof navigator !== "undefined" ? navigator.userAgent : "Unknown",
+    speechSynthesisSupported:
+      typeof window !== "undefined" && "speechSynthesis" in window,
   };
 
-  console.error(`Speech synthesis error in ${context}:`, errorInfo);
+  console.error(`🔊 Speech synthesis error in ${context}:`, errorInfo);
+
+  // Also log a simplified version for easier debugging
+  console.error(
+    `🔊 Simple error: ${context} failed with input "${errorInfo.sanitizedInput}" - ${String(errorInfo.error)}`,
+  );
 }
