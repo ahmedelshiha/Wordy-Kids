@@ -116,9 +116,19 @@ export const WordPracticeGame: React.FC<WordPracticeGameProps> = ({
   };
 
   const playPronunciation = () => {
-    // Simulate pronunciation - in real app would use speech synthesis
+    // Import sanitization helper to prevent "[object Object]" errors
+    const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+
+    // Sanitize input to prevent errors
+    const sanitizedWord = sanitizeTTSInput(currentWord.word);
+    if (!sanitizedWord) {
+      logSpeechError("WordPracticeGame.playPronunciation", currentWord.word, "Empty word after sanitization");
+      return;
+    }
+
+    // Use speech synthesis with sanitized input
     if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(currentWord.word);
+      const utterance = new SpeechSynthesisUtterance(sanitizedWord);
       utterance.rate = 0.8;
       speechSynthesis.speak(utterance);
     }
