@@ -38,10 +38,16 @@ export function createServer() {
   app.use(express.json({ charset: 'utf-8' }));
   app.use(express.urlencoded({ extended: true, charset: 'utf-8' }));
 
+  // PHASE 2: Ensure JSON responses preserve emoji encoding
+  app.use('/api', (req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+    next();
+  });
+
   // Example API routes
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
+    res.json({ message: ping, emoji: "🎯", timestamp: new Date().toISOString() });
   });
 
   app.get("/api/demo", handleDemo);
