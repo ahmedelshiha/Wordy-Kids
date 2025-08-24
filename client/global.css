@@ -1,6 +1,18 @@
 /* Import Baloo 2 Google Font */
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@300;400;500;600;700;800&display=swap");
 
+/* ========================================
+ * JUNGLE ADVENTURE DESIGN SYSTEM
+ * ======================================== */
+/* Import Jungle Adventure Design Tokens - FIRST for CSS custom properties */
+@import "./styles/jungle-design-tokens.css";
+
+/* Import Jungle Adventure Motion System - SECOND for animations */
+@import "./styles/jungle-motion-system.css";
+
+/* ========================================
+ * LEGACY STYLE IMPORTS (to be migrated)
+ * ======================================== */
 /* Import mobile games optimization */
 @import "./styles/mobile-games-optimization.css";
 

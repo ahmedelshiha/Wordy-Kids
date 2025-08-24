@@ -1,0 +1,437 @@
+/**
+ * Jungle Adventure Design Token System
+ * A comprehensive, mobile-first design token system for Wordy Kids
+ * Unified across all routes with accessibility and performance optimization
+ */
+
+:root {
+  /* ========================================
+   * BRAND COLORS (HSL for easy theming)
+   * ======================================== */
+  --color-jungle-700: 122 39% 28%; /* Deep jungle for text */
+  --color-jungle-600: 122 39% 36%; /* Jungle hover states */
+  --color-jungle-500: 122 39% 49%; /* Primary jungle brand */
+  --color-jungle-400: 122 39% 62%; /* Lighter jungle */
+  --color-jungle-300: 122 39% 72%; /* Subtle jungle accents */
+  --color-jungle-200: 122 39% 85%; /* Very light jungle */
+  --color-jungle-100: 122 39% 95%; /* Background tints */
+
+  --color-banana-600: 45 100% 45%; /* Darker banana */
+  --color-banana-500: 45 100% 51%; /* Primary banana yellow */
+  --color-banana-400: 45 100% 60%; /* Lighter banana */
+  --color-banana-300: 45 100% 70%; /* Subtle banana */
+  --color-banana-200: 45 100% 85%; /* Light banana tints */
+  --color-banana-100: 45 100% 95%; /* Background banana */
+
+  --color-sky-600: 207 90% 45%; /* Darker sky */
+  --color-sky-500: 207 90% 54%; /* Primary sky blue */
+  --color-sky-400: 207 90% 65%; /* Lighter sky */
+  --color-sky-300: 207 90% 75%; /* Subtle sky */
+  --color-sky-200: 207 90% 85%; /* Light sky tints */
+  --color-sky-100: 207 90% 95%; /* Background sky */
+
+  --color-wood-600: 30 46% 25%; /* Darker wood */
+  --color-wood-500: 30 46% 35%; /* Primary wood brown */
+  --color-wood-400: 30 46% 50%; /* Lighter wood */
+  --color-wood-300: 30 46% 65%; /* Subtle wood */
+  --color-wood-200: 30 46% 80%; /* Light wood tints */
+
+  --color-berry-600: 330 75% 35%; /* Darker berry */
+  --color-berry-500: 330 75% 48%; /* Primary berry red */
+  --color-berry-400: 330 75% 60%; /* Lighter berry */
+  --color-berry-300: 330 75% 75%; /* Subtle berry */
+  --color-berry-200: 330 75% 85%; /* Light berry tints */
+
+  /* ========================================
+   * SURFACE & SEMANTIC COLORS
+   * ======================================== */
+  --color-bg: 150 28% 98%; /* Main background */
+  --color-surface: 0 0% 100%; /* Card/panel surfaces */
+  --color-surface-2: 150 20% 96%; /* Secondary surfaces */
+  --color-surface-3: 150 15% 94%; /* Tertiary surfaces */
+  --color-border: 150 10% 86%; /* Default borders */
+  --color-border-light: 150 8% 92%; /* Light borders */
+
+  --color-text: 210 15% 15%; /* Primary text */
+  --color-text-secondary: 210 10% 35%; /* Secondary text */
+  --color-text-muted: 210 8% 55%; /* Muted text */
+  --color-text-inverse: 0 0% 100%; /* Text on dark backgrounds */
+
+  /* Semantic colors */
+  --color-success: 150 55% 40%; /* Success states */
+  --color-success-light: 150 55% 85%; /* Success backgrounds */
+  --color-warning: 40 100% 50%; /* Warning states */
+  --color-warning-light: 40 100% 85%; /* Warning backgrounds */
+  --color-danger: 0 75% 50%; /* Error states */
+  --color-danger-light: 0 75% 85%; /* Error backgrounds */
+  --color-info: 207 90% 54%; /* Info states */
+  --color-info-light: 207 90% 85%; /* Info backgrounds */
+
+  /* ========================================
+   * ADMIN PALETTE (Neutral Professional)
+   * ======================================== */
+  --color-admin-bg: 220 13% 98%; /* Admin background */
+  --color-admin-surface: 220 13% 100%; /* Admin surfaces */
+  --color-admin-border: 220 13% 91%; /* Admin borders */
+  --color-admin-text: 220 13% 15%; /* Admin text */
+  --color-admin-text-muted: 220 8% 55%; /* Admin muted text */
+  --color-admin-accent: 220 13% 85%; /* Admin accent */
+
+  /* ========================================
+   * GRADIENT BACKGROUNDS
+   * ======================================== */
+  --grad-jungle-primary: linear-gradient(
+    180deg,
+    hsl(150 30% 97%) 0%,
+    hsl(122 39% 96%) 100%
+  );
+  --grad-jungle-secondary: radial-gradient(
+    120% 120% at 10% 0%,
+    hsl(122 39% 97%) 0%,
+    hsl(207 90% 98%) 33%,
+    hsl(150 28% 98%) 100%
+  );
+  --grad-jungle-hero: linear-gradient(
+    135deg,
+    hsl(122 39% 49%) 0%,
+    hsl(45 100% 51%) 50%,
+    hsl(207 90% 54%) 100%
+  );
+  --grad-adventure: linear-gradient(
+    135deg,
+    hsl(122 39% 85%) 0%,
+    hsl(207 90% 85%) 100%
+  );
+  --grad-warm: linear-gradient(
+    135deg,
+    hsl(45 100% 85%) 0%,
+    hsl(330 75% 85%) 100%
+  );
+  --grad-cool: linear-gradient(
+    135deg,
+    hsl(207 90% 85%) 0%,
+    hsl(122 39% 85%) 100%
+  );
+
+  /* ========================================
+   * TYPOGRAPHY (Mobile-First)
+   * ======================================== */
+  --fs-xs: 0.75rem; /* 12px */
+  --fs-sm: 0.875rem; /* 14px */
+  --fs-base: 1rem; /* 16px - body */
+  --fs-lg: 1.125rem; /* 18px */
+  --fs-xl: 1.25rem; /* 20px - h6 */
+  --fs-2xl: 1.5rem; /* 24px - h5 */
+  --fs-3xl: 1.875rem; /* 30px - h4 */
+  --fs-4xl: 2.25rem; /* 36px - h3 */
+  --fs-5xl: 3rem; /* 48px - h2 */
+  --fs-6xl: 3.75rem; /* 60px - h1 */
+
+  /* Font families */
+  --font-display:
+    "Baloo 2", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans",
+    Ubuntu, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-body:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", "Courier New", monospace;
+
+  /* Font weights */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* Line heights */
+  --lh-tight: 1.15;
+  --lh-snug: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.625;
+  --lh-loose: 2;
+
+  /* ========================================
+   * SPACING SCALE (rem-based)
+   * ======================================== */
+  --sp-1: 0.25rem; /* 4px */
+  --sp-2: 0.5rem; /* 8px */
+  --sp-3: 0.75rem; /* 12px */
+  --sp-4: 1rem; /* 16px */
+  --sp-5: 1.25rem; /* 20px */
+  --sp-6: 1.5rem; /* 24px */
+  --sp-8: 2rem; /* 32px */
+  --sp-10: 2.5rem; /* 40px */
+  --sp-12: 3rem; /* 48px */
+  --sp-16: 4rem; /* 64px */
+  --sp-20: 5rem; /* 80px */
+  --sp-24: 6rem; /* 96px */
+
+  /* ========================================
+   * BORDER RADIUS & SHADOWS
+   * ======================================== */
+  --radius-xs: 0.25rem; /* 4px */
+  --radius-sm: 0.5rem; /* 8px */
+  --radius-md: 0.75rem; /* 12px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.5rem; /* 24px */
+  --radius-2xl: 2rem; /* 32px */
+  --radius-full: 9999px; /* Full rounded */
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px hsl(150 10% 10% / 0.05);
+  --shadow-sm:
+    0 1px 3px hsl(150 10% 10% / 0.1), 0 1px 2px hsl(150 10% 10% / 0.06);
+  --shadow-md:
+    0 4px 6px hsl(150 10% 10% / 0.07), 0 2px 4px hsl(150 10% 10% / 0.06);
+  --shadow-lg:
+    0 10px 15px hsl(150 10% 10% / 0.1), 0 4px 6px hsl(150 10% 10% / 0.05);
+  --shadow-xl:
+    0 20px 25px hsl(150 10% 10% / 0.1), 0 10px 10px hsl(150 10% 10% / 0.04);
+  --shadow-2xl: 0 25px 50px hsl(150 10% 10% / 0.25);
+  --shadow-soft: 0 10px 20px hsl(150 10% 10% / 0.06);
+  --shadow-float: 0 12px 28px hsl(150 15% 10% / 0.12);
+  --shadow-glow: 0 0 20px hsl(122 39% 49% / 0.3);
+  --shadow-jungle: 0 8px 32px hsl(122 39% 49% / 0.2);
+
+  /* ========================================
+   * COMPONENT TOKENS
+   * ======================================== */
+  --card-padding: var(--sp-6);
+  --card-padding-sm: var(--sp-4);
+  --card-padding-lg: var(--sp-8);
+
+  --btn-h-xs: 1.5rem; /* 24px */
+  --btn-h-sm: 2.25rem; /* 36px */
+  --btn-h-md: 2.75rem; /* 44px */
+  --btn-h-lg: 3rem; /* 48px */
+  --btn-h-xl: 3.5rem; /* 56px */
+
+  --input-h-sm: 2.25rem; /* 36px */
+  --input-h-md: 2.75rem; /* 44px */
+  --input-h-lg: 3rem; /* 48px */
+
+  --nav-h-mobile: 3.5rem; /* 56px */
+  --nav-h-desktop: 4rem; /* 64px */
+
+  /* ========================================
+   * MOTION & ANIMATION
+   * ======================================== */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  --dur-instant: 0ms;
+  --dur-fast: 150ms;
+  --dur-normal: 250ms;
+  --dur-slow: 400ms;
+  --dur-slower: 600ms;
+  --dur-slowest: 1000ms;
+
+  /* Animation control */
+  --motion-scale: 1; /* Can be set to 0 for reduced motion */
+
+  /* ========================================
+   * Z-INDEX SCALE
+   * ======================================== */
+  --z-hide: -1;
+  --z-base: 0;
+  --z-docked: 10;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-banner: 1030;
+  --z-overlay: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+  --z-max: 2147483647;
+
+  /* ========================================
+   * BREAKPOINTS (for container queries)
+   * ======================================== */
+  --bp-xs: 475px;
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1400px;
+}
+
+/* ========================================
+ * REDUCED MOTION & ACCESSIBILITY
+ * ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-normal: 0ms;
+    --dur-slow: 0ms;
+    --dur-slower: 0ms;
+    --dur-slowest: 0ms;
+    --motion-scale: 0;
+  }
+}
+
+/* Save data preferences */
+@media (prefers-reduced-data: reduce), (save-data: active) {
+  :root {
+    --shadow-float: var(--shadow-soft);
+    --shadow-glow: var(--shadow-md);
+    --shadow-jungle: var(--shadow-lg);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: 0 0% 0%;
+    --color-text: 0 0% 0%;
+    --color-text-secondary: 0 0% 20%;
+  }
+}
+
+/* Dark mode tokens */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: 210 15% 8%;
+    --color-surface: 210 15% 12%;
+    --color-surface-2: 210 15% 16%;
+    --color-surface-3: 210 15% 20%;
+    --color-border: 210 15% 25%;
+    --color-border-light: 210 15% 20%;
+
+    --color-text: 210 15% 95%;
+    --color-text-secondary: 210 10% 75%;
+    --color-text-muted: 210 8% 55%;
+    --color-text-inverse: 210 15% 8%;
+
+    /* Adjust jungle colors for dark mode */
+    --color-jungle-500: 122 39% 60%;
+    --color-jungle-400: 122 39% 70%;
+    --color-jungle-300: 122 39% 80%;
+
+    --color-banana-500: 45 85% 60%;
+    --color-sky-500: 207 80% 65%;
+  }
+}
+
+/* ========================================
+ * CLAMP UTILITIES (Responsive Typography)
+ * ======================================== */
+:root {
+  --fs-h1-fluid: clamp(2rem, 2.5vw + 1.5rem, var(--fs-6xl));
+  --fs-h2-fluid: clamp(1.75rem, 2vw + 1rem, var(--fs-5xl));
+  --fs-h3-fluid: clamp(1.5rem, 1.5vw + 0.75rem, var(--fs-4xl));
+  --fs-h4-fluid: clamp(1.25rem, 1vw + 0.5rem, var(--fs-3xl));
+  --fs-h5-fluid: clamp(1.125rem, 0.5vw + 0.25rem, var(--fs-2xl));
+  --fs-h6-fluid: clamp(1rem, 0.25vw + 0.125rem, var(--fs-xl));
+}
+
+/* ========================================
+ * UTILITY CLASSES
+ * ======================================== */
+
+/* Typography utilities */
+.text-jungle {
+  color: hsl(var(--color-jungle-500));
+}
+.text-banana {
+  color: hsl(var(--color-banana-500));
+}
+.text-sky {
+  color: hsl(var(--color-sky-500));
+}
+.text-wood {
+  color: hsl(var(--color-wood-500));
+}
+.text-berry {
+  color: hsl(var(--color-berry-500));
+}
+
+/* Background utilities */
+.bg-jungle {
+  background-color: hsl(var(--color-jungle-500));
+}
+.bg-banana {
+  background-color: hsl(var(--color-banana-500));
+}
+.bg-sky {
+  background-color: hsl(var(--color-sky-500));
+}
+.bg-wood {
+  background-color: hsl(var(--color-wood-500));
+}
+.bg-berry {
+  background-color: hsl(var(--color-berry-500));
+}
+
+/* Gradient utilities */
+.bg-grad-jungle {
+  background: var(--grad-jungle-primary);
+}
+.bg-grad-adventure {
+  background: var(--grad-adventure);
+}
+.bg-grad-hero {
+  background: var(--grad-jungle-hero);
+}
+
+/* Shadow utilities */
+.shadow-jungle {
+  box-shadow: var(--shadow-jungle);
+}
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+.shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
+/* Motion utilities */
+.motion-safe {
+  animation-duration: calc(var(--motion-scale) * 1s);
+  transition-duration: calc(var(--motion-scale) * var(--dur-normal));
+}
+
+.motion-reduce {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Safe area utilities */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+.safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Performance utilities */
+.will-change-auto {
+  will-change: auto;
+}
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
+.will-change-scroll {
+  will-change: scroll-position;
+}
+.hardware-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

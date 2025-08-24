@@ -108,14 +108,14 @@ export default function AIIntegrationDemo() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="flex justify-center mb-4">
-          <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4 rounded-full shadow-2xl">
+          <div className="bg-grad-hero p-4 rounded-full shadow-2xl">
             <Brain className="w-12 h-12 text-white" />
           </div>
         </div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+        <h1 className="text-4xl font-bold bg-grad-hero bg-clip-text text-transparent mb-4">
           AI Integration Demo
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <p className="text-xl text-text-secondary max-w-2xl mx-auto">
           Experience the power of AI-enhanced word learning integrated into your
           existing dashboard.
         </p>
@@ -193,59 +193,59 @@ export default function AIIntegrationDemo() {
             {/* Core AI Features */}
             <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-blue-800">
+                <CardTitle className="flex items-center gap-2 text-sky-700">
                   <Brain className="w-5 h-5" />
                   Core AI Features
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
-                    <Sparkles className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
+                    <Sparkles className="w-5 h-5 text-sky-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-blue-800">
+                      <h4 className="font-medium text-sky-700">
                         Adaptive Word Selection
                       </h4>
-                      <p className="text-sm text-blue-700">
+                      <p className="text-sm text-sky-600">
                         AI analyzes learning patterns to select optimal words
                         based on difficulty, retention rates, and engagement.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
-                    <TrendingUp className="w-5 h-5 text-purple-600 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
+                    <TrendingUp className="w-5 h-5 text-berry-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-purple-800">
+                      <h4 className="font-medium text-berry-700">
                         Predictive Analytics
                       </h4>
-                      <p className="text-sm text-purple-700">
+                      <p className="text-sm text-berry-600">
                         Predicts learning outcomes and optimizes difficulty
                         progression in real-time.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
-                    <Target className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
+                    <Target className="w-5 h-5 text-jungle-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-green-800">
+                      <h4 className="font-medium text-jungle-700">
                         Personalized Hints
                       </h4>
-                      <p className="text-sm text-green-700">
+                      <p className="text-sm text-jungle-600">
                         Context-aware hints and encouragement based on
                         individual learning style.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-3 bg-white/60 rounded-lg">
-                    <Zap className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
+                    <Zap className="w-5 h-5 text-banana-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-orange-800">
+                      <h4 className="font-medium text-banana-700">
                         Real-time Adaptation
                       </h4>
-                      <p className="text-sm text-orange-700">
+                      <p className="text-sm text-banana-600">
                         Adjusts difficulty and teaching strategy based on
                         performance patterns.
                       </p>
@@ -256,53 +256,53 @@ export default function AIIntegrationDemo() {
             </Card>
 
             {/* Analytics & Insights */}
-            <Card className="border-green-200 bg-gradient-to-br from-green-50 to-blue-50">
+            <Card className="border-jungle-200 bg-grad-adventure">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-800">
+                <CardTitle className="flex items-center gap-2 text-jungle-700">
                   <TrendingUp className="w-5 h-5" />
                   Analytics & Insights
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       Learning Velocity
                     </span>
-                    <span className="text-sm font-bold text-green-600">
+                    <span className="text-sm font-bold text-jungle-600">
                       2.3 words/min
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       Retention Prediction
                     </span>
-                    <span className="text-sm font-bold text-blue-600">87%</span>
+                    <span className="text-sm font-bold text-sky-600">87%</span>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       Engagement Score
                     </span>
-                    <span className="text-sm font-bold text-purple-600">
+                    <span className="text-sm font-bold text-berry-600">
                       94%
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center p-3 bg-white/60 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
+                  <div className="flex justify-between items-center p-3 bg-surface/60 rounded-lg">
+                    <span className="text-sm font-medium text-text-secondary">
                       AI Confidence
                     </span>
-                    <span className="text-sm font-bold text-orange-600">
+                    <span className="text-sm font-bold text-banana-600">
                       91%
                     </span>
                   </div>
                 </div>
 
-                <Alert className="bg-green-100 border-green-200">
+                <Alert className="bg-success-light border-success/30">
                   <Star className="w-4 h-4" />
-                  <AlertDescription className="text-green-800">
+                  <AlertDescription className="text-jungle-700">
                     <strong>Predictive Success:</strong> AI predictions match
                     actual performance with 89% accuracy on average.
                   </AlertDescription>
@@ -315,17 +315,17 @@ export default function AIIntegrationDemo() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-600" />
+                <CheckCircle className="w-5 h-5 text-jungle-600" />
                 AI Enhancement Benefits
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-3">
+                  <h4 className="font-semibold text-text mb-3">
                     Standard Word Selection
                   </h4>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <ul className="space-y-2 text-sm text-text-secondary">
                     <li>• Random or category-based selection</li>
                     <li>• Fixed difficulty progression</li>
                     <li>• Generic encouragement messages</li>
@@ -334,10 +334,10 @@ export default function AIIntegrationDemo() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-green-800 mb-3">
+                  <h4 className="font-semibold text-jungle-700 mb-3">
                     AI-Enhanced Selection
                   </h4>
-                  <ul className="space-y-2 text-sm text-green-700">
+                  <ul className="space-y-2 text-sm text-jungle-600">
                     <li>
                       • ✨ Personalized word selection based on learning
                       patterns
@@ -376,8 +376,8 @@ export default function AIIntegrationDemo() {
                 <h3 className="text-lg font-semibold">
                   Step 1: Update LearningDashboard Usage
                 </h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <pre className="text-sm text-gray-800 overflow-x-auto">
+                <div className="bg-surface-2 p-4 rounded-lg">
+                  <pre className="text-sm text-text overflow-x-auto">
                     <code>{`<LearningDashboard
   stats={learningStats}
   userName="Alex"
@@ -407,22 +407,24 @@ export default function AIIntegrationDemo() {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-blue-700">
+                    <h4 className="font-semibold mb-2 text-sky-600">
                       Essential Props
                     </h4>
                     <ul className="text-sm space-y-1">
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">userId</code>{" "}
+                        <code className="bg-surface-2 px-1 rounded">
+                          userId
+                        </code>{" "}
                         - Unique user identifier
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           enableAIEnhancement
                         </code>{" "}
                         - Toggle AI features
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           userProgress
                         </code>{" "}
                         - Learning progress data
@@ -430,24 +432,24 @@ export default function AIIntegrationDemo() {
                     </ul>
                   </div>
                   <div className="border rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-green-700">
+                    <h4 className="font-semibold mb-2 text-jungle-600">
                       Optional Props
                     </h4>
                     <ul className="text-sm space-y-1">
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           selectedCategory
                         </code>{" "}
                         - Current category
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           onSessionComplete
                         </code>{" "}
                         - Session callback
                       </li>
                       <li>
-                        <code className="bg-gray-100 px-1 rounded">
+                        <code className="bg-surface-2 px-1 rounded">
                           childStats
                         </code>{" "}
                         - Performance data
@@ -460,20 +462,20 @@ export default function AIIntegrationDemo() {
                   Step 3: Features You Get
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <Brain className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                  <div className="text-center p-4 bg-sky-100 rounded-lg">
+                    <Brain className="w-8 h-8 mx-auto mb-2 text-sky-600" />
                     <div className="text-sm font-medium">Smart Selection</div>
                   </div>
-                  <div className="text-center p-4 bg-purple-50 rounded-lg">
-                    <TrendingUp className="w-8 h-8 mx-auto mb-2 text-purple-600" />
+                  <div className="text-center p-4 bg-berry-100 rounded-lg">
+                    <TrendingUp className="w-8 h-8 mx-auto mb-2 text-berry-600" />
                     <div className="text-sm font-medium">Analytics</div>
                   </div>
-                  <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <Target className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                  <div className="text-center p-4 bg-jungle-100 rounded-lg">
+                    <Target className="w-8 h-8 mx-auto mb-2 text-jungle-600" />
                     <div className="text-sm font-medium">Personalization</div>
                   </div>
-                  <div className="text-center p-4 bg-orange-50 rounded-lg">
-                    <Zap className="w-8 h-8 mx-auto mb-2 text-orange-600" />
+                  <div className="text-center p-4 bg-banana-100 rounded-lg">
+                    <Zap className="w-8 h-8 mx-auto mb-2 text-banana-600" />
                     <div className="text-sm font-medium">Real-time</div>
                   </div>
                 </div>
@@ -493,7 +495,7 @@ export default function AIIntegrationDemo() {
       </Tabs>
 
       {/* Quick Action Footer */}
-      <Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+      <Card className="bg-grad-hero text-text-inverse">
         <CardContent className="p-6 text-center">
           <h3 className="text-xl font-bold mb-2">
             🚀 Ready to Enhance Your App?
@@ -505,7 +507,7 @@ export default function AIIntegrationDemo() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               variant="secondary"
-              className="bg-white text-blue-600 hover:bg-gray-100"
+              className="bg-surface text-sky-600 hover:bg-surface-2"
               onClick={() => (window.location.href = "#demo")}
             >
               <Play className="w-4 h-4 mr-2" />
@@ -513,7 +515,7 @@ export default function AIIntegrationDemo() {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white/10"
+              className="border-surface text-text-inverse hover:bg-surface/10"
               onClick={() => (window.location.href = "/")}
             >
               <ArrowRight className="w-4 h-4 mr-2" />
