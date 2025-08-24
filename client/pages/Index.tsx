@@ -338,12 +338,6 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Learning goals state and progress tracking
   const [learningGoals, setLearningGoals] = useState<any[]>([]);
-  const [currentProgress, setCurrentProgress] = useState({
-    wordsLearned: 0,
-    wordsRemembered: 0,
-    sessionCount: 0,
-    accuracy: 0,
-  });
   const [dailySessionCount, setDailySessionCount] = useState(0);
   const [currentDashboardWords, setCurrentDashboardWords] = useState<any[]>([]);
 
@@ -558,8 +552,8 @@ export default function Index({ initialProfile }: IndexProps) {
     }
   }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
 
-  // Update current progress for goals tracking (using stable dependencies)
-  useEffect(() => {
+  // Compute current progress using useMemo to prevent infinite loops
+  const currentProgress = useMemo(() => {
     const totalWordsLearned = rememberedWords.size;
     const totalAttempts = rememberedWords.size + forgottenWords.size;
     const accuracy =
@@ -567,13 +561,13 @@ export default function Index({ initialProfile }: IndexProps) {
         ? Math.round((rememberedWords.size / totalAttempts) * 100)
         : 0;
 
-    setCurrentProgress({
+    return {
       wordsLearned: totalWordsLearned,
       wordsRemembered: rememberedWords.size,
       sessionCount: dailySessionCount,
       accuracy: accuracy,
-    });
-  }, [rememberedWords.size, forgottenWords.size, dailySessionCount]); // Use .size instead of full Set objects
+    };
+  }, [rememberedWords.size, forgottenWords.size, dailySessionCount]);
 
   // Load saved learning goals on mount
   useEffect(() => {
@@ -672,9 +666,37 @@ export default function Index({ initialProfile }: IndexProps) {
 
     persistenceService.queueSave(sessionData, "medium");
     setLastAutoSave(Date.now());
-  }, [persistenceService, isSessionInitialized]); // Minimal dependencies to prevent infinite loops
-
-  // Auto-save whenever important state changes (removed problematic auto-save to prevent infinite loop)
+  }, [
+    persistenceService,
+    isSessionInitialized,
+    activeTab,
+    currentWordIndex,
+    selectedCategory,
+    learningMode,
+    userRole,
+    forgottenWords,
+    rememberedWords,
+    excludedWordIds,
+    currentProgress,
+    dailySessionCount,
+    currentProfile,
+    childStats,
+    currentSessionId,
+    learningGoals,
+    currentDashboardWords,
+    customWords,
+    practiceWords,
+    userWordHistory,
+    sessionNumber,
+    lastSystematicSelection,
+    dashboardSession,
+    dashboardSessionNumber,
+    showQuiz,
+    selectedQuizType,
+    showMatchingGame,
+    gameMode,
+    showPracticeGame,
+  ]);
 
   // Force save on critical actions (with debouncing to prevent infinite loops)
   const lastSaveCountRef = useRef({ remembered: 0, forgotten: 0 });
@@ -694,21 +716,21 @@ export default function Index({ initialProfile }: IndexProps) {
         forgotten: forgottenCount,
       };
 
-      persistenceService.queueSave(
-        {
-          forgottenWords: Array.from(forgottenWords),
-          rememberedWords: Array.from(rememberedWords),
-          currentProgress,
-        },
-        "high",
-      );
+      // Use setTimeout to debounce the save and prevent rapid successive calls
+      const timeoutId = setTimeout(() => {
+        persistenceService.queueSave(
+          {
+            forgottenWords: Array.from(forgottenWords),
+            rememberedWords: Array.from(rememberedWords),
+            currentProgress,
+          },
+          "high",
+        );
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
     }
-  }, [
-    rememberedWords.size,
-    forgottenWords.size,
-    currentProgress,
-    persistenceService,
-  ]);
+  }, [rememberedWords.size, forgottenWords.size, persistenceService]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
@@ -759,10 +781,7 @@ export default function Index({ initialProfile }: IndexProps) {
             "Session updated from another tab - progress synced silently",
           );
 
-          // Update current state with latest data (selective update to avoid disruption)
-          if (latestSession.currentProgress) {
-            setCurrentProgress(latestSession.currentProgress);
-          }
+          // Note: currentProgress is now computed via useMemo, no need to set it
           if (latestSession.forgottenWords) {
             setForgottenWords(new Set(latestSession.forgottenWords));
           }
@@ -875,9 +894,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
       if (latestSession && latestSession.lastSaved > lastAutoSave) {
         // Silently sync progress without disrupting user
-        if (latestSession.currentProgress) {
-          setCurrentProgress(latestSession.currentProgress);
-        }
+        // Note: currentProgress is now computed via useMemo, no need to set it
         setLastAutoSave(latestSession.lastSaved);
       }
     };
@@ -918,9 +935,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (sessionData.excludedWordIds) {
         setExcludedWordIds(new Set(sessionData.excludedWordIds));
       }
-      if (sessionData.currentProgress) {
-        setCurrentProgress(sessionData.currentProgress);
-      }
+      // Note: currentProgress is now computed via useMemo from other state
       if (sessionData.dailySessionCount !== undefined) {
         setDailySessionCount(sessionData.dailySessionCount);
       }
@@ -1061,7 +1076,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "science-star",
         name: "Science Star",
-        icon: "🔬",
+        icon: "����",
         earned: rememberedWords.size >= 15,
         description: "Mastered 10 science words",
       },

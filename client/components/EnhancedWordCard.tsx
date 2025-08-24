@@ -45,7 +45,7 @@ interface EnhancedWordCardProps {
   className?: string;
 }
 
-export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
+const EnhancedWordCardComponent: React.FC<EnhancedWordCardProps> = ({
   word,
   showDefinition = false,
   onPronounce,
@@ -607,3 +607,7 @@ export const EnhancedWordCard: React.FC<EnhancedWordCardProps> = ({
     </div>
   );
 };
+
+// Memoize the component to prevent unnecessary re-renders when props haven't changed
+export const EnhancedWordCard = React.memo(EnhancedWordCardComponent);
+EnhancedWordCard.displayName = "EnhancedWordCard";
