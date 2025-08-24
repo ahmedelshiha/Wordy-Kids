@@ -227,12 +227,12 @@ export default function AIIntegrationDemo() {
                   </div>
 
                   <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
-                    <Target className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                    <Target className="w-5 h-5 text-jungle-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-green-800">
+                      <h4 className="font-medium text-jungle-700">
                         Personalized Hints
                       </h4>
-                      <p className="text-sm text-green-700">
+                      <p className="text-sm text-jungle-600">
                         Context-aware hints and encouragement based on
                         individual learning style.
                       </p>
@@ -256,9 +256,9 @@ export default function AIIntegrationDemo() {
             </Card>
 
             {/* Analytics & Insights */}
-            <Card className="border-green-200 bg-gradient-to-br from-green-50 to-blue-50">
+            <Card className="border-success/30 bg-gradient-to-br from-green-50 to-blue-50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-800">
+                <CardTitle className="flex items-center gap-2 text-jungle-700">
                   <TrendingUp className="w-5 h-5" />
                   Analytics & Insights
                 </CardTitle>
@@ -269,7 +269,7 @@ export default function AIIntegrationDemo() {
                     <span className="text-sm font-medium text-text-secondary">
                       Learning Velocity
                     </span>
-                    <span className="text-sm font-bold text-green-600">
+                    <span className="text-sm font-bold text-jungle-600">
                       2.3 words/min
                     </span>
                   </div>
@@ -300,9 +300,9 @@ export default function AIIntegrationDemo() {
                   </div>
                 </div>
 
-                <Alert className="bg-green-100 border-green-200">
+                <Alert className="bg-success-light border-success/30">
                   <Star className="w-4 h-4" />
-                  <AlertDescription className="text-green-800">
+                  <AlertDescription className="text-jungle-700">
                     <strong>Predictive Success:</strong> AI predictions match
                     actual performance with 89% accuracy on average.
                   </AlertDescription>
@@ -315,7 +315,7 @@ export default function AIIntegrationDemo() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-600" />
+                <CheckCircle className="w-5 h-5 text-jungle-600" />
                 AI Enhancement Benefits
               </CardTitle>
             </CardHeader>
@@ -334,10 +334,10 @@ export default function AIIntegrationDemo() {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-green-800 mb-3">
+                  <h4 className="font-semibold text-jungle-700 mb-3">
                     AI-Enhanced Selection
                   </h4>
-                  <ul className="space-y-2 text-sm text-green-700">
+                  <ul className="space-y-2 text-sm text-jungle-600">
                     <li>
                       • ✨ Personalized word selection based on learning
                       patterns
@@ -430,7 +430,7 @@ export default function AIIntegrationDemo() {
                     </ul>
                   </div>
                   <div className="border rounded-lg p-4">
-                    <h4 className="font-semibold mb-2 text-green-700">
+                    <h4 className="font-semibold mb-2 text-jungle-600">
                       Optional Props
                     </h4>
                     <ul className="text-sm space-y-1">
@@ -468,8 +468,8 @@ export default function AIIntegrationDemo() {
                     <TrendingUp className="w-8 h-8 mx-auto mb-2 text-berry-600" />
                     <div className="text-sm font-medium">Analytics</div>
                   </div>
-                  <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <Target className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                  <div className="text-center p-4 bg-jungle-100 rounded-lg">
+                    <Target className="w-8 h-8 mx-auto mb-2 text-jungle-600" />
                     <div className="text-sm font-medium">Personalization</div>
                   </div>
                   <div className="text-center p-4 bg-orange-50 rounded-lg">
