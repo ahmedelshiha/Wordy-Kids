@@ -551,16 +551,16 @@ export function EnhancedAchievementPopup({
                   {autoCloseDelay > 0 && !isPaused && timeRemaining > 0 && (
                     <div className="mt-2 mb-1">
                       <div className="text-center mb-1">
-                        <div className="text-xs text-white/60">
+                        <div className="text-xs text-gray-600">
                           Auto-closing in {Math.ceil(timeRemaining / 1000)}s
                         </div>
-                        <div className="text-xs text-white/40 hidden sm:block">
-                          (tap to pause)
+                        <div className="text-xs text-gray-500 hidden sm:block">
+                          (touch to pause)
                         </div>
                       </div>
-                      <div className="w-full bg-white/20 rounded-full h-1 mx-auto overflow-hidden">
+                      <div className="w-full bg-white/40 rounded-full h-1 mx-auto overflow-hidden">
                         <motion.div
-                          className="bg-white/60 h-1 rounded-full w-full"
+                          className="bg-emerald-500 h-1 rounded-full w-full"
                           initial={{ scaleX: 1 }}
                           animate={{
                             scaleX:
