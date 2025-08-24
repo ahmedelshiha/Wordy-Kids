@@ -9,6 +9,7 @@ import {
 } from '../lib/unifiedPronunciationService';
 import { audioService, enhancedAudioService } from '../lib/pronunciationMigrationAdapter';
 import { Volume2, Play, Pause, Settings, CheckCircle, AlertCircle, Loader, Star, Heart, Smile } from 'lucide-react';
+import PronunciationDebugger from '../components/PronunciationDebugger';
 
 const UnifiedPronunciationDemo = () => {
   const { 
