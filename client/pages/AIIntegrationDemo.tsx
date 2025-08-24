@@ -240,12 +240,12 @@ export default function AIIntegrationDemo() {
                   </div>
 
                   <div className="flex items-start gap-3 p-3 bg-surface/60 rounded-lg">
-                    <Zap className="w-5 h-5 text-orange-600 mt-1 flex-shrink-0" />
+                    <Zap className="w-5 h-5 text-banana-600 mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-medium text-orange-800">
+                      <h4 className="font-medium text-banana-700">
                         Real-time Adaptation
                       </h4>
-                      <p className="text-sm text-orange-700">
+                      <p className="text-sm text-banana-600">
                         Adjusts difficulty and teaching strategy based on
                         performance patterns.
                       </p>
@@ -294,7 +294,7 @@ export default function AIIntegrationDemo() {
                     <span className="text-sm font-medium text-text-secondary">
                       AI Confidence
                     </span>
-                    <span className="text-sm font-bold text-orange-600">
+                    <span className="text-sm font-bold text-banana-600">
                       91%
                     </span>
                   </div>
@@ -472,8 +472,8 @@ export default function AIIntegrationDemo() {
                     <Target className="w-8 h-8 mx-auto mb-2 text-jungle-600" />
                     <div className="text-sm font-medium">Personalization</div>
                   </div>
-                  <div className="text-center p-4 bg-orange-50 rounded-lg">
-                    <Zap className="w-8 h-8 mx-auto mb-2 text-orange-600" />
+                  <div className="text-center p-4 bg-banana-100 rounded-lg">
+                    <Zap className="w-8 h-8 mx-auto mb-2 text-banana-600" />
                     <div className="text-sm font-medium">Real-time</div>
                   </div>
                 </div>
