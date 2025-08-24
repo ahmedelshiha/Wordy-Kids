@@ -10,11 +10,19 @@ export default {
       padding: "2rem",
       screens: {
         xs: "475px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
         "2xl": "1400px",
       },
     },
     extend: {
+      /* ========================================
+       * JUNGLE ADVENTURE DESIGN TOKENS
+       * ======================================== */
       colors: {
+        /* Legacy Radix UI colors - maintained for compatibility */
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -58,7 +66,101 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Educational color palette
+
+        /* ========================================
+         * JUNGLE ADVENTURE BRAND COLORS
+         * ======================================== */
+        jungle: {
+          100: "hsl(var(--color-jungle-100) / <alpha-value>)",
+          200: "hsl(var(--color-jungle-200) / <alpha-value>)",
+          300: "hsl(var(--color-jungle-300) / <alpha-value>)",
+          400: "hsl(var(--color-jungle-400) / <alpha-value>)",
+          500: "hsl(var(--color-jungle-500) / <alpha-value>)",
+          600: "hsl(var(--color-jungle-600) / <alpha-value>)",
+          700: "hsl(var(--color-jungle-700) / <alpha-value>)",
+          DEFAULT: "hsl(var(--color-jungle-500) / <alpha-value>)",
+        },
+        banana: {
+          100: "hsl(var(--color-banana-100) / <alpha-value>)",
+          200: "hsl(var(--color-banana-200) / <alpha-value>)",
+          300: "hsl(var(--color-banana-300) / <alpha-value>)",
+          400: "hsl(var(--color-banana-400) / <alpha-value>)",
+          500: "hsl(var(--color-banana-500) / <alpha-value>)",
+          600: "hsl(var(--color-banana-600) / <alpha-value>)",
+          DEFAULT: "hsl(var(--color-banana-500) / <alpha-value>)",
+        },
+        sky: {
+          100: "hsl(var(--color-sky-100) / <alpha-value>)",
+          200: "hsl(var(--color-sky-200) / <alpha-value>)",
+          300: "hsl(var(--color-sky-300) / <alpha-value>)",
+          400: "hsl(var(--color-sky-400) / <alpha-value>)",
+          500: "hsl(var(--color-sky-500) / <alpha-value>)",
+          600: "hsl(var(--color-sky-600) / <alpha-value>)",
+          DEFAULT: "hsl(var(--color-sky-500) / <alpha-value>)",
+        },
+        wood: {
+          200: "hsl(var(--color-wood-200) / <alpha-value>)",
+          300: "hsl(var(--color-wood-300) / <alpha-value>)",
+          400: "hsl(var(--color-wood-400) / <alpha-value>)",
+          500: "hsl(var(--color-wood-500) / <alpha-value>)",
+          600: "hsl(var(--color-wood-600) / <alpha-value>)",
+          DEFAULT: "hsl(var(--color-wood-500) / <alpha-value>)",
+        },
+        berry: {
+          200: "hsl(var(--color-berry-200) / <alpha-value>)",
+          300: "hsl(var(--color-berry-300) / <alpha-value>)",
+          400: "hsl(var(--color-berry-400) / <alpha-value>)",
+          500: "hsl(var(--color-berry-500) / <alpha-value>)",
+          600: "hsl(var(--color-berry-600) / <alpha-value>)",
+          DEFAULT: "hsl(var(--color-berry-500) / <alpha-value>)",
+        },
+
+        /* ========================================
+         * SURFACE & SEMANTIC COLORS
+         * ======================================== */
+        surface: {
+          DEFAULT: "hsl(var(--color-surface) / <alpha-value>)",
+          2: "hsl(var(--color-surface-2) / <alpha-value>)",
+          3: "hsl(var(--color-surface-3) / <alpha-value>)",
+        },
+        text: {
+          DEFAULT: "hsl(var(--color-text) / <alpha-value>)",
+          secondary: "hsl(var(--color-text-secondary) / <alpha-value>)",
+          muted: "hsl(var(--color-text-muted) / <alpha-value>)",
+          inverse: "hsl(var(--color-text-inverse) / <alpha-value>)",
+        },
+        success: {
+          DEFAULT: "hsl(var(--color-success) / <alpha-value>)",
+          light: "hsl(var(--color-success-light) / <alpha-value>)",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--color-warning) / <alpha-value>)",
+          light: "hsl(var(--color-warning-light) / <alpha-value>)",
+        },
+        danger: {
+          DEFAULT: "hsl(var(--color-danger) / <alpha-value>)",
+          light: "hsl(var(--color-danger-light) / <alpha-value>)",
+        },
+        info: {
+          DEFAULT: "hsl(var(--color-info) / <alpha-value>)",
+          light: "hsl(var(--color-info-light) / <alpha-value>)",
+        },
+
+        /* ========================================
+         * ADMIN PALETTE (controlled exception)
+         * ======================================== */
+        admin: {
+          bg: "hsl(var(--color-admin-bg) / <alpha-value>)",
+          surface: "hsl(var(--color-admin-surface) / <alpha-value>)",
+          border: "hsl(var(--color-admin-border) / <alpha-value>)",
+          text: "hsl(var(--color-admin-text) / <alpha-value>)",
+          muted: "hsl(var(--color-admin-text-muted) / <alpha-value>)",
+          accent: "hsl(var(--color-admin-accent) / <alpha-value>)",
+        },
+
+        /* ========================================
+         * LEGACY COLORS (deprecated - use new tokens)
+         * ======================================== */
         educational: {
           blue: "hsl(var(--educational-blue))",
           "blue-light": "hsl(var(--educational-blue-light))",
@@ -73,34 +175,28 @@ export default {
           yellow: "hsl(var(--educational-yellow))",
           "yellow-light": "hsl(var(--educational-yellow-light))",
         },
-        // Jungle Green Family
-        jungle: {
-          DEFAULT: "hsl(var(--jungle-green))", // #4CAF50
-          dark: "hsl(var(--jungle-green-dark))", // #388E3C
-          light: "hsl(var(--jungle-green-light))", // #81C784
+        // Legacy Jungle Green Family
+        "jungle-legacy": {
+          DEFAULT: "hsl(var(--jungle-green))",
+          dark: "hsl(var(--jungle-green-dark))",
+          light: "hsl(var(--jungle-green-light))",
         },
-        // Sunshine Yellow Family
+        // Legacy Sunshine Yellow Family
         sunshine: {
-          DEFAULT: "hsl(var(--sunshine-yellow))", // #FFC107
-          dark: "hsl(var(--sunshine-yellow-dark))", // #F57F17
-          light: "hsl(var(--sunshine-yellow-light))", // #FFF176
+          DEFAULT: "hsl(var(--sunshine-yellow))",
+          dark: "hsl(var(--sunshine-yellow-dark))",
+          light: "hsl(var(--sunshine-yellow-light))",
         },
-        // Sky Blue Family
-        sky: {
-          DEFAULT: "hsl(var(--sky-blue))", // #2196F3
-          dark: "hsl(var(--sky-blue-dark))", // #1976D2
-          light: "hsl(var(--sky-blue-light))", // Light variant
-        },
-        // Dark Navy
+        // Legacy Dark Navy
         navy: {
-          DEFAULT: "hsl(var(--dark-navy))", // #1A237E
+          DEFAULT: "hsl(var(--dark-navy))",
         },
-        // New Jungle Adventure Colors
-        "profile-purple": "hsl(var(--profile-purple))", // #6366F1
-        "bright-orange": "hsl(var(--bright-orange))", // #FF9800
-        "playful-purple": "hsl(var(--playful-purple))", // #9C27B0
-        "coral-red": "hsl(var(--coral-red))", // #FF5722
-        "light-background": "hsl(var(--light-background))", // #F8F9FA
+        // Legacy Jungle Adventure Colors
+        "profile-purple": "hsl(var(--profile-purple))",
+        "bright-orange": "hsl(var(--bright-orange))",
+        "playful-purple": "hsl(var(--playful-purple))",
+        "coral-red": "hsl(var(--coral-red))",
+        "light-background": "hsl(var(--light-background))",
       },
       borderRadius: {
         lg: "var(--radius)",
