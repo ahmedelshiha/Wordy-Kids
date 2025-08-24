@@ -1111,14 +1111,14 @@ export function AchievementSystem({
                               <div className="text-xs font-semibold text-gray-800 mb-1">
                                 Reward Unlocked:
                               </div>
-                              <div className="text-sm text-white">
+                              <div className="text-sm text-gray-800">
                                 🎁 {achievement.reward.item}
                               </div>
                             </div>
                           )}
 
                           {achievement.unlocked && achievement.dateUnlocked && (
-                            <div className="text-xs text-white/70">
+                            <div className="text-xs text-gray-600">
                               Unlocked:{" "}
                               {achievement.dateUnlocked.toLocaleDateString()}
                             </div>
@@ -1186,7 +1186,7 @@ export function AchievementSystem({
                         )}
 
                         {content.unlocked && (
-                          <Badge className="bg-white/20 text-white">
+                          <Badge className="bg-emerald-500 text-white shadow-sm">
                             <Check className="w-3 h-3 mr-1" />
                             Unlocked!
                           </Badge>
