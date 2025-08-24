@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { usePronunciation } from '../lib/unifiedPronunciationService';
-import { sanitizeTTSInput, logSpeechError, createSafeUtterance } from '../lib/speechUtils';
-import { audioService, enhancedAudioService } from '../lib/pronunciationMigrationAdapter';
-import { AlertCircle, CheckCircle, Bug, Volume2, Play } from 'lucide-react';
+import React, { useState } from "react";
+import { usePronunciation } from "../lib/unifiedPronunciationService";
+import {
+  sanitizeTTSInput,
+  logSpeechError,
+  createSafeUtterance,
+} from "../lib/speechUtils";
+import {
+  audioService,
+  enhancedAudioService,
+} from "../lib/pronunciationMigrationAdapter";
+import { AlertCircle, CheckCircle, Bug, Volume2, Play } from "lucide-react";
 
 const PronunciationDebugger: React.FC = () => {
   const { speak, quickSpeak, isSupported } = usePronunciation();
@@ -12,21 +19,41 @@ const PronunciationDebugger: React.FC = () => {
   // Test cases that might cause "[object Object]" errors
   const testCases = [
     // Normal cases
-    { name: 'Simple string', input: 'hello', expected: 'pass' },
-    { name: 'Number', input: 123, expected: 'pass' },
-    { name: 'Boolean', input: true, expected: 'pass' },
-    
+    { name: "Simple string", input: "hello", expected: "pass" },
+    { name: "Number", input: 123, expected: "pass" },
+    { name: "Boolean", input: true, expected: "pass" },
+
     // Problematic cases
-    { name: 'Plain object', input: { word: 'test' }, expected: 'pass' },
-    { name: 'Object without word prop', input: { foo: 'bar' }, expected: 'handle' },
-    { name: 'Array of strings', input: ['hello', 'world'], expected: 'pass' },
-    { name: 'Nested object', input: { text: { value: 'nested' } }, expected: 'handle' },
-    { name: 'React-like element', input: { $$typeof: 'react', props: { children: 'React text' } }, expected: 'pass' },
-    { name: 'Function', input: () => 'function result', expected: 'handle' },
-    { name: 'null', input: null, expected: 'pass' },
-    { name: 'undefined', input: undefined, expected: 'pass' },
-    { name: 'Empty object', input: {}, expected: 'handle' },
-    { name: 'Circular reference', input: (() => { const obj: any = {}; obj.self = obj; return obj; })(), expected: 'handle' },
+    { name: "Plain object", input: { word: "test" }, expected: "pass" },
+    {
+      name: "Object without word prop",
+      input: { foo: "bar" },
+      expected: "handle",
+    },
+    { name: "Array of strings", input: ["hello", "world"], expected: "pass" },
+    {
+      name: "Nested object",
+      input: { text: { value: "nested" } },
+      expected: "handle",
+    },
+    {
+      name: "React-like element",
+      input: { $$typeof: "react", props: { children: "React text" } },
+      expected: "pass",
+    },
+    { name: "Function", input: () => "function result", expected: "handle" },
+    { name: "null", input: null, expected: "pass" },
+    { name: "undefined", input: undefined, expected: "pass" },
+    { name: "Empty object", input: {}, expected: "handle" },
+    {
+      name: "Circular reference",
+      input: (() => {
+        const obj: any = {};
+        obj.self = obj;
+        return obj;
+      })(),
+      expected: "handle",
+    },
   ];
 
   const runDebugTests = async () => {
@@ -37,30 +64,30 @@ const PronunciationDebugger: React.FC = () => {
       try {
         // Test sanitization
         const sanitized = sanitizeTTSInput(testCase.input);
-        
+
         // Test utterance creation
         const utterance = createSafeUtterance(testCase.input);
-        
+
         // Test legacy audioService
-        let legacyResult = 'not tested';
+        let legacyResult = "not tested";
         try {
           await audioService.pronounceWord(testCase.input, {
             onStart: () => {},
             onEnd: () => {},
             onError: (error) => {
               legacyResult = `error: ${error}`;
-            }
+            },
           });
-          legacyResult = 'success';
+          legacyResult = "success";
         } catch (error) {
           legacyResult = `exception: ${error}`;
         }
 
         // Test unified system
-        let unifiedResult = 'not tested';
+        let unifiedResult = "not tested";
         try {
           await speak(testCase.input);
-          unifiedResult = 'success';
+          unifiedResult = "success";
         } catch (error) {
           unifiedResult = `exception: ${error}`;
         }
@@ -75,18 +102,20 @@ const PronunciationDebugger: React.FC = () => {
           utteranceCreated: !!utterance,
           legacyResult,
           unifiedResult,
-          status: (sanitized && utterance && legacyResult !== 'not tested') ? 'pass' : 'fail'
+          status:
+            sanitized && utterance && legacyResult !== "not tested"
+              ? "pass"
+              : "fail",
         });
 
         // Small delay to prevent overwhelming the speech system
-        await new Promise(resolve => setTimeout(resolve, 100));
-
+        await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (error) {
         results.push({
           name: testCase.name,
           input: testCase.input,
           error: String(error),
-          status: 'error'
+          status: "error",
         });
       }
     }
@@ -97,18 +126,18 @@ const PronunciationDebugger: React.FC = () => {
 
   const runQuickTest = async (input: any) => {
     try {
-      console.log('🧪 Quick test input:', input);
+      console.log("🧪 Quick test input:", input);
       const sanitized = sanitizeTTSInput(input);
-      console.log('🧪 Sanitized:', sanitized);
-      
+      console.log("🧪 Sanitized:", sanitized);
+
       if (sanitized) {
         await quickSpeak(sanitized);
-        console.log('✅ Quick test passed');
+        console.log("✅ Quick test passed");
       } else {
-        console.log('❌ Quick test failed - empty sanitized input');
+        console.log("❌ Quick test failed - empty sanitized input");
       }
     } catch (error) {
-      console.error('❌ Quick test error:', error);
+      console.error("❌ Quick test error:", error);
     }
   };
 
@@ -127,7 +156,9 @@ const PronunciationDebugger: React.FC = () => {
     <div className="bg-white rounded-xl p-6 shadow-lg">
       <div className="flex items-center gap-2 mb-4">
         <Bug className="h-6 w-6 text-purple-600" />
-        <h3 className="text-xl font-bold text-gray-800">Pronunciation Debugger</h3>
+        <h3 className="text-xl font-bold text-gray-800">
+          Pronunciation Debugger
+        </h3>
       </div>
 
       <div className="space-y-4">
@@ -138,11 +169,11 @@ const PronunciationDebugger: React.FC = () => {
             className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <Bug className="h-4 w-4" />
-            {isRunning ? 'Running Tests...' : 'Run Debug Tests'}
+            {isRunning ? "Running Tests..." : "Run Debug Tests"}
           </button>
 
           <button
-            onClick={() => runQuickTest('Quick test')}
+            onClick={() => runQuickTest("Quick test")}
             disabled={isRunning}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
@@ -151,7 +182,7 @@ const PronunciationDebugger: React.FC = () => {
           </button>
 
           <button
-            onClick={() => runQuickTest({ word: 'Object test' })}
+            onClick={() => runQuickTest({ word: "Object test" })}
             disabled={isRunning}
             className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
@@ -178,12 +209,18 @@ const PronunciationDebugger: React.FC = () => {
                 </thead>
                 <tbody>
                   {testResults.map((result, index) => (
-                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <tr
+                      key={index}
+                      className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                    >
                       <td className="p-2 font-medium">{result.name}</td>
                       <td className="p-2 text-gray-600">{result.inputType}</td>
                       <td className="p-2 text-gray-600">
                         {result.sanitized ? (
-                          <span className="text-green-600" title={result.sanitized}>
+                          <span
+                            className="text-green-600"
+                            title={result.sanitized}
+                          >
                             ✓ ({result.sanitizedLength})
                           </span>
                         ) : (
@@ -198,23 +235,31 @@ const PronunciationDebugger: React.FC = () => {
                         )}
                       </td>
                       <td className="p-2 text-xs">
-                        <span className={
-                          result.legacyResult === 'success' ? 'text-green-600' : 'text-red-600'
-                        }>
+                        <span
+                          className={
+                            result.legacyResult === "success"
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }
+                        >
                           {result.legacyResult}
                         </span>
                       </td>
                       <td className="p-2 text-xs">
-                        <span className={
-                          result.unifiedResult === 'success' ? 'text-green-600' : 'text-red-600'
-                        }>
+                        <span
+                          className={
+                            result.unifiedResult === "success"
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }
+                        >
                           {result.unifiedResult}
                         </span>
                       </td>
                       <td className="p-2">
-                        {result.status === 'pass' ? (
+                        {result.status === "pass" ? (
                           <CheckCircle className="h-4 w-4 text-green-500" />
-                        ) : result.status === 'error' ? (
+                        ) : result.status === "error" ? (
                           <AlertCircle className="h-4 w-4 text-red-500" />
                         ) : (
                           <AlertCircle className="h-4 w-4 text-yellow-500" />
@@ -236,8 +281,8 @@ const PronunciationDebugger: React.FC = () => {
           <div className="flex gap-2">
             <button
               onClick={() => {
-                console.log('Testing problematic input...');
-                runQuickTest({ someObject: 'test', nested: { deep: 'value' } });
+                console.log("Testing problematic input...");
+                runQuickTest({ someObject: "test", nested: { deep: "value" } });
               }}
               className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
             >
@@ -245,8 +290,11 @@ const PronunciationDebugger: React.FC = () => {
             </button>
             <button
               onClick={() => {
-                console.log('Testing React-like element...');
-                runQuickTest({ $$typeof: 'react.element', props: { children: 'React children text' } });
+                console.log("Testing React-like element...");
+                runQuickTest({
+                  $$typeof: "react.element",
+                  props: { children: "React children text" },
+                });
               }}
               className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
             >
@@ -254,8 +302,8 @@ const PronunciationDebugger: React.FC = () => {
             </button>
             <button
               onClick={() => {
-                console.log('Testing array...');
-                runQuickTest(['word', 'array', 'test']);
+                console.log("Testing array...");
+                runQuickTest(["word", "array", "test"]);
               }}
               className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
             >

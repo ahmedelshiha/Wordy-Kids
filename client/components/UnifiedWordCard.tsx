@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  usePronunciation, 
-  PronounceableWord, 
+import React, { useState, useEffect } from "react";
+import {
+  usePronunciation,
+  PronounceableWord,
   VoiceType,
-  VOICE_TYPES 
-} from '../lib/unifiedPronunciationService';
-import { Volume2, Star, Heart, Play, Pause, RotateCcw } from 'lucide-react';
-import { cn } from '../lib/utils';
+  VOICE_TYPES,
+} from "../lib/unifiedPronunciationService";
+import { Volume2, Star, Heart, Play, Pause, RotateCcw } from "lucide-react";
+import { cn } from "../lib/utils";
 
 interface WordCardProps {
   word: string;
   definition?: string;
   category?: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
+  difficulty?: "easy" | "medium" | "hard";
   imageUrl?: string;
   className?: string;
   onPronounce?: (word: string) => void;
@@ -24,32 +24,34 @@ interface WordCardProps {
 
 const UnifiedWordCard: React.FC<WordCardProps> = ({
   word,
-  definition = '',
-  category = 'General',
-  difficulty = 'easy',
+  definition = "",
+  category = "General",
+  difficulty = "easy",
   imageUrl,
-  className = '',
+  className = "",
   onPronounce,
   onMastered,
   showDefinition = true,
   autoSpeak = false,
-  preferredVoice
+  preferredVoice,
 }) => {
-  const { 
-    speak, 
-    quickSpeak, 
-    slowSpeak, 
+  const {
+    speak,
+    quickSpeak,
+    slowSpeak,
     phoneticSpeak,
     voicePreference,
     setVoicePreference,
     isPlaying,
     currentWord,
-    isSupported 
+    isSupported,
   } = usePronunciation();
 
   const [isCardPlaying, setIsCardPlaying] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [pronunciationSpeed, setPronunciationSpeed] = useState<'quick' | 'slow' | 'phonetic'>('quick');
+  const [pronunciationSpeed, setPronunciationSpeed] = useState<
+    "quick" | "slow" | "phonetic"
+  >("quick");
   const [error, setError] = useState<string | null>(null);
 
   // Auto-speak on mount if enabled
@@ -66,7 +68,7 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
 
   const handleQuickPronunciation = async () => {
     if (!word.trim() || !isSupported) return;
-    
+
     setError(null);
     onPronounce?.(word);
 
@@ -79,8 +81,8 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
     try {
       await quickSpeak(word);
     } catch (error) {
-      console.error('Word pronunciation failed:', error);
-      setError('Pronunciation unavailable');
+      console.error("Word pronunciation failed:", error);
+      setError("Pronunciation unavailable");
     } finally {
       // Restore original voice
       if (preferredVoice && preferredVoice !== originalVoice) {
@@ -91,68 +93,77 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
 
   const handleSlowPronunciation = async () => {
     if (!word.trim() || !isSupported) return;
-    
+
     setError(null);
     try {
       await slowSpeak(word);
     } catch (error) {
-      console.error('Slow pronunciation failed:', error);
-      setError('Pronunciation unavailable');
+      console.error("Slow pronunciation failed:", error);
+      setError("Pronunciation unavailable");
     }
   };
 
   const handlePhoneticPronunciation = async () => {
     if (!word.trim() || !isSupported) return;
-    
+
     setError(null);
     try {
       await phoneticSpeak(word);
     } catch (error) {
-      console.error('Phonetic pronunciation failed:', error);
-      setError('Pronunciation unavailable');
+      console.error("Phonetic pronunciation failed:", error);
+      setError("Pronunciation unavailable");
     }
   };
 
   const handleDefinitionPronunciation = async () => {
     if (!definition.trim() || !isSupported) return;
-    
+
     setError(null);
     try {
       await speak(definition, {
         rate: 0.8,
-        pitch: 1.0
+        pitch: 1.0,
       });
     } catch (error) {
-      console.error('Definition pronunciation failed:', error);
-      setError('Pronunciation unavailable');
+      console.error("Definition pronunciation failed:", error);
+      setError("Pronunciation unavailable");
     }
   };
 
   const getDifficultyColor = () => {
     switch (difficulty) {
-      case 'easy': return 'bg-green-100 text-green-800 border-green-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'hard': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case "easy":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "hard":
+        return "bg-red-100 text-red-800 border-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const getCategoryColor = () => {
     const colors = {
-      'Animals': 'bg-green-500',
-      'Food': 'bg-orange-500',
-      'Colors': 'bg-purple-500',
-      'Numbers': 'bg-blue-500',
-      'Nature': 'bg-emerald-500',
-      'Objects': 'bg-gray-500',
-      'General': 'bg-indigo-500'
+      Animals: "bg-green-500",
+      Food: "bg-orange-500",
+      Colors: "bg-purple-500",
+      Numbers: "bg-blue-500",
+      Nature: "bg-emerald-500",
+      Objects: "bg-gray-500",
+      General: "bg-indigo-500",
     };
-    return colors[category as keyof typeof colors] || 'bg-indigo-500';
+    return colors[category as keyof typeof colors] || "bg-indigo-500";
   };
 
   if (!isSupported) {
     return (
-      <div className={cn("bg-gray-100 border border-gray-300 rounded-xl p-4", className)}>
+      <div
+        className={cn(
+          "bg-gray-100 border border-gray-300 rounded-xl p-4",
+          className,
+        )}
+      >
         <div className="text-center text-gray-600">
           <div className="text-xl font-bold mb-2">{word}</div>
           <div className="text-sm">Pronunciation not supported</div>
@@ -162,25 +173,36 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
   }
 
   return (
-    <div 
+    <div
       className={cn(
         "group relative bg-white border-2 border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden",
-        isCardPlaying && "ring-4 ring-yellow-300 shadow-2xl transform scale-105",
+        isCardPlaying &&
+          "ring-4 ring-yellow-300 shadow-2xl transform scale-105",
         error && "border-red-300 bg-red-50",
-        className
+        className,
       )}
     >
       {/* Category Badge */}
-      <div className={cn("absolute top-3 right-3 px-2 py-1 rounded-full text-white text-xs font-semibold", getCategoryColor())}>
+      <div
+        className={cn(
+          "absolute top-3 right-3 px-2 py-1 rounded-full text-white text-xs font-semibold",
+          getCategoryColor(),
+        )}
+      >
         {category}
       </div>
 
       {/* Difficulty Badge */}
-      <div className={cn("absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-semibold border", getDifficultyColor())}>
+      <div
+        className={cn(
+          "absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-semibold border",
+          getDifficultyColor(),
+        )}
+      >
         {difficulty}
       </div>
 
-      <div 
+      <div
         className="p-6 cursor-pointer"
         onClick={() => setIsFlipped(!isFlipped)}
       >
@@ -190,8 +212,8 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
             {/* Image placeholder */}
             {imageUrl ? (
               <div className="h-32 bg-gray-200 rounded-lg mb-4 overflow-hidden">
-                <img 
-                  src={imageUrl} 
+                <img
+                  src={imageUrl}
                   alt={word}
                   className="w-full h-full object-cover"
                 />
@@ -204,13 +226,13 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
 
             {/* Word Display */}
             <div className="text-center">
-              <PronounceableWord 
+              <PronounceableWord
                 className={cn(
                   "text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors",
-                  isCardPlaying && "text-yellow-600 animate-pulse"
+                  isCardPlaying && "text-yellow-600 animate-pulse",
                 )}
                 onPronounce={handleQuickPronunciation}
-                slow={pronunciationSpeed === 'slow'}
+                slow={pronunciationSpeed === "slow"}
                 showIcon={false}
               >
                 {word}
@@ -219,9 +241,7 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
 
             {/* Error Display */}
             {error && (
-              <div className="text-center text-red-600 text-sm">
-                {error}
-              </div>
+              <div className="text-center text-red-600 text-sm">{error}</div>
             )}
 
             {/* Pronunciation Controls */}
@@ -234,15 +254,15 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
                 disabled={isCardPlaying}
                 className={cn(
                   "p-2 rounded-full transition-all transform hover:scale-110",
-                  pronunciationSpeed === 'quick' 
-                    ? "bg-blue-500 text-white" 
-                    : "bg-gray-100 text-gray-600 hover:bg-blue-100"
+                  pronunciationSpeed === "quick"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-blue-100",
                 )}
                 title="Quick pronunciation"
               >
                 <Play className="h-4 w-4" />
               </button>
-              
+
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -251,15 +271,15 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
                 disabled={isCardPlaying}
                 className={cn(
                   "p-2 rounded-full transition-all transform hover:scale-110",
-                  pronunciationSpeed === 'slow' 
-                    ? "bg-green-500 text-white" 
-                    : "bg-gray-100 text-gray-600 hover:bg-green-100"
+                  pronunciationSpeed === "slow"
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-green-100",
                 )}
                 title="Slow pronunciation"
               >
                 <Volume2 className="h-4 w-4" />
               </button>
-              
+
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -268,9 +288,9 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
                 disabled={isCardPlaying}
                 className={cn(
                   "p-2 rounded-full transition-all transform hover:scale-110",
-                  pronunciationSpeed === 'phonetic' 
-                    ? "bg-purple-500 text-white" 
-                    : "bg-gray-100 text-gray-600 hover:bg-purple-100"
+                  pronunciationSpeed === "phonetic"
+                    ? "bg-purple-500 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-purple-100",
                 )}
                 title="Phonetic pronunciation"
               >
@@ -287,7 +307,9 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
           /* Back Side - Definition */
           <div className="space-y-4 min-h-[200px] flex flex-col justify-center">
             <div className="text-center">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Definition</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">
+                Definition
+              </h3>
               {definition ? (
                 <div className="space-y-3">
                   <p className="text-gray-700 leading-relaxed">{definition}</p>
@@ -322,7 +344,7 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
           <RotateCcw className="h-3 w-3" />
           Flip Card
         </button>
-        
+
         <button
           onClick={() => onMastered?.(word)}
           className="text-sm text-green-600 hover:text-green-700 flex items-center gap-1"
@@ -348,39 +370,42 @@ const UnifiedWordCard: React.FC<WordCardProps> = ({
 // Example usage component
 export const UnifiedWordCardDemo: React.FC = () => {
   const [masteredWords, setMasteredWords] = useState<string[]>([]);
-  const [pronunciationCount, setPronunciationCount] = useState<Record<string, number>>({});
+  const [pronunciationCount, setPronunciationCount] = useState<
+    Record<string, number>
+  >({});
 
   const sampleWords = [
     {
-      word: 'Elephant',
-      definition: 'A large mammal with a trunk, big ears, and thick gray skin.',
-      category: 'Animals',
-      difficulty: 'easy' as const,
-      imageUrl: '/images/elephant.jpg'
+      word: "Elephant",
+      definition: "A large mammal with a trunk, big ears, and thick gray skin.",
+      category: "Animals",
+      difficulty: "easy" as const,
+      imageUrl: "/images/elephant.jpg",
     },
     {
-      word: 'Adventure',
-      definition: 'An exciting or unusual experience that involves some risk.',
-      category: 'General',
-      difficulty: 'medium' as const
+      word: "Adventure",
+      definition: "An exciting or unusual experience that involves some risk.",
+      category: "General",
+      difficulty: "medium" as const,
     },
     {
-      word: 'Photosynthesis',
-      definition: 'The process by which plants make food from sunlight and carbon dioxide.',
-      category: 'Nature',
-      difficulty: 'hard' as const
-    }
+      word: "Photosynthesis",
+      definition:
+        "The process by which plants make food from sunlight and carbon dioxide.",
+      category: "Nature",
+      difficulty: "hard" as const,
+    },
   ];
 
   const handlePronounce = (word: string) => {
-    setPronunciationCount(prev => ({
+    setPronunciationCount((prev) => ({
       ...prev,
-      [word]: (prev[word] || 0) + 1
+      [word]: (prev[word] || 0) + 1,
     }));
   };
 
   const handleMastered = (word: string) => {
-    setMasteredWords(prev => [...prev, word]);
+    setMasteredWords((prev) => [...prev, word]);
   };
 
   return (
@@ -409,14 +434,21 @@ export const UnifiedWordCardDemo: React.FC = () => {
 
       {/* Statistics */}
       <div className="bg-white rounded-xl p-6 shadow-lg">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Learning Statistics</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4">
+          Learning Statistics
+        </h3>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-semibold text-green-600 mb-2">Mastered Words:</h4>
+            <h4 className="font-semibold text-green-600 mb-2">
+              Mastered Words:
+            </h4>
             <div className="space-y-1">
               {masteredWords.length > 0 ? (
-                masteredWords.map(word => (
-                  <div key={word} className="flex items-center gap-2 text-green-700">
+                masteredWords.map((word) => (
+                  <div
+                    key={word}
+                    className="flex items-center gap-2 text-green-700"
+                  >
                     <Star className="h-4 w-4" />
                     {word}
                   </div>
@@ -427,12 +459,19 @@ export const UnifiedWordCardDemo: React.FC = () => {
             </div>
           </div>
           <div>
-            <h4 className="font-semibold text-blue-600 mb-2">Pronunciation Count:</h4>
+            <h4 className="font-semibold text-blue-600 mb-2">
+              Pronunciation Count:
+            </h4>
             <div className="space-y-1">
               {Object.entries(pronunciationCount).map(([word, count]) => (
-                <div key={word} className="flex justify-between items-center text-blue-700">
+                <div
+                  key={word}
+                  className="flex justify-between items-center text-blue-700"
+                >
                   <span>{word}</span>
-                  <span className="bg-blue-100 px-2 py-1 rounded text-sm">{count}x</span>
+                  <span className="bg-blue-100 px-2 py-1 rounded text-sm">
+                    {count}x
+                  </span>
                 </div>
               ))}
               {Object.keys(pronunciationCount).length === 0 && (

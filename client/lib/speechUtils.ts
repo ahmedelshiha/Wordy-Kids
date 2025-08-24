@@ -11,12 +11,12 @@
  */
 export function sanitizeTTSInput(input: any): string {
   // Debug logging for troubleshooting
-  if (process.env.NODE_ENV === 'development') {
-    console.log('sanitizeTTSInput received:', {
+  if (process.env.NODE_ENV === "development") {
+    console.log("sanitizeTTSInput received:", {
       input,
       type: typeof input,
       constructor: input?.constructor?.name,
-      isArray: Array.isArray(input)
+      isArray: Array.isArray(input),
     });
   }
 
@@ -42,18 +42,22 @@ export function sanitizeTTSInput(input: any): string {
 
   // Handle React elements and components
   if (input && typeof input === "object" && input.$$typeof) {
-    console.warn('React element passed to TTS, extracting children or text content');
+    console.warn(
+      "React element passed to TTS, extracting children or text content",
+    );
     // Extract text from React children
     if (input.props && input.props.children) {
       return sanitizeTTSInput(input.props.children);
     }
-    return '';
+    return "";
   }
 
   // Handle arrays (like React children arrays)
   if (Array.isArray(input)) {
-    const textParts = input.map(item => sanitizeTTSInput(item)).filter(text => text.trim());
-    return textParts.join(' ');
+    const textParts = input
+      .map((item) => sanitizeTTSInput(item))
+      .filter((text) => text.trim());
+    return textParts.join(" ");
   }
 
   // Handle objects with common word/text properties
@@ -95,16 +99,16 @@ export function sanitizeTTSInput(input: any): string {
     }
 
     // Log problematic objects for debugging
-    console.warn('Problematic object passed to TTS:', {
+    console.warn("Problematic object passed to TTS:", {
       input,
       keys: Object.keys(input),
-      constructor: input.constructor?.name
+      constructor: input.constructor?.name,
     });
 
     // Try to serialize the object nicely
     try {
       const jsonString = JSON.stringify(input);
-      if (jsonString !== '{}' && jsonString !== '[]') {
+      if (jsonString !== "{}" && jsonString !== "[]") {
         return jsonString;
       }
     } catch (error) {
@@ -130,14 +134,18 @@ export function createSafeUtterance(
   const text = sanitizeTTSInput(input);
 
   if (!text || text.length === 0) {
-    logSpeechError('createSafeUtterance', input, 'Empty text after sanitization');
+    logSpeechError(
+      "createSafeUtterance",
+      input,
+      "Empty text after sanitization",
+    );
     return null;
   }
 
   try {
     return new SpeechSynthesisUtterance(text);
   } catch (error) {
-    logSpeechError('createSafeUtterance', input, error);
+    logSpeechError("createSafeUtterance", input, error);
     return null;
   }
 }
@@ -161,7 +169,8 @@ export function logSpeechError(
         if (typeof originalInput === "string") return originalInput;
         if (typeof originalInput === "number") return originalInput;
         if (typeof originalInput === "boolean") return originalInput;
-        if (originalInput === null || originalInput === undefined) return originalInput;
+        if (originalInput === null || originalInput === undefined)
+          return originalInput;
         return JSON.stringify(originalInput, null, 2);
       } catch (e) {
         return `[Unserializable ${typeof originalInput}]`;
@@ -180,14 +189,18 @@ export function logSpeechError(
             stack: error.stack,
           }
         : typeof error === "object"
-        ? JSON.stringify(error)
-        : String(error),
-    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
-    speechSynthesisSupported: typeof window !== 'undefined' && 'speechSynthesis' in window
+          ? JSON.stringify(error)
+          : String(error),
+    userAgent:
+      typeof navigator !== "undefined" ? navigator.userAgent : "Unknown",
+    speechSynthesisSupported:
+      typeof window !== "undefined" && "speechSynthesis" in window,
   };
 
   console.error(`🔊 Speech synthesis error in ${context}:`, errorInfo);
 
   // Also log a simplified version for easier debugging
-  console.error(`🔊 Simple error: ${context} failed with input "${errorInfo.sanitizedInput}" - ${String(errorInfo.error)}`);
+  console.error(
+    `🔊 Simple error: ${context} failed with input "${errorInfo.sanitizedInput}" - ${String(errorInfo.error)}`,
+  );
 }

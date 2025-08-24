@@ -1,21 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  usePronunciation, 
-  VoiceSelector, 
-  PronounceableWord, 
+import React, { useState, useEffect } from "react";
+import {
+  usePronunciation,
+  VoiceSelector,
+  PronounceableWord,
   PronounceableSentence,
   VOICE_TYPES,
-  SPEECH_RATES 
-} from '../lib/unifiedPronunciationService';
-import { audioService, enhancedAudioService } from '../lib/pronunciationMigrationAdapter';
-import { Volume2, Play, Pause, Settings, CheckCircle, AlertCircle, Loader, Star, Heart, Smile } from 'lucide-react';
-import PronunciationDebugger from '../components/PronunciationDebugger';
+  SPEECH_RATES,
+} from "../lib/unifiedPronunciationService";
+import {
+  audioService,
+  enhancedAudioService,
+} from "../lib/pronunciationMigrationAdapter";
+import {
+  Volume2,
+  Play,
+  Pause,
+  Settings,
+  CheckCircle,
+  AlertCircle,
+  Loader,
+  Star,
+  Heart,
+  Smile,
+} from "lucide-react";
+import PronunciationDebugger from "../components/PronunciationDebugger";
 
 const UnifiedPronunciationDemo = () => {
-  const { 
-    voicePreference, 
-    isPlaying, 
-    isSupported, 
+  const {
+    voicePreference,
+    isPlaying,
+    isSupported,
     isVoicesLoaded,
     voices,
     currentWord,
@@ -23,23 +37,27 @@ const UnifiedPronunciationDemo = () => {
     quickSpeak,
     slowSpeak,
     phoneticSpeak,
-    stop
+    stop,
   } = usePronunciation();
 
-  const [selectedWord, setSelectedWord] = useState('');
-  const [legacyTestResult, setLegacyTestResult] = useState('');
-  const [customText, setCustomText] = useState('The quick brown fox jumps over the lazy dog.');
+  const [selectedWord, setSelectedWord] = useState("");
+  const [legacyTestResult, setLegacyTestResult] = useState("");
+  const [customText, setCustomText] = useState(
+    "The quick brown fox jumps over the lazy dog.",
+  );
   const [testResults, setTestResults] = useState<any>({});
 
   // Test the legacy compatibility layer
   const testLegacyAudioService = async () => {
-    setLegacyTestResult('Testing legacy audioService...');
-    
+    setLegacyTestResult("Testing legacy audioService...");
+
     try {
-      await audioService.pronounceWord('Hello from legacy audioService!', {
-        onStart: () => setLegacyTestResult('✅ Legacy audioService working!'),
-        onEnd: () => setLegacyTestResult('✅ Legacy audioService completed successfully!'),
-        onError: (error) => setLegacyTestResult(`❌ Legacy audioService error: ${error}`)
+      await audioService.pronounceWord("Hello from legacy audioService!", {
+        onStart: () => setLegacyTestResult("✅ Legacy audioService working!"),
+        onEnd: () =>
+          setLegacyTestResult("✅ Legacy audioService completed successfully!"),
+        onError: (error) =>
+          setLegacyTestResult(`❌ Legacy audioService error: ${error}`),
       });
     } catch (error) {
       setLegacyTestResult(`❌ Legacy audioService failed: ${error}`);
@@ -47,15 +65,23 @@ const UnifiedPronunciationDemo = () => {
   };
 
   const testEnhancedAudioService = async () => {
-    setLegacyTestResult('Testing enhanced audioService...');
-    
+    setLegacyTestResult("Testing enhanced audioService...");
+
     try {
-      await enhancedAudioService.pronounceWord('Hello from enhanced audioService!', {
-        voiceType: VOICE_TYPES.KID,
-        onStart: () => setLegacyTestResult('✅ Enhanced audioService working!'),
-        onEnd: () => setLegacyTestResult('✅ Enhanced audioService completed successfully!'),
-        onError: (error) => setLegacyTestResult(`❌ Enhanced audioService error: ${error}`)
-      });
+      await enhancedAudioService.pronounceWord(
+        "Hello from enhanced audioService!",
+        {
+          voiceType: VOICE_TYPES.KID,
+          onStart: () =>
+            setLegacyTestResult("✅ Enhanced audioService working!"),
+          onEnd: () =>
+            setLegacyTestResult(
+              "✅ Enhanced audioService completed successfully!",
+            ),
+          onError: (error) =>
+            setLegacyTestResult(`❌ Enhanced audioService error: ${error}`),
+        },
+      );
     } catch (error) {
       setLegacyTestResult(`❌ Enhanced audioService failed: ${error}`);
     }
@@ -64,11 +90,11 @@ const UnifiedPronunciationDemo = () => {
   // Run comprehensive tests
   const runComprehensiveTests = async () => {
     const results: any = {};
-    
+
     // Test 1: Basic pronunciation
     try {
-      await quickSpeak('Test one');
-      results.basicPronunciation = '✅ Passed';
+      await quickSpeak("Test one");
+      results.basicPronunciation = "✅ Passed";
     } catch (error) {
       results.basicPronunciation = `❌ Failed: ${error}`;
     }
@@ -77,25 +103,25 @@ const UnifiedPronunciationDemo = () => {
     try {
       const originalVoice = voicePreference;
       // This would be implemented by the context
-      results.voiceSwitching = '✅ Voice switching available';
+      results.voiceSwitching = "✅ Voice switching available";
     } catch (error) {
       results.voiceSwitching = `❌ Failed: ${error}`;
     }
 
     // Test 3: Speed variations
     try {
-      await slowSpeak('Slow speech test');
-      results.speedVariation = '✅ Passed';
+      await slowSpeak("Slow speech test");
+      results.speedVariation = "✅ Passed";
     } catch (error) {
       results.speedVariation = `❌ Failed: ${error}`;
     }
 
     // Test 4: Word highlighting
     try {
-      await speak('Word highlighting test', {
-        onWordHighlight: (word) => console.log('Highlighted:', word)
+      await speak("Word highlighting test", {
+        onWordHighlight: (word) => console.log("Highlighted:", word),
       });
-      results.wordHighlighting = '✅ Passed';
+      results.wordHighlighting = "✅ Passed";
     } catch (error) {
       results.wordHighlighting = `❌ Failed: ${error}`;
     }
@@ -112,7 +138,8 @@ const UnifiedPronunciationDemo = () => {
             Speech Not Supported
           </h1>
           <p className="text-gray-600">
-            This browser doesn't support speech synthesis. Please try Chrome, Safari, or Firefox.
+            This browser doesn't support speech synthesis. Please try Chrome,
+            Safari, or Firefox.
           </p>
         </div>
       </div>
@@ -130,12 +157,18 @@ const UnifiedPronunciationDemo = () => {
             <Heart className="text-red-500" />
           </h1>
           <p className="text-lg text-gray-600">
-            Current Voice: <span className="font-semibold capitalize">{voicePreference}</span>
-            {isPlaying && <span className="ml-2 text-blue-600">🎵 Speaking...</span>}
-            {!isVoicesLoaded && <span className="ml-2 text-orange-600">⏳ Loading voices...</span>}
+            Current Voice:{" "}
+            <span className="font-semibold capitalize">{voicePreference}</span>
+            {isPlaying && (
+              <span className="ml-2 text-blue-600">🎵 Speaking...</span>
+            )}
+            {!isVoicesLoaded && (
+              <span className="ml-2 text-orange-600">⏳ Loading voices...</span>
+            )}
           </p>
           <div className="mt-2 text-sm text-gray-500">
-            {voices.length} voices available | System Status: {isSupported ? 'Ready' : 'Not Supported'}
+            {voices.length} voices available | System Status:{" "}
+            {isSupported ? "Ready" : "Not Supported"}
           </div>
         </div>
 
@@ -147,11 +180,19 @@ const UnifiedPronunciationDemo = () => {
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="flex items-center gap-2">
-              {isSupported ? <CheckCircle className="text-green-500" /> : <AlertCircle className="text-red-500" />}
+              {isSupported ? (
+                <CheckCircle className="text-green-500" />
+              ) : (
+                <AlertCircle className="text-red-500" />
+              )}
               <span>Browser Support</span>
             </div>
             <div className="flex items-center gap-2">
-              {isVoicesLoaded ? <CheckCircle className="text-green-500" /> : <Loader className="text-orange-500 animate-spin" />}
+              {isVoicesLoaded ? (
+                <CheckCircle className="text-green-500" />
+              ) : (
+                <Loader className="text-orange-500 animate-spin" />
+              )}
               <span>Voices Loaded</span>
             </div>
             <div className="flex items-center gap-2">
@@ -181,9 +222,18 @@ const UnifiedPronunciationDemo = () => {
                 Click any word to hear it pronounced:
               </div>
               <div className="flex flex-wrap gap-2">
-                {['Apple', 'Banana', 'Cherry', 'Dragon', 'Elephant', 'Forest', 'Garden', 'Happy'].map(word => (
-                  <PronounceableWord 
-                    key={word} 
+                {[
+                  "Apple",
+                  "Banana",
+                  "Cherry",
+                  "Dragon",
+                  "Elephant",
+                  "Forest",
+                  "Garden",
+                  "Happy",
+                ].map((word) => (
+                  <PronounceableWord
+                    key={word}
                     className="bg-blue-100 text-blue-800 font-semibold"
                     highlight={selectedWord === word}
                     slow={true}
@@ -194,7 +244,8 @@ const UnifiedPronunciationDemo = () => {
                 ))}
               </div>
               <div className="mt-4 text-sm text-gray-600">
-                Last pronounced: <span className="font-semibold">{selectedWord || 'None'}</span>
+                Last pronounced:{" "}
+                <span className="font-semibold">{selectedWord || "None"}</span>
               </div>
             </div>
           </div>
@@ -212,7 +263,8 @@ const UnifiedPronunciationDemo = () => {
                 The dragon loved to play with children in the magical forest.
               </PronounceableSentence>
               <PronounceableSentence className="text-lg leading-relaxed">
-                They all became the best of friends and had wonderful adventures!
+                They all became the best of friends and had wonderful
+                adventures!
               </PronounceableSentence>
             </div>
           </div>
@@ -283,7 +335,8 @@ const UnifiedPronunciationDemo = () => {
           </h3>
           <div className="space-y-4">
             <p className="text-gray-600">
-              Test that existing components can use the new unified system through the compatibility layer:
+              Test that existing components can use the new unified system
+              through the compatibility layer:
             </p>
             <div className="flex flex-wrap gap-2">
               <button
@@ -331,7 +384,9 @@ const UnifiedPronunciationDemo = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-blue-600 mb-2">1. Legacy Component (Before):</h4>
+                <h4 className="font-semibold text-blue-600 mb-2">
+                  1. Legacy Component (Before):
+                </h4>
                 <div className="bg-gray-100 p-3 rounded font-mono text-sm">
                   {`import { audioService } from './audioService';
 
@@ -340,7 +395,9 @@ await audioService.pronounceWord('hello');`}
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-green-600 mb-2">2. Unified Component (After):</h4>
+                <h4 className="font-semibold text-green-600 mb-2">
+                  2. Unified Component (After):
+                </h4>
                 <div className="bg-gray-100 p-3 rounded font-mono text-sm">
                   {`import { PronounceableWord } from './unifiedPronunciationService';
 
@@ -351,7 +408,9 @@ await audioService.pronounceWord('hello');`}
             </div>
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-purple-600 mb-2">3. Using the Hook:</h4>
+                <h4 className="font-semibold text-purple-600 mb-2">
+                  3. Using the Hook:
+                </h4>
                 <div className="bg-gray-100 p-3 rounded font-mono text-sm">
                   {`const { quickSpeak, voicePreference } = usePronunciation();
 
@@ -359,7 +418,9 @@ await quickSpeak('Hello world!');`}
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-red-600 mb-2">4. Voice Selection:</h4>
+                <h4 className="font-semibold text-red-600 mb-2">
+                  4. Voice Selection:
+                </h4>
                 <div className="bg-gray-100 p-3 rounded font-mono text-sm">
                   {`<VoiceSelector />
 
@@ -374,7 +435,10 @@ await quickSpeak('Hello world!');`}
         {currentWord && (
           <div className="bg-yellow-100 border border-yellow-300 rounded-xl p-4 text-center">
             <div className="text-lg font-semibold text-yellow-800">
-              Currently Speaking: <span className="bg-yellow-200 px-2 py-1 rounded">{currentWord}</span>
+              Currently Speaking:{" "}
+              <span className="bg-yellow-200 px-2 py-1 rounded">
+                {currentWord}
+              </span>
             </div>
           </div>
         )}
