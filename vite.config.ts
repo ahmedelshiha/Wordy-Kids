@@ -10,11 +10,14 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     fs: {
       allow: ["./client", "./shared"],
-      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
+      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**", "backup/**"],
     },
   },
   build: {
     outDir: "dist/spa",
+  },
+  optimizeDeps: {
+    exclude: ["backup/**/*"]
   },
   plugins: [react(), expressPlugin()],
   resolve: {
