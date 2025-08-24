@@ -34,6 +34,7 @@ import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
+import EmojiTestPage from "./pages/EmojiTestPage";
 
 const queryClient = new QueryClient();
 
