@@ -55,21 +55,21 @@
   background:
     radial-gradient(
       circle at 40% 60%,
-      rgba(255, 152, 0, 0.15) 0%,
+      hsl(var(--color-wood-500) / 0.15) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 60% 40%,
-      rgba(56, 142, 60, 0.3) 0%,
+      hsl(var(--quiz-evening-mid) / 0.3) 0%,
       transparent 50%
     ),
     linear-gradient(
       135deg,
-      #2e7d32 0%,
-      #388e3c 25%,
-      #4caf50 50%,
-      #66bb6a 75%,
-      #81c784 100%
+      hsl(var(--quiz-evening-start)) 0%,
+      hsl(var(--quiz-evening-mid)) 25%,
+      hsl(var(--quiz-evening-end)) 50%,
+      hsl(var(--color-jungle-400)) 75%,
+      hsl(var(--color-jungle-300)) 100%
     );
 }
 
@@ -77,21 +77,21 @@
   background:
     radial-gradient(
       circle at 50% 50%,
-      rgba(63, 81, 181, 0.1) 0%,
+      hsl(var(--color-sky-600) / 0.1) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 25% 75%,
-      rgba(27, 94, 32, 0.4) 0%,
+      hsl(var(--quiz-night-start) / 0.4) 0%,
       transparent 50%
     ),
     linear-gradient(
       135deg,
-      #1b5e20 0%,
-      #2e7d32 25%,
-      #388e3c 50%,
-      #4caf50 75%,
-      #66bb6a 100%
+      hsl(var(--quiz-night-start)) 0%,
+      hsl(var(--quiz-night-mid)) 25%,
+      hsl(var(--quiz-night-end)) 50%,
+      hsl(var(--color-jungle-500)) 75%,
+      hsl(var(--color-jungle-400)) 100%
     );
 }
 
