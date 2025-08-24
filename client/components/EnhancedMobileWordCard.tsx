@@ -648,9 +648,9 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                     handlePronounce();
                   }}
                   disabled={isPlaying}
-                  className={`text-white hover:bg-white/30 hover:scale-110 p-3 min-w-[52px] min-h-[52px] rounded-full transition-all duration-300 border-2 border-white/50 bg-white/15 backdrop-blur-sm shadow-lg ${
+                  className={`text-gray-200 hover:bg-white/60 hover:text-gray-800 hover:scale-110 p-3 min-w-[52px] min-h-[52px] rounded-full transition-all duration-300 border-2 border-white/50 bg-white/30 backdrop-blur-sm shadow-lg ${
                     isPlaying
-                      ? "scale-125 bg-yellow-400/40 border-yellow-300/70 shadow-yellow-300/40 animate-bounce"
+                      ? "scale-125 bg-yellow-400/60 border-yellow-300/70 shadow-yellow-300/40 animate-bounce text-gray-800"
                       : "hover:border-white/70 hover:shadow-xl"
                   }`}
                   aria-label={`Pronounce ${word.word}`}
