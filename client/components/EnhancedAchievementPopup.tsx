@@ -434,7 +434,7 @@ export function EnhancedAchievementPopup({
 
                   {/* Simplified Badges for mobile */}
                   <div className="flex items-center justify-center gap-1 mb-2">
-                    <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full">
+                    <Badge className="bg-white/60 text-emerald-800 border-0 text-xs px-2 py-0.5 rounded-full font-bold shadow-sm">
                       {currentAchievement.difficulty === "rainbow"
                         ? "🌈 ULTIMATE"
                         : currentAchievement.difficulty === "diamond"
@@ -461,12 +461,12 @@ export function EnhancedAchievementPopup({
                             type: "spring",
                             duration: 0.3,
                           }}
-                          className="bg-white/20 rounded-xl p-2 mb-3"
+                          className="bg-white/60 rounded-xl p-2 mb-3 border-2 border-white/70 shadow-lg"
                         >
-                          <div className="text-xs font-bold text-yellow-200 mb-1 animate-pulse">
-                            🎁 REWARD TIME! 🎁
+                          <div className="text-xs font-bold text-emerald-700 mb-1 animate-pulse">
+                            🎁 TREASURE FOUND! 🎁
                           </div>
-                          <div className="text-sm font-bold">
+                          <div className="text-sm font-bold text-gray-800">
                             {currentAchievement.reward.emoji || "🎁"}{" "}
                             {currentAchievement.reward.item.length > 15
                               ? currentAchievement.reward.item.slice(0, 15) +
