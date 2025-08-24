@@ -177,6 +177,14 @@ const AppWithPronunciation = () => {
           path="/StorageOptimizationDemo"
           element={<StorageOptimizationDemo />}
         />
+        <Route
+          path="/unified-pronunciation-demo"
+          element={<UnifiedPronunciationDemo />}
+        />
+        <Route
+          path="/UnifiedPronunciationDemo"
+          element={<UnifiedPronunciationDemo />}
+        />
 
         {/* Builder.io Educational Content Routes */}
         <Route
