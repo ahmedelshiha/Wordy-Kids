@@ -9,6 +9,13 @@
  */
 export interface DemoResponse {
   message: string;
+  emojiTest?: {
+    basic: string;
+    complex: string;
+    recent: string;
+    skinTones: string;
+    educational: string;
+  };
 }
 
 /**
