@@ -233,7 +233,7 @@ export const PronunciationProvider: React.FC<{
   };
 
   // Main speak function
-  const speak = useCallback(async (text: string, options: {
+  const speak = useCallback(async (text: any, options: {
     rate?: number;
     pitch?: number;
     volume?: number;
@@ -241,10 +241,20 @@ export const PronunciationProvider: React.FC<{
     onEnd?: () => void;
     onWordHighlight?: (word: string, index: number) => void;
   } = {}): Promise<void> => {
-    if (!text?.trim()) return Promise.resolve();
-    
+    // Import sanitization helper
+    const { sanitizeTTSInput, logSpeechError } = require('./speechUtils');
+
+    // Sanitize input to prevent "[object Object]" errors
+    const sanitizedText = sanitizeTTSInput(text);
+    if (!sanitizedText) {
+      logSpeechError('unifiedPronunciationService.speak', text, 'Empty text after sanitization');
+      return Promise.resolve();
+    }
+
     if (!isSupported || !synthRef.current) {
-      throw new Error('Speech synthesis not available');
+      const error = 'Speech synthesis not available';
+      logSpeechError('unifiedPronunciationService.speak', text, error);
+      throw new Error(error);
     }
 
     if (!isVoicesLoaded) {
@@ -267,7 +277,7 @@ export const PronunciationProvider: React.FC<{
       try {
         synthRef.current?.cancel();
         
-        const utterance = new SpeechSynthesisUtterance(text.trim());
+        const utterance = new SpeechSynthesisUtterance(sanitizedText);
 
         utterance.voice = selectedVoice;
         utterance.rate = Math.max(0.1, Math.min(2.0, options.rate || rate));
@@ -276,7 +286,7 @@ export const PronunciationProvider: React.FC<{
         utterance.lang = language;
 
         let wordIndex = 0;
-        const words = text.split(/\s+/);
+        const words = sanitizedText.split(/\s+/);
 
         utterance.onstart = () => {
           setIsPlaying(true);
@@ -292,16 +302,26 @@ export const PronunciationProvider: React.FC<{
 
         utterance.onerror = (event) => {
           setIsPlaying(false);
-          console.error('Speech synthesis error:', event.error);
-          
+          const errorDetails = {
+            error: event.error,
+            message: event.message || 'Unknown speech error',
+            originalText: text,
+            sanitizedText: sanitizedText,
+            voiceType: voicePreference,
+            selectedVoice: selectedVoice?.name,
+            timestamp: new Date().toISOString()
+          };
+
+          logSpeechError('unifiedPronunciationService.speak.onerror', text, errorDetails);
+
           if (event.error === 'interrupted' && retryCount < maxRetries) {
             setTimeout(() => {
               setRetryCount(prev => prev + 1);
               speak(text, options).then(resolve).catch(reject);
             }, 500);
           } else {
-            onError?.(event.error);
-            reject(new Error(`Speech error: ${event.error}`));
+            onError?.(errorDetails);
+            reject(new Error(`Speech error: ${event.error} - ${event.message || 'Unknown error'}`));
           }
         };
 
@@ -321,7 +341,15 @@ export const PronunciationProvider: React.FC<{
         synthRef.current?.speak(utterance);
 
       } catch (error) {
-        console.error('Speak function error:', error);
+        const errorDetails = {
+          originalError: error,
+          originalText: text,
+          sanitizedText: sanitizedText,
+          context: 'speak function',
+          timestamp: new Date().toISOString()
+        };
+
+        logSpeechError('unifiedPronunciationService.speak.catch', text, errorDetails);
         reject(error);
       }
     });
