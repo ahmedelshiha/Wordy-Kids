@@ -495,7 +495,7 @@ export function EnhancedAchievementPopup({
                         <div
                           key={index}
                           className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                            index === currentIndex ? "bg-white" : "bg-white/30"
+                            index === currentIndex ? "bg-emerald-600" : "bg-emerald-300"
                           }`}
                         />
                       ))}
