@@ -148,18 +148,6 @@ const App = () => {
                         element={<EnhancedWordCardDemo />}
                       />
                       <Route
-                        path="/word-garden-demo"
-                        element={<WordGardenDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-demo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/WordAdventureDemo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
                         path="/word-adventure-test"
                         element={<WordAdventureTest />}
                       />
@@ -172,28 +160,8 @@ const App = () => {
                         element={<SpeechDiagnostics />}
                       />
                       <Route
-                        path="/ai-integration-demo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/AIIntegrationDemo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/ai-word-recommendation-demo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/AIWordRecommendationDemo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
                         path="/ai-system-test"
                         element={<AISystemTest />}
-                      />
-                      <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
                       />
                       <Route
                         path="/error-boundary-test"
