@@ -617,10 +617,72 @@
   }
 
   .text-adventure {
-    font-family: "Poppins", "Nunito", sans-serif;
+    font-family: "Poppins", "Nunito", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
     font-weight: 700;
     letter-spacing: 0.015em;
     line-height: 1.5;
+  }
+
+  /* PHASE 3: Additional emoji utilities */
+  .emoji-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", system-ui, sans-serif;
+    font-variant-emoji: unicode;
+  }
+
+  .emoji-button:hover:not(:disabled) {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .emoji-button:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .emoji-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .emoji-icon {
+    display: inline-block;
+    line-height: 1;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", system-ui, sans-serif;
+    font-variant-emoji: unicode;
+  }
+
+  /* Ensure emojis don't break in forms */
+  input.emoji-input,
+  textarea.emoji-input {
+    font-family: system-ui, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-variant-emoji: unicode;
+  }
+
+  /* High contrast mode support for emojis */
+  @media (prefers-contrast: high) {
+    .emoji-text {
+      filter: contrast(1.2);
+    }
+  }
+
+  /* Reduced motion for emoji animations */
+  @media (prefers-reduced-motion: reduce) {
+    .emoji-button {
+      transition: none;
+    }
+
+    .emoji-button:hover:not(:disabled) {
+      transform: none;
+    }
+
+    .emoji-button:active:not(:disabled) {
+      transform: none;
+    }
   }
 
   /* Optimized readability for kids with better density */
