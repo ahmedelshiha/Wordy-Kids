@@ -159,21 +159,44 @@ export default {
         },
 
         /* ========================================
-         * LEGACY COLORS (deprecated - use new tokens)
+         * EDUCATIONAL COLORS (now unified with jungle theme)
+         * These automatically map to jungle theme tokens via CSS variables
          * ======================================== */
         educational: {
-          blue: "hsl(var(--educational-blue))",
-          "blue-light": "hsl(var(--educational-blue-light))",
-          purple: "hsl(var(--educational-purple))",
-          "purple-light": "hsl(var(--educational-purple-light))",
-          green: "hsl(var(--educational-green))",
-          "green-light": "hsl(var(--educational-green-light))",
-          orange: "hsl(var(--educational-orange))",
-          "orange-light": "hsl(var(--educational-orange-light))",
-          pink: "hsl(var(--educational-pink))",
-          "pink-light": "hsl(var(--educational-pink-light))",
-          yellow: "hsl(var(--educational-yellow))",
-          "yellow-light": "hsl(var(--educational-yellow-light))",
+          blue: "hsl(var(--educational-blue))", /* -> sky-500 */
+          "blue-light": "hsl(var(--educational-blue-light))", /* -> sky-200 */
+          purple: "hsl(var(--educational-purple))", /* -> berry-500 */
+          "purple-light": "hsl(var(--educational-purple-light))", /* -> berry-200 */
+          green: "hsl(var(--educational-green))", /* -> jungle-500 */
+          "green-light": "hsl(var(--educational-green-light))", /* -> jungle-200 */
+          orange: "hsl(var(--educational-orange))", /* -> wood-500 */
+          "orange-light": "hsl(var(--educational-orange-light))", /* -> wood-200 */
+          pink: "hsl(var(--educational-pink))", /* -> berry-400 */
+          "pink-light": "hsl(var(--educational-pink-light))", /* -> berry-200 */
+          yellow: "hsl(var(--educational-yellow))", /* -> banana-500 */
+          "yellow-light": "hsl(var(--educational-yellow-light))", /* -> banana-200 */
+        },
+
+        /* ========================================
+         * QUIZ ADVENTURE THEME COLORS
+         * Time-based backgrounds and quiz UI elements
+         * ======================================== */
+        quiz: {
+          "morning-start": "hsl(var(--quiz-morning-start))",
+          "morning-mid": "hsl(var(--quiz-morning-mid))",
+          "morning-end": "hsl(var(--quiz-morning-end))",
+          "midday-start": "hsl(var(--quiz-midday-start))",
+          "midday-mid": "hsl(var(--quiz-midday-mid))",
+          "midday-end": "hsl(var(--quiz-midday-end))",
+          "evening-start": "hsl(var(--quiz-evening-start))",
+          "evening-mid": "hsl(var(--quiz-evening-mid))",
+          "evening-end": "hsl(var(--quiz-evening-end))",
+          "night-start": "hsl(var(--quiz-night-start))",
+          "night-mid": "hsl(var(--quiz-night-mid))",
+          "night-end": "hsl(var(--quiz-night-end))",
+          "gold": "hsl(var(--quiz-gold-accent))",
+          "treasure-border": "var(--quiz-treasure-border)",
+          "option-bg": "var(--quiz-option-bg)",
         },
         // Legacy Jungle Green Family
         "jungle-legacy": {
