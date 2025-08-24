@@ -139,7 +139,25 @@ export class SpeechSynthesisDebugger {
       }
 
       const synth = window.speechSynthesis;
-      const utterance = new SpeechSynthesisUtterance(testWord);
+
+      // Import sanitization helper to prevent "[object Object]" errors
+      const { sanitizeTTSInput, logSpeechError } = require("./speechUtils");
+
+      // Sanitize input to prevent errors
+      const sanitizedTestWord = sanitizeTTSInput(testWord);
+      if (!sanitizedTestWord) {
+        logSpeechError(
+          "speechSynthesisDebugger.testSpeechSynthesis",
+          testWord,
+          "Empty testWord after sanitization",
+        );
+        console.error("❌ Test failed: Invalid test word");
+        resolved = true;
+        resolve(false);
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(sanitizedTestWord);
 
       // Use very quiet volume for testing
       utterance.volume = 0.01;
