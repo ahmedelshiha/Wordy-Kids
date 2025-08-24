@@ -11,11 +11,11 @@ import { AssetManager, AudioManager } from "./lib/assetManager";
 import { localStorageManager } from "./lib/localStorageManager";
 
 // Unified Pronunciation System
-import { 
-  PronunciationProvider, 
+import {
+  PronunciationProvider,
   usePronunciation,
   VOICE_TYPES,
-  SPEECH_RATES 
+  SPEECH_RATES,
 } from "./lib/unifiedPronunciationService";
 import { setPronunciationContext } from "./lib/pronunciationMigrationAdapter";
 
@@ -85,10 +85,7 @@ const AppWithPronunciation = () => {
         <Route
           path="/app"
           element={
-            <ErrorBoundary
-              fallbackType="kid"
-              componentName="MainAppPage"
-            >
+            <ErrorBoundary fallbackType="kid" componentName="MainAppPage">
               <MainAppPage />
             </ErrorBoundary>
           }
@@ -97,50 +94,20 @@ const AppWithPronunciation = () => {
         <Route
           path="/admin"
           element={
-            <ErrorBoundary
-              fallbackType="parent"
-              componentName="AdminPage"
-            >
+            <ErrorBoundary fallbackType="parent" componentName="AdminPage">
               <AdminPage />
             </ErrorBoundary>
           }
         />
-        <Route
-          path="/word-card-demo"
-          element={<EnhancedWordCardDemo />}
-        />
-        <Route
-          path="/word-garden-demo"
-          element={<WordGardenDemo />}
-        />
-        <Route
-          path="/word-adventure-demo"
-          element={<WordAdventureDemo />}
-        />
-        <Route
-          path="/WordAdventureDemo"
-          element={<WordAdventureDemo />}
-        />
-        <Route
-          path="/word-adventure-test"
-          element={<WordAdventureTest />}
-        />
-        <Route
-          path="/WordAdventureTest"
-          element={<WordAdventureTest />}
-        />
-        <Route
-          path="/speech-diagnostics"
-          element={<SpeechDiagnostics />}
-        />
-        <Route
-          path="/ai-integration-demo"
-          element={<AIIntegrationDemo />}
-        />
-        <Route
-          path="/AIIntegrationDemo"
-          element={<AIIntegrationDemo />}
-        />
+        <Route path="/word-card-demo" element={<EnhancedWordCardDemo />} />
+        <Route path="/word-garden-demo" element={<WordGardenDemo />} />
+        <Route path="/word-adventure-demo" element={<WordAdventureDemo />} />
+        <Route path="/WordAdventureDemo" element={<WordAdventureDemo />} />
+        <Route path="/word-adventure-test" element={<WordAdventureTest />} />
+        <Route path="/WordAdventureTest" element={<WordAdventureTest />} />
+        <Route path="/speech-diagnostics" element={<SpeechDiagnostics />} />
+        <Route path="/ai-integration-demo" element={<AIIntegrationDemo />} />
+        <Route path="/AIIntegrationDemo" element={<AIIntegrationDemo />} />
         <Route
           path="/ai-word-recommendation-demo"
           element={<AIWordRecommendationDemo />}
@@ -149,22 +116,13 @@ const AppWithPronunciation = () => {
           path="/AIWordRecommendationDemo"
           element={<AIWordRecommendationDemo />}
         />
-        <Route
-          path="/ai-system-test"
-          element={<AISystemTest />}
-        />
+        <Route path="/ai-system-test" element={<AISystemTest />} />
         <Route
           path="/jungle-adventure-word-card-demo"
           element={<JungleAdventureWordCardDemo />}
         />
-        <Route
-          path="/error-boundary-test"
-          element={<ErrorBoundaryTest />}
-        />
-        <Route
-          path="/mobile-settings-demo"
-          element={<MobileSettingsDemo />}
-        />
+        <Route path="/error-boundary-test" element={<ErrorBoundaryTest />} />
+        <Route path="/mobile-settings-demo" element={<MobileSettingsDemo />} />
         <Route
           path="/settings-panel-v2-demo"
           element={<SettingsPanelV2Demo />}
@@ -209,8 +167,7 @@ const AppWithPronunciation = () => {
                     🎓 Lesson Coming Soon!
                   </h2>
                   <p className="text-gray-600">
-                    This educational content is being prepared for
-                    you.
+                    This educational content is being prepared for you.
                   </p>
                   <div className="mt-4 text-4xl">📚</div>
                 </div>
@@ -241,41 +198,28 @@ const AppWithPronunciation = () => {
 
         <Route
           path="/about"
-          element={
-            <MarketingPageWrapper model="marketing-page" />
-          }
+          element={<MarketingPageWrapper model="marketing-page" />}
         />
 
         <Route
           path="/pricing"
-          element={
-            <MarketingPageWrapper model="marketing-page" />
-          }
+          element={<MarketingPageWrapper model="marketing-page" />}
         />
 
         <Route
           path="/parents"
-          element={
-            <MarketingPageWrapper model="parent-info-page" />
-          }
+          element={<MarketingPageWrapper model="parent-info-page" />}
         />
 
         {/* Builder.io Dynamic Pages */}
-        <Route
-          path="/page/*"
-          element={<BuilderPageWrapper model="page" />}
-        />
+        <Route path="/page/*" element={<BuilderPageWrapper model="page" />} />
         <Route
           path="/lesson/*"
-          element={
-            <EducationalPageWrapper model="educational-lesson" />
-          }
+          element={<EducationalPageWrapper model="educational-lesson" />}
         />
         <Route
           path="/game/*"
-          element={
-            <EducationalPageWrapper model="learning-activity" />
-          }
+          element={<EducationalPageWrapper model="learning-activity" />}
         />
         <Route
           path="/builder/:slug"
@@ -401,7 +345,7 @@ const App = () => {
       // Add pronunciation-related legacy keys
       "preferred-voice-type",
       "audio-enabled",
-      "voice-settings"
+      "voice-settings",
     ];
     const jungleKey = "jungleAdventureSettings";
 
@@ -432,23 +376,25 @@ const App = () => {
 
   // Get default pronunciation settings from legacy storage
   const getDefaultPronunciationSettings = () => {
-    const legacyVoiceType = localStorage.getItem('preferred-voice-type');
-    const legacyAudioEnabled = localStorage.getItem('audio-enabled');
-    
+    const legacyVoiceType = localStorage.getItem("preferred-voice-type");
+    const legacyAudioEnabled = localStorage.getItem("audio-enabled");
+
     return {
-      voiceType: (legacyVoiceType && Object.values(VOICE_TYPES).includes(legacyVoiceType as any)) 
-        ? legacyVoiceType as any
-        : VOICE_TYPES.WOMAN,
+      voiceType:
+        legacyVoiceType &&
+        Object.values(VOICE_TYPES).includes(legacyVoiceType as any)
+          ? (legacyVoiceType as any)
+          : VOICE_TYPES.WOMAN,
       rate: SPEECH_RATES.SLOW,
       pitch: 1.1,
       volume: 0.9,
-      language: 'en-US'
+      language: "en-US",
     };
   };
 
   // Handle pronunciation system errors
   const handlePronunciationError = (error: string) => {
-    console.error('Pronunciation system error:', error);
+    console.error("Pronunciation system error:", error);
     // Log to analytics or error reporting service
     // Could also show user-friendly notification
   };
