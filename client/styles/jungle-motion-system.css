@@ -1,0 +1,639 @@
+/**
+ * Jungle Adventure Motion System
+ * Comprehensive animation system with accessibility-first design
+ * All animations respect prefers-reduced-motion and save-data preferences
+ */
+
+/* ========================================
+ * KEYFRAME DEFINITIONS
+ * ======================================== */
+
+/* Subtle floating animation for jungle elements */
+@keyframes float-soft {
+  0%, 100% { 
+    transform: translateY(0px);
+  }
+  50% { 
+    transform: translateY(-4px);
+  }
+}
+
+/* Gentle leaf sway animation */
+@keyframes leaf-sway {
+  0%, 100% { 
+    transform: rotate(-1deg);
+  }
+  50% { 
+    transform: rotate(1deg);
+  }
+}
+
+/* Pop-in animation for interactive elements */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Gentle breath animation for ambient elements */
+@keyframes gentle-breath {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.98;
+  }
+}
+
+/* Serene glow animation */
+@keyframes serene-glow {
+  0%, 100% {
+    box-shadow: 0 0 0px hsl(var(--color-jungle-500) / 0);
+  }
+  50% {
+    box-shadow: 0 0 8px hsl(var(--color-jungle-500) / 0.15);
+  }
+}
+
+/* Peaceful hover lift */
+@keyframes peaceful-hover {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-0.5px) scale(1.005);
+  }
+}
+
+/* Calm pulse for attention elements */
+@keyframes calm-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.97;
+  }
+}
+
+/* Gentle emoji floating */
+@keyframes gentle-emoji-float {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
+}
+
+/* Jungle sparkle effect */
+@keyframes jungle-sparkle {
+  0%, 100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* Progressive reveal animation */
+@keyframes reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in with scale */
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide in from left */
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Bouncy entrance */
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Shimmer effect for loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Progress fill animation */
+@keyframes progress-fill {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+/* Wiggle for fun interactions */
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-10deg);
+  }
+  20% {
+    transform: rotateZ(8deg);
+  }
+  25% {
+    transform: rotateZ(-6deg);
+  }
+  30% {
+    transform: rotateZ(4deg);
+  }
+  35% {
+    transform: rotateZ(-2deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+/* Jungle celebration animation */
+@keyframes jungle-celebration {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-3deg);
+  }
+}
+
+/* Level up effect */
+@keyframes jungle-level-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Parallax background layers */
+@keyframes parallax-slow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100px);
+  }
+}
+
+@keyframes parallax-medium {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50px);
+  }
+}
+
+@keyframes parallax-fast {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25px);
+  }
+}
+
+/* ========================================
+ * ANIMATION CLASSES
+ * ======================================== */
+
+/* Base animation classes with motion-safe approach */
+.anim-float {
+  animation: float-soft 8s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 8s);
+}
+
+.anim-sway {
+  animation: leaf-sway 6s ease-in-out infinite alternate;
+  animation-duration: calc(var(--motion-scale) * 6s);
+}
+
+.anim-pop-in {
+  animation: pop-in var(--dur-normal) var(--ease-soft);
+  animation-duration: calc(var(--motion-scale) * var(--dur-normal));
+}
+
+.anim-breath {
+  animation: gentle-breath 8s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 8s);
+}
+
+.anim-glow {
+  animation: serene-glow 12s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 12s);
+}
+
+.anim-hover-lift {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.anim-hover-lift:hover {
+  animation: peaceful-hover var(--dur-slow) var(--ease-out) forwards;
+  animation-duration: calc(var(--motion-scale) * var(--dur-slow));
+}
+
+.anim-pulse {
+  animation: calm-pulse 6s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 6s);
+}
+
+.anim-emoji-float {
+  animation: gentle-emoji-float 3s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 3s);
+}
+
+.anim-sparkle {
+  animation: jungle-sparkle 1.5s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 1.5s);
+}
+
+.anim-reveal-up {
+  animation: reveal-up var(--dur-slow) var(--ease-out);
+  animation-duration: calc(var(--motion-scale) * var(--dur-slow));
+}
+
+.anim-fade-in {
+  animation: fade-in-scale var(--dur-normal) var(--ease-out);
+  animation-duration: calc(var(--motion-scale) * var(--dur-normal));
+}
+
+.anim-slide-left {
+  animation: slide-in-left var(--dur-normal) var(--ease-out);
+  animation-duration: calc(var(--motion-scale) * var(--dur-normal));
+}
+
+.anim-slide-right {
+  animation: slide-in-right var(--dur-normal) var(--ease-out);
+  animation-duration: calc(var(--motion-scale) * var(--dur-normal));
+}
+
+.anim-bounce-in {
+  animation: bounce-in var(--dur-slow) var(--ease-bounce);
+  animation-duration: calc(var(--motion-scale) * var(--dur-slow));
+}
+
+.anim-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--color-jungle-200) / 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  animation-duration: calc(var(--motion-scale) * 2s);
+}
+
+.anim-progress {
+  transform-origin: left;
+  animation: progress-fill var(--dur-slow) var(--ease-out);
+  animation-duration: calc(var(--motion-scale) * var(--dur-slow));
+}
+
+.anim-wiggle {
+  animation: wiggle 2s ease-in-out;
+  animation-duration: calc(var(--motion-scale) * 2s);
+}
+
+.anim-celebrate {
+  animation: jungle-celebration 2s ease-in-out;
+  animation-duration: calc(var(--motion-scale) * 2s);
+}
+
+.anim-level-up {
+  animation: jungle-level-up 3s var(--ease-bounce);
+  animation-duration: calc(var(--motion-scale) * 3s);
+}
+
+/* Parallax animations */
+.anim-parallax-slow {
+  animation: parallax-slow 20s linear infinite;
+  animation-duration: calc(var(--motion-scale) * 20s);
+}
+
+.anim-parallax-medium {
+  animation: parallax-medium 15s linear infinite;
+  animation-duration: calc(var(--motion-scale) * 15s);
+}
+
+.anim-parallax-fast {
+  animation: parallax-fast 10s linear infinite;
+  animation-duration: calc(var(--motion-scale) * 10s);
+}
+
+/* ========================================
+ * ANIMATION DELAYS
+ * ======================================== */
+.anim-delay-75 { animation-delay: 75ms; }
+.anim-delay-100 { animation-delay: 100ms; }
+.anim-delay-150 { animation-delay: 150ms; }
+.anim-delay-200 { animation-delay: 200ms; }
+.anim-delay-300 { animation-delay: 300ms; }
+.anim-delay-500 { animation-delay: 500ms; }
+.anim-delay-700 { animation-delay: 700ms; }
+.anim-delay-1000 { animation-delay: 1000ms; }
+
+/* ========================================
+ * TRANSITION UTILITIES
+ * ======================================== */
+.transition-soft {
+  transition: all var(--dur-normal) var(--ease-soft);
+}
+
+.transition-fast {
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.transition-slow {
+  transition: all var(--dur-slow) var(--ease-in-out);
+}
+
+.transition-transform {
+  transition: transform var(--dur-normal) var(--ease-soft);
+}
+
+.transition-colors {
+  transition: color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.transition-opacity {
+  transition: opacity var(--dur-normal) var(--ease-out);
+}
+
+.transition-shadow {
+  transition: box-shadow var(--dur-normal) var(--ease-soft);
+}
+
+/* ========================================
+ * HOVER STATES
+ * ======================================== */
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+.hover-jungle:hover {
+  background-color: hsl(var(--color-jungle-500));
+  color: hsl(var(--color-text-inverse));
+}
+
+/* ========================================
+ * REDUCED MOTION OVERRIDES
+ * ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .anim-float,
+  .anim-sway,
+  .anim-breath,
+  .anim-glow,
+  .anim-pulse,
+  .anim-emoji-float,
+  .anim-sparkle,
+  .anim-parallax-slow,
+  .anim-parallax-medium,
+  .anim-parallax-fast,
+  .anim-shimmer {
+    animation: none !important;
+  }
+
+  .anim-hover-lift:hover {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .hover-lift:hover,
+  .hover-scale:hover {
+    transform: none !important;
+  }
+
+  /* Allow essential animations that provide feedback */
+  .anim-pop-in,
+  .anim-reveal-up,
+  .anim-fade-in,
+  .anim-slide-left,
+  .anim-slide-right,
+  .anim-bounce-in,
+  .anim-progress,
+  .anim-celebrate,
+  .anim-level-up {
+    animation-duration: 0.01s !important;
+  }
+
+  /* Keep transitions but make them faster */
+  .transition-soft,
+  .transition-fast,
+  .transition-slow,
+  .transition-transform,
+  .transition-colors,
+  .transition-opacity,
+  .transition-shadow {
+    transition-duration: 0.01s !important;
+  }
+}
+
+/* ========================================
+ * SAVE DATA OPTIMIZATIONS
+ * ======================================== */
+@media (prefers-reduced-data: reduce), (save-data: active) {
+  /* Disable non-essential animations to save battery and data */
+  .anim-float,
+  .anim-sway,
+  .anim-breath,
+  .anim-glow,
+  .anim-pulse,
+  .anim-emoji-float,
+  .anim-sparkle,
+  .anim-parallax-slow,
+  .anim-parallax-medium,
+  .anim-parallax-fast,
+  .anim-shimmer {
+    animation: none !important;
+  }
+
+  /* Simplify hover effects */
+  .hover-glow:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* ========================================
+ * PERFORMANCE OPTIMIZATIONS
+ * ======================================== */
+
+/* Promote animated elements to their own layer */
+.anim-float,
+.anim-sway,
+.anim-parallax-slow,
+.anim-parallax-medium,
+.anim-parallax-fast {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize opacity animations */
+.anim-fade-in,
+.anim-pulse,
+.transition-opacity {
+  will-change: opacity;
+}
+
+/* Optimize transform animations */
+.anim-pop-in,
+.anim-reveal-up,
+.anim-slide-left,
+.anim-slide-right,
+.anim-bounce-in,
+.transition-transform,
+.hover-lift,
+.hover-scale {
+  will-change: transform;
+}
+
+/* Clean up will-change after animations complete */
+.anim-pop-in {
+  animation-fill-mode: forwards;
+}
+
+.anim-pop-in:not(:hover):not(:focus) {
+  will-change: auto;
+}
+
+/* ========================================
+ * MOBILE OPTIMIZATIONS
+ * ======================================== */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .anim-float {
+    animation-duration: calc(var(--motion-scale) * 10s);
+  }
+  
+  .anim-sway {
+    animation-duration: calc(var(--motion-scale) * 8s);
+  }
+
+  .anim-breath {
+    animation-duration: calc(var(--motion-scale) * 12s);
+  }
+
+  /* Disable parallax on mobile for better performance */
+  .anim-parallax-slow,
+  .anim-parallax-medium,
+  .anim-parallax-fast {
+    animation: none !important;
+  }
+}
+
+/* ========================================
+ * PRINT STYLES
+ * ======================================== */
+@media print {
+  /* Remove all animations and transitions for print */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ========================================
+ * CONTAINER QUERY SUPPORT
+ * ======================================== */
+@container (max-width: 480px) {
+  /* Disable complex animations in small containers */
+  .anim-parallax-slow,
+  .anim-parallax-medium,
+  .anim-parallax-fast {
+    animation: none !important;
+  }
+}
