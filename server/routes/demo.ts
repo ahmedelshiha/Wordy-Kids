@@ -9,8 +9,8 @@ export const handleDemo: RequestHandler = (req, res) => {
       complex: "👨‍💻 👩‍🎨 🏳️‍🌈",
       recent: "🫠 🫡 🫥 🫶",
       skinTones: "👋🏻 👋🏽 👋🏿",
-      educational: "📚 🎯 🌟 ✨ 🎮 💡"
-    }
+      educational: "📚 🎯 🌟 ✨ 🎮 💡",
+    },
   };
   res.status(200).json(response);
 };

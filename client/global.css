@@ -574,23 +574,14 @@
   /* PHASE 3: Emoji-safe font declarations */
   .emoji-text {
     font-family:
-      "Apple Color Emoji",
-      "Segoe UI Emoji",
-      "Noto Color Emoji",
-      "Android Emoji",
-      "EmojiSymbols",
-      system-ui,
-      sans-serif;
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      "Android Emoji", "EmojiSymbols", system-ui, sans-serif;
     font-variant-emoji: unicode;
     text-rendering: optimizeLegibility;
   }
 
   .emoji-fallback {
-    font-family:
-      "Segoe UI Symbol",
-      "Symbola",
-      "DejaVu Sans",
-      sans-serif;
+    font-family: "Segoe UI Symbol", "Symbola", "DejaVu Sans", sans-serif;
   }
 
   /* Kid-friendly typography system with emoji support */
@@ -617,7 +608,8 @@
   }
 
   .text-adventure {
-    font-family: "Poppins", "Nunito", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    font-family:
+      "Poppins", "Nunito", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
     font-weight: 700;
     letter-spacing: 0.015em;
     line-height: 1.5;
@@ -631,7 +623,9 @@
     padding: 4px;
     border-radius: 4px;
     transition: all 0.2s ease;
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", system-ui, sans-serif;
+    font-family:
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", system-ui,
+      sans-serif;
     font-variant-emoji: unicode;
   }
 
@@ -652,14 +646,18 @@
   .emoji-icon {
     display: inline-block;
     line-height: 1;
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", system-ui, sans-serif;
+    font-family:
+      "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", system-ui,
+      sans-serif;
     font-variant-emoji: unicode;
   }
 
   /* Ensure emojis don't break in forms */
   input.emoji-input,
   textarea.emoji-input {
-    font-family: system-ui, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-family:
+      system-ui, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+      sans-serif;
     font-variant-emoji: unicode;
   }
 

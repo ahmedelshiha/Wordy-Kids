@@ -3,14 +3,14 @@
  * Interactive page for testing emoji functionality in the browser
  */
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { EmojiText, EmojiIcon, EmojiButton } from '@/components/EmojiText';
+import React, { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { EmojiText, EmojiIcon, EmojiButton } from "@/components/EmojiText";
 import {
   EMOJI_CONSTANTS,
   safeEmojiString,
@@ -21,42 +21,44 @@ import {
   validateEmojiInput,
   getRandomEducationalEmoji,
   getEmojiForCategory,
-  emojiFormUtils
-} from '@/lib/emojiUtils';
+  emojiFormUtils,
+} from "@/lib/emojiUtils";
 
 // Test emoji sets
 const TEST_EMOJI_SETS = {
   basic: {
-    name: 'Basic Emojis',
-    emojis: ['😀', '🎉', '❤️', '🚀', '⭐', '✨', '🔥', '👍'],
-    description: 'Common basic emojis'
+    name: "Basic Emojis",
+    emojis: ["😀", "🎉", "❤️", "🚀", "⭐", "✨", "🔥", "👍"],
+    description: "Common basic emojis",
   },
   complex: {
-    name: 'Complex Emojis (ZWJ)',
-    emojis: ['👨‍💻', '👩‍🎨', '🏳️‍🌈', '👨‍👩‍👧‍👦'],
-    description: 'Emojis with Zero-Width Joiner sequences'
+    name: "Complex Emojis (ZWJ)",
+    emojis: ["👨‍💻", "👩‍🎨", "🏳️‍🌈", "👨‍👩‍👧‍👦"],
+    description: "Emojis with Zero-Width Joiner sequences",
   },
   skinTones: {
-    name: 'Skin Tone Variants',
-    emojis: ['👋🏻', '👋🏽', '👋🏿', '👍🏻', '👍🏽', '👍🏿'],
-    description: 'Emojis with different skin tone modifiers'
+    name: "Skin Tone Variants",
+    emojis: ["👋🏻", "👋🏽", "👋🏿", "👍🏻", "👍🏽", "👍🏿"],
+    description: "Emojis with different skin tone modifiers",
   },
   educational: {
-    name: 'Educational Emojis',
-    emojis: ['📚', '🎯', '🌟', '✨', '🎮', '💡', '🏆', '🎖️'],
-    description: 'Emojis used in educational contexts'
+    name: "Educational Emojis",
+    emojis: ["📚", "🎯", "🌟", "✨", "🎮", "💡", "🏆", "🎖️"],
+    description: "Emojis used in educational contexts",
   },
   recent: {
-    name: 'Recent Unicode Emojis',
-    emojis: ['🫠', '🫡', '🫥', '🫶', '🫶🏻', '🫶🏽', '🫶🏿'],
-    description: 'Recently added Unicode emojis'
-  }
+    name: "Recent Unicode Emojis",
+    emojis: ["🫠", "🫡", "🫥", "🫶", "🫶🏻", "🫶🏽", "🫶🏿"],
+    description: "Recently added Unicode emojis",
+  },
 };
 
 export default function EmojiTestPage() {
-  const [testInput, setTestInput] = useState('Hello 👋 World 🌍! Learning is fun 📚✨');
+  const [testInput, setTestInput] = useState(
+    "Hello 👋 World 🌍! Learning is fun 📚✨",
+  );
   const [apiTestResult, setApiTestResult] = useState<any>(null);
-  const [storageTestResult, setStorageTestResult] = useState<string>('');
+  const [storageTestResult, setStorageTestResult] = useState<string>("");
   const [validationResult, setValidationResult] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,23 +67,23 @@ export default function EmojiTestPage() {
     setIsLoading(true);
     try {
       const testData = {
-        message: 'API Test with emojis 🚀',
+        message: "API Test with emojis 🚀",
         emojis: testInput,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
-      const response = await fetch('/api/demo', {
-        method: 'GET',
+      const response = await fetch("/api/demo", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        }
+          "Content-Type": "application/json; charset=UTF-8",
+        },
       });
 
       const result = await response.json();
       setApiTestResult(result);
     } catch (error) {
-      console.error('API test failed:', error);
-      setApiTestResult({ error: 'API test failed' });
+      console.error("API test failed:", error);
+      setApiTestResult({ error: "API test failed" });
     } finally {
       setIsLoading(false);
     }
@@ -90,27 +92,27 @@ export default function EmojiTestPage() {
   // Test local storage with emoji data
   const testLocalStorage = () => {
     try {
-      const testKey = 'emoji-test-' + Date.now();
+      const testKey = "emoji-test-" + Date.now();
       const testData = {
         content: testInput,
         emojis: extractEmojis(testInput),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       // Store data
       localStorage.setItem(testKey, JSON.stringify(testData));
-      
+
       // Retrieve data
       const retrieved = localStorage.getItem(testKey);
       const parsed = retrieved ? JSON.parse(retrieved) : null;
-      
+
       // Clean up
       localStorage.removeItem(testKey);
-      
-      setStorageTestResult(parsed ? parsed.content : 'Storage test failed');
+
+      setStorageTestResult(parsed ? parsed.content : "Storage test failed");
     } catch (error) {
-      console.error('Storage test failed:', error);
-      setStorageTestResult('Storage test failed');
+      console.error("Storage test failed:", error);
+      setStorageTestResult("Storage test failed");
     }
   };
 
@@ -145,7 +147,8 @@ export default function EmojiTestPage() {
               Emoji Functionality Test Suite
             </CardTitle>
             <p className="text-gray-600">
-              Comprehensive testing for emoji encoding, storage, and display functionality.
+              Comprehensive testing for emoji encoding, storage, and display
+              functionality.
             </p>
           </CardHeader>
         </Card>
@@ -168,15 +171,21 @@ export default function EmojiTestPage() {
                 rows={3}
               />
             </div>
-            
+
             <div className="flex gap-2 flex-wrap">
               <Button onClick={runAllTests} disabled={isLoading}>
-                {isLoading ? 'Testing...' : 'Run All Tests'}
+                {isLoading ? "Testing..." : "Run All Tests"}
               </Button>
-              <Button variant="outline" onClick={() => setTestInput(getRandomEducationalEmoji())}>
+              <Button
+                variant="outline"
+                onClick={() => setTestInput(getRandomEducationalEmoji())}
+              >
                 Random Educational Emoji
               </Button>
-              <Button variant="outline" onClick={() => setTestInput('👨‍💻 Complex emoji test 🏳️‍🌈')}>
+              <Button
+                variant="outline"
+                onClick={() => setTestInput("👨‍💻 Complex emoji test 🏳️‍🌈")}
+              >
                 Complex Emojis
               </Button>
             </div>
@@ -211,7 +220,6 @@ export default function EmojiTestPage() {
 
         {/* Test Results */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
           {/* Validation Results */}
           <Card>
             <CardHeader>
@@ -221,24 +229,30 @@ export default function EmojiTestPage() {
               {validationResult ? (
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <Badge variant={validationResult.isValid ? "default" : "destructive"}>
-                      {validationResult.isValid ? '✅ Valid' : '❌ Invalid'}
+                    <Badge
+                      variant={
+                        validationResult.isValid ? "default" : "destructive"
+                      }
+                    >
+                      {validationResult.isValid ? "✅ Valid" : "❌ Invalid"}
                     </Badge>
                   </div>
-                  
+
                   {validationResult.errors.length > 0 && (
                     <Alert>
                       <AlertDescription>
                         <strong>Errors:</strong>
                         <ul className="list-disc list-inside mt-1">
-                          {validationResult.errors.map((error: string, i: number) => (
-                            <li key={i}>{error}</li>
-                          ))}
+                          {validationResult.errors.map(
+                            (error: string, i: number) => (
+                              <li key={i}>{error}</li>
+                            ),
+                          )}
                         </ul>
                       </AlertDescription>
                     </Alert>
                   )}
-                  
+
                   <div>
                     <strong>Cleaned Output:</strong>
                     <EmojiText className="block p-2 bg-gray-100 rounded mt-1">
@@ -247,7 +261,9 @@ export default function EmojiTestPage() {
                   </div>
                 </div>
               ) : (
-                <p className="text-gray-500">Enter text to see validation results</p>
+                <p className="text-gray-500">
+                  Enter text to see validation results
+                </p>
               )}
             </CardContent>
           </Card>
@@ -262,15 +278,24 @@ export default function EmojiTestPage() {
                 <Button onClick={testLocalStorage} variant="outline" size="sm">
                   Test Storage
                 </Button>
-                
+
                 {storageTestResult && (
                   <div>
                     <strong>Storage Roundtrip Result:</strong>
                     <EmojiText className="block p-2 bg-gray-100 rounded mt-1">
                       {storageTestResult}
                     </EmojiText>
-                    <Badge variant={storageTestResult === testInput ? "default" : "destructive"} className="mt-2">
-                      {storageTestResult === testInput ? '✅ Perfect Match' : '❌ Data Loss'}
+                    <Badge
+                      variant={
+                        storageTestResult === testInput
+                          ? "default"
+                          : "destructive"
+                      }
+                      className="mt-2"
+                    >
+                      {storageTestResult === testInput
+                        ? "✅ Perfect Match"
+                        : "❌ Data Loss"}
                     </Badge>
                   </div>
                 )}
@@ -285,27 +310,37 @@ export default function EmojiTestPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                <Button onClick={testApiEndpoint} disabled={isLoading} variant="outline" size="sm">
+                <Button
+                  onClick={testApiEndpoint}
+                  disabled={isLoading}
+                  variant="outline"
+                  size="sm"
+                >
                   Test API
                 </Button>
-                
+
                 {apiTestResult && (
                   <div>
                     <strong>API Response:</strong>
                     <pre className="bg-gray-100 p-2 rounded text-sm overflow-x-auto mt-1">
                       {JSON.stringify(apiTestResult, null, 2)}
                     </pre>
-                    
+
                     {apiTestResult.emojiTest && (
                       <div className="mt-2">
                         <strong>Emoji Test Data from API:</strong>
                         <div className="space-y-1 mt-1">
-                          {Object.entries(apiTestResult.emojiTest).map(([key, value]) => (
-                            <div key={key} className="flex items-center gap-2">
-                              <Badge variant="outline">{key}</Badge>
-                              <EmojiText>{value as string}</EmojiText>
-                            </div>
-                          ))}
+                          {Object.entries(apiTestResult.emojiTest).map(
+                            ([key, value]) => (
+                              <div
+                                key={key}
+                                className="flex items-center gap-2"
+                              >
+                                <Badge variant="outline">{key}</Badge>
+                                <EmojiText>{value as string}</EmojiText>
+                              </div>
+                            ),
+                          )}
                         </div>
                       </div>
                     )}
@@ -322,20 +357,34 @@ export default function EmojiTestPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm">
-                <div><strong>Contains Emojis:</strong> {containsEmoji(testInput) ? '✅ Yes' : '❌ No'}</div>
-                <div><strong>Emoji Count:</strong> {countEmojis(testInput)}</div>
-                <div><strong>Text Length:</strong> {testInput.length} characters</div>
-                <div><strong>Extracted Emojis:</strong></div>
+                <div>
+                  <strong>Contains Emojis:</strong>{" "}
+                  {containsEmoji(testInput) ? "✅ Yes" : "❌ No"}
+                </div>
+                <div>
+                  <strong>Emoji Count:</strong> {countEmojis(testInput)}
+                </div>
+                <div>
+                  <strong>Text Length:</strong> {testInput.length} characters
+                </div>
+                <div>
+                  <strong>Extracted Emojis:</strong>
+                </div>
                 <div className="flex flex-wrap gap-1">
                   {extractEmojis(testInput).map((emoji, i) => (
-                    <EmojiText key={i} className="bg-gray-100 px-2 py-1 rounded">
+                    <EmojiText
+                      key={i}
+                      className="bg-gray-100 px-2 py-1 rounded"
+                    >
                       {emoji}
                     </EmojiText>
                   ))}
                 </div>
-                <div><strong>Text without Emojis:</strong></div>
+                <div>
+                  <strong>Text without Emojis:</strong>
+                </div>
                 <div className="bg-gray-100 p-2 rounded">
-                  {removeEmojis(testInput) || '(no text)'}
+                  {removeEmojis(testInput) || "(no text)"}
                 </div>
               </div>
             </CardContent>
@@ -352,23 +401,37 @@ export default function EmojiTestPage() {
               <div>
                 <strong>Browser Support:</strong>
                 <ul className="list-disc list-inside text-sm mt-2 space-y-1">
-                  <li>Unicode Normalization: {typeof String.prototype.normalize === 'function' ? '✅' : '❌'}</li>
-                  <li>Intl.Segmenter: {typeof Intl !== 'undefined' && 'Segmenter' in Intl ? '✅' : '❌'}</li>
-                  <li>ES6 Unicode Escapes: {'🎯' === '\u{1F3AF}' ? '✅' : '❌'}</li>
-                  <li>localStorage: {typeof Storage !== 'undefined' ? '✅' : '❌'}</li>
+                  <li>
+                    Unicode Normalization:{" "}
+                    {typeof String.prototype.normalize === "function"
+                      ? "✅"
+                      : "❌"}
+                  </li>
+                  <li>
+                    Intl.Segmenter:{" "}
+                    {typeof Intl !== "undefined" && "Segmenter" in Intl
+                      ? "✅"
+                      : "❌"}
+                  </li>
+                  <li>
+                    ES6 Unicode Escapes: {"🎯" === "\u{1F3AF}" ? "✅" : "❌"}
+                  </li>
+                  <li>
+                    localStorage: {typeof Storage !== "undefined" ? "✅" : "❌"}
+                  </li>
                 </ul>
               </div>
-              
+
               <div>
                 <strong>Font Support Test:</strong>
                 <div className="mt-2 space-y-1">
-                  <EmojiText style={{fontFamily: 'Apple Color Emoji'}}>
+                  <EmojiText style={{ fontFamily: "Apple Color Emoji" }}>
                     Apple Color Emoji: 😀🎉❤️
                   </EmojiText>
-                  <EmojiText style={{fontFamily: 'Segoe UI Emoji'}}>
+                  <EmojiText style={{ fontFamily: "Segoe UI Emoji" }}>
                     Segoe UI Emoji: 😀🎉❤️
                   </EmojiText>
-                  <EmojiText style={{fontFamily: 'Noto Color Emoji'}}>
+                  <EmojiText style={{ fontFamily: "Noto Color Emoji" }}>
                     Noto Color Emoji: 😀🎉❤️
                   </EmojiText>
                 </div>
@@ -383,13 +446,17 @@ export default function EmojiTestPage() {
             <CardTitle>Form Integration Test</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              const data = Object.fromEntries(formData.entries());
-              const prepared = emojiFormUtils.prepareForSubmission(data);
-              alert('Form data prepared: ' + JSON.stringify(prepared, null, 2));
-            }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const data = Object.fromEntries(formData.entries());
+                const prepared = emojiFormUtils.prepareForSubmission(data);
+                alert(
+                  "Form data prepared: " + JSON.stringify(prepared, null, 2),
+                );
+              }}
+            >
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">
@@ -401,7 +468,7 @@ export default function EmojiTestPage() {
                     className="emoji-input"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium mb-1">
                     Description:
@@ -413,7 +480,7 @@ export default function EmojiTestPage() {
                     rows={3}
                   />
                 </div>
-                
+
                 <Button type="submit">Test Form Submission</Button>
               </div>
             </form>
@@ -436,7 +503,7 @@ export default function EmojiTestPage() {
                   <li>✅ Emojis display correctly in Edge</li>
                 </ul>
               </div>
-              
+
               <div>
                 <strong>Functionality Tests:</strong>
                 <ul className="list-disc list-inside text-sm mt-2 space-y-1">

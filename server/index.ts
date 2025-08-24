@@ -28,26 +28,30 @@ export function createServer() {
 
   // PHASE 1: UTF-8 Charset Headers - Ensure proper emoji encoding
   app.use((req, res, next) => {
-    res.charset = 'utf-8';
-    res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+    res.charset = "utf-8";
+    res.setHeader("Content-Type", "text/html; charset=UTF-8");
     next();
   });
 
   // Middleware
   app.use(cors());
-  app.use(express.json({ charset: 'utf-8' }));
-  app.use(express.urlencoded({ extended: true, charset: 'utf-8' }));
+  app.use(express.json({ charset: "utf-8" }));
+  app.use(express.urlencoded({ extended: true, charset: "utf-8" }));
 
   // PHASE 2: Ensure JSON responses preserve emoji encoding
-  app.use('/api', (req, res, next) => {
-    res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+  app.use("/api", (req, res, next) => {
+    res.setHeader("Content-Type", "application/json; charset=UTF-8");
     next();
   });
 
   // Example API routes
   app.get("/api/ping", (_req, res) => {
     const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping, emoji: "🎯", timestamp: new Date().toISOString() });
+    res.json({
+      message: ping,
+      emoji: "🎯",
+      timestamp: new Date().toISOString(),
+    });
   });
 
   app.get("/api/demo", handleDemo);

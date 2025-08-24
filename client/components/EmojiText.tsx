@@ -3,8 +3,8 @@
  * Ensures emojis are displayed correctly with proper font fallbacks
  */
 
-import React from 'react';
-import { safeEmojiString } from '@/lib/emojiUtils';
+import React from "react";
+import { safeEmojiString } from "@/lib/emojiUtils";
 
 interface EmojiTextProps {
   children: React.ReactNode;
@@ -18,31 +18,30 @@ interface EmojiTextProps {
  * EmojiText Component - Safely renders text with emojis
  * Uses proper font stack and Unicode normalization
  */
-export const EmojiText: React.FC<EmojiTextProps> = ({ 
-  children, 
-  className = '', 
+export const EmojiText: React.FC<EmojiTextProps> = ({
+  children,
+  className = "",
   normalize = true,
   style = {},
-  inline = true
+  inline = true,
 }) => {
-  const content = typeof children === 'string' && normalize 
-    ? safeEmojiString(children) 
-    : children;
+  const content =
+    typeof children === "string" && normalize
+      ? safeEmojiString(children)
+      : children;
 
   const emojiStyles: React.CSSProperties = {
-    fontVariantEmoji: 'unicode',
-    fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, Android Emoji, EmojiSymbols, system-ui, sans-serif',
-    textRendering: 'optimizeLegibility',
-    ...style
+    fontVariantEmoji: "unicode",
+    fontFamily:
+      "Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, Android Emoji, EmojiSymbols, system-ui, sans-serif",
+    textRendering: "optimizeLegibility",
+    ...style,
   };
 
-  const Component = inline ? 'span' : 'div';
-    
+  const Component = inline ? "span" : "div";
+
   return (
-    <Component 
-      className={`emoji-text ${className}`.trim()}
-      style={emojiStyles}
-    >
+    <Component className={`emoji-text ${className}`.trim()} style={emojiStyles}>
       {content}
     </Component>
   );
@@ -53,7 +52,7 @@ export const EmojiText: React.FC<EmojiTextProps> = ({
  */
 interface EmojiIconProps {
   emoji: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: "sm" | "md" | "lg" | "xl";
   className?: string;
   style?: React.CSSProperties;
   title?: string;
@@ -61,16 +60,16 @@ interface EmojiIconProps {
 
 export const EmojiIcon: React.FC<EmojiIconProps> = ({
   emoji,
-  size = 'md',
-  className = '',
+  size = "md",
+  className = "",
   style = {},
-  title
+  title,
 }) => {
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg',
-    xl: 'text-xl'
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+    xl: "text-xl",
   };
 
   const normalizedEmoji = safeEmojiString(emoji);
@@ -79,9 +78,9 @@ export const EmojiIcon: React.FC<EmojiIconProps> = ({
     <EmojiText
       className={`emoji-icon ${sizeClasses[size]} ${className}`.trim()}
       style={{
-        display: 'inline-block',
+        display: "inline-block",
         lineHeight: 1,
-        ...style
+        ...style,
       }}
       title={title}
       normalize={false} // Already normalized
@@ -99,17 +98,17 @@ interface EmojiButtonProps {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: "sm" | "md" | "lg" | "xl";
   title?: string;
 }
 
 export const EmojiButton: React.FC<EmojiButtonProps> = ({
   emoji,
   onClick,
-  className = '',
+  className = "",
   disabled = false,
-  size = 'md',
-  title
+  size = "md",
+  title,
 }) => {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -126,21 +125,21 @@ export const EmojiButton: React.FC<EmojiButtonProps> = ({
       className={`emoji-button ${className}`.trim()}
       title={title}
       style={{
-        background: 'none',
-        border: 'none',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        padding: '4px',
-        borderRadius: '4px',
-        transition: 'all 0.2s ease',
-        opacity: disabled ? 0.5 : 1
+        background: "none",
+        border: "none",
+        cursor: disabled ? "not-allowed" : "pointer",
+        padding: "4px",
+        borderRadius: "4px",
+        transition: "all 0.2s ease",
+        opacity: disabled ? 0.5 : 1,
       }}
     >
-      <EmojiIcon 
-        emoji={emoji} 
+      <EmojiIcon
+        emoji={emoji}
         size={size}
         style={{
-          transform: 'scale(1)',
-          transition: 'transform 0.1s ease'
+          transform: "scale(1)",
+          transition: "transform 0.1s ease",
         }}
       />
     </button>
@@ -161,17 +160,13 @@ export const EmojiWithFallback: React.FC<EmojiWithFallbackProps> = ({
   emoji,
   fallback,
   showFallback = false,
-  className = ''
+  className = "",
 }) => {
   if (showFallback) {
     return <span className={className}>{fallback}</span>;
   }
 
-  return (
-    <EmojiText className={className}>
-      {emoji}
-    </EmojiText>
-  );
+  return <EmojiText className={className}>{emoji}</EmojiText>;
 };
 
 export default EmojiText;

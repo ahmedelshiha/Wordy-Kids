@@ -39,18 +39,21 @@ if (result.isValid) {
 ### Core Components
 
 1. **Emoji Utilities** (`client/lib/emojiUtils.ts`)
+
    - Unicode normalization functions
    - Validation and sanitization
    - Category-based emoji selection
    - Form handling utilities
 
 2. **React Components** (`client/components/EmojiText.tsx`)
+
    - `EmojiText`: Safe text rendering with emojis
    - `EmojiIcon`: Standalone emoji display
    - `EmojiButton`: Interactive emoji elements
    - `EmojiWithFallback`: Fallback text support
 
 3. **CSS System** (`client/global.css`)
+
    - Emoji-safe font stacks
    - Cross-platform compatibility
    - Reduced motion support
@@ -88,14 +91,14 @@ Must be the **first** meta tag in all HTML documents.
 ```javascript
 // UTF-8 charset headers
 app.use((req, res, next) => {
-  res.charset = 'utf-8';
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+  res.charset = "utf-8";
+  res.setHeader("Content-Type", "text/html; charset=UTF-8");
   next();
 });
 
 // JSON API endpoints
-app.use('/api', (req, res, next) => {
-  res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+app.use("/api", (req, res, next) => {
+  res.setHeader("Content-Type", "application/json; charset=UTF-8");
   next();
 });
 ```
@@ -104,14 +107,9 @@ app.use('/api', (req, res, next) => {
 
 ```css
 .emoji-text {
-  font-family: 
-    "Apple Color Emoji",
-    "Segoe UI Emoji", 
-    "Noto Color Emoji",
-    "Android Emoji",
-    "EmojiSymbols",
-    system-ui,
-    sans-serif;
+  font-family:
+    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji",
+    "EmojiSymbols", system-ui, sans-serif;
   font-variant-emoji: unicode;
   text-rendering: optimizeLegibility;
 }
@@ -122,41 +120,45 @@ app.use('/api', (req, res, next) => {
 ### ✅ Do's
 
 1. **Use Emoji Constants**
+
    ```typescript
    // ✅ Good
    const icon = EMOJI_CONSTANTS.TARGET;
-   
+
    // ❌ Avoid
-   const icon = '🎯';
+   const icon = "🎯";
    ```
 
 2. **Validate User Input**
+
    ```typescript
    // ✅ Good
    const { isValid, cleaned } = validateEmojiInput(input);
    if (isValid) processInput(cleaned);
-   
+
    // ❌ Avoid
    processInput(input); // No validation
    ```
 
 3. **Use Safe Rendering Components**
+
    ```tsx
    // ✅ Good
    <EmojiText>{userMessage}</EmojiText>
-   
+
    // ❌ Avoid
    <span>{userMessage}</span>
    ```
 
 4. **Normalize Before Storage**
+
    ```typescript
    // ✅ Good
    const normalized = safeEmojiString(input);
-   localStorage.setItem('key', JSON.stringify({ text: normalized }));
-   
+   localStorage.setItem("key", JSON.stringify({ text: normalized }));
+
    // ❌ Avoid
-   localStorage.setItem('key', input);
+   localStorage.setItem("key", input);
    ```
 
 ### ❌ Don'ts
@@ -179,6 +181,7 @@ npm test -- emojiUtils.test.ts
 ### Manual Testing
 
 Visit `/emoji-test` page to:
+
 - Test emoji display across browsers
 - Verify API roundtrips
 - Check storage functionality
@@ -199,16 +202,19 @@ Visit `/emoji-test` page to:
 ### Common Issues
 
 1. **Emojis appear as squares (□)**
+
    - Check font fallbacks in CSS
    - Verify browser emoji support
    - Test font-variant-emoji setting
 
 2. **Emojis lost in database**
+
    - Verify UTF-8 encoding
    - Check connection string charset
    - Test normalization before storage
 
 3. **API corruption**
+
    - Verify Content-Type headers
    - Check JSON.stringify handling
    - Test with diverse emoji sets
@@ -221,13 +227,18 @@ Visit `/emoji-test` page to:
 ### Debugging Tools
 
 1. **Browser Developer Tools**
+
    ```javascript
    // Check emoji encoding
-   console.log('Length:', text.length);
-   console.log('Code points:', [...text].map(c => c.codePointAt(0)));
+   console.log("Length:", text.length);
+   console.log(
+     "Code points:",
+     [...text].map((c) => c.codePointAt(0)),
+   );
    ```
 
 2. **Network Tab**
+
    - Verify request/response headers
    - Check charset in Content-Type
    - Inspect JSON payload encoding
@@ -241,13 +252,13 @@ Visit `/emoji-test` page to:
 
 ### Supported Features
 
-| Feature | Chrome | Firefox | Safari | Edge |
-|---------|---------|---------|---------|------|
-| Unicode Normalization | ✅ | ✅ | ✅ | ✅ |
-| Color Emojis | ✅ | ✅ | ✅ | ✅ |
-| ZWJ Sequences | ✅ | ✅ | ✅ | ✅ |
-| Skin Tone Modifiers | ✅ | ✅ | ✅ | ✅ |
-| Font Fallbacks | ✅ | ✅ | ✅ | ✅ |
+| Feature               | Chrome | Firefox | Safari | Edge |
+| --------------------- | ------ | ------- | ------ | ---- |
+| Unicode Normalization | ✅     | ✅      | ✅     | ✅   |
+| Color Emojis          | ✅     | ✅      | ✅     | ✅   |
+| ZWJ Sequences         | ✅     | ✅      | ✅     | ✅   |
+| Skin Tone Modifiers   | ✅     | ✅      | ✅     | ✅   |
+| Font Fallbacks        | ✅     | ✅      | ✅     | ✅   |
 
 ### Fallback Strategy
 
@@ -261,28 +272,30 @@ Visit `/emoji-test` page to:
 ### Optimization Tips
 
 1. **Lazy Load Emoji Components**
+
    ```typescript
-   const EmojiText = lazy(() => import('@/components/EmojiText'));
+   const EmojiText = lazy(() => import("@/components/EmojiText"));
    ```
 
 2. **Memoize Validation Results**
+
    ```typescript
-   const memoizedValidation = useMemo(() => 
-     validateEmojiInput(input), [input]
-   );
+   const memoizedValidation = useMemo(() => validateEmojiInput(input), [input]);
    ```
 
 3. **Batch Emoji Processing**
+
    ```typescript
    // Process multiple emojis together
-   const results = texts.map(text => safeEmojiString(text));
+   const results = texts.map((text) => safeEmojiString(text));
    ```
 
 4. **Use Efficient Patterns**
+
    ```typescript
    // ✅ Efficient
    const hasEmojis = containsEmoji(text);
-   
+
    // ❌ Less efficient
    const hasEmojis = extractEmojis(text).length > 0;
    ```
@@ -336,6 +349,7 @@ Before deploying emoji-related changes:
 ### Input Sanitization
 
 All emoji input is automatically sanitized:
+
 - Removes replacement characters (\uFFFD)
 - Normalizes Unicode composition
 - Validates length limits
@@ -363,6 +377,7 @@ const safe = emojiToHtmlEntities(userInput);
 ### Monitoring
 
 Watch for:
+
 - Increased error rates in emoji-related functions
 - Browser compatibility issues
 - Performance regressions
