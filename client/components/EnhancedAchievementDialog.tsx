@@ -649,14 +649,14 @@ export function EnhancedAchievementDialog({
 
                       {/* Achievement description */}
                       <p
-                        className={`text-white/90 leading-relaxed ${isMobile ? "text-sm px-2" : "text-lg px-4"}`}
+                        className={`text-gray-700 leading-relaxed ${isMobile ? "text-sm px-2" : "text-lg px-4"}`}
                       >
                         {getDescription(currentAchievement)}
                       </p>
 
                       {/* Difficulty badge */}
                       <div className="flex justify-center">
-                        <Badge className="bg-white/25 text-white border-yellow-400 px-4 py-2 text-sm font-bold rounded-full">
+                        <Badge className="bg-white/60 text-emerald-800 border-emerald-400 px-4 py-2 text-sm font-bold rounded-full shadow-sm">
                           <DifficultyIcon className="w-4 h-4 mr-2" />
                           {currentAchievement.difficulty.toUpperCase()} TIER
                         </Badge>
@@ -668,7 +668,7 @@ export function EnhancedAchievementDialog({
                           initial={{ scale: 0.9, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ delay: 0.7 }}
-                          className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 mx-2"
+                          className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 mx-2 border-2 border-white/70 shadow-lg"
                         >
                           <div className="text-yellow-200 font-bold mb-2 flex items-center justify-center gap-2">
                             <Gift className="w-5 h-5" />
@@ -676,7 +676,7 @@ export function EnhancedAchievementDialog({
                             <Leaf className="w-5 h-5" />
                           </div>
                           <div
-                            className={`text-white font-semibold ${isMobile ? "text-sm" : "text-lg"}`}
+                            className={`text-gray-800 font-semibold ${isMobile ? "text-sm" : "text-lg"}`}
                           >
                             {currentAchievement.reward.item}
                           </div>
