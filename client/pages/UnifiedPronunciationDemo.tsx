@@ -273,6 +273,9 @@ const UnifiedPronunciationDemo = () => {
           </div>
         </div>
 
+        {/* Pronunciation Debugger */}
+        <PronunciationDebugger />
+
         {/* Legacy Compatibility Testing */}
         <div className="bg-white rounded-xl p-6 shadow-lg">
           <h3 className="text-xl font-bold text-gray-800 mb-4">
