@@ -1079,7 +1079,32 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigateBack }) => {
             </CardContent>
           </Card>
         ) : (
-          filteredAndSortedWords.map((word) => (
+          // Use VirtualWordList for performance with large datasets
+          <VirtualWordList
+            words={filteredAndSortedWords.map(word => ({
+              id: word.id,
+              word: word.word,
+              definition: word.definition,
+              category: word.category,
+              difficulty: word.difficulty
+            }))}
+            containerHeight={600}
+            onWordSelect={(word) => {
+              const fullWord = words.find(w => w.id === word.id);
+              if (fullWord) {
+                setEditingWord(fullWord);
+                setWordEditorMode("edit");
+                setShowWordEditor(true);
+              }
+            }}
+            selectedWordId={editingWord?.id}
+            className="border rounded-lg"
+          />
+        )}
+
+        {/* Keep original implementation as fallback for smaller lists */}
+        {filteredAndSortedWords.length > 100 ? null : (
+          filteredAndSortedWords.slice(0, 100).map((word) => (
             <Card
               key={word.id}
               className="hover:shadow-lg transition-all duration-200 mx-2 md:mx-0"
