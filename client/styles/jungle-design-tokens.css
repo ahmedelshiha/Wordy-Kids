@@ -80,6 +80,47 @@
   ); /* Yellow -> Orange warm gradient */
 
   /* ========================================
+   * QUIZ ADVENTURE SYSTEM TOKENS
+   * Replaces hardcoded hex values in quiz CSS
+   * ======================================== */
+
+  /* Time-of-day background themes */
+  --quiz-morning-start: 150 30% 91%; /* #e8f5e8 */
+  --quiz-morning-mid: 122 39% 78%; /* #c8e6c9 */
+  --quiz-morning-end: 122 39% 67%; /* #a5d6a7 */
+
+  --quiz-midday-start: var(--color-jungle-500); /* #4caf50 */
+  --quiz-midday-mid: var(--color-jungle-400); /* #66bb6a */
+  --quiz-midday-end: var(--color-jungle-300); /* #81c784 */
+
+  --quiz-evening-start: 122 39% 20%; /* #2e7d32 */
+  --quiz-evening-mid: 122 42% 39%; /* #388e3c */
+  --quiz-evening-end: var(--color-jungle-500); /* #4caf50 */
+
+  --quiz-night-start: 122 39% 12%; /* #1b5e20 */
+  --quiz-night-mid: 122 39% 20%; /* #2e7d32 */
+  --quiz-night-end: 122 42% 39%; /* #388e3c */
+
+  /* Quiz UI element colors */
+  --quiz-treasure-border: hsl(var(--color-jungle-500) / 0.4);
+  --quiz-treasure-shadow: hsl(var(--color-jungle-500) / 0.2);
+  --quiz-treasure-hover-shadow: hsl(var(--color-jungle-500) / 0.3);
+  --quiz-option-border: hsl(var(--color-jungle-500) / 0.3);
+  --quiz-option-bg: hsl(var(--color-surface) / 0.95);
+  --quiz-gold-accent: 45 100% 50%; /* #ffd700 */
+  --quiz-progress-trail: linear-gradient(
+    90deg,
+    hsl(var(--color-jungle-500)) 0%,
+    hsl(var(--color-jungle-400)) 50%,
+    hsl(var(--color-banana-500)) 100%
+  );
+
+  /* High contrast overrides for accessibility */
+  --quiz-high-contrast-border: var(--quiz-evening-start);
+  --quiz-high-contrast-bg: hsl(0 0% 0%);
+  --quiz-high-contrast-text: hsl(0 0% 100%);
+
+  /* ========================================
    * SURFACE & SEMANTIC COLORS
    * ======================================== */
   --color-bg: 150 28% 98%; /* Main background */
