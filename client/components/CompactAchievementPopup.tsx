@@ -52,7 +52,7 @@ const DIFFICULTY_COLORS = {
   silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme
   gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme
   diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme
-  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // 🌈 Legend theme
+  rainbow: "from-pink-300 via-purple-300 via-blue-300 via-green-300 to-yellow-300", // ���� Legend theme
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -233,14 +233,14 @@ export function CompactAchievementPopup({
             className="relative w-full max-w-[280px] sm:max-w-[320px]"
           >
             <Card
-              className={`bg-gradient-to-br ${difficultyColor} text-white shadow-lg border-0 overflow-hidden rounded-xl`}
+              className={`bg-gradient-to-br ${difficultyColor} text-gray-800 shadow-lg border-0 overflow-hidden rounded-xl`}
             >
               {/* Compact Close Button */}
               <Button
                 onClick={handleClose}
                 variant="ghost"
                 size="sm"
-                className="absolute top-1 right-1 text-white/70 hover:text-white hover:bg-white/20 rounded-full z-10 w-5 h-5 p-0"
+                className="absolute top-1 right-1 text-gray-700 hover:text-gray-900 hover:bg-white/40 rounded-full z-10 w-5 h-5 p-0"
                 aria-label="Close"
               >
                 <X className="w-3 h-3" />
@@ -273,12 +273,12 @@ export function CompactAchievementPopup({
                   </div>
 
                   {/* Short Achievement Name */}
-                  <h4 className="text-sm mb-1 font-bold text-white">
+                  <h4 className="text-sm mb-1 font-bold text-emerald-700">
                     {currentAchievement.name}
                   </h4>
 
                   {/* Very Short Description */}
-                  <p className="text-white/90 mb-2 text-xs leading-tight">
+                  <p className="text-gray-700 mb-2 text-xs leading-tight">
                     {getShortDescription(currentAchievement)}
                   </p>
 
