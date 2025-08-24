@@ -1,0 +1,249 @@
+/* Mobile-First Achievement Enhancements */
+
+/* Ensure achievement popups are mobile-friendly */
+@media (max-width: 640px) {
+  /* Enhanced Achievement Popup Mobile Styles */
+  .achievement-popup-overlay {
+    padding: 1rem;
+  }
+  
+  /* Reduced motion for better mobile performance */
+  .achievement-popup * {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Touch-friendly button sizing */
+  .achievement-popup button {
+    min-height: 44px; /* iOS accessibility guideline */
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Optimized text sizing for small screens */
+  .achievement-popup h3 {
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+  
+  .achievement-popup h4 {
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+  
+  .achievement-popup p {
+    font-size: 0.75rem;
+    line-height: 1.333;
+  }
+  
+  /* Ensure proper spacing on mobile */
+  .achievement-popup .space-y-1\.5 > * + * {
+    margin-top: 0.375rem;
+  }
+  
+  /* Optimize magical effects for mobile performance */
+  .jungle-magical-effects {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  /* Reduce particle count on very small screens */
+  @media (max-width: 360px) {
+    .jungle-magical-effects > div:nth-child(n+9) {
+      display: none;
+    }
+  }
+}
+
+/* Tablet and larger mobile devices */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .achievement-popup {
+    max-width: 380px;
+  }
+  
+  .achievement-popup h3 {
+    font-size: 1rem;
+  }
+  
+  .achievement-popup h4 {
+    font-size: 1.125rem;
+  }
+  
+  .achievement-popup p {
+    font-size: 0.875rem;
+  }
+}
+
+/* High DPI / Retina display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .achievement-popup {
+    /* Crisper borders and shadows on high DPI */
+    border-width: 3px;
+    box-shadow: 
+      0 10px 25px rgba(0, 0, 0, 0.15),
+      0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .achievement-popup button {
+    border-width: 2px;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 896px) and (orientation: landscape) {
+  .achievement-popup {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  
+  .achievement-popup .text-4xl {
+    font-size: 2rem;
+  }
+  
+  .achievement-popup .text-5xl {
+    font-size: 2.5rem;
+  }
+}
+
+/* Dark mode mobile adjustments */
+@media (prefers-color-scheme: dark) and (max-width: 640px) {
+  .achievement-popup {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .achievement-popup .bg-white\/60 {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .achievement-popup .text-gray-800 {
+    color: rgb(31, 41, 55);
+  }
+}
+
+/* Touch interaction improvements */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .achievement-popup button:hover {
+    transform: none;
+  }
+  
+  /* Larger touch targets */
+  .achievement-popup .w-6.h-6 {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  /* Better tap feedback */
+  .achievement-popup button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Accessibility improvements for mobile */
+@media (max-width: 640px) {
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .achievement-popup {
+      border-width: 4px;
+      border-color: #000;
+      background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .achievement-popup .text-gray-800,
+    .achievement-popup .text-emerald-700,
+    .achievement-popup .text-emerald-800 {
+      color: #000 !important;
+    }
+    
+    .achievement-popup button {
+      border: 2px solid #000;
+    }
+  }
+  
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .achievement-popup * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    
+    .jungle-magical-effects {
+      display: none;
+    }
+    
+    .achievement-popup .animate-bounce,
+    .achievement-popup .animate-pulse {
+      animation: none;
+    }
+  }
+}
+
+/* Performance optimizations for older mobile devices */
+@media (max-width: 640px) {
+  /* Reduce blur effects on low-end devices */
+  @supports not (backdrop-filter: blur(10px)) {
+    .achievement-popup {
+      backdrop-filter: none;
+      background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .achievement-popup-overlay {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: none;
+    }
+  }
+  
+  /* Simplify gradients for better performance */
+  @media (max-device-width: 480px) {
+    .achievement-popup {
+      background: linear-gradient(135deg, 
+        var(--emerald-200) 0%, 
+        var(--green-300) 100%
+      ) !important;
+    }
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .achievement-popup {
+    /* Fix for iOS Safari viewport issues */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  .achievement-popup button {
+    /* Prevent iOS button styling */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  /* Fix for iOS safe area */
+  @media (max-width: 640px) {
+    .achievement-popup-overlay {
+      padding-top: env(safe-area-inset-top, 1rem);
+      padding-bottom: env(safe-area-inset-bottom, 1rem);
+      padding-left: env(safe-area-inset-left, 1rem);
+      padding-right: env(safe-area-inset-right, 1rem);
+    }
+  }
+}
+
+/* Android Chrome specific optimizations */
+@media screen and (max-width: 640px) {
+  /* Prevent zoom on input focus (Android) */
+  .achievement-popup input,
+  .achievement-popup button {
+    font-size: 16px;
+  }
+  
+  /* Better rendering on Android */
+  .achievement-popup {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
