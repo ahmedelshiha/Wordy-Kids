@@ -366,14 +366,14 @@ export function CompactAchievementPopup({
                         style={{ transformOrigin: "left" }}
                       />
                     </div>
-                    <div className="text-xs text-white/60 mt-1">
+                    <div className="text-xs text-gray-600 mt-1">
                       Auto-closing...
                     </div>
                   </div>
 
                   {/* Achievement Counter */}
                   {achievements.length > 1 && (
-                    <div className="text-xs text-white/70 mt-1">
+                    <div className="text-xs text-gray-600 mt-1">
                       {currentIndex + 1}/{achievements.length} 🏆
                     </div>
                   )}
