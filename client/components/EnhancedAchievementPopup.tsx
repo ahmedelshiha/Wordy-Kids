@@ -391,7 +391,7 @@ export function EnhancedAchievementPopup({
                 onClick={handleClose}
                 variant="ghost"
                 size="sm"
-                className="absolute top-2 right-2 text-white/80 hover:text-white hover:bg-white/20 rounded-full z-10 transition-colors w-6 h-6 p-0"
+                className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 hover:bg-white/40 rounded-full z-10 transition-colors w-6 h-6 p-0"
                 aria-label="Close achievement popup"
               >
                 <X className="w-3 h-3" />
@@ -416,19 +416,19 @@ export function EnhancedAchievementPopup({
                   transition={{ delay: 0.2 }}
                 >
                   <div className="flex items-center justify-center gap-1 mb-2">
-                    <DifficultyIcon className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <h3 className="text-sm sm:text-base font-bold animate-bounce">
-                      🎉 WOW! 🎉
+                    <DifficultyIcon className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600" />
+                    <h3 className="text-sm sm:text-base font-bold animate-bounce text-emerald-800">
+                      🎉 AMAZING! 🎉
                     </h3>
                   </div>
 
-                  <h4 className="text-sm sm:text-base mb-2 font-bold text-yellow-200">
+                  <h4 className="text-sm sm:text-base mb-2 font-bold text-emerald-700">
                     {currentAchievement.name.length > 20
                       ? currentAchievement.name.slice(0, 20) + "..."
                       : currentAchievement.name}
                   </h4>
 
-                  <p className="text-white/90 mb-3 text-xs sm:text-sm leading-tight px-1">
+                  <p className="text-gray-700 mb-3 text-xs sm:text-sm leading-tight px-1">
                     {getShortDescription(currentAchievement)}
                   </p>
 
