@@ -375,7 +375,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               {userData.name}
             </h2>
             <div className="flex items-center justify-center gap-3 mb-2">
-              <Badge className="bg-white/20 text-white border-white/30 font-['Baloo_2'] text-xs px-3 py-1">
+              <Badge className="bg-navy/80 text-white border-navy/50 font-['Baloo_2'] text-xs px-3 py-1">
                 🌟 Level {userData.level}
               </Badge>
               <Badge className="bg-orange-500/80 text-white border-orange-400/50 font-['Baloo_2'] text-xs px-3 py-1">
