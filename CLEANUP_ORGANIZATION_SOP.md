@@ -11,7 +11,7 @@ This document outlines the standardized backup structure, cleanup procedures, an
 ├── /old-components       # Retired React/Builder components
 ├── /unused-assets        # Images, icons, fonts not in use
 ├── /deprecated-pages     # Outdated/removed Builder pages
-├── /legacy-scripts       # Obsolete scripts/utilities  
+├── /legacy-scripts       # Obsolete scripts/utilities
 ├── /docs                 # Archived markdown and documentation
 └── README.md             # This structure documentation
 ```
@@ -21,6 +21,7 @@ This document outlines the standardized backup structure, cleanup procedures, an
 All archived files include timestamp suffix: `filename_YYYYMMDD.ext`
 
 **Examples:**
+
 - `header_20241215.tsx`
 - `legacy-nav_20241215.js`
 - `old-docs_20241215.md`
@@ -60,25 +61,28 @@ npm run cleanup:full
 
 # Individual analysis tools
 npm run cleanup:assets    # Analyze unused assets
-npm run cleanup:deps      # Analyze unused dependencies  
+npm run cleanup:deps      # Analyze unused dependencies
 npm run cleanup:auto      # Run automated cleanup process
 ```
 
 ### Script Functions
 
 #### 1. `cleanup-automation.js`
+
 - Moves outdated files to backup directories
 - Archives markdown files older than 6 months
 - Compresses large backup directories
 - Updates archive index automatically
 
 #### 2. `analyze-unused-assets.js`
+
 - Scans public/ directory for unused assets
 - Identifies duplicate assets (PNG/WebP pairs)
 - Generates removal commands
 - Creates detailed usage report
 
 #### 3. `analyze-dependencies.js`
+
 - Checks package.json for unused dependencies
 - Identifies dev dependencies used in production
 - Generates uninstall commands
@@ -87,18 +91,21 @@ npm run cleanup:auto      # Run automated cleanup process
 ### Scheduled Maintenance
 
 **Weekly Cleanup (Automated):**
+
 - [ ] Archive files older than 6 months
 - [ ] Compress backup directories > 50MB
 - [ ] Update archive index
 - [ ] Generate usage reports
 
 **Monthly Review (Manual):**
+
 - [ ] Review and approve automated archive decisions
 - [ ] Remove confirmed unused assets
 - [ ] Update dependencies
 - [ ] Audit Builder.io models and content
 
 **Quarterly Deep Clean (Manual):**
+
 - [ ] Compress old backup archives
 - [ ] Review project structure
 - [ ] Update naming conventions
@@ -107,6 +114,7 @@ npm run cleanup:auto      # Run automated cleanup process
 ## 📁 Current Project Structure
 
 ### Core Directories
+
 ```
 client/                   # React SPA frontend
 ├── components/           # React components
@@ -114,7 +122,7 @@ client/                   # React SPA frontend
 │   ├── games/           # Game-related components
 │   └── common/          # Shared components
 ├── pages/               # Route components
-├── lib/                 # Utility libraries and services  
+├── lib/                 # Utility libraries and services
 ├── hooks/               # Custom React hooks
 ├── contexts/            # React contexts
 ├── styles/              # CSS and styling files
@@ -138,18 +146,21 @@ backup/                  # Archived files (NEW)
 ### File Organization Rules
 
 **Components (`client/components/`):**
+
 - Break large components into smaller, focused units
 - Use PascalCase for component files
 - Group related components in subdirectories
 - Export from index.ts files for clean imports
 
 **Assets (`public/`):**
+
 - Use kebab-case for all static assets
 - Prefer WebP over PNG for images
 - Organize by type: `/images/`, `/sounds/`, `/icons/`
 - Remove spaces and special characters from filenames
 
 **Documentation:**
+
 - Keep only current, relevant documentation in root
 - Archive reports and summaries older than 6 months
 - Use meaningful names that describe content
@@ -201,16 +212,19 @@ npm run build
 ### Regular Audits
 
 **Asset Usage:**
+
 - Track total asset size in public/ directory
 - Monitor asset usage statistics
 - Identify optimization opportunities
 
 **Code Quality:**
+
 - Count deprecated/TODO comments
 - Track component reusability
 - Monitor import complexity
 
 **Documentation Health:**
+
 - Ensure current docs are up-to-date
 - Archive obsolete documentation
 - Maintain clear README files
@@ -239,6 +253,7 @@ npm run build
 ### Common Issues
 
 **Script Permissions:**
+
 ```bash
 chmod +x scripts/*.js
 ```

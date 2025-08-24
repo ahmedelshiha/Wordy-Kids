@@ -89,7 +89,7 @@ export function DesktopKidNav({
         await junglePerformanceOptimizer.initialize();
         setIsPerformanceOptimized(true);
       } catch (error) {
-        console.warn('Performance optimization failed:', error);
+        console.warn("Performance optimization failed:", error);
         setIsPerformanceOptimized(false);
       }
     };
@@ -101,10 +101,16 @@ export function DesktopKidNav({
       setIsPerformanceOptimized(true);
     };
 
-    window.addEventListener('jungle-nav-optimizations-updated', handleOptimizationUpdate as EventListener);
+    window.addEventListener(
+      "jungle-nav-optimizations-updated",
+      handleOptimizationUpdate as EventListener,
+    );
 
     return () => {
-      window.removeEventListener('jungle-nav-optimizations-updated', handleOptimizationUpdate as EventListener);
+      window.removeEventListener(
+        "jungle-nav-optimizations-updated",
+        handleOptimizationUpdate as EventListener,
+      );
       junglePerformanceOptimizer.destroy();
     };
   }, []);
@@ -137,11 +143,11 @@ export function DesktopKidNav({
                 "flex flex-col items-center p-2 rounded-lg transition-colors",
                 activeTab === tab.id
                   ? "text-blue-600 bg-blue-50"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50",
               )}
             >
               <div className="text-2xl mb-1">
-                {tab.image.startsWith('/') ? (
+                {tab.image.startsWith("/") ? (
                   <img src={tab.image} alt={tab.label} className="w-6 h-6" />
                 ) : (
                   <span>{tab.image}</span>

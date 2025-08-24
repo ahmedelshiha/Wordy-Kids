@@ -108,7 +108,7 @@ export default function JungleAdventureNavV2({
             className="fixed inset-0 z-40 bg-black/20"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          
+
           {/* Mobile Menu */}
           <motion.div
             initial={{ x: "-100%" }}
@@ -134,14 +134,14 @@ export default function JungleAdventureNavV2({
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
-                
+
                 return (
                   <Button
                     key={item.id}
                     variant="ghost"
                     className={cn(
                       "w-full justify-start gap-3 text-white hover:bg-jungle-dark/20",
-                      isActive && "bg-jungle-dark/30 text-white"
+                      isActive && "bg-jungle-dark/30 text-white",
                     )}
                     onClick={() => handleNavigation(item.path)}
                   >
@@ -149,7 +149,7 @@ export default function JungleAdventureNavV2({
                     <span>{item.label}</span>
                     {item.badge && item.badge > 0 && (
                       <Badge
-                        variant="secondary" 
+                        variant="secondary"
                         className="ml-auto bg-sunshine text-navy text-xs"
                       >
                         {item.badge}
@@ -183,14 +183,17 @@ export default function JungleAdventureNavV2({
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className={cn(
-        "hidden md:flex items-center gap-1 bg-jungle/90 backdrop-blur-sm rounded-full px-3 py-2 border border-jungle-dark/20",
-        className
-      )} {...props}>
+      <nav
+        className={cn(
+          "hidden md:flex items-center gap-1 bg-jungle/90 backdrop-blur-sm rounded-full px-3 py-2 border border-jungle-dark/20",
+          className,
+        )}
+        {...props}
+      >
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
-          
+
           return (
             <Button
               key={item.id}
@@ -198,7 +201,7 @@ export default function JungleAdventureNavV2({
               variant="ghost"
               className={cn(
                 "relative gap-2 text-white/80 hover:text-white hover:bg-jungle-dark/20 transition-colors",
-                isActive && "text-white bg-jungle-dark/30"
+                isActive && "text-white bg-jungle-dark/30",
               )}
               onClick={() => handleNavigation(item.path)}
             >
@@ -215,7 +218,7 @@ export default function JungleAdventureNavV2({
             </Button>
           );
         })}
-        
+
         {/* Parent Menu Button - Desktop */}
         {showParentMenu && parentMenuConfig && (
           <Button
@@ -224,7 +227,9 @@ export default function JungleAdventureNavV2({
             className="ml-2 bg-sunshine hover:bg-sunshine-dark text-navy font-semibold"
           >
             👨‍👩‍👧‍👦
-            <span className="hidden lg:inline ml-1">{parentMenuConfig.title}</span>
+            <span className="hidden lg:inline ml-1">
+              {parentMenuConfig.title}
+            </span>
           </Button>
         )}
       </nav>
@@ -240,7 +245,8 @@ export default function JungleAdventureNavV2({
       </Button>
 
       {/* Mobile Menu Portal */}
-      {typeof document !== "undefined" && createPortal(mobileMenuComponent, document.body)}
+      {typeof document !== "undefined" &&
+        createPortal(mobileMenuComponent, document.body)}
     </>
   );
 }
