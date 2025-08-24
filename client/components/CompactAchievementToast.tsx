@@ -28,11 +28,11 @@ interface CompactAchievementToastProps {
 }
 
 const DIFFICULTY_COLORS = {
-  bronze: "from-orange-400 to-amber-500",
-  silver: "from-gray-300 to-gray-500",
-  gold: "from-yellow-400 to-yellow-500",
-  diamond: "from-blue-400 to-purple-500",
-  rainbow: "from-pink-400 via-purple-400 to-blue-400",
+  bronze: "from-amber-200 via-orange-300 to-yellow-300", // 🌱 Seed theme
+  silver: "from-emerald-200 via-green-300 to-teal-300", // 🌿 Sprout theme
+  gold: "from-yellow-200 via-orange-300 to-amber-300", // 🌻 Bloom theme
+  diamond: "from-emerald-300 via-teal-400 to-cyan-300", // 🌳 Tree theme
+  rainbow: "from-pink-300 via-purple-300 to-blue-300", // 🌈 Legend theme
 } as const;
 
 const DIFFICULTY_ICONS = {
@@ -108,12 +108,12 @@ export function CompactAchievementToast({
           className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-[300px]"
         >
           <div
-            className={`bg-gradient-to-r ${difficultyColor} text-white rounded-xl shadow-lg border-0 overflow-hidden`}
+            className={`bg-gradient-to-r ${difficultyColor} text-gray-800 rounded-xl shadow-lg border-0 overflow-hidden`}
           >
             {/* Close button */}
             <button
               onClick={handleClose}
-              className="absolute top-1 right-1 text-white/70 hover:text-white z-10 w-5 h-5 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors"
+              className="absolute top-1 right-1 text-gray-700 hover:text-gray-900 z-10 w-5 h-5 flex items-center justify-center rounded-full hover:bg-white/40 transition-colors"
               aria-label="Close"
             >
               <X className="w-3 h-3" />
@@ -152,7 +152,7 @@ export function CompactAchievementToast({
                 </div>
 
                 {/* Achievement name */}
-                <h4 className="text-sm font-bold text-white mb-1">
+                <h4 className="text-sm font-bold text-emerald-700 mb-1">
                   {getShortName(achievement.name)}
                 </h4>
 
