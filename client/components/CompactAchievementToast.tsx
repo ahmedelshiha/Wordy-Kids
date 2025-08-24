@@ -157,7 +157,7 @@ export function CompactAchievementToast({
                 </h4>
 
                 {/* Compact badge */}
-                <Badge className="bg-white/25 text-white border-0 text-xs px-2 py-0.5 rounded-full mb-2">
+                <Badge className="bg-white/60 text-emerald-800 border-0 text-xs px-2 py-0.5 rounded-full mb-2 font-bold shadow-sm">
                   {getDifficultyEmoji(achievement.difficulty)}{" "}
                   {achievement.difficulty.toUpperCase()}
                 </Badge>
@@ -168,7 +168,7 @@ export function CompactAchievementToast({
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="bg-white/20 rounded-lg p-1.5 mb-2"
+                    className="bg-white/60 rounded-lg p-1.5 mb-2 border-2 border-white/70 shadow-lg"
                   >
                     <div className="text-xs font-bold text-yellow-200">
                       🎁 {achievement.reward.emoji || "🎁"}{" "}
@@ -176,7 +176,7 @@ export function CompactAchievementToast({
                       {achievement.reward.item.length > 20 ? "..." : ""}
                     </div>
                     {achievement.reward.value && (
-                      <div className="text-xs text-white/90">
+                      <div className="text-xs text-emerald-700">
                         +{achievement.reward.value} pts!
                       </div>
                     )}
@@ -186,9 +186,9 @@ export function CompactAchievementToast({
                 {/* Auto-close progress bar */}
                 {autoClose && (
                   <div className="mt-2">
-                    <div className="w-full bg-white/20 rounded-full h-1 overflow-hidden">
+                    <div className="w-full bg-white/40 rounded-full h-1 overflow-hidden">
                       <motion.div
-                        className="h-full bg-white/40 rounded-full"
+                        className="h-full bg-emerald-500 rounded-full"
                         initial={{ scaleX: 1 }}
                         animate={{ scaleX: 0 }}
                         transition={{
