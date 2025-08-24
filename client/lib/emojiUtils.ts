@@ -284,26 +284,36 @@ export function emojiToHtmlEntities(text: string): string {
 }
 
 /**
- * React component helper for safe emoji rendering
+ * Form handling utilities for emoji input
  */
-export const EmojiText: React.FC<{ 
-  children: React.ReactNode; 
-  className?: string;
-  normalize?: boolean;
-}> = ({ children, className = '', normalize = true }) => {
-  const content = typeof children === 'string' && normalize 
-    ? safeEmojiString(children) 
-    : children;
+export const emojiFormUtils = {
+  /**
+   * Handle emoji input in form fields
+   */
+  handleEmojiInput: (value: string, callback: (cleanedValue: string) => void) => {
+    const validation = validateEmojiInput(value);
+    if (validation.isValid) {
+      callback(validation.cleaned);
+    } else {
+      console.warn('Emoji input validation failed:', validation.errors);
+      callback(validation.cleaned); // Still return cleaned version
+    }
+  },
+
+  /**
+   * Prepare emoji data for API submission
+   */
+  prepareForSubmission: (data: Record<string, any>): Record<string, any> => {
+    const prepared: Record<string, any> = {};
     
-  return (
-    <span 
-      className={`emoji-text ${className}`}
-      style={{ 
-        fontVariantEmoji: 'unicode',
-        fontFamily: 'Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, Android Emoji, EmojiSymbols, system-ui, sans-serif'
-      }}
-    >
-      {content}
-    </span>
-  );
+    for (const [key, value] of Object.entries(data)) {
+      if (typeof value === 'string') {
+        prepared[key] = sanitizeForStorage(value);
+      } else {
+        prepared[key] = value;
+      }
+    }
+    
+    return prepared;
+  }
 };
