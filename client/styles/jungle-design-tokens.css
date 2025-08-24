@@ -435,3 +435,107 @@
   backface-visibility: hidden;
   perspective: 1000px;
 }
+
+/* ========================================
+ * CONTRAST-SAFE UTILITY CLASSES
+ * ======================================== */
+
+/* Badge utilities with guaranteed contrast */
+.badge-primary {
+  background: hsl(var(--color-jungle-600));
+  color: hsl(var(--color-text-inverse));
+  border: 1px solid hsl(var(--color-jungle-500));
+}
+
+.badge-secondary {
+  background: hsl(var(--color-text-secondary) / 0.8);
+  color: hsl(var(--color-text-inverse));
+  border: 1px solid hsl(var(--color-text-secondary) / 0.6);
+}
+
+.badge-light {
+  background: hsl(var(--color-surface));
+  color: hsl(var(--color-text));
+  border: 1px solid hsl(var(--color-border));
+}
+
+.badge-dark {
+  background: hsl(210 15% 15% / 0.9);
+  color: hsl(var(--color-text-inverse));
+  border: 1px solid hsl(210 15% 25%);
+}
+
+/* Button utilities with proper contrast */
+.btn-overlay-dark {
+  background: hsl(210 15% 15% / 0.8);
+  color: hsl(var(--color-text-inverse));
+  border: 1px solid hsl(210 15% 25% / 0.6);
+}
+
+.btn-overlay-dark:hover {
+  background: hsl(210 15% 10% / 0.9);
+  border-color: hsl(210 15% 30%);
+}
+
+.btn-overlay-light {
+  background: hsl(var(--color-surface) / 0.95);
+  color: hsl(var(--color-text));
+  border: 1px solid hsl(var(--color-border));
+}
+
+.btn-overlay-light:hover {
+  background: hsl(var(--color-surface));
+  border-color: hsl(var(--color-border-light));
+}
+
+/* Card utilities with proper text contrast */
+.card-light {
+  background: hsl(var(--color-surface) / 0.95);
+  color: hsl(var(--color-text));
+  border: 1px solid hsl(var(--color-border));
+}
+
+.card-semi-light {
+  background: hsl(var(--color-surface) / 0.9);
+  color: hsl(var(--color-text));
+  border: 1px solid hsl(var(--color-border) / 0.8);
+}
+
+.card-overlay-dark {
+  background: hsl(210 15% 15% / 0.85);
+  color: hsl(var(--color-text-inverse));
+  border: 1px solid hsl(210 15% 25% / 0.6);
+}
+
+/* Text overlay utilities */
+.text-overlay-dark {
+  color: hsl(var(--color-text-inverse));
+  text-shadow: 0 1px 2px hsl(0 0% 0% / 0.5);
+}
+
+.text-overlay-light {
+  color: hsl(var(--color-text));
+  text-shadow: 0 1px 2px hsl(0 0% 100% / 0.8);
+}
+
+/* High contrast mode overrides */
+@media (prefers-contrast: high) {
+  .badge-primary,
+  .badge-secondary,
+  .badge-dark,
+  .btn-overlay-dark,
+  .card-overlay-dark {
+    background: hsl(0 0% 0%);
+    color: hsl(0 0% 100%);
+    border-color: hsl(0 0% 0%);
+  }
+
+  .badge-light,
+  .btn-overlay-light,
+  .card-light,
+  .card-semi-light {
+    background: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
+    border-color: hsl(0 0% 0%);
+  }
+}
