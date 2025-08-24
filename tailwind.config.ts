@@ -163,18 +163,22 @@ export default {
          * These automatically map to jungle theme tokens via CSS variables
          * ======================================== */
         educational: {
-          blue: "hsl(var(--educational-blue))", /* -> sky-500 */
-          "blue-light": "hsl(var(--educational-blue-light))", /* -> sky-200 */
-          purple: "hsl(var(--educational-purple))", /* -> berry-500 */
-          "purple-light": "hsl(var(--educational-purple-light))", /* -> berry-200 */
-          green: "hsl(var(--educational-green))", /* -> jungle-500 */
-          "green-light": "hsl(var(--educational-green-light))", /* -> jungle-200 */
-          orange: "hsl(var(--educational-orange))", /* -> wood-500 */
-          "orange-light": "hsl(var(--educational-orange-light))", /* -> wood-200 */
-          pink: "hsl(var(--educational-pink))", /* -> berry-400 */
-          "pink-light": "hsl(var(--educational-pink-light))", /* -> berry-200 */
-          yellow: "hsl(var(--educational-yellow))", /* -> banana-500 */
-          "yellow-light": "hsl(var(--educational-yellow-light))", /* -> banana-200 */
+          blue: "hsl(var(--educational-blue))" /* -> sky-500 */,
+          "blue-light": "hsl(var(--educational-blue-light))" /* -> sky-200 */,
+          purple: "hsl(var(--educational-purple))" /* -> berry-500 */,
+          "purple-light":
+            "hsl(var(--educational-purple-light))" /* -> berry-200 */,
+          green: "hsl(var(--educational-green))" /* -> jungle-500 */,
+          "green-light":
+            "hsl(var(--educational-green-light))" /* -> jungle-200 */,
+          orange: "hsl(var(--educational-orange))" /* -> wood-500 */,
+          "orange-light":
+            "hsl(var(--educational-orange-light))" /* -> wood-200 */,
+          pink: "hsl(var(--educational-pink))" /* -> berry-400 */,
+          "pink-light": "hsl(var(--educational-pink-light))" /* -> berry-200 */,
+          yellow: "hsl(var(--educational-yellow))" /* -> banana-500 */,
+          "yellow-light":
+            "hsl(var(--educational-yellow-light))" /* -> banana-200 */,
         },
 
         /* ========================================
@@ -194,7 +198,7 @@ export default {
           "night-start": "hsl(var(--quiz-night-start))",
           "night-mid": "hsl(var(--quiz-night-mid))",
           "night-end": "hsl(var(--quiz-night-end))",
-          "gold": "hsl(var(--quiz-gold-accent))",
+          gold: "hsl(var(--quiz-gold-accent))",
           "treasure-border": "var(--quiz-treasure-border)",
           "option-bg": "var(--quiz-option-bg)",
         },

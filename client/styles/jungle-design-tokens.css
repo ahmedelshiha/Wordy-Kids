@@ -46,16 +46,34 @@
    * EDUCATIONAL SYSTEM UNIFIED MAPPINGS
    * Maps legacy educational colors to jungle theme
    * ======================================== */
-  --educational-blue: var(--color-sky-500); /* Primary learning color -> sky blue */
+  --educational-blue: var(
+    --color-sky-500
+  ); /* Primary learning color -> sky blue */
   --educational-blue-light: var(--color-sky-200); /* Light blue backgrounds */
-  --educational-purple: var(--color-berry-500); /* Secondary learning -> berry purple */
-  --educational-purple-light: var(--color-berry-200); /* Light purple backgrounds */
-  --educational-green: var(--color-jungle-500); /* Success/easy -> jungle green */
-  --educational-green-light: var(--color-jungle-200); /* Light green backgrounds */
-  --educational-yellow: var(--color-banana-500); /* Highlights -> banana yellow */
-  --educational-yellow-light: var(--color-banana-200); /* Light yellow backgrounds */
-  --educational-orange: var(--color-wood-500); /* Medium difficulty -> wood orange */
-  --educational-orange-light: var(--color-wood-200); /* Light orange backgrounds */
+  --educational-purple: var(
+    --color-berry-500
+  ); /* Secondary learning -> berry purple */
+  --educational-purple-light: var(
+    --color-berry-200
+  ); /* Light purple backgrounds */
+  --educational-green: var(
+    --color-jungle-500
+  ); /* Success/easy -> jungle green */
+  --educational-green-light: var(
+    --color-jungle-200
+  ); /* Light green backgrounds */
+  --educational-yellow: var(
+    --color-banana-500
+  ); /* Highlights -> banana yellow */
+  --educational-yellow-light: var(
+    --color-banana-200
+  ); /* Light yellow backgrounds */
+  --educational-orange: var(
+    --color-wood-500
+  ); /* Medium difficulty -> wood orange */
+  --educational-orange-light: var(
+    --color-wood-200
+  ); /* Light orange backgrounds */
   --educational-pink: var(--color-berry-400); /* Fun accents -> lighter berry */
   --educational-pink-light: var(--color-berry-200); /* Light pink backgrounds */
 
