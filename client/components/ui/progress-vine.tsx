@@ -9,10 +9,7 @@ import { cn } from "@/lib/utils";
  */
 
 const progressVineVariants = cva(
-  [
-    "relative w-full bg-wood-200 overflow-hidden",
-    "transition-soft",
-  ],
+  ["relative w-full bg-wood-200 overflow-hidden", "transition-soft"],
   {
     variants: {
       size: {
@@ -28,25 +25,16 @@ const progressVineVariants = cva(
           "[&_.progress-vine-fill]:bg-gradient-to-r [&_.progress-vine-fill]:from-jungle-400 [&_.progress-vine-fill]:to-jungle-600",
         ],
         colorful: [
-          "bg-wood-200", 
+          "bg-wood-200",
           "[&_.progress-vine-fill]:bg-gradient-to-r [&_.progress-vine-fill]:from-jungle-400 [&_.progress-vine-fill]:via-banana-400 [&_.progress-vine-fill]:to-sky-400",
         ],
         adventure: [
           "bg-wood-200",
           "[&_.progress-vine-fill]:bg-gradient-to-r [&_.progress-vine-fill]:from-berry-400 [&_.progress-vine-fill]:via-jungle-400 [&_.progress-vine-fill]:to-banana-400",
         ],
-        success: [
-          "bg-wood-200",
-          "[&_.progress-vine-fill]:bg-success",
-        ],
-        warning: [
-          "bg-wood-200", 
-          "[&_.progress-vine-fill]:bg-warning",
-        ],
-        danger: [
-          "bg-wood-200",
-          "[&_.progress-vine-fill]:bg-danger",
-        ],
+        success: ["bg-wood-200", "[&_.progress-vine-fill]:bg-success"],
+        warning: ["bg-wood-200", "[&_.progress-vine-fill]:bg-warning"],
+        danger: ["bg-wood-200", "[&_.progress-vine-fill]:bg-danger"],
       },
       texture: {
         smooth: "",
@@ -71,30 +59,33 @@ const progressVineFillVariants = cva([
   "transform-origin-left",
 ]);
 
-const progressVineLeafVariants = cva([
-  "absolute top-1/2 -translate-y-1/2 -translate-x-1/2",
-  "text-jungle-600 transition-soft",
-  "motion-safe:anim-float",
-  "z-10",
-], {
-  variants: {
-    size: {
-      sm: "text-xs",
-      md: "text-sm", 
-      lg: "text-base",
-      xl: "text-lg",
+const progressVineLeafVariants = cva(
+  [
+    "absolute top-1/2 -translate-y-1/2 -translate-x-1/2",
+    "text-jungle-600 transition-soft",
+    "motion-safe:anim-float",
+    "z-10",
+  ],
+  {
+    variants: {
+      size: {
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-base",
+        xl: "text-lg",
+      },
+      state: {
+        upcoming: "opacity-30 text-wood-400",
+        current: "opacity-100 text-jungle-500 motion-safe:anim-wiggle",
+        completed: "opacity-100 text-success",
+      },
     },
-    state: {
-      upcoming: "opacity-30 text-wood-400",
-      current: "opacity-100 text-jungle-500 motion-safe:anim-wiggle",
-      completed: "opacity-100 text-success",
+    defaultVariants: {
+      size: "md",
+      state: "upcoming",
     },
   },
-  defaultVariants: {
-    size: "md",
-    state: "upcoming",
-  },
-});
+);
 
 export interface Milestone {
   id: string;
@@ -154,7 +145,7 @@ const ProgressVine = React.forwardRef<HTMLDivElement, ProgressVineProps>(
 
       const timer = setInterval(() => {
         currentStep++;
-        const newValue = startValue + (stepValue * currentStep);
+        const newValue = startValue + stepValue * currentStep;
 
         if (currentStep >= steps) {
           setDisplayValue(percentage);
@@ -193,7 +184,9 @@ const ProgressVine = React.forwardRef<HTMLDivElement, ProgressVineProps>(
         {/* Progress vine container */}
         <div
           ref={ref}
-          className={cn(progressVineVariants({ size, variant, texture, className }))}
+          className={cn(
+            progressVineVariants({ size, variant, texture, className }),
+          )}
           role="progressbar"
           aria-valuenow={value}
           aria-valuemin={0}
@@ -208,7 +201,7 @@ const ProgressVine = React.forwardRef<HTMLDivElement, ProgressVineProps>(
             className={cn(progressVineFillVariants())}
             style={{
               width: `${displayValue}%`,
-              transformOrigin: 'left',
+              transformOrigin: "left",
             }}
           >
             {/* Animated shimmer effect on fill */}
@@ -217,11 +210,11 @@ const ProgressVine = React.forwardRef<HTMLDivElement, ProgressVineProps>(
 
           {/* Milestone leaves */}
           {milestones.map((milestone) => {
-            const leafState = milestone.completed 
-              ? 'completed' 
-              : milestone.current 
-                ? 'current' 
-                : 'upcoming';
+            const leafState = milestone.completed
+              ? "completed"
+              : milestone.current
+                ? "current"
+                : "upcoming";
 
             return (
               <div
@@ -233,7 +226,7 @@ const ProgressVine = React.forwardRef<HTMLDivElement, ProgressVineProps>(
                 title={milestone.label}
                 aria-label={`Milestone: ${milestone.label} at ${milestone.position}%`}
               >
-                {milestone.icon || '🍃'}
+                {milestone.icon || "🍃"}
               </div>
             );
           })}

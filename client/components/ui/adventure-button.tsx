@@ -138,7 +138,10 @@ export interface AdventureButtonProps
   rightIcon?: React.ReactNode;
 }
 
-const AdventureButton = React.forwardRef<HTMLButtonElement, AdventureButtonProps>(
+const AdventureButton = React.forwardRef<
+  HTMLButtonElement,
+  AdventureButtonProps
+>(
   (
     {
       className,
@@ -158,7 +161,7 @@ const AdventureButton = React.forwardRef<HTMLButtonElement, AdventureButtonProps
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
-    
+
     return (
       <Comp
         className={cn(

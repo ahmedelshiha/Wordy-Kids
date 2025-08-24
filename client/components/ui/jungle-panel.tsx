@@ -19,7 +19,7 @@ const junglePanelVariants = cva(
       background: {
         none: "",
         primary: "bg-grad-jungle",
-        secondary: "bg-grad-adventure", 
+        secondary: "bg-grad-adventure",
         hero: "bg-grad-hero",
         warm: "bg-grad-warm",
         cool: "bg-grad-cool",
@@ -37,16 +37,16 @@ const junglePanelVariants = cva(
       minHeight: {
         none: "",
         screen: "min-h-screen",
-        "screen-75": "min-h-[75vh]", 
+        "screen-75": "min-h-[75vh]",
         "screen-50": "min-h-[50vh]",
         "screen-25": "min-h-[25vh]",
         content: "min-h-fit",
       },
       parallaxDepth: {
         0: "", // No parallax - respects reduced motion
-        1: "motion-safe:anim-parallax-slow",  // Subtle parallax
+        1: "motion-safe:anim-parallax-slow", // Subtle parallax
         2: "motion-safe:anim-parallax-medium", // Medium parallax
-        3: "motion-safe:anim-parallax-fast",   // Fast parallax
+        3: "motion-safe:anim-parallax-fast", // Fast parallax
       },
       pattern: {
         none: "",
@@ -72,7 +72,7 @@ const junglePanelVariants = cva(
       safeArea: {
         none: "",
         top: "safe-top",
-        bottom: "safe-bottom", 
+        bottom: "safe-bottom",
         both: "safe-top safe-bottom",
         all: "safe-top safe-bottom safe-left safe-right",
       },
@@ -93,18 +93,18 @@ const junglePanelContentVariants = cva([
   "mx-auto max-w-7xl",
 ]);
 
-const junglePanelBackgroundVariants = cva([
-  "absolute inset-0 -z-10",
-  "overflow-hidden",
-], {
-  variants: {
-    layer: {
-      1: "opacity-20 motion-safe:anim-parallax-slow",
-      2: "opacity-30 motion-safe:anim-parallax-medium", 
-      3: "opacity-40 motion-safe:anim-parallax-fast",
+const junglePanelBackgroundVariants = cva(
+  ["absolute inset-0 -z-10", "overflow-hidden"],
+  {
+    variants: {
+      layer: {
+        1: "opacity-20 motion-safe:anim-parallax-slow",
+        2: "opacity-30 motion-safe:anim-parallax-medium",
+        3: "opacity-40 motion-safe:anim-parallax-fast",
+      },
     },
   },
-});
+);
 
 export interface JunglePanelProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -140,28 +140,31 @@ const JunglePanel = React.forwardRef<HTMLDivElement, JunglePanelProps>(
   ) => {
     // Automatically disable parallax on mobile and for reduced motion
     const [isMobile, setIsMobile] = React.useState(false);
-    const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] =
+      React.useState(false);
 
     React.useEffect(() => {
       // Detect mobile
       const checkMobile = () => setIsMobile(window.innerWidth < 768);
       checkMobile();
-      window.addEventListener('resize', checkMobile);
+      window.addEventListener("resize", checkMobile);
 
       // Detect reduced motion preference
-      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      const handleMotionChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const handleMotionChange = (e: MediaQueryListEvent) =>
+        setPrefersReducedMotion(e.matches);
       setPrefersReducedMotion(mediaQuery.matches);
-      mediaQuery.addEventListener('change', handleMotionChange);
+      mediaQuery.addEventListener("change", handleMotionChange);
 
       return () => {
-        window.removeEventListener('resize', checkMobile);
-        mediaQuery.removeEventListener('change', handleMotionChange);
+        window.removeEventListener("resize", checkMobile);
+        mediaQuery.removeEventListener("change", handleMotionChange);
       };
     }, []);
 
     // Override parallax depth if motion should be reduced
-    const effectiveParallaxDepth = (isMobile || prefersReducedMotion) ? 0 : parallaxDepth;
+    const effectiveParallaxDepth =
+      isMobile || prefersReducedMotion ? 0 : parallaxDepth;
 
     return (
       <section
@@ -191,35 +194,35 @@ const JunglePanel = React.forwardRef<HTMLDivElement, JunglePanelProps>(
         ))}
 
         {/* Main content container */}
-        <JunglePanelContent {...containerProps}>
-          {children}
-        </JunglePanelContent>
+        <JunglePanelContent {...containerProps}>{children}</JunglePanelContent>
       </section>
     );
   },
 );
 JunglePanel.displayName = "JunglePanel";
 
-const JunglePanelContent = React.forwardRef<HTMLDivElement, JunglePanelContentProps>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(junglePanelContentVariants({ className }))}
-      {...props}
-    />
-  ),
-);
+const JunglePanelContent = React.forwardRef<
+  HTMLDivElement,
+  JunglePanelContentProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(junglePanelContentVariants({ className }))}
+    {...props}
+  />
+));
 JunglePanelContent.displayName = "JunglePanelContent";
 
-const JunglePanelBackground = React.forwardRef<HTMLDivElement, JunglePanelBackgroundProps>(
-  ({ className, layer, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(junglePanelBackgroundVariants({ layer, className }))}
-      {...props}
-    />
-  ),
-);
+const JunglePanelBackground = React.forwardRef<
+  HTMLDivElement,
+  JunglePanelBackgroundProps
+>(({ className, layer, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(junglePanelBackgroundVariants({ layer, className }))}
+    {...props}
+  />
+));
 JunglePanelBackground.displayName = "JunglePanelBackground";
 
 export {

@@ -21,23 +21,20 @@ const jungleCardVariants = cva(
   {
     variants: {
       tone: {
-        default: [
-          "border-border-light bg-surface",
-          "shadow-soft",
-        ],
+        default: ["border-border-light bg-surface", "shadow-soft"],
         success: [
           "border-success/30 bg-success-light/20",
           "shadow-soft",
           "[&_.jungle-card-icon]:text-success",
         ],
         warning: [
-          "border-warning/30 bg-warning-light/20", 
+          "border-warning/30 bg-warning-light/20",
           "shadow-soft",
           "[&_.jungle-card-icon]:text-warning",
         ],
         danger: [
           "border-danger/30 bg-danger-light/20",
-          "shadow-soft", 
+          "shadow-soft",
           "[&_.jungle-card-icon]:text-danger",
         ],
         info: [
@@ -65,7 +62,7 @@ const jungleCardVariants = cva(
       },
       size: {
         sm: "p-card-sm rounded-md",
-        md: "p-card rounded-lg", 
+        md: "p-card rounded-lg",
         lg: "p-card-lg rounded-xl",
         xl: "p-8 rounded-2xl",
       },
@@ -115,30 +112,28 @@ const jungleCardHeaderVariants = cva([
   "border-b border-border-light/50",
 ]);
 
-const jungleCardTitleVariants = cva([
-  "font-display font-semibold leading-snug tracking-tight",
-  "text-text",
-], {
-  variants: {
-    size: {
-      sm: "text-base",
-      md: "text-lg",
-      lg: "text-xl", 
-      xl: "text-2xl",
+const jungleCardTitleVariants = cva(
+  ["font-display font-semibold leading-snug tracking-tight", "text-text"],
+  {
+    variants: {
+      size: {
+        sm: "text-base",
+        md: "text-lg",
+        lg: "text-xl",
+        xl: "text-2xl",
+      },
+    },
+    defaultVariants: {
+      size: "md",
     },
   },
-  defaultVariants: {
-    size: "md",
-  },
-});
+);
 
 const jungleCardDescriptionVariants = cva([
   "text-sm text-text-muted leading-normal",
 ]);
 
-const jungleCardContentVariants = cva([
-  "text-text leading-normal",
-]);
+const jungleCardContentVariants = cva(["text-text leading-normal"]);
 
 const jungleCardFooterVariants = cva([
   "flex items-center gap-3",
@@ -173,7 +168,10 @@ export interface JungleCardFooterProps
     VariantProps<typeof jungleCardFooterVariants> {}
 
 const JungleCard = React.forwardRef<HTMLDivElement, JungleCardProps>(
-  ({ className, tone, size, interactive, elevation, pattern, ...props }, ref) => (
+  (
+    { className, tone, size, interactive, elevation, pattern, ...props },
+    ref,
+  ) => (
     <div
       ref={ref}
       className={cn(
@@ -192,71 +190,77 @@ const JungleCard = React.forwardRef<HTMLDivElement, JungleCardProps>(
 );
 JungleCard.displayName = "JungleCard";
 
-const JungleCardHeader = React.forwardRef<HTMLDivElement, JungleCardHeaderProps>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(jungleCardHeaderVariants({ className }))}
-      {...props}
-    />
-  ),
-);
+const JungleCardHeader = React.forwardRef<
+  HTMLDivElement,
+  JungleCardHeaderProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(jungleCardHeaderVariants({ className }))}
+    {...props}
+  />
+));
 JungleCardHeader.displayName = "JungleCardHeader";
 
-const JungleCardTitle = React.forwardRef<HTMLParagraphElement, JungleCardTitleProps>(
-  ({ className, size, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cn(jungleCardTitleVariants({ size, className }))}
-      {...props}
-    />
-  ),
-);
+const JungleCardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  JungleCardTitleProps
+>(({ className, size, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(jungleCardTitleVariants({ size, className }))}
+    {...props}
+  />
+));
 JungleCardTitle.displayName = "JungleCardTitle";
 
-const JungleCardDescription = React.forwardRef<HTMLParagraphElement, JungleCardDescriptionProps>(
-  ({ className, ...props }, ref) => (
-    <p
-      ref={ref}
-      className={cn(jungleCardDescriptionVariants({ className }))}
-      {...props}
-    />
-  ),
-);
+const JungleCardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  JungleCardDescriptionProps
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn(jungleCardDescriptionVariants({ className }))}
+    {...props}
+  />
+));
 JungleCardDescription.displayName = "JungleCardDescription";
 
-const JungleCardContent = React.forwardRef<HTMLDivElement, JungleCardContentProps>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(jungleCardContentVariants({ className }))}
-      {...props}
-    />
-  ),
-);
+const JungleCardContent = React.forwardRef<
+  HTMLDivElement,
+  JungleCardContentProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(jungleCardContentVariants({ className }))}
+    {...props}
+  />
+));
 JungleCardContent.displayName = "JungleCardContent";
 
-const JungleCardFooter = React.forwardRef<HTMLDivElement, JungleCardFooterProps>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(jungleCardFooterVariants({ className }))}
-      {...props}
-    />
-  ),
-);
+const JungleCardFooter = React.forwardRef<
+  HTMLDivElement,
+  JungleCardFooterProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(jungleCardFooterVariants({ className }))}
+    {...props}
+  />
+));
 JungleCardFooter.displayName = "JungleCardFooter";
 
 // Icon wrapper for semantic styling
-const JungleCardIcon = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn("jungle-card-icon flex-shrink-0", className)}
-      {...props}
-    />
-  ),
-);
+const JungleCardIcon = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("jungle-card-icon flex-shrink-0", className)}
+    {...props}
+  />
+));
 JungleCardIcon.displayName = "JungleCardIcon";
 
 export {

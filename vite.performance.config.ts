@@ -10,31 +10,35 @@ export const performanceConfig = defineConfig({
   build: {
     // Bundle size limits
     chunkSizeWarningLimit: PERFORMANCE_BUDGETS.totalJS / 1024, // Convert to KB
-    
+
     rollupOptions: {
       output: {
         // Code splitting strategy
         manualChunks: {
           // Vendor libraries
           vendor: ["react", "react-dom"],
-          ui: ["@radix-ui/react-dialog", "@radix-ui/react-tabs", "@radix-ui/react-select"],
+          ui: [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-tabs",
+            "@radix-ui/react-select",
+          ],
           icons: ["lucide-react"],
-          
+
           // Jungle Adventure components
           "jungle-adventure": [
             "./client/components/ui/adventure-button.tsx",
-            "./client/components/ui/jungle-card.tsx", 
+            "./client/components/ui/jungle-card.tsx",
             "./client/components/ui/jungle-panel.tsx",
             "./client/components/ui/progress-vine.tsx",
           ],
-          
+
           // Templates (lazy loaded)
           templates: [
             "./client/templates/LoginTemplate.tsx",
-            "./client/templates/AppHomeTemplate.tsx", 
+            "./client/templates/AppHomeTemplate.tsx",
             "./client/templates/AdminTemplate.tsx",
           ],
-          
+
           // Game components (lazy loaded)
           games: [
             "./client/components/games/EnhancedGameHub.tsx",
@@ -42,31 +46,33 @@ export const performanceConfig = defineConfig({
             "./client/components/games/FlashcardDuel.tsx",
           ],
         },
-        
+
         // Asset naming for caching
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name?.split(".") ?? [];
           const ext = info[info.length - 1];
-          
-          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name ?? "")) {
+
+          if (
+            /\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name ?? "")
+          ) {
             return `assets/images/[name]-[hash][extname]`;
           }
-          
+
           if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name ?? "")) {
             return `assets/fonts/[name]-[hash][extname]`;
           }
-          
+
           return `assets/[name]-[hash][extname]`;
         },
-        
+
         chunkFileNames: "assets/js/[name]-[hash].js",
         entryFileNames: "assets/js/[name]-[hash].js",
       },
     },
-    
+
     // CSS code splitting
     cssCodeSplit: true,
-    
+
     // Minification
     minify: "terser",
     terserOptions: {
@@ -79,14 +85,14 @@ export const performanceConfig = defineConfig({
         safari10: true,
       },
     },
-    
+
     // Source maps only for development
     sourcemap: false,
-    
+
     // Asset inlining threshold (4KB)
     assetsInlineLimit: 4096,
   },
-  
+
   // CSS optimization
   css: {
     devSourcemap: true,
@@ -95,22 +101,25 @@ export const performanceConfig = defineConfig({
         // PurgeCSS will be handled by Tailwind
         require("autoprefixer"),
         require("cssnano")({
-          preset: ["default", {
-            discardComments: { removeAll: true },
-            normalizeWhitespace: true,
-            mergeLonghand: false, // Avoid issues with CSS custom properties
-          }],
+          preset: [
+            "default",
+            {
+              discardComments: { removeAll: true },
+              normalizeWhitespace: true,
+              mergeLonghand: false, // Avoid issues with CSS custom properties
+            },
+          ],
         }),
       ],
     },
   },
-  
+
   // Optimization settings
   optimizeDeps: {
     include: [
       "react",
       "react-dom",
-      "react-router-dom", 
+      "react-router-dom",
       "@radix-ui/react-dialog",
       "@radix-ui/react-tabs",
       "lucide-react",
@@ -121,7 +130,7 @@ export const performanceConfig = defineConfig({
       "@tensorflow/tfjs",
     ],
   },
-  
+
   // Preview server optimization
   preview: {
     headers: {
@@ -129,7 +138,7 @@ export const performanceConfig = defineConfig({
       "X-Frame-Options": "DENY",
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "strict-origin-when-cross-origin",
-      
+
       // Performance headers
       "Cache-Control": "public, max-age=31536000, immutable",
     },
@@ -141,40 +150,44 @@ export function bundleAnalyzerPlugin() {
   return {
     name: "bundle-analyzer",
     generateBundle(options: any, bundle: any) {
-      const chunks = Object.values(bundle).filter((chunk: any) => chunk.type === "chunk");
-      const assets = Object.values(bundle).filter((chunk: any) => chunk.type === "asset");
-      
+      const chunks = Object.values(bundle).filter(
+        (chunk: any) => chunk.type === "chunk",
+      );
+      const assets = Object.values(bundle).filter(
+        (chunk: any) => chunk.type === "asset",
+      );
+
       const totalJSSize = chunks.reduce((size: number, chunk: any) => {
         return size + (chunk.code?.length || 0);
       }, 0);
-      
+
       const totalCSSSize = assets
         .filter((asset: any) => asset.fileName.endsWith(".css"))
         .reduce((size: number, asset: any) => {
           return size + (asset.source?.length || 0);
         }, 0);
-      
+
       // Check against budgets
       const budgetWarnings = [];
-      
+
       if (totalJSSize > PERFORMANCE_BUDGETS.totalJS) {
         budgetWarnings.push(
-          `⚠️  JavaScript bundle size (${(totalJSSize / 1024).toFixed(1)}KB) exceeds budget (${(PERFORMANCE_BUDGETS.totalJS / 1024).toFixed(1)}KB)`
+          `⚠️  JavaScript bundle size (${(totalJSSize / 1024).toFixed(1)}KB) exceeds budget (${(PERFORMANCE_BUDGETS.totalJS / 1024).toFixed(1)}KB)`,
         );
       }
-      
+
       if (totalCSSSize > PERFORMANCE_BUDGETS.totalCSS) {
         budgetWarnings.push(
-          `⚠️  CSS bundle size (${(totalCSSSize / 1024).toFixed(1)}KB) exceeds budget (${(PERFORMANCE_BUDGETS.totalCSS / 1024).toFixed(1)}KB)`
+          `⚠️  CSS bundle size (${(totalCSSSize / 1024).toFixed(1)}KB) exceeds budget (${(PERFORMANCE_BUDGETS.totalCSS / 1024).toFixed(1)}KB)`,
         );
       }
-      
+
       if (budgetWarnings.length > 0) {
         console.warn("\n🚨 Performance Budget Warnings:");
-        budgetWarnings.forEach(warning => console.warn(warning));
+        budgetWarnings.forEach((warning) => console.warn(warning));
         console.warn("\nConsider:");
         console.warn("- Code splitting for large components");
-        console.warn("- Tree shaking unused code"); 
+        console.warn("- Tree shaking unused code");
         console.warn("- Lazy loading non-critical features");
         console.warn("- Using dynamic imports\n");
       } else {
@@ -223,7 +236,7 @@ export function performanceMonitoringPlugin() {
           }
         </script>
       `;
-      
+
       return html.replace("</head>", `${monitoringScript}</head>`);
     },
   };
@@ -235,7 +248,7 @@ export function assetOptimizationPlugin() {
     name: "asset-optimization",
     generateBundle(options: any, bundle: any) {
       // Optimize SVG assets
-      Object.keys(bundle).forEach(fileName => {
+      Object.keys(bundle).forEach((fileName) => {
         if (fileName.endsWith(".svg")) {
           const asset = bundle[fileName] as any;
           if (asset.type === "asset" && typeof asset.source === "string") {

@@ -1,13 +1,37 @@
 import React from "react";
-import { JunglePanel, JungleCard, JungleCardHeader, JungleCardTitle, JungleCardDescription, JungleCardContent, JungleCardFooter } from "@/components/ui/jungle-adventure";
+import {
+  JunglePanel,
+  JungleCard,
+  JungleCardHeader,
+  JungleCardTitle,
+  JungleCardDescription,
+  JungleCardContent,
+  JungleCardFooter,
+} from "@/components/ui/jungle-adventure";
 import { AdventureButton } from "@/components/ui/adventure-button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Users, BarChart3, Settings, Shield, Database, Activity, AlertTriangle, CheckCircle, Info } from "lucide-react";
+import {
+  Users,
+  BarChart3,
+  Settings,
+  Shield,
+  Database,
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  Info,
+} from "lucide-react";
 
 /**
  * AdminTemplate - Professional admin interface using controlled exception palette
@@ -62,19 +86,27 @@ export function AdminTemplate({
 }: AdminTemplateProps) {
   const getHealthColor = (health: string) => {
     switch (health) {
-      case "healthy": return "success";
-      case "warning": return "warning";
-      case "critical": return "danger";
-      default: return "info";
+      case "healthy":
+        return "success";
+      case "warning":
+        return "warning";
+      case "critical":
+        return "danger";
+      default:
+        return "info";
     }
   };
 
   const getAlertIcon = (type: string) => {
     switch (type) {
-      case "error": return <AlertTriangle className="w-4 h-4" />;
-      case "warning": return <AlertTriangle className="w-4 h-4" />;
-      case "success": return <CheckCircle className="w-4 h-4" />;
-      default: return <Info className="w-4 h-4" />;
+      case "error":
+        return <AlertTriangle className="w-4 h-4" />;
+      case "warning":
+        return <AlertTriangle className="w-4 h-4" />;
+      case "success":
+        return <CheckCircle className="w-4 h-4" />;
+      default:
+        return <Info className="w-4 h-4" />;
     }
   };
 
@@ -103,7 +135,7 @@ export function AdminTemplate({
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Badge 
+              <Badge
                 className={`bg-${getHealthColor(systemStats.systemHealth)}-light text-${getHealthColor(systemStats.systemHealth)} border-${getHealthColor(systemStats.systemHealth)}/30`}
               >
                 System {systemStats.systemHealth}
@@ -155,7 +187,9 @@ export function AdminTemplate({
                 <div className="text-2xl font-bold text-admin-text">
                   {systemStats.totalWords.toLocaleString()}
                 </div>
-                <div className="text-sm text-admin-muted">Words in Database</div>
+                <div className="text-sm text-admin-muted">
+                  Words in Database
+                </div>
                 <div className="text-xs text-admin-muted mt-1">
                   {systemStats.avgAccuracy}% avg accuracy
                 </div>
@@ -202,16 +236,28 @@ export function AdminTemplate({
           {/* Main admin tabs */}
           <Tabs defaultValue="users" className="space-y-6">
             <TabsList className="grid w-full grid-cols-1 md:grid-cols-4 bg-admin-surface border border-admin-border">
-              <TabsTrigger value="users" className="data-[state=active]:bg-admin-accent">
+              <TabsTrigger
+                value="users"
+                className="data-[state=active]:bg-admin-accent"
+              >
                 User Management
               </TabsTrigger>
-              <TabsTrigger value="content" className="data-[state=active]:bg-admin-accent">
+              <TabsTrigger
+                value="content"
+                className="data-[state=active]:bg-admin-accent"
+              >
                 Content Management
               </TabsTrigger>
-              <TabsTrigger value="analytics" className="data-[state=active]:bg-admin-accent">
+              <TabsTrigger
+                value="analytics"
+                className="data-[state=active]:bg-admin-accent"
+              >
                 Analytics
               </TabsTrigger>
-              <TabsTrigger value="settings" className="data-[state=active]:bg-admin-accent">
+              <TabsTrigger
+                value="settings"
+                className="data-[state=active]:bg-admin-accent"
+              >
                 System Settings
               </TabsTrigger>
             </TabsList>
@@ -248,10 +294,12 @@ export function AdminTemplate({
                           Search
                         </AdventureButton>
                       </div>
-                      
+
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <Label className="text-admin-text">Filter by Role</Label>
+                          <Label className="text-admin-text">
+                            Filter by Role
+                          </Label>
                           <Select>
                             <SelectTrigger className="w-48 bg-admin-bg border-admin-border">
                               <SelectValue placeholder="All users" />
@@ -266,7 +314,9 @@ export function AdminTemplate({
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <Label className="text-admin-text">Show Active Only</Label>
+                          <Label className="text-admin-text">
+                            Show Active Only
+                          </Label>
                           <Switch />
                         </div>
                       </div>
@@ -306,25 +356,33 @@ export function AdminTemplate({
                     <JungleCardContent className="space-y-4">
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-sm text-admin-muted">Total Children</span>
+                          <span className="text-sm text-admin-muted">
+                            Total Children
+                          </span>
                           <span className="font-semibold text-admin-text">
                             {userManagement.totalChildren.toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-admin-muted">Total Parents</span>
+                          <span className="text-sm text-admin-muted">
+                            Total Parents
+                          </span>
                           <span className="font-semibold text-admin-text">
                             {userManagement.totalParents.toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-admin-muted">Active Subscriptions</span>
+                          <span className="text-sm text-admin-muted">
+                            Active Subscriptions
+                          </span>
                           <span className="font-semibold text-admin-text">
                             {userManagement.activeSubscriptions.toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-admin-muted">New This Week</span>
+                          <span className="text-sm text-admin-muted">
+                            New This Week
+                          </span>
                           <span className="font-semibold text-admin-text">
                             {userManagement.recentRegistrations}
                           </span>
@@ -406,7 +464,9 @@ export function AdminTemplate({
                   <div className="text-center text-admin-muted py-12">
                     <BarChart3 className="w-12 h-12 mx-auto mb-4 opacity-50" />
                     <p>Analytics dashboard would be integrated here</p>
-                    <p className="text-sm mt-2">Charts, graphs, and detailed metrics</p>
+                    <p className="text-sm mt-2">
+                      Charts, graphs, and detailed metrics
+                    </p>
                   </div>
                 </JungleCardContent>
               </JungleCard>
@@ -431,18 +491,24 @@ export function AdminTemplate({
                 <JungleCardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h3 className="font-semibold text-admin-text">Security Settings</h3>
+                      <h3 className="font-semibold text-admin-text">
+                        Security Settings
+                      </h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <Label className="text-admin-text">Enable 2FA</Label>
                           <Switch />
                         </div>
                         <div className="flex items-center justify-between">
-                          <Label className="text-admin-text">Password Requirements</Label>
+                          <Label className="text-admin-text">
+                            Password Requirements
+                          </Label>
                           <Switch />
                         </div>
                         <div className="flex items-center justify-between">
-                          <Label className="text-admin-text">Session Timeout</Label>
+                          <Label className="text-admin-text">
+                            Session Timeout
+                          </Label>
                           <Select>
                             <SelectTrigger className="w-32 bg-admin-bg border-admin-border">
                               <SelectValue placeholder="30m" />
@@ -458,14 +524,20 @@ export function AdminTemplate({
                     </div>
 
                     <div className="space-y-4">
-                      <h3 className="font-semibold text-admin-text">System Preferences</h3>
+                      <h3 className="font-semibold text-admin-text">
+                        System Preferences
+                      </h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <Label className="text-admin-text">Maintenance Mode</Label>
+                          <Label className="text-admin-text">
+                            Maintenance Mode
+                          </Label>
                           <Switch />
                         </div>
                         <div className="flex items-center justify-between">
-                          <Label className="text-admin-text">Debug Logging</Label>
+                          <Label className="text-admin-text">
+                            Debug Logging
+                          </Label>
                           <Switch />
                         </div>
                         <div className="flex items-center justify-between">
@@ -511,19 +583,28 @@ export function AdminTemplate({
                     <div
                       key={alert.id}
                       className={`flex items-start gap-3 p-3 rounded-lg border ${
-                        alert.type === "error" ? "bg-danger-light border-danger/30" :
-                        alert.type === "warning" ? "bg-warning-light border-warning/30" :
-                        alert.type === "success" ? "bg-success-light border-success/30" :
-                        "bg-info-light border-info/30"
+                        alert.type === "error"
+                          ? "bg-danger-light border-danger/30"
+                          : alert.type === "warning"
+                            ? "bg-warning-light border-warning/30"
+                            : alert.type === "success"
+                              ? "bg-success-light border-success/30"
+                              : "bg-info-light border-info/30"
                       }`}
                     >
-                      <div className={`
-                        ${alert.type === "error" ? "text-danger" :
-                          alert.type === "warning" ? "text-warning" :
-                          alert.type === "success" ? "text-success" :
-                          "text-info"
+                      <div
+                        className={`
+                        ${
+                          alert.type === "error"
+                            ? "text-danger"
+                            : alert.type === "warning"
+                              ? "text-warning"
+                              : alert.type === "success"
+                                ? "text-success"
+                                : "text-info"
                         }
-                      `}>
+                      `}
+                      >
                         {getAlertIcon(alert.type)}
                       </div>
                       <div className="flex-1 min-w-0">

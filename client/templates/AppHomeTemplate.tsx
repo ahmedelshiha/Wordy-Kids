@@ -1,10 +1,28 @@
 import React from "react";
-import { JunglePanel, JungleCard, JungleCardHeader, JungleCardTitle, JungleCardDescription, JungleCardContent, JungleCardFooter, JungleCardIcon } from "@/components/ui/jungle-adventure";
+import {
+  JunglePanel,
+  JungleCard,
+  JungleCardHeader,
+  JungleCardTitle,
+  JungleCardDescription,
+  JungleCardContent,
+  JungleCardFooter,
+  JungleCardIcon,
+} from "@/components/ui/jungle-adventure";
 import { AdventureButton } from "@/components/ui/adventure-button";
 import { ProgressVine, type Milestone } from "@/components/ui/progress-vine";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Target, Star, Zap, Trophy, MapPin, Compass, Leaf } from "lucide-react";
+import {
+  BookOpen,
+  Target,
+  Star,
+  Zap,
+  Trophy,
+  MapPin,
+  Compass,
+  Leaf,
+} from "lucide-react";
 
 /**
  * AppHomeTemplate - Immersive jungle-themed app dashboard
@@ -66,15 +84,58 @@ export function AppHomeTemplate({
 }: AppHomeTemplateProps) {
   // Calculate progress milestones
   const progressMilestones: Milestone[] = [
-    { id: "start", position: 0, label: "Start Journey", icon: "🌱", completed: true },
-    { id: "quarter", position: 25, label: "First Steps", icon: "🌿", completed: stats.wordsLearned >= stats.totalWords * 0.25 },
-    { id: "half", position: 50, label: "Halfway Explorer", icon: "🍃", completed: stats.wordsLearned >= stats.totalWords * 0.5, current: stats.wordsLearned < stats.totalWords * 0.5 && stats.wordsLearned >= stats.totalWords * 0.25 },
-    { id: "three-quarter", position: 75, label: "Adventure Master", icon: "🌳", completed: stats.wordsLearned >= stats.totalWords * 0.75, current: stats.wordsLearned < stats.totalWords * 0.75 && stats.wordsLearned >= stats.totalWords * 0.5 },
-    { id: "complete", position: 100, label: "Jungle Champion", icon: "🏆", completed: stats.wordsLearned >= stats.totalWords, current: stats.wordsLearned >= stats.totalWords * 0.75 && stats.wordsLearned < stats.totalWords },
+    {
+      id: "start",
+      position: 0,
+      label: "Start Journey",
+      icon: "🌱",
+      completed: true,
+    },
+    {
+      id: "quarter",
+      position: 25,
+      label: "First Steps",
+      icon: "🌿",
+      completed: stats.wordsLearned >= stats.totalWords * 0.25,
+    },
+    {
+      id: "half",
+      position: 50,
+      label: "Halfway Explorer",
+      icon: "🍃",
+      completed: stats.wordsLearned >= stats.totalWords * 0.5,
+      current:
+        stats.wordsLearned < stats.totalWords * 0.5 &&
+        stats.wordsLearned >= stats.totalWords * 0.25,
+    },
+    {
+      id: "three-quarter",
+      position: 75,
+      label: "Adventure Master",
+      icon: "🌳",
+      completed: stats.wordsLearned >= stats.totalWords * 0.75,
+      current:
+        stats.wordsLearned < stats.totalWords * 0.75 &&
+        stats.wordsLearned >= stats.totalWords * 0.5,
+    },
+    {
+      id: "complete",
+      position: 100,
+      label: "Jungle Champion",
+      icon: "🏆",
+      completed: stats.wordsLearned >= stats.totalWords,
+      current:
+        stats.wordsLearned >= stats.totalWords * 0.75 &&
+        stats.wordsLearned < stats.totalWords,
+    },
   ];
 
-  const overallProgress = Math.round((stats.wordsLearned / stats.totalWords) * 100);
-  const weeklyProgress = Math.round((stats.weeklyProgress / stats.weeklyGoal) * 100);
+  const overallProgress = Math.round(
+    (stats.wordsLearned / stats.totalWords) * 100,
+  );
+  const weeklyProgress = Math.round(
+    (stats.weeklyProgress / stats.weeklyGoal) * 100,
+  );
 
   return (
     <div className="min-h-screen bg-surface">
@@ -147,14 +208,25 @@ export function AppHomeTemplate({
       </JunglePanel>
 
       {/* Main Content */}
-      <JunglePanel background="surface-2" padding="lg" className="relative -mt-16 z-20">
+      <JunglePanel
+        background="surface-2"
+        padding="lg"
+        className="relative -mt-16 z-20"
+      >
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Progress Section */}
-          <JungleCard tone="adventure" size="lg" elevation="medium" className="motion-safe:anim-reveal-up">
+          <JungleCard
+            tone="adventure"
+            size="lg"
+            elevation="medium"
+            className="motion-safe:anim-reveal-up"
+          >
             <JungleCardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <JungleCardTitle size="lg">Your Learning Journey</JungleCardTitle>
+                  <JungleCardTitle size="lg">
+                    Your Learning Journey
+                  </JungleCardTitle>
                   <JungleCardDescription>
                     Progress through the magical word jungle
                   </JungleCardDescription>
@@ -211,13 +283,19 @@ export function AppHomeTemplate({
                     onClick={action.onClick}
                   >
                     <JungleCardContent className="text-center py-6">
-                      <JungleCardIcon className={`text-${action.color}-500 mb-3 mx-auto`}>
+                      <JungleCardIcon
+                        className={`text-${action.color}-500 mb-3 mx-auto`}
+                      >
                         <div className="w-12 h-12 bg-current/10 rounded-full flex items-center justify-center">
                           {action.icon}
                         </div>
                       </JungleCardIcon>
-                      <h3 className="font-semibold text-text mb-2">{action.title}</h3>
-                      <p className="text-sm text-text-secondary">{action.description}</p>
+                      <h3 className="font-semibold text-text mb-2">
+                        {action.title}
+                      </h3>
+                      <p className="text-sm text-text-secondary">
+                        {action.description}
+                      </p>
                     </JungleCardContent>
                   </JungleCard>
                 ))}
@@ -259,16 +337,20 @@ export function AppHomeTemplate({
                         <p className="text-xs text-text-secondary line-clamp-2">
                           {achievement.description}
                         </p>
-                        {!achievement.earned && achievement.progress && achievement.maxProgress && (
-                          <div className="mt-2">
-                            <div className="w-full bg-surface-2 rounded-full h-1">
-                              <div
-                                className="bg-jungle-500 h-1 rounded-full transition-all"
-                                style={{ width: `${(achievement.progress / achievement.maxProgress) * 100}%` }}
-                              />
+                        {!achievement.earned &&
+                          achievement.progress &&
+                          achievement.maxProgress && (
+                            <div className="mt-2">
+                              <div className="w-full bg-surface-2 rounded-full h-1">
+                                <div
+                                  className="bg-jungle-500 h-1 rounded-full transition-all"
+                                  style={{
+                                    width: `${(achievement.progress / achievement.maxProgress) * 100}%`,
+                                  }}
+                                />
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
                       </div>
                       {achievement.earned && (
                         <Star className="w-4 h-4 text-success" />
@@ -281,11 +363,18 @@ export function AppHomeTemplate({
           </div>
 
           {/* Categories Preview */}
-          <JungleCard tone="jungle" size="lg" elevation="medium" className="motion-safe:anim-reveal-up anim-delay-500">
+          <JungleCard
+            tone="jungle"
+            size="lg"
+            elevation="medium"
+            className="motion-safe:anim-reveal-up anim-delay-500"
+          >
             <JungleCardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <JungleCardTitle size="lg">Explore New Categories</JungleCardTitle>
+                  <JungleCardTitle size="lg">
+                    Explore New Categories
+                  </JungleCardTitle>
                   <JungleCardDescription>
                     Discover new word adventures waiting for you
                   </JungleCardDescription>
@@ -305,12 +394,16 @@ export function AppHomeTemplate({
                 ].map((category, index) => (
                   <div
                     key={category.name}
-                    onClick={() => onSelectCategory(category.name.toLowerCase())}
+                    onClick={() =>
+                      onSelectCategory(category.name.toLowerCase())
+                    }
                     className={`text-center p-4 bg-${category.color}-100 rounded-lg cursor-pointer transition-soft hover:scale-105 motion-safe:anim-reveal-up`}
                     style={{ animationDelay: `${600 + index * 100}ms` }}
                   >
                     <div className="text-3xl mb-2">{category.icon}</div>
-                    <div className="text-sm font-medium text-text">{category.name}</div>
+                    <div className="text-sm font-medium text-text">
+                      {category.name}
+                    </div>
                   </div>
                 ))}
               </div>

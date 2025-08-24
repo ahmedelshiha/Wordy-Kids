@@ -1,5 +1,13 @@
 import React from "react";
-import { JunglePanel, JungleCard, JungleCardHeader, JungleCardTitle, JungleCardDescription, JungleCardContent, JungleCardFooter } from "@/components/ui/jungle-adventure";
+import {
+  JunglePanel,
+  JungleCard,
+  JungleCardHeader,
+  JungleCardTitle,
+  JungleCardDescription,
+  JungleCardContent,
+  JungleCardFooter,
+} from "@/components/ui/jungle-adventure";
 import { AdventureButton } from "@/components/ui/adventure-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -86,7 +94,8 @@ export function LoginTemplate({
               Welcome to Jungle Adventure!
             </JungleCardTitle>
             <JungleCardDescription className="text-text-secondary">
-              Sign in to continue your word learning journey through the magical jungle.
+              Sign in to continue your word learning journey through the magical
+              jungle.
             </JungleCardDescription>
           </JungleCardHeader>
 
@@ -103,7 +112,10 @@ export function LoginTemplate({
 
               {/* Email field */}
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-text flex items-center gap-2">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-text flex items-center gap-2"
+                >
                   <User className="w-4 h-4 text-jungle-500" />
                   Email
                 </Label>
@@ -121,7 +133,10 @@ export function LoginTemplate({
 
               {/* Password field */}
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-text flex items-center gap-2">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-text flex items-center gap-2"
+                >
                   <Lock className="w-4 h-4 text-jungle-500" />
                   Password
                 </Label>
@@ -141,7 +156,9 @@ export function LoginTemplate({
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text transition-colors"
                     disabled={loading}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                   >
                     {showPassword ? (
                       <EyeOff className="w-4 h-4" />

@@ -28,7 +28,8 @@
 }
 
 @keyframes gentle-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -37,7 +38,8 @@
 }
 
 @keyframes gentle-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -47,20 +49,22 @@
 
 /* Subtle floating animation for jungle elements */
 @keyframes float-soft {
-  0%, 100% { 
+  0%,
+  100% {
     transform: translateY(0px);
   }
-  50% { 
+  50% {
     transform: translateY(-4px);
   }
 }
 
 /* Gentle leaf sway animation */
 @keyframes leaf-sway {
-  0%, 100% { 
+  0%,
+  100% {
     transform: rotate(-1deg);
   }
-  50% { 
+  50% {
     transform: rotate(1deg);
   }
 }
@@ -79,7 +83,8 @@
 
 /* Gentle breath animation for ambient elements */
 @keyframes gentle-breath {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -91,7 +96,8 @@
 
 /* Serene glow animation */
 @keyframes serene-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0px hsl(var(--color-jungle-500) / 0);
   }
   50% {
@@ -111,7 +117,8 @@
 
 /* Calm pulse for attention elements */
 @keyframes calm-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -121,7 +128,8 @@
 
 /* Gentle emoji floating */
 @keyframes gentle-emoji-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(-2deg);
   }
   50% {
@@ -131,7 +139,8 @@
 
 /* Jungle sparkle effect */
 @keyframes jungle-sparkle {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0) rotate(0deg);
     opacity: 0;
   }
@@ -230,7 +239,8 @@
 
 /* Wiggle for fun interactions */
 @keyframes wiggle {
-  0%, 7% {
+  0%,
+  7% {
     transform: rotateZ(0);
   }
   15% {
@@ -248,14 +258,16 @@
   35% {
     transform: rotateZ(-2deg);
   }
-  40%, 100% {
+  40%,
+  100% {
     transform: rotateZ(0);
   }
 }
 
 /* Jungle celebration animation */
 @keyframes jungle-celebration {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
   }
   25% {
@@ -441,14 +453,30 @@
 /* ========================================
  * ANIMATION DELAYS
  * ======================================== */
-.anim-delay-75 { animation-delay: 75ms; }
-.anim-delay-100 { animation-delay: 100ms; }
-.anim-delay-150 { animation-delay: 150ms; }
-.anim-delay-200 { animation-delay: 200ms; }
-.anim-delay-300 { animation-delay: 300ms; }
-.anim-delay-500 { animation-delay: 500ms; }
-.anim-delay-700 { animation-delay: 700ms; }
-.anim-delay-1000 { animation-delay: 1000ms; }
+.anim-delay-75 {
+  animation-delay: 75ms;
+}
+.anim-delay-100 {
+  animation-delay: 100ms;
+}
+.anim-delay-150 {
+  animation-delay: 150ms;
+}
+.anim-delay-200 {
+  animation-delay: 200ms;
+}
+.anim-delay-300 {
+  animation-delay: 300ms;
+}
+.anim-delay-500 {
+  animation-delay: 500ms;
+}
+.anim-delay-700 {
+  animation-delay: 700ms;
+}
+.anim-delay-1000 {
+  animation-delay: 1000ms;
+}
 
 /* ========================================
  * TRANSITION UTILITIES
@@ -470,9 +498,10 @@
 }
 
 .transition-colors {
-  transition: color var(--dur-fast) var(--ease-out),
-              background-color var(--dur-fast) var(--ease-out),
-              border-color var(--dur-fast) var(--ease-out);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
 }
 
 .transition-opacity {
@@ -632,7 +661,7 @@
   .anim-float {
     animation-duration: calc(var(--motion-scale) * 10s);
   }
-  
+
   .anim-sway {
     animation-duration: calc(var(--motion-scale) * 8s);
   }

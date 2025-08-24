@@ -412,7 +412,9 @@ export default function AIIntegrationDemo() {
                     </h4>
                     <ul className="text-sm space-y-1">
                       <li>
-                        <code className="bg-surface-2 px-1 rounded">userId</code>{" "}
+                        <code className="bg-surface-2 px-1 rounded">
+                          userId
+                        </code>{" "}
                         - Unique user identifier
                       </li>
                       <li>

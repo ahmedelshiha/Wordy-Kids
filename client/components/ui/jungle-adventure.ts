@@ -1,6 +1,6 @@
 /**
  * Jungle Adventure Component Library
- * 
+ *
  * A comprehensive design system for the Wordy Kids application
  * featuring immersive jungle-themed components built with:
  * - Design tokens for consistent theming
@@ -53,11 +53,7 @@ export {
 } from "./progress-vine";
 
 // Re-export existing UI components for convenience
-export {
-  Button,
-  buttonVariants,
-  type ButtonProps,
-} from "./button";
+export { Button, buttonVariants, type ButtonProps } from "./button";
 
 export {
   Card,
@@ -69,23 +65,11 @@ export {
   type CardProps,
 } from "./card";
 
-export {
-  Badge,
-  badgeVariants,
-  type BadgeProps,
-} from "./badge";
+export { Badge, badgeVariants, type BadgeProps } from "./badge";
 
-export {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  type AlertProps,
-} from "./alert";
+export { Alert, AlertDescription, AlertTitle, type AlertProps } from "./alert";
 
-export {
-  Progress,
-  type ProgressProps,
-} from "./progress";
+export { Progress, type ProgressProps } from "./progress";
 
 export {
   Tabs,
@@ -123,21 +107,11 @@ export {
   type SheetProps,
 } from "./sheet";
 
-export {
-  Slider,
-  type SliderProps,
-} from "./slider";
+export { Slider, type SliderProps } from "./slider";
 
-export {
-  Switch,
-  type SwitchProps,
-} from "./switch";
+export { Switch, type SwitchProps } from "./switch";
 
-export {
-  Toggle,
-  toggleVariants,
-  type ToggleProps,
-} from "./toggle";
+export { Toggle, toggleVariants, type ToggleProps } from "./toggle";
 
 export {
   toast,
@@ -146,9 +120,7 @@ export {
   type ToastActionElement,
 } from "./use-toast";
 
-export {
-  Toaster,
-} from "./toaster";
+export { Toaster } from "./toaster";
 
 export {
   Toast,
@@ -167,25 +139,25 @@ export {
 
 /**
  * Component Usage Patterns
- * 
+ *
  * 1. Page Layout:
  *    JunglePanel (sections) > JungleCard (content blocks) > AdventureButton (actions)
- * 
+ *
  * 2. Interactive Elements:
  *    AdventureButton for primary actions
  *    JungleCard with interactive={true} for clickable content
  *    ProgressVine for showing learning progress
- * 
+ *
  * 3. Theming:
  *    All components use design tokens from jungle-design-tokens.css
  *    CVA variants provide consistent styling options
  *    Motion respects user preferences automatically
- * 
+ *
  * 4. Accessibility:
  *    All components include proper ARIA attributes
  *    Focus management and keyboard navigation
  *    Screen reader friendly labels and descriptions
- * 
+ *
  * 5. Performance:
  *    Hardware acceleration for smooth animations
  *    Reduced motion and save-data preferences respected
@@ -198,22 +170,22 @@ export {
 
 /**
  * Migrating from Legacy Components:
- * 
+ *
  * Button → AdventureButton
- * - Replace variant="primary" with intent="primary"  
+ * - Replace variant="primary" with intent="primary"
  * - Add jungle-specific intents: jungle, adventure, fun, natural
  * - Size variants remain the same
- * 
+ *
  * Card → JungleCard
  * - Add tone prop for semantic styling
  * - Use interactive={true} for clickable cards
  * - Pattern and elevation props for visual depth
- * 
+ *
  * Progress → ProgressVine
  * - Add milestones array for learning checkpoints
  * - Jungle-themed styling with leaf markers
  * - Enhanced accessibility with live announcements
- * 
+ *
  * Raw Gradient Classes → Design Tokens
  * - bg-gradient-to-r from-blue-500 to-purple-500 → bg-grad-adventure
  * - Custom gradients → use CSS custom properties from tokens
@@ -225,19 +197,19 @@ export {
 
 /**
  * Customizing the Jungle Theme:
- * 
+ *
  * 1. Colors: Update CSS custom properties in jungle-design-tokens.css
  *    --color-jungle-500: 122 39% 49%; (HSL format for alpha support)
- * 
+ *
  * 2. Typography: Modify font family variables
  *    --font-display: "Your Font", var(--font-display);
- * 
+ *
  * 3. Spacing: Adjust spacing scale
  *    --sp-4: 1rem; (base spacing unit)
- * 
+ *
  * 4. Motion: Control animation speed
  *    --dur-normal: 250ms; (standard transition duration)
- * 
+ *
  * 5. Admin Override: Use admin color namespace for professional sections
  *    --color-admin-bg: 220 13% 98%; (neutral admin palette)
  */

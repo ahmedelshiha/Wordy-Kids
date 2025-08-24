@@ -1,6 +1,6 @@
 /**
  * Jungle Adventure Performance Optimization System
- * 
+ *
  * Comprehensive performance utilities respecting user preferences
  * - Reduced motion and save-data support
  * - Asset optimization and lazy loading
@@ -15,21 +15,21 @@
 export const PERFORMANCE_BUDGETS = {
   // CSS budgets
   initialCSS: 90 * 1024, // 90KB initial CSS
-  totalCSS: 150 * 1024,  // 150KB total CSS
-  
-  // JavaScript budgets  
+  totalCSS: 150 * 1024, // 150KB total CSS
+
+  // JavaScript budgets
   initialJS: 150 * 1024, // 150KB initial JS
-  totalJS: 300 * 1024,   // 300KB total JS
-  
+  totalJS: 300 * 1024, // 300KB total JS
+
   // Image budgets (mobile)
   mobileImages: 250 * 1024, // 250KB total images on mobile
   desktopImages: 500 * 1024, // 500KB total images on desktop
-  
+
   // Core Web Vitals targets
-  lcp: 2500,    // Largest Contentful Paint < 2.5s
-  fid: 100,     // First Input Delay < 100ms
-  cls: 0.1,     // Cumulative Layout Shift < 0.1
-  inp: 200,     // Interaction to Next Paint < 200ms
+  lcp: 2500, // Largest Contentful Paint < 2.5s
+  fid: 100, // First Input Delay < 100ms
+  cls: 0.1, // Cumulative Layout Shift < 0.1
+  inp: 200, // Interaction to Next Paint < 200ms
 } as const;
 
 /* ========================================
@@ -54,8 +54,9 @@ export function getUserPreferences(): UserPreferences {
   }
 
   return {
-    reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    saveData: 
+    reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches,
+    saveData:
       window.matchMedia("(prefers-reduced-data: reduce)").matches ||
       // @ts-ignore - navigator.connection might not be available
       (navigator.connection && navigator.connection.saveData === true),
@@ -65,7 +66,7 @@ export function getUserPreferences(): UserPreferences {
 }
 
 export function createPreferencesWatcher(
-  callback: (preferences: UserPreferences) => void
+  callback: (preferences: UserPreferences) => void,
 ): () => void {
   if (typeof window === "undefined") {
     return () => {};
@@ -79,11 +80,11 @@ export function createPreferencesWatcher(
   ];
 
   const handler = () => callback(getUserPreferences());
-  
-  queries.forEach(query => query.addEventListener("change", handler));
-  
+
+  queries.forEach((query) => query.addEventListener("change", handler));
+
   return () => {
-    queries.forEach(query => query.removeEventListener("change", handler));
+    queries.forEach((query) => query.removeEventListener("change", handler));
   };
 }
 
@@ -105,7 +106,7 @@ export function createLazyLoader(options: LazyLoadOptions = {}) {
   } = options;
 
   const preferences = getUserPreferences();
-  
+
   // Disable lazy loading if save-data is enabled and we respect it
   if (respectSaveData && preferences.saveData) {
     return {
@@ -128,7 +129,7 @@ export function createLazyLoader(options: LazyLoadOptions = {}) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const target = entry.target as HTMLElement;
-          
+
           // Load images
           if (target.tagName === "IMG") {
             const img = target as HTMLImageElement;
@@ -141,21 +142,21 @@ export function createLazyLoader(options: LazyLoadOptions = {}) {
               img.removeAttribute("data-srcset");
             }
           }
-          
+
           // Load background images
           if (target.dataset.bgSrc) {
             target.style.backgroundImage = `url(${target.dataset.bgSrc})`;
             target.removeAttribute("data-bg-src");
           }
-          
+
           // Trigger custom load event
           target.dispatchEvent(new CustomEvent("lazyload"));
-          
+
           observer.unobserve(target);
         }
       });
     },
-    { rootMargin, threshold }
+    { rootMargin, threshold },
   );
 
   return observer;
@@ -167,7 +168,7 @@ export function createLazyLoader(options: LazyLoadOptions = {}) {
 
 export function optimizeAnimations() {
   const preferences = getUserPreferences();
-  
+
   if (preferences.reducedMotion) {
     // Disable animations globally
     document.documentElement.style.setProperty("--motion-scale", "0");
@@ -175,11 +176,17 @@ export function optimizeAnimations() {
     document.documentElement.style.setProperty("--dur-normal", "0ms");
     document.documentElement.style.setProperty("--dur-slow", "0ms");
   }
-  
+
   if (preferences.saveData) {
     // Reduce animation complexity
-    document.documentElement.style.setProperty("--shadow-float", "var(--shadow-soft)");
-    document.documentElement.style.setProperty("--shadow-glow", "var(--shadow-md)");
+    document.documentElement.style.setProperty(
+      "--shadow-float",
+      "var(--shadow-soft)",
+    );
+    document.documentElement.style.setProperty(
+      "--shadow-glow",
+      "var(--shadow-md)",
+    );
   }
 }
 
@@ -199,7 +206,7 @@ export interface ImageOptimizationOptions {
 export function createOptimizedImageProps(
   src: string,
   alt: string,
-  options: ImageOptimizationOptions = {}
+  options: ImageOptimizationOptions = {},
 ): React.ImgHTMLAttributes<HTMLImageElement> {
   const {
     width,
@@ -211,19 +218,19 @@ export function createOptimizedImageProps(
   } = options;
 
   const preferences = getUserPreferences();
-  
+
   // Use lower quality for save-data
   const finalQuality = preferences.saveData ? Math.min(quality, 60) : quality;
-  
+
   // Build optimized src
   const params = new URLSearchParams();
   if (width) params.set("w", width.toString());
   if (height) params.set("h", height.toString());
   params.set("q", finalQuality.toString());
   params.set("f", format);
-  
+
   const optimizedSrc = `${src}?${params.toString()}`;
-  
+
   return {
     src: optimizedSrc,
     alt,
@@ -241,35 +248,37 @@ export function createOptimizedImageProps(
 
 export class ComponentCleanup {
   private cleanupFunctions: (() => void)[] = [];
-  
+
   add(cleanup: () => void) {
     this.cleanupFunctions.push(cleanup);
   }
-  
+
   addEventListener(
     element: HTMLElement | Window | Document,
     event: string,
     handler: EventListener,
-    options?: AddEventListenerOptions
+    options?: AddEventListenerOptions,
   ) {
     element.addEventListener(event, handler, options);
     this.add(() => element.removeEventListener(event, handler, options));
   }
-  
+
   addTimeout(id: NodeJS.Timeout) {
     this.add(() => clearTimeout(id));
   }
-  
+
   addInterval(id: NodeJS.Timeout) {
     this.add(() => clearInterval(id));
   }
-  
-  addObserver(observer: IntersectionObserver | ResizeObserver | MutationObserver) {
+
+  addObserver(
+    observer: IntersectionObserver | ResizeObserver | MutationObserver,
+  ) {
     this.add(() => observer.disconnect());
   }
-  
+
   cleanup() {
-    this.cleanupFunctions.forEach(fn => fn());
+    this.cleanupFunctions.forEach((fn) => fn());
     this.cleanupFunctions = [];
   }
 }
@@ -289,7 +298,7 @@ export interface PerformanceMetrics {
 
 export function createPerformanceMonitor() {
   const metrics: PerformanceMetrics = {};
-  
+
   if (typeof window === "undefined") {
     return { metrics, getReport: () => metrics };
   }
@@ -339,7 +348,9 @@ export function createPerformanceMonitor() {
 
   // Navigation timing
   if ("performance" in window && "getEntriesByType" in performance) {
-    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+    const navigation = performance.getEntriesByType(
+      "navigation",
+    )[0] as PerformanceNavigationTiming;
     if (navigation) {
       metrics.ttfb = navigation.responseStart - navigation.requestStart;
       metrics.fcp = navigation.loadEventEnd - navigation.navigationStart;
@@ -368,17 +379,14 @@ export function addResourceHints() {
   if (typeof document === "undefined") return;
 
   const preferences = getUserPreferences();
-  
+
   // Skip resource hints if save-data is enabled
   if (preferences.saveData) return;
 
   // Preconnect to important domains
-  const domains = [
-    "https://fonts.googleapis.com",
-    "https://fonts.gstatic.com",
-  ];
+  const domains = ["https://fonts.googleapis.com", "https://fonts.gstatic.com"];
 
-  domains.forEach(domain => {
+  domains.forEach((domain) => {
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = domain;
@@ -393,15 +401,18 @@ export function addResourceHints() {
 
 export function createBundleAnalyzer() {
   const bundleSizes = new Map<string, number>();
-  
+
   return {
     trackBundle: (name: string, size: number) => {
       bundleSizes.set(name, size);
     },
-    
+
     getBundleReport: () => {
-      const totalSize = Array.from(bundleSizes.values()).reduce((sum, size) => sum + size, 0);
-      
+      const totalSize = Array.from(bundleSizes.values()).reduce(
+        (sum, size) => sum + size,
+        0,
+      );
+
       return {
         bundles: Object.fromEntries(bundleSizes),
         totalSize,
@@ -409,11 +420,14 @@ export function createBundleAnalyzer() {
           initialJS: totalSize <= PERFORMANCE_BUDGETS.initialJS,
           totalJS: totalSize <= PERFORMANCE_BUDGETS.totalJS,
         },
-        recommendations: totalSize > PERFORMANCE_BUDGETS.totalJS ? [
-          "Consider code splitting for large bundles",
-          "Enable tree shaking for unused code",
-          "Use dynamic imports for route-based chunks",
-        ] : [],
+        recommendations:
+          totalSize > PERFORMANCE_BUDGETS.totalJS
+            ? [
+                "Consider code splitting for large bundles",
+                "Enable tree shaking for unused code",
+                "Use dynamic imports for route-based chunks",
+              ]
+            : [],
       };
     },
   };
@@ -429,17 +443,17 @@ export function usePerformanceOptimization() {
 
   React.useEffect(() => {
     const cleanup = cleanupRef.current;
-    
+
     // Watch for preference changes
     const unwatch = createPreferencesWatcher(setPreferences);
     cleanup.add(unwatch);
-    
+
     // Optimize animations based on preferences
     optimizeAnimations();
-    
+
     // Add resource hints
     addResourceHints();
-    
+
     return () => cleanup.cleanup();
   }, []);
 
@@ -456,10 +470,10 @@ export function usePerformanceOptimization() {
 
 export function useLazyLoading(options?: LazyLoadOptions) {
   const observerRef = React.useRef<IntersectionObserver>();
-  
+
   React.useEffect(() => {
     observerRef.current = createLazyLoader(options);
-    
+
     return () => {
       observerRef.current?.disconnect();
     };
