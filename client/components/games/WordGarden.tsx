@@ -109,8 +109,18 @@ function uuid() {
 function speakWord(word: string, funny = false, fallbackUrl?: string) {
   const synth =
     typeof window !== "undefined" ? window.speechSynthesis : undefined;
+  // Import sanitization helper to prevent "[object Object]" errors
+  const { sanitizeTTSInput, logSpeechError } = require("@/lib/speechUtils");
+
   if (synth && typeof SpeechSynthesisUtterance !== "undefined") {
-    const u = new SpeechSynthesisUtterance(word);
+    // Sanitize input to prevent errors
+    const sanitizedWord = sanitizeTTSInput(word);
+    if (!sanitizedWord) {
+      logSpeechError("WordGarden.speakWord", word, "Empty word after sanitization");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(sanitizedWord);
     const voices = synth.getVoices();
     const pref =
       voices.find((v) =>
