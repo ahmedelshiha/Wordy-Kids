@@ -8,7 +8,7 @@ class AudioAssetManager {
   private audioCache = new Map<string, HTMLAudioElement>();
   private loadingPromises = new Map<string, Promise<HTMLAudioElement>>();
   private priorityQueue: string[] = [];
-  
+
   static getInstance(): AudioAssetManager {
     if (!AudioAssetManager.instance) {
       AudioAssetManager.instance = new AudioAssetManager();
@@ -17,7 +17,10 @@ class AudioAssetManager {
   }
 
   // Preload audio with priority queue
-  async preloadAudio(src: string, priority: 'high' | 'medium' | 'low' = 'medium'): Promise<HTMLAudioElement> {
+  async preloadAudio(
+    src: string,
+    priority: "high" | "medium" | "low" = "medium",
+  ): Promise<HTMLAudioElement> {
     if (this.audioCache.has(src)) {
       return this.audioCache.get(src)!;
     }
@@ -30,7 +33,7 @@ class AudioAssetManager {
     this.loadingPromises.set(src, loadPromise);
 
     // Add to priority queue
-    if (priority === 'high') {
+    if (priority === "high") {
       this.priorityQueue.unshift(src);
     } else {
       this.priorityQueue.push(src);
@@ -51,12 +54,14 @@ class AudioAssetManager {
   private loadAudioFile(src: string): Promise<HTMLAudioElement> {
     return new Promise((resolve, reject) => {
       const audio = new Audio();
-      
-      audio.addEventListener('canplaythrough', () => resolve(audio), { once: true });
-      audio.addEventListener('error', reject, { once: true });
-      
+
+      audio.addEventListener("canplaythrough", () => resolve(audio), {
+        once: true,
+      });
+      audio.addEventListener("error", reject, { once: true });
+
       // Optimize for mobile
-      audio.preload = 'metadata';
+      audio.preload = "metadata";
       audio.src = src;
     });
   }
@@ -67,19 +72,21 @@ class AudioAssetManager {
   }
 
   // Preload animal sounds with progressive strategy
-  async preloadAnimalSounds(priority: 'high' | 'medium' | 'low' = 'medium'): Promise<void> {
+  async preloadAnimalSounds(
+    priority: "high" | "medium" | "low" = "medium",
+  ): Promise<void> {
     const commonAnimals = [
-      '/sounds/cat.mp3',
-      '/sounds/dog.mp3', 
-      '/sounds/elephant.mp3',
-      '/sounds/lion.mp3',
-      '/sounds/bird.mp3'
+      "/sounds/cat.mp3",
+      "/sounds/dog.mp3",
+      "/sounds/elephant.mp3",
+      "/sounds/lion.mp3",
+      "/sounds/bird.mp3",
     ];
 
-    const preloadPromises = commonAnimals.map(sound => 
-      this.preloadAudio(sound, priority).catch(err => 
-        console.warn(`Failed to preload ${sound}:`, err)
-      )
+    const preloadPromises = commonAnimals.map((sound) =>
+      this.preloadAudio(sound, priority).catch((err) =>
+        console.warn(`Failed to preload ${sound}:`, err),
+      ),
     );
 
     await Promise.allSettled(preloadPromises);
@@ -97,7 +104,7 @@ class AudioAssetManager {
     return {
       cached: this.audioCache.size,
       loading: this.loadingPromises.size,
-      queue: this.priorityQueue.length
+      queue: this.priorityQueue.length,
     };
   }
 }
@@ -116,11 +123,14 @@ class ImageAssetManager {
   }
 
   // Progressive image loading with WebP support
-  async loadOptimizedImage(src: string, options: {
-    webpSrc?: string;
-    placeholder?: string;
-    quality?: number;
-  } = {}): Promise<string> {
+  async loadOptimizedImage(
+    src: string,
+    options: {
+      webpSrc?: string;
+      placeholder?: string;
+      quality?: number;
+    } = {},
+  ): Promise<string> {
     const { webpSrc, placeholder, quality = 85 } = options;
 
     // Check cache first
@@ -155,7 +165,8 @@ class ImageAssetManager {
     return new Promise((resolve) => {
       const webP = new Image();
       webP.onload = webP.onerror = () => resolve(webP.height === 2);
-      webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+      webP.src =
+        "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
     });
   }
 
@@ -163,26 +174,29 @@ class ImageAssetManager {
   setupLazyLoading(): void {
     if (this.observer) return;
 
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const img = entry.target as HTMLImageElement;
-          const src = img.dataset.src;
-          const webpSrc = img.dataset.webpSrc;
-          
-          if (src) {
-            this.loadOptimizedImage(src, { webpSrc }).then((optimizedSrc) => {
-              img.src = optimizedSrc;
-              img.classList.remove('lazy');
-              this.observer?.unobserve(img);
-            });
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            const src = img.dataset.src;
+            const webpSrc = img.dataset.webpSrc;
+
+            if (src) {
+              this.loadOptimizedImage(src, { webpSrc }).then((optimizedSrc) => {
+                img.src = optimizedSrc;
+                img.classList.remove("lazy");
+                this.observer?.unobserve(img);
+              });
+            }
           }
-        }
-      });
-    }, {
-      rootMargin: '50px',
-      threshold: 0.1
-    });
+        });
+      },
+      {
+        rootMargin: "50px",
+        threshold: 0.1,
+      },
+    );
   }
 
   observeImage(img: HTMLImageElement): void {
@@ -202,33 +216,49 @@ class ImageAssetManager {
 // Bundle size analyzer
 class BundleAnalyzer {
   static analyzeChunkSizes(): void {
-    if (typeof window !== 'undefined' && 'performance' in window) {
-      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-      const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+    if (typeof window !== "undefined" && "performance" in window) {
+      const navigation = performance.getEntriesByType(
+        "navigation",
+      )[0] as PerformanceNavigationTiming;
+      const resources = performance.getEntriesByType(
+        "resource",
+      ) as PerformanceResourceTiming[];
 
-      console.group('Bundle Analysis');
-      console.log('Main bundle load time:', navigation.loadEventEnd - navigation.fetchStart, 'ms');
-      
-      const jsResources = resources.filter(r => r.name.endsWith('.js'));
-      const cssResources = resources.filter(r => r.name.endsWith('.css'));
-      
-      console.log('JavaScript chunks:', jsResources.length);
-      console.log('CSS chunks:', cssResources.length);
-      
-      jsResources.forEach(resource => {
-        console.log(`${resource.name}: ${Math.round(resource.transferSize / 1024)}KB`);
+      console.group("Bundle Analysis");
+      console.log(
+        "Main bundle load time:",
+        navigation.loadEventEnd - navigation.fetchStart,
+        "ms",
+      );
+
+      const jsResources = resources.filter((r) => r.name.endsWith(".js"));
+      const cssResources = resources.filter((r) => r.name.endsWith(".css"));
+
+      console.log("JavaScript chunks:", jsResources.length);
+      console.log("CSS chunks:", cssResources.length);
+
+      jsResources.forEach((resource) => {
+        console.log(
+          `${resource.name}: ${Math.round(resource.transferSize / 1024)}KB`,
+        );
       });
-      
+
       console.groupEnd();
     }
   }
 
-  static measureComponentLoadTime(componentName: string, startTime: number): void {
+  static measureComponentLoadTime(
+    componentName: string,
+    startTime: number,
+  ): void {
     const endTime = performance.now();
     const loadTime = endTime - startTime;
-    
-    if (loadTime > 100) { // Log slow component loads
-      console.warn(`Slow component load: ${componentName} took ${Math.round(loadTime)}ms`);
+
+    if (loadTime > 100) {
+      // Log slow component loads
+      console.warn(
+        `Slow component load: ${componentName} took ${Math.round(loadTime)}ms`,
+      );
     }
   }
 }
@@ -237,13 +267,13 @@ class BundleAnalyzer {
 export class ProgressiveLoader {
   private static loadingStrategies = {
     // Critical above-the-fold content
-    critical: ['main-ui', 'navigation', 'hero'],
-    
+    critical: ["main-ui", "navigation", "hero"],
+
     // Important but not immediately visible
-    important: ['games', 'dashboard', 'profile'],
-    
+    important: ["games", "dashboard", "profile"],
+
     // Nice-to-have features
-    optional: ['analytics', 'admin', 'advanced-features']
+    optional: ["analytics", "admin", "advanced-features"],
   };
 
   static async loadCriticalAssets(): Promise<void> {
@@ -254,9 +284,9 @@ export class ProgressiveLoader {
     imageManager.setupLazyLoading();
 
     // Preload critical audio
-    await audioManager.preloadAnimalSounds('high');
+    await audioManager.preloadAnimalSounds("high");
 
-    console.log('Critical assets loaded');
+    console.log("Critical assets loaded");
   }
 
   static async loadImportantAssets(): Promise<void> {
@@ -264,36 +294,36 @@ export class ProgressiveLoader {
 
     // Preload additional animal sounds
     const additionalSounds = [
-      '/sounds/tiger.mp3',
-      '/sounds/bear.mp3',
-      '/sounds/monkey.mp3',
-      '/sounds/snake.mp3'
+      "/sounds/tiger.mp3",
+      "/sounds/bear.mp3",
+      "/sounds/monkey.mp3",
+      "/sounds/snake.mp3",
     ];
 
-    const preloadPromises = additionalSounds.map(sound => 
-      audioManager.preloadAudio(sound, 'medium').catch(() => {})
+    const preloadPromises = additionalSounds.map((sound) =>
+      audioManager.preloadAudio(sound, "medium").catch(() => {}),
     );
 
     await Promise.allSettled(preloadPromises);
-    console.log('Important assets loaded');
+    console.log("Important assets loaded");
   }
 
   static loadOptionalAssets(): void {
     // Load remaining assets in background
     setTimeout(() => {
       const audioManager = AudioAssetManager.getInstance();
-      
+
       // Load all remaining animal sounds
       const allSounds = [
-        '/sounds/zebra.mp3',
-        '/sounds/giraffe.mp3',
-        '/sounds/hippo.mp3',
-        '/sounds/rhino.mp3'
+        "/sounds/zebra.mp3",
+        "/sounds/giraffe.mp3",
+        "/sounds/hippo.mp3",
+        "/sounds/rhino.mp3",
         // Add more as needed
       ];
 
-      allSounds.forEach(sound => {
-        audioManager.preloadAudio(sound, 'low').catch(() => {});
+      allSounds.forEach((sound) => {
+        audioManager.preloadAudio(sound, "low").catch(() => {});
       });
     }, 5000); // Delay to not interfere with critical loading
   }
@@ -304,12 +334,16 @@ export class MemoryManager {
   private static memoryWarningThreshold = 50 * 1024 * 1024; // 50MB
 
   static monitorMemoryUsage(): void {
-    if ('memory' in performance) {
+    if ("memory" in performance) {
       const memInfo = (performance as any).memory;
       const usedMemory = memInfo.usedJSHeapSize;
-      
+
       if (usedMemory > this.memoryWarningThreshold) {
-        console.warn('High memory usage detected:', Math.round(usedMemory / 1024 / 1024), 'MB');
+        console.warn(
+          "High memory usage detected:",
+          Math.round(usedMemory / 1024 / 1024),
+          "MB",
+        );
         this.cleanup();
       }
     }
@@ -318,7 +352,7 @@ export class MemoryManager {
   static cleanup(): void {
     // Clear audio cache if memory is high
     AudioAssetManager.getInstance().clearCache();
-    
+
     // Trigger garbage collection if available (Chrome DevTools)
     if ((window as any).gc) {
       (window as any).gc();
@@ -327,13 +361,16 @@ export class MemoryManager {
 
   static trackComponentMemory(componentName: string): () => void {
     const startMemory = (performance as any).memory?.usedJSHeapSize || 0;
-    
+
     return () => {
       const endMemory = (performance as any).memory?.usedJSHeapSize || 0;
       const memoryDiff = endMemory - startMemory;
-      
-      if (memoryDiff > 1024 * 1024) { // > 1MB
-        console.warn(`Component ${componentName} used ${Math.round(memoryDiff / 1024 / 1024)}MB`);
+
+      if (memoryDiff > 1024 * 1024) {
+        // > 1MB
+        console.warn(
+          `Component ${componentName} used ${Math.round(memoryDiff / 1024 / 1024)}MB`,
+        );
       }
     };
   }
@@ -364,16 +401,22 @@ export function useProgressiveAssetLoading() {
   }, []);
 }
 
-export function useOptimizedImage(src: string, options?: {
-  webpSrc?: string;
-  placeholder?: string;
-}) {
-  const [optimizedSrc, setOptimizedSrc] = React.useState(options?.placeholder || src);
+export function useOptimizedImage(
+  src: string,
+  options?: {
+    webpSrc?: string;
+    placeholder?: string;
+  },
+) {
+  const [optimizedSrc, setOptimizedSrc] = React.useState(
+    options?.placeholder || src,
+  );
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    imageAssetManager.loadOptimizedImage(src, options)
+    imageAssetManager
+      .loadOptimizedImage(src, options)
       .then((loadedSrc) => {
         setOptimizedSrc(loadedSrc);
         setIsLoading(false);
@@ -387,14 +430,17 @@ export function useOptimizedImage(src: string, options?: {
   return { src: optimizedSrc, isLoading, error };
 }
 
-export function useAudioPreloader(sounds: string[], priority: 'high' | 'medium' | 'low' = 'medium') {
+export function useAudioPreloader(
+  sounds: string[],
+  priority: "high" | "medium" | "low" = "medium",
+) {
   const [loadedCount, setLoadedCount] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     const loadAudio = async () => {
       let loaded = 0;
-      
+
       for (const sound of sounds) {
         try {
           await audioAssetManager.preloadAudio(sound, priority);
@@ -404,7 +450,7 @@ export function useAudioPreloader(sounds: string[], priority: 'high' | 'medium' 
           console.warn(`Failed to preload ${sound}:`, error);
         }
       }
-      
+
       setIsLoading(false);
     };
 
@@ -415,6 +461,6 @@ export function useAudioPreloader(sounds: string[], priority: 'high' | 'medium' 
     loadedCount,
     totalCount: sounds.length,
     isLoading,
-    progress: sounds.length > 0 ? (loadedCount / sounds.length) * 100 : 0
+    progress: sounds.length > 0 ? (loadedCount / sounds.length) * 100 : 0,
   };
 }

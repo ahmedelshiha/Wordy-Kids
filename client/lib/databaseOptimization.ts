@@ -11,7 +11,7 @@ interface IndexedData<T> {
 
 interface QueryOptions {
   filter?: Record<string, any>;
-  sort?: { field: string; direction: 'asc' | 'desc' }[];
+  sort?: { field: string; direction: "asc" | "desc" }[];
   limit?: number;
   offset?: number;
   search?: { fields: string[]; term: string };
@@ -41,20 +41,22 @@ class VirtualDatabase<T> {
     this.indexedData = {
       data: [...data],
       indexes: new Map(),
-      primaryKey
+      primaryKey,
     };
 
     this.buildIndexes([primaryKey, ...indexFields]);
-    console.log(`VirtualDatabase initialized with ${data.length} records and ${indexFields.length + 1} indexes`);
+    console.log(
+      `VirtualDatabase initialized with ${data.length} records and ${indexFields.length + 1} indexes`,
+    );
   }
 
   // Build indexes for fast lookups
   private buildIndexes(fields: (keyof T)[]): void {
     const startTime = performance.now();
 
-    fields.forEach(field => {
+    fields.forEach((field) => {
       const index = new Map<any, number[]>();
-      
+
       this.indexedData.data.forEach((item, index_pos) => {
         const value = item[field];
         if (!index.has(value)) {
@@ -80,7 +82,7 @@ class VirtualDatabase<T> {
     if (cached) {
       return {
         ...cached,
-        executionTime: performance.now() - startTime
+        executionTime: performance.now() - startTime,
       };
     }
 
@@ -103,14 +105,14 @@ class VirtualDatabase<T> {
     const limit = options.limit || resultIndices.length;
     const paginatedIndices = resultIndices.slice(offset, offset + limit);
 
-    const data = paginatedIndices.map(index => this.indexedData.data[index]);
+    const data = paginatedIndices.map((index) => this.indexedData.data[index]);
     const hasMore = offset + limit < totalCount;
 
     const result: QueryResult<T> = {
       data,
       totalCount,
       hasMore,
-      executionTime: performance.now() - startTime
+      executionTime: performance.now() - startTime,
     };
 
     // Cache the result
@@ -131,15 +133,17 @@ class VirtualDatabase<T> {
     // Try to use indexes for filtering
     for (const [field, value] of filterEntries) {
       const index = this.indexedData.indexes.get(field);
-      
+
       if (index) {
         const fieldIndices = index.get(value) || [];
-        
+
         if (resultIndices === null) {
           resultIndices = [...fieldIndices];
         } else {
           // Intersection of results
-          resultIndices = resultIndices.filter(idx => fieldIndices.includes(idx));
+          resultIndices = resultIndices.filter((idx) =>
+            fieldIndices.includes(idx),
+          );
         }
       } else {
         // Fallback to linear scan for non-indexed fields
@@ -151,7 +155,9 @@ class VirtualDatabase<T> {
         if (resultIndices === null) {
           resultIndices = scanIndices;
         } else {
-          resultIndices = resultIndices.filter(idx => scanIndices.includes(idx));
+          resultIndices = resultIndices.filter((idx) =>
+            scanIndices.includes(idx),
+          );
         }
       }
 
@@ -165,12 +171,15 @@ class VirtualDatabase<T> {
   }
 
   // Apply search filter
-  private applySearchFilter(indices: number[], search: { fields: string[]; term: string }): number[] {
+  private applySearchFilter(
+    indices: number[],
+    search: { fields: string[]; term: string },
+  ): number[] {
     const searchTerm = search.term.toLowerCase();
-    
-    return indices.filter(idx => {
+
+    return indices.filter((idx) => {
       const item = this.indexedData.data[idx];
-      return search.fields.some(field => {
+      return search.fields.some((field) => {
         const value = String(item[field as keyof T]).toLowerCase();
         return value.includes(searchTerm);
       });
@@ -178,7 +187,10 @@ class VirtualDatabase<T> {
   }
 
   // Apply sorting
-  private applySorting(indices: number[], sortOptions: { field: string; direction: 'asc' | 'desc' }[]): number[] {
+  private applySorting(
+    indices: number[],
+    sortOptions: { field: string; direction: "asc" | "desc" }[],
+  ): number[] {
     return indices.sort((aIdx, bIdx) => {
       const a = this.indexedData.data[aIdx];
       const b = this.indexedData.data[bIdx];
@@ -192,7 +204,7 @@ class VirtualDatabase<T> {
         else if (aValue > bValue) comparison = 1;
 
         if (comparison !== 0) {
-          return direction === 'asc' ? comparison : -comparison;
+          return direction === "asc" ? comparison : -comparison;
         }
       }
 
@@ -208,7 +220,7 @@ class VirtualDatabase<T> {
   // Get from cache
   private getFromCache(queryHash: string): QueryResult<T> | null {
     const cached = this.queryCache.get(queryHash);
-    
+
     if (!cached) return null;
 
     // Check if cache entry is expired
@@ -224,12 +236,17 @@ class VirtualDatabase<T> {
       data: cached.data,
       totalCount: cached.data.length,
       hasMore: false,
-      executionTime: 0 // Cached result
+      executionTime: 0, // Cached result
     };
   }
 
   // Cache result
-  private cacheResult(queryHash: string, data: T[], totalCount: number, hasMore: boolean): void {
+  private cacheResult(
+    queryHash: string,
+    data: T[],
+    totalCount: number,
+    hasMore: boolean,
+  ): void {
     // Limit cache size
     if (this.queryCache.size >= this.maxCacheSize) {
       this.evictLeastRecentlyUsed();
@@ -239,7 +256,7 @@ class VirtualDatabase<T> {
       data: [...data],
       timestamp: Date.now(),
       queryHash,
-      accessCount: 1
+      accessCount: 1,
     });
   }
 
@@ -279,7 +296,9 @@ class VirtualDatabase<T> {
 
   // Update existing data
   update(primaryKeyValue: any, updates: Partial<T>): boolean {
-    const primaryIndex = this.indexedData.indexes.get(String(this.indexedData.primaryKey));
+    const primaryIndex = this.indexedData.indexes.get(
+      String(this.indexedData.primaryKey),
+    );
     if (!primaryIndex) return false;
 
     const indices = primaryIndex.get(primaryKeyValue);
@@ -300,7 +319,9 @@ class VirtualDatabase<T> {
 
   // Delete data
   delete(primaryKeyValue: any): boolean {
-    const primaryIndex = this.indexedData.indexes.get(String(this.indexedData.primaryKey));
+    const primaryIndex = this.indexedData.indexes.get(
+      String(this.indexedData.primaryKey),
+    );
     if (!primaryIndex) return false;
 
     const indices = primaryIndex.get(primaryKeyValue);
@@ -371,21 +392,25 @@ class VirtualDatabase<T> {
     cacheSize: number;
     memoryUsage: number;
   } {
-    const recordCount = this.indexedData.data.filter(item => item !== null).length;
+    const recordCount = this.indexedData.data.filter(
+      (item) => item !== null,
+    ).length;
     const indexCount = this.indexedData.indexes.size;
     const cacheSize = this.queryCache.size;
-    
+
     // Estimate memory usage
     const dataSize = JSON.stringify(this.indexedData.data).length * 2; // Approximate UTF-16 encoding
-    const indexSize = Array.from(this.indexedData.indexes.values())
-      .reduce((sum, index) => sum + index.size * 10, 0); // Rough estimate
+    const indexSize = Array.from(this.indexedData.indexes.values()).reduce(
+      (sum, index) => sum + index.size * 10,
+      0,
+    ); // Rough estimate
     const memoryUsage = dataSize + indexSize;
 
     return {
       recordCount,
       indexCount,
       cacheSize,
-      memoryUsage
+      memoryUsage,
     };
   }
 }
@@ -393,33 +418,42 @@ class VirtualDatabase<T> {
 // Specialized database for words
 export class WordDatabase extends VirtualDatabase<any> {
   constructor(words: any[]) {
-    super(words, 'id', ['category', 'difficulty', 'word']);
+    super(words, "id", ["category", "difficulty", "word"]);
   }
 
   // Find words by category with caching
-  findByCategory(category: string, options: Omit<QueryOptions, 'filter'> = {}): QueryResult<any> {
+  findByCategory(
+    category: string,
+    options: Omit<QueryOptions, "filter"> = {},
+  ): QueryResult<any> {
     return this.query({
       ...options,
-      filter: { category }
+      filter: { category },
     });
   }
 
   // Search words by term
-  searchWords(term: string, options: Omit<QueryOptions, 'search'> = {}): QueryResult<any> {
+  searchWords(
+    term: string,
+    options: Omit<QueryOptions, "search"> = {},
+  ): QueryResult<any> {
     return this.query({
       ...options,
       search: {
-        fields: ['word', 'definition', 'example'],
-        term
-      }
+        fields: ["word", "definition", "example"],
+        term,
+      },
     });
   }
 
   // Get words by difficulty
-  findByDifficulty(difficulty: string, options: Omit<QueryOptions, 'filter'> = {}): QueryResult<any> {
+  findByDifficulty(
+    difficulty: string,
+    options: Omit<QueryOptions, "filter"> = {},
+  ): QueryResult<any> {
     return this.query({
       ...options,
-      filter: { difficulty }
+      filter: { difficulty },
     });
   }
 
@@ -427,22 +461,25 @@ export class WordDatabase extends VirtualDatabase<any> {
   getRandomWords(count: number, filter?: Record<string, any>): any[] {
     const baseQuery = filter ? this.query({ filter }) : this.query();
     const availableWords = baseQuery.data;
-    
+
     if (availableWords.length <= count) {
       return availableWords;
     }
 
     const randomWords = [];
     const usedIndices = new Set<number>();
-    
-    while (randomWords.length < count && usedIndices.size < availableWords.length) {
+
+    while (
+      randomWords.length < count &&
+      usedIndices.size < availableWords.length
+    ) {
       const randomIndex = Math.floor(Math.random() * availableWords.length);
       if (!usedIndices.has(randomIndex)) {
         usedIndices.add(randomIndex);
         randomWords.push(availableWords[randomIndex]);
       }
     }
-    
+
     return randomWords;
   }
 }
@@ -473,12 +510,16 @@ export class PaginationHelper<T> {
   }
 
   // Get current page
-  getCurrentPage(): QueryResult<T> & { page: number; pageSize: number; totalPages: number } {
+  getCurrentPage(): QueryResult<T> & {
+    page: number;
+    pageSize: number;
+    totalPages: number;
+  } {
     const offset = (this.currentPage - 1) * this.pageSize;
     const result = this.database.query({
       ...this.currentQuery,
       limit: this.pageSize,
-      offset
+      offset,
     });
 
     const totalPages = Math.ceil(result.totalCount / this.pageSize);
@@ -487,7 +528,7 @@ export class PaginationHelper<T> {
       ...result,
       page: this.currentPage,
       pageSize: this.pageSize,
-      totalPages
+      totalPages,
     };
   }
 
@@ -511,38 +552,56 @@ export class PaginationHelper<T> {
 }
 
 // React hooks for database operations
-export function useVirtualDatabase<T>(data: T[], primaryKey: keyof T, indexFields: (keyof T)[] = []) {
+export function useVirtualDatabase<T>(
+  data: T[],
+  primaryKey: keyof T,
+  indexFields: (keyof T)[] = [],
+) {
   const database = React.useMemo(() => {
     return new VirtualDatabase(data, primaryKey, indexFields);
   }, [data, primaryKey, indexFields]);
 
-  const [queryResult, setQueryResult] = React.useState<QueryResult<T> | null>(null);
+  const [queryResult, setQueryResult] = React.useState<QueryResult<T> | null>(
+    null,
+  );
   const [loading, setLoading] = React.useState(false);
 
-  const executeQuery = React.useCallback(async (options: QueryOptions = {}) => {
-    setLoading(true);
-    
-    // Simulate async operation for consistency
-    await new Promise(resolve => setTimeout(resolve, 0));
-    
-    const result = database.query(options);
-    setQueryResult(result);
-    setLoading(false);
-    
-    return result;
-  }, [database]);
+  const executeQuery = React.useCallback(
+    async (options: QueryOptions = {}) => {
+      setLoading(true);
 
-  const insert = React.useCallback((item: T) => {
-    database.insert(item);
-  }, [database]);
+      // Simulate async operation for consistency
+      await new Promise((resolve) => setTimeout(resolve, 0));
 
-  const update = React.useCallback((primaryKeyValue: any, updates: Partial<T>) => {
-    return database.update(primaryKeyValue, updates);
-  }, [database]);
+      const result = database.query(options);
+      setQueryResult(result);
+      setLoading(false);
 
-  const remove = React.useCallback((primaryKeyValue: any) => {
-    return database.delete(primaryKeyValue);
-  }, [database]);
+      return result;
+    },
+    [database],
+  );
+
+  const insert = React.useCallback(
+    (item: T) => {
+      database.insert(item);
+    },
+    [database],
+  );
+
+  const update = React.useCallback(
+    (primaryKeyValue: any, updates: Partial<T>) => {
+      return database.update(primaryKeyValue, updates);
+    },
+    [database],
+  );
+
+  const remove = React.useCallback(
+    (primaryKeyValue: any) => {
+      return database.delete(primaryKeyValue);
+    },
+    [database],
+  );
 
   const getStats = React.useCallback(() => {
     return database.getStats();
@@ -556,7 +615,7 @@ export function useVirtualDatabase<T>(data: T[], primaryKey: keyof T, indexField
     insert,
     update,
     remove,
-    getStats
+    getStats,
   };
 }
 
@@ -564,18 +623,22 @@ export function useVirtualDatabase<T>(data: T[], primaryKey: keyof T, indexField
 export function usePaginatedData<T>(
   database: VirtualDatabase<T>,
   initialQuery: QueryOptions = {},
-  initialPageSize = 20
+  initialPageSize = 20,
 ) {
   const pagination = React.useMemo(() => {
-    return new PaginationHelper(database).setQuery(initialQuery).setPageSize(initialPageSize);
+    return new PaginationHelper(database)
+      .setQuery(initialQuery)
+      .setPageSize(initialPageSize);
   }, [database, initialQuery, initialPageSize]);
 
-  const [currentData, setCurrentData] = React.useState(pagination.getCurrentPage());
+  const [currentData, setCurrentData] = React.useState(
+    pagination.getCurrentPage(),
+  );
   const [loading, setLoading] = React.useState(false);
 
   const loadPage = React.useCallback(async () => {
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 0));
     const result = pagination.getCurrentPage();
     setCurrentData(result);
     setLoading(false);
@@ -591,15 +654,21 @@ export function usePaginatedData<T>(
     loadPage();
   }, [pagination, loadPage]);
 
-  const goToPage = React.useCallback((page: number) => {
-    pagination.goToPage(page);
-    loadPage();
-  }, [pagination, loadPage]);
+  const goToPage = React.useCallback(
+    (page: number) => {
+      pagination.goToPage(page);
+      loadPage();
+    },
+    [pagination, loadPage],
+  );
 
-  const updateQuery = React.useCallback((query: QueryOptions) => {
-    pagination.setQuery(query);
-    loadPage();
-  }, [pagination, loadPage]);
+  const updateQuery = React.useCallback(
+    (query: QueryOptions) => {
+      pagination.setQuery(query);
+      loadPage();
+    },
+    [pagination, loadPage],
+  );
 
   React.useEffect(() => {
     loadPage();
@@ -616,6 +685,6 @@ export function usePaginatedData<T>(
     nextPage,
     previousPage,
     goToPage,
-    updateQuery
+    updateQuery,
   };
 }

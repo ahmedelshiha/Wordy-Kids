@@ -610,4 +610,4 @@ const EnhancedWordCardComponent: React.FC<EnhancedWordCardProps> = ({
 
 // Memoize the component to prevent unnecessary re-renders when props haven't changed
 export const EnhancedWordCard = React.memo(EnhancedWordCardComponent);
-EnhancedWordCard.displayName = 'EnhancedWordCard';
+EnhancedWordCard.displayName = "EnhancedWordCard";

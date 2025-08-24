@@ -10,13 +10,13 @@ interface MonitoringConfig {
   enableFeatureTracking: boolean;
   apiEndpoint: string;
   apiKey: string;
-  environment: 'development' | 'staging' | 'production';
+  environment: "development" | "staging" | "production";
   userId?: string;
   sessionId?: string;
 }
 
 interface ErrorEvent {
-  type: 'error';
+  type: "error";
   id: string;
   message: string;
   stack?: string;
@@ -31,7 +31,7 @@ interface ErrorEvent {
 }
 
 interface PerformanceEvent {
-  type: 'performance';
+  type: "performance";
   id: string;
   metric: string;
   value: number;
@@ -44,7 +44,7 @@ interface PerformanceEvent {
 }
 
 interface UserEvent {
-  type: 'user';
+  type: "user";
   id: string;
   action: string;
   category: string;
@@ -58,10 +58,10 @@ interface UserEvent {
 }
 
 interface FeatureEvent {
-  type: 'feature';
+  type: "feature";
   id: string;
   feature: string;
-  action: 'viewed' | 'used' | 'completed' | 'failed';
+  action: "viewed" | "used" | "completed" | "failed";
   timestamp: number;
   url: string;
   userId?: string;
@@ -88,14 +88,15 @@ class ProductionMonitoring {
 
   constructor() {
     this.config = {
-      enableErrorTracking: process.env.NODE_ENV === 'production',
-      enablePerformanceTracking: process.env.NODE_ENV === 'production',
+      enableErrorTracking: process.env.NODE_ENV === "production",
+      enablePerformanceTracking: process.env.NODE_ENV === "production",
       enableUserTracking: true,
       enableFeatureTracking: true,
-      apiEndpoint: process.env.REACT_APP_MONITORING_ENDPOINT || '/api/monitoring',
-      apiKey: process.env.REACT_APP_MONITORING_API_KEY || '',
-      environment: (process.env.NODE_ENV as any) || 'development',
-      sessionId: this.generateSessionId()
+      apiEndpoint:
+        process.env.REACT_APP_MONITORING_ENDPOINT || "/api/monitoring",
+      apiKey: process.env.REACT_APP_MONITORING_API_KEY || "",
+      environment: (process.env.NODE_ENV as any) || "development",
+      sessionId: this.generateSessionId(),
     };
 
     this.initialize();
@@ -108,10 +109,10 @@ class ProductionMonitoring {
     this.setupNetworkTracking();
     this.setupUserActivityTracking();
     this.startEventFlush();
-    
-    console.log('Production monitoring initialized:', {
+
+    console.log("Production monitoring initialized:", {
       environment: this.config.environment,
-      sessionId: this.config.sessionId
+      sessionId: this.config.sessionId,
     });
   }
 
@@ -125,7 +126,7 @@ class ProductionMonitoring {
     if (!this.config.enableErrorTracking) return;
 
     // Global error handler
-    window.addEventListener('error', (event) => {
+    window.addEventListener("error", (event) => {
       this.trackError({
         message: event.message,
         stack: event.error?.stack,
@@ -133,22 +134,22 @@ class ProductionMonitoring {
         line: event.lineno,
         column: event.colno,
         additionalContext: {
-          type: 'javascript-error',
-          source: 'window.onerror'
-        }
+          type: "javascript-error",
+          source: "window.onerror",
+        },
       });
     });
 
     // Unhandled promise rejection handler
-    window.addEventListener('unhandledrejection', (event) => {
+    window.addEventListener("unhandledrejection", (event) => {
       this.trackError({
-        message: event.reason?.message || 'Unhandled Promise Rejection',
+        message: event.reason?.message || "Unhandled Promise Rejection",
         stack: event.reason?.stack,
         additionalContext: {
-          type: 'unhandled-promise-rejection',
+          type: "unhandled-promise-rejection",
           reason: event.reason,
-          source: 'window.onunhandledrejection'
-        }
+          source: "window.onunhandledrejection",
+        },
       });
     });
 
@@ -159,20 +160,20 @@ class ProductionMonitoring {
   // React error tracking
   private setupReactErrorTracking(): void {
     const originalConsoleError = console.error;
-    
+
     console.error = (...args) => {
       // Check if this is a React error
-      if (args[0] && args[0].includes && args[0].includes('React')) {
+      if (args[0] && args[0].includes && args[0].includes("React")) {
         this.trackError({
-          message: args.join(' '),
+          message: args.join(" "),
           additionalContext: {
-            type: 'react-error',
-            source: 'console.error',
-            args: args.slice(0, 3) // Limit args to prevent large payloads
-          }
+            type: "react-error",
+            source: "console.error",
+            args: args.slice(0, 3), // Limit args to prevent large payloads
+          },
         });
       }
-      
+
       originalConsoleError.apply(console, args);
     };
   }
@@ -194,42 +195,53 @@ class ProductionMonitoring {
   // Core Web Vitals tracking
   private trackCoreWebVitals(): void {
     // FCP (First Contentful Paint)
-    this.observePerformanceEntry('paint', (entries) => {
-      entries.forEach(entry => {
-        if (entry.name === 'first-contentful-paint') {
-          this.trackPerformance('first-contentful-paint', entry.startTime, 'ms');
+    this.observePerformanceEntry("paint", (entries) => {
+      entries.forEach((entry) => {
+        if (entry.name === "first-contentful-paint") {
+          this.trackPerformance(
+            "first-contentful-paint",
+            entry.startTime,
+            "ms",
+          );
         }
       });
     });
 
     // LCP (Largest Contentful Paint)
-    this.observePerformanceEntry('largest-contentful-paint', (entries) => {
+    this.observePerformanceEntry("largest-contentful-paint", (entries) => {
       const lastEntry = entries[entries.length - 1];
-      this.trackPerformance('largest-contentful-paint', lastEntry.startTime, 'ms');
+      this.trackPerformance(
+        "largest-contentful-paint",
+        lastEntry.startTime,
+        "ms",
+      );
     });
 
     // FID (First Input Delay) - approximated with event timing
-    this.observePerformanceEntry('first-input', (entries) => {
-      entries.forEach(entry => {
+    this.observePerformanceEntry("first-input", (entries) => {
+      entries.forEach((entry) => {
         const fid = entry.processingStart - entry.startTime;
-        this.trackPerformance('first-input-delay', fid, 'ms');
+        this.trackPerformance("first-input-delay", fid, "ms");
       });
     });
 
     // CLS (Cumulative Layout Shift)
-    this.observePerformanceEntry('layout-shift', (entries) => {
+    this.observePerformanceEntry("layout-shift", (entries) => {
       let cls = 0;
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (!(entry as any).hadRecentInput) {
           cls += (entry as any).value;
         }
       });
-      this.trackPerformance('cumulative-layout-shift', cls, 'score');
+      this.trackPerformance("cumulative-layout-shift", cls, "score");
     });
   }
 
   // Observe performance entries
-  private observePerformanceEntry(type: string, callback: (entries: PerformanceEntry[]) => void): void {
+  private observePerformanceEntry(
+    type: string,
+    callback: (entries: PerformanceEntry[]) => void,
+  ): void {
     try {
       const observer = new PerformanceObserver((list) => {
         callback(list.getEntries());
@@ -244,72 +256,92 @@ class ProductionMonitoring {
   private trackCustomMetrics(): void {
     // Navigation timing
     if (performance.navigation) {
-      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-      
+      const navigation = performance.getEntriesByType(
+        "navigation",
+      )[0] as PerformanceNavigationTiming;
+
       if (navigation) {
-        this.trackPerformance('dom-content-loaded', navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart, 'ms');
-        this.trackPerformance('load-complete', navigation.loadEventEnd - navigation.loadEventStart, 'ms');
-        this.trackPerformance('dns-lookup', navigation.domainLookupEnd - navigation.domainLookupStart, 'ms');
-        this.trackPerformance('tcp-connect', navigation.connectEnd - navigation.connectStart, 'ms');
+        this.trackPerformance(
+          "dom-content-loaded",
+          navigation.domContentLoadedEventEnd -
+            navigation.domContentLoadedEventStart,
+          "ms",
+        );
+        this.trackPerformance(
+          "load-complete",
+          navigation.loadEventEnd - navigation.loadEventStart,
+          "ms",
+        );
+        this.trackPerformance(
+          "dns-lookup",
+          navigation.domainLookupEnd - navigation.domainLookupStart,
+          "ms",
+        );
+        this.trackPerformance(
+          "tcp-connect",
+          navigation.connectEnd - navigation.connectStart,
+          "ms",
+        );
       }
     }
 
     // Memory usage (if available)
-    if ('memory' in performance) {
+    if ("memory" in performance) {
       const memory = (performance as any).memory;
-      this.trackPerformance('memory-used', memory.usedJSHeapSize, 'bytes');
-      this.trackPerformance('memory-total', memory.totalJSHeapSize, 'bytes');
-      this.trackPerformance('memory-limit', memory.jsHeapSizeLimit, 'bytes');
+      this.trackPerformance("memory-used", memory.usedJSHeapSize, "bytes");
+      this.trackPerformance("memory-total", memory.totalJSHeapSize, "bytes");
+      this.trackPerformance("memory-limit", memory.jsHeapSizeLimit, "bytes");
     }
   }
 
   // Resource timing tracking
   private setupResourceTimingTracking(): void {
     const observer = new PerformanceObserver((list) => {
-      list.getEntries().forEach(entry => {
+      list.getEntries().forEach((entry) => {
         const resource = entry as PerformanceResourceTiming;
-        
+
         // Track slow resources
-        if (resource.duration > 1000) { // Slower than 1 second
-          this.trackPerformance('slow-resource', resource.duration, 'ms', {
+        if (resource.duration > 1000) {
+          // Slower than 1 second
+          this.trackPerformance("slow-resource", resource.duration, "ms", {
             resourceUrl: resource.name,
             resourceType: this.getResourceType(resource.name),
-            transferSize: resource.transferSize
+            transferSize: resource.transferSize,
           });
         }
       });
     });
 
-    observer.observe({ entryTypes: ['resource'] });
+    observer.observe({ entryTypes: ["resource"] });
   }
 
   // Network tracking
   private setupNetworkTracking(): void {
     // Monitor online/offline status
-    window.addEventListener('online', () => {
+    window.addEventListener("online", () => {
       this.isOnline = true;
-      this.trackUserEvent('network', 'online');
+      this.trackUserEvent("network", "online");
       this.flushEvents(); // Flush queued events when back online
     });
 
-    window.addEventListener('offline', () => {
+    window.addEventListener("offline", () => {
       this.isOnline = false;
-      this.trackUserEvent('network', 'offline');
+      this.trackUserEvent("network", "offline");
     });
 
     // Monitor connection changes
-    if ('connection' in navigator) {
+    if ("connection" in navigator) {
       const connection = (navigator as any).connection;
       const trackConnectionChange = () => {
-        this.trackUserEvent('network', 'connection-change', undefined, {
+        this.trackUserEvent("network", "connection-change", undefined, {
           effectiveType: connection.effectiveType,
           downlink: connection.downlink,
           rtt: connection.rtt,
-          saveData: connection.saveData
+          saveData: connection.saveData,
         });
       };
 
-      connection.addEventListener('change', trackConnectionChange);
+      connection.addEventListener("change", trackConnectionChange);
     }
   }
 
@@ -318,16 +350,16 @@ class ProductionMonitoring {
     if (!this.config.enableUserTracking) return;
 
     // Page visibility
-    document.addEventListener('visibilitychange', () => {
-      this.trackUserEvent('page', document.hidden ? 'hidden' : 'visible');
+    document.addEventListener("visibilitychange", () => {
+      this.trackUserEvent("page", document.hidden ? "hidden" : "visible");
     });
 
     // Session duration tracking
     let sessionStart = Date.now();
-    
-    window.addEventListener('beforeunload', () => {
+
+    window.addEventListener("beforeunload", () => {
       const sessionDuration = Date.now() - sessionStart;
-      this.trackPerformance('session-duration', sessionDuration, 'ms');
+      this.trackPerformance("session-duration", sessionDuration, "ms");
     });
 
     // Scroll depth tracking
@@ -341,40 +373,50 @@ class ProductionMonitoring {
   private setupScrollTracking(): void {
     let maxScrollDepth = 0;
     const trackScrollDepth = this.throttle(() => {
-      const scrollDepth = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
-      
+      const scrollDepth = Math.round(
+        ((window.scrollY + window.innerHeight) / document.body.scrollHeight) *
+          100,
+      );
+
       if (scrollDepth > maxScrollDepth) {
         maxScrollDepth = scrollDepth;
-        
+
         // Track milestone scroll depths
         if ([25, 50, 75, 90, 100].includes(scrollDepth)) {
-          this.trackUserEvent('scroll', 'depth', `${scrollDepth}%`);
+          this.trackUserEvent("scroll", "depth", `${scrollDepth}%`);
         }
       }
     }, 1000);
 
-    window.addEventListener('scroll', trackScrollDepth, { passive: true });
+    window.addEventListener("scroll", trackScrollDepth, { passive: true });
   }
 
   // Click tracking
   private setupClickTracking(): void {
-    document.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement;
-      const elementType = target.tagName.toLowerCase();
-      const elementText = target.textContent?.substring(0, 100) || '';
-      const elementId = target.id;
-      const elementClass = target.className;
+    document.addEventListener(
+      "click",
+      (event) => {
+        const target = event.target as HTMLElement;
+        const elementType = target.tagName.toLowerCase();
+        const elementText = target.textContent?.substring(0, 100) || "";
+        const elementId = target.id;
+        const elementClass = target.className;
 
-      // Track important clicks
-      if (['button', 'a', 'input'].includes(elementType) || target.role === 'button') {
-        this.trackUserEvent('click', elementType, elementText, {
-          elementId,
-          elementClass: typeof elementClass === 'string' ? elementClass : '',
-          x: event.clientX,
-          y: event.clientY
-        });
-      }
-    }, { passive: true });
+        // Track important clicks
+        if (
+          ["button", "a", "input"].includes(elementType) ||
+          target.role === "button"
+        ) {
+          this.trackUserEvent("click", elementType, elementText, {
+            elementId,
+            elementClass: typeof elementClass === "string" ? elementClass : "",
+            x: event.clientX,
+            y: event.clientY,
+          });
+        }
+      },
+      { passive: true },
+    );
   }
 
   // Track error
@@ -382,9 +424,9 @@ class ProductionMonitoring {
     if (!this.config.enableErrorTracking) return;
 
     const errorEvent: ErrorEvent = {
-      type: 'error',
+      type: "error",
       id: this.generateEventId(),
-      message: error.message || 'Unknown error',
+      message: error.message || "Unknown error",
       stack: error.stack,
       url: error.url || window.location.href,
       line: error.line,
@@ -393,18 +435,23 @@ class ProductionMonitoring {
       userId: this.config.userId,
       sessionId: this.config.sessionId,
       userAgent: navigator.userAgent,
-      additionalContext: error.additionalContext
+      additionalContext: error.additionalContext,
     };
 
     this.queueEvent(errorEvent);
   }
 
   // Track performance metric
-  trackPerformance(metric: string, value: number, unit: string, context?: Record<string, any>): void {
+  trackPerformance(
+    metric: string,
+    value: number,
+    unit: string,
+    context?: Record<string, any>,
+  ): void {
     if (!this.config.enablePerformanceTracking) return;
 
     const performanceEvent: PerformanceEvent = {
-      type: 'performance',
+      type: "performance",
       id: this.generateEventId(),
       metric,
       value,
@@ -413,18 +460,23 @@ class ProductionMonitoring {
       url: window.location.href,
       userId: this.config.userId,
       sessionId: this.config.sessionId,
-      additionalContext: context
+      additionalContext: context,
     };
 
     this.queueEvent(performanceEvent);
   }
 
   // Track user event
-  trackUserEvent(category: string, action: string, label?: string, properties?: Record<string, any>): void {
+  trackUserEvent(
+    category: string,
+    action: string,
+    label?: string,
+    properties?: Record<string, any>,
+  ): void {
     if (!this.config.enableUserTracking) return;
 
     const userEvent: UserEvent = {
-      type: 'user',
+      type: "user",
       id: this.generateEventId(),
       action,
       category,
@@ -433,18 +485,22 @@ class ProductionMonitoring {
       url: window.location.href,
       userId: this.config.userId,
       sessionId: this.config.sessionId,
-      properties
+      properties,
     };
 
     this.queueEvent(userEvent);
   }
 
   // Track feature usage
-  trackFeature(feature: string, action: 'viewed' | 'used' | 'completed' | 'failed', metadata?: Record<string, any>): void {
+  trackFeature(
+    feature: string,
+    action: "viewed" | "used" | "completed" | "failed",
+    metadata?: Record<string, any>,
+  ): void {
     if (!this.config.enableFeatureTracking) return;
 
     const featureEvent: FeatureEvent = {
-      type: 'feature',
+      type: "feature",
       id: this.generateEventId(),
       feature,
       action,
@@ -452,7 +508,7 @@ class ProductionMonitoring {
       url: window.location.href,
       userId: this.config.userId,
       sessionId: this.config.sessionId,
-      metadata
+      metadata,
     };
 
     this.queueEvent(featureEvent);
@@ -463,7 +519,7 @@ class ProductionMonitoring {
     this.eventQueue.push(event);
 
     // Immediately send critical errors
-    if (event.type === 'error') {
+    if (event.type === "error") {
       this.flushEvents();
     }
   }
@@ -488,11 +544,11 @@ class ProductionMonitoring {
 
     try {
       const response = await fetch(this.config.apiEndpoint, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.config.apiKey}`,
-          'X-Environment': this.config.environment
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.config.apiKey}`,
+          "X-Environment": this.config.environment,
         },
         body: JSON.stringify({
           events,
@@ -501,9 +557,9 @@ class ProductionMonitoring {
             url: window.location.href,
             timestamp: Date.now(),
             sessionId: this.config.sessionId,
-            userId: this.config.userId
-          }
-        })
+            userId: this.config.userId,
+          },
+        }),
       });
 
       if (!response.ok) {
@@ -512,8 +568,8 @@ class ProductionMonitoring {
 
       console.log(`Monitoring: Sent ${events.length} events`);
     } catch (error) {
-      console.error('Failed to send monitoring events:', error);
-      
+      console.error("Failed to send monitoring events:", error);
+
       // Re-queue events for retry (with limit)
       if (this.eventQueue.length < 1000) {
         this.eventQueue.unshift(...events);
@@ -531,21 +587,24 @@ class ProductionMonitoring {
   }
 
   private getResourceType(url: string): string {
-    if (url.includes('.js')) return 'script';
-    if (url.includes('.css')) return 'stylesheet';
-    if (url.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) return 'image';
-    if (url.match(/\.(mp3|wav|ogg)$/)) return 'audio';
-    if (url.match(/\.(mp4|webm|mov)$/)) return 'video';
-    return 'other';
+    if (url.includes(".js")) return "script";
+    if (url.includes(".css")) return "stylesheet";
+    if (url.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) return "image";
+    if (url.match(/\.(mp3|wav|ogg)$/)) return "audio";
+    if (url.match(/\.(mp4|webm|mov)$/)) return "video";
+    return "other";
   }
 
-  private throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
+  private throttle<T extends (...args: any[]) => void>(
+    func: T,
+    limit: number,
+  ): T {
     let inThrottle: boolean;
     return ((...args: any[]) => {
       if (!inThrottle) {
         func.apply(this, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
     }) as T;
   }
@@ -575,43 +634,72 @@ class ProductionMonitoring {
   } {
     return {
       eventsQueued: this.eventQueue.length,
-      sessionId: this.config.sessionId || '',
+      sessionId: this.config.sessionId || "",
       isOnline: this.isOnline,
-      environment: this.config.environment
+      environment: this.config.environment,
     };
   }
 }
 
 // React hooks for monitoring
 export function useMonitoring() {
-  const monitoring = React.useMemo(() => ProductionMonitoring.getInstance(), []);
+  const monitoring = React.useMemo(
+    () => ProductionMonitoring.getInstance(),
+    [],
+  );
 
-  const trackError = React.useCallback((error: Error, context?: Record<string, any>) => {
-    monitoring.trackError({
-      message: error.message,
-      stack: error.stack,
-      additionalContext: context
-    });
-  }, [monitoring]);
+  const trackError = React.useCallback(
+    (error: Error, context?: Record<string, any>) => {
+      monitoring.trackError({
+        message: error.message,
+        stack: error.stack,
+        additionalContext: context,
+      });
+    },
+    [monitoring],
+  );
 
-  const trackUserAction = React.useCallback((category: string, action: string, label?: string, properties?: Record<string, any>) => {
-    monitoring.trackUserEvent(category, action, label, properties);
-  }, [monitoring]);
+  const trackUserAction = React.useCallback(
+    (
+      category: string,
+      action: string,
+      label?: string,
+      properties?: Record<string, any>,
+    ) => {
+      monitoring.trackUserEvent(category, action, label, properties);
+    },
+    [monitoring],
+  );
 
-  const trackFeature = React.useCallback((feature: string, action: 'viewed' | 'used' | 'completed' | 'failed', metadata?: Record<string, any>) => {
-    monitoring.trackFeature(feature, action, metadata);
-  }, [monitoring]);
+  const trackFeature = React.useCallback(
+    (
+      feature: string,
+      action: "viewed" | "used" | "completed" | "failed",
+      metadata?: Record<string, any>,
+    ) => {
+      monitoring.trackFeature(feature, action, metadata);
+    },
+    [monitoring],
+  );
 
-  const trackPerformance = React.useCallback((metric: string, value: number, unit: string, context?: Record<string, any>) => {
-    monitoring.trackPerformance(metric, value, unit, context);
-  }, [monitoring]);
+  const trackPerformance = React.useCallback(
+    (
+      metric: string,
+      value: number,
+      unit: string,
+      context?: Record<string, any>,
+    ) => {
+      monitoring.trackPerformance(metric, value, unit, context);
+    },
+    [monitoring],
+  );
 
   return {
     trackError,
     trackUserAction,
     trackFeature,
     trackPerformance,
-    getStats: monitoring.getStats.bind(monitoring)
+    getStats: monitoring.getStats.bind(monitoring),
   };
 }
 
@@ -621,17 +709,24 @@ export function useComponentTracking(componentName: string) {
 
   React.useEffect(() => {
     const startTime = performance.now();
-    trackFeature(componentName, 'viewed');
+    trackFeature(componentName, "viewed");
 
     return () => {
       const endTime = performance.now();
-      trackPerformance(`${componentName}-mount-time`, endTime - startTime, 'ms');
+      trackPerformance(
+        `${componentName}-mount-time`,
+        endTime - startTime,
+        "ms",
+      );
     };
   }, [componentName, trackFeature, trackPerformance]);
 
-  const trackAction = React.useCallback((action: string, metadata?: Record<string, any>) => {
-    trackFeature(componentName, 'used', { action, ...metadata });
-  }, [componentName, trackFeature]);
+  const trackAction = React.useCallback(
+    (action: string, metadata?: Record<string, any>) => {
+      trackFeature(componentName, "used", { action, ...metadata });
+    },
+    [componentName, trackFeature],
+  );
 
   return { trackAction };
 }

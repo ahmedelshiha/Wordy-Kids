@@ -24,7 +24,7 @@ interface MobileOptimizationConfig {
   enableLazyLoading: boolean;
   touchDebounceMs: number;
   scrollThrottleMs: number;
-  imageQuality: 'low' | 'medium' | 'high';
+  imageQuality: "low" | "medium" | "high";
   enableHapticFeedback: boolean;
 }
 
@@ -50,31 +50,40 @@ class MobilePerformanceOptimizer {
 
   // Detect device capabilities and limitations
   private detectDeviceCapabilities(): DeviceCapabilities {
-    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile =
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
     const isTablet = /iPad|Android.*Tablet/i.test(navigator.userAgent);
     const isDesktop = !isMobile && !isTablet;
-    
+
     // Detect low-end devices
     const deviceMemory = (navigator as any).deviceMemory || 4; // Default to 4GB if unknown
     const hardwareConcurrency = navigator.hardwareConcurrency || 4;
     const isLowEndDevice = deviceMemory <= 2 || hardwareConcurrency <= 2;
 
-    const supportsTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const supportsTouch =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
     // Network connection
-    const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
-    const connectionType = connection?.effectiveType || 'unknown';
+    const connection =
+      (navigator as any).connection ||
+      (navigator as any).mozConnection ||
+      (navigator as any).webkitConnection;
+    const connectionType = connection?.effectiveType || "unknown";
 
     // Screen information
     const screenSize = {
       width: window.screen.width,
-      height: window.screen.height
+      height: window.screen.height,
     };
     const pixelRatio = window.devicePixelRatio || 1;
 
     // Accessibility preferences
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const highContrast = window.matchMedia('(prefers-contrast: high)').matches;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const highContrast = window.matchMedia("(prefers-contrast: high)").matches;
 
     return {
       isMobile,
@@ -87,13 +96,14 @@ class MobilePerformanceOptimizer {
       screenSize,
       pixelRatio,
       reducedMotion,
-      highContrast
+      highContrast,
     };
   }
 
   // Get optimal configuration based on device capabilities
   private getOptimalConfig(): MobileOptimizationConfig {
-    const { isLowEndDevice, connectionType, reducedMotion } = this.deviceCapabilities;
+    const { isLowEndDevice, connectionType, reducedMotion } =
+      this.deviceCapabilities;
 
     return {
       enableImageOptimization: true,
@@ -102,9 +112,14 @@ class MobilePerformanceOptimizer {
       enableLazyLoading: true,
       touchDebounceMs: isLowEndDevice ? 100 : 50,
       scrollThrottleMs: isLowEndDevice ? 16 : 8,
-      imageQuality: connectionType === 'slow-2g' || connectionType === '2g' ? 'low' : 
-                   connectionType === '3g' ? 'medium' : 'high',
-      enableHapticFeedback: this.deviceCapabilities.supportsTouch && !isLowEndDevice
+      imageQuality:
+        connectionType === "slow-2g" || connectionType === "2g"
+          ? "low"
+          : connectionType === "3g"
+            ? "medium"
+            : "high",
+      enableHapticFeedback:
+        this.deviceCapabilities.supportsTouch && !isLowEndDevice,
     };
   }
 
@@ -121,28 +136,30 @@ class MobilePerformanceOptimizer {
   // Optimize viewport settings
   private setupViewportOptimization(): void {
     // Ensure proper viewport meta tag
-    let viewportMeta = document.querySelector('meta[name="viewport"]') as HTMLMetaElement;
-    
+    let viewportMeta = document.querySelector(
+      'meta[name="viewport"]',
+    ) as HTMLMetaElement;
+
     if (!viewportMeta) {
-      viewportMeta = document.createElement('meta');
-      viewportMeta.name = 'viewport';
+      viewportMeta = document.createElement("meta");
+      viewportMeta.name = "viewport";
       document.head.appendChild(viewportMeta);
     }
 
     // Optimal viewport settings for mobile
     const viewportContent = [
-      'width=device-width',
-      'initial-scale=1.0',
-      'maximum-scale=5.0',
-      'user-scalable=yes',
-      'viewport-fit=cover'
-    ].join(', ');
+      "width=device-width",
+      "initial-scale=1.0",
+      "maximum-scale=5.0",
+      "user-scalable=yes",
+      "viewport-fit=cover",
+    ].join(", ");
 
     viewportMeta.content = viewportContent;
 
     // Add safe area CSS variables for notched devices
     if (this.deviceCapabilities.isMobile) {
-      const style = document.createElement('style');
+      const style = document.createElement("style");
       style.textContent = `
         :root {
           --safe-area-inset-top: env(safe-area-inset-top, 0px);
@@ -160,7 +177,7 @@ class MobilePerformanceOptimizer {
     if (!this.config.enableTouchOptimization) return;
 
     // Disable touch delay on mobile
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       * {
         -webkit-touch-callout: none;
@@ -182,9 +199,9 @@ class MobilePerformanceOptimizer {
 
   // Setup passive event listeners for scroll performance
   private setupPassiveEventListeners(): void {
-    const passiveEvents = ['touchstart', 'touchmove', 'wheel'];
-    
-    passiveEvents.forEach(eventType => {
+    const passiveEvents = ["touchstart", "touchmove", "wheel"];
+
+    passiveEvents.forEach((eventType) => {
       document.addEventListener(eventType, () => {}, { passive: true });
     });
   }
@@ -192,10 +209,10 @@ class MobilePerformanceOptimizer {
   // Setup scroll optimizations
   private setupScrollOptimizations(): void {
     // Enable smooth scrolling with fallback
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       html {
-        scroll-behavior: ${this.config.enableAnimationReduction ? 'auto' : 'smooth'};
+        scroll-behavior: ${this.config.enableAnimationReduction ? "auto" : "smooth"};
       }
       
       /* Optimize scrolling containers */
@@ -223,12 +240,12 @@ class MobilePerformanceOptimizer {
 
     const options = {
       root: null,
-      rootMargin: this.deviceCapabilities.isLowEndDevice ? '50px' : '100px',
-      threshold: 0.1
+      rootMargin: this.deviceCapabilities.isLowEndDevice ? "50px" : "100px",
+      threshold: 0.1,
     };
 
     this.scrollObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const element = entry.target as HTMLElement;
           this.loadLazyContent(element);
@@ -240,33 +257,33 @@ class MobilePerformanceOptimizer {
 
   // Load lazy content
   private loadLazyContent(element: HTMLElement): void {
-    const dataSrc = element.getAttribute('data-src');
-    const dataSrcset = element.getAttribute('data-srcset');
+    const dataSrc = element.getAttribute("data-src");
+    const dataSrcset = element.getAttribute("data-srcset");
 
     if (element instanceof HTMLImageElement) {
       if (dataSrc) {
         element.src = dataSrc;
-        element.removeAttribute('data-src');
+        element.removeAttribute("data-src");
       }
       if (dataSrcset) {
         element.srcset = dataSrcset;
-        element.removeAttribute('data-srcset');
+        element.removeAttribute("data-srcset");
       }
     }
 
-    element.classList.remove('lazy');
-    element.classList.add('loaded');
+    element.classList.remove("lazy");
+    element.classList.add("loaded");
   }
 
   // Setup image optimizations
   private setupImageOptimizations(): void {
     if (!this.config.enableImageOptimization) return;
 
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       /* Optimize image rendering */
       img {
-        image-rendering: ${this.deviceCapabilities.isLowEndDevice ? 'auto' : 'crisp-edges'};
+        image-rendering: ${this.deviceCapabilities.isLowEndDevice ? "auto" : "crisp-edges"};
         decode: async;
       }
       
@@ -292,8 +309,8 @@ class MobilePerformanceOptimizer {
 
   // Setup animation optimizations
   private setupAnimationOptimizations(): void {
-    const style = document.createElement('style');
-    
+    const style = document.createElement("style");
+
     if (this.config.enableAnimationReduction) {
       style.textContent = `
         /* Reduce animations for low-end devices or user preference */
@@ -317,27 +334,28 @@ class MobilePerformanceOptimizer {
         }
       `;
     }
-    
+
     document.head.appendChild(style);
   }
 
   // Log device information for debugging
   private logDeviceInfo(): void {
-    console.group('Mobile Performance Optimizer');
-    console.log('Device Capabilities:', this.deviceCapabilities);
-    console.log('Optimization Config:', this.config);
+    console.group("Mobile Performance Optimizer");
+    console.log("Device Capabilities:", this.deviceCapabilities);
+    console.log("Optimization Config:", this.config);
     console.groupEnd();
   }
 
   // Optimize touch event handling
   optimizeTouchEvent(
     element: HTMLElement,
-    eventType: 'tap' | 'longpress' | 'swipe',
+    eventType: "tap" | "longpress" | "swipe",
     handler: (event: TouchEvent) => void,
-    options: { debounce?: number; preventDefault?: boolean } = {}
+    options: { debounce?: number; preventDefault?: boolean } = {},
   ): () => void {
-    const { debounce = this.config.touchDebounceMs, preventDefault = true } = options;
-    
+    const { debounce = this.config.touchDebounceMs, preventDefault = true } =
+      options;
+
     let startTime = 0;
     let startPos = { x: 0, y: 0 };
     let timeoutId: NodeJS.Timeout | null = null;
@@ -349,7 +367,7 @@ class MobilePerformanceOptimizer {
       const touch = e.touches[0];
       startPos = { x: touch.clientX, y: touch.clientY };
 
-      if (eventType === 'longpress') {
+      if (eventType === "longpress") {
         timeoutId = setTimeout(() => {
           debouncedHandler(e);
         }, 500);
@@ -358,7 +376,7 @@ class MobilePerformanceOptimizer {
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (preventDefault) e.preventDefault();
-      
+
       const endTime = Date.now();
       const duration = endTime - startTime;
 
@@ -367,40 +385,42 @@ class MobilePerformanceOptimizer {
         timeoutId = null;
       }
 
-      if (eventType === 'tap' && duration < 300) {
+      if (eventType === "tap" && duration < 300) {
         debouncedHandler(e);
-      } else if (eventType === 'swipe' && duration < 300) {
+      } else if (eventType === "swipe" && duration < 300) {
         const touch = e.changedTouches[0];
         const deltaX = touch.clientX - startPos.x;
         const deltaY = touch.clientY - startPos.y;
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        
+
         if (distance > 50) {
           debouncedHandler(e);
         }
       }
 
       // Haptic feedback
-      if (this.config.enableHapticFeedback && 'vibrate' in navigator) {
+      if (this.config.enableHapticFeedback && "vibrate" in navigator) {
         navigator.vibrate(10);
       }
     };
 
-    element.addEventListener('touchstart', handleTouchStart, { passive: false });
-    element.addEventListener('touchend', handleTouchEnd, { passive: false });
+    element.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    element.addEventListener("touchend", handleTouchEnd, { passive: false });
 
     const handlerId = `${eventType}-${Date.now()}`;
     this.touchHandlers.set(handlerId, {
       element,
       touchstart: handleTouchStart,
-      touchend: handleTouchEnd
+      touchend: handleTouchEnd,
     });
 
     return () => {
       const handlers = this.touchHandlers.get(handlerId);
       if (handlers) {
-        handlers.element.removeEventListener('touchstart', handlers.touchstart);
-        handlers.element.removeEventListener('touchend', handlers.touchend);
+        handlers.element.removeEventListener("touchstart", handlers.touchstart);
+        handlers.element.removeEventListener("touchend", handlers.touchend);
         this.touchHandlers.delete(handlerId);
       }
     };
@@ -411,51 +431,54 @@ class MobilePerformanceOptimizer {
     img: HTMLImageElement,
     options: {
       lazy?: boolean;
-      quality?: 'low' | 'medium' | 'high';
+      quality?: "low" | "medium" | "high";
       sizes?: string;
-    } = {}
+    } = {},
   ): void {
     const { lazy = true, quality = this.config.imageQuality, sizes } = options;
 
     // Set responsive sizes if not provided
     if (!sizes && !img.sizes) {
-      img.sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw';
+      img.sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw";
     }
 
     // Setup lazy loading
     if (lazy && this.scrollObserver) {
-      img.classList.add('lazy');
-      img.setAttribute('data-src', img.src);
+      img.classList.add("lazy");
+      img.setAttribute("data-src", img.src);
       img.src = this.generatePlaceholder(img.width || 300, img.height || 200);
       this.scrollObserver.observe(img);
     }
 
     // Add loading attribute for modern browsers
-    img.loading = 'lazy';
-    img.decoding = 'async';
+    img.loading = "lazy";
+    img.decoding = "async";
   }
 
   // Generate placeholder image
   private generatePlaceholder(width: number, height: number): string {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    
+    const ctx = canvas.getContext("2d");
+
     if (ctx) {
-      ctx.fillStyle = '#f0f0f0';
+      ctx.fillStyle = "#f0f0f0";
       ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = '#cccccc';
-      ctx.font = '16px Arial';
-      ctx.textAlign = 'center';
-      ctx.fillText('Loading...', width / 2, height / 2);
+      ctx.fillStyle = "#cccccc";
+      ctx.font = "16px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Loading...", width / 2, height / 2);
     }
-    
+
     return canvas.toDataURL();
   }
 
   // Debounce utility
-  private debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
+  private debounce<T extends (...args: any[]) => void>(
+    func: T,
+    delay: number,
+  ): T {
     let timeoutId: NodeJS.Timeout;
     return ((...args: any[]) => {
       clearTimeout(timeoutId);
@@ -464,7 +487,10 @@ class MobilePerformanceOptimizer {
   }
 
   // Throttle utility
-  private throttle<T extends (...args: any[]) => void>(func: T, delay: number): T {
+  private throttle<T extends (...args: any[]) => void>(
+    func: T,
+    delay: number,
+  ): T {
     let lastCall = 0;
     return ((...args: any[]) => {
       const now = Date.now();
@@ -497,8 +523,13 @@ class MobilePerformanceOptimizer {
 
 // React hooks for mobile optimization
 export function useMobileOptimization() {
-  const optimizer = React.useMemo(() => MobilePerformanceOptimizer.getInstance(), []);
-  const [deviceCapabilities, setDeviceCapabilities] = React.useState(optimizer.getDeviceCapabilities());
+  const optimizer = React.useMemo(
+    () => MobilePerformanceOptimizer.getInstance(),
+    [],
+  );
+  const [deviceCapabilities, setDeviceCapabilities] = React.useState(
+    optimizer.getDeviceCapabilities(),
+  );
 
   React.useEffect(() => {
     // Listen for orientation changes
@@ -510,30 +541,40 @@ export function useMobileOptimization() {
       }, 100);
     };
 
-    window.addEventListener('orientationchange', handleOrientationChange);
-    window.addEventListener('resize', handleOrientationChange);
+    window.addEventListener("orientationchange", handleOrientationChange);
+    window.addEventListener("resize", handleOrientationChange);
 
     return () => {
-      window.removeEventListener('orientationchange', handleOrientationChange);
-      window.removeEventListener('resize', handleOrientationChange);
+      window.removeEventListener("orientationchange", handleOrientationChange);
+      window.removeEventListener("resize", handleOrientationChange);
     };
   }, [optimizer]);
 
-  const optimizeTouch = React.useCallback((
-    element: HTMLElement,
-    eventType: 'tap' | 'longpress' | 'swipe',
-    handler: (event: TouchEvent) => void,
-    options?: { debounce?: number; preventDefault?: boolean }
-  ) => {
-    return optimizer.optimizeTouchEvent(element, eventType, handler, options);
-  }, [optimizer]);
+  const optimizeTouch = React.useCallback(
+    (
+      element: HTMLElement,
+      eventType: "tap" | "longpress" | "swipe",
+      handler: (event: TouchEvent) => void,
+      options?: { debounce?: number; preventDefault?: boolean },
+    ) => {
+      return optimizer.optimizeTouchEvent(element, eventType, handler, options);
+    },
+    [optimizer],
+  );
 
-  const optimizeImage = React.useCallback((
-    img: HTMLImageElement,
-    options?: { lazy?: boolean; quality?: 'low' | 'medium' | 'high'; sizes?: string }
-  ) => {
-    optimizer.optimizeImageForMobile(img, options);
-  }, [optimizer]);
+  const optimizeImage = React.useCallback(
+    (
+      img: HTMLImageElement,
+      options?: {
+        lazy?: boolean;
+        quality?: "low" | "medium" | "high";
+        sizes?: string;
+      },
+    ) => {
+      optimizer.optimizeImageForMobile(img, options);
+    },
+    [optimizer],
+  );
 
   return {
     deviceCapabilities,
@@ -541,7 +582,7 @@ export function useMobileOptimization() {
     optimizeImage,
     isMobile: deviceCapabilities.isMobile,
     isLowEndDevice: deviceCapabilities.isLowEndDevice,
-    supportsTouch: deviceCapabilities.supportsTouch
+    supportsTouch: deviceCapabilities.supportsTouch,
   };
 }
 
@@ -549,32 +590,35 @@ export function useMobileOptimization() {
 export function useTouchOptimizedButton() {
   const { optimizeTouch, supportsTouch } = useMobileOptimization();
 
-  const createTouchButton = React.useCallback((
-    ref: React.RefObject<HTMLElement>,
-    onClick: () => void,
-    options: { haptic?: boolean; debounce?: number } = {}
-  ) => {
-    React.useEffect(() => {
-      if (!ref.current || !supportsTouch) return;
+  const createTouchButton = React.useCallback(
+    (
+      ref: React.RefObject<HTMLElement>,
+      onClick: () => void,
+      options: { haptic?: boolean; debounce?: number } = {},
+    ) => {
+      React.useEffect(() => {
+        if (!ref.current || !supportsTouch) return;
 
-      const cleanup = optimizeTouch(
-        ref.current,
-        'tap',
-        (e: TouchEvent) => {
-          e.preventDefault();
-          onClick();
-          
-          // Haptic feedback
-          if (options.haptic && 'vibrate' in navigator) {
-            navigator.vibrate(10);
-          }
-        },
-        { debounce: options.debounce }
-      );
+        const cleanup = optimizeTouch(
+          ref.current,
+          "tap",
+          (e: TouchEvent) => {
+            e.preventDefault();
+            onClick();
 
-      return cleanup;
-    }, [ref, onClick, options.haptic, options.debounce]);
-  }, [optimizeTouch, supportsTouch]);
+            // Haptic feedback
+            if (options.haptic && "vibrate" in navigator) {
+              navigator.vibrate(10);
+            }
+          },
+          { debounce: options.debounce },
+        );
+
+        return cleanup;
+      }, [ref, onClick, options.haptic, options.debounce]);
+    },
+    [optimizeTouch, supportsTouch],
+  );
 
   return createTouchButton;
 }
@@ -585,7 +629,7 @@ export function useMobilePerformanceMonitoring() {
     frameRate: 0,
     touchLatency: 0,
     scrollPerformance: 0,
-    memoryUsage: 0
+    memoryUsage: 0,
   });
 
   React.useEffect(() => {
@@ -596,17 +640,17 @@ export function useMobilePerformanceMonitoring() {
     const measureFrameRate = () => {
       frameCount++;
       const currentTime = performance.now();
-      
+
       if (currentTime - lastTime >= 1000) {
-        setMetrics(prev => ({
+        setMetrics((prev) => ({
           ...prev,
-          frameRate: Math.round((frameCount * 1000) / (currentTime - lastTime))
+          frameRate: Math.round((frameCount * 1000) / (currentTime - lastTime)),
         }));
-        
+
         frameCount = 0;
         lastTime = currentTime;
       }
-      
+
       animationId = requestAnimationFrame(measureFrameRate);
     };
 
@@ -614,11 +658,11 @@ export function useMobilePerformanceMonitoring() {
 
     // Monitor memory if available
     const memoryInterval = setInterval(() => {
-      if ('memory' in performance) {
+      if ("memory" in performance) {
         const memInfo = (performance as any).memory;
-        setMetrics(prev => ({
+        setMetrics((prev) => ({
           ...prev,
-          memoryUsage: Math.round(memInfo.usedJSHeapSize / 1024 / 1024)
+          memoryUsage: Math.round(memInfo.usedJSHeapSize / 1024 / 1024),
         }));
       }
     }, 5000);

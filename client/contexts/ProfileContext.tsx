@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode } from "react";
 
 interface UserProfile {
   id: string;
@@ -33,35 +33,41 @@ interface ProfileProviderProps {
   value: ProfileContextType;
 }
 
-export const ProfileProvider: React.FC<ProfileProviderProps> = ({ children, value }) => {
+export const ProfileProvider: React.FC<ProfileProviderProps> = ({
+  children,
+  value,
+}) => {
   return (
-    <ProfileContext.Provider value={value}>
-      {children}
-    </ProfileContext.Provider>
+    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
   );
 };
 
 export const useProfile = (): ProfileContextType => {
   const context = useContext(ProfileContext);
   if (context === undefined) {
-    throw new Error('useProfile must be used within a ProfileProvider');
+    throw new Error("useProfile must be used within a ProfileProvider");
   }
   return context;
 };
 
 // Selector hooks for specific profile data to minimize re-renders
-export const useProfileSelector = <T,>(selector: (profile: UserProfile | null) => T): T => {
+export const useProfileSelector = <T,>(
+  selector: (profile: UserProfile | null) => T,
+): T => {
   const { currentProfile } = useProfile();
   return selector(currentProfile);
 };
 
 // Common selectors
-export const useProfileId = () => useProfileSelector(profile => profile?.id);
-export const useProfileName = () => useProfileSelector(profile => profile?.name);
-export const useProfileAvatar = () => useProfileSelector(profile => profile?.avatar);
-export const useProfileStats = () => useProfileSelector(profile => ({
-  wordsLearned: profile?.wordsLearned || 0,
-  points: profile?.points || 0,
-  streak: profile?.streak || 0,
-  accuracy: profile?.accuracy || 0
-}));
+export const useProfileId = () => useProfileSelector((profile) => profile?.id);
+export const useProfileName = () =>
+  useProfileSelector((profile) => profile?.name);
+export const useProfileAvatar = () =>
+  useProfileSelector((profile) => profile?.avatar);
+export const useProfileStats = () =>
+  useProfileSelector((profile) => ({
+    wordsLearned: profile?.wordsLearned || 0,
+    points: profile?.points || 0,
+    streak: profile?.streak || 0,
+    accuracy: profile?.accuracy || 0,
+  }));

@@ -6,17 +6,17 @@
 class StorageCompressor {
   // Simple LZ-string implementation for compression
   static compress(data: string): string {
-    if (!data) return '';
-    
+    if (!data) return "";
+
     const dict: { [key: string]: number } = {};
     const result: (string | number)[] = [];
     let dictSize = 256;
-    let w = '';
+    let w = "";
 
     for (let i = 0; i < data.length; i++) {
       const c = data.charAt(i);
       const wc = w + c;
-      
+
       if (dict[wc]) {
         w = wc;
       } else {
@@ -25,30 +25,30 @@ class StorageCompressor {
         w = c;
       }
     }
-    
+
     if (w) {
       result.push(dict[w] ? dict[w] : w);
     }
-    
+
     return JSON.stringify(result);
   }
 
   static decompress(compressed: string): string {
-    if (!compressed) return '';
-    
+    if (!compressed) return "";
+
     try {
       const data = JSON.parse(compressed);
       const dict: { [key: number]: string } = {};
       let dictSize = 256;
-      let result = '';
+      let result = "";
       let w = String(data[0]);
-      
+
       result += w;
-      
+
       for (let i = 1; i < data.length; i++) {
         const k = data[i];
-        let entry = '';
-        
+        let entry = "";
+
         if (dict[k]) {
           entry = dict[k];
         } else if (k === dictSize) {
@@ -56,15 +56,15 @@ class StorageCompressor {
         } else {
           entry = String(k);
         }
-        
+
         result += entry;
         dict[dictSize++] = w + entry.charAt(0);
         w = entry;
       }
-      
+
       return result;
     } catch (error) {
-      console.warn('Failed to decompress data:', error);
+      console.warn("Failed to decompress data:", error);
       return compressed; // Return original if decompression fails
     }
   }
@@ -82,7 +82,7 @@ class StorageQuotaManager {
     warning: boolean;
     error: boolean;
   }> {
-    if ('storage' in navigator && 'estimate' in navigator.storage) {
+    if ("storage" in navigator && "estimate" in navigator.storage) {
       try {
         const estimate = await navigator.storage.estimate();
         const used = estimate.usage || 0;
@@ -94,10 +94,10 @@ class StorageQuotaManager {
           available,
           percentage,
           warning: percentage > this.QUOTA_WARNING_THRESHOLD,
-          error: percentage > this.QUOTA_ERROR_THRESHOLD
+          error: percentage > this.QUOTA_ERROR_THRESHOLD,
         };
       } catch (error) {
-        console.warn('Failed to estimate storage quota:', error);
+        console.warn("Failed to estimate storage quota:", error);
       }
     }
 
@@ -111,7 +111,7 @@ class StorageQuotaManager {
       available: maxSize,
       percentage,
       warning: percentage > this.QUOTA_WARNING_THRESHOLD,
-      error: percentage > this.QUOTA_ERROR_THRESHOLD
+      error: percentage > this.QUOTA_ERROR_THRESHOLD,
     };
   }
 
@@ -128,27 +128,30 @@ class StorageQuotaManager {
 
   static async cleanupIfNeeded(): Promise<void> {
     const quota = await this.checkStorageQuota();
-    
+
     if (quota.warning) {
-      console.warn('Storage quota warning:', Math.round(quota.percentage * 100) + '%');
+      console.warn(
+        "Storage quota warning:",
+        Math.round(quota.percentage * 100) + "%",
+      );
       this.performCleanup();
     }
   }
 
   private static performCleanup(): void {
     // Remove old cache entries
-    const cachePrefix = 'words_v';
-    const sessionPrefix = 'wordAdventure_session';
+    const cachePrefix = "words_v";
+    const sessionPrefix = "wordAdventure_session";
     const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
     const now = Date.now();
 
-    Object.keys(localStorage).forEach(key => {
+    Object.keys(localStorage).forEach((key) => {
       if (key.startsWith(cachePrefix) || key.startsWith(sessionPrefix)) {
         try {
           const data = JSON.parse(localStorage[key]);
-          if (data.timestamp && (now - data.timestamp) > maxAge) {
+          if (data.timestamp && now - data.timestamp > maxAge) {
             localStorage.removeItem(key);
-            console.log('Cleaned up old storage entry:', key);
+            console.log("Cleaned up old storage entry:", key);
           }
         } catch (error) {
           // If we can't parse it, it might be corrupted - remove it
@@ -165,33 +168,40 @@ export class OptimizedStorageManager {
   private compressionEnabled: boolean;
   private keyPrefix: string;
 
-  constructor(keyPrefix: string = '', compressionEnabled: boolean = true) {
+  constructor(keyPrefix: string = "", compressionEnabled: boolean = true) {
     this.keyPrefix = keyPrefix;
     this.compressionEnabled = compressionEnabled;
   }
 
   // Set item with automatic compression
-  setItem(key: string, value: any, options: {
-    compress?: boolean;
-    expires?: number; // Time in milliseconds
-    priority?: 'high' | 'medium' | 'low';
-  } = {}): void {
+  setItem(
+    key: string,
+    value: any,
+    options: {
+      compress?: boolean;
+      expires?: number; // Time in milliseconds
+      priority?: "high" | "medium" | "low";
+    } = {},
+  ): void {
     const fullKey = this.keyPrefix + key;
-    const { compress, expires, priority = 'medium' } = options;
+    const { compress, expires, priority = "medium" } = options;
 
     try {
       const serialized = JSON.stringify(value);
-      const shouldCompress = compress ?? (
-        this.compressionEnabled && serialized.length > OptimizedStorageManager.COMPRESSION_THRESHOLD
-      );
+      const shouldCompress =
+        compress ??
+        (this.compressionEnabled &&
+          serialized.length > OptimizedStorageManager.COMPRESSION_THRESHOLD);
 
       const data = {
-        value: shouldCompress ? StorageCompressor.compress(serialized) : serialized,
+        value: shouldCompress
+          ? StorageCompressor.compress(serialized)
+          : serialized,
         compressed: shouldCompress,
         timestamp: Date.now(),
         expires: expires ? Date.now() + expires : null,
         priority,
-        size: serialized.length
+        size: serialized.length,
       };
 
       localStorage.setItem(fullKey, JSON.stringify(data));
@@ -199,15 +209,18 @@ export class OptimizedStorageManager {
       // Check quota after storing
       StorageQuotaManager.cleanupIfNeeded();
     } catch (error) {
-      console.error('Failed to store item:', key, error);
-      
+      console.error("Failed to store item:", key, error);
+
       // If storage is full, try to clean up and retry
-      if (error.name === 'QuotaExceededError') {
+      if (error.name === "QuotaExceededError") {
         this.cleanup();
         try {
-          localStorage.setItem(fullKey, JSON.stringify({ value, timestamp: Date.now() }));
+          localStorage.setItem(
+            fullKey,
+            JSON.stringify({ value, timestamp: Date.now() }),
+          );
         } catch (retryError) {
-          console.error('Failed to store item after cleanup:', key, retryError);
+          console.error("Failed to store item after cleanup:", key, retryError);
           throw retryError;
         }
       }
@@ -225,19 +238,23 @@ export class OptimizedStorageManager {
       const data = JSON.parse(stored);
 
       // Handle legacy data (direct values)
-      if (typeof data === 'string' || typeof data === 'number' || typeof data === 'boolean') {
+      if (
+        typeof data === "string" ||
+        typeof data === "number" ||
+        typeof data === "boolean"
+      ) {
         return data as T;
       }
 
       // Handle wrapped data
-      if (data && typeof data === 'object') {
+      if (data && typeof data === "object") {
         // Check expiration
         if (data.expires && Date.now() > data.expires) {
           this.removeItem(key);
           return null;
         }
 
-        const rawValue = data.compressed 
+        const rawValue = data.compressed
           ? StorageCompressor.decompress(data.value)
           : data.value;
 
@@ -246,7 +263,7 @@ export class OptimizedStorageManager {
 
       return data;
     } catch (error) {
-      console.warn('Failed to retrieve item:', key, error);
+      console.warn("Failed to retrieve item:", key, error);
       // If corrupted, remove it
       this.removeItem(key);
       return null;
@@ -261,36 +278,36 @@ export class OptimizedStorageManager {
 
   // Clear all items with this prefix
   clear(): void {
-    const keysToRemove = Object.keys(localStorage).filter(key => 
-      key.startsWith(this.keyPrefix)
+    const keysToRemove = Object.keys(localStorage).filter((key) =>
+      key.startsWith(this.keyPrefix),
     );
-    
-    keysToRemove.forEach(key => localStorage.removeItem(key));
+
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
   }
 
   // Get all keys with this prefix
   getKeys(): string[] {
     return Object.keys(localStorage)
-      .filter(key => key.startsWith(this.keyPrefix))
-      .map(key => key.substring(this.keyPrefix.length));
+      .filter((key) => key.startsWith(this.keyPrefix))
+      .map((key) => key.substring(this.keyPrefix.length));
   }
 
   // Cleanup expired and low-priority items
   cleanup(): void {
     const now = Date.now();
-    const keysToCheck = Object.keys(localStorage).filter(key => 
-      key.startsWith(this.keyPrefix)
+    const keysToCheck = Object.keys(localStorage).filter((key) =>
+      key.startsWith(this.keyPrefix),
     );
 
     let cleanedCount = 0;
 
-    keysToCheck.forEach(fullKey => {
+    keysToCheck.forEach((fullKey) => {
       try {
         const stored = localStorage.getItem(fullKey);
         if (!stored) return;
 
         const data = JSON.parse(stored);
-        
+
         // Remove expired items
         if (data.expires && now > data.expires) {
           localStorage.removeItem(fullKey);
@@ -299,9 +316,10 @@ export class OptimizedStorageManager {
         }
 
         // Remove old low-priority items (older than 3 days)
-        if (data.priority === 'low' && data.timestamp) {
+        if (data.priority === "low" && data.timestamp) {
           const age = now - data.timestamp;
-          if (age > 3 * 24 * 60 * 60 * 1000) { // 3 days
+          if (age > 3 * 24 * 60 * 60 * 1000) {
+            // 3 days
             localStorage.removeItem(fullKey);
             cleanedCount++;
           }
@@ -331,7 +349,7 @@ export class OptimizedStorageManager {
     let originalSize = 0;
     let compressedSize = 0;
 
-    keys.forEach(key => {
+    keys.forEach((key) => {
       try {
         const stored = localStorage.getItem(this.keyPrefix + key);
         if (stored) {
@@ -354,32 +372,35 @@ export class OptimizedStorageManager {
       totalItems: keys.length,
       totalSize,
       compressedItems,
-      compressionRatio: originalSize > 0 ? compressedSize / originalSize : 1
+      compressionRatio: originalSize > 0 ? compressedSize / originalSize : 1,
     };
   }
 }
 
 // Specialized storage managers for different data types
-export const sessionStorage = new OptimizedStorageManager('session_', true);
-export const cacheStorage = new OptimizedStorageManager('cache_', true);
-export const settingsStorage = new OptimizedStorageManager('settings_', false);
-export const progressStorage = new OptimizedStorageManager('progress_', true);
+export const sessionStorage = new OptimizedStorageManager("session_", true);
+export const cacheStorage = new OptimizedStorageManager("cache_", true);
+export const settingsStorage = new OptimizedStorageManager("settings_", false);
+export const progressStorage = new OptimizedStorageManager("progress_", true);
 
 // React hook for optimized storage
 export function useOptimizedStorage<T>(
   key: string,
   defaultValue: T,
-  storageManager: OptimizedStorageManager = cacheStorage
+  storageManager: OptimizedStorageManager = cacheStorage,
 ): [T, (value: T) => void, () => void] {
   const [value, setValue] = React.useState<T>(() => {
     const stored = storageManager.getItem<T>(key);
     return stored !== null ? stored : defaultValue;
   });
 
-  const setStoredValue = React.useCallback((newValue: T) => {
-    setValue(newValue);
-    storageManager.setItem(key, newValue);
-  }, [key, storageManager]);
+  const setStoredValue = React.useCallback(
+    (newValue: T) => {
+      setValue(newValue);
+      storageManager.setItem(key, newValue);
+    },
+    [key, storageManager],
+  );
 
   const removeValue = React.useCallback(() => {
     setValue(defaultValue);
@@ -411,7 +432,12 @@ export function useStorageMonitoring() {
 
 // Batch operations for efficient storage
 export class BatchStorageOperations {
-  private operations: Array<{ type: 'set' | 'remove'; key: string; value?: any; options?: any }> = [];
+  private operations: Array<{
+    type: "set" | "remove";
+    key: string;
+    value?: any;
+    options?: any;
+  }> = [];
   private storageManager: OptimizedStorageManager;
 
   constructor(storageManager: OptimizedStorageManager) {
@@ -419,24 +445,24 @@ export class BatchStorageOperations {
   }
 
   set(key: string, value: any, options?: any): this {
-    this.operations.push({ type: 'set', key, value, options });
+    this.operations.push({ type: "set", key, value, options });
     return this;
   }
 
   remove(key: string): this {
-    this.operations.push({ type: 'remove', key });
+    this.operations.push({ type: "remove", key });
     return this;
   }
 
   execute(): void {
-    this.operations.forEach(op => {
-      if (op.type === 'set') {
+    this.operations.forEach((op) => {
+      if (op.type === "set") {
         this.storageManager.setItem(op.key, op.value, op.options);
       } else {
         this.storageManager.removeItem(op.key);
       }
     });
-    
+
     this.operations = [];
   }
 

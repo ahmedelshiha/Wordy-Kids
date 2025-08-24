@@ -1,42 +1,42 @@
-import React, { Suspense } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import React, { Suspense } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Lazy load heavy game components
-export const LazyEnhancedJungleQuizAdventure = React.lazy(() => 
-  import('./games/EnhancedJungleQuizAdventure').then(module => ({
-    default: module.EnhancedJungleQuizAdventure
-  }))
+export const LazyEnhancedJungleQuizAdventure = React.lazy(() =>
+  import("./games/EnhancedJungleQuizAdventure").then((module) => ({
+    default: module.EnhancedJungleQuizAdventure,
+  })),
 );
 
 export const LazyEnhancedJungleQuizAdventureDesktop = React.lazy(() =>
-  import('./games/EnhancedJungleQuizAdventureDesktop').then(module => ({
-    default: module.EnhancedJungleQuizAdventureDesktop
-  }))
+  import("./games/EnhancedJungleQuizAdventureDesktop").then((module) => ({
+    default: module.EnhancedJungleQuizAdventureDesktop,
+  })),
 );
 
 export const LazyWordGarden = React.lazy(() =>
-  import('./games/WordGarden').then(module => ({
-    default: module.default
-  }))
+  import("./games/WordGarden").then((module) => ({
+    default: module.default,
+  })),
 );
 
 export const LazyAdminDashboard = React.lazy(() =>
-  import('./AdminDashboard').then(module => ({
-    default: module.default
-  }))
+  import("./AdminDashboard").then((module) => ({
+    default: module.default,
+  })),
 );
 
 export const LazyAdvancedAnalyticsDashboard = React.lazy(() =>
-  import('./AdvancedAnalyticsDashboard').then(module => ({
-    default: module.default
-  }))
+  import("./AdvancedAnalyticsDashboard").then((module) => ({
+    default: module.default,
+  })),
 );
 
 export const LazyJungleAdventureSidebar = React.lazy(() =>
-  import('./JungleAdventureSidebar').then(module => ({
-    default: module.JungleAdventureSidebar
-  }))
+  import("./JungleAdventureSidebar").then((module) => ({
+    default: module.JungleAdventureSidebar,
+  })),
 );
 
 // Loading skeleton for game components
@@ -49,10 +49,10 @@ const GameLoadingSkeleton: React.FC = () => (
           <Skeleton className="h-8 w-48" />
           <Skeleton className="h-6 w-24" />
         </div>
-        
+
         {/* Game area skeleton */}
         <Skeleton className="h-64 w-full rounded-lg" />
-        
+
         {/* Controls skeleton */}
         <div className="flex justify-center space-x-4">
           <Skeleton className="h-12 w-24 rounded-lg" />
@@ -78,7 +78,7 @@ const DashboardLoadingSkeleton: React.FC = () => (
         </Card>
       ))}
     </div>
-    
+
     {/* Main content skeleton */}
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <Card>
@@ -117,7 +117,7 @@ const SidebarLoadingSkeleton: React.FC = () => (
 // HOC for adding lazy loading with appropriate skeleton
 export const withLazyLoading = <P extends object>(
   LazyComponent: React.LazyExoticComponent<React.ComponentType<P>>,
-  LoadingSkeleton: React.ComponentType = GameLoadingSkeleton
+  LoadingSkeleton: React.ComponentType = GameLoadingSkeleton,
 ) => {
   return React.memo((props: P) => (
     <Suspense fallback={<LoadingSkeleton />}>
@@ -127,32 +127,53 @@ export const withLazyLoading = <P extends object>(
 };
 
 // Pre-configured lazy components with skeletons
-export const LazyGameWithSkeleton = withLazyLoading(LazyEnhancedJungleQuizAdventure, GameLoadingSkeleton);
-export const LazyGameDesktopWithSkeleton = withLazyLoading(LazyEnhancedJungleQuizAdventureDesktop, GameLoadingSkeleton);
-export const LazyWordGardenWithSkeleton = withLazyLoading(LazyWordGarden, GameLoadingSkeleton);
-export const LazyAdminWithSkeleton = withLazyLoading(LazyAdminDashboard, DashboardLoadingSkeleton);
-export const LazyAnalyticsWithSkeleton = withLazyLoading(LazyAdvancedAnalyticsDashboard, DashboardLoadingSkeleton);
-export const LazySidebarWithSkeleton = withLazyLoading(LazyJungleAdventureSidebar, SidebarLoadingSkeleton);
+export const LazyGameWithSkeleton = withLazyLoading(
+  LazyEnhancedJungleQuizAdventure,
+  GameLoadingSkeleton,
+);
+export const LazyGameDesktopWithSkeleton = withLazyLoading(
+  LazyEnhancedJungleQuizAdventureDesktop,
+  GameLoadingSkeleton,
+);
+export const LazyWordGardenWithSkeleton = withLazyLoading(
+  LazyWordGarden,
+  GameLoadingSkeleton,
+);
+export const LazyAdminWithSkeleton = withLazyLoading(
+  LazyAdminDashboard,
+  DashboardLoadingSkeleton,
+);
+export const LazyAnalyticsWithSkeleton = withLazyLoading(
+  LazyAdvancedAnalyticsDashboard,
+  DashboardLoadingSkeleton,
+);
+export const LazySidebarWithSkeleton = withLazyLoading(
+  LazyJungleAdventureSidebar,
+  SidebarLoadingSkeleton,
+);
 
 // Preload components when user hovers over navigation
 export const preloadComponents = {
-  game: () => import('./games/EnhancedJungleQuizAdventure'),
-  gameDesktop: () => import('./games/EnhancedJungleQuizAdventureDesktop'),
-  wordGarden: () => import('./games/WordGarden'),
-  admin: () => import('./AdminDashboard'),
-  analytics: () => import('./AdvancedAnalyticsDashboard'),
-  sidebar: () => import('./JungleAdventureSidebar')
+  game: () => import("./games/EnhancedJungleQuizAdventure"),
+  gameDesktop: () => import("./games/EnhancedJungleQuizAdventureDesktop"),
+  wordGarden: () => import("./games/WordGarden"),
+  admin: () => import("./AdminDashboard"),
+  analytics: () => import("./AdvancedAnalyticsDashboard"),
+  sidebar: () => import("./JungleAdventureSidebar"),
 };
 
 // Preload hook for eager loading on user interaction
 export const usePreloadComponents = () => {
-  const preload = React.useCallback((components: (keyof typeof preloadComponents)[]) => {
-    components.forEach(component => {
-      preloadComponents[component]().catch(err => {
-        console.warn(`Failed to preload ${component}:`, err);
+  const preload = React.useCallback(
+    (components: (keyof typeof preloadComponents)[]) => {
+      components.forEach((component) => {
+        preloadComponents[component]().catch((err) => {
+          console.warn(`Failed to preload ${component}:`, err);
+        });
       });
-    });
-  }, []);
+    },
+    [],
+  );
 
   return preload;
 };

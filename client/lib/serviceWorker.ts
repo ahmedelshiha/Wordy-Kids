@@ -31,18 +31,21 @@ class ServiceWorkerManager {
 
   // Initialize service worker
   async initialize(): Promise<void> {
-    if (!('serviceWorker' in navigator)) {
-      console.warn('Service Worker not supported');
+    if (!("serviceWorker" in navigator)) {
+      console.warn("Service Worker not supported");
       return;
     }
 
     try {
       // Register the service worker
-      this.registration = await navigator.serviceWorker.register('/sw-advanced.js', {
-        scope: '/'
-      });
+      this.registration = await navigator.serviceWorker.register(
+        "/sw-advanced.js",
+        {
+          scope: "/",
+        },
+      );
 
-      console.log('Service Worker registered successfully');
+      console.log("Service Worker registered successfully");
 
       // Set up event listeners
       this.setupEventListeners();
@@ -55,9 +58,8 @@ class ServiceWorkerManager {
 
       // Setup message channel
       this.setupMessageChannel();
-
     } catch (error) {
-      console.error('Service Worker registration failed:', error);
+      console.error("Service Worker registration failed:", error);
     }
   }
 
@@ -66,11 +68,14 @@ class ServiceWorkerManager {
     if (!this.registration) return;
 
     // Listen for waiting service worker (update available)
-    this.registration.addEventListener('updatefound', () => {
+    this.registration.addEventListener("updatefound", () => {
       const newWorker = this.registration!.installing;
       if (newWorker) {
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+        newWorker.addEventListener("statechange", () => {
+          if (
+            newWorker.state === "installed" &&
+            navigator.serviceWorker.controller
+          ) {
             // New service worker installed and ready
             this.updateAvailable = true;
             this.notifyUpdateAvailable();
@@ -80,13 +85,13 @@ class ServiceWorkerManager {
     });
 
     // Listen for messages from service worker
-    navigator.serviceWorker.addEventListener('message', (event) => {
+    navigator.serviceWorker.addEventListener("message", (event) => {
       this.handleMessage(event.data);
     });
 
     // Listen for service worker controller change
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('Service Worker controller changed - reloading page');
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      console.log("Service Worker controller changed - reloading page");
       window.location.reload();
     });
   }
@@ -98,7 +103,7 @@ class ServiceWorkerManager {
     try {
       await this.registration.update();
     } catch (error) {
-      console.warn('Failed to check for service worker updates:', error);
+      console.warn("Failed to check for service worker updates:", error);
     }
   }
 
@@ -109,40 +114,40 @@ class ServiceWorkerManager {
     }
 
     // Send message to waiting service worker to skip waiting
-    this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    this.registration.waiting.postMessage({ type: "SKIP_WAITING" });
   }
 
   // Setup online/offline detection
   private setupOnlineDetection(): void {
     this.isOnline = navigator.onLine;
 
-    window.addEventListener('online', () => {
+    window.addEventListener("online", () => {
       this.isOnline = true;
       this.notifyOnlineStatus(true);
-      console.log('App is back online');
+      console.log("App is back online");
     });
 
-    window.addEventListener('offline', () => {
+    window.addEventListener("offline", () => {
       this.isOnline = false;
       this.notifyOnlineStatus(false);
-      console.log('App is offline');
+      console.log("App is offline");
     });
   }
 
   // Setup message channel for communication
   private setupMessageChannel(): void {
     this.messageChannel = new MessageChannel();
-    
+
     // Send port to service worker
     if (navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage(
-        { type: 'SETUP_CHANNEL' },
-        [this.messageChannel.port2]
+        { type: "SETUP_CHANNEL" },
+        [this.messageChannel.port2],
       );
     }
 
     // Listen for messages from service worker
-    this.messageChannel.port1.addEventListener('message', (event) => {
+    this.messageChannel.port1.addEventListener("message", (event) => {
       this.handleMessage(event.data);
     });
 
@@ -152,30 +157,30 @@ class ServiceWorkerManager {
   // Handle messages from service worker
   private handleMessage(message: ServiceWorkerMessage): void {
     switch (message.type) {
-      case 'CACHE_STATUS':
+      case "CACHE_STATUS":
         this.handleCacheStatus(message.data);
         break;
-      case 'CACHE_CLEARED':
-        console.log('Cache cleared successfully');
+      case "CACHE_CLEARED":
+        console.log("Cache cleared successfully");
         break;
-      case 'RESOURCES_PRELOADED':
-        console.log('Resources preloaded successfully');
+      case "RESOURCES_PRELOADED":
+        console.log("Resources preloaded successfully");
         break;
       default:
-        console.log('Unknown message from service worker:', message);
+        console.log("Unknown message from service worker:", message);
     }
   }
 
   // Queue action for background sync
   async queueSyncAction(type: string, data: any): Promise<void> {
     if (!navigator.serviceWorker.controller) {
-      console.warn('No service worker controller available for sync');
+      console.warn("No service worker controller available for sync");
       return;
     }
 
     navigator.serviceWorker.controller.postMessage({
-      type: 'QUEUE_SYNC_ACTION',
-      data: { type, data }
+      type: "QUEUE_SYNC_ACTION",
+      data: { type, data },
     });
   }
 
@@ -192,19 +197,22 @@ class ServiceWorkerManager {
       }, 5000);
 
       const messageHandler = (event: MessageEvent) => {
-        if (event.data.type === 'CACHE_STATUS') {
+        if (event.data.type === "CACHE_STATUS") {
           clearTimeout(timeout);
-          this.messageChannel!.port1.removeEventListener('message', messageHandler);
+          this.messageChannel!.port1.removeEventListener(
+            "message",
+            messageHandler,
+          );
           resolve(event.data.data);
         }
       };
 
-      this.messageChannel.port1.addEventListener('message', messageHandler);
+      this.messageChannel.port1.addEventListener("message", messageHandler);
 
       // Request cache status
       if (navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
-          type: 'GET_CACHE_STATUS'
+          type: "GET_CACHE_STATUS",
         });
       }
     });
@@ -213,44 +221,48 @@ class ServiceWorkerManager {
   // Clear application cache
   async clearCache(): Promise<void> {
     if (!navigator.serviceWorker.controller) {
-      console.warn('No service worker controller available');
+      console.warn("No service worker controller available");
       return;
     }
 
     navigator.serviceWorker.controller.postMessage({
-      type: 'CLEAR_CACHE'
+      type: "CLEAR_CACHE",
     });
   }
 
   // Preload resources for offline use
   async preloadResources(resources: string[]): Promise<void> {
     if (!navigator.serviceWorker.controller) {
-      console.warn('No service worker controller available');
+      console.warn("No service worker controller available");
       return;
     }
 
     navigator.serviceWorker.controller.postMessage({
-      type: 'PRELOAD_RESOURCES',
-      data: { resources }
+      type: "PRELOAD_RESOURCES",
+      data: { resources },
     });
   }
 
   // Notification callbacks
   private notifyUpdateAvailable(): void {
     // Dispatch custom event for UI to handle
-    window.dispatchEvent(new CustomEvent('sw-update-available'));
+    window.dispatchEvent(new CustomEvent("sw-update-available"));
   }
 
   private notifyOnlineStatus(online: boolean): void {
-    window.dispatchEvent(new CustomEvent('online-status-changed', {
-      detail: { online }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("online-status-changed", {
+        detail: { online },
+      }),
+    );
   }
 
   private handleCacheStatus(status: CacheStatus): void {
-    window.dispatchEvent(new CustomEvent('cache-status-updated', {
-      detail: status
-    }));
+    window.dispatchEvent(
+      new CustomEvent("cache-status-updated", {
+        detail: status,
+      }),
+    );
   }
 
   // Getters for status
@@ -271,7 +283,9 @@ class ServiceWorkerManager {
 export function useServiceWorker() {
   const [isOnline, setIsOnline] = React.useState(navigator.onLine);
   const [updateAvailable, setUpdateAvailable] = React.useState(false);
-  const [cacheStatus, setCacheStatus] = React.useState<CacheStatus | null>(null);
+  const [cacheStatus, setCacheStatus] = React.useState<CacheStatus | null>(
+    null,
+  );
   const swManager = ServiceWorkerManager.getInstance();
 
   React.useEffect(() => {
@@ -293,14 +307,26 @@ export function useServiceWorker() {
       setCacheStatus(event.detail);
     };
 
-    window.addEventListener('online-status-changed', handleOnlineStatus as EventListener);
-    window.addEventListener('sw-update-available', handleUpdateAvailable);
-    window.addEventListener('cache-status-updated', handleCacheStatus as EventListener);
+    window.addEventListener(
+      "online-status-changed",
+      handleOnlineStatus as EventListener,
+    );
+    window.addEventListener("sw-update-available", handleUpdateAvailable);
+    window.addEventListener(
+      "cache-status-updated",
+      handleCacheStatus as EventListener,
+    );
 
     return () => {
-      window.removeEventListener('online-status-changed', handleOnlineStatus as EventListener);
-      window.removeEventListener('sw-update-available', handleUpdateAvailable);
-      window.removeEventListener('cache-status-updated', handleCacheStatus as EventListener);
+      window.removeEventListener(
+        "online-status-changed",
+        handleOnlineStatus as EventListener,
+      );
+      window.removeEventListener("sw-update-available", handleUpdateAvailable);
+      window.removeEventListener(
+        "cache-status-updated",
+        handleCacheStatus as EventListener,
+      );
     };
   }, []);
 
@@ -336,31 +362,36 @@ export function useServiceWorker() {
     getCacheStatus,
     clearCache,
     preloadResources,
-    isRegistered: swManager.isRegistered
+    isRegistered: swManager.isRegistered,
   };
 }
 
 // Offline action queue hook
 export function useOfflineActionQueue() {
   const { queueSyncAction, isOnline } = useServiceWorker();
-  const [queuedActions, setQueuedActions] = React.useState<Array<{ type: string; data: any }>>([]);
+  const [queuedActions, setQueuedActions] = React.useState<
+    Array<{ type: string; data: any }>
+  >([]);
 
-  const addAction = React.useCallback(async (type: string, data: any) => {
-    if (isOnline) {
-      // Execute immediately if online
-      try {
-        await executeAction(type, data);
-      } catch (error) {
-        // Queue if execution fails
+  const addAction = React.useCallback(
+    async (type: string, data: any) => {
+      if (isOnline) {
+        // Execute immediately if online
+        try {
+          await executeAction(type, data);
+        } catch (error) {
+          // Queue if execution fails
+          await queueSyncAction(type, data);
+          setQueuedActions((prev) => [...prev, { type, data }]);
+        }
+      } else {
+        // Queue for later if offline
         await queueSyncAction(type, data);
-        setQueuedActions(prev => [...prev, { type, data }]);
+        setQueuedActions((prev) => [...prev, { type, data }]);
       }
-    } else {
-      // Queue for later if offline
-      await queueSyncAction(type, data);
-      setQueuedActions(prev => [...prev, { type, data }]);
-    }
-  }, [isOnline, queueSyncAction]);
+    },
+    [isOnline, queueSyncAction],
+  );
 
   const clearQueue = React.useCallback(() => {
     setQueuedActions([]);
@@ -370,32 +401,32 @@ export function useOfflineActionQueue() {
     addAction,
     queuedActions,
     clearQueue,
-    hasQueuedActions: queuedActions.length > 0
+    hasQueuedActions: queuedActions.length > 0,
   };
 }
 
 // Execute action immediately
 async function executeAction(type: string, data: any): Promise<void> {
   switch (type) {
-    case 'word-progress':
-      await fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    case "word-progress":
+      await fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
       break;
-    case 'user-settings':
-      await fetch('/api/settings', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    case "user-settings":
+      await fetch("/api/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
       break;
-    case 'achievement-unlock':
-      await fetch('/api/achievements', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+    case "achievement-unlock":
+      await fetch("/api/achievements", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
       break;
     default:
@@ -406,17 +437,17 @@ async function executeAction(type: string, data: any): Promise<void> {
 // Preload critical resources for offline use
 export async function preloadCriticalResources(): Promise<void> {
   const swManager = ServiceWorkerManager.getInstance();
-  
+
   const criticalResources = [
-    '/',
-    '/app',
-    '/static/css/main.css',
-    '/static/js/bundle.js',
-    '/sounds/cat.mp3',
-    '/sounds/dog.mp3',
-    '/sounds/elephant.mp3',
-    '/sounds/lion.mp3',
-    '/images/logo.png'
+    "/",
+    "/app",
+    "/static/css/main.css",
+    "/static/js/bundle.js",
+    "/sounds/cat.mp3",
+    "/sounds/dog.mp3",
+    "/sounds/elephant.mp3",
+    "/sounds/lion.mp3",
+    "/images/logo.png",
   ];
 
   await swManager.preloadResources(criticalResources);
