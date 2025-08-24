@@ -99,11 +99,21 @@ export function logSpeechError(
 ): void {
   const errorInfo = {
     context,
-    originalInput:
-      typeof originalInput === "object"
-        ? JSON.stringify(originalInput)
-        : originalInput,
+    originalInput: (() => {
+      try {
+        if (typeof originalInput === "string") return originalInput;
+        if (typeof originalInput === "number") return originalInput;
+        if (typeof originalInput === "boolean") return originalInput;
+        if (originalInput === null || originalInput === undefined) return originalInput;
+        return JSON.stringify(originalInput, null, 2);
+      } catch (e) {
+        return `[Unserializable ${typeof originalInput}]`;
+      }
+    })(),
     inputType: typeof originalInput,
+    inputConstructor: originalInput?.constructor?.name,
+    isArray: Array.isArray(originalInput),
+    sanitizedInput: sanitizeTTSInput(originalInput),
     timestamp: new Date().toISOString(),
     error:
       error instanceof Error
@@ -112,8 +122,15 @@ export function logSpeechError(
             message: error.message,
             stack: error.stack,
           }
+        : typeof error === "object"
+        ? JSON.stringify(error)
         : String(error),
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
+    speechSynthesisSupported: typeof window !== 'undefined' && 'speechSynthesis' in window
   };
 
-  console.error(`Speech synthesis error in ${context}:`, errorInfo);
+  console.error(`🔊 Speech synthesis error in ${context}:`, errorInfo);
+
+  // Also log a simplified version for easier debugging
+  console.error(`🔊 Simple error: ${context} failed with input "${errorInfo.sanitizedInput}" - ${String(errorInfo.error)}`);
 }
