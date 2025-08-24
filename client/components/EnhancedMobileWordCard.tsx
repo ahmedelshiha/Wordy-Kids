@@ -522,7 +522,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="text-white hover:bg-white/20 p-2 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm"
+                  className="text-gray-200 hover:bg-white/40 hover:text-gray-800 p-2 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-colors"
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowAccessibilityPanel(!showAccessibilityPanel);
@@ -536,7 +536,7 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
               <Button
                 size="sm"
                 variant="ghost"
-                className="text-white hover:bg-white/20 p-2 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm"
+                className="text-gray-200 hover:bg-white/40 hover:text-gray-800 p-2 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-colors"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleShare();
