@@ -1557,7 +1557,7 @@ export function InteractiveDashboardWordCard({
                         return "🌟 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "�� Almost there, superstar!";
+                        return "🌟 Almost there, superstar!";
                       if (percentage >= 75) return "⭐ You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
@@ -1881,7 +1881,7 @@ export function InteractiveDashboardWordCard({
                       Objects: "🎯",
                       Colors: "🌈",
                       Body: "👤",
-                      Family: "👨‍👩‍👧‍👦",
+                      Family: "👨‍����‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
                       Clothes: "👕",
@@ -2471,6 +2471,7 @@ export function InteractiveDashboardWordCard({
                         transition={{
                           duration: 1.5,
                           ease: "easeOut",
+                          type: "tween",
                         }}
                         className="absolute top-2 right-4 text-yellow-400 text-sm"
                       >
@@ -2633,6 +2634,7 @@ export function InteractiveDashboardWordCard({
                         duration: 1,
                         ease: "easeOut",
                         times: [0, 0.2, 0.8, 1],
+                        type: "tween",
                       }}
                       className="fixed pointer-events-none z-50"
                       style={{
