@@ -3171,7 +3171,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       ) {
                                                         return (
                                                           <div className="text-xs text-orange-600 font-medium">
-                                                            �� Review
+                                                            📚 Review
                                                           </div>
                                                         );
                                                       } else {
@@ -3234,10 +3234,14 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <Brain className="w-3 h-3 md:w-4 md:h-4 text-white drop-shadow-sm" />
                                         </div>
                                       </div>
-                                      <h2 className="jungle-quiz-title font-bold text-center leading-tight" style={{fontSize: '0.6rem'}}>
-                                        <span className="md:text-[0.4rem] md:!text-[0.4rem]">
-                                          🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
-                                        </span>
+                                      <h2
+                                        className="jungle-quiz-title font-bold text-center leading-tight"
+                                        style={{
+                                          fontSize: '0.6rem',
+                                          ...(window.innerWidth >= 768 && { fontSize: '0.4rem' })
+                                        }}
+                                      >
+                                        🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
                                       </h2>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
