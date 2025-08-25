@@ -15,7 +15,7 @@ import MainAppPage from "./pages/App";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
-import { EnhancedWordCardDemo } from "./components/EnhancedWordCardDemo";
+import { JungleWordLibrary } from "./components/JungleWordLibrarySimplified";
 import { JungleAdventureWordCardDemo } from "./pages/JungleAdventureWordCardDemo";
 import {
   WordDatabaseNotifications,
@@ -150,57 +150,27 @@ const App = () => {
                           </ErrorBoundary>
                         }
                       />
+                      {/* Main App Route - Production Jungle Word Library */}
                       <Route
-                        path="/word-card-demo"
-                        element={<EnhancedWordCardDemo />}
+                        path="/jungle-library"
+                        element={
+                          <ErrorBoundary
+                            fallbackType="parent"
+                            componentName="JungleWordLibrary"
+                          >
+                            <JungleWordLibrary enableAdvancedFeatures={true} showMobileOptimizations={true} />
+                          </ErrorBoundary>
+                        }
                       />
+
+                      {/* Legacy Demo Routes - Keep for debugging */}
                       <Route
-                        path="/word-garden-demo"
-                        element={<WordGardenDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-demo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/WordAdventureDemo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-test"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/WordAdventureTest"
-                        element={<WordAdventureTest />}
+                        path="/jungle-adventure-word-card-demo"
+                        element={<JungleAdventureWordCardDemo />}
                       />
                       <Route
                         path="/speech-diagnostics"
                         element={<SpeechDiagnostics />}
-                      />
-                      <Route
-                        path="/ai-integration-demo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/AIIntegrationDemo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/ai-word-recommendation-demo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/AIWordRecommendationDemo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/ai-system-test"
-                        element={<AISystemTest />}
-                      />
-                      <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
                       />
                       <Route
                         path="/error-boundary-test"
