@@ -32,7 +32,7 @@
 
 .jungle-nav-icon {
   width: 12vw;
-  max-width: 58px;
+  max-width: 75px; /* Increased from 58px by ~30% */
   height: auto;
   /* Desktop: Elevation handled by Framer Motion */
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
