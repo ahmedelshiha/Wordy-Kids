@@ -21,7 +21,8 @@ import {
   RotateCcw,
   ThumbsUp,
   Brain,
-  MapPin
+  MapPin,
+  BookOpen
 } from "lucide-react";
 
 // Types and interfaces
