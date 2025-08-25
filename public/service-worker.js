@@ -1,14 +1,33 @@
-// Wordy Kids Service Worker
-const CACHE_NAME = "wordy-kids-v1";
-const CACHE_VERSION = "1.0.0";
+// Jungle Word Library Service Worker
+const CACHE_NAME = "jungle-word-library-v2";
+const CACHE_VERSION = "2.0.0";
 
 // Assets to cache for offline functionality
 const STATIC_ASSETS = [
   "/",
+  "/app",
+  "/jungle-library",
+  "/parent-dashboard",
   "/manifest.json",
   "/favicon.svg",
   "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F6a9f823070a947fe81ec12398fd564c5?format=webp&width=192",
   "https://cdn.builder.io/api/v1/image/assets%2Fbebe97bf37d04293b70e6f9372d99db4%2F895928ec13444b41a48325b8bfd8cec2?format=webp&width=512",
+];
+
+// Jungle sounds to cache for offline play
+const JUNGLE_SOUNDS = [
+  "/sounds/jungle-birds.mp3",
+  "/sounds/jungle-insects.mp3",
+  "/sounds/jungle-rain.mp3",
+  "/sounds/jungle-waterfall.mp3",
+  "/sounds/jungle-wind.mp3",
+  "/sounds/ui/settings-saved.mp3",
+  "/sounds/ui/voice-preview.mp3",
+  "/sounds/ui/settings-reset.mp3",
+  "/sounds/mockingbird.mp3",
+  "/sounds/rooster.mp3",
+  "/sounds/owl.mp3",
+  "/sounds/cricket.mp3",
 ];
 
 // Network-first cache strategy for dynamic content
