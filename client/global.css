@@ -7,6 +7,9 @@
 /* Import mobile analytics optimization */
 @import "./styles/mobile-analytics-optimization.css";
 
+/* Import enhanced mobile word library header */
+@import "./styles/enhanced-mobile-word-library-header.css";
+
 /* Import jungle button effects */
 @import "./styles/jungle-button-effects.css";
 
