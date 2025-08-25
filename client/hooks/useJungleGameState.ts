@@ -392,8 +392,24 @@ export const useJungleGameState = () => {
     loadGameState();
     startSession();
 
-    // Auto-save every 30 seconds
+    // Auto-save every 30 seconds with analytics tracking
     const autoSaveInterval = setInterval(() => {
+      // Track periodic session analytics (every 30 seconds)
+      if (currentSession.startTime) {
+        const sessionDuration = Date.now() - currentSession.startTime.getTime();
+        analyticsManager.track("session_progress", {
+          sessionDuration,
+          wordsReviewed: currentSession.wordsReviewed,
+          wordsLearned: currentSession.wordsLearned,
+          achievementsUnlocked: currentSession.achievementsUnlocked.length,
+          currentStreak: gameState.streak,
+          totalScore: gameState.score,
+          categoriesExplored: currentSession.categoriesExplored.size,
+          accuracy: currentSession.wordsReviewed > 0
+            ? (currentSession.wordsLearned / currentSession.wordsReviewed) * 100
+            : 100,
+        });
+      }
       saveGameState();
     }, 30000);
 
