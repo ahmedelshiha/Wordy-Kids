@@ -590,13 +590,13 @@ export function ChildFriendlyCategorySelector({
               </div>
 
               <div className="flex items-center justify-center gap-2 mt-2">
-                <p className="text-xs text-jungle/60">
+                <p className="text-xs text-white/80 drop-shadow-sm">
                   🌳 Slide to explore all {enrichedCategories.length} jungle adventures
                 </p>
                 <div className="flex gap-1">
-                  <div className="w-1.5 h-1.5 bg-jungle/30 rounded-full animate-pulse"></div>
-                  <div className="w-1.5 h-1.5 bg-jungle/30 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-1.5 h-1.5 bg-jungle/30 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse drop-shadow-sm"></div>
+                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse drop-shadow-sm" style={{animationDelay: '0.2s'}}></div>
+                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse drop-shadow-sm" style={{animationDelay: '0.4s'}}></div>
                 </div>
               </div>
             </div>
