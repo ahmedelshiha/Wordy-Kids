@@ -523,81 +523,64 @@ export function ChildFriendlyCategorySelector({
         {/* Desktop Optimized Header */}
         <div className="hidden md:block">
           <div className="rounded-2xl p-5 mb-6 border backdrop-blur-sm bg-gradient-to-r from-jungle to-sunshine border-jungle/15 shadow-lg">
-            {/* Compact Title & Stats Row */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex-1">
-                <h1 className="text-2xl font-bold text-white mb-1 drop-shadow-md">
+            {/* New Layout: Title Left, Categories Middle, Stats Right */}
+            <div className="flex items-center gap-6">
+              {/* Left: Title & Subtitle */}
+              <div className="flex-shrink-0">
+                <h1 className="text-xl font-bold text-white mb-1 drop-shadow-md">
                   🌿 Welcome to the Jungle Adventure Library! 🦋
                 </h1>
-                <p className="text-base text-white/90 drop-shadow-sm">
+                <p className="text-sm text-white/90 drop-shadow-sm">
                   Choose your favorite topic to start learning!
                 </p>
               </div>
 
-              {/* Compact Stats */}
-              <div className="flex gap-2 ml-4">
-                <Badge className="bg-jungle text-white px-3 py-1.5 text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-shadow">
+              {/* Middle: Quick Categories Selection */}
+              <div className="flex-1 min-w-0">
+                <div className="relative">
+                  {/* Gradient fade edges for better UX */}
+                  <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-jungle to-transparent z-10 pointer-events-none"></div>
+                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-sunshine to-transparent z-10 pointer-events-none"></div>
+
+                  <div className="flex gap-2 overflow-x-auto overflow-y-hidden py-2 px-2 scroll-smooth scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50 transition-colors">
+                    {enrichedCategories.map((category, index) => (
+                      <Button
+                        key={category.id}
+                        variant={
+                          selectedCategory === category.id ? "default" : "outline"
+                        }
+                        size="sm"
+                        onClick={() => handleCategoryClick(category.id)}
+                        className={`flex-shrink-0 h-16 w-16 flex-col gap-1 transition-all duration-200 ${
+                          selectedCategory === category.id
+                            ? "bg-white/20 hover:bg-white/30 text-white border-2 border-white/50 shadow-lg scale-105"
+                            : "bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-white/50 hover:scale-105"
+                        }`}
+                        style={{
+                          animationDelay: `${index * 50}ms`
+                        }}
+                      >
+                        <span className="text-lg">{category.icon}</span>
+                        <span className="text-xs font-medium text-center leading-tight">
+                          {category.name.split(" ")[0]}
+                        </span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Compact Stats */}
+              <div className="flex flex-col gap-2">
+                <Badge className="bg-white/20 text-white px-3 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
                   🌳 {wordsDatabase.length}
                 </Badge>
-                <Badge className="bg-educational-blue text-white px-3 py-1.5 text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-shadow">
+                <Badge className="bg-white/20 text-white px-3 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
                   🎯 {categories.length}
                 </Badge>
-                <Badge className="bg-educational-purple text-white px-3 py-1.5 text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-shadow">
+                <Badge className="bg-white/20 text-white px-3 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
                   ⭐ 3 Levels
                 </Badge>
-              </div>
-            </div>
-
-            {/* Enhanced Single-Line Quick Categories with Slide */}
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-3">
-                <p className="text-sm font-medium text-white/90 drop-shadow-sm">
-                  🌿 Quick Jungle Paths - Slide to Explore Adventures 🦎
-                </p>
-              </div>
-
-              {/* Horizontal Scrollable Categories */}
-              <div className="relative">
-                {/* Gradient fade edges for better UX */}
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-jungle to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-sunshine to-transparent z-10 pointer-events-none"></div>
-
-                <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 pt-1 px-4 scroll-smooth scrollbar-thin scrollbar-thumb-jungle/30 scrollbar-track-transparent hover:scrollbar-thumb-jungle/50 transition-colors">
-                  {enrichedCategories.map((category, index) => (
-                    <Button
-                      key={category.id}
-                      variant={
-                        selectedCategory === category.id ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() => handleCategoryClick(category.id)}
-                      className={`flex-shrink-0 h-20 w-20 flex-col gap-1 transition-all duration-200 ${
-                        selectedCategory === category.id
-                          ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg scale-105"
-                          : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md hover:scale-105"
-                      }`}
-                      style={{
-                        animationDelay: `${index * 50}ms`
-                      }}
-                    >
-                      <span className="text-2xl">{category.icon}</span>
-                      <span className="text-xs font-medium text-center leading-tight">
-                        {category.name.split(" ")[0]}
-                      </span>
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-center gap-2 mt-2">
-                <p className="text-xs text-white/80 drop-shadow-sm">
-                  🌳 Slide to explore all {enrichedCategories.length} jungle adventures
-                </p>
-                <div className="flex gap-1">
-                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse drop-shadow-sm"></div>
-                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse drop-shadow-sm" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse drop-shadow-sm" style={{animationDelay: '0.4s'}}></div>
-                </div>
               </div>
             </div>
           </div>
