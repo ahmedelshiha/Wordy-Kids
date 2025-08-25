@@ -1121,6 +1121,10 @@ export const useJungleGameState = () => {
     resetProgress,
     loadGameState,
     saveGameState,
+
+    // Analytics & GDPR Compliance
+    exportAnalyticsData,
+    deleteAllData,
   };
 };
 
