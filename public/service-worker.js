@@ -31,7 +31,9 @@ const JUNGLE_SOUNDS = [
 ];
 
 // Network-first cache strategy for dynamic content
-const DYNAMIC_CACHE = "wordy-kids-dynamic-v1";
+const DYNAMIC_CACHE = "jungle-word-library-dynamic-v2";
+const SOUNDS_CACHE = "jungle-sounds-v1";
+const GAME_STATE_CACHE = "jungle-game-state-v1";
 
 // Install event - cache static assets
 self.addEventListener("install", (event) => {
