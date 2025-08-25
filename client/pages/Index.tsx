@@ -1076,7 +1076,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "science-star",
         name: "Science Star",
-        icon: "������",
+        icon: "����",
         earned: rememberedWords.size >= 15,
         description: "Mastered 10 science words",
       },
@@ -3171,7 +3171,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                       ) {
                                                         return (
                                                           <div className="text-xs text-orange-600 font-medium">
-                                                            📚 Review
+                                                            �� Review
                                                           </div>
                                                         );
                                                       } else {
@@ -3235,7 +3235,9 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2 className="jungle-quiz-title font-bold text-center leading-tight" style={{fontSize: '0.6rem'}}>
-                                        🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
+                                        <span className="md:text-[0.4rem] md:!text-[0.4rem]">
+                                          🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
+                                        </span>
                                       </h2>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
