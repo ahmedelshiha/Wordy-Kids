@@ -64,8 +64,8 @@
 @media (max-width: 767px) {
   .jungle-nav-icon {
     /* Mobile: Elevation handled by Framer Motion */
-    /* Increased by ~25% for better visibility */
-    max-width: 66px;
+    /* Increased by 30% for better mobile visibility */
+    max-width: 86px;
   }
 
   .jungle-icon-nav-item {
@@ -195,7 +195,7 @@
 /* Very small screens (below 375px) */
 @media (max-width: 374px) {
   .jungle-nav-icon {
-    max-width: 62px;
+    max-width: 81px;
     /* Very small screen elevation handled by Framer Motion */
   }
 
