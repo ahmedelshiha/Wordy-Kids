@@ -667,7 +667,9 @@ export function ChildFriendlyCategorySelector({
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-1">
                   <div className="h-px bg-gradient-to-r from-transparent via-jungle/30 to-transparent flex-1"></div>
-                  <span className="text-xs font-medium text-jungle/70 px-2">All Adventures</span>
+                  <span className="text-xs font-medium text-jungle/70 px-2">
+                    All Adventures
+                  </span>
                   <div className="h-px bg-gradient-to-r from-transparent via-jungle/30 to-transparent flex-1"></div>
                 </div>
               </div>
@@ -689,15 +691,17 @@ export function ChildFriendlyCategorySelector({
                           : "bg-white/80 backdrop-blur-sm border-2 border-jungle/20 hover:border-jungle/40 hover:bg-gradient-to-br hover:from-white hover:to-jungle/5 hover:shadow-lg hover:shadow-jungle/10 text-jungle-dark"
                       } rounded-xl`}
                       style={{
-                        animationDelay: `${index * 100}ms`
+                        animationDelay: `${index * 100}ms`,
                       }}
                     >
                       {/* Premium Icon with Glow Effect */}
-                      <div className={`relative ${
-                        selectedCategory === category.id
-                          ? "drop-shadow-lg"
-                          : ""
-                      }`}>
+                      <div
+                        className={`relative ${
+                          selectedCategory === category.id
+                            ? "drop-shadow-lg"
+                            : ""
+                        }`}
+                      >
                         <span className="text-xl">{category.icon}</span>
                         {selectedCategory === category.id && (
                           <div className="absolute inset-0 bg-white/20 rounded-full blur-sm animate-pulse"></div>
@@ -705,11 +709,13 @@ export function ChildFriendlyCategorySelector({
                       </div>
 
                       {/* Premium Typography */}
-                      <span className={`text-xs font-semibold text-center leading-tight ${
-                        selectedCategory === category.id
-                          ? "text-white drop-shadow-sm"
-                          : "text-jungle-dark"
-                      }`}>
+                      <span
+                        className={`text-xs font-semibold text-center leading-tight ${
+                          selectedCategory === category.id
+                            ? "text-white drop-shadow-sm"
+                            : "text-jungle-dark"
+                        }`}
+                      >
                         {category.name.split(" ")[0]}
                       </span>
 
@@ -734,7 +740,8 @@ export function ChildFriendlyCategorySelector({
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-jungle/10 to-educational-blue/10 rounded-full px-3 py-1 border border-jungle/15">
                   <span className="text-sm animate-gentle-emoji-float">🌳</span>
                   <p className="text-xs font-medium text-white">
-                    Scroll right to explore all {enrichedCategories.length} premium adventures
+                    Scroll right to explore all {enrichedCategories.length}{" "}
+                    premium adventures
                   </p>
                   <span className="text-xs bg-gradient-to-r from-jungle to-educational-blue text-white px-2 py-0.5 rounded-full font-bold shadow-sm">
                     {enrichedCategories.length}
@@ -745,9 +752,18 @@ export function ChildFriendlyCategorySelector({
 
             {/* Premium Corner Decorations */}
             <div className="absolute -top-1 -left-1 w-3 h-3 bg-gradient-to-br from-sunshine to-sunshine-dark rounded-full opacity-60 animate-pulse"></div>
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-educational-blue to-jungle rounded-full opacity-60 animate-pulse" style={{animationDelay: '1s'}}></div>
-            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-gradient-to-br from-jungle to-educational-purple rounded-full opacity-60 animate-pulse" style={{animationDelay: '2s'}}></div>
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br from-educational-purple to-sunshine rounded-full opacity-60 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+            <div
+              className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-educational-blue to-jungle rounded-full opacity-60 animate-pulse"
+              style={{ animationDelay: "1s" }}
+            ></div>
+            <div
+              className="absolute -bottom-1 -left-1 w-2 h-2 bg-gradient-to-br from-jungle to-educational-purple rounded-full opacity-60 animate-pulse"
+              style={{ animationDelay: "2s" }}
+            ></div>
+            <div
+              className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br from-educational-purple to-sunshine rounded-full opacity-60 animate-pulse"
+              style={{ animationDelay: "0.5s" }}
+            ></div>
           </div>
         )}
       </div>
