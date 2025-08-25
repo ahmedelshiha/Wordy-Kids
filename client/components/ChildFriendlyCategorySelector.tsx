@@ -522,14 +522,14 @@ export function ChildFriendlyCategorySelector({
 
         {/* Desktop Optimized Header */}
         <div className="hidden md:block">
-          <div className="rounded-2xl p-5 mb-6 border backdrop-blur-sm bg-gradient-to-r from-jungle/5 via-white/95 to-educational-blue/5 border-jungle/15 shadow-lg">
+          <div className="rounded-2xl p-5 mb-6 border backdrop-blur-sm bg-gradient-to-r from-jungle to-sunshine border-jungle/15 shadow-lg">
             {/* Compact Title & Stats Row */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-slate-800 mb-1">
+                <h1 className="text-2xl font-bold text-white mb-1 drop-shadow-md">
                   🌿 Welcome to the Jungle Adventure Library! 🦋
                 </h1>
-                <p className="text-base text-jungle/70">
+                <p className="text-base text-white/90 drop-shadow-sm">
                   Choose your favorite topic to start learning!
                 </p>
               </div>
