@@ -519,7 +519,7 @@ export function EnhancedCategorySelector({
       { id: "1", emoji: "🌟", x: 10, y: 10 },
       { id: "2", emoji: "✨", x: 90, y: 20 },
       { id: "3", emoji: "🎯", x: 15, y: 80 },
-      { id: "4", emoji: "🚀", x: 85, y: 75 },
+      { id: "4", emoji: "��", x: 85, y: 75 },
       { id: "5", emoji: "💫", x: 50, y: 5 },
       { id: "6", emoji: "🎪", x: 25, y: 45 },
       { id: "7", emoji: "🎈", x: 75, y: 35 },
@@ -714,100 +714,208 @@ export function EnhancedCategorySelector({
           </div>
         )}
 
-        {/* Mobile-optimized header */}
+        {/* Mobile-optimized enhanced header */}
         <div className="md:hidden mb-6">
           <div
-            className={`rounded-xl p-4 border ${
+            className={`rounded-2xl p-6 border-2 backdrop-blur-sm ${
               highContrastMode
                 ? "bg-black text-white border-white"
-                : "bg-gradient-to-r from-educational-blue/10 to-educational-purple/10 border-educational-blue/20"
+                : "bg-gradient-to-br from-jungle/5 via-white to-educational-blue/5 border-jungle/20 shadow-lg"
             }`}
           >
-            <div className="flex items-center justify-between mb-2">
-              <h2
-                className={`text-lg font-bold ${
-                  highContrastMode
-                    ? "text-white"
-                    : "text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent"
+            {/* Premium Title */}
+            <div className="text-center mb-4">
+              <h1
+                className={`text-xl font-bold mb-2 leading-relaxed ${
+                  highContrastMode ? "text-white" : "text-slate-800"
                 }`}
               >
-                🌟 Pick a Topic!
-              </h2>
-              <div className="flex gap-1">
-                <Badge className="bg-educational-green text-white px-2 py-1 text-xs">
-                  📚{" "}
-                  {realTimeWords.length > 0
-                    ? realTimeWords.length
-                    : wordsDatabase.length}
-                </Badge>
-                <Badge className="bg-educational-blue text-white px-2 py-1 text-xs">
-                  🎯 {categories.length}
-                </Badge>
-              </div>
+                🌿 Welcome to the Jungle Adventure Library! 🦋
+              </h1>
+              <p
+                className={`text-sm font-medium ${
+                  highContrastMode ? "text-white/80" : "text-jungle/70"
+                }`}
+              >
+                Choose your favorite topic to start learning!
+              </p>
             </div>
-            <p
-              className={`text-sm leading-tight ${
-                highContrastMode ? "text-white" : "text-slate-600"
-              }`}
-            >
-              {getPersonalizedMessage()}
-            </p>
-          </div>
-        </div>
 
-        {/* Desktop header */}
-        <div className="hidden md:block">
-          <h2
-            className={`text-3xl font-bold mb-3 ${
-              highContrastMode
-                ? "text-white"
-                : "text-slate-800 bg-gradient-to-r from-educational-blue to-educational-purple bg-clip-text text-transparent"
-            }`}
-          >
-            🌟 Choose Your Learning Adventure! 🌟
-          </h2>
-          <p
-            className={`text-lg max-w-2xl mx-auto mb-4 ${
-              highContrastMode ? "text-white" : "text-slate-600"
-            }`}
-          >
-            {getPersonalizedMessage()}
-          </p>
-
-          {showGameification && (
-            <div className="flex justify-center gap-3 mb-6 flex-wrap">
-              <Badge className="bg-educational-green text-white px-4 py-2 text-sm animate-pulse">
-                📚{" "}
+            {/* Flying badges with improved animations */}
+            <div className="flex justify-center gap-2 mb-4 flex-wrap">
+              <Badge className="bg-jungle text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce">
+                🌳{" "}
                 {realTimeWords.length > 0
                   ? realTimeWords.length
                   : wordsDatabase.length}{" "}
-                Amazing Words
+                Adventure Words
               </Badge>
-              <Badge className="bg-educational-blue text-white px-4 py-2 text-sm animate-pulse delay-100">
-                🎯 {categories.length} Fun Categories
+              <Badge
+                className="bg-educational-blue text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce"
+                style={{ animationDelay: "0.2s" }}
+              >
+                ��� {categories.length} Jungle Paths
               </Badge>
-              <Badge className="bg-educational-purple text-white px-4 py-2 text-sm animate-pulse delay-200">
-                ⭐ 3 Difficulty Levels
-              </Badge>
-              <Badge className="bg-educational-orange text-white px-4 py-2 text-sm animate-pulse delay-300">
-                🏆 Gamified Learning
+              <Badge
+                className="bg-educational-purple text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce"
+                style={{ animationDelay: "0.4s" }}
+              >
+                ⭐ 3 Adventure Levels
               </Badge>
             </div>
-          )}
+
+            {/* Integrated search */}
+            <div className="relative">
+              <Input
+                ref={searchInputRef}
+                type="text"
+                placeholder="🌿 Explore jungle categories..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={`pl-12 pr-12 py-3 rounded-full border-2 focus:ring-2 focus:ring-jungle/30 bg-white/80 backdrop-blur-sm ${
+                  highContrastMode
+                    ? "border-white text-white bg-black"
+                    : "border-jungle/20 text-slate-700 hover:border-jungle/30 focus:border-jungle/40"
+                }`}
+                aria-label="Search jungle categories"
+              />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-jungle/60" />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setSearchTerm("");
+                    searchInputRef.current?.focus();
+                  }}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-jungle/10"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop enhanced premium header */}
+        <div className="hidden md:block">
+          <div
+            className={`rounded-3xl p-8 mb-8 border-2 backdrop-blur-lg relative overflow-hidden ${
+              highContrastMode
+                ? "bg-black text-white border-white"
+                : "bg-gradient-to-br from-jungle/8 via-white/90 to-educational-blue/8 border-jungle/20 shadow-2xl"
+            }`}
+          >
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-r from-jungle/5 to-educational-blue/5 opacity-50" />
+
+            {/* Content */}
+            <div className="relative z-10">
+              {/* Premium Title Section */}
+              <div className="text-center mb-6">
+                <h1
+                  className={`text-4xl font-bold mb-3 leading-relaxed tracking-wide ${
+                    highContrastMode ? "text-white" : "text-slate-800"
+                  }`}
+                >
+                  🌿 Welcome to the Jungle Adventure Library! 🦋
+                </h1>
+                <p
+                  className={`text-xl font-medium max-w-3xl mx-auto ${
+                    highContrastMode ? "text-white/90" : "text-jungle/80"
+                  }`}
+                >
+                  Choose your favorite topic to start learning!
+                </p>
+              </div>
+
+              {/* Enhanced Flying Badges */}
+              <div className="flex justify-center gap-4 mb-6 flex-wrap">
+                <Badge className="bg-jungle text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float">
+                  🌳{" "}
+                  {realTimeWords.length > 0
+                    ? realTimeWords.length
+                    : wordsDatabase.length}{" "}
+                  Adventure Words
+                </Badge>
+                <Badge
+                  className="bg-educational-blue text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float"
+                  style={{ animationDelay: "0.5s" }}
+                >
+                  🎯 {categories.length} Jungle Paths
+                </Badge>
+                <Badge
+                  className="bg-educational-purple text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float"
+                  style={{ animationDelay: "1s" }}
+                >
+                  ⭐ 3 Adventure Levels
+                </Badge>
+              </div>
+
+              {/* Integrated Premium Search */}
+              <div className="max-w-lg mx-auto">
+                <div className="relative">
+                  <Input
+                    ref={searchInputRef}
+                    type="text"
+                    placeholder="🌿 Explore jungle categories..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={`pl-14 pr-14 py-4 text-lg rounded-full border-2 focus:ring-4 focus:ring-jungle/20 bg-white/90 backdrop-blur-sm shadow-md transition-all duration-300 ${
+                      highContrastMode
+                        ? "border-white text-white bg-black"
+                        : "border-jungle/30 text-slate-700 hover:border-jungle/50 focus:border-jungle/60 hover:shadow-lg"
+                    }`}
+                    aria-label="Search jungle categories"
+                  />
+                  <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 w-6 h-6 text-jungle/60" />
+                  {searchTerm && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setSearchTerm("");
+                        searchInputRef.current?.focus();
+                      }}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-jungle/10 rounded-full transition-all duration-200"
+                      aria-label="Clear search"
+                    >
+                      <X className="w-5 h-5" />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Enhanced search and filters */}
+      {/* Enhanced filters section (search is now integrated in header) */}
       <div className="space-y-4 px-4 md:px-0">
-        {/* Search bar */}
-        <div className="relative max-w-md mx-auto">
+        {/* Additional filters for desktop when search is active */}
+        {searchTerm && (
+          <div className="hidden md:block">
+            <div className="text-center mb-4">
+              <p
+                className={`text-lg font-medium ${
+                  highContrastMode ? "text-white" : "text-slate-600"
+                }`}
+              >
+                Found {categories.length} jungle paths matching "{searchTerm}"
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Placeholder to maintain original search structure for mobile fallback */}
+        <div className="hidden">
           <Input
-            ref={searchInputRef}
             type="text"
-            placeholder="🔍 Search categories..."
+            placeholder="🌿 Explore jungle categories..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`pl-12 pr-12 py-3 rounded-full border-2 focus:ring-2 focus:ring-educational-blue/50 ${
+            className={`pl-12 pr-12 py-3 rounded-full border-2 focus:ring-2 focus:ring-jungle/50 ${
               highContrastMode
                 ? "bg-black text-white border-white"
                 : "border-educational-blue/20 focus:border-educational-blue bg-white/80 backdrop-blur-sm"

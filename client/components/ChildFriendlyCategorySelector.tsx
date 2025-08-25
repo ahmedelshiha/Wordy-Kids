@@ -114,7 +114,7 @@ const enrichedCategories: Category[] = [
   {
     id: "space",
     name: "Space",
-    icon: "⭐",
+    icon: "���",
     color: "bg-navy",
     gradient: "from-navy to-sky",
     wordCount: getWordsByCategory("space").length,
@@ -412,13 +412,12 @@ export function ChildFriendlyCategorySelector({
     ];
     setFloatingElements(elements);
 
-    // Show encouragement periodically
-    const encouragementTimer = setInterval(() => {
-      setShowEncouragement(true);
-      setTimeout(() => setShowEncouragement(false), 3000);
-    }, 10000);
-
-    return () => clearInterval(encouragementTimer);
+    // Encouragement popup disabled for better UX
+    // const encouragementTimer = setInterval(() => {
+    //   setShowEncouragement(true);
+    //   setTimeout(() => setShowEncouragement(false), 3000);
+    // }, 10000);
+    // return () => clearInterval(encouragementTimer);
   }, []);
 
   const handleCategoryClick = (categoryId: string) => {
@@ -498,79 +497,142 @@ export function ChildFriendlyCategorySelector({
 
       {/* Enhanced Mobile Header */}
       <div className="text-center relative mt-2 md:mt-4 px-2 md:px-0">
-        <div className="md:hidden mb-4">
-          <div className="bg-gradient-to-r from-jungle/10 to-sunshine/10 rounded-xl p-3 border border-jungle/20 shadow-lg jungle-mobile-card animate-jungle-entrance">
-            <div className="flex items-center justify-between mb-1">
-              <h2 className="text-base font-bold text-slate-800 bg-gradient-to-r from-jungle to-sunshine bg-clip-text text-transparent">
-                🌿 Jungle Adventure Library! 🦎
-              </h2>
-              <div className="flex gap-1">
-                <Badge className="bg-jungle text-white px-2 py-0.5 text-xs">
-                  📚 {wordsDatabase.length}
+        <div className="md:hidden mb-3">
+          <div className="bg-gradient-to-r from-jungle/8 to-white/95 rounded-xl p-3 border border-jungle/15 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex-1 min-w-0">
+                <h2 className="text-sm font-bold text-slate-800 truncate">
+                  🌿 Jungle Adventure Library! 🦎
+                </h2>
+                <p className="text-xs text-jungle/70 leading-tight">
+                  Choose your favorite topic!
+                </p>
+              </div>
+              <div className="flex gap-1.5 ml-2">
+                <Badge className="bg-jungle text-white px-2 py-1 text-xs rounded-full">
+                  🌳 {wordsDatabase.length}
                 </Badge>
-                <Badge className="bg-sunshine text-navy px-2 py-0.5 text-xs">
+                <Badge className="bg-educational-blue text-white px-2 py-1 text-xs rounded-full">
                   🎯 {categories.length}
                 </Badge>
               </div>
             </div>
-            <p className="text-xs text-jungle-dark leading-tight">
-              {getPersonalizedMessage()}
-            </p>
           </div>
         </div>
 
-        {/* Desktop Header */}
-        <div className="hidden md:block animate-jungle-entrance">
-          <h2 className="text-3xl font-bold text-slate-800 mb-3 bg-gradient-to-r from-jungle via-sunshine to-jungle-light bg-clip-text text-transparent">
-            🌿 Welcome to the Jungle Adventure Library! 🦋
-          </h2>
-          <p className="text-lg text-jungle-dark max-w-3xl mx-auto mb-3">
-            {getPersonalizedMessage()}
-          </p>
-          <div className="flex justify-center gap-3 mb-6 flex-wrap">
-            <Badge className="bg-gradient-to-r from-jungle to-jungle-light text-white px-4 py-2 text-sm animate-jungle-bounce shadow-lg jungle-sparkle">
-              🌳 {wordsDatabase.length} Adventure Words
-            </Badge>
-            <Badge className="bg-gradient-to-r from-sunshine to-sunshine-dark text-navy px-4 py-2 text-sm animate-jungle-bounce delay-100 shadow-lg jungle-sparkle">
-              🎯 {categories.length} Jungle Paths
-            </Badge>
-            <Badge className="bg-gradient-to-r from-bright-orange to-coral-red text-white px-4 py-2 text-sm animate-jungle-bounce delay-200 shadow-lg jungle-sparkle">
-              ⭐ 3 Adventure Levels
-            </Badge>
-          </div>
-        </div>
-
-        {/* Desktop Search Bar */}
-        <div className="hidden md:block mb-6">
-          <div className="max-w-md mx-auto">
-            <div className="relative">
-              <Input
-                type="text"
-                placeholder="🌿 Explore jungle categories..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 pl-10 pr-12 rounded-full border-2 border-jungle/30 focus:border-jungle focus:outline-none bg-white/90 backdrop-blur-sm shadow-lg"
-              />
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jungle">
-                🌿
+        {/* Desktop Optimized Header */}
+        <div className="hidden md:block">
+          <div className="rounded-2xl p-5 mb-6 border backdrop-blur-sm bg-gradient-to-r from-jungle to-sunshine border-jungle/15 shadow-lg">
+            {/* New Layout: Title Left, Categories Middle, Stats Right */}
+            <div className="flex items-center gap-6">
+              {/* Left: Title & Subtitle */}
+              <div className="flex-shrink-0">
+                <h1 className="text-xl font-bold text-white mb-1 drop-shadow-md">
+                  🌿 Welcome to the Jungle Adventure Library! 🦋
+                </h1>
+                <p className="text-sm text-white/90 drop-shadow-sm">
+                  Choose your favorite topic to start learning!
+                </p>
               </div>
-              {searchTerm && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setSearchTerm("")}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-jungle/10"
-                >
-                  ✕
-                </Button>
-              )}
+
+              {/* Middle: Premium Scrollable Quick Categories Selection */}
+              <div className="flex-1 min-w-0 max-w-lg">
+                {/* Premium Container with Glass Morphism Effect */}
+                <div className="relative bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
+                  {/* Premium Background Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5"></div>
+
+                  {/* Elegant Border Glow */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/30 via-transparent to-white/30 opacity-50 blur-sm"></div>
+
+                  {/* Premium Content Container */}
+                  <div className="relative z-10 p-2">
+                    {/* Enhanced Gradient Fade Edges */}
+                    <div className="absolute left-2 top-2 bottom-2 w-6 bg-gradient-to-r from-jungle/20 via-jungle/10 to-transparent z-20 pointer-events-none rounded-l-xl"></div>
+                    <div className="absolute right-2 top-2 bottom-2 w-6 bg-gradient-to-l from-sunshine/20 via-sunshine/10 to-transparent z-20 pointer-events-none rounded-r-xl"></div>
+
+                    {/* Premium Scroll Indicators */}
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
+                      <div className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm"></div>
+                    </div>
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
+                      <div
+                        className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm"
+                        style={{ animationDelay: "0.5s" }}
+                      ></div>
+                    </div>
+
+                    {/* Premium Scrollable Container */}
+                    <div
+                      className="flex gap-3 overflow-x-auto overflow-y-hidden py-3 px-4 scroll-smooth scrollbar-thin scrollbar-thumb-white/50 scrollbar-track-white/10 hover:scrollbar-thumb-white/70 transition-all duration-500"
+                      style={{
+                        scrollbarWidth: "thin",
+                        scrollBehavior: "smooth",
+                      }}
+                    >
+                      {enrichedCategories.map((category, index) => (
+                        <Button
+                          key={category.id}
+                          variant={
+                            selectedCategory === category.id
+                              ? "default"
+                              : "outline"
+                          }
+                          size="sm"
+                          onClick={() => handleCategoryClick(category.id)}
+                          className={`flex-shrink-0 h-16 w-16 flex-col gap-1 transition-all duration-300 group ${
+                            selectedCategory === category.id
+                              ? "bg-white/30 hover:bg-white/40 text-white border-2 border-white/70 shadow-xl scale-110 backdrop-blur-sm"
+                              : "bg-white/20 hover:bg-white/30 text-white border border-white/50 hover:border-white/70 hover:scale-105 backdrop-blur-sm shadow-lg"
+                          }`}
+                          style={{
+                            animationDelay: `${index * 75}ms`,
+                            transform:
+                              selectedCategory === category.id
+                                ? "scale(1.1)"
+                                : "scale(1)",
+                          }}
+                        >
+                          <span
+                            className={`text-xl drop-shadow-md transition-transform duration-300 ${
+                              selectedCategory === category.id
+                                ? "scale-110"
+                                : "group-hover:scale-105"
+                            }`}
+                          >
+                            {category.icon}
+                          </span>
+                          <span className="text-xs font-bold text-center leading-tight drop-shadow-md tracking-wide">
+                            {category.name.split(" ")[0]}
+                          </span>
+
+                          {/* Premium Selection Indicator */}
+                          {selectedCategory === category.id && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full shadow-lg animate-pulse"></div>
+                          )}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Premium Bottom Shine Effect */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
+                </div>
+              </div>
+
+              {/* Right: Horizontal Stats Badges */}
+              <div className="flex gap-2 items-center">
+                <Badge className="bg-white/20 text-white px-2 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
+                  🌳 {wordsDatabase.length}
+                </Badge>
+                <Badge className="bg-white/20 text-white px-2 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
+                  🎯 {categories.length}
+                </Badge>
+                <Badge className="bg-white/20 text-white px-2 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
+                  ⭐ 3
+                </Badge>
+              </div>
             </div>
-            {searchTerm && (
-              <div className="mt-2 text-sm text-jungle-dark text-center font-medium">
-                🌳 Found {categories.length} jungle paths matching "{searchTerm}
-                " 🦋
-              </div>
-            )}
           </div>
         </div>
       </div>
