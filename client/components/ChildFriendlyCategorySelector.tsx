@@ -412,13 +412,12 @@ export function ChildFriendlyCategorySelector({
     ];
     setFloatingElements(elements);
 
-    // Show encouragement periodically
-    const encouragementTimer = setInterval(() => {
-      setShowEncouragement(true);
-      setTimeout(() => setShowEncouragement(false), 3000);
-    }, 10000);
-
-    return () => clearInterval(encouragementTimer);
+    // Encouragement popup disabled for better UX
+    // const encouragementTimer = setInterval(() => {
+    //   setShowEncouragement(true);
+    //   setTimeout(() => setShowEncouragement(false), 3000);
+    // }, 10000);
+    // return () => clearInterval(encouragementTimer);
   }, []);
 
   const handleCategoryClick = (categoryId: string) => {
