@@ -155,7 +155,12 @@ export const KidRegistrationNotification: React.FC<
   const floatingVariants = {
     float: {
       y: [-10, 10, -10],
-      transition: { duration: 3, repeat: Infinity, ease: "easeInOut", type: "tween" },
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+        type: "tween",
+      },
     },
   };
 
