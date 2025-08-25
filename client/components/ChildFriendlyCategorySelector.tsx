@@ -331,7 +331,7 @@ const enrichedCategories: Category[] = [
   {
     id: "colors",
     name: "Colors",
-    icon: "����",
+    icon: "🌈",
     color: "bg-rainbow",
     gradient: "from-coral-red via-sunshine to-jungle",
     wordCount: getWordsByCategory("colors").length,

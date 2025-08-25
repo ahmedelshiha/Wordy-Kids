@@ -211,7 +211,7 @@ const enrichedCategories: Category[] = [
   {
     id: "feelings",
     name: "Feelings",
-    icon: "��",
+    icon: "😊",
     color: "bg-educational-purple",
     gradient: "from-purple-400 to-purple-600",
     wordCount: getWordsByCategory("feelings").length,
@@ -1267,7 +1267,7 @@ export function EnhancedCategorySelector({
                         </div>
                         <div className="text-center">
                           <span className="text-orange-600 font-medium text-xs">
-                            ⭐ {category.difficultyBreakdown.medium}
+                            ��� {category.difficultyBreakdown.medium}
                           </span>
                         </div>
                       </div>
