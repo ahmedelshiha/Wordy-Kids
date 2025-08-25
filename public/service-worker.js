@@ -200,7 +200,73 @@ async function staleWhileRevalidate(request) {
   return cachedResponse || fetchPromise;
 }
 
+// Cache-first strategy for jungle sounds
+async function cacheFirstSounds(request) {
+  try {
+    const cachedResponse = await caches.match(request, { cacheName: SOUNDS_CACHE });
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    const networkResponse = await fetch(request);
+    if (networkResponse.status === 200) {
+      const cache = await caches.open(SOUNDS_CACHE);
+      await cache.put(request, networkResponse.clone());
+    }
+
+    return networkResponse;
+  } catch (error) {
+    console.error("[ServiceWorker] Sound cache error:", error);
+    // Return a silent audio response as fallback
+    return new Response(new ArrayBuffer(0), {
+      status: 200,
+      headers: { "Content-Type": "audio/mpeg" },
+    });
+  }
+}
+
+// Game state cache-first strategy
+async function gameStateCacheFirst(request) {
+  try {
+    const cachedResponse = await caches.match(request, { cacheName: GAME_STATE_CACHE });
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    const networkResponse = await fetch(request);
+    if (networkResponse.status === 200) {
+      const cache = await caches.open(GAME_STATE_CACHE);
+      await cache.put(request, networkResponse.clone());
+    }
+
+    return networkResponse;
+  } catch (error) {
+    console.error("[ServiceWorker] Game state cache error:", error);
+    // Return empty game state as fallback
+    return new Response(JSON.stringify({ error: "Offline game state unavailable" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+
 // Helper functions
+function isJungleSound(url) {
+  return (
+    url.includes("/sounds/") &&
+    (url.includes(".mp3") || url.includes(".wav") || url.includes(".ogg"))
+  );
+}
+
+function isGameStateRequest(url) {
+  return (
+    url.includes("jungle_word_library_game_state") ||
+    url.includes("jungle_analytics") ||
+    url.includes("/api/game-state") ||
+    url.includes("/api/progress")
+  );
+}
+
 function isStaticAsset(url) {
   return (
     STATIC_ASSETS.some((asset) => url.includes(asset)) ||
