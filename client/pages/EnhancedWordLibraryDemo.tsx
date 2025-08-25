@@ -150,9 +150,9 @@ export function EnhancedWordLibraryDemo() {
   if (showDemo) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-        <EnhancedWordLibrary
+        <JungleWordLibrary
           onBack={() => setShowDemo(false)}
-          userInterests={userInterests}
+          userProfile={{ interests: userInterests }}
           enableAdvancedFeatures={true}
           showMobileOptimizations={true}
         />
