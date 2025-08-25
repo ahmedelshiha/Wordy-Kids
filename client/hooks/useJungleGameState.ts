@@ -33,8 +33,14 @@ const getDeviceInfo = (): DeviceInfo => {
   const userAgent = navigator.userAgent;
   let deviceType: "mobile" | "tablet" | "desktop" = "desktop";
 
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
-    deviceType = /iPad|Android(?=.*\b(tablet|pad)\b)/i.test(userAgent) ? "tablet" : "mobile";
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent,
+    )
+  ) {
+    deviceType = /iPad|Android(?=.*\b(tablet|pad)\b)/i.test(userAgent)
+      ? "tablet"
+      : "mobile";
   }
 
   return {
@@ -62,7 +68,11 @@ class AnalyticsManager {
     this.providers.push(provider);
   }
 
-  track(eventName: string, eventProperties: Record<string, any> = {}, userProperties?: Record<string, any>) {
+  track(
+    eventName: string,
+    eventProperties: Record<string, any> = {},
+    userProperties?: Record<string, any>,
+  ) {
     const event: AnalyticsEvent = {
       eventName,
       eventProperties: {
@@ -76,7 +86,7 @@ class AnalyticsManager {
     };
 
     // Track with all registered providers
-    this.providers.forEach(provider => {
+    this.providers.forEach((provider) => {
       try {
         provider.track(event);
       } catch (error) {
@@ -86,21 +96,27 @@ class AnalyticsManager {
   }
 
   identify(userId: string, userProperties: Record<string, any>) {
-    this.providers.forEach(provider => {
+    this.providers.forEach((provider) => {
       try {
         provider.identify(userId, userProperties);
       } catch (error) {
-        console.error(`Analytics provider ${provider.name} identify failed:`, error);
+        console.error(
+          `Analytics provider ${provider.name} identify failed:`,
+          error,
+        );
       }
     });
   }
 
   setUserProperties(properties: Record<string, any>) {
-    this.providers.forEach(provider => {
+    this.providers.forEach((provider) => {
       try {
         provider.setUserProperties(properties);
       } catch (error) {
-        console.error(`Analytics provider ${provider.name} setUserProperties failed:`, error);
+        console.error(
+          `Analytics provider ${provider.name} setUserProperties failed:`,
+          error,
+        );
       }
     });
   }
@@ -116,7 +132,9 @@ const internalAnalyticsProvider: AnalyticsProvider = {
   name: "internal",
   track: (event: AnalyticsEvent) => {
     try {
-      const existingEvents = JSON.parse(localStorage.getItem("jungle_analytics_events") || "[]");
+      const existingEvents = JSON.parse(
+        localStorage.getItem("jungle_analytics_events") || "[]",
+      );
       existingEvents.push(event);
 
       // Keep only last 1000 events to prevent storage bloat
@@ -124,22 +142,33 @@ const internalAnalyticsProvider: AnalyticsProvider = {
         existingEvents.splice(0, existingEvents.length - 1000);
       }
 
-      localStorage.setItem("jungle_analytics_events", JSON.stringify(existingEvents));
+      localStorage.setItem(
+        "jungle_analytics_events",
+        JSON.stringify(existingEvents),
+      );
     } catch (error) {
       console.error("Internal analytics tracking failed:", error);
     }
   },
   identify: (userId: string, userProperties: Record<string, any>) => {
     try {
-      localStorage.setItem("jungle_analytics_user", JSON.stringify({ userId, ...userProperties }));
+      localStorage.setItem(
+        "jungle_analytics_user",
+        JSON.stringify({ userId, ...userProperties }),
+      );
     } catch (error) {
       console.error("Internal analytics identify failed:", error);
     }
   },
   setUserProperties: (properties: Record<string, any>) => {
     try {
-      const existingUser = JSON.parse(localStorage.getItem("jungle_analytics_user") || "{}");
-      localStorage.setItem("jungle_analytics_user", JSON.stringify({ ...existingUser, ...properties }));
+      const existingUser = JSON.parse(
+        localStorage.getItem("jungle_analytics_user") || "{}",
+      );
+      localStorage.setItem(
+        "jungle_analytics_user",
+        JSON.stringify({ ...existingUser, ...properties }),
+      );
     } catch (error) {
       console.error("Internal analytics setUserProperties failed:", error);
     }
@@ -405,9 +434,11 @@ export const useJungleGameState = () => {
           currentStreak: gameState.streak,
           totalScore: gameState.score,
           categoriesExplored: currentSession.categoriesExplored.size,
-          accuracy: currentSession.wordsReviewed > 0
-            ? (currentSession.wordsLearned / currentSession.wordsReviewed) * 100
-            : 100,
+          accuracy:
+            currentSession.wordsReviewed > 0
+              ? (currentSession.wordsLearned / currentSession.wordsReviewed) *
+                100
+              : 100,
         });
       }
       saveGameState();
@@ -449,9 +480,11 @@ export const useJungleGameState = () => {
           maxStreak: currentSession.maxStreak,
           totalScore: currentSession.totalScore,
           endReason: "page_unload",
-          finalAccuracy: currentSession.wordsReviewed > 0
-            ? (currentSession.wordsLearned / currentSession.wordsReviewed) * 100
-            : 100,
+          finalAccuracy:
+            currentSession.wordsReviewed > 0
+              ? (currentSession.wordsLearned / currentSession.wordsReviewed) *
+                100
+              : 100,
         });
       }
     };
@@ -543,7 +576,8 @@ export const useJungleGameState = () => {
     // Track session start with device info
     analyticsManager.track("session_started", {
       sessionStartTime: new Date().toISOString(),
-      totalSessions: parseInt(localStorage.getItem(`${ANALYTICS_KEY}_sessions`) || "0") + 1,
+      totalSessions:
+        parseInt(localStorage.getItem(`${ANALYTICS_KEY}_sessions`) || "0") + 1,
       playerLevel: gameState.level,
       totalScore: gameState.score,
       masteredWords: gameState.masteredWords.size,
@@ -681,7 +715,7 @@ export const useJungleGameState = () => {
         rewardsEarned: {
           score: 25,
           gems: 1,
-          experience: 20
+          experience: 20,
         },
         difficulty: "unknown", // Could be enhanced with word difficulty data
         category: "unknown", // Could be enhanced with word category data
@@ -769,9 +803,12 @@ export const useJungleGameState = () => {
         streakBroken: !correct && gameState.streak > 0,
         sessionWordsReviewed: currentSession.wordsReviewed + 1,
         totalWordsReviewedToday: gameState.wordsReviewedToday + 1,
-        accuracy: currentSession.wordsReviewed > 0
-          ? ((currentSession.wordsLearned + (correct ? 1 : 0)) / (currentSession.wordsReviewed + 1)) * 100
-          : 100,
+        accuracy:
+          currentSession.wordsReviewed > 0
+            ? ((currentSession.wordsLearned + (correct ? 1 : 0)) /
+                (currentSession.wordsReviewed + 1)) *
+              100
+            : 100,
       });
 
       debouncedSave();
@@ -947,10 +984,16 @@ export const useJungleGameState = () => {
   // Export all analytics data (for GDPR compliance)
   const exportAnalyticsData = useCallback(() => {
     try {
-      const analyticsEvents = JSON.parse(localStorage.getItem("jungle_analytics_events") || "[]");
-      const userData = JSON.parse(localStorage.getItem("jungle_analytics_user") || "{}");
+      const analyticsEvents = JSON.parse(
+        localStorage.getItem("jungle_analytics_events") || "[]",
+      );
+      const userData = JSON.parse(
+        localStorage.getItem("jungle_analytics_user") || "{}",
+      );
       const gameData = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      const analyticsData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || "{}");
+      const analyticsData = JSON.parse(
+        localStorage.getItem(ANALYTICS_KEY) || "{}",
+      );
 
       const exportData = {
         exportDate: new Date().toISOString(),
@@ -959,8 +1002,12 @@ export const useJungleGameState = () => {
         gameProgress: {
           level: gameData.level,
           score: gameData.score,
-          masteredWords: gameData.masteredWords ? Array.from(gameData.masteredWords) : [],
-          favoriteWords: gameData.favoriteWords ? Array.from(gameData.favoriteWords) : [],
+          masteredWords: gameData.masteredWords
+            ? Array.from(gameData.masteredWords)
+            : [],
+          favoriteWords: gameData.favoriteWords
+            ? Array.from(gameData.favoriteWords)
+            : [],
           achievements: gameData.achievements || [],
           totalPlayTime: gameData.totalPlayTime,
           lastPlayDate: gameData.lastPlayDate,
@@ -974,12 +1021,12 @@ export const useJungleGameState = () => {
 
       // Create downloadable file
       const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-        type: "application/json"
+        type: "application/json",
       });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `jungle-word-library-data-${new Date().toISOString().split('T')[0]}.json`;
+      link.download = `jungle-word-library-data-${new Date().toISOString().split("T")[0]}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

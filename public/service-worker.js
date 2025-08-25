@@ -42,14 +42,12 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     Promise.all([
       // Cache static assets
-      caches
-        .open(CACHE_NAME)
-        .then((cache) => {
-          console.log("[ServiceWorker] Caching static assets");
-          return cache.addAll(
-            STATIC_ASSETS.map((url) => new Request(url, { cache: "reload" })),
-          );
-        }),
+      caches.open(CACHE_NAME).then((cache) => {
+        console.log("[ServiceWorker] Caching static assets");
+        return cache.addAll(
+          STATIC_ASSETS.map((url) => new Request(url, { cache: "reload" })),
+        );
+      }),
 
       // Cache jungle sounds for offline play
       caches
@@ -61,17 +59,20 @@ self.addEventListener("install", (event) => {
           );
         })
         .catch((error) => {
-          console.warn("[ServiceWorker] Some jungle sounds could not be cached:", error);
+          console.warn(
+            "[ServiceWorker] Some jungle sounds could not be cached:",
+            error,
+          );
           // Don't fail the entire install if some sounds are missing
         }),
     ])
-    .then(() => {
-      console.log("[ServiceWorker] All assets cached successfully");
-      return self.skipWaiting(); // Force activation
-    })
-    .catch((error) => {
-      console.error("[ServiceWorker] Error during installation:", error);
-    }),
+      .then(() => {
+        console.log("[ServiceWorker] All assets cached successfully");
+        return self.skipWaiting(); // Force activation
+      })
+      .catch((error) => {
+        console.error("[ServiceWorker] Error during installation:", error);
+      }),
   );
 });
 
@@ -79,7 +80,12 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   console.log("[ServiceWorker] Activate event");
 
-  const currentCaches = [CACHE_NAME, DYNAMIC_CACHE, SOUNDS_CACHE, GAME_STATE_CACHE];
+  const currentCaches = [
+    CACHE_NAME,
+    DYNAMIC_CACHE,
+    SOUNDS_CACHE,
+    GAME_STATE_CACHE,
+  ];
 
   event.waitUntil(
     caches
@@ -203,7 +209,9 @@ async function staleWhileRevalidate(request) {
 // Cache-first strategy for jungle sounds
 async function cacheFirstSounds(request) {
   try {
-    const cachedResponse = await caches.match(request, { cacheName: SOUNDS_CACHE });
+    const cachedResponse = await caches.match(request, {
+      cacheName: SOUNDS_CACHE,
+    });
     if (cachedResponse) {
       return cachedResponse;
     }
@@ -228,7 +236,9 @@ async function cacheFirstSounds(request) {
 // Game state cache-first strategy
 async function gameStateCacheFirst(request) {
   try {
-    const cachedResponse = await caches.match(request, { cacheName: GAME_STATE_CACHE });
+    const cachedResponse = await caches.match(request, {
+      cacheName: GAME_STATE_CACHE,
+    });
     if (cachedResponse) {
       return cachedResponse;
     }
@@ -243,10 +253,13 @@ async function gameStateCacheFirst(request) {
   } catch (error) {
     console.error("[ServiceWorker] Game state cache error:", error);
     // Return empty game state as fallback
-    return new Response(JSON.stringify({ error: "Offline game state unavailable" }), {
-      status: 503,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Offline game state unavailable" }),
+      {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 }
 

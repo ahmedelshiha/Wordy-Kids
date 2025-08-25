@@ -83,7 +83,7 @@ interface JungleWordLibraryProps {
 
 type ViewMode =
   | "categories"
-  | "words" 
+  | "words"
   | "vocabulary"
   | "achievements"
   | "settings";
@@ -100,7 +100,8 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   // Core state
   const [viewMode, setViewMode] = useState<ViewMode>("categories");
   const [wordViewMode, setWordViewMode] = useState<WordViewMode>("grid");
-  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(initialCategory);
   const [currentWords, setCurrentWords] = useState<Word[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -132,11 +133,12 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
         // Load sound pack
         await audioService.loadSoundPack("jungle-adventure");
-        
+
         // Initialize words
-        const words = selectedCategory === "all" 
-          ? wordsDatabase 
-          : getWordsByCategory(selectedCategory);
+        const words =
+          selectedCategory === "all"
+            ? wordsDatabase
+            : getWordsByCategory(selectedCategory);
         setCurrentWords(words);
 
         // Start ambient sounds if enabled
@@ -174,72 +176,80 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   }, [selectedCategory, gameMode]);
 
   // Handlers
-  const handleCategorySelect = useCallback((category: string) => {
-    setSelectedCategory(category);
-    setCurrentWordIndex(0);
-    
-    const words = category === "all" 
-      ? wordsDatabase 
-      : getWordsByCategory(category);
-    setCurrentWords(words);
-    
-    setViewMode("words");
-    
-    // Play category selection sound
-    audioService.playSound("category-select");
-    
-    // Announce for screen readers
-    if (announcementRef.current) {
-      announcementRef.current.textContent = `Selected ${category} category with ${words.length} words`;
-    }
-  }, [audioService]);
+  const handleCategorySelect = useCallback(
+    (category: string) => {
+      setSelectedCategory(category);
+      setCurrentWordIndex(0);
 
-  const handleWordInteraction = useCallback((word: Word, action: string) => {
-    switch (action) {
-      case "pronounce":
-        audioService.pronounceWord(word.word, {
-          rate: userProfile?.age && userProfile.age < 8 ? 0.8 : 1.0,
-          pitch: 1.1,
-        });
-        break;
-      case "master":
-        gameState.masterWord(word.id);
-        gameState.updateScore(10);
-        gameState.addJungleGems(2);
-        audioService.playSound("achievement");
-        animations.triggerCelebration("word-mastered");
-        break;
-      case "favorite":
-        gameState.toggleFavorite(word.id);
-        audioService.playSound("button-click");
-        break;
-      case "share":
-        // Implement sharing logic
-        audioService.playSound("navigation");
-        break;
-    }
+      const words =
+        category === "all" ? wordsDatabase : getWordsByCategory(category);
+      setCurrentWords(words);
 
-    // Track interaction
-    enhancedAnalyticsSystem.trackEvent({
-      type: "word_interaction",
-      data: {
-        wordId: word.id,
-        word: word.word,
-        action,
-        category: word.category,
-        difficulty: word.difficulty,
-      },
-    });
-  }, [audioService, gameState, animations, userProfile]);
+      setViewMode("words");
 
-  const handleViewModeChange = useCallback((newViewMode: ViewMode) => {
-    setViewMode(newViewMode);
-    audioService.playSound("view-change");
-    
-    if (announcementRef.current) {
-      announcementRef.current.textContent = `Changed to ${newViewMode} view`;
-    }
-  }, [audioService]);
+      // Play category selection sound
+      audioService.playSound("category-select");
+
+      // Announce for screen readers
+      if (announcementRef.current) {
+        announcementRef.current.textContent = `Selected ${category} category with ${words.length} words`;
+      }
+    },
+    [audioService],
+  );
+
+  const handleWordInteraction = useCallback(
+    (word: Word, action: string) => {
+      switch (action) {
+        case "pronounce":
+          audioService.pronounceWord(word.word, {
+            rate: userProfile?.age && userProfile.age < 8 ? 0.8 : 1.0,
+            pitch: 1.1,
+          });
+          break;
+        case "master":
+          gameState.masterWord(word.id);
+          gameState.updateScore(10);
+          gameState.addJungleGems(2);
+          audioService.playSound("achievement");
+          animations.triggerCelebration("word-mastered");
+          break;
+        case "favorite":
+          gameState.toggleFavorite(word.id);
+          audioService.playSound("button-click");
+          break;
+        case "share":
+          // Implement sharing logic
+          audioService.playSound("navigation");
+          break;
+      }
+
+      // Track interaction
+      enhancedAnalyticsSystem.trackEvent({
+        type: "word_interaction",
+        data: {
+          wordId: word.id,
+          word: word.word,
+          action,
+          category: word.category,
+          difficulty: word.difficulty,
+        },
+      });
+    },
+    [audioService, gameState, animations, userProfile],
+  );
+
+  const handleViewModeChange = useCallback(
+    (newViewMode: ViewMode) => {
+      setViewMode(newViewMode);
+      audioService.playSound("view-change");
+
+      if (announcementRef.current) {
+        announcementRef.current.textContent = `Changed to ${newViewMode} view`;
+      }
+    },
+    [audioService],
+  );
 
   const getCurrentWord = () => currentWords[currentWordIndex] || null;
   const filteredWords = wordFiltering.filteredWords;
@@ -305,7 +315,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                 🌴 Jungle Word Library
               </h1>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               {/* Game Stats */}
               <div className="hidden sm:flex items-center space-x-4 text-sm">
@@ -427,7 +437,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
               <Card className="p-4">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Difficulty</label>
+                    <label className="block text-sm font-medium mb-2">
+                      Difficulty
+                    </label>
                     <select
                       value={difficultyFilter}
                       onChange={(e) => setDifficultyFilter(e.target.value)}
@@ -444,10 +456,13 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
             )}
 
             {/* Words Grid/List */}
-            <div className={wordViewMode === "grid" 
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              : "space-y-4"
-            }>
+            <div
+              className={
+                wordViewMode === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                  : "space-y-4"
+              }
+            >
               {filteredWords.length > 0 ? (
                 filteredWords.map((word) => (
                   <JungleWordCard
@@ -480,7 +495,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
             masteredWords={Array.from(gameState.gameState.masteredWords)}
             favoriteWords={Array.from(gameState.gameState.favoriteWords)}
             onWordReview={(wordId) => {
-              const word = wordsDatabase.find(w => w.id === wordId);
+              const word = wordsDatabase.find((w) => w.id === wordId);
               if (word) handleWordInteraction(word, "pronounce");
             }}
           />
@@ -493,8 +508,10 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                 <div className="text-center">
                   <div className="text-4xl mb-2">{achievement.emoji}</div>
                   <h3 className="font-bold text-lg mb-2">{achievement.name}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{achievement.description}</p>
-                  <Badge 
+                  <p className="text-gray-600 text-sm mb-4">
+                    {achievement.description}
+                  </p>
+                  <Badge
                     variant={achievement.unlockedAt ? "default" : "secondary"}
                     className={achievement.unlockedAt ? "bg-green-500" : ""}
                   >

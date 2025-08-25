@@ -88,7 +88,11 @@ const IndexSimplified: React.FC = () => {
             <div className="flex items-center justify-center gap-4 mb-6">
               <motion.div
                 animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="text-6xl"
               >
                 🌴
@@ -98,13 +102,17 @@ const IndexSimplified: React.FC = () => {
               </h1>
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="text-6xl"
               >
                 🦁
               </motion.div>
             </div>
-            
+
             {user && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -113,7 +121,10 @@ const IndexSimplified: React.FC = () => {
                 className="flex items-center justify-center gap-2 mb-4"
               >
                 <span className="text-lg text-green-700">Welcome back,</span>
-                <Badge variant="outline" className="text-green-800 border-green-300">
+                <Badge
+                  variant="outline"
+                  className="text-green-800 border-green-300"
+                >
                   <Crown className="w-4 h-4 mr-1" />
                   {user.name || "Adventure Explorer"}
                 </Badge>
@@ -130,15 +141,14 @@ const IndexSimplified: React.FC = () => {
           >
             {/* Start Adventure Card */}
             <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-green-200 hover:border-green-400">
-              <CardContent 
+              <CardContent
                 className="p-6 text-center"
                 onClick={handleStartAdventure}
               >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="mb-4"
-                >
-                  <div className="text-6xl mb-4 group-hover:animate-bounce">🌿</div>
+                <motion.div whileHover={{ scale: 1.05 }} className="mb-4">
+                  <div className="text-6xl mb-4 group-hover:animate-bounce">
+                    🌿
+                  </div>
                   <h3 className="text-xl font-bold text-green-800 mb-2">
                     Start Word Adventure
                   </h3>
@@ -155,15 +165,14 @@ const IndexSimplified: React.FC = () => {
 
             {/* Parent Dashboard Card */}
             <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-blue-200 hover:border-blue-400">
-              <CardContent 
+              <CardContent
                 className="p-6 text-center"
                 onClick={handleParentDashboard}
               >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="mb-4"
-                >
-                  <div className="text-6xl mb-4 group-hover:animate-pulse">👨‍👩‍👧‍👦</div>
+                <motion.div whileHover={{ scale: 1.05 }} className="mb-4">
+                  <div className="text-6xl mb-4 group-hover:animate-pulse">
+                    👨‍👩‍👧‍👦
+                  </div>
                   <h3 className="text-xl font-bold text-blue-800 mb-2">
                     Parent Dashboard
                   </h3>
@@ -171,7 +180,10 @@ const IndexSimplified: React.FC = () => {
                     Track progress and manage family settings
                   </p>
                 </motion.div>
-                <Button variant="outline" className="w-full border-blue-300 text-blue-700 hover:bg-blue-50">
+                <Button
+                  variant="outline"
+                  className="w-full border-blue-300 text-blue-700 hover:bg-blue-50"
+                >
                   <Users className="w-4 h-4 mr-2" />
                   View Progress
                 </Button>
@@ -180,15 +192,11 @@ const IndexSimplified: React.FC = () => {
 
             {/* Settings Card */}
             <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-purple-200 hover:border-purple-400">
-              <CardContent 
-                className="p-6 text-center"
-                onClick={handleSettings}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="mb-4"
-                >
-                  <div className="text-6xl mb-4 group-hover:animate-spin">⚙️</div>
+              <CardContent className="p-6 text-center" onClick={handleSettings}>
+                <motion.div whileHover={{ scale: 1.05 }} className="mb-4">
+                  <div className="text-6xl mb-4 group-hover:animate-spin">
+                    ⚙️
+                  </div>
                   <h3 className="text-xl font-bold text-purple-800 mb-2">
                     Settings
                   </h3>
@@ -196,7 +204,10 @@ const IndexSimplified: React.FC = () => {
                     Customize your learning experience
                   </p>
                 </motion.div>
-                <Button variant="outline" className="w-full border-purple-300 text-purple-700 hover:bg-purple-50">
+                <Button
+                  variant="outline"
+                  className="w-full border-purple-300 text-purple-700 hover:bg-purple-50"
+                >
                   <Settings className="w-4 h-4 mr-2" />
                   Configure
                 </Button>
@@ -205,15 +216,11 @@ const IndexSimplified: React.FC = () => {
 
             {/* Help Card */}
             <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-orange-200 hover:border-orange-400 md:col-span-2 lg:col-span-1">
-              <CardContent 
-                className="p-6 text-center"
-                onClick={handleHelp}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="mb-4"
-                >
-                  <div className="text-6xl mb-4 group-hover:animate-bounce">❓</div>
+              <CardContent className="p-6 text-center" onClick={handleHelp}>
+                <motion.div whileHover={{ scale: 1.05 }} className="mb-4">
+                  <div className="text-6xl mb-4 group-hover:animate-bounce">
+                    ❓
+                  </div>
                   <h3 className="text-xl font-bold text-orange-800 mb-2">
                     Help & Tutorials
                   </h3>
@@ -221,7 +228,10 @@ const IndexSimplified: React.FC = () => {
                     Learn how to use the jungle library
                   </p>
                 </motion.div>
-                <Button variant="outline" className="w-full border-orange-300 text-orange-700 hover:bg-orange-50">
+                <Button
+                  variant="outline"
+                  className="w-full border-orange-300 text-orange-700 hover:bg-orange-50"
+                >
                   <HelpCircle className="w-4 h-4 mr-2" />
                   Get Help
                 </Button>
@@ -242,7 +252,9 @@ const IndexSimplified: React.FC = () => {
                   <div className="flex items-center justify-center gap-4 text-sm">
                     <div className="flex items-center gap-1">
                       <Sparkles className="w-4 h-4 text-yellow-500" />
-                      <span className="text-gray-600">Ready for adventure!</span>
+                      <span className="text-gray-600">
+                        Ready for adventure!
+                      </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Leaf className="w-4 h-4 text-green-500" />
@@ -260,11 +272,8 @@ const IndexSimplified: React.FC = () => {
 
   // Jungle Word Library view
   return (
-    <ErrorBoundary
-      fallbackType="parent"
-      componentName="JungleWordLibrary"
-    >
-      <JungleWordLibrary 
+    <ErrorBoundary fallbackType="parent" componentName="JungleWordLibrary">
+      <JungleWordLibrary
         onBack={handleBackToMenu}
         userProfile={{
           name: user?.name,

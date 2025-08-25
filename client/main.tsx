@@ -6,11 +6,17 @@ import App from "./App";
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
-      const registration = await navigator.serviceWorker.register("/service-worker.js", {
-        scope: "/",
-      });
+      const registration = await navigator.serviceWorker.register(
+        "/service-worker.js",
+        {
+          scope: "/",
+        },
+      );
 
-      console.log("[App] Service Worker registered successfully:", registration);
+      console.log(
+        "[App] Service Worker registered successfully:",
+        registration,
+      );
 
       // Handle updates
       registration.addEventListener("updatefound", () => {
@@ -52,7 +58,6 @@ if ("serviceWorker" in navigator) {
           registration.sync.register("analytics-sync").catch(console.error);
         });
       }
-
     } catch (error) {
       console.error("[App] Service Worker registration failed:", error);
     }

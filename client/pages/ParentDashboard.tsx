@@ -13,7 +13,9 @@ interface ParentDashboardProps {
   className?: string;
 }
 
-const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => {
+const ParentDashboard: React.FC<ParentDashboardProps> = ({
+  className = "",
+}) => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +36,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
     const validateAccess = async () => {
       try {
         setIsLoading(true);
-        
+
         // Check if user is authenticated
         if (!isAuthenticated) {
           navigate("/login");
@@ -43,9 +45,11 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
 
         // Simulate COPPA/GDPR compliance check
         // In a real app, this would verify parental consent and data processing agreements
-        const hasValidConsent = localStorage.getItem("parental_consent") === "granted";
-        const hasDataProcessingAgreement = localStorage.getItem("data_processing_consent") === "granted";
-        
+        const hasValidConsent =
+          localStorage.getItem("parental_consent") === "granted";
+        const hasDataProcessingAgreement =
+          localStorage.getItem("data_processing_consent") === "granted";
+
         if (!hasValidConsent || !hasDataProcessingAgreement) {
           // Redirect to consent flow
           setHasAccess(false);
@@ -81,7 +85,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
     // In a real app, this would show a proper consent flow
     localStorage.setItem("parental_consent", "granted");
     localStorage.setItem("data_processing_consent", "granted");
-    
+
     enhancedAnalyticsSystem.trackEvent({
       type: "parental_consent_granted",
       data: {
@@ -89,7 +93,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
         parentId: user?.id || "anonymous",
       },
     });
-    
+
     setHasAccess(true);
   };
 
@@ -127,17 +131,22 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
               <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg">
                 <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
-                  <p className="font-medium text-blue-800 mb-1">COPPA Compliance</p>
+                  <p className="font-medium text-blue-800 mb-1">
+                    COPPA Compliance
+                  </p>
                   <p className="text-blue-700">
-                    We need your consent to collect and process your child's learning data
-                    in compliance with the Children's Online Privacy Protection Act.
+                    We need your consent to collect and process your child's
+                    learning data in compliance with the Children's Online
+                    Privacy Protection Act.
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 bg-purple-50 rounded-lg">
                 <Shield className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
-                  <p className="font-medium text-purple-800 mb-1">GDPR Compliance</p>
+                  <p className="font-medium text-purple-800 mb-1">
+                    GDPR Compliance
+                  </p>
                   <p className="text-purple-700">
                     Your consent is required for data processing under the
                     General Data Protection Regulation.
@@ -146,25 +155,22 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
               </div>
             </div>
             <div className="space-y-3">
-              <Button 
+              <Button
                 onClick={handleGrantConsent}
                 className="w-full bg-green-600 hover:bg-green-700"
               >
                 <Shield className="w-4 h-4 mr-2" />
                 Grant Consent & Continue
               </Button>
-              <Button 
-                variant="outline"
-                onClick={handleBack}
-                className="w-full"
-              >
+              <Button variant="outline" onClick={handleBack} className="w-full">
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 Back to App
               </Button>
             </div>
             <p className="text-xs text-gray-500">
-              By granting consent, you agree to our privacy policy and data processing terms.
-              You can withdraw consent at any time from the dashboard settings.
+              By granting consent, you agree to our privacy policy and data
+              processing terms. You can withdraw consent at any time from the
+              dashboard settings.
             </p>
           </CardContent>
         </Card>
@@ -174,11 +180,10 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ className = "" }) => 
 
   // Main dashboard
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-blue-50 ${className}`}>
-      <ErrorBoundary
-        fallbackType="parent"
-        componentName="ParentDashboard"
-      >
+    <div
+      className={`min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-blue-50 ${className}`}
+    >
+      <ErrorBoundary fallbackType="parent" componentName="ParentDashboard">
         <JungleAdventureParentDashboard onBack={handleBack} />
       </ErrorBoundary>
     </div>

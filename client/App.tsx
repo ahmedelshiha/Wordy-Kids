@@ -160,7 +160,10 @@ const App = () => {
                             fallbackType="parent"
                             componentName="JungleWordLibrary"
                           >
-                            <JungleWordLibrary enableAdvancedFeatures={true} showMobileOptimizations={true} />
+                            <JungleWordLibrary
+                              enableAdvancedFeatures={true}
+                              showMobileOptimizations={true}
+                            />
                           </ErrorBoundary>
                         }
                       />

@@ -4,40 +4,40 @@ import { Progress } from "@/components/ui/progress";
 import { Loader2, TreePine, Users, Settings } from "lucide-react";
 
 // Lazy load heavy components to improve initial page load
-export const LazyJungleWordLibrary = lazy(() => 
-  import("./JungleWordLibrarySimplified").then(module => ({
-    default: module.JungleWordLibrary
-  }))
+export const LazyJungleWordLibrary = lazy(() =>
+  import("./JungleWordLibrarySimplified").then((module) => ({
+    default: module.JungleWordLibrary,
+  })),
 );
 
-export const LazyJungleAdventureParentDashboard = lazy(() => 
-  import("./JungleAdventureParentDashboard").then(module => ({
-    default: module.JungleAdventureParentDashboard
-  }))
+export const LazyJungleAdventureParentDashboard = lazy(() =>
+  import("./JungleAdventureParentDashboard").then((module) => ({
+    default: module.JungleAdventureParentDashboard,
+  })),
 );
 
-export const LazyEnhancedJungleQuizAdventure = lazy(() => 
-  import("./games/EnhancedJungleQuizAdventure").then(module => ({
-    default: module.EnhancedJungleQuizAdventure
-  }))
+export const LazyEnhancedJungleQuizAdventure = lazy(() =>
+  import("./games/EnhancedJungleQuizAdventure").then((module) => ({
+    default: module.EnhancedJungleQuizAdventure,
+  })),
 );
 
-export const LazyGameHub = lazy(() => 
-  import("./games/GameHub").then(module => ({
-    default: module.GameHub
-  }))
+export const LazyGameHub = lazy(() =>
+  import("./games/GameHub").then((module) => ({
+    default: module.GameHub,
+  })),
 );
 
-export const LazyInteractiveJungleMap = lazy(() => 
-  import("./InteractiveJungleMap").then(module => ({
-    default: module.InteractiveJungleMap
-  }))
+export const LazyInteractiveJungleMap = lazy(() =>
+  import("./InteractiveJungleMap").then((module) => ({
+    default: module.InteractiveJungleMap,
+  })),
 );
 
-export const LazyFamilyAchievementsTimeline = lazy(() => 
-  import("./FamilyAchievementsTimeline").then(module => ({
-    default: module.FamilyAchievementsTimeline
-  }))
+export const LazyFamilyAchievementsTimeline = lazy(() =>
+  import("./FamilyAchievementsTimeline").then((module) => ({
+    default: module.FamilyAchievementsTimeline,
+  })),
 );
 
 // Loading fallback components with branded jungle theme
@@ -46,9 +46,9 @@ interface LoadingFallbackProps {
   message?: string;
 }
 
-export const LoadingFallback: React.FC<LoadingFallbackProps> = ({ 
-  type = "generic", 
-  message 
+export const LoadingFallback: React.FC<LoadingFallbackProps> = ({
+  type = "generic",
+  message,
 }) => {
   const getLoadingContent = () => {
     switch (type) {
@@ -90,24 +90,18 @@ export const LoadingFallback: React.FC<LoadingFallbackProps> = ({
       <Card className="w-full max-w-md">
         <CardContent className="p-8 text-center">
           <div className="mb-6">
-            <div className="text-6xl mb-4 animate-bounce">
-              {content.emoji}
-            </div>
-            <div className="flex justify-center mb-4">
-              {content.icon}
-            </div>
+            <div className="text-6xl mb-4 animate-bounce">{content.emoji}</div>
+            <div className="flex justify-center mb-4">{content.icon}</div>
           </div>
-          
+
           <h2 className="text-xl font-bold text-gray-800 mb-2">
             {content.title}
           </h2>
-          
-          <p className="text-gray-600 mb-6">
-            {content.description}
-          </p>
-          
+
+          <p className="text-gray-600 mb-6">{content.description}</p>
+
           <Progress value={65} className="w-full h-2 mb-4" />
-          
+
           <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
             <Loader2 className="w-4 h-4 animate-spin" />
             <span>Loading components...</span>
@@ -134,9 +128,7 @@ export const EnhancedSuspense: React.FC<EnhancedSuspenseProps> = ({
 }) => {
   return (
     <Suspense
-      fallback={
-        fallback || <LoadingFallback type={type} message={message} />
-      }
+      fallback={fallback || <LoadingFallback type={type} message={message} />}
     >
       {children}
     </Suspense>
@@ -161,7 +153,9 @@ export const preloadCriticalComponents = () => {
 };
 
 // Preload on mouseover/focus for instant navigation
-export const usePreloadOnHover = (componentName: keyof typeof preloadComponents) => {
+export const usePreloadOnHover = (
+  componentName: keyof typeof preloadComponents,
+) => {
   const handlePreload = () => {
     preloadComponents[componentName]().catch(() => {
       // Silently fail if preload fails
@@ -189,7 +183,7 @@ export const ResourceHints: React.FC = () => {
     // Preload critical jungle sounds
     addResourceHint("/sounds/jungle-birds.mp3", "preload", "audio");
     addResourceHint("/sounds/ui/voice-preview.mp3", "preload", "audio");
-    
+
     // Prefetch likely navigation targets
     addResourceHint("/jungle-library", "prefetch");
     addResourceHint("/parent-dashboard", "prefetch");
