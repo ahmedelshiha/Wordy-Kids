@@ -35,26 +35,43 @@ const DYNAMIC_CACHE = "jungle-word-library-dynamic-v2";
 const SOUNDS_CACHE = "jungle-sounds-v1";
 const GAME_STATE_CACHE = "jungle-game-state-v1";
 
-// Install event - cache static assets
+// Install event - cache static assets and jungle sounds
 self.addEventListener("install", (event) => {
   console.log("[ServiceWorker] Install event");
 
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => {
-        console.log("[ServiceWorker] Caching static assets");
-        return cache.addAll(
-          STATIC_ASSETS.map((url) => new Request(url, { cache: "reload" })),
-        );
-      })
-      .then(() => {
-        console.log("[ServiceWorker] Static assets cached successfully");
-        return self.skipWaiting(); // Force activation
-      })
-      .catch((error) => {
-        console.error("[ServiceWorker] Error caching static assets:", error);
-      }),
+    Promise.all([
+      // Cache static assets
+      caches
+        .open(CACHE_NAME)
+        .then((cache) => {
+          console.log("[ServiceWorker] Caching static assets");
+          return cache.addAll(
+            STATIC_ASSETS.map((url) => new Request(url, { cache: "reload" })),
+          );
+        }),
+
+      // Cache jungle sounds for offline play
+      caches
+        .open(SOUNDS_CACHE)
+        .then((cache) => {
+          console.log("[ServiceWorker] Caching jungle sounds");
+          return cache.addAll(
+            JUNGLE_SOUNDS.map((url) => new Request(url, { cache: "reload" })),
+          );
+        })
+        .catch((error) => {
+          console.warn("[ServiceWorker] Some jungle sounds could not be cached:", error);
+          // Don't fail the entire install if some sounds are missing
+        }),
+    ])
+    .then(() => {
+      console.log("[ServiceWorker] All assets cached successfully");
+      return self.skipWaiting(); // Force activation
+    })
+    .catch((error) => {
+      console.error("[ServiceWorker] Error during installation:", error);
+    }),
   );
 });
 
