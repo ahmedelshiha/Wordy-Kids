@@ -535,15 +535,15 @@ export function ChildFriendlyCategorySelector({
                 </p>
               </div>
 
-              {/* Middle: Quick Categories Selection */}
-              <div className="flex-1 min-w-0">
+              {/* Middle: Quick Categories Selection (Top 6 Essential) */}
+              <div className="flex-1 min-w-0 max-w-md">
                 <div className="relative">
                   {/* Gradient fade edges for better UX */}
-                  <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-jungle to-transparent z-10 pointer-events-none"></div>
-                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-sunshine to-transparent z-10 pointer-events-none"></div>
+                  <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-r from-jungle to-transparent z-10 pointer-events-none"></div>
+                  <div className="absolute right-0 top-0 bottom-0 w-3 bg-gradient-to-l from-sunshine to-transparent z-10 pointer-events-none"></div>
 
-                  <div className="flex gap-2 overflow-x-auto overflow-y-hidden py-2 px-2 scroll-smooth scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50 transition-colors">
-                    {enrichedCategories.map((category, index) => (
+                  <div className="flex gap-2 overflow-x-auto overflow-y-hidden py-2 px-1 scroll-smooth scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50 transition-colors">
+                    {enrichedCategories.slice(0, 6).map((category, index) => (
                       <Button
                         key={category.id}
                         variant={
@@ -551,17 +551,17 @@ export function ChildFriendlyCategorySelector({
                         }
                         size="sm"
                         onClick={() => handleCategoryClick(category.id)}
-                        className={`flex-shrink-0 h-16 w-16 flex-col gap-1 transition-all duration-200 ${
+                        className={`flex-shrink-0 h-18 w-18 flex-col gap-0.5 transition-all duration-200 ${
                           selectedCategory === category.id
-                            ? "bg-white/20 hover:bg-white/30 text-white border-2 border-white/50 shadow-lg scale-105"
-                            : "bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-white/50 hover:scale-105"
+                            ? "bg-white/25 hover:bg-white/35 text-white border-2 border-white/60 shadow-lg scale-110"
+                            : "bg-white/15 hover:bg-white/25 text-white border border-white/40 hover:border-white/60 hover:scale-105"
                         }`}
                         style={{
                           animationDelay: `${index * 50}ms`
                         }}
                       >
-                        <span className="text-lg">{category.icon}</span>
-                        <span className="text-xs font-medium text-center leading-tight">
+                        <span className="text-2xl drop-shadow-sm">{category.icon}</span>
+                        <span className="text-xs font-semibold text-center leading-tight drop-shadow-sm">
                           {category.name.split(" ")[0]}
                         </span>
                       </Button>
