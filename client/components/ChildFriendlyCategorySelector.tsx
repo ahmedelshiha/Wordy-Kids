@@ -535,52 +535,76 @@ export function ChildFriendlyCategorySelector({
                 </p>
               </div>
 
-              {/* Middle: Scrollable Quick Categories Selection (All Categories) */}
+              {/* Middle: Premium Scrollable Quick Categories Selection */}
               <div className="flex-1 min-w-0 max-w-lg">
-                <div className="relative">
-                  {/* Enhanced gradient fade edges with scroll indicators */}
-                  <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-jungle to-transparent z-10 pointer-events-none"></div>
-                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-sunshine to-transparent z-10 pointer-events-none"></div>
+                {/* Premium Container with Glass Morphism Effect */}
+                <div className="relative bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
+                  {/* Premium Background Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5"></div>
 
-                  {/* Scroll indicators */}
-                  <div className="absolute left-1 top-1/2 transform -translate-y-1/2 z-20 pointer-events-none">
-                    <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                  </div>
-                  <div className="absolute right-1 top-1/2 transform -translate-y-1/2 z-20 pointer-events-none">
-                    <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                  {/* Elegant Border Glow */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/30 via-transparent to-white/30 opacity-50 blur-sm"></div>
+
+                  {/* Premium Content Container */}
+                  <div className="relative z-10 p-2">
+                    {/* Enhanced Gradient Fade Edges */}
+                    <div className="absolute left-2 top-2 bottom-2 w-6 bg-gradient-to-r from-jungle/20 via-jungle/10 to-transparent z-20 pointer-events-none rounded-l-xl"></div>
+                    <div className="absolute right-2 top-2 bottom-2 w-6 bg-gradient-to-l from-sunshine/20 via-sunshine/10 to-transparent z-20 pointer-events-none rounded-r-xl"></div>
+
+                    {/* Premium Scroll Indicators */}
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
+                      <div className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm"></div>
+                    </div>
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
+                      <div className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm" style={{animationDelay: '0.5s'}}></div>
+                    </div>
+
+                    {/* Premium Scrollable Container */}
+                    <div
+                      className="flex gap-3 overflow-x-auto overflow-y-hidden py-3 px-4 scroll-smooth scrollbar-thin scrollbar-thumb-white/50 scrollbar-track-white/10 hover:scrollbar-thumb-white/70 transition-all duration-500"
+                      style={{
+                        scrollbarWidth: 'thin',
+                        scrollBehavior: 'smooth'
+                      }}
+                    >
+                      {enrichedCategories.map((category, index) => (
+                        <Button
+                          key={category.id}
+                          variant={
+                            selectedCategory === category.id ? "default" : "outline"
+                          }
+                          size="sm"
+                          onClick={() => handleCategoryClick(category.id)}
+                          className={`flex-shrink-0 h-16 w-16 flex-col gap-1 transition-all duration-300 group ${
+                            selectedCategory === category.id
+                              ? "bg-white/30 hover:bg-white/40 text-white border-2 border-white/70 shadow-xl scale-110 backdrop-blur-sm"
+                              : "bg-white/20 hover:bg-white/30 text-white border border-white/50 hover:border-white/70 hover:scale-105 backdrop-blur-sm shadow-lg"
+                          }`}
+                          style={{
+                            animationDelay: `${index * 75}ms`,
+                            transform: selectedCategory === category.id ? 'scale(1.1)' : 'scale(1)'
+                          }}
+                        >
+                          <span className={`text-xl drop-shadow-md transition-transform duration-300 ${
+                            selectedCategory === category.id ? 'scale-110' : 'group-hover:scale-105'
+                          }`}>
+                            {category.icon}
+                          </span>
+                          <span className="text-xs font-bold text-center leading-tight drop-shadow-md tracking-wide">
+                            {category.name.split(" ")[0]}
+                          </span>
+
+                          {/* Premium Selection Indicator */}
+                          {selectedCategory === category.id && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full shadow-lg animate-pulse"></div>
+                          )}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
 
-                  <div
-                    className="flex gap-2 overflow-x-auto overflow-y-hidden py-2 px-2 scroll-smooth scrollbar-thin scrollbar-thumb-white/40 scrollbar-track-transparent hover:scrollbar-thumb-white/60 transition-all duration-300"
-                    style={{
-                      scrollbarWidth: 'thin',
-                      scrollBehavior: 'smooth'
-                    }}
-                  >
-                    {enrichedCategories.map((category, index) => (
-                      <Button
-                        key={category.id}
-                        variant={
-                          selectedCategory === category.id ? "default" : "outline"
-                        }
-                        size="sm"
-                        onClick={() => handleCategoryClick(category.id)}
-                        className={`flex-shrink-0 h-16 w-16 flex-col gap-0.5 transition-all duration-200 ${
-                          selectedCategory === category.id
-                            ? "bg-white/25 hover:bg-white/35 text-white border-2 border-white/60 shadow-lg scale-110"
-                            : "bg-white/15 hover:bg-white/25 text-white border border-white/40 hover:border-white/60 hover:scale-105"
-                        }`}
-                        style={{
-                          animationDelay: `${index * 50}ms`
-                        }}
-                      >
-                        <span className="text-xl drop-shadow-sm">{category.icon}</span>
-                        <span className="text-xs font-semibold text-center leading-tight drop-shadow-sm">
-                          {category.name.split(" ")[0]}
-                        </span>
-                      </Button>
-                    ))}
-                  </div>
+                  {/* Premium Bottom Shine Effect */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
                 </div>
               </div>
 
