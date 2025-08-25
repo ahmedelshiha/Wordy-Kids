@@ -556,22 +556,27 @@ export function ChildFriendlyCategorySelector({
                       <div className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm"></div>
                     </div>
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
-                      <div className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm" style={{animationDelay: '0.5s'}}></div>
+                      <div
+                        className="w-2.5 h-2.5 bg-white/80 rounded-full animate-pulse shadow-lg backdrop-blur-sm"
+                        style={{ animationDelay: "0.5s" }}
+                      ></div>
                     </div>
 
                     {/* Premium Scrollable Container */}
                     <div
                       className="flex gap-3 overflow-x-auto overflow-y-hidden py-3 px-4 scroll-smooth scrollbar-thin scrollbar-thumb-white/50 scrollbar-track-white/10 hover:scrollbar-thumb-white/70 transition-all duration-500"
                       style={{
-                        scrollbarWidth: 'thin',
-                        scrollBehavior: 'smooth'
+                        scrollbarWidth: "thin",
+                        scrollBehavior: "smooth",
                       }}
                     >
                       {enrichedCategories.map((category, index) => (
                         <Button
                           key={category.id}
                           variant={
-                            selectedCategory === category.id ? "default" : "outline"
+                            selectedCategory === category.id
+                              ? "default"
+                              : "outline"
                           }
                           size="sm"
                           onClick={() => handleCategoryClick(category.id)}
@@ -582,12 +587,19 @@ export function ChildFriendlyCategorySelector({
                           }`}
                           style={{
                             animationDelay: `${index * 75}ms`,
-                            transform: selectedCategory === category.id ? 'scale(1.1)' : 'scale(1)'
+                            transform:
+                              selectedCategory === category.id
+                                ? "scale(1.1)"
+                                : "scale(1)",
                           }}
                         >
-                          <span className={`text-xl drop-shadow-md transition-transform duration-300 ${
-                            selectedCategory === category.id ? 'scale-110' : 'group-hover:scale-105'
-                          }`}>
+                          <span
+                            className={`text-xl drop-shadow-md transition-transform duration-300 ${
+                              selectedCategory === category.id
+                                ? "scale-110"
+                                : "group-hover:scale-105"
+                            }`}
+                          >
                             {category.icon}
                           </span>
                           <span className="text-xs font-bold text-center leading-tight drop-shadow-md tracking-wide">

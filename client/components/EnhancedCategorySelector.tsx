@@ -727,9 +727,7 @@ export function EnhancedCategorySelector({
             <div className="text-center mb-4">
               <h1
                 className={`text-xl font-bold mb-2 leading-relaxed ${
-                  highContrastMode
-                    ? "text-white"
-                    : "text-slate-800"
+                  highContrastMode ? "text-white" : "text-slate-800"
                 }`}
               >
                 🌿 Welcome to the Jungle Adventure Library! 🦋
@@ -746,12 +744,22 @@ export function EnhancedCategorySelector({
             {/* Flying badges with improved animations */}
             <div className="flex justify-center gap-2 mb-4 flex-wrap">
               <Badge className="bg-jungle text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce">
-                🌳 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} Adventure Words
+                🌳{" "}
+                {realTimeWords.length > 0
+                  ? realTimeWords.length
+                  : wordsDatabase.length}{" "}
+                Adventure Words
               </Badge>
-              <Badge className="bg-educational-blue text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce" style={{animationDelay: '0.2s'}}>
+              <Badge
+                className="bg-educational-blue text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce"
+                style={{ animationDelay: "0.2s" }}
+              >
                 ��� {categories.length} Jungle Paths
               </Badge>
-              <Badge className="bg-educational-purple text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce" style={{animationDelay: '0.4s'}}>
+              <Badge
+                className="bg-educational-purple text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce"
+                style={{ animationDelay: "0.4s" }}
+              >
                 ⭐ 3 Adventure Levels
               </Badge>
             </div>
@@ -808,9 +816,7 @@ export function EnhancedCategorySelector({
               <div className="text-center mb-6">
                 <h1
                   className={`text-4xl font-bold mb-3 leading-relaxed tracking-wide ${
-                    highContrastMode
-                      ? "text-white"
-                      : "text-slate-800"
+                    highContrastMode ? "text-white" : "text-slate-800"
                   }`}
                 >
                   🌿 Welcome to the Jungle Adventure Library! 🦋
@@ -827,12 +833,22 @@ export function EnhancedCategorySelector({
               {/* Enhanced Flying Badges */}
               <div className="flex justify-center gap-4 mb-6 flex-wrap">
                 <Badge className="bg-jungle text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float">
-                  🌳 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} Adventure Words
+                  🌳{" "}
+                  {realTimeWords.length > 0
+                    ? realTimeWords.length
+                    : wordsDatabase.length}{" "}
+                  Adventure Words
                 </Badge>
-                <Badge className="bg-educational-blue text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float" style={{animationDelay: '0.5s'}}>
+                <Badge
+                  className="bg-educational-blue text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float"
+                  style={{ animationDelay: "0.5s" }}
+                >
                   🎯 {categories.length} Jungle Paths
                 </Badge>
-                <Badge className="bg-educational-purple text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float" style={{animationDelay: '1s'}}>
+                <Badge
+                  className="bg-educational-purple text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float"
+                  style={{ animationDelay: "1s" }}
+                >
                   ⭐ 3 Adventure Levels
                 </Badge>
               </div>
@@ -881,9 +897,11 @@ export function EnhancedCategorySelector({
         {searchTerm && (
           <div className="hidden md:block">
             <div className="text-center mb-4">
-              <p className={`text-lg font-medium ${
-                highContrastMode ? "text-white" : "text-slate-600"
-              }`}>
+              <p
+                className={`text-lg font-medium ${
+                  highContrastMode ? "text-white" : "text-slate-600"
+                }`}
+              >
                 Found {categories.length} jungle paths matching "{searchTerm}"
               </p>
             </div>
