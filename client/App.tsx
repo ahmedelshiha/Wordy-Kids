@@ -34,6 +34,7 @@ import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
+import EnhancedMobileWordLibraryHeaderDemo from "./pages/EnhancedMobileWordLibraryHeaderDemo";
 
 const queryClient = new QueryClient();
 
@@ -215,6 +216,10 @@ const App = () => {
                         element={<SettingsPanelV2Demo />}
                       />
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
+                      <Route
+                        path="/mobile-header-demo"
+                        element={<EnhancedMobileWordLibraryHeaderDemo />}
+                      />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
