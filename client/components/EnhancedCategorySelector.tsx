@@ -1267,7 +1267,7 @@ export function EnhancedCategorySelector({
                         </div>
                         <div className="text-center">
                           <span className="text-orange-600 font-medium text-xs">
-                            ��� {category.difficultyBreakdown.medium}
+                            🟡 {category.difficultyBreakdown.medium}
                           </span>
                         </div>
                       </div>
