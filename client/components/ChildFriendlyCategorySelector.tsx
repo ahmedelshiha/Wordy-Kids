@@ -501,10 +501,10 @@ export function ChildFriendlyCategorySelector({
           <div className="bg-gradient-to-r from-jungle/8 to-white/95 rounded-xl p-3 border border-jungle/15 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex-1 min-w-0">
-                <h2 className="text-sm font-bold text-slate-800 truncate">
+                <h2 className="text-sm font-bold text-white truncate">
                   🌿 Jungle Adventure Library! 🦎
                 </h2>
-                <p className="text-xs text-jungle/70 leading-tight">
+                <p className="text-xs text-white leading-tight">
                   Choose your favorite topic!
                 </p>
               </div>
@@ -681,7 +681,7 @@ export function ChildFriendlyCategorySelector({
                 </Button>
               ))}
             </div>
-            <p className="text-xs text-jungle-dark/70 mt-1">
+            <p className="text-xs text-white mt-1">
               🌳 Scroll right to explore all {enrichedCategories.length} jungle
               adventures
             </p>
