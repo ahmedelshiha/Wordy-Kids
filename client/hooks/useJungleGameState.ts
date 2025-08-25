@@ -302,7 +302,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     id: "daily-adventurer",
     name: "Daily Adventurer",
     description: "Reviewed 20 words in one day!",
-    emoji: "📅",
+    emoji: "����",
     color: "from-indigo-400 to-blue-500",
     requirement: 20,
     category: "time",
@@ -493,6 +493,20 @@ export const useJungleGameState = () => {
 
   // Start new session
   const startSession = useCallback(() => {
+    // Track session start with device info
+    analyticsManager.track("session_started", {
+      sessionStartTime: new Date().toISOString(),
+      totalSessions: parseInt(localStorage.getItem(`${ANALYTICS_KEY}_sessions`) || "0") + 1,
+      playerLevel: gameState.level,
+      totalScore: gameState.score,
+      masteredWords: gameState.masteredWords.size,
+      lastSessionDuration: currentSession.startTime
+        ? Date.now() - currentSession.startTime.getTime()
+        : 0,
+    });
+
+    analyticsManager.newSession();
+
     setCurrentSession({
       startTime: new Date(),
       duration: 0,
@@ -503,7 +517,7 @@ export const useJungleGameState = () => {
       maxStreak: 0,
       totalScore: 0,
     });
-  }, []);
+  }, [gameState, currentSession]);
 
   // Update score
   const updateScore = useCallback(
@@ -589,6 +603,8 @@ export const useJungleGameState = () => {
         return false; // Already mastered
       }
 
+      const masteryStartTime = performance.now();
+
       setGameState((prev) => ({
         ...prev,
         masteredWords: new Set([...prev.masteredWords, wordId]),
@@ -607,6 +623,22 @@ export const useJungleGameState = () => {
       updateScore(25);
       addJungleGems(1);
       addExperience(20);
+
+      // Analytics tracking for word mastery
+      analyticsManager.track("word_mastered", {
+        wordId,
+        masteryTime: performance.now() - masteryStartTime,
+        currentStreak: gameState.streak + 1,
+        totalMasteredWords: gameState.masteredWords.size + 1,
+        sessionWordsLearned: currentSession.wordsLearned + 1,
+        rewardsEarned: {
+          score: 25,
+          gems: 1,
+          experience: 20
+        },
+        difficulty: "unknown", // Could be enhanced with word difficulty data
+        category: "unknown", // Could be enhanced with word category data
+      });
 
       debouncedSave();
       return true; // New mastery
@@ -654,7 +686,10 @@ export const useJungleGameState = () => {
 
   // Review a word (for streak tracking)
   const reviewWord = useCallback(
-    (wordId: number, correct: boolean = true) => {
+    (wordId: number, correct: boolean = true, timeSpent?: number) => {
+      const reviewStartTime = performance.now();
+      const actualTimeSpent = timeSpent || reviewStartTime;
+
       setGameState((prev) => ({
         ...prev,
         streak: correct ? prev.streak + 1 : 0,
@@ -677,6 +712,21 @@ export const useJungleGameState = () => {
         addExperience(5);
       }
 
+      // Analytics tracking for time-on-task and word review
+      analyticsManager.track("word_reviewed", {
+        wordId,
+        correct,
+        timeOnTask: actualTimeSpent,
+        streakBefore: gameState.streak,
+        streakAfter: correct ? gameState.streak + 1 : 0,
+        streakBroken: !correct && gameState.streak > 0,
+        sessionWordsReviewed: currentSession.wordsReviewed + 1,
+        totalWordsReviewedToday: gameState.wordsReviewedToday + 1,
+        accuracy: currentSession.wordsReviewed > 0
+          ? ((currentSession.wordsLearned + (correct ? 1 : 0)) / (currentSession.wordsReviewed + 1)) * 100
+          : 100,
+      });
+
       debouncedSave();
     },
     [gameState.streak, updateScore, addExperience, debouncedSave],
@@ -695,6 +745,8 @@ export const useJungleGameState = () => {
       if (!achievement) {
         return false;
       }
+
+      const sessionDuration = Date.now() - currentSession.startTime.getTime();
 
       setGameState((prev) => ({
         ...prev,
@@ -722,6 +774,24 @@ export const useJungleGameState = () => {
       addJungleGems(reward.gems);
       addSparkleSeeds(reward.seeds);
       addExperience(reward.score / 2);
+
+      // Analytics tracking for achievement unlocks
+      analyticsManager.track("achievement_unlocked", {
+        achievementId: achievement.id,
+        achievementName: achievement.name,
+        achievementCategory: achievement.category,
+        achievementRarity: achievement.rarity,
+        timeToUnlock: sessionDuration,
+        totalAchievements: gameState.explorerBadges.size + 1,
+        sessionAchievements: currentSession.achievementsUnlocked.length + 1,
+        rewardsEarned: reward,
+        playerStats: {
+          level: gameState.level,
+          totalScore: gameState.score,
+          masteredWords: gameState.masteredWords.size,
+          currentStreak: gameState.streak,
+        },
+      });
 
       toast({
         title: "🏆 Achievement Unlocked!",
