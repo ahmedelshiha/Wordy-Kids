@@ -133,10 +133,10 @@ const App = () => {
                         path="/app"
                         element={
                           <ErrorBoundary
-                            fallbackType="kid"
-                            componentName="MainAppPage"
+                            fallbackType="parent"
+                            componentName="IndexSimplified"
                           >
-                            <MainAppPage />
+                            <IndexSimplified />
                           </ErrorBoundary>
                         }
                       />
