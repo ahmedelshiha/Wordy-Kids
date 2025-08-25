@@ -549,37 +549,38 @@ export function ChildFriendlyCategorySelector({
               </div>
             </div>
 
-            {/* Compact Search */}
-            <div className="max-w-md mx-auto">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="🌿 Explore jungle categories..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-10 py-2.5 rounded-full border border-jungle/25 focus:ring-2 focus:ring-jungle/20 bg-white/80 backdrop-blur-sm focus:border-jungle/40 transition-colors"
-                  aria-label="Search jungle categories"
-                />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jungle/60">
-                  🌿
-                </div>
-                {searchTerm && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setSearchTerm("")}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-jungle/10 rounded-full"
-                    aria-label="Clear search"
-                  >
-                    <span className="text-sm">✕</span>
-                  </Button>
-                )}
+            {/* Quick Categories Selection */}
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-3">
+                <p className="text-sm font-medium text-jungle/70">
+                  🌿 Quick Jungle Paths - Select Your Adventure 🦎
+                </p>
               </div>
-              {searchTerm && (
-                <div className="mt-2 text-sm text-jungle-dark text-center">
-                  Found {categories.length} paths matching "{searchTerm}"
-                </div>
-              )}
+              <div className="flex gap-3 justify-center flex-wrap">
+                {enrichedCategories.map((category) => (
+                  <Button
+                    key={category.id}
+                    variant={
+                      selectedCategory === category.id ? "default" : "outline"
+                    }
+                    size="sm"
+                    onClick={() => handleCategoryClick(category.id)}
+                    className={`flex-shrink-0 h-20 w-20 flex-col gap-1 transition-all duration-200 ${
+                      selectedCategory === category.id
+                        ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg scale-105"
+                        : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md hover:scale-105"
+                    }`}
+                  >
+                    <span className="text-2xl">{category.icon}</span>
+                    <span className="text-xs font-medium text-center leading-tight">
+                      {category.name.split(" ")[0]}
+                    </span>
+                  </Button>
+                ))}
+              </div>
+              <p className="text-xs text-jungle/60 mt-2 text-center">
+                🌳 Choose from {enrichedCategories.length} exciting jungle adventures above
+              </p>
             </div>
           </div>
         </div>
