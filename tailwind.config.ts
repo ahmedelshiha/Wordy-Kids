@@ -159,6 +159,31 @@ export default {
             opacity: "0.97",
           },
         },
+        // Gentle animations for badges
+        "gentle-bounce": {
+          "0%, 100%": {
+            transform: "translateY(0) scale(1)",
+            opacity: "1",
+          },
+          "50%": {
+            transform: "translateY(-3px) scale(1.02)",
+            opacity: "0.95",
+          },
+        },
+        "gentle-float": {
+          "0%, 100%": {
+            transform: "translateY(0) scale(1)",
+          },
+          "25%": {
+            transform: "translateY(-2px) scale(1.005)",
+          },
+          "50%": {
+            transform: "translateY(0) scale(1.01)",
+          },
+          "75%": {
+            transform: "translateY(-1px) scale(1.005)",
+          },
+        },
         // Gentle emoji floating animation
         "gentle-emoji-float": {
           "0%, 100%": {
