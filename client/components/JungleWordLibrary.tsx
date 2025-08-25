@@ -25,16 +25,11 @@ import {
   Zap,
 } from "lucide-react";
 
-// Import enhanced components
+// Import enhanced components (using existing Enhanced components temporarily)
 import { JungleWordCard } from "./JungleWordCard";
-import { JungleWordLibraryHeader } from "./JungleWordLibraryHeader";
-import { JungleWordLibraryContent } from "./JungleWordLibraryContent";
-import { JungleWordLibraryFilters } from "./JungleWordLibraryFilters";
 import { JungleAchievementPopup } from "./JungleAchievementPopup";
-import { JungleCategorySelector } from "./JungleCategorySelector";
-import { JungleVocabularyBuilder } from "./JungleVocabularyBuilder";
-import { JungleAccessibilityPanel } from "./JungleAccessibilityPanel";
-import { JungleFloatingActions } from "./JungleFloatingActions";
+import { EnhancedCategorySelector } from "./EnhancedCategorySelector";
+import { EnhancedVocabularyBuilder } from "./EnhancedVocabularyBuilder";
 
 // Import enhanced services and hooks
 import { useJungleGameState } from "@/hooks/useJungleGameState";
@@ -46,8 +41,7 @@ import { useJungleAnimations } from "@/hooks/useJungleAnimations";
 
 // Import data and utilities
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
-import { jungleThemeConfig } from "@/lib/jungleThemeConfig";
-import { enhancedAnalytics } from "@/lib/enhancedAnalytics";
+import { enhancedAnalyticsSystem } from "@/lib/enhancedAnalyticsSystem";
 
 // Types and interfaces
 interface Word {
@@ -233,7 +227,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
       } catch (error) {
         console.error("Error initializing Jungle Word Library:", error);
         toast({
-          title: "🌿 Adventure Loading",
+          title: "��� Adventure Loading",
           description: "Setting up your jungle adventure...",
           duration: 2000,
         });
