@@ -3241,11 +3241,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                       </h2>
                                       <style jsx>{`
                                         .quiz-title-tiny {
-                                          font-size: 0.6rem !important;
+                                          font-size: 0.75rem !important;
                                         }
                                         @media (min-width: 768px) {
                                           .quiz-title-tiny {
-                                            font-size: 0.4rem !important;
+                                            font-size: 0.875rem !important;
                                           }
                                         }
                                       `}</style>
