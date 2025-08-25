@@ -2486,79 +2486,48 @@ export default function Index({ initialProfile }: IndexProps) {
                                     <div className="text-center">
                                       {/* Compact Mobile Header */}
                                       <div className="mb-2">
-                                        {/* Mobile: Compact navigation */}
+                                        {/* Enhanced Mobile Word Library Header */}
                                         <div className="block sm:hidden">
-                                          {/* Minimal Header with Essential Info */}
-                                          <div className="flex items-center justify-between mb-1.5 px-2">
-                                            {/* Left: Back Button */}
-                                            <Button
-                                              onClick={() => {
-                                                if (navigator.vibrate) {
-                                                  navigator.vibrate([
-                                                    50, 30, 50,
-                                                  ]);
-                                                }
-                                                audioService.playClickSound();
-                                                setLearningMode("selector");
-                                                setCurrentWordIndex(0);
-                                              }}
-                                              variant="ghost"
-                                              size="lg"
-                                              className="h-12 px-4 text-slate-600 hover:bg-slate-100 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
-                                            >
-                                              <BookOpen className="w-5 h-5" />
-                                            </Button>
+                                          <EnhancedMobileWordLibraryHeader
+                                            title={selectedCategory
+                                              ? `🌳 ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure 🦋`
+                                              : "🌿 Jungle Word Adventure Library 🦋"}
+                                            selectedCategory={selectedCategory}
+                                            onCategorySelect={(categoryId) => {
+                                              handleCategoryChange(categoryId);
+                                              if (categoryId) {
+                                                setLearningMode("cards");
+                                              }
+                                            }}
+                                            onBack={() => {
+                                              if (navigator.vibrate) {
+                                                navigator.vibrate([50, 30, 50]);
+                                              }
+                                              audioService.playClickSound();
+                                              setLearningMode("selector");
+                                              setCurrentWordIndex(0);
+                                            }}
+                                            onSearch={(searchTerm) => {
+                                              // Handle search functionality
+                                              console.log("Search term:", searchTerm);
+                                              // You can implement search logic here
+                                            }}
+                                            onViewModeToggle={() => {
+                                              // Handle view mode toggle if needed
+                                              console.log("View mode toggle");
+                                            }}
+                                            viewMode="grid"
+                                            showQuickCategories={true}
+                                            showSearch={true}
+                                            showStats={true}
+                                            totalWords={displayWords.length}
+                                            completedWords={rememberedWords.size}
+                                            streakDays={learningStats.currentStreak}
+                                            className="mb-4"
+                                          />
 
-                                            {/* Jungle Adventure Center: Category and Progress */}
-                                            <div className="flex-1 text-center">
-                                              <div className="relative bg-gradient-to-r from-jungle via-jungle-light to-jungle backdrop-blur-md rounded-xl px-3 py-2 mx-1 border border-jungle-light/40 shadow-md">
-                                                {/* Jungle Decorative Elements */}
-                                                <div className="absolute -top-0.5 left-1 text-sm animate-gentle-bounce">
-                                                  🌿
-                                                </div>
-                                                <div className="absolute -top-0.5 right-1 text-sm animate-gentle-bounce animation-delay-300">
-                                                  🌟
-                                                </div>
-
-                                                {/* Category Title */}
-                                                <div className="text-sm font-bold text-white drop-shadow-lg truncate">
-                                                  <span className="inline-flex items-center gap-1">
-                                                    🌳
-                                                    {selectedCategory
-                                                      ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Quest`
-                                                      : "Jungle Quest"}
-                                                  </span>
-                                                </div>
-
-                                                {/* Progress Stats */}
-                                                <div className="flex items-center justify-center gap-2 text-xs text-white/90 font-semibold mt-0.5">
-                                                  <span className="inline-flex items-center gap-0.5 bg-white/20 rounded-full px-1.5 py-0.5 text-xs">
-                                                    📍 {currentWordIndex + 1}/
-                                                    {displayWords.length}
-                                                  </span>
-                                                  <span className="inline-flex items-center gap-0.5 bg-sunshine/20 rounded-full px-1.5 py-0.5 text-xs">
-                                                    🏆 {rememberedWords.size}
-                                                  </span>
-                                                  {forgottenWords.size > 0 && (
-                                                    <span className="inline-flex items-center gap-0.5 bg-coral-red/20 rounded-full px-1.5 py-0.5 text-xs">
-                                                      🔄 {forgottenWords.size}
-                                                    </span>
-                                                  )}
-                                                </div>
-
-                                                {/* Animated Progress Bar */}
-                                                <div className="mt-1 bg-white/20 rounded-full h-1.5 overflow-hidden">
-                                                  <div
-                                                    className="h-full bg-gradient-to-r from-sunshine to-sunshine-light transition-all duration-500 rounded-full"
-                                                    style={{
-                                                      width: `${displayWords.length > 0 ? ((currentWordIndex + 1) / displayWords.length) * 100 : 0}%`,
-                                                    }}
-                                                  ></div>
-                                                </div>
-                                              </div>
-                                            </div>
-
-                                            {/* Right: Switch Button */}
+                                          {/* Minimal Navigation Controls Below Header */}
+                                          <div className="flex items-center justify-center gap-3 px-4 mb-2">
                                             <Button
                                               onClick={() => {
                                                 if (navigator.vibrate) {
@@ -2569,12 +2538,19 @@ export default function Index({ initialProfile }: IndexProps) {
                                                 setLearningMode("selector");
                                                 setCurrentWordIndex(0);
                                               }}
-                                              variant="ghost"
+                                              variant="outline"
                                               size="sm"
-                                              className="h-8 px-2 text-slate-600 hover:bg-slate-100 rounded-lg"
+                                              className="h-10 px-4 bg-white/80 backdrop-blur-sm border-jungle/30 text-jungle hover:bg-jungle/10 hover:border-jungle/50 rounded-xl shadow-md transition-all duration-200"
                                             >
-                                              <Shuffle className="w-3.5 h-3.5" />
+                                              <Shuffle className="w-4 h-4 mr-2" />
+                                              Switch Category
                                             </Button>
+
+                                            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-jungle/30 rounded-xl px-3 py-2 shadow-md">
+                                              <span className="text-jungle font-semibold text-sm">
+                                                📍 {currentWordIndex + 1}/{displayWords.length}
+                                              </span>
+                                            </div>
                                           </div>
                                         </div>
 
