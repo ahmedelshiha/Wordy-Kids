@@ -3235,14 +3235,20 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2
-                                        className="jungle-quiz-title font-bold text-center leading-tight"
-                                        style={{
-                                          fontSize: '0.6rem',
-                                          ...(window.innerWidth >= 768 && { fontSize: '0.4rem' })
-                                        }}
+                                        className="jungle-quiz-title font-bold text-center leading-tight quiz-title-tiny"
                                       >
                                         🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
                                       </h2>
+                                      <style jsx>{`
+                                        .quiz-title-tiny {
+                                          font-size: 0.6rem !important;
+                                        }
+                                        @media (min-width: 768px) {
+                                          .quiz-title-tiny {
+                                            font-size: 0.4rem !important;
+                                          }
+                                        }
+                                      `}</style>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
                                       {isAIEnabled() && (
