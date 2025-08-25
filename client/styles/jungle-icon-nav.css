@@ -76,7 +76,7 @@
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -35px; /* Bring mobile labels even closer to icons */
+    margin-top: -45px; /* Reduced space between icons and labels on mobile */
   }
 }
 
@@ -207,7 +207,7 @@
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -60px; /* Bring very small screen labels even closer to lowered icons */
+    margin-top: -70px; /* Reduced space between icons and labels on very small screens */
   }
 }
 
