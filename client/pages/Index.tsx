@@ -3243,7 +3243,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           🏆✨
                                         </p>
                                       </div>
-                                      <style jsx>{`
+                                      <style>{`
                                         .quiz-title-compact {
                                           font-size: 0.875rem !important;
                                           line-height: 1 !important;
