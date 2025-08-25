@@ -49,28 +49,28 @@ const SOUND_LIBRARY: { [key: string]: SoundEffect } = {
   "button-click": {
     id: "button-click",
     name: "Button Click",
-    url: "/sounds/ui/button-click.mp3",
+    url: "/sounds/ui/voice-preview.mp3", // Using available UI sound
     category: "ui",
     volume: 0.3,
   },
   navigation: {
     id: "navigation",
     name: "Navigation",
-    url: "/sounds/ui/navigation-whoosh.mp3",
+    url: "/sounds/ui/settings-saved.mp3", // Using available UI sound
     category: "ui",
     volume: 0.4,
   },
   "category-select": {
     id: "category-select",
     name: "Category Selection",
-    url: "/sounds/ui/category-select.mp3",
+    url: "/sounds/ui/settings-saved.mp3", // Using available UI sound
     category: "ui",
     volume: 0.5,
   },
   "view-change": {
     id: "view-change",
     name: "View Change",
-    url: "/sounds/ui/view-transition.mp3",
+    url: "/sounds/ui/voice-preview.mp3", // Using available UI sound
     category: "ui",
     volume: 0.3,
   },
