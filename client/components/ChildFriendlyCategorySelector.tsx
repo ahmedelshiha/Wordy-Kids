@@ -570,16 +570,16 @@ export function ChildFriendlyCategorySelector({
                 </div>
               </div>
 
-              {/* Right: Compact Stats */}
-              <div className="flex flex-col gap-2">
-                <Badge className="bg-white/20 text-white px-3 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
+              {/* Right: Horizontal Stats Badges */}
+              <div className="flex gap-2 items-center">
+                <Badge className="bg-white/20 text-white px-2 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
                   🌳 {wordsDatabase.length}
                 </Badge>
-                <Badge className="bg-white/20 text-white px-3 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
+                <Badge className="bg-white/20 text-white px-2 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
                   🎯 {categories.length}
                 </Badge>
-                <Badge className="bg-white/20 text-white px-3 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
-                  ⭐ 3 Levels
+                <Badge className="bg-white/20 text-white px-2 py-1 text-xs font-medium rounded-full shadow-sm hover:bg-white/30 transition-colors border border-white/30">
+                  ⭐ 3
                 </Badge>
               </div>
             </div>
