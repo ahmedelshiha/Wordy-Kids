@@ -1579,7 +1579,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🏆 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! 🎓";
+        achievementTitle = "Category Expert! ����";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -3235,7 +3235,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2 className="jungle-quiz-title text-xs md:text-sm font-bold text-center leading-none">
-                                        🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
+                                        🧠 Jungle Quiz! 🌟 Test words! 🏆
                                       </h2>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
