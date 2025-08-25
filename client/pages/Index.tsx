@@ -1076,7 +1076,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "science-star",
         name: "Science Star",
-        icon: "����",
+        icon: "🔬",
         earned: rememberedWords.size >= 15,
         description: "Mastered 10 science words",
       },
@@ -1579,7 +1579,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🏆";
         achievementMessage = `Outstanding! You remembered ALL ${totalWords} words in ${categoryDisplayName}! You're a true champion!\n\n🏆 Perfect Mastery Bonus: 200 points!\n🗺️ New adventure zone unlocked!`;
       } else if (accuracy >= 90) {
-        achievementTitle = "Category Expert! ����";
+        achievementTitle = "Category Expert! 🎓";
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
@@ -1591,7 +1591,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
-        achievementTitle = "Category Challenger! ����";
+        achievementTitle = "Category Challenger! 💪";
         achievementIcon = "💪";
         achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!`;
       }
@@ -3463,7 +3463,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             🎵 Audio Quest
                                           </span>
                                           <span className="jungle-quiz-badge-difficulty">
-                                            ��� Challenge
+                                            🔥 Challenge
                                           </span>
                                         </div>
                                         <button
@@ -3478,7 +3478,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Start Sound Safari! ����
+                                          Start Sound Safari! 🎵
                                         </button>
                                       </div>
 
