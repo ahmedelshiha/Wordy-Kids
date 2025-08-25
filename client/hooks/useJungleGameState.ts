@@ -1,6 +1,167 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { toast } from "@/hooks/use-toast";
 
+// Analytics interfaces for external providers (Amplitude/Firebase/Segment)
+interface AnalyticsEvent {
+  eventName: string;
+  eventProperties: Record<string, any>;
+  userProperties?: Record<string, any>;
+  timestamp: string;
+  sessionId: string;
+  deviceInfo: DeviceInfo;
+}
+
+interface DeviceInfo {
+  type: "mobile" | "tablet" | "desktop";
+  platform: string;
+  userAgent: string;
+  screenResolution: string;
+  colorDepth: number;
+  language: string;
+  timezone: string;
+}
+
+interface AnalyticsProvider {
+  name: "amplitude" | "firebase" | "segment" | "internal";
+  track: (event: AnalyticsEvent) => void;
+  identify: (userId: string, userProperties: Record<string, any>) => void;
+  setUserProperties: (properties: Record<string, any>) => void;
+}
+
+// Analytics tracking functions
+const getDeviceInfo = (): DeviceInfo => {
+  const userAgent = navigator.userAgent;
+  let deviceType: "mobile" | "tablet" | "desktop" = "desktop";
+
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+    deviceType = /iPad|Android(?=.*\b(tablet|pad)\b)/i.test(userAgent) ? "tablet" : "mobile";
+  }
+
+  return {
+    type: deviceType,
+    platform: navigator.platform,
+    userAgent: userAgent,
+    screenResolution: `${screen.width}x${screen.height}`,
+    colorDepth: screen.colorDepth,
+    language: navigator.language,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  };
+};
+
+const generateSessionId = (): string => {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+};
+
+// Analytics providers setup (ready for external integrations)
+class AnalyticsManager {
+  private providers: AnalyticsProvider[] = [];
+  private sessionId: string = generateSessionId();
+  private deviceInfo: DeviceInfo = getDeviceInfo();
+
+  addProvider(provider: AnalyticsProvider) {
+    this.providers.push(provider);
+  }
+
+  track(eventName: string, eventProperties: Record<string, any> = {}, userProperties?: Record<string, any>) {
+    const event: AnalyticsEvent = {
+      eventName,
+      eventProperties: {
+        ...eventProperties,
+        sessionId: this.sessionId,
+      },
+      userProperties,
+      timestamp: new Date().toISOString(),
+      sessionId: this.sessionId,
+      deviceInfo: this.deviceInfo,
+    };
+
+    // Track with all registered providers
+    this.providers.forEach(provider => {
+      try {
+        provider.track(event);
+      } catch (error) {
+        console.error(`Analytics provider ${provider.name} failed:`, error);
+      }
+    });
+  }
+
+  identify(userId: string, userProperties: Record<string, any>) {
+    this.providers.forEach(provider => {
+      try {
+        provider.identify(userId, userProperties);
+      } catch (error) {
+        console.error(`Analytics provider ${provider.name} identify failed:`, error);
+      }
+    });
+  }
+
+  setUserProperties(properties: Record<string, any>) {
+    this.providers.forEach(provider => {
+      try {
+        provider.setUserProperties(properties);
+      } catch (error) {
+        console.error(`Analytics provider ${provider.name} setUserProperties failed:`, error);
+      }
+    });
+  }
+
+  newSession() {
+    this.sessionId = generateSessionId();
+    this.deviceInfo = getDeviceInfo(); // Refresh device info for new session
+  }
+}
+
+// Internal analytics provider (localStorage-based)
+const internalAnalyticsProvider: AnalyticsProvider = {
+  name: "internal",
+  track: (event: AnalyticsEvent) => {
+    try {
+      const existingEvents = JSON.parse(localStorage.getItem("jungle_analytics_events") || "[]");
+      existingEvents.push(event);
+
+      // Keep only last 1000 events to prevent storage bloat
+      if (existingEvents.length > 1000) {
+        existingEvents.splice(0, existingEvents.length - 1000);
+      }
+
+      localStorage.setItem("jungle_analytics_events", JSON.stringify(existingEvents));
+    } catch (error) {
+      console.error("Internal analytics tracking failed:", error);
+    }
+  },
+  identify: (userId: string, userProperties: Record<string, any>) => {
+    try {
+      localStorage.setItem("jungle_analytics_user", JSON.stringify({ userId, ...userProperties }));
+    } catch (error) {
+      console.error("Internal analytics identify failed:", error);
+    }
+  },
+  setUserProperties: (properties: Record<string, any>) => {
+    try {
+      const existingUser = JSON.parse(localStorage.getItem("jungle_analytics_user") || "{}");
+      localStorage.setItem("jungle_analytics_user", JSON.stringify({ ...existingUser, ...properties }));
+    } catch (error) {
+      console.error("Internal analytics setUserProperties failed:", error);
+    }
+  },
+};
+
+// Initialize analytics manager
+const analyticsManager = new AnalyticsManager();
+analyticsManager.addProvider(internalAnalyticsProvider);
+
+// TODO: Add external providers when available
+// Example for Amplitude:
+// if (window.amplitude) {
+//   const amplitudeProvider: AnalyticsProvider = {
+//     name: "amplitude",
+//     track: (event) => window.amplitude.track(event.eventName, event.eventProperties),
+//     identify: (userId, props) => window.amplitude.identify(userId, props),
+//     setUserProperties: (props) => window.amplitude.setUserProperties(props),
+//   };
+//   analyticsManager.addProvider(amplitudeProvider);
+// }
+
 // Types and interfaces
 interface Achievement {
   id: string;
