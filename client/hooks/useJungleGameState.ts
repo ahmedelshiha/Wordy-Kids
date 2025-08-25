@@ -944,6 +944,113 @@ export const useJungleGameState = () => {
     });
   }, [saveGameState]);
 
+  // Export all analytics data (for GDPR compliance)
+  const exportAnalyticsData = useCallback(() => {
+    try {
+      const analyticsEvents = JSON.parse(localStorage.getItem("jungle_analytics_events") || "[]");
+      const userData = JSON.parse(localStorage.getItem("jungle_analytics_user") || "{}");
+      const gameData = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      const analyticsData = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || "{}");
+
+      const exportData = {
+        exportDate: new Date().toISOString(),
+        exportVersion: "1.0",
+        userData,
+        gameProgress: {
+          level: gameData.level,
+          score: gameData.score,
+          masteredWords: gameData.masteredWords ? Array.from(gameData.masteredWords) : [],
+          favoriteWords: gameData.favoriteWords ? Array.from(gameData.favoriteWords) : [],
+          achievements: gameData.achievements || [],
+          totalPlayTime: gameData.totalPlayTime,
+          lastPlayDate: gameData.lastPlayDate,
+        },
+        analytics: {
+          sessionData: analyticsData,
+          events: analyticsEvents,
+        },
+        deviceInfo: getDeviceInfo(),
+      };
+
+      // Create downloadable file
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: "application/json"
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `jungle-word-library-data-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      // Track export event
+      analyticsManager.track("data_exported", {
+        exportDate: new Date().toISOString(),
+        dataTypes: ["game_progress", "analytics", "user_data"],
+        requestedBy: "parent", // Could be enhanced to track requester
+      });
+
+      toast({
+        title: "📁 Data Exported",
+        description: "Your child's learning data has been downloaded.",
+        duration: 3000,
+      });
+
+      return exportData;
+    } catch (error) {
+      console.error("Error exporting analytics data:", error);
+      toast({
+        title: "❌ Export Failed",
+        description: "Failed to export data. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return null;
+    }
+  }, [gameState]);
+
+  // Delete all analytics data (for GDPR compliance)
+  const deleteAllData = useCallback(() => {
+    try {
+      localStorage.removeItem("jungle_analytics_events");
+      localStorage.removeItem("jungle_analytics_user");
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(ANALYTICS_KEY);
+      localStorage.removeItem(`${ANALYTICS_KEY}_sessions`);
+
+      // Reset to initial state
+      const initialState = getInitialGameState();
+      setGameState(initialState);
+      startSession();
+
+      // Track deletion event before clearing
+      analyticsManager.track("data_deleted", {
+        deletionDate: new Date().toISOString(),
+        requestedBy: "parent",
+        dataTypes: ["game_progress", "analytics", "user_data"],
+      });
+
+      toast({
+        title: "🗑️ Data Deleted",
+        description: "All learning data has been permanently removed.",
+        duration: 3000,
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error deleting data:", error);
+      toast({
+        title: "❌ Deletion Failed",
+        description: "Failed to delete data. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return false;
+    }
+  }, [startSession]);
+
   // Check if achievement requirements are met
   const checkAchievementRequirements = useCallback(() => {
     const stats = getPlayerStats();
