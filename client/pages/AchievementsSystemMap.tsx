@@ -636,7 +636,11 @@ export function AchievementsSystemMap() {
                                 scale: [1, 1.2, 1],
                                 opacity: [0.3, 0.6, 0.3],
                               }}
-                              transition={{ duration: 2, repeat: Infinity }}
+                              transition={{
+                                duration: 2,
+                                repeat: Infinity,
+                                type: "tween",
+                              }}
                             >
                               {module.icon}
                             </motion.div>
@@ -800,7 +804,11 @@ export function AchievementsSystemMap() {
                     <motion.h3
                       className="text-lg font-bold text-jungle-dark mb-2"
                       animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        type: "tween",
+                      }}
                     >
                       🌿 Jungle Connection Network 🌿
                     </motion.h3>
@@ -859,13 +867,18 @@ export function AchievementsSystemMap() {
                                 duration: 2,
                                 repeat: Infinity,
                                 delay: index * 0.3,
+                                type: "tween",
                               }}
                             >
                               {module.emoji}
                             </motion.span>
                             <motion.div
                               animate={{ x: [0, 3, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                type: "tween",
+                              }}
                               className="text-jungle-dark font-bold"
                             >
                               🌿→
@@ -877,6 +890,7 @@ export function AchievementsSystemMap() {
                                 duration: 2,
                                 repeat: Infinity,
                                 delay: index * 0.5,
+                                type: "tween",
                               }}
                             >
                               {connectedModule.emoji}

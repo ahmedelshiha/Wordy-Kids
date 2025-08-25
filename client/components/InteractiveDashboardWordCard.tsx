@@ -1133,6 +1133,7 @@ export function InteractiveDashboardWordCard({
                       duration: 1.5,
                       repeat: Infinity,
                       ease: "easeInOut",
+                      type: "tween",
                     }
                   : { duration: 0 }
               }
@@ -1217,6 +1218,7 @@ export function InteractiveDashboardWordCard({
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
+                    type: "tween",
                   }
                 : { duration: 0 }
             }
@@ -1466,6 +1468,7 @@ export function InteractiveDashboardWordCard({
                   duration: 6,
                   repeat: Infinity,
                   ease: "easeInOut",
+                  type: "tween",
                 }}
                 className="absolute -top-10 -left-5 text-3xl opacity-15 text-jungle-light"
               >
@@ -1614,6 +1617,7 @@ export function InteractiveDashboardWordCard({
                             duration: 4,
                             repeat: Infinity,
                             ease: "easeInOut",
+                            type: "tween",
                           },
                           opacity: {
                             duration: 0.3,
@@ -1878,7 +1882,7 @@ export function InteractiveDashboardWordCard({
                       Objects: "🎯",
                       Colors: "🌈",
                       Body: "👤",
-                      Family: "👨‍👩‍👧‍👦",
+                      Family: "👨‍����‍👧‍👦",
                       Home: "🏠",
                       Transportation: "🚗",
                       Clothes: "👕",
@@ -2468,6 +2472,7 @@ export function InteractiveDashboardWordCard({
                         transition={{
                           duration: 1.5,
                           ease: "easeOut",
+                          type: "tween",
                         }}
                         className="absolute top-2 right-4 text-yellow-400 text-sm"
                       >
@@ -2630,6 +2635,7 @@ export function InteractiveDashboardWordCard({
                         duration: 1,
                         ease: "easeOut",
                         times: [0, 0.2, 0.8, 1],
+                        type: "tween",
                       }}
                       className="fixed pointer-events-none z-50"
                       style={{

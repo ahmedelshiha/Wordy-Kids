@@ -32,7 +32,7 @@
 
 .jungle-nav-icon {
   width: 12vw;
-  max-width: 58px;
+  max-width: 75px; /* Increased from 58px by ~30% */
   height: auto;
   /* Desktop: Elevation handled by Framer Motion */
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.25));
@@ -64,8 +64,8 @@
 @media (max-width: 767px) {
   .jungle-nav-icon {
     /* Mobile: Elevation handled by Framer Motion */
-    /* 20% larger than before */
-    max-width: 53px;
+    /* Increased by 30% for better mobile visibility */
+    max-width: 112px;
   }
 
   .jungle-icon-nav-item {
@@ -76,14 +76,14 @@
   .jungle-nav-label {
     font-size: 2.8vw;
     max-font-size: 12px;
-    margin-top: -35px; /* Bring mobile labels even closer to icons */
+    margin-top: -45px; /* Reduced space between icons and labels on mobile */
   }
 }
 
 /* Tablet adjustments */
 @media (min-width: 768px) and (max-width: 1024px) {
   .jungle-nav-icon {
-    max-width: 62px;
+    max-width: 80px;
   }
 
   .jungle-nav-label {
@@ -95,7 +95,7 @@
 /* Large desktop adjustments */
 @media (min-width: 1025px) {
   .jungle-nav-icon {
-    max-width: 67px;
+    max-width: 87px;
   }
 
   .jungle-nav-label {
@@ -195,7 +195,7 @@
 /* Very small screens (below 375px) */
 @media (max-width: 374px) {
   .jungle-nav-icon {
-    max-width: 48px;
+    max-width: 105px;
     /* Very small screen elevation handled by Framer Motion */
   }
 
@@ -207,14 +207,14 @@
   .jungle-nav-label {
     font-size: 2.5vw;
     max-font-size: 11px;
-    margin-top: -60px; /* Bring very small screen labels even closer to lowered icons */
+    margin-top: -70px; /* Reduced space between icons and labels on very small screens */
   }
 }
 
 /* Large screens (4K and above) */
 @media (min-width: 2560px) {
   .jungle-nav-icon {
-    max-width: 77px;
+    max-width: 100px;
   }
 
   .jungle-nav-label {
