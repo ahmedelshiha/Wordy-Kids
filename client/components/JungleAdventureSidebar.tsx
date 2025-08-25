@@ -327,52 +327,86 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           ))}
         </div>
 
-        {/* Enhanced User Profile Section matching other cards */}
+        {/* Enhanced User Profile Section with premium styling */}
         <motion.div
           variants={itemVariants}
-          className="bg-white/90 backdrop-blur-sm rounded-[16px] p-3 shadow-md relative overflow-hidden flex-shrink-0 border border-gray-100/50"
+          className="bg-white/90 backdrop-blur-sm rounded-[20px] p-5 shadow-md relative overflow-hidden flex-shrink-0 border border-gray-100/50 group cursor-pointer"
+          whileHover="hover"
+          initial="initial"
+          variants={{
+            initial: {
+              scale: 1,
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+            },
+            hover: {
+              scale: 1.02,
+              boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              transition: {
+                duration: 0.3,
+                ease: "easeOut"
+              }
+            }
+          }}
         >
-          {/* Profile section with optimized layout */}
-          <div className="flex items-center gap-3">
+          {/* Premium gradient overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-100/0 via-yellow-50/0 to-orange-100/0 group-hover:from-yellow-100/20 group-hover:via-yellow-50/10 group-hover:to-orange-100/20 rounded-[20px] transition-all duration-500" />
+
+          {/* Subtle animated particles */}
+          <div className="absolute top-2 right-2 w-1 h-1 bg-yellow-400/0 group-hover:bg-yellow-400/60 rounded-full transition-all duration-700 animate-pulse" />
+          <div className="absolute bottom-3 left-3 w-1 h-1 bg-orange-400/0 group-hover:bg-orange-400/40 rounded-full transition-all duration-500 animate-bounce" />
+
+          {/* Profile section with vertical layout */}
+          <div className="text-center relative z-10">
+            {/* Emoji at the top */}
             <motion.div
-              className="w-12 h-12 rounded-xl bg-gradient-to-br from-jungle to-jungle-dark flex items-center justify-center shadow-lg relative flex-shrink-0"
+              className="flex justify-center mb-3"
               whileHover={{
-                scale: 1.05,
-                rotate: 2,
+                scale: 1.1,
+                rotate: [0, -5, 5, 0],
               }}
-              transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
+              transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
             >
-              <span className="text-xl text-white">{userData.avatar?.emoji || "🎯"}</span>
-              {/* Level indicator ring */}
-              <motion.div
-                className="absolute -top-1 -right-1 w-5 h-5 bg-sunshine rounded-full flex items-center justify-center shadow-lg border border-white"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              >
-                <span className="text-navy text-[10px] font-bold">
-                  {userData.level}
-                </span>
-              </motion.div>
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-jungle to-jungle-dark flex items-center justify-center shadow-lg relative">
+                <span className="text-2xl text-white">{userData.avatar?.emoji || "🎯"}</span>
+                {/* Level indicator ring */}
+                <motion.div
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-sunshine rounded-full flex items-center justify-center shadow-lg border-2 border-white"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                >
+                  <span className="text-navy text-[10px] font-bold">
+                    {userData.level}
+                  </span>
+                </motion.div>
+              </div>
             </motion.div>
 
-            {/* User Info with compact layout */}
-            <div className="flex-1 min-w-0">
-              <h3 className="text-navy font-['Baloo_2'] text-[14px] font-bold truncate mb-1">
-                {userData.name}
-              </h3>
-              <div className="flex items-center justify-between">
-                <p className="text-navy/70 font-['Baloo_2'] text-[12px] font-medium">
-                  Adventure Explorer 🗺️
-                </p>
-                <div className="flex gap-1">
-                  <span className="text-jungle font-['Baloo_2'] text-[10px] font-bold bg-jungle/10 px-2 py-0.5 rounded-full">
-                    Lv.{userData.level}
-                  </span>
-                  <span className="text-orange-600 font-['Baloo_2'] text-[10px] font-bold bg-orange-100 px-2 py-0.5 rounded-full">
-                    🔥{userData.streak}
-                  </span>
-                </div>
-              </div>
+            {/* User name */}
+            <h3 className="text-navy font-['Baloo_2'] text-[16px] font-bold truncate mb-2">
+              {userData.name}
+            </h3>
+
+            {/* Explorer status */}
+            <p className="text-navy/70 font-['Baloo_2'] text-[13px] font-medium mb-4">
+              {isGuest ? "Guest Explorer 🌟" : "Adventure Explorer 🗺️"}
+            </p>
+
+            {/* Badges at the bottom */}
+            <div className="flex justify-center gap-2 flex-wrap">
+              <motion.span
+                className="text-jungle font-['Baloo_2'] text-[11px] font-bold bg-jungle/10 px-3 py-1.5 rounded-full border border-jungle/20 shadow-sm"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                🌟 Lv.{userData.level}
+              </motion.span>
+              <motion.span
+                className="text-orange-600 font-['Baloo_2'] text-[11px] font-bold bg-orange-100 px-3 py-1.5 rounded-full border border-orange-200 shadow-sm"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                🔥 {userData.streak}
+              </motion.span>
             </div>
           </div>
         </motion.div>
