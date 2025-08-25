@@ -2489,9 +2489,11 @@ export default function Index({ initialProfile }: IndexProps) {
                                         {/* Enhanced Mobile Word Library Header */}
                                         <div className="block sm:hidden">
                                           <EnhancedMobileWordLibraryHeader
-                                            title={selectedCategory
-                                              ? `🌳 ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure 🦋`
-                                              : "🌿 Jungle Word Adventure Library 🦋"}
+                                            title={
+                                              selectedCategory
+                                                ? `🌳 ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure 🦋`
+                                                : "🌿 Jungle Word Adventure Library 🦋"
+                                            }
                                             selectedCategory={selectedCategory}
                                             onCategorySelect={(categoryId) => {
                                               handleCategoryChange(categoryId);
@@ -2509,7 +2511,10 @@ export default function Index({ initialProfile }: IndexProps) {
                                             }}
                                             onSearch={(searchTerm) => {
                                               // Handle search functionality
-                                              console.log("Search term:", searchTerm);
+                                              console.log(
+                                                "Search term:",
+                                                searchTerm,
+                                              );
                                               // You can implement search logic here
                                             }}
                                             onViewModeToggle={() => {
@@ -2521,8 +2526,12 @@ export default function Index({ initialProfile }: IndexProps) {
                                             showSearch={true}
                                             showStats={true}
                                             totalWords={displayWords.length}
-                                            completedWords={rememberedWords.size}
-                                            streakDays={learningStats.currentStreak}
+                                            completedWords={
+                                              rememberedWords.size
+                                            }
+                                            streakDays={
+                                              learningStats.currentStreak
+                                            }
                                             className="mb-4"
                                           />
 
@@ -2548,7 +2557,8 @@ export default function Index({ initialProfile }: IndexProps) {
 
                                             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-jungle/30 rounded-xl px-3 py-2 shadow-md">
                                               <span className="text-jungle font-semibold text-sm">
-                                                📍 {currentWordIndex + 1}/{displayWords.length}
+                                                📍 {currentWordIndex + 1}/
+                                                {displayWords.length}
                                               </span>
                                             </div>
                                           </div>

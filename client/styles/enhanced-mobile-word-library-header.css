@@ -2,7 +2,8 @@
 
 /* Gentle emoji floating animation */
 @keyframes gentle-emoji-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(-2deg);
   }
   50% {
@@ -16,7 +17,8 @@
 
 /* Enhanced gradient glow for premium elements */
 @keyframes premium-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   }
   50% {
@@ -66,7 +68,8 @@
 
 /* Pulsing indicators for scroll */
 @keyframes scroll-indicator-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.4;
     transform: scale(1);
   }
@@ -115,7 +118,7 @@
 }
 
 .shine-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -133,7 +136,8 @@
 
 /* Badge bounce animation */
 @keyframes gentle-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) scale(1);
   }
   50% {
@@ -151,7 +155,7 @@
     min-width: 4.5rem;
     min-height: 4.5rem;
   }
-  
+
   .category-scroll-container {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -184,11 +188,11 @@
   .scroll-indicator {
     animation: none;
   }
-  
+
   .category-button {
     transition: none;
   }
-  
+
   .search-input:focus {
     transform: none;
   }
@@ -200,7 +204,7 @@
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   .search-input {
     font-size: 16px; /* Prevents zoom on iOS */
   }
@@ -235,7 +239,10 @@
 
 /* Smooth color transitions */
 .color-transition {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Premium loading states */

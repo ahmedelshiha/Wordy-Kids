@@ -208,7 +208,8 @@ export const EnhancedMobileWordLibraryHeader: React.FC<
   };
 
   // Calculate progress percentage
-  const progressPercentage = totalWords > 0 ? (completedWords / totalWords) * 100 : 0;
+  const progressPercentage =
+    totalWords > 0 ? (completedWords / totalWords) * 100 : 0;
 
   return (
     <div
@@ -221,12 +222,15 @@ export const EnhancedMobileWordLibraryHeader: React.FC<
       {/* Premium Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.1),transparent)]" />
-      
+
       {/* Floating Jungle Elements */}
       <div className="absolute top-4 right-4 text-2xl animate-gentle-emoji-float opacity-30">
         🦋
       </div>
-      <div className="absolute bottom-4 left-4 text-lg animate-gentle-emoji-float opacity-25" style={{ animationDelay: "1s" }}>
+      <div
+        className="absolute bottom-4 left-4 text-lg animate-gentle-emoji-float opacity-25"
+        style={{ animationDelay: "1s" }}
+      >
         🌿
       </div>
 
@@ -256,7 +260,7 @@ export const EnhancedMobileWordLibraryHeader: React.FC<
               >
                 {title}
               </h1>
-              
+
               {showStats && (
                 <div className="flex items-center gap-2 mt-1">
                   <Badge className="bg-white/20 text-white text-xs px-2 py-0.5 backdrop-blur-sm border border-white/30">
@@ -316,7 +320,10 @@ export const EnhancedMobileWordLibraryHeader: React.FC<
                 className="h-full bg-gradient-to-r from-sunshine to-sunshine-light rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progressPercentage}%` }}
-                transition={{ duration: reducedMotion ? 0 : 1, ease: "easeOut" }}
+                transition={{
+                  duration: reducedMotion ? 0 : 1,
+                  ease: "easeOut",
+                }}
               />
             </div>
           </div>
@@ -399,7 +406,10 @@ export const EnhancedMobileWordLibraryHeader: React.FC<
                   <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse shadow-md" />
                 </div>
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 z-30 pointer-events-none">
-                  <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse shadow-md" style={{ animationDelay: "0.5s" }} />
+                  <div
+                    className="w-2 h-2 bg-white/60 rounded-full animate-pulse shadow-md"
+                    style={{ animationDelay: "0.5s" }}
+                  />
                 </div>
 
                 {/* Categories Scroll Container */}

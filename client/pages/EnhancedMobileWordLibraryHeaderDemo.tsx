@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EnhancedMobileWordLibraryHeader from "@/components/EnhancedMobileWordLibraryHeader";
-import { 
-  Smartphone, 
-  Tablet, 
-  Monitor, 
-  Sparkles, 
-  Zap, 
+import {
+  Smartphone,
+  Tablet,
+  Monitor,
+  Sparkles,
+  Zap,
   Star,
   Heart,
   Target,
@@ -26,8 +26,10 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
   const [selectedCategory, setSelectedCategory] = useState("animals");
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [deviceMode, setDeviceMode] = useState<"mobile" | "tablet" | "desktop">("mobile");
-  
+  const [deviceMode, setDeviceMode] = useState<"mobile" | "tablet" | "desktop">(
+    "mobile",
+  );
+
   // Accessibility settings
   const [highContrastMode, setHighContrastMode] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -51,7 +53,7 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
     setSelectedCategory(categoryId);
     // Simulate progress update
     if (categoryId !== selectedCategory) {
-      setDemoProgress(prev => ({
+      setDemoProgress((prev) => ({
         ...prev,
         completedWords: prev.completedWords + 1,
       }));
@@ -64,13 +66,12 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
   };
 
   const toggleViewMode = () => {
-    setViewMode(prev => prev === "grid" ? "list" : "grid");
+    setViewMode((prev) => (prev === "grid" ? "list" : "grid"));
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
       <div className="max-w-7xl mx-auto">
-        
         {/* Demo Header */}
         <div className="text-center mb-8">
           <motion.div
@@ -82,9 +83,10 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
               🌿 Enhanced Mobile Word Library Header 🦋
             </h1>
             <p className="text-lg text-slate-600 mb-6">
-              Premium mobile-first component with integrated category selection, search, and jungle adventure theming
+              Premium mobile-first component with integrated category selection,
+              search, and jungle adventure theming
             </p>
-            
+
             {/* Feature Badges */}
             <div className="flex flex-wrap justify-center gap-3 mb-6">
               <Badge className="bg-jungle text-white px-4 py-2 text-sm font-semibold rounded-full">
@@ -114,7 +116,6 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
           </TabsList>
 
           <TabsContent value="preview" className="space-y-6">
-            
             {/* Device Mode Controls */}
             <Card>
               <CardHeader>
@@ -177,9 +178,11 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
 
                       {/* Enhanced Mobile Word Library Header */}
                       <EnhancedMobileWordLibraryHeader
-                        title={selectedCategory
-                          ? `🌳 ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure 🦋`
-                          : "🌿 Jungle Word Adventure Library 🦋"}
+                        title={
+                          selectedCategory
+                            ? `🌳 ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Adventure 🦋`
+                            : "🌿 Jungle Word Adventure Library 🦋"
+                        }
                         selectedCategory={selectedCategory}
                         onCategorySelect={handleCategorySelect}
                         onBack={() => {
@@ -218,12 +221,29 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                         </div>
 
                         {/* Demo Word Cards */}
-                        <div className={`grid gap-3 ${viewMode === "grid" ? "grid-cols-2" : "grid-cols-1"}`}>
+                        <div
+                          className={`grid gap-3 ${viewMode === "grid" ? "grid-cols-2" : "grid-cols-1"}`}
+                        >
                           {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="bg-white rounded-lg p-3 shadow-sm border">
-                              <div className="text-2xl mb-2">{i === 1 ? "🦁" : i === 2 ? "🐯" : i === 3 ? "🐘" : "🦒"}</div>
-                              <div className="text-sm font-semibold">Demo Word {i}</div>
-                              <div className="text-xs text-slate-500">Sample definition</div>
+                            <div
+                              key={i}
+                              className="bg-white rounded-lg p-3 shadow-sm border"
+                            >
+                              <div className="text-2xl mb-2">
+                                {i === 1
+                                  ? "🦁"
+                                  : i === 2
+                                    ? "🐯"
+                                    : i === 3
+                                      ? "🐘"
+                                      : "🦒"}
+                              </div>
+                              <div className="text-sm font-semibold">
+                                Demo Word {i}
+                              </div>
+                              <div className="text-xs text-slate-500">
+                                Sample definition
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -235,16 +255,26 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                 {/* Demo Stats */}
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-jungle/5 rounded-lg">
-                    <div className="text-2xl font-bold text-jungle">{demoProgress.totalWords}</div>
+                    <div className="text-2xl font-bold text-jungle">
+                      {demoProgress.totalWords}
+                    </div>
                     <div className="text-sm text-jungle/70">Total Words</div>
                   </div>
                   <div className="text-center p-4 bg-sunshine/5 rounded-lg">
-                    <div className="text-2xl font-bold text-sunshine-dark">{demoProgress.completedWords}</div>
-                    <div className="text-sm text-sunshine-dark/70">Completed</div>
+                    <div className="text-2xl font-bold text-sunshine-dark">
+                      {demoProgress.completedWords}
+                    </div>
+                    <div className="text-sm text-sunshine-dark/70">
+                      Completed
+                    </div>
                   </div>
                   <div className="text-center p-4 bg-educational-blue/5 rounded-lg">
-                    <div className="text-2xl font-bold text-educational-blue">{demoProgress.streakDays}</div>
-                    <div className="text-sm text-educational-blue/70">Day Streak</div>
+                    <div className="text-2xl font-bold text-educational-blue">
+                      {demoProgress.streakDays}
+                    </div>
+                    <div className="text-sm text-educational-blue/70">
+                      Day Streak
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -253,7 +283,6 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
 
           <TabsContent value="features" className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
-              
               {/* Premium Design Features */}
               <Card>
                 <CardHeader>
@@ -265,11 +294,15 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                 <CardContent className="space-y-3">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-jungle rounded-full"></div>
-                    <span className="text-sm">Glass morphism effects with backdrop blur</span>
+                    <span className="text-sm">
+                      Glass morphism effects with backdrop blur
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sunshine rounded-full"></div>
-                    <span className="text-sm">Animated jungle adventure theme</span>
+                    <span className="text-sm">
+                      Animated jungle adventure theme
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-educational-purple rounded-full"></div>
@@ -281,7 +314,9 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-educational-green rounded-full"></div>
-                    <span className="text-sm">Micro-interactions and haptic feedback</span>
+                    <span className="text-sm">
+                      Micro-interactions and haptic feedback
+                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -297,15 +332,21 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                 <CardContent className="space-y-3">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-jungle rounded-full"></div>
-                    <span className="text-sm">Horizontal scrolling category selector</span>
+                    <span className="text-sm">
+                      Horizontal scrolling category selector
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sunshine rounded-full"></div>
-                    <span className="text-sm">Real-time search with auto-complete</span>
+                    <span className="text-sm">
+                      Real-time search with auto-complete
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-educational-purple rounded-full"></div>
-                    <span className="text-sm">Progress tracking with animations</span>
+                    <span className="text-sm">
+                      Progress tracking with animations
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-educational-blue rounded-full"></div>
@@ -365,11 +406,15 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-sunshine rounded-full"></div>
-                    <span className="text-sm">Prevent iOS zoom on input focus</span>
+                    <span className="text-sm">
+                      Prevent iOS zoom on input focus
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-educational-purple rounded-full"></div>
-                    <span className="text-sm">Optimized scroll performance</span>
+                    <span className="text-sm">
+                      Optimized scroll performance
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-educational-blue rounded-full"></div>
@@ -393,11 +438,12 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                
                 {/* Accessibility Settings */}
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-jungle">Accessibility Settings</h3>
-                  
+                  <h3 className="font-semibold text-jungle">
+                    Accessibility Settings
+                  </h3>
+
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Eye className="w-4 h-4" />
@@ -408,7 +454,11 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                       size="sm"
                       onClick={() => setHighContrastMode(!highContrastMode)}
                     >
-                      {highContrastMode ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      {highContrastMode ? (
+                        <Eye className="w-4 h-4" />
+                      ) : (
+                        <EyeOff className="w-4 h-4" />
+                      )}
                     </Button>
                   </div>
 
@@ -450,51 +500,63 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
                       size="sm"
                       onClick={() => setSoundEnabled(!soundEnabled)}
                     >
-                      {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                      {soundEnabled ? (
+                        <Volume2 className="w-4 h-4" />
+                      ) : (
+                        <VolumeX className="w-4 h-4" />
+                      )}
                     </Button>
                   </div>
                 </div>
 
                 {/* Demo Progress Controls */}
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-jungle">Demo Progress Controls</h3>
-                  
+                  <h3 className="font-semibold text-jungle">
+                    Demo Progress Controls
+                  </h3>
+
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className="text-sm font-medium">Total Words</label>
                       <input
                         type="number"
                         value={demoProgress.totalWords}
-                        onChange={(e) => setDemoProgress(prev => ({
-                          ...prev,
-                          totalWords: parseInt(e.target.value) || 0
-                        }))}
+                        onChange={(e) =>
+                          setDemoProgress((prev) => ({
+                            ...prev,
+                            totalWords: parseInt(e.target.value) || 0,
+                          }))
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-lg"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Completed</label>
                       <input
                         type="number"
                         value={demoProgress.completedWords}
-                        onChange={(e) => setDemoProgress(prev => ({
-                          ...prev,
-                          completedWords: parseInt(e.target.value) || 0
-                        }))}
+                        onChange={(e) =>
+                          setDemoProgress((prev) => ({
+                            ...prev,
+                            completedWords: parseInt(e.target.value) || 0,
+                          }))
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-lg"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Streak Days</label>
                       <input
                         type="number"
                         value={demoProgress.streakDays}
-                        onChange={(e) => setDemoProgress(prev => ({
-                          ...prev,
-                          streakDays: parseInt(e.target.value) || 0
-                        }))}
+                        onChange={(e) =>
+                          setDemoProgress((prev) => ({
+                            ...prev,
+                            streakDays: parseInt(e.target.value) || 0,
+                          }))
+                        }
                         className="w-full mt-1 px-3 py-2 border rounded-lg"
                       />
                     </div>
@@ -522,7 +584,10 @@ export default function EnhancedMobileWordLibraryHeaderDemo() {
 
         {/* Footer */}
         <div className="text-center mt-12 text-slate-500 text-sm">
-          <p>🌿 Enhanced Mobile Word Library Header Demo • Built with Premium UX Principles 🦋</p>
+          <p>
+            🌿 Enhanced Mobile Word Library Header Demo • Built with Premium UX
+            Principles 🦋
+          </p>
         </div>
       </div>
     </div>
