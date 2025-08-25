@@ -327,65 +327,71 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           ))}
         </div>
 
-        {/* Enhanced User Profile Section with Adventure Theme */}
+        {/* Enhanced User Profile Section with Card Style from Image */}
         <motion.div
           variants={itemVariants}
-          className="bg-gradient-to-br from-profile-purple to-purple-600 rounded-[24px] p-5 shadow-xl relative overflow-hidden flex-shrink-0 border border-white/10"
+          className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-[20px] p-6 shadow-lg relative overflow-hidden flex-shrink-0 border border-amber-100/60"
           style={{
-            backgroundImage: `
-            radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)
-          `,
+            backgroundColor: "#FEF7ED", // Cream/beige background like in the image
           }}
         >
-          {/* Animated background elements */}
-          <div className="absolute top-2 right-2 w-8 h-8 bg-white/5 rounded-full animate-pulse" />
-          <div
-            className="absolute bottom-2 left-2 w-6 h-6 bg-white/5 rounded-full animate-pulse"
-            style={{ animationDelay: "1s" }}
-          />
-
-          {/* Profile Avatar with enhanced styling and animation */}
-          <div className="flex justify-center mb-4">
+          {/* Profile Avatar with enhanced styling - positioned like the icon in the image */}
+          <div className="flex items-start gap-4 mb-4">
             <motion.div
-              className="w-16 h-16 rounded-full border-3 border-white/30 flex items-center justify-center bg-white/10 shadow-2xl backdrop-blur-sm relative"
+              className="w-16 h-16 rounded-2xl bg-gradient-to-br from-jungle to-jungle-dark flex items-center justify-center shadow-lg relative flex-shrink-0"
               whileHover={{
-                scale: 1.1,
-                rotate: 5,
+                scale: 1.05,
+                rotate: 2,
               }}
               transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
             >
-              <span className="text-2xl">{userData.avatar?.emoji || "🎯"}</span>
+              <span className="text-2xl text-white">{userData.avatar?.emoji || "🎯"}</span>
               {/* Level indicator ring */}
               <motion.div
-                className="absolute -top-1 -right-1 w-6 h-6 bg-sunshine rounded-full flex items-center justify-center shadow-lg"
+                className="absolute -top-2 -right-2 w-7 h-7 bg-sunshine rounded-full flex items-center justify-center shadow-lg border-2 border-white"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
               >
-                <span className="text-white text-xs font-bold">
+                <span className="text-navy text-xs font-bold">
                   {userData.level}
                 </span>
               </motion.div>
             </motion.div>
+
+            {/* User Info with card-style layout */}
+            <div className="flex-1 min-w-0">
+              <h2 className="text-slate-800 font-['Baloo_2'] text-[22px] font-bold leading-tight mb-1 truncate">
+                {userData.name}
+              </h2>
+              <p className="text-slate-600 font-['Baloo_2'] text-[15px] font-medium mb-3">
+                Adventure Explorer 🗺️
+              </p>
+
+              {/* Stats badges in a clean row */}
+              <div className="flex flex-wrap gap-2">
+                <Badge className="bg-jungle/10 text-jungle border-jungle/20 font-['Baloo_2'] text-xs px-3 py-1 rounded-full">
+                  🌟 Level {userData.level}
+                </Badge>
+                <Badge className="bg-orange-100 text-orange-700 border-orange-200 font-['Baloo_2'] text-xs px-3 py-1 rounded-full">
+                  🔥 {userData.streak} days
+                </Badge>
+              </div>
+            </div>
           </div>
 
-          {/* Enhanced User Info with better typography and spacing */}
-          <div className="text-center relative z-10">
-            <h2 className="text-white font-['Baloo_2'] text-[20px] font-bold leading-tight mb-2 truncate drop-shadow-sm">
-              {userData.name}
-            </h2>
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <Badge className="bg-white/20 text-white border-white/30 font-['Baloo_2'] text-xs px-3 py-1">
-                🌟 Level {userData.level}
-              </Badge>
-              <Badge className="bg-orange-500/80 text-white border-orange-400/50 font-['Baloo_2'] text-xs px-3 py-1">
-                🔥 {userData.streak} days
-              </Badge>
-            </div>
-            <p className="text-white/90 font-['Baloo_2'] text-[14px] font-medium">
-              Adventure Explorer 🗺️
-            </p>
-          </div>
+          {/* Action button styled like the "Play" button in the image */}
+          <motion.div
+            className="mt-4"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Button
+              onClick={() => navigate("/profile")}
+              className="w-full bg-gradient-to-r from-jungle to-jungle-dark hover:from-jungle-dark hover:to-jungle text-white font-['Baloo_2'] text-[16px] font-bold py-3 rounded-[16px] shadow-md transition-all duration-200"
+            >
+              View Profile
+            </Button>
+          </motion.div>
         </motion.div>
 
         {/* Scrollable Progress Section - Takes available space but allows scrolling */}
