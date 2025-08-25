@@ -219,6 +219,7 @@ const JungleCanopyLight = React.memo(({ show }: { show: boolean }) => (
             duration: 3,
             repeat: Infinity,
             ease: "easeInOut",
+            type: "tween",
           }}
         />
       </motion.div>
