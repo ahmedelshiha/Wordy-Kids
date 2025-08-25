@@ -859,13 +859,14 @@ export function AchievementsSystemMap() {
                                 duration: 2,
                                 repeat: Infinity,
                                 delay: index * 0.3,
+                                type: "tween",
                               }}
                             >
                               {module.emoji}
                             </motion.span>
                             <motion.div
                               animate={{ x: [0, 3, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
+                              transition={{ duration: 1.5, repeat: Infinity, type: "tween" }}
                               className="text-jungle-dark font-bold"
                             >
                               🌿→
@@ -877,6 +878,7 @@ export function AchievementsSystemMap() {
                                 duration: 2,
                                 repeat: Infinity,
                                 delay: index * 0.5,
+                                type: "tween",
                               }}
                             >
                               {connectedModule.emoji}
