@@ -79,28 +79,28 @@ const SOUND_LIBRARY: { [key: string]: SoundEffect } = {
   achievement: {
     id: "achievement",
     name: "Achievement Unlocked",
-    url: "/sounds/ui/achievement-fanfare.mp3",
+    url: "/sounds/mockingbird.mp3", // Bird sound for celebration
     category: "celebration",
     volume: 0.7,
   },
   "word-mastered": {
     id: "word-mastered",
     name: "Word Mastered",
-    url: "/sounds/ui/word-mastered.mp3",
+    url: "/sounds/rooster.mp3", // Victory crow
     category: "celebration",
     volume: 0.6,
   },
   "level-up": {
     id: "level-up",
     name: "Level Up",
-    url: "/sounds/ui/level-up.mp3",
+    url: "/sounds/owl.mp3", // Wise progression sound
     category: "celebration",
     volume: 0.8,
   },
   "gem-collected": {
     id: "gem-collected",
     name: "Gem Collected",
-    url: "/sounds/ui/gem-sparkle.mp3",
+    url: "/sounds/cricket.mp3", // Sparkly cricket sound
     category: "celebration",
     volume: 0.4,
   },
