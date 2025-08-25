@@ -152,7 +152,7 @@ const App = () => {
                           </ErrorBoundary>
                         }
                       />
-                      {/* Main App Route - Production Jungle Word Library */}
+                      {/* Production Routes */}
                       <Route
                         path="/jungle-library"
                         element={
@@ -165,7 +165,6 @@ const App = () => {
                         }
                       />
 
-                      {/* Parent Dashboard Route */}
                       <Route
                         path="/parent-dashboard"
                         element={
@@ -178,14 +177,27 @@ const App = () => {
                         }
                       />
 
-                      {/* Legacy Demo Routes - Keep for debugging */}
+                      {/* Legacy App Route - Backup */}
                       <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
+                        path="/app-legacy"
+                        element={
+                          <ErrorBoundary
+                            fallbackType="kid"
+                            componentName="MainAppPage"
+                          >
+                            <MainAppPage />
+                          </ErrorBoundary>
+                        }
                       />
+
+                      {/* Essential Diagnostic Routes */}
                       <Route
                         path="/speech-diagnostics"
                         element={<SpeechDiagnostics />}
+                      />
+                      <Route
+                        path="/jungle-adventure-word-card-demo"
+                        element={<JungleAdventureWordCardDemo />}
                       />
                       <Route
                         path="/error-boundary-test"
