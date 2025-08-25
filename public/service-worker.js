@@ -79,13 +79,15 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   console.log("[ServiceWorker] Activate event");
 
+  const currentCaches = [CACHE_NAME, DYNAMIC_CACHE, SOUNDS_CACHE, GAME_STATE_CACHE];
+
   event.waitUntil(
     caches
       .keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (cacheName !== CACHE_NAME && cacheName !== DYNAMIC_CACHE) {
+            if (!currentCaches.includes(cacheName)) {
               console.log("[ServiceWorker] Deleting old cache:", cacheName);
               return caches.delete(cacheName);
             }
