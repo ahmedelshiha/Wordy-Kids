@@ -551,7 +551,7 @@ export function ChildFriendlyCategorySelector({
             {/* Enhanced Single-Line Quick Categories with Slide */}
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-3">
-                <p className="text-sm font-medium text-jungle/70">
+                <p className="text-sm font-medium text-white/90 drop-shadow-sm">
                   🌿 Quick Jungle Paths - Slide to Explore Adventures 🦎
                 </p>
               </div>
@@ -559,8 +559,8 @@ export function ChildFriendlyCategorySelector({
               {/* Horizontal Scrollable Categories */}
               <div className="relative">
                 {/* Gradient fade edges for better UX */}
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-jungle to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-sunshine to-transparent z-10 pointer-events-none"></div>
 
                 <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 pt-1 px-4 scroll-smooth scrollbar-thin scrollbar-thumb-jungle/30 scrollbar-track-transparent hover:scrollbar-thumb-jungle/50 transition-colors">
                   {enrichedCategories.map((category, index) => (
