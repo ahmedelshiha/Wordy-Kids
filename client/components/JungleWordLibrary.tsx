@@ -22,7 +22,7 @@ import {
   Map,
   Target,
   Heart,
-  Zap
+  Zap,
 } from "lucide-react";
 
 // Import enhanced components
@@ -82,7 +82,12 @@ interface JungleWordLibraryProps {
   initialCategory?: string;
 }
 
-type ViewMode = "categories" | "words" | "vocabulary" | "achievements" | "settings";
+type ViewMode =
+  | "categories"
+  | "words"
+  | "vocabulary"
+  | "achievements"
+  | "settings";
 type WordViewMode = "grid" | "list" | "carousel" | "adventure";
 
 export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
@@ -91,7 +96,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   enableAdvancedFeatures = true,
   showMobileOptimizations = true,
   gameMode = "exploration",
-  initialCategory = "all"
+  initialCategory = "all",
 }) => {
   // Enhanced state management with custom hooks
   const {
@@ -111,7 +116,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     unlockAchievement,
     getPlayerStats,
     saveProgress,
-    resetSession
+    resetSession,
   } = useJungleGameState();
 
   const {
@@ -122,7 +127,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     stopAmbientSounds,
     setVolume,
     loadSoundPack,
-    toggleAudio
+    toggleAudio,
   } = useJungleAudioService();
 
   const {
@@ -131,7 +136,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     isLandscape,
     screenSize,
     touchCapabilities,
-    optimizeForMobile
+    optimizeForMobile,
   } = useMobileOptimization();
 
   const {
@@ -139,7 +144,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     announceForScreenReader,
     handleKeyboardNavigation,
     updateAccessibilitySettings,
-    getAccessibilityStatus
+    getAccessibilityStatus,
   } = useJungleAccessibility();
 
   const {
@@ -148,13 +153,14 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     triggerCelebration,
     animateWordCard,
     animateTransition,
-    clearAnimations
+    clearAnimations,
   } = useJungleAnimations();
 
   // Core state
   const [viewMode, setViewMode] = useState<ViewMode>("categories");
   const [wordViewMode, setWordViewMode] = useState<WordViewMode>("adventure");
-  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(initialCategory);
   const [currentWords, setCurrentWords] = useState<Word[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
@@ -178,11 +184,11 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     clearAllFilters,
     hasActiveFilters,
     getFilterStats,
-    getSuggestedTerms
+    getSuggestedTerms,
   } = useJungleWordFiltering(currentWords, {
     masteredWords,
     favoriteWords,
-    userProfile
+    userProfile,
   });
 
   // Refs for performance and accessibility
@@ -195,11 +201,11 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   useEffect(() => {
     const initializeJungleLibrary = async () => {
       setIsLoading(true);
-      
+
       try {
         // Load initial data
         await loadSoundPack("jungle-adventure");
-        
+
         // Set initial words
         if (selectedCategory === "all") {
           setCurrentWords(wordsDatabase);
@@ -217,18 +223,19 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           gameMode,
           selectedCategory,
           userAge: userProfile.age,
-          isMobile
+          isMobile,
         });
 
         // Announce for screen readers
-        announceForScreenReader("Welcome to the Jungle Word Adventure! Explore amazing words in the jungle.");
-
+        announceForScreenReader(
+          "Welcome to the Jungle Word Adventure! Explore amazing words in the jungle.",
+        );
       } catch (error) {
         console.error("Error initializing Jungle Word Library:", error);
         toast({
           title: "🌿 Adventure Loading",
           description: "Setting up your jungle adventure...",
-          duration: 2000
+          duration: 2000,
         });
       } finally {
         setIsLoading(false);
@@ -244,7 +251,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
       enhancedAnalytics.trackEvent("jungle_library_session_end", {
         timeSpent: currentSession.duration,
         wordsReviewed: currentSession.wordsReviewed,
-        achievementsUnlocked: currentSession.achievementsUnlocked
+        achievementsUnlocked: currentSession.achievementsUnlocked,
       });
     };
   }, []);
@@ -258,19 +265,19 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         setCurrentWords(getWordsByCategory(selectedCategory));
       }
       setCurrentWordIndex(0);
-      
+
       // Trigger transition animation
       if (animationsEnabled) {
         animateTransition("category-switch");
       }
-      
+
       // Play category selection sound
       playSound("category-select");
-      
+
       // Track category selection
       enhancedAnalytics.trackEvent("category_selected", {
         category: selectedCategory,
-        wordCount: currentWords.length
+        wordCount: currentWords.length,
       });
     };
 
@@ -278,143 +285,180 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   }, [selectedCategory, animationsEnabled]);
 
   // Handle category selection
-  const handleCategorySelect = useCallback((categoryId: string) => {
-    // Announce category change for screen readers
-    announceForScreenReader(`Exploring ${categoryId} category`);
-    
-    setSelectedCategory(categoryId);
-    setViewMode("words");
-    
-    // Haptic feedback for mobile
-    if (isMobile && 'vibrate' in navigator) {
-      navigator.vibrate([50]);
-    }
-    
-    // Visual feedback
-    if (animationsEnabled) {
-      createParticles("category-select", { count: 6, emoji: "🌿" });
-    }
-  }, [isMobile, animationsEnabled, announceForScreenReader, createParticles]);
+  const handleCategorySelect = useCallback(
+    (categoryId: string) => {
+      // Announce category change for screen readers
+      announceForScreenReader(`Exploring ${categoryId} category`);
+
+      setSelectedCategory(categoryId);
+      setViewMode("words");
+
+      // Haptic feedback for mobile
+      if (isMobile && "vibrate" in navigator) {
+        navigator.vibrate([50]);
+      }
+
+      // Visual feedback
+      if (animationsEnabled) {
+        createParticles("category-select", { count: 6, emoji: "🌿" });
+      }
+    },
+    [isMobile, animationsEnabled, announceForScreenReader, createParticles],
+  );
 
   // Handle word interaction
-  const handleWordInteraction = useCallback((wordId: number, action: string, data?: any) => {
-    const word = currentWords.find(w => w.id === wordId);
-    if (!word) return;
+  const handleWordInteraction = useCallback(
+    (wordId: number, action: string, data?: any) => {
+      const word = currentWords.find((w) => w.id === wordId);
+      if (!word) return;
 
-    switch (action) {
-      case "pronounce":
-        pronounceWord(word.word, {
-          speed: accessibilitySettings.speechRate || 1,
-          voice: userProfile.interests?.includes("animals") ? "child-friendly" : "default"
-        });
-        break;
-        
-      case "master":
-        const wasNewMastery = masterWord(wordId);
-        if (wasNewMastery) {
-          updateScore(25);
-          addJungleGems(1);
-          triggerCelebration("word-mastered");
-          playSound("achievement");
-          
-          announceForScreenReader(`Congratulations! You mastered the word ${word.word}!`);
-          
-          // Check for achievements
-          checkAchievements();
-        }
-        break;
-        
-      case "favorite":
-        const isFavorited = toggleFavorite(wordId);
-        playSound(isFavorited ? "heart-add" : "heart-remove");
-        announceForScreenReader(`${word.word} ${isFavorited ? "added to" : "removed from"} favorites`);
-        break;
-        
-      case "share":
-        handleWordShare(word);
-        break;
-    }
-    
-    // Track interaction
-    enhancedAnalytics.trackEvent("word_interaction", {
-      wordId,
-      word: word.word,
-      action,
-      category: selectedCategory,
-      difficulty: word.difficulty,
-      rarity: word.rarity
-    });
-  }, [currentWords, selectedCategory, accessibilitySettings, userProfile, masterWord, updateScore, addJungleGems, triggerCelebration, playSound, announceForScreenReader, toggleFavorite]);
+      switch (action) {
+        case "pronounce":
+          pronounceWord(word.word, {
+            speed: accessibilitySettings.speechRate || 1,
+            voice: userProfile.interests?.includes("animals")
+              ? "child-friendly"
+              : "default",
+          });
+          break;
+
+        case "master":
+          const wasNewMastery = masterWord(wordId);
+          if (wasNewMastery) {
+            updateScore(25);
+            addJungleGems(1);
+            triggerCelebration("word-mastered");
+            playSound("achievement");
+
+            announceForScreenReader(
+              `Congratulations! You mastered the word ${word.word}!`,
+            );
+
+            // Check for achievements
+            checkAchievements();
+          }
+          break;
+
+        case "favorite":
+          const isFavorited = toggleFavorite(wordId);
+          playSound(isFavorited ? "heart-add" : "heart-remove");
+          announceForScreenReader(
+            `${word.word} ${isFavorited ? "added to" : "removed from"} favorites`,
+          );
+          break;
+
+        case "share":
+          handleWordShare(word);
+          break;
+      }
+
+      // Track interaction
+      enhancedAnalytics.trackEvent("word_interaction", {
+        wordId,
+        word: word.word,
+        action,
+        category: selectedCategory,
+        difficulty: word.difficulty,
+        rarity: word.rarity,
+      });
+    },
+    [
+      currentWords,
+      selectedCategory,
+      accessibilitySettings,
+      userProfile,
+      masterWord,
+      updateScore,
+      addJungleGems,
+      triggerCelebration,
+      playSound,
+      announceForScreenReader,
+      toggleFavorite,
+    ],
+  );
 
   // Handle word navigation
-  const handleWordNavigation = useCallback((direction: "prev" | "next" | "random") => {
-    const maxIndex = filteredWords.length - 1;
-    let newIndex = currentWordIndex;
+  const handleWordNavigation = useCallback(
+    (direction: "prev" | "next" | "random") => {
+      const maxIndex = filteredWords.length - 1;
+      let newIndex = currentWordIndex;
 
-    switch (direction) {
-      case "prev":
-        newIndex = currentWordIndex > 0 ? currentWordIndex - 1 : maxIndex;
-        break;
-      case "next":
-        newIndex = currentWordIndex < maxIndex ? currentWordIndex + 1 : 0;
-        break;
-      case "random":
-        newIndex = Math.floor(Math.random() * filteredWords.length);
-        break;
-    }
+      switch (direction) {
+        case "prev":
+          newIndex = currentWordIndex > 0 ? currentWordIndex - 1 : maxIndex;
+          break;
+        case "next":
+          newIndex = currentWordIndex < maxIndex ? currentWordIndex + 1 : 0;
+          break;
+        case "random":
+          newIndex = Math.floor(Math.random() * filteredWords.length);
+          break;
+      }
 
-    if (newIndex !== currentWordIndex) {
-      setCurrentWordIndex(newIndex);
-      playSound("navigation");
-      
-      if (animationsEnabled) {
-        animateWordCard(direction);
+      if (newIndex !== currentWordIndex) {
+        setCurrentWordIndex(newIndex);
+        playSound("navigation");
+
+        if (animationsEnabled) {
+          animateWordCard(direction);
+        }
+
+        // Announce new word for screen readers
+        const newWord = filteredWords[newIndex];
+        if (newWord) {
+          announceForScreenReader(`Now viewing: ${newWord.word}`);
+        }
       }
-      
-      // Announce new word for screen readers
-      const newWord = filteredWords[newIndex];
-      if (newWord) {
-        announceForScreenReader(`Now viewing: ${newWord.word}`);
-      }
-    }
-  }, [currentWordIndex, filteredWords, playSound, animationsEnabled, animateWordCard, announceForScreenReader]);
+    },
+    [
+      currentWordIndex,
+      filteredWords,
+      playSound,
+      animationsEnabled,
+      animateWordCard,
+      announceForScreenReader,
+    ],
+  );
 
   // Handle word sharing
-  const handleWordShare = useCallback(async (word: Word) => {
-    const shareData = {
-      title: `Learn the word: ${word.word}`,
-      text: `🌿 ${word.definition}\n\n${word.example ? `Example: ${word.example}` : ''}${word.funFact ? `\n\nFun fact: ${word.funFact}` : ''}`,
-      url: window.location.href
-    };
+  const handleWordShare = useCallback(
+    async (word: Word) => {
+      const shareData = {
+        title: `Learn the word: ${word.word}`,
+        text: `🌿 ${word.definition}\n\n${word.example ? `Example: ${word.example}` : ""}${word.funFact ? `\n\nFun fact: ${word.funFact}` : ""}`,
+        url: window.location.href,
+      };
 
-    try {
-      if (navigator.share && isMobile) {
-        await navigator.share(shareData);
-        playSound("success");
-      } else {
-        await navigator.clipboard.writeText(shareData.text);
-        toast({
-          title: "📋 Copied to clipboard!",
-          description: `Word "${word.word}" copied successfully`,
-          duration: 2000
+      try {
+        if (navigator.share && isMobile) {
+          await navigator.share(shareData);
+          playSound("success");
+        } else {
+          await navigator.clipboard.writeText(shareData.text);
+          toast({
+            title: "📋 Copied to clipboard!",
+            description: `Word "${word.word}" copied successfully`,
+            duration: 2000,
+          });
+          playSound("copy");
+        }
+
+        enhancedAnalytics.trackEvent("word_shared", {
+          wordId: word.id,
+          word: word.word,
+          method: navigator.share ? "native" : "clipboard",
         });
-        playSound("copy");
+      } catch (error) {
+        console.error("Error sharing word:", error);
+        toast({
+          title: "❌ Share failed",
+          description: "Couldn't share the word. Please try again.",
+          duration: 2000,
+        });
       }
-      
-      enhancedAnalytics.trackEvent("word_shared", {
-        wordId: word.id,
-        word: word.word,
-        method: navigator.share ? "native" : "clipboard"
-      });
-    } catch (error) {
-      console.error("Error sharing word:", error);
-      toast({
-        title: "❌ Share failed",
-        description: "Couldn't share the word. Please try again.",
-        duration: 2000
-      });
-    }
-  }, [isMobile, playSound]);
+    },
+    [isMobile, playSound],
+  );
 
   // Check for achievements
   const checkAchievements = useCallback(() => {
@@ -428,7 +472,10 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     if (stats.masteredWordsCount >= 10 && !explorerBadges.has("word-master")) {
       newAchievements.push("word-master");
     }
-    if (stats.masteredWordsCount >= 25 && !explorerBadges.has("jungle-explorer")) {
+    if (
+      stats.masteredWordsCount >= 25 &&
+      !explorerBadges.has("jungle-explorer")
+    ) {
       newAchievements.push("jungle-explorer");
     }
 
@@ -442,8 +489,13 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
     // Category completion achievements
     const categoryWords = getWordsByCategory(selectedCategory);
-    const masteredInCategory = categoryWords.filter(w => masteredWords.has(w.id)).length;
-    if (masteredInCategory === categoryWords.length && categoryWords.length > 0) {
+    const masteredInCategory = categoryWords.filter((w) =>
+      masteredWords.has(w.id),
+    ).length;
+    if (
+      masteredInCategory === categoryWords.length &&
+      categoryWords.length > 0
+    ) {
       const achievementId = `category-${selectedCategory}`;
       if (!explorerBadges.has(achievementId)) {
         newAchievements.push(achievementId);
@@ -451,7 +503,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     }
 
     // Unlock new achievements
-    newAchievements.forEach(achievementId => {
+    newAchievements.forEach((achievementId) => {
       unlockAchievement(achievementId);
       setShowAchievements(true);
       triggerCelebration("achievement");
@@ -459,24 +511,42 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     });
 
     return newAchievements;
-  }, [getPlayerStats, explorerBadges, streak, masteredWords, selectedCategory, unlockAchievement, triggerCelebration, playSound]);
+  }, [
+    getPlayerStats,
+    explorerBadges,
+    streak,
+    masteredWords,
+    selectedCategory,
+    unlockAchievement,
+    triggerCelebration,
+    playSound,
+  ]);
 
   // Handle view mode changes
-  const handleViewModeChange = useCallback((newViewMode: ViewMode) => {
-    setViewMode(newViewMode);
-    playSound("view-change");
-    
-    if (animationsEnabled) {
-      animateTransition("view-change");
-    }
-    
-    announceForScreenReader(`Switched to ${newViewMode} view`);
-    
-    enhancedAnalytics.trackEvent("view_mode_changed", {
-      from: viewMode,
-      to: newViewMode
-    });
-  }, [viewMode, playSound, animationsEnabled, animateTransition, announceForScreenReader]);
+  const handleViewModeChange = useCallback(
+    (newViewMode: ViewMode) => {
+      setViewMode(newViewMode);
+      playSound("view-change");
+
+      if (animationsEnabled) {
+        animateTransition("view-change");
+      }
+
+      announceForScreenReader(`Switched to ${newViewMode} view`);
+
+      enhancedAnalytics.trackEvent("view_mode_changed", {
+        from: viewMode,
+        to: newViewMode,
+      });
+    },
+    [
+      viewMode,
+      playSound,
+      animationsEnabled,
+      animateTransition,
+      announceForScreenReader,
+    ],
+  );
 
   // Get current word
   const getCurrentWord = useCallback(() => {
@@ -529,7 +599,13 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [wordViewMode, handleWordNavigation, getCurrentWord, handleWordInteraction, handleKeyboardNavigation]);
+  }, [
+    wordViewMode,
+    handleWordNavigation,
+    getCurrentWord,
+    handleWordInteraction,
+    handleKeyboardNavigation,
+  ]);
 
   // Loading state
   if (isLoading) {
@@ -560,7 +636,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           : "bg-gradient-to-br from-green-50 via-emerald-50 to-blue-50"
       } ${accessibilitySettings.reducedMotion ? "" : "jungle-pattern-bg"}`}
       style={{
-        fontSize: accessibilitySettings.largeText ? "1.125rem" : "1rem"
+        fontSize: accessibilitySettings.largeText ? "1.125rem" : "1rem",
       }}
     >
       {/* Accessibility announcements */}
@@ -582,7 +658,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         onBack={onBack}
         onViewModeChange={handleViewModeChange}
         onToggleAudio={toggleAudio}
-        onToggleAccessibility={() => setShowAccessibilityPanel(!showAccessibilityPanel)}
+        onToggleAccessibility={() =>
+          setShowAccessibilityPanel(!showAccessibilityPanel)
+        }
         audioEnabled={audioEnabled}
         accessibilitySettings={accessibilitySettings}
         isMobile={isMobile}
@@ -647,7 +725,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         onToggleFilters={() => setShowFilters(!showFilters)}
         onRandomWord={() => handleWordNavigation("random")}
         onToggleAchievements={() => setShowAchievements(!showAchievements)}
-        onToggleAccessibility={() => setShowAccessibilityPanel(!showAccessibilityPanel)}
+        onToggleAccessibility={() =>
+          setShowAccessibilityPanel(!showAccessibilityPanel)
+        }
         hasActiveFilters={hasActiveFilters()}
         accessibilitySettings={accessibilitySettings}
         isMobile={isMobile}

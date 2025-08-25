@@ -85,7 +85,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-yellow-400 to-orange-500",
     requirement: 1,
     category: "mastery",
-    rarity: "common"
+    rarity: "common",
   },
   {
     id: "word-master",
@@ -95,7 +95,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-gold-400 to-yellow-500",
     requirement: 10,
     category: "mastery",
-    rarity: "rare"
+    rarity: "rare",
   },
   {
     id: "jungle-explorer",
@@ -105,7 +105,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-green-400 to-emerald-500",
     requirement: 25,
     category: "mastery",
-    rarity: "epic"
+    rarity: "epic",
   },
   {
     id: "word-champion",
@@ -115,7 +115,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-purple-400 to-pink-500",
     requirement: 50,
     category: "mastery",
-    rarity: "legendary"
+    rarity: "legendary",
   },
   {
     id: "streak-starter",
@@ -125,7 +125,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-red-400 to-orange-500",
     requirement: 5,
     category: "streak",
-    rarity: "common"
+    rarity: "common",
   },
   {
     id: "streak-master",
@@ -135,7 +135,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-blue-400 to-purple-500",
     requirement: 10,
     category: "streak",
-    rarity: "rare"
+    rarity: "rare",
   },
   {
     id: "daily-adventurer",
@@ -145,7 +145,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-indigo-400 to-blue-500",
     requirement: 20,
     category: "time",
-    rarity: "rare"
+    rarity: "rare",
   },
   {
     id: "category-animals",
@@ -155,7 +155,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-orange-400 to-red-500",
     requirement: 1,
     category: "exploration",
-    rarity: "epic"
+    rarity: "epic",
   },
   {
     id: "category-nature",
@@ -165,7 +165,7 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-green-400 to-emerald-500",
     requirement: 1,
     category: "exploration",
-    rarity: "epic"
+    rarity: "epic",
   },
   {
     id: "gem-collector",
@@ -175,8 +175,8 @@ const DEFAULT_ACHIEVEMENTS: Achievement[] = [
     color: "from-cyan-400 to-blue-500",
     requirement: 100,
     category: "exploration",
-    rarity: "legendary"
-  }
+    rarity: "legendary",
+  },
 ];
 
 // Initial game state
@@ -205,8 +205,8 @@ const getInitialGameState = (): GameState => ({
   parentalControls: {
     timeLimit: 30, // minutes
     bedtimeMode: false,
-    allowSharing: true
-  }
+    allowSharing: true,
+  },
 });
 
 export const useJungleGameState = () => {
@@ -220,7 +220,7 @@ export const useJungleGameState = () => {
     categoriesExplored: new Set(),
     achievementsUnlocked: [],
     maxStreak: 0,
-    totalScore: 0
+    totalScore: 0,
   });
 
   const sessionIntervalRef = useRef<NodeJS.Timeout>();
@@ -238,9 +238,9 @@ export const useJungleGameState = () => {
 
     // Update session duration every second
     sessionIntervalRef.current = setInterval(() => {
-      setCurrentSession(prev => ({
+      setCurrentSession((prev) => ({
         ...prev,
-        duration: Date.now() - prev.startTime.getTime()
+        duration: Date.now() - prev.startTime.getTime(),
       }));
     }, 1000);
 
@@ -262,16 +262,18 @@ export const useJungleGameState = () => {
       const savedState = localStorage.getItem(STORAGE_KEY);
       if (savedState) {
         const parsed = JSON.parse(savedState);
-        
+
         // Convert Sets back from arrays
         const loadedState: GameState = {
           ...parsed,
           masteredWords: new Set(parsed.masteredWords || []),
           favoriteWords: new Set(parsed.favoriteWords || []),
           explorerBadges: new Set(parsed.explorerBadges || []),
-          unlockedCategories: new Set(parsed.unlockedCategories || ["animals", "nature", "food"]),
+          unlockedCategories: new Set(
+            parsed.unlockedCategories || ["animals", "nature", "food"],
+          ),
           achievements: parsed.achievements || DEFAULT_ACHIEVEMENTS,
-          sessionStartTime: new Date()
+          sessionStartTime: new Date(),
         };
 
         // Reset daily counter if it's a new day
@@ -299,19 +301,21 @@ export const useJungleGameState = () => {
         explorerBadges: Array.from(gameState.explorerBadges),
         unlockedCategories: Array.from(gameState.unlockedCategories),
         totalPlayTime: gameState.totalPlayTime + currentSession.duration,
-        sessionStartTime: undefined // Don't save session start time
+        sessionStartTime: undefined, // Don't save session start time
       };
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
-      
+
       // Also save analytics data
       const analyticsData = {
         lastSaved: new Date().toISOString(),
-        sessionCount: (parseInt(localStorage.getItem(`${ANALYTICS_KEY}_sessions`) || "0") + 1),
+        sessionCount:
+          parseInt(localStorage.getItem(`${ANALYTICS_KEY}_sessions`) || "0") +
+          1,
         totalWords: gameState.masteredWords.size,
-        totalTime: stateToSave.totalPlayTime
+        totalTime: stateToSave.totalPlayTime,
       };
-      
+
       localStorage.setItem(ANALYTICS_KEY, JSON.stringify(analyticsData));
     } catch (error) {
       console.error("Error saving game state:", error);
@@ -336,226 +340,280 @@ export const useJungleGameState = () => {
       categoriesExplored: new Set(),
       achievementsUnlocked: [],
       maxStreak: 0,
-      totalScore: 0
+      totalScore: 0,
     });
   }, []);
 
   // Update score
-  const updateScore = useCallback((points: number) => {
-    setGameState(prev => ({
-      ...prev,
-      score: prev.score + points,
-      experience: prev.experience + points
-    }));
+  const updateScore = useCallback(
+    (points: number) => {
+      setGameState((prev) => ({
+        ...prev,
+        score: prev.score + points,
+        experience: prev.experience + points,
+      }));
 
-    setCurrentSession(prev => ({
-      ...prev,
-      totalScore: prev.totalScore + points
-    }));
+      setCurrentSession((prev) => ({
+        ...prev,
+        totalScore: prev.totalScore + points,
+      }));
 
-    debouncedSave();
-    return gameState.score + points;
-  }, [gameState.score, debouncedSave]);
+      debouncedSave();
+      return gameState.score + points;
+    },
+    [gameState.score, debouncedSave],
+  );
 
   // Add jungle gems
-  const addJungleGems = useCallback((amount: number = 1) => {
-    setGameState(prev => ({
-      ...prev,
-      jungleGems: prev.jungleGems + amount
-    }));
+  const addJungleGems = useCallback(
+    (amount: number = 1) => {
+      setGameState((prev) => ({
+        ...prev,
+        jungleGems: prev.jungleGems + amount,
+      }));
 
-    debouncedSave();
-    return gameState.jungleGems + amount;
-  }, [gameState.jungleGems, debouncedSave]);
+      debouncedSave();
+      return gameState.jungleGems + amount;
+    },
+    [gameState.jungleGems, debouncedSave],
+  );
 
   // Add sparkle seeds
-  const addSparkleSeeds = useCallback((amount: number = 1) => {
-    setGameState(prev => ({
-      ...prev,
-      sparkleSeeds: prev.sparkleSeeds + amount
-    }));
+  const addSparkleSeeds = useCallback(
+    (amount: number = 1) => {
+      setGameState((prev) => ({
+        ...prev,
+        sparkleSeeds: prev.sparkleSeeds + amount,
+      }));
 
-    debouncedSave();
-    return gameState.sparkleSeeds + amount;
-  }, [gameState.sparkleSeeds, debouncedSave]);
+      debouncedSave();
+      return gameState.sparkleSeeds + amount;
+    },
+    [gameState.sparkleSeeds, debouncedSave],
+  );
 
   // Update experience and level
-  const addExperience = useCallback((exp: number) => {
-    setGameState(prev => {
-      const newExp = prev.experience + exp;
-      const newLevel = Math.floor(newExp / 100) + 1; // Level up every 100 XP
-      
-      const leveledUp = newLevel > prev.level;
-      
-      if (leveledUp) {
-        toast({
-          title: "🎉 Level Up!",
-          description: `You reached level ${newLevel}! Amazing work!`,
-          duration: 3000
-        });
-      }
+  const addExperience = useCallback(
+    (exp: number) => {
+      setGameState((prev) => {
+        const newExp = prev.experience + exp;
+        const newLevel = Math.floor(newExp / 100) + 1; // Level up every 100 XP
 
-      return {
-        ...prev,
-        experience: newExp,
-        level: newLevel
-      };
-    });
+        const leveledUp = newLevel > prev.level;
 
-    debouncedSave();
-  }, [debouncedSave]);
+        if (leveledUp) {
+          toast({
+            title: "🎉 Level Up!",
+            description: `You reached level ${newLevel}! Amazing work!`,
+            duration: 3000,
+          });
+        }
+
+        return {
+          ...prev,
+          experience: newExp,
+          level: newLevel,
+        };
+      });
+
+      debouncedSave();
+    },
+    [debouncedSave],
+  );
 
   // Master a word
-  const masterWord = useCallback((wordId: number): boolean => {
-    if (gameState.masteredWords.has(wordId)) {
-      return false; // Already mastered
-    }
+  const masterWord = useCallback(
+    (wordId: number): boolean => {
+      if (gameState.masteredWords.has(wordId)) {
+        return false; // Already mastered
+      }
 
-    setGameState(prev => ({
-      ...prev,
-      masteredWords: new Set([...prev.masteredWords, wordId]),
-      streak: prev.streak + 1,
-      maxStreak: Math.max(prev.maxStreak, prev.streak + 1),
-      wordsReviewedToday: prev.wordsReviewedToday + 1
-    }));
+      setGameState((prev) => ({
+        ...prev,
+        masteredWords: new Set([...prev.masteredWords, wordId]),
+        streak: prev.streak + 1,
+        maxStreak: Math.max(prev.maxStreak, prev.streak + 1),
+        wordsReviewedToday: prev.wordsReviewedToday + 1,
+      }));
 
-    setCurrentSession(prev => ({
-      ...prev,
-      wordsLearned: prev.wordsLearned + 1,
-      maxStreak: Math.max(prev.maxStreak, gameState.streak + 1)
-    }));
+      setCurrentSession((prev) => ({
+        ...prev,
+        wordsLearned: prev.wordsLearned + 1,
+        maxStreak: Math.max(prev.maxStreak, gameState.streak + 1),
+      }));
 
-    // Add rewards
-    updateScore(25);
-    addJungleGems(1);
-    addExperience(20);
+      // Add rewards
+      updateScore(25);
+      addJungleGems(1);
+      addExperience(20);
 
-    debouncedSave();
-    return true; // New mastery
-  }, [gameState.masteredWords, gameState.streak, updateScore, addJungleGems, addExperience, debouncedSave]);
+      debouncedSave();
+      return true; // New mastery
+    },
+    [
+      gameState.masteredWords,
+      gameState.streak,
+      updateScore,
+      addJungleGems,
+      addExperience,
+      debouncedSave,
+    ],
+  );
 
   // Toggle favorite word
-  const toggleFavorite = useCallback((wordId: number): boolean => {
-    const isFavorited = gameState.favoriteWords.has(wordId);
-    
-    setGameState(prev => {
-      const newFavorites = new Set(prev.favoriteWords);
-      if (isFavorited) {
-        newFavorites.delete(wordId);
-      } else {
-        newFavorites.add(wordId);
-        // Small reward for favoriting
+  const toggleFavorite = useCallback(
+    (wordId: number): boolean => {
+      const isFavorited = gameState.favoriteWords.has(wordId);
+
+      setGameState((prev) => {
+        const newFavorites = new Set(prev.favoriteWords);
+        if (isFavorited) {
+          newFavorites.delete(wordId);
+        } else {
+          newFavorites.add(wordId);
+          // Small reward for favoriting
+          return {
+            ...prev,
+            favoriteWords: newFavorites,
+            score: prev.score + 5,
+            experience: prev.experience + 5,
+          };
+        }
         return {
           ...prev,
           favoriteWords: newFavorites,
-          score: prev.score + 5,
-          experience: prev.experience + 5
         };
-      }
-      return {
-        ...prev,
-        favoriteWords: newFavorites
-      };
-    });
+      });
 
-    debouncedSave();
-    return !isFavorited;
-  }, [gameState.favoriteWords, debouncedSave]);
+      debouncedSave();
+      return !isFavorited;
+    },
+    [gameState.favoriteWords, debouncedSave],
+  );
 
   // Review a word (for streak tracking)
-  const reviewWord = useCallback((wordId: number, correct: boolean = true) => {
-    setGameState(prev => ({
-      ...prev,
-      streak: correct ? prev.streak + 1 : 0,
-      maxStreak: correct ? Math.max(prev.maxStreak, prev.streak + 1) : prev.maxStreak,
-      wordsReviewedToday: prev.wordsReviewedToday + 1
-    }));
+  const reviewWord = useCallback(
+    (wordId: number, correct: boolean = true) => {
+      setGameState((prev) => ({
+        ...prev,
+        streak: correct ? prev.streak + 1 : 0,
+        maxStreak: correct
+          ? Math.max(prev.maxStreak, prev.streak + 1)
+          : prev.maxStreak,
+        wordsReviewedToday: prev.wordsReviewedToday + 1,
+      }));
 
-    setCurrentSession(prev => ({
-      ...prev,
-      wordsReviewed: prev.wordsReviewed + 1,
-      maxStreak: correct ? Math.max(prev.maxStreak, gameState.streak + 1) : prev.maxStreak
-    }));
+      setCurrentSession((prev) => ({
+        ...prev,
+        wordsReviewed: prev.wordsReviewed + 1,
+        maxStreak: correct
+          ? Math.max(prev.maxStreak, gameState.streak + 1)
+          : prev.maxStreak,
+      }));
 
-    if (correct) {
-      updateScore(10);
-      addExperience(5);
-    }
+      if (correct) {
+        updateScore(10);
+        addExperience(5);
+      }
 
-    debouncedSave();
-  }, [gameState.streak, updateScore, addExperience, debouncedSave]);
+      debouncedSave();
+    },
+    [gameState.streak, updateScore, addExperience, debouncedSave],
+  );
 
   // Unlock achievement
-  const unlockAchievement = useCallback((achievementId: string) => {
-    if (gameState.explorerBadges.has(achievementId)) {
-      return false; // Already unlocked
-    }
+  const unlockAchievement = useCallback(
+    (achievementId: string) => {
+      if (gameState.explorerBadges.has(achievementId)) {
+        return false; // Already unlocked
+      }
 
-    const achievement = gameState.achievements.find(a => a.id === achievementId);
-    if (!achievement) {
-      return false;
-    }
+      const achievement = gameState.achievements.find(
+        (a) => a.id === achievementId,
+      );
+      if (!achievement) {
+        return false;
+      }
 
-    setGameState(prev => ({
-      ...prev,
-      explorerBadges: new Set([...prev.explorerBadges, achievementId]),
-      achievements: prev.achievements.map(a =>
-        a.id === achievementId ? { ...a, unlockedAt: new Date() } : a
-      )
-    }));
+      setGameState((prev) => ({
+        ...prev,
+        explorerBadges: new Set([...prev.explorerBadges, achievementId]),
+        achievements: prev.achievements.map((a) =>
+          a.id === achievementId ? { ...a, unlockedAt: new Date() } : a,
+        ),
+      }));
 
-    setCurrentSession(prev => ({
-      ...prev,
-      achievementsUnlocked: [...prev.achievementsUnlocked, achievementId]
-    }));
+      setCurrentSession((prev) => ({
+        ...prev,
+        achievementsUnlocked: [...prev.achievementsUnlocked, achievementId],
+      }));
 
-    // Achievement rewards based on rarity
-    const rewards = {
-      common: { score: 50, gems: 2, seeds: 1 },
-      rare: { score: 100, gems: 5, seeds: 2 },
-      epic: { score: 200, gems: 10, seeds: 5 },
-      legendary: { score: 500, gems: 25, seeds: 10 }
-    };
+      // Achievement rewards based on rarity
+      const rewards = {
+        common: { score: 50, gems: 2, seeds: 1 },
+        rare: { score: 100, gems: 5, seeds: 2 },
+        epic: { score: 200, gems: 10, seeds: 5 },
+        legendary: { score: 500, gems: 25, seeds: 10 },
+      };
 
-    const reward = rewards[achievement.rarity];
-    updateScore(reward.score);
-    addJungleGems(reward.gems);
-    addSparkleSeeds(reward.seeds);
-    addExperience(reward.score / 2);
+      const reward = rewards[achievement.rarity];
+      updateScore(reward.score);
+      addJungleGems(reward.gems);
+      addSparkleSeeds(reward.seeds);
+      addExperience(reward.score / 2);
 
-    toast({
-      title: "🏆 Achievement Unlocked!",
-      description: `${achievement.emoji} ${achievement.name}`,
-      duration: 4000
-    });
+      toast({
+        title: "🏆 Achievement Unlocked!",
+        description: `${achievement.emoji} ${achievement.name}`,
+        duration: 4000,
+      });
 
-    debouncedSave();
-    return true;
-  }, [gameState.explorerBadges, gameState.achievements, updateScore, addJungleGems, addSparkleSeeds, addExperience, debouncedSave]);
+      debouncedSave();
+      return true;
+    },
+    [
+      gameState.explorerBadges,
+      gameState.achievements,
+      updateScore,
+      addJungleGems,
+      addSparkleSeeds,
+      addExperience,
+      debouncedSave,
+    ],
+  );
 
   // Unlock category
-  const unlockCategory = useCallback((categoryId: string): boolean => {
-    if (gameState.unlockedCategories.has(categoryId)) {
-      return false; // Already unlocked
-    }
+  const unlockCategory = useCallback(
+    (categoryId: string): boolean => {
+      if (gameState.unlockedCategories.has(categoryId)) {
+        return false; // Already unlocked
+      }
 
-    setGameState(prev => ({
-      ...prev,
-      unlockedCategories: new Set([...prev.unlockedCategories, categoryId])
-    }));
+      setGameState((prev) => ({
+        ...prev,
+        unlockedCategories: new Set([...prev.unlockedCategories, categoryId]),
+      }));
 
-    updateScore(100);
-    addSparkleSeeds(5);
-    addExperience(50);
+      updateScore(100);
+      addSparkleSeeds(5);
+      addExperience(50);
 
-    debouncedSave();
-    return true;
-  }, [gameState.unlockedCategories, updateScore, addSparkleSeeds, addExperience, debouncedSave]);
+      debouncedSave();
+      return true;
+    },
+    [
+      gameState.unlockedCategories,
+      updateScore,
+      addSparkleSeeds,
+      addExperience,
+      debouncedSave,
+    ],
+  );
 
   // Get player statistics
   const getPlayerStats = useCallback((): PlayerStats => {
     const sessionDuration = Date.now() - currentSession.startTime.getTime();
-    
+
     return {
       totalScore: gameState.score,
       currentStreak: gameState.streak,
@@ -568,11 +626,13 @@ export const useJungleGameState = () => {
       totalPlayTime: gameState.totalPlayTime + sessionDuration,
       wordsReviewedToday: gameState.wordsReviewedToday,
       categoriesUnlocked: gameState.unlockedCategories.size,
-      averageAccuracy: currentSession.wordsReviewed > 0 ? 
-        (currentSession.wordsLearned / currentSession.wordsReviewed) * 100 : 100,
+      averageAccuracy:
+        currentSession.wordsReviewed > 0
+          ? (currentSession.wordsLearned / currentSession.wordsReviewed) * 100
+          : 100,
       lastPlayDate: gameState.lastPlayDate,
       level: gameState.level,
-      experience: gameState.experience
+      experience: gameState.experience,
     };
   }, [gameState, currentSession]);
 
@@ -581,7 +641,7 @@ export const useJungleGameState = () => {
     const initialState = getInitialGameState();
     setGameState(initialState);
     startSession();
-    
+
     try {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(ANALYTICS_KEY);
@@ -592,7 +652,7 @@ export const useJungleGameState = () => {
     toast({
       title: "🔄 Progress Reset",
       description: "Your jungle adventure starts fresh!",
-      duration: 2000
+      duration: 2000,
     });
   }, [startSession]);
 
@@ -602,7 +662,7 @@ export const useJungleGameState = () => {
     toast({
       title: "💾 Progress Saved",
       description: "Your jungle adventure is safe!",
-      duration: 2000
+      duration: 2000,
     });
   }, [saveGameState]);
 
@@ -611,7 +671,7 @@ export const useJungleGameState = () => {
     const stats = getPlayerStats();
     const newAchievements: string[] = [];
 
-    gameState.achievements.forEach(achievement => {
+    gameState.achievements.forEach((achievement) => {
       if (gameState.explorerBadges.has(achievement.id)) return;
 
       let requirementMet = false;
@@ -643,7 +703,7 @@ export const useJungleGameState = () => {
     // State
     gameState,
     currentSession,
-    
+
     // Basic stats (for easy access)
     score: gameState.score,
     streak: gameState.streak,
@@ -675,7 +735,7 @@ export const useJungleGameState = () => {
     saveProgress,
     resetProgress,
     loadGameState,
-    saveGameState
+    saveGameState,
   };
 };
 

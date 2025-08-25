@@ -17,7 +17,7 @@ import {
   Zap,
   Heart,
   BookOpen,
-  MapPin
+  MapPin,
 } from "lucide-react";
 
 // Types and interfaces
@@ -75,17 +75,17 @@ const ACHIEVEMENT_LIBRARY: { [key: string]: Achievement } = {
     color: "from-yellow-400 to-orange-500",
     requirement: 1,
     category: "mastery",
-    rarity: "common"
+    rarity: "common",
   },
   "word-master": {
-    id: "word-master", 
+    id: "word-master",
     name: "Word Master",
     description: "Mastered 10 jungle words!",
     emoji: "🏆",
     color: "from-gold-400 to-yellow-500",
     requirement: 10,
     category: "mastery",
-    rarity: "rare"
+    rarity: "rare",
   },
   "jungle-explorer": {
     id: "jungle-explorer",
@@ -95,17 +95,17 @@ const ACHIEVEMENT_LIBRARY: { [key: string]: Achievement } = {
     color: "from-green-400 to-emerald-500",
     requirement: 25,
     category: "mastery",
-    rarity: "epic"
+    rarity: "epic",
   },
   "word-champion": {
     id: "word-champion",
-    name: "Word Champion", 
+    name: "Word Champion",
     description: "Mastered 50 jungle words!",
     emoji: "👑",
     color: "from-purple-400 to-pink-500",
     requirement: 50,
     category: "mastery",
-    rarity: "legendary"
+    rarity: "legendary",
   },
   "streak-starter": {
     id: "streak-starter",
@@ -115,7 +115,7 @@ const ACHIEVEMENT_LIBRARY: { [key: string]: Achievement } = {
     color: "from-red-400 to-orange-500",
     requirement: 5,
     category: "streak",
-    rarity: "common"
+    rarity: "common",
   },
   "streak-master": {
     id: "streak-master",
@@ -125,7 +125,7 @@ const ACHIEVEMENT_LIBRARY: { [key: string]: Achievement } = {
     color: "from-blue-400 to-purple-500",
     requirement: 10,
     category: "streak",
-    rarity: "rare"
+    rarity: "rare",
   },
   "daily-adventurer": {
     id: "daily-adventurer",
@@ -135,7 +135,7 @@ const ACHIEVEMENT_LIBRARY: { [key: string]: Achievement } = {
     color: "from-indigo-400 to-blue-500",
     requirement: 20,
     category: "time",
-    rarity: "rare"
+    rarity: "rare",
   },
   "gem-collector": {
     id: "gem-collector",
@@ -145,8 +145,8 @@ const ACHIEVEMENT_LIBRARY: { [key: string]: Achievement } = {
     color: "from-cyan-400 to-blue-500",
     requirement: 100,
     category: "exploration",
-    rarity: "legendary"
-  }
+    rarity: "legendary",
+  },
 };
 
 const RARITY_CONFIG = {
@@ -154,26 +154,26 @@ const RARITY_CONFIG = {
     borderColor: "border-green-300",
     bgGradient: "from-green-50 to-green-100",
     textColor: "text-green-800",
-    sparkleCount: 5
+    sparkleCount: 5,
   },
   rare: {
-    borderColor: "border-blue-300", 
+    borderColor: "border-blue-300",
     bgGradient: "from-blue-50 to-blue-100",
     textColor: "text-blue-800",
-    sparkleCount: 8
+    sparkleCount: 8,
   },
   epic: {
     borderColor: "border-purple-300",
-    bgGradient: "from-purple-50 to-purple-100", 
+    bgGradient: "from-purple-50 to-purple-100",
     textColor: "text-purple-800",
-    sparkleCount: 12
+    sparkleCount: 12,
   },
   legendary: {
     borderColor: "border-yellow-300",
     bgGradient: "from-yellow-50 to-orange-100",
-    textColor: "text-orange-800", 
-    sparkleCount: 16
-  }
+    textColor: "text-orange-800",
+    sparkleCount: 16,
+  },
 };
 
 export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
@@ -183,24 +183,26 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
   gameStats,
   accessibilitySettings = {},
   onShareAchievement,
-  onViewAllAchievements
+  onViewAllAchievements,
 }) => {
   // State management
   const [currentAchievementIndex, setCurrentAchievementIndex] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
   const [particles, setParticles] = useState<any[]>([]);
-  const [celebrationPhase, setCelebrationPhase] = useState<"intro" | "main" | "outro">("intro");
+  const [celebrationPhase, setCelebrationPhase] = useState<
+    "intro" | "main" | "outro"
+  >("intro");
 
   // Refs
   const popupRef = useRef<HTMLDivElement>(null);
   const celebrationTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Get current achievement details
-  const currentAchievement = recentAchievements[currentAchievementIndex] 
+  const currentAchievement = recentAchievements[currentAchievementIndex]
     ? ACHIEVEMENT_LIBRARY[recentAchievements[currentAchievementIndex]]
     : null;
 
-  const rarityConfig = currentAchievement 
+  const rarityConfig = currentAchievement
     ? RARITY_CONFIG[currentAchievement.rarity]
     : RARITY_CONFIG.common;
 
@@ -208,19 +210,21 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
   useEffect(() => {
     if (isOpen && !accessibilitySettings.reducedMotion && currentAchievement) {
       setCelebrationPhase("intro");
-      
+
       const createParticles = () => {
         const newParticles = [];
         const count = rarityConfig.sparkleCount;
-        
+
         for (let i = 0; i < count; i++) {
           newParticles.push({
             id: Math.random(),
-            emoji: ['✨', '⭐', '🌟', '💫', '🎉'][Math.floor(Math.random() * 5)],
+            emoji: ["✨", "⭐", "🌟", "💫", "🎉"][
+              Math.floor(Math.random() * 5)
+            ],
             x: Math.random() * 100,
             y: Math.random() * 100,
             delay: Math.random() * 2,
-            duration: 2 + Math.random() * 2
+            duration: 2 + Math.random() * 2,
           });
         }
         setParticles(newParticles);
@@ -245,7 +249,12 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
         clearTimeout(celebrationTimeoutRef.current);
       }
     };
-  }, [isOpen, currentAchievement, accessibilitySettings.reducedMotion, rarityConfig.sparkleCount]);
+  }, [
+    isOpen,
+    currentAchievement,
+    accessibilitySettings.reducedMotion,
+    rarityConfig.sparkleCount,
+  ]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -258,12 +267,12 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
           break;
         case "ArrowLeft":
           if (currentAchievementIndex > 0) {
-            setCurrentAchievementIndex(prev => prev - 1);
+            setCurrentAchievementIndex((prev) => prev - 1);
           }
           break;
         case "ArrowRight":
           if (currentAchievementIndex < recentAchievements.length - 1) {
-            setCurrentAchievementIndex(prev => prev + 1);
+            setCurrentAchievementIndex((prev) => prev + 1);
           }
           break;
         case "Enter":
@@ -275,7 +284,13 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, currentAchievementIndex, recentAchievements.length, showDetails, onClose]);
+  }, [
+    isOpen,
+    currentAchievementIndex,
+    recentAchievements.length,
+    showDetails,
+    onClose,
+  ]);
 
   // Handle sharing
   const handleShare = () => {
@@ -287,9 +302,12 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
   // Navigate between achievements
   const navigateAchievement = (direction: "prev" | "next") => {
     if (direction === "prev" && currentAchievementIndex > 0) {
-      setCurrentAchievementIndex(prev => prev - 1);
-    } else if (direction === "next" && currentAchievementIndex < recentAchievements.length - 1) {
-      setCurrentAchievementIndex(prev => prev + 1);
+      setCurrentAchievementIndex((prev) => prev - 1);
+    } else if (
+      direction === "next" &&
+      currentAchievementIndex < recentAchievements.length - 1
+    ) {
+      setCurrentAchievementIndex((prev) => prev + 1);
     }
     setShowDetails(false);
   };
@@ -304,7 +322,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
       name: "Word Champion",
       progress: Math.min(100, (current / nextTarget) * 100),
       current,
-      target: nextTarget
+      target: nextTarget,
     };
   };
 
@@ -313,7 +331,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
   if (!isOpen || !currentAchievement) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
@@ -321,7 +339,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
       aria-describedby="achievement-description"
     >
       {/* Celebration Particles */}
-      {particles.map(particle => (
+      {particles.map((particle) => (
         <div
           key={particle.id}
           className={`absolute text-2xl pointer-events-none ${
@@ -331,27 +349,29 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             animationDelay: `${particle.delay}s`,
-            animationDuration: `${particle.duration}s`
+            animationDuration: `${particle.duration}s`,
           }}
         >
           {particle.emoji}
         </div>
       ))}
 
-      <Card 
+      <Card
         ref={popupRef}
         className={`w-full max-w-lg transform transition-all duration-500 ${
           celebrationPhase === "intro" && !accessibilitySettings.reducedMotion
-            ? "scale-110 opacity-0" 
+            ? "scale-110 opacity-0"
             : "scale-100 opacity-100"
         } ${accessibilitySettings.highContrast ? "bg-black text-white border-white" : "bg-white"} ${
           rarityConfig.borderColor
         } border-4 shadow-2xl`}
       >
         {/* Header */}
-        <CardHeader className={`relative text-center bg-gradient-to-r ${rarityConfig.bgGradient} ${
-          accessibilitySettings.highContrast ? "bg-gray-800" : ""
-        }`}>
+        <CardHeader
+          className={`relative text-center bg-gradient-to-r ${rarityConfig.bgGradient} ${
+            accessibilitySettings.highContrast ? "bg-gray-800" : ""
+          }`}
+        >
           {/* Close button */}
           <Button
             variant="ghost"
@@ -373,14 +393,17 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
           )}
 
           <CardTitle className="text-center">
-            <div className={`text-6xl mb-2 ${
-              celebrationPhase === "main" && !accessibilitySettings.reducedMotion 
-                ? "animate-bounce" 
-                : ""
-            }`}>
+            <div
+              className={`text-6xl mb-2 ${
+                celebrationPhase === "main" &&
+                !accessibilitySettings.reducedMotion
+                  ? "animate-bounce"
+                  : ""
+              }`}
+            >
               {currentAchievement.emoji}
             </div>
-            <h2 
+            <h2
               id="achievement-title"
               className={`text-2xl font-bold ${rarityConfig.textColor} ${
                 accessibilitySettings.largeText ? "text-3xl" : ""
@@ -394,23 +417,27 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
         <CardContent className="p-6 space-y-6">
           {/* Achievement Details */}
           <div className="text-center space-y-3">
-            <h3 className={`text-xl font-bold ${
-              accessibilitySettings.largeText ? "text-2xl" : ""
-            } ${accessibilitySettings.highContrast ? "text-white" : "text-gray-800"}`}>
+            <h3
+              className={`text-xl font-bold ${
+                accessibilitySettings.largeText ? "text-2xl" : ""
+              } ${accessibilitySettings.highContrast ? "text-white" : "text-gray-800"}`}
+            >
               {currentAchievement.name}
             </h3>
-            
-            <p 
+
+            <p
               id="achievement-description"
               className={`${accessibilitySettings.largeText ? "text-lg" : "text-base"} ${
-                accessibilitySettings.highContrast ? "text-gray-300" : "text-gray-600"
+                accessibilitySettings.highContrast
+                  ? "text-gray-300"
+                  : "text-gray-600"
               }`}
             >
               {currentAchievement.description}
             </p>
 
             {/* Rarity badge */}
-            <Badge 
+            <Badge
               className={`capitalize bg-gradient-to-r ${currentAchievement.color} text-white px-4 py-2 text-sm font-bold`}
             >
               <Sparkles className="w-4 h-4 mr-1" />
@@ -420,22 +447,28 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
           {/* Additional Details (expandable) */}
           {showDetails && (
-            <div className={`space-y-4 bg-gradient-to-r ${rarityConfig.bgGradient} rounded-lg p-4 ${
-              accessibilitySettings.highContrast ? "bg-gray-700" : ""
-            }`}>
+            <div
+              className={`space-y-4 bg-gradient-to-r ${rarityConfig.bgGradient} rounded-lg p-4 ${
+                accessibilitySettings.highContrast ? "bg-gray-700" : ""
+              }`}
+            >
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <div className={`text-2xl font-bold ${rarityConfig.textColor} ${
-                    accessibilitySettings.highContrast ? "text-white" : ""
-                  }`}>
+                  <div
+                    className={`text-2xl font-bold ${rarityConfig.textColor} ${
+                      accessibilitySettings.highContrast ? "text-white" : ""
+                    }`}
+                  >
                     {gameStats.masteredWordsCount}
                   </div>
                   <div className="text-xs text-gray-600">Words Mastered</div>
                 </div>
                 <div>
-                  <div className={`text-2xl font-bold ${rarityConfig.textColor} ${
-                    accessibilitySettings.highContrast ? "text-white" : ""
-                  }`}>
+                  <div
+                    className={`text-2xl font-bold ${rarityConfig.textColor} ${
+                      accessibilitySettings.highContrast ? "text-white" : ""
+                    }`}
+                  >
                     {gameStats.currentStreak}
                   </div>
                   <div className="text-xs text-gray-600">Current Streak</div>
@@ -451,9 +484,13 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
           {/* Next Achievement Progress */}
           <div className="space-y-3">
-            <h4 className={`font-semibold ${accessibilitySettings.largeText ? "text-lg" : "text-base"} ${
-              accessibilitySettings.highContrast ? "text-white" : "text-gray-800"
-            }`}>
+            <h4
+              className={`font-semibold ${accessibilitySettings.largeText ? "text-lg" : "text-base"} ${
+                accessibilitySettings.highContrast
+                  ? "text-white"
+                  : "text-gray-800"
+              }`}
+            >
               🎯 Next Goal: {nextProgress.name}
             </h4>
             <div className="space-y-2">
@@ -461,10 +498,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
                 <span>{nextProgress.current}</span>
                 <span>{nextProgress.target}</span>
               </div>
-              <Progress 
-                value={nextProgress.progress} 
-                className="h-3"
-              />
+              <Progress value={nextProgress.progress} className="h-3" />
               <p className="text-xs text-center text-gray-600">
                 {nextProgress.target - nextProgress.current} more words to go!
               </p>
@@ -523,8 +557,8 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
                   <div
                     key={index}
                     className={`w-2 h-2 rounded-full ${
-                      index === currentAchievementIndex 
-                        ? "bg-blue-500" 
+                      index === currentAchievementIndex
+                        ? "bg-blue-500"
                         : "bg-gray-300"
                     }`}
                   />
@@ -535,7 +569,9 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={() => navigateAchievement("next")}
-                disabled={currentAchievementIndex === recentAchievements.length - 1}
+                disabled={
+                  currentAchievementIndex === recentAchievements.length - 1
+                }
                 aria-label="Next achievement"
               >
                 Next →
