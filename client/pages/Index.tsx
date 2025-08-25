@@ -3234,8 +3234,8 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <Brain className="w-3 h-3 md:w-4 md:h-4 text-white drop-shadow-sm" />
                                         </div>
                                       </div>
-                                      <h2 className="jungle-quiz-title text-xs md:text-sm font-bold text-center leading-none">
-                                        🧠 Quiz! 🏆
+                                      <h2 className="jungle-quiz-title text-[0.6rem] md:text-[0.7rem] font-bold text-center leading-tight">
+                                        🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
                                       </h2>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
