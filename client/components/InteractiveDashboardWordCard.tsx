@@ -1133,6 +1133,7 @@ export function InteractiveDashboardWordCard({
                       duration: 1.5,
                       repeat: Infinity,
                       ease: "easeInOut",
+                      type: "tween",
                     }
                   : { duration: 0 }
               }
@@ -1217,6 +1218,7 @@ export function InteractiveDashboardWordCard({
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
+                    type: "tween",
                   }
                 : { duration: 0 }
             }
@@ -1466,6 +1468,7 @@ export function InteractiveDashboardWordCard({
                   duration: 6,
                   repeat: Infinity,
                   ease: "easeInOut",
+                  type: "tween",
                 }}
                 className="absolute -top-10 -left-5 text-3xl opacity-15 text-jungle-light"
               >
@@ -1554,7 +1557,7 @@ export function InteractiveDashboardWordCard({
                         return "🌟 Goal achieved! You're incredible!";
                       }
                       if (percentage >= 90)
-                        return "🌟 Almost there, superstar!";
+                        return "�� Almost there, superstar!";
                       if (percentage >= 75) return "⭐ You're doing great!";
                       if (percentage >= 50) return "💪 Keep going, champion!";
                       if (percentage >= 25) return "🌱 Nice start!";
