@@ -32,6 +32,7 @@ import {
   preloadAIComponents,
 } from "@/components/LazyAIComponents";
 import { ChildFriendlyCategorySelector } from "@/components/ChildFriendlyCategorySelector";
+import EnhancedMobileWordLibraryHeader from "@/components/EnhancedMobileWordLibraryHeader";
 import { EnhancedChildLogin } from "@/components/EnhancedChildLogin";
 import { AvatarCustomization } from "@/components/AvatarCustomization";
 // Legacy AchievementSystem removed - now using EnhancedAchievementsPage
