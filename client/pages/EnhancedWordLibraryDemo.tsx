@@ -19,7 +19,7 @@ import {
   Eye,
   Gamepad2,
 } from "lucide-react";
-import { EnhancedWordLibrary } from "@/components/EnhancedWordLibrary";
+import { JungleWordLibrary } from "@/components/JungleWordLibrarySimplified";
 
 export function EnhancedWordLibraryDemo() {
   const [showDemo, setShowDemo] = useState(false);
