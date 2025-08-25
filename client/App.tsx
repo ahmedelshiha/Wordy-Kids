@@ -164,6 +164,19 @@ const App = () => {
                         }
                       />
 
+                      {/* Parent Dashboard Route */}
+                      <Route
+                        path="/parent-dashboard"
+                        element={
+                          <ErrorBoundary
+                            fallbackType="parent"
+                            componentName="ParentDashboard"
+                          >
+                            <ParentDashboard />
+                          </ErrorBoundary>
+                        }
+                      />
+
                       {/* Legacy Demo Routes - Keep for debugging */}
                       <Route
                         path="/jungle-adventure-word-card-demo"
