@@ -433,6 +433,37 @@ export const useJungleGameState = () => {
     };
   }, []);
 
+  // Session end tracking effect
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (currentSession.startTime) {
+        const sessionDuration = Date.now() - currentSession.startTime.getTime();
+
+        // Track session end
+        analyticsManager.track("session_ended", {
+          sessionDuration,
+          wordsReviewed: currentSession.wordsReviewed,
+          wordsLearned: currentSession.wordsLearned,
+          achievementsUnlocked: currentSession.achievementsUnlocked.length,
+          categoriesExplored: currentSession.categoriesExplored.size,
+          maxStreak: currentSession.maxStreak,
+          totalScore: currentSession.totalScore,
+          endReason: "page_unload",
+          finalAccuracy: currentSession.wordsReviewed > 0
+            ? (currentSession.wordsLearned / currentSession.wordsReviewed) * 100
+            : 100,
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // Also track session end on component unmount
+      handleBeforeUnload();
+    };
+  }, [currentSession]);
+
   // Load game state from localStorage
   const loadGameState = useCallback(() => {
     try {
