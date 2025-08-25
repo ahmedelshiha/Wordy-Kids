@@ -1591,7 +1591,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🗺️";
         achievementMessage = `Good effort! You finished ${categoryDisplayName} with ${accuracy}% accuracy! Practice makes perfect!\n\n🎁 Explorer Bonus: 75 points!`;
       } else {
-        achievementTitle = "Category Challenger! 💪";
+        achievementTitle = "Category Challenger! ����";
         achievementIcon = "💪";
         achievementMessage = `Nice try! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Every attempt makes you stronger!\n\n🏆 Challenger Bonus: 50 points!`;
       }
@@ -3245,12 +3245,14 @@ export default function Index({ initialProfile }: IndexProps) {
                                       <style jsx>{`
                                         .quiz-title-compact {
                                           font-size: 0.875rem !important;
-                                          line-height: 1.2 !important;
-                                          margin-bottom: 2px !important;
+                                          line-height: 1 !important;
+                                          margin-bottom: 0px !important;
+                                          margin-top: 1px !important;
                                         }
                                         .quiz-subtitle-compact {
                                           font-size: 0.75rem !important;
-                                          line-height: 1.2 !important;
+                                          line-height: 1 !important;
+                                          margin: 0 !important;
                                         }
                                         @media (min-width: 768px) {
                                           .quiz-title-compact {
