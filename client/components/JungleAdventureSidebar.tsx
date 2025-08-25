@@ -336,16 +336,18 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
           variants={{
             initial: {
               scale: 1,
-              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+              boxShadow:
+                "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
             },
             hover: {
               scale: 1.02,
-              boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              boxShadow:
+                "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
               transition: {
                 duration: 0.3,
-                ease: "easeOut"
-              }
-            }
+                ease: "easeOut",
+              },
+            },
           }}
         >
           {/* Premium gradient overlay on hover */}
@@ -367,12 +369,18 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
               transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
             >
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-jungle to-jungle-dark flex items-center justify-center shadow-lg relative">
-                <span className="text-2xl text-white">{userData.avatar?.emoji || "🎯"}</span>
+                <span className="text-2xl text-white">
+                  {userData.avatar?.emoji || "🎯"}
+                </span>
                 {/* Level indicator ring */}
                 <motion.div
                   className="absolute -top-2 -right-2 w-6 h-6 bg-sunshine rounded-full flex items-center justify-center shadow-lg border-2 border-white"
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                 >
                   <span className="text-navy text-[10px] font-bold">
                     {userData.level}
