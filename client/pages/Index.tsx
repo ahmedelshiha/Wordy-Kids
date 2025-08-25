@@ -3239,8 +3239,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           🧠 Jungle Quiz Adventure!
                                         </h2>
                                         <p className="jungle-quiz-subtitle font-medium quiz-subtitle-compact">
-                                          🌟 Test your vocabulary in the jungle!
-                                          🏆✨
+                                          🌟 Test your vocabulary in the jungle! 🏆✨
                                         </p>
                                       </div>
                                       <style jsx>{`
