@@ -120,9 +120,15 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Handle different types of requests
-  if (isStaticAsset(request.url)) {
+  if (isJungleSound(request.url)) {
+    // Cache-first strategy for jungle sounds (critical for offline play)
+    event.respondWith(cacheFirstSounds(request));
+  } else if (isStaticAsset(request.url)) {
     // Cache-first strategy for static assets
     event.respondWith(cacheFirst(request));
+  } else if (isGameStateRequest(request.url)) {
+    // Special handling for game state (always try cache first for performance)
+    event.respondWith(gameStateCacheFirst(request));
   } else if (isAPIRequest(request.url)) {
     // Network-first strategy for API requests
     event.respondWith(networkFirst(request));
