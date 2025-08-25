@@ -1076,7 +1076,7 @@ export default function Index({ initialProfile }: IndexProps) {
       {
         id: "science-star",
         name: "Science Star",
-        icon: "����",
+        icon: "🔬",
         earned: rememberedWords.size >= 15,
         description: "Mastered 10 science words",
       },
@@ -3227,19 +3227,43 @@ export default function Index({ initialProfile }: IndexProps) {
                                       🌱🌿
                                     </div>
 
-                                    {/* Hero Content - Compact */}
+                                    {/* Hero Content - Minimal Height */}
                                     <div className="jungle-quiz-hero-content">
-                                      <div className="flex justify-center mb-2">
-                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-1.5 md:p-2 rounded-full shadow-xl animate-jungle-glow border-2 border-white/30">
-                                          <Brain className="w-6 h-6 md:w-8 md:h-8 text-white drop-shadow-lg" />
+                                      <div className="flex justify-center">
+                                        <div className="bg-gradient-to-r from-jungle-green via-jungle-light to-sunshine-yellow p-0.5 rounded-full shadow-md animate-jungle-glow border border-white/30">
+                                          <Brain className="w-3 h-3 md:w-4 md:h-4 text-white drop-shadow-sm" />
                                         </div>
                                       </div>
-                                      <h2 className="jungle-quiz-title text-lg md:text-xl mb-1">
-                                        🧠 Jungle Quiz Adventure! 🌟
-                                      </h2>
-                                      <p className="jungle-quiz-subtitle text-xs md:text-sm">
-                                        Test your vocabulary in the jungle! 🏆✨
-                                      </p>
+                                      <div className="text-center">
+                                        <h2 className="jungle-quiz-title font-bold quiz-title-compact">
+                                          🧠 Jungle Quiz Adventure!
+                                        </h2>
+                                        <p className="jungle-quiz-subtitle font-medium quiz-subtitle-compact">
+                                          🌟 Test your vocabulary in the jungle!
+                                          🏆✨
+                                        </p>
+                                      </div>
+                                      <style jsx>{`
+                                        .quiz-title-compact {
+                                          font-size: 0.875rem !important;
+                                          line-height: 1 !important;
+                                          margin-bottom: 0px !important;
+                                          margin-top: 1px !important;
+                                        }
+                                        .quiz-subtitle-compact {
+                                          font-size: 0.75rem !important;
+                                          line-height: 1 !important;
+                                          margin: 0 !important;
+                                        }
+                                        @media (min-width: 768px) {
+                                          .quiz-title-compact {
+                                            font-size: 1rem !important;
+                                          }
+                                          .quiz-subtitle-compact {
+                                            font-size: 0.875rem !important;
+                                          }
+                                        }
+                                      `}</style>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
                                       {isAIEnabled() && (
@@ -3439,7 +3463,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             🎵 Audio Quest
                                           </span>
                                           <span className="jungle-quiz-badge-difficulty">
-                                            🏆 Challenge
+                                            🔥 Challenge
                                           </span>
                                         </div>
                                         <button
@@ -3454,7 +3478,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Start Sound Safari! 🎧
+                                          Start Sound Safari! 🎵
                                         </button>
                                       </div>
 

@@ -114,7 +114,7 @@ const enrichedCategories: Category[] = [
   {
     id: "space",
     name: "Space",
-    icon: "���",
+    icon: "🚀",
     color: "bg-navy",
     gradient: "from-navy to-sky",
     wordCount: getWordsByCategory("space").length,
@@ -501,10 +501,10 @@ export function ChildFriendlyCategorySelector({
           <div className="bg-gradient-to-r from-jungle/8 to-white/95 rounded-xl p-3 border border-jungle/15 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex-1 min-w-0">
-                <h2 className="text-sm font-bold text-slate-800 truncate">
+                <h2 className="text-sm font-bold text-white truncate">
                   🌿 Jungle Adventure Library! 🦎
                 </h2>
-                <p className="text-xs text-jungle/70 leading-tight">
+                <p className="text-xs text-white leading-tight">
                   Choose your favorite topic!
                 </p>
               </div>
@@ -651,40 +651,119 @@ export function ChildFriendlyCategorySelector({
         </div>
       )}
 
-      {/* Mobile Quick Categories - Search removed */}
-      <div className="md:hidden mb-6 px-2">
+      {/* Premium Mobile Quick Categories */}
+      <div className="md:hidden mb-8 px-2">
         {/* Quick Categories Bar - All Categories */}
         {!searchTerm && (
-          <div>
-            <h3 className="text-sm font-semibold text-jungle-dark mb-3">
-              🌿 Quick Jungle Paths - All Adventures 🦎
-            </h3>
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100">
-              {enrichedCategories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={
-                    selectedCategory === category.id ? "default" : "outline"
-                  }
-                  size="sm"
-                  onClick={() => handleCategoryClick(category.id)}
-                  className={`flex-shrink-0 h-16 w-16 flex-col gap-1 jungle-mobile-button ${
-                    selectedCategory === category.id
-                      ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg"
-                      : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md"
-                  }`}
-                >
-                  <span className="text-lg">{category.icon}</span>
-                  <span className="text-xs font-medium text-center leading-tight">
-                    {category.name.split(" ")[0]}
+          <div className="relative">
+            {/* Premium Container with Gradient Background */}
+            <div className="bg-gradient-to-br from-jungle/5 via-sunshine/3 to-educational-blue/5 rounded-2xl p-4 border border-jungle/20 shadow-xl backdrop-blur-sm">
+              {/* Premium Header with Enhanced Typography */}
+              <div className="text-center mb-4">
+                <div className="inline-flex items-center gap-2">
+                  <h3 className="text-base font-bold tracking-wide text-white">
+                    🌿 Quick Jungle Paths - All Adventures 🦎
+                  </h3>
+                </div>
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  <div className="h-px bg-gradient-to-r from-transparent via-jungle/30 to-transparent flex-1"></div>
+                  <span className="text-xs font-medium text-jungle/70 px-2">
+                    All Adventures
                   </span>
-                </Button>
-              ))}
+                  <div className="h-px bg-gradient-to-r from-transparent via-jungle/30 to-transparent flex-1"></div>
+                </div>
+              </div>
+
+              {/* Premium Category Buttons */}
+              <div className="relative">
+                <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-thin scrollbar-thumb-gradient-to-r scrollbar-thumb-from-jungle scrollbar-thumb-to-educational-blue scrollbar-track-transparent">
+                  {enrichedCategories.map((category, index) => (
+                    <Button
+                      key={category.id}
+                      variant={
+                        selectedCategory === category.id ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => handleCategoryClick(category.id)}
+                      className={`relative flex-shrink-0 h-20 w-20 flex-col gap-1.5 transition-all duration-300 ease-out transform hover:scale-105 ${
+                        selectedCategory === category.id
+                          ? "bg-gradient-to-br from-jungle via-jungle-light to-educational-blue text-white border-2 border-white/30 shadow-xl shadow-jungle/25 animate-gentle-glow"
+                          : "bg-white/80 backdrop-blur-sm border-2 border-jungle/20 hover:border-jungle/40 hover:bg-gradient-to-br hover:from-white hover:to-jungle/5 hover:shadow-lg hover:shadow-jungle/10 text-jungle-dark"
+                      } rounded-xl`}
+                      style={{
+                        animationDelay: `${index * 100}ms`,
+                      }}
+                    >
+                      {/* Premium Icon with Glow Effect */}
+                      <div
+                        className={`relative ${
+                          selectedCategory === category.id
+                            ? "drop-shadow-lg"
+                            : ""
+                        }`}
+                      >
+                        <span className="text-xl">{category.icon}</span>
+                        {selectedCategory === category.id && (
+                          <div className="absolute inset-0 bg-white/20 rounded-full blur-sm animate-pulse"></div>
+                        )}
+                      </div>
+
+                      {/* Premium Typography */}
+                      <span
+                        className={`text-xs font-semibold text-center leading-tight ${
+                          selectedCategory === category.id
+                            ? "text-white drop-shadow-sm"
+                            : "text-jungle-dark"
+                        }`}
+                      >
+                        {category.name.split(" ")[0]}
+                      </span>
+
+                      {/* Selected Indicator */}
+                      {selectedCategory === category.id && (
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-sunshine rounded-full border-2 border-white animate-bounce">
+                          <div className="w-full h-full bg-gradient-to-br from-sunshine to-sunshine-dark rounded-full"></div>
+                        </div>
+                      )}
+                    </Button>
+                  ))}
+                </div>
+
+                {/* Premium Scroll Indicator */}
+                <div className="absolute right-0 top-0 bottom-3 w-8 bg-gradient-to-l from-jungle/10 to-transparent pointer-events-none rounded-l-xl flex items-center justify-center">
+                  <div className="w-1 h-6 bg-gradient-to-b from-jungle/40 to-jungle/20 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+
+              {/* Premium Footer with Enhanced Styling */}
+              <div className="text-center mt-3">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-jungle/10 to-educational-blue/10 rounded-full px-3 py-1 border border-jungle/15">
+                  <span className="text-sm animate-gentle-emoji-float">🌳</span>
+                  <p className="text-xs font-medium text-white">
+                    Scroll right to explore all {enrichedCategories.length}{" "}
+                    premium adventures
+                  </p>
+                  <span className="text-xs bg-gradient-to-r from-jungle to-educational-blue text-white px-2 py-0.5 rounded-full font-bold shadow-sm">
+                    {enrichedCategories.length}
+                  </span>
+                </div>
+              </div>
             </div>
-            <p className="text-xs text-jungle-dark/70 mt-1">
-              🌳 Scroll right to explore all {enrichedCategories.length} jungle
-              adventures
-            </p>
+
+            {/* Premium Corner Decorations */}
+            <div className="absolute -top-1 -left-1 w-3 h-3 bg-gradient-to-br from-sunshine to-sunshine-dark rounded-full opacity-60 animate-pulse"></div>
+            <div
+              className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-educational-blue to-jungle rounded-full opacity-60 animate-pulse"
+              style={{ animationDelay: "1s" }}
+            ></div>
+            <div
+              className="absolute -bottom-1 -left-1 w-2 h-2 bg-gradient-to-br from-jungle to-educational-purple rounded-full opacity-60 animate-pulse"
+              style={{ animationDelay: "2s" }}
+            ></div>
+            <div
+              className="absolute -bottom-1 -right-1 w-3 h-3 bg-gradient-to-br from-educational-purple to-sunshine rounded-full opacity-60 animate-pulse"
+              style={{ animationDelay: "0.5s" }}
+            ></div>
           </div>
         )}
       </div>

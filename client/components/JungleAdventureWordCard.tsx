@@ -468,7 +468,7 @@ export const JungleAdventureWordCard: React.FC<
 
                 {word.pronunciation && (
                   <p className="text-lg sm:text-xl opacity-95 font-semibold leading-tight bg-white/20 backdrop-blur-md rounded-full px-4 py-2 border border-white/30">
-                    🗣��� {word.pronunciation}
+                    🗣️ {word.pronunciation}
                   </p>
                 )}
               </div>
