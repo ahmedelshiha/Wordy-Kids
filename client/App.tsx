@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
 import { JungleWordLibrary } from "./components/JungleWordLibrarySimplified";
+import ParentDashboard from "./pages/ParentDashboard";
 import { JungleAdventureWordCardDemo } from "./pages/JungleAdventureWordCardDemo";
 import {
   WordDatabaseNotifications,
