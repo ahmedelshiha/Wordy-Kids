@@ -549,38 +549,57 @@ export function ChildFriendlyCategorySelector({
               </div>
             </div>
 
-            {/* Quick Categories Selection */}
-            <div className="max-w-4xl mx-auto">
+            {/* Enhanced Single-Line Quick Categories with Slide */}
+            <div className="max-w-5xl mx-auto">
               <div className="text-center mb-3">
                 <p className="text-sm font-medium text-jungle/70">
-                  🌿 Quick Jungle Paths - Select Your Adventure 🦎
+                  🌿 Quick Jungle Paths - Slide to Explore Adventures 🦎
                 </p>
               </div>
-              <div className="flex gap-3 justify-center flex-wrap">
-                {enrichedCategories.map((category) => (
-                  <Button
-                    key={category.id}
-                    variant={
-                      selectedCategory === category.id ? "default" : "outline"
-                    }
-                    size="sm"
-                    onClick={() => handleCategoryClick(category.id)}
-                    className={`flex-shrink-0 h-20 w-20 flex-col gap-1 transition-all duration-200 ${
-                      selectedCategory === category.id
-                        ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg scale-105"
-                        : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md hover:scale-105"
-                    }`}
-                  >
-                    <span className="text-2xl">{category.icon}</span>
-                    <span className="text-xs font-medium text-center leading-tight">
-                      {category.name.split(" ")[0]}
-                    </span>
-                  </Button>
-                ))}
+
+              {/* Horizontal Scrollable Categories */}
+              <div className="relative">
+                {/* Gradient fade edges for better UX */}
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+                <div className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 pt-1 px-4 scroll-smooth scrollbar-thin scrollbar-thumb-jungle/30 scrollbar-track-transparent hover:scrollbar-thumb-jungle/50 transition-colors">
+                  {enrichedCategories.map((category, index) => (
+                    <Button
+                      key={category.id}
+                      variant={
+                        selectedCategory === category.id ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => handleCategoryClick(category.id)}
+                      className={`flex-shrink-0 h-20 w-20 flex-col gap-1 transition-all duration-200 ${
+                        selectedCategory === category.id
+                          ? "bg-gradient-to-r from-jungle to-jungle-light hover:from-jungle-dark hover:to-jungle text-white border-2 border-jungle shadow-lg scale-105"
+                          : "hover:bg-jungle/10 hover:text-jungle hover:border-jungle hover:shadow-md hover:scale-105"
+                      }`}
+                      style={{
+                        animationDelay: `${index * 50}ms`
+                      }}
+                    >
+                      <span className="text-2xl">{category.icon}</span>
+                      <span className="text-xs font-medium text-center leading-tight">
+                        {category.name.split(" ")[0]}
+                      </span>
+                    </Button>
+                  ))}
+                </div>
               </div>
-              <p className="text-xs text-jungle/60 mt-2 text-center">
-                🌳 Choose from {enrichedCategories.length} exciting jungle adventures above
-              </p>
+
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <p className="text-xs text-jungle/60">
+                  🌳 Slide to explore all {enrichedCategories.length} jungle adventures
+                </p>
+                <div className="flex gap-1">
+                  <div className="w-1.5 h-1.5 bg-jungle/30 rounded-full animate-pulse"></div>
+                  <div className="w-1.5 h-1.5 bg-jungle/30 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                  <div className="w-1.5 h-1.5 bg-jungle/30 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
