@@ -660,12 +660,10 @@ export function ChildFriendlyCategorySelector({
             <div className="bg-gradient-to-br from-jungle/5 via-sunshine/3 to-educational-blue/5 rounded-2xl p-4 border border-jungle/20 shadow-xl backdrop-blur-sm">
               {/* Premium Header with Enhanced Typography */}
               <div className="text-center mb-4">
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-jungle to-educational-blue bg-clip-text text-transparent">
-                  <span className="text-lg animate-gentle-emoji-float">🌿</span>
-                  <h3 className="text-base font-bold tracking-wide">
-                    Premium Jungle Paths
+                <div className="inline-flex items-center gap-2">
+                  <h3 className="text-base font-bold tracking-wide text-white">
+                    🌿 Quick Jungle Paths - All Adventures 🦎
                   </h3>
-                  <span className="text-lg animate-gentle-emoji-float" style={{animationDelay: '1s'}}>🦎</span>
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-1">
                   <div className="h-px bg-gradient-to-r from-transparent via-jungle/30 to-transparent flex-1"></div>
