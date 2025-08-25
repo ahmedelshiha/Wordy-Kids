@@ -519,71 +519,65 @@ export function ChildFriendlyCategorySelector({
           </div>
         </div>
 
-        {/* Desktop Enhanced Premium Header */}
+        {/* Desktop Optimized Header */}
         <div className="hidden md:block">
-          <div
-            className="rounded-3xl p-8 mb-8 border-2 backdrop-blur-lg relative overflow-hidden bg-gradient-to-br from-jungle/8 via-white/90 to-educational-blue/8 border-jungle/20 shadow-2xl"
-          >
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-r from-jungle/5 to-educational-blue/5 opacity-50" />
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Premium Title Section */}
-              <div className="text-center mb-6">
-                <h1 className="text-4xl font-bold mb-3 leading-relaxed tracking-wide text-slate-800">
+          <div className="rounded-2xl p-5 mb-6 border backdrop-blur-sm bg-gradient-to-r from-jungle/5 via-white/95 to-educational-blue/5 border-jungle/15 shadow-lg">
+            {/* Compact Title & Stats Row */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex-1">
+                <h1 className="text-2xl font-bold text-slate-800 mb-1">
                   🌿 Welcome to the Jungle Adventure Library! 🦋
                 </h1>
-                <p className="text-xl font-medium max-w-3xl mx-auto text-jungle/80">
+                <p className="text-base text-jungle/70">
                   Choose your favorite topic to start learning!
                 </p>
               </div>
 
-              {/* Enhanced Flying Badges */}
-              <div className="flex justify-center gap-4 mb-6 flex-wrap">
-                <Badge className="bg-jungle text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float">
-                  🌳 {wordsDatabase.length} Adventure Words
+              {/* Compact Stats */}
+              <div className="flex gap-2 ml-4">
+                <Badge className="bg-jungle text-white px-3 py-1.5 text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-shadow">
+                  🌳 {wordsDatabase.length}
                 </Badge>
-                <Badge className="bg-educational-blue text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float" style={{animationDelay: '0.5s'}}>
-                  🎯 {categories.length} Jungle Paths
+                <Badge className="bg-educational-blue text-white px-3 py-1.5 text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-shadow">
+                  🎯 {categories.length}
                 </Badge>
-                <Badge className="bg-educational-purple text-white px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 animate-gentle-float" style={{animationDelay: '1s'}}>
-                  ⭐ 3 Adventure Levels
+                <Badge className="bg-educational-purple text-white px-3 py-1.5 text-sm font-medium rounded-full shadow-sm hover:shadow-md transition-shadow">
+                  ⭐ 3 Levels
                 </Badge>
               </div>
+            </div>
 
-              {/* Integrated Premium Search */}
-              <div className="max-w-lg mx-auto">
-                <div className="relative">
-                  <Input
-                    type="text"
-                    placeholder="🌿 Explore jungle categories..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-14 pr-14 py-4 text-lg rounded-full border-2 focus:ring-4 focus:ring-jungle/20 bg-white/90 backdrop-blur-sm shadow-md transition-all duration-300 border-jungle/30 text-slate-700 hover:border-jungle/50 focus:border-jungle/60 hover:shadow-lg"
-                    aria-label="Search jungle categories"
-                  />
-                  <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-jungle/60 text-xl">
-                    🌿
-                  </div>
-                  {searchTerm && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSearchTerm("")}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 h-10 w-10 p-0 hover:bg-jungle/10 rounded-full transition-all duration-200"
-                      aria-label="Clear search"
-                    >
-                      <span className="text-lg">✕</span>
-                    </Button>
-                  )}
+            {/* Compact Search */}
+            <div className="max-w-md mx-auto">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="🌿 Explore jungle categories..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-10 py-2.5 rounded-full border border-jungle/25 focus:ring-2 focus:ring-jungle/20 bg-white/80 backdrop-blur-sm focus:border-jungle/40 transition-colors"
+                  aria-label="Search jungle categories"
+                />
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-jungle/60">
+                  🌿
                 </div>
                 {searchTerm && (
-                  <div className="mt-3 text-lg text-jungle-dark text-center font-medium">
-                    🌳 Found {categories.length} jungle paths matching "{searchTerm}" 🦋
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-jungle/10 rounded-full"
+                    aria-label="Clear search"
+                  >
+                    <span className="text-sm">✕</span>
+                  </Button>
                 )}
               </div>
+              {searchTerm && (
+                <div className="mt-2 text-sm text-jungle-dark text-center">
+                  Found {categories.length} paths matching "{searchTerm}"
+                </div>
+              )}
             </div>
           </div>
         </div>
