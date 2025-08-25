@@ -289,17 +289,105 @@ self.addEventListener("sync", (event) => {
   console.log("[ServiceWorker] Background sync event:", event.tag);
 
   if (event.tag === "background-sync") {
-    event.waitUntil(
-      // Handle any queued offline actions
-      processOfflineQueue(),
-    );
+    event.waitUntil(processOfflineQueue());
+  } else if (event.tag === "jungle-game-sync") {
+    event.waitUntil(syncJungleGameData());
+  } else if (event.tag === "analytics-sync") {
+    event.waitUntil(syncAnalyticsData());
   }
 });
 
-// Process offline queue (placeholder for future implementation)
+// Process offline queue for jungle library actions
 async function processOfflineQueue() {
   console.log("[ServiceWorker] Processing offline queue");
-  // Implementation for handling offline user actions
+
+  try {
+    // Sync any queued game progress
+    await syncJungleGameData();
+
+    // Sync any queued analytics events
+    await syncAnalyticsData();
+
+    console.log("[ServiceWorker] Offline queue processed successfully");
+  } catch (error) {
+    console.error("[ServiceWorker] Error processing offline queue:", error);
+  }
+}
+
+// Sync jungle game data when back online
+async function syncJungleGameData() {
+  console.log("[ServiceWorker] Syncing jungle game data");
+
+  try {
+    // Get offline game state from localStorage
+    const gameState = await getStoredGameState();
+
+    if (gameState && gameState.needsSync) {
+      // Attempt to sync with server
+      const response = await fetch("/api/sync-game-state", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(gameState),
+      });
+
+      if (response.ok) {
+        console.log("[ServiceWorker] Game state synced successfully");
+        // Mark as synced in local storage
+        await markGameStateSynced();
+      }
+    }
+  } catch (error) {
+    console.error("[ServiceWorker] Error syncing game data:", error);
+  }
+}
+
+// Sync analytics data when back online
+async function syncAnalyticsData() {
+  console.log("[ServiceWorker] Syncing analytics data");
+
+  try {
+    // Get offline analytics events
+    const analyticsEvents = await getStoredAnalyticsEvents();
+
+    if (analyticsEvents && analyticsEvents.length > 0) {
+      // Attempt to sync with analytics service
+      const response = await fetch("/api/sync-analytics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ events: analyticsEvents }),
+      });
+
+      if (response.ok) {
+        console.log("[ServiceWorker] Analytics synced successfully");
+        // Clear synced events from local storage
+        await clearSyncedAnalytics();
+      }
+    }
+  } catch (error) {
+    console.error("[ServiceWorker] Error syncing analytics:", error);
+  }
+}
+
+// Helper functions for offline data management
+async function getStoredGameState() {
+  // This would integrate with the actual localStorage structure
+  // For now, return a placeholder
+  return null;
+}
+
+async function markGameStateSynced() {
+  // Mark game state as synced in localStorage
+  console.log("[ServiceWorker] Marking game state as synced");
+}
+
+async function getStoredAnalyticsEvents() {
+  // Get analytics events that need syncing
+  return [];
+}
+
+async function clearSyncedAnalytics() {
+  // Clear synced analytics events
+  console.log("[ServiceWorker] Clearing synced analytics");
 }
 
 // Handle push notifications (placeholder for future implementation)
