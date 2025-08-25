@@ -1617,6 +1617,7 @@ export function InteractiveDashboardWordCard({
                             duration: 4,
                             repeat: Infinity,
                             ease: "easeInOut",
+                            type: "tween",
                           },
                           opacity: {
                             duration: 0.3,
