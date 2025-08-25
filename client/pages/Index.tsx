@@ -3234,17 +3234,29 @@ export default function Index({ initialProfile }: IndexProps) {
                                           <Brain className="w-3 h-3 md:w-4 md:h-4 text-white drop-shadow-sm" />
                                         </div>
                                       </div>
-                                      <h2
-                                        className="jungle-quiz-title font-bold text-center leading-tight quiz-title-tiny"
-                                      >
-                                        🧠 Jungle Quiz Adventure! 🌟 Test your vocabulary in the jungle! 🏆✨
-                                      </h2>
+                                      <div className="text-center">
+                                        <h2 className="jungle-quiz-title font-bold quiz-title-compact">
+                                          🧠 Jungle Quiz Adventure!
+                                        </h2>
+                                        <p className="jungle-quiz-subtitle font-medium quiz-subtitle-compact">
+                                          🌟 Test your vocabulary in the jungle! 🏆✨
+                                        </p>
+                                      </div>
                                       <style jsx>{`
-                                        .quiz-title-tiny {
+                                        .quiz-title-compact {
+                                          font-size: 0.875rem !important;
+                                          line-height: 1.2 !important;
+                                          margin-bottom: 2px !important;
+                                        }
+                                        .quiz-subtitle-compact {
                                           font-size: 0.75rem !important;
+                                          line-height: 1.2 !important;
                                         }
                                         @media (min-width: 768px) {
-                                          .quiz-title-tiny {
+                                          .quiz-title-compact {
+                                            font-size: 1rem !important;
+                                          }
+                                          .quiz-subtitle-compact {
                                             font-size: 0.875rem !important;
                                           }
                                         }
@@ -3463,7 +3475,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Start Sound Safari! 🎧
+                                          Start Sound Safari! ����
                                         </button>
                                       </div>
 
