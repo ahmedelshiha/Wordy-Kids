@@ -3235,7 +3235,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                         </div>
                                       </div>
                                       <h2 className="jungle-quiz-title text-xs md:text-sm font-bold text-center leading-none">
-                                        🧠 Jungle Quiz! 🌟 Test words! 🏆
+                                        🧠 Quiz! 🏆
                                       </h2>
 
                                       {/* AI Quiz Enhancement Notice - Jungle Themed */}
