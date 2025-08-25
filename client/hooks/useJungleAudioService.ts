@@ -172,33 +172,51 @@ const SOUND_LIBRARY: { [key: string]: SoundEffect } = {
     volume: 0.3,
   },
 
-  // Ambient Jungle Sounds
-  "jungle-background": {
-    id: "jungle-background",
-    name: "Jungle Ambience",
-    url: "/sounds/ambient/jungle-birds-water.mp3",
+  // Ambient Jungle Sounds (using actual available files)
+  "jungle-birds": {
+    id: "jungle-birds",
+    name: "Jungle Birds",
+    url: "/sounds/jungle-birds.mp3", // Actual file path
     category: "ambient",
     volume: 0.2,
     loop: true,
     fadeDuration: 3000,
   },
-  "forest-morning": {
-    id: "forest-morning",
-    name: "Forest Morning",
-    url: "/sounds/ambient/forest-morning.mp3",
+  "jungle-insects": {
+    id: "jungle-insects",
+    name: "Jungle Insects",
+    url: "/sounds/jungle-insects.mp3", // Actual file path
     category: "ambient",
     volume: 0.15,
     loop: true,
     fadeDuration: 2000,
   },
-  "river-flow": {
-    id: "river-flow",
-    name: "River Flow",
-    url: "/sounds/ambient/gentle-river.mp3",
+  "jungle-rain": {
+    id: "jungle-rain",
+    name: "Jungle Rain",
+    url: "/sounds/jungle-rain.mp3", // Actual file path
     category: "ambient",
     volume: 0.1,
     loop: true,
     fadeDuration: 2500,
+  },
+  "jungle-waterfall": {
+    id: "jungle-waterfall",
+    name: "Jungle Waterfall",
+    url: "/sounds/jungle-waterfall.mp3", // Actual file path
+    category: "ambient",
+    volume: 0.2,
+    loop: true,
+    fadeDuration: 3000,
+  },
+  "jungle-wind": {
+    id: "jungle-wind",
+    name: "Jungle Wind",
+    url: "/sounds/jungle-wind.mp3", // Actual file path
+    category: "ambient",
+    volume: 0.1,
+    loop: true,
+    fadeDuration: 2000,
   },
 };
 
