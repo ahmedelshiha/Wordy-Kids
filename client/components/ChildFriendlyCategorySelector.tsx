@@ -114,7 +114,7 @@ const enrichedCategories: Category[] = [
   {
     id: "space",
     name: "Space",
-    icon: "���",
+    icon: "🚀",
     color: "bg-navy",
     gradient: "from-navy to-sky",
     wordCount: getWordsByCategory("space").length,
@@ -331,7 +331,7 @@ const enrichedCategories: Category[] = [
   {
     id: "colors",
     name: "Colors",
-    icon: "🌈",
+    icon: "����",
     color: "bg-rainbow",
     gradient: "from-coral-red via-sunshine to-jungle",
     wordCount: getWordsByCategory("colors").length,

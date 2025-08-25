@@ -644,10 +644,10 @@ export default function JungleAdventureSettingsPanelV2({
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="parchment">📜 Parchment</SelectItem>
-                        <SelectItem value="jungle">���� Jungle</SelectItem>
+                        <SelectItem value="jungle">🌿 Jungle</SelectItem>
                         <SelectItem value="canopy">🌫️ Canopy</SelectItem>
                         <SelectItem value="river">🌊 River</SelectItem>
-                        <SelectItem value="sunset">���� Sunset</SelectItem>
+                        <SelectItem value="sunset">🌅 Sunset</SelectItem>
                       </SelectContent>
                     </Select>
                   }
@@ -721,7 +721,7 @@ export default function JungleAdventureSettingsPanelV2({
                   />
 
                   <SettingRow
-                    label="Glow ��"
+                    label="Glow ✨"
                     control={
                       <Switch
                         checked={settings.overlays.glow}

@@ -211,7 +211,7 @@ const enrichedCategories: Category[] = [
   {
     id: "feelings",
     name: "Feelings",
-    icon: "😊",
+    icon: "��",
     color: "bg-educational-purple",
     gradient: "from-purple-400 to-purple-600",
     wordCount: getWordsByCategory("feelings").length,
@@ -519,7 +519,7 @@ export function EnhancedCategorySelector({
       { id: "1", emoji: "🌟", x: 10, y: 10 },
       { id: "2", emoji: "✨", x: 90, y: 20 },
       { id: "3", emoji: "🎯", x: 15, y: 80 },
-      { id: "4", emoji: "��", x: 85, y: 75 },
+      { id: "4", emoji: "🪄", x: 85, y: 75 },
       { id: "5", emoji: "💫", x: 50, y: 5 },
       { id: "6", emoji: "🎪", x: 25, y: 45 },
       { id: "7", emoji: "🎈", x: 75, y: 35 },
@@ -754,7 +754,7 @@ export function EnhancedCategorySelector({
                 className="bg-educational-blue text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce"
                 style={{ animationDelay: "0.2s" }}
               >
-                ��� {categories.length} Jungle Paths
+                🎯 {categories.length} Jungle Paths
               </Badge>
               <Badge
                 className="bg-educational-purple text-white px-3 py-1.5 text-xs font-semibold rounded-full shadow-md animate-gentle-bounce"
