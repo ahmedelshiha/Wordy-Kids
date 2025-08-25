@@ -658,7 +658,7 @@ export const JungleWordCard: React.FC<JungleWordCardProps> = ({
               } ${accessibilitySettings.reducedMotion ? "" : "animate-fade-in"}`}
             >
               <h3 className="text-sm font-semibold text-gray-600 mb-1 flex items-center justify-center gap-1">
-                <Book className="w-4 h-4" />
+                <BookOpen className="w-4 h-4" />
                 Definition
               </h3>
               <p className={`${sizeClasses.content} ${
