@@ -122,6 +122,16 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     categoryFilter: selectedCategory,
   });
 
+  // Feature flags
+  const featureFlags = useFeatureFlags([
+    "enhancedAudio",
+    "jungleAnimations",
+    "advancedAnalytics",
+    "performanceOptimizations",
+    "adaptiveLearning",
+    "betaFeatures"
+  ]);
+
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
   const announcementRef = useRef<HTMLDivElement>(null);
