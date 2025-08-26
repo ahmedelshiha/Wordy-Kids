@@ -46,7 +46,7 @@ import { useJungleAnimations } from "@/hooks/useJungleAnimations";
 
 // Import data and utilities
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
-import { enhancedAnalyticsSystem } from "@/lib/enhancedAnalyticsSystem";
+import { enhancedAnalytics } from "@/lib/enhancedAnalytics";
 import { useFeatureFlag, useFeatureFlags } from "@/lib/featureFlags";
 
 // Types and interfaces
@@ -161,7 +161,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
         // Track initialization (with feature flag check)
         if (featureFlags.advancedAnalytics) {
-          enhancedAnalyticsSystem.trackEvent({
+          enhancedAnalytics.trackEvent({
             type: "jungle_library_initialized",
             data: {
               category: selectedCategory,
@@ -243,7 +243,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
       }
 
       // Track interaction
-      enhancedAnalyticsSystem.trackEvent({
+      enhancedAnalytics.trackEvent({
         type: "word_interaction",
         data: {
           wordId: word.id,
