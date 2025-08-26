@@ -137,7 +137,8 @@ const App = () => {
   return (
     <ErrorBoundary fallbackType="parent" componentName="App">
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
+        <ErrorBoundary fallbackType="parent" componentName="TooltipProvider">
+          <TooltipProvider>
           <ResourceHints />
           <Toaster />
           <Sonner />
@@ -250,7 +251,8 @@ const App = () => {
               </LightweightAchievementProvider>
             </AuthProvider>
           </BrowserRouter>
-        </TooltipProvider>
+          </TooltipProvider>
+        </ErrorBoundary>
       </QueryClientProvider>
     </ErrorBoundary>
   );
