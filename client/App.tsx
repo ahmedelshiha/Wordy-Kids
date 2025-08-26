@@ -59,8 +59,12 @@ const App = () => {
       migrateLegacySettings();
 
       // Preload critical components for better performance
-      preloadComponents.jungleLibrary();
-      preloadComponents.parentDashboard();
+      try {
+        preloadComponents.jungleLibrary?.();
+        preloadComponents.parentDashboard?.();
+      } catch (error) {
+        console.warn("Failed to preload components:", error);
+      }
     }
   }, []);
 
