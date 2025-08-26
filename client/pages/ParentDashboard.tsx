@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Shield, Users, ChevronLeft, AlertCircle } from "lucide-react";
-import { enhancedAnalyticsSystem } from "@/lib/enhancedAnalyticsSystem";
+import { enhancedAnalytics } from "@/lib/enhancedAnalyticsSystem";
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 interface ParentDashboardProps {
@@ -23,7 +23,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
   useEffect(() => {
     // Track page view
-    enhancedAnalyticsSystem.trackEvent({
+    enhancedAnalytics.trackEvent({
       type: "parent_dashboard_view",
       data: {
         timestamp: new Date().toISOString(),
@@ -71,7 +71,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({
   }, [isAuthenticated, user, navigate]);
 
   const handleBack = () => {
-    enhancedAnalyticsSystem.trackEvent({
+    enhancedAnalytics.trackEvent({
       type: "parent_dashboard_exit",
       data: {
         timestamp: new Date().toISOString(),
@@ -86,7 +86,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({
     localStorage.setItem("parental_consent", "granted");
     localStorage.setItem("data_processing_consent", "granted");
 
-    enhancedAnalyticsSystem.trackEvent({
+    enhancedAnalytics.trackEvent({
       type: "parental_consent_granted",
       data: {
         timestamp: new Date().toISOString(),
