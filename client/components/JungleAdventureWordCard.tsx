@@ -47,6 +47,10 @@ interface Word {
   masteryLevel?: number;
   lastReviewed?: Date;
   nextReview?: Date;
+  rarity?: "common" | "rare" | "epic" | "legendary" | "mythical";
+  sound?: string;
+  color?: string;
+  habitat?: string;
 }
 
 interface JungleAdventureWordCardProps {
@@ -54,11 +58,24 @@ interface JungleAdventureWordCardProps {
   showDefinition?: boolean;
   onPronounce?: (word: Word) => void;
   onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
+  onWordFavorite?: (wordId: number) => void;
+  onWordShare?: (word: Word) => void;
   showVocabularyBuilder?: boolean;
   className?: string;
   adventureLevel?: number;
   explorerBadges?: string[];
   isJungleQuest?: boolean;
+  isWordMastered?: (wordId: number) => boolean;
+  isWordFavorited?: (wordId: number) => boolean;
+  accessibilitySettings?: {
+    highContrast: boolean;
+    largeText: boolean;
+    reducedMotion: boolean;
+    autoPlay: boolean;
+    soundEnabled: boolean;
+  };
+  showAnimations?: boolean;
+  autoPlay?: boolean;
 }
 
 export const JungleAdventureWordCard: React.FC<
@@ -68,11 +85,24 @@ export const JungleAdventureWordCard: React.FC<
   showDefinition = false,
   onPronounce,
   onWordMastered,
+  onWordFavorite,
+  onWordShare,
   showVocabularyBuilder = false,
   className = "",
   adventureLevel = 1,
   explorerBadges = [],
   isJungleQuest = false,
+  isWordMastered,
+  isWordFavorited,
+  accessibilitySettings = {
+    highContrast: false,
+    largeText: false,
+    reducedMotion: false,
+    autoPlay: true,
+    soundEnabled: true
+  },
+  showAnimations = true,
+  autoPlay = false,
 }) => {
   // Core states
   const [isFlipped, setIsFlipped] = useState(showDefinition);
@@ -86,9 +116,42 @@ export const JungleAdventureWordCard: React.FC<
   const [showJungleParticles, setShowJungleParticles] = useState(false);
   const [explorerXP, setExplorerXP] = useState(0);
   const [isLevelingUp, setIsLevelingUp] = useState(false);
+  const [particles, setParticles] = useState<Array<{id: number, emoji: string, x: number, y: number, delay: number}>>([]);
+  const [currentAnimation, setCurrentAnimation] = useState('');
+
+  const isMastered = isWordMastered?.(word.id) || false;
+  const isFavorited = isWordFavorited?.(word.id) || false;
 
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
+
+  // Auto-play pronunciation when card appears
+  useEffect(() => {
+    if (autoPlay && accessibilitySettings.soundEnabled) {
+      const timer = setTimeout(() => {
+        handlePronounce();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [word.id, autoPlay, accessibilitySettings.soundEnabled]);
+
+  // Create particle effects
+  const createParticles = () => {
+    if (!showAnimations || accessibilitySettings.reducedMotion) return;
+
+    const newParticles = [];
+    for (let i = 0; i < 6; i++) {
+      newParticles.push({
+        id: Math.random(),
+        emoji: ['✨', '⭐', '🌟', '💫', '🎉', '🎊'][Math.floor(Math.random() * 6)],
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        delay: Math.random() * 2
+      });
+    }
+    setParticles(newParticles);
+    setTimeout(() => setParticles([]), 2000);
+  };
 
   // Jungle adventure effects - much lighter
   useEffect(() => {
@@ -105,24 +168,34 @@ export const JungleAdventureWordCard: React.FC<
 
     setIsPlaying(true);
     setShowMagicalSparkles(true);
-    // Removed jungle particles for pronunciation to be lighter
+
+    // Visual feedback
+    if (showAnimations && !accessibilitySettings.reducedMotion) {
+      setCurrentAnimation('bounce');
+      createParticles();
+      setTimeout(() => setCurrentAnimation(''), 1000);
+    }
 
     try {
-      // Jungle adventure pronunciation
-      enhancedAudioService.pronounceWord(word.word, {
-        onStart: () => {
-          playSoundIfEnabled.jungleAmbient?.();
-          console.log("Jungle explorer pronunciation started");
-        },
-        onEnd: () => {
-          setIsPlaying(false);
-          setShowMagicalSparkles(false);
-          setExplorerXP((prev) => prev + 10);
-          onPronounce?.(word);
-          playSoundIfEnabled.explorerReward?.();
-        },
-        onError: () => handlePronunciationError(),
-      });
+      if (word.sound) {
+        audioService.playWordSound?.(word);
+      } else {
+        // Jungle adventure pronunciation
+        enhancedAudioService.pronounceWord(word.word, {
+          onStart: () => {
+            playSoundIfEnabled.jungleAmbient?.();
+            console.log("Jungle explorer pronunciation started");
+          },
+          onEnd: () => {
+            setIsPlaying(false);
+            setShowMagicalSparkles(false);
+            setExplorerXP((prev) => prev + 10);
+            onPronounce?.(word);
+            playSoundIfEnabled.explorerReward?.();
+          },
+          onError: () => handlePronunciationError(),
+        });
+      }
     } catch (error) {
       handlePronunciationError();
     }
@@ -140,8 +213,13 @@ export const JungleAdventureWordCard: React.FC<
     playSoundIfEnabled.pronunciation();
   };
 
-  // Enhanced jungle adventure flip
+  // Enhanced jungle adventure flip - also handle card tap/click
   const handleFlip = () => {
+    // Auto-pronounce on tap if enabled
+    if (!isFlipped) {
+      handlePronounce();
+    }
+
     setIsFlipped(!isFlipped);
     audioService.playWhooshSound();
     playUIInteractionSoundIfEnabled.jungleLeafRustle?.() ||
@@ -153,7 +231,13 @@ export const JungleAdventureWordCard: React.FC<
     }
 
     setIsPressed(true);
-    // Removed jungle particles on flip to make it lighter
+
+    // Flip animation
+    if (showAnimations && !accessibilitySettings.reducedMotion) {
+      setIsFlipped(true);
+      setTimeout(() => setIsFlipped(false), 600);
+    }
+
     setTimeout(() => {
       setIsPressed(false);
     }, 300);
