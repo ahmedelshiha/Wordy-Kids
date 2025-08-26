@@ -74,4 +74,8 @@ if (!rootElement) {
 
 // Create root without caching to avoid React context issues
 const root = createRoot(rootElement);
-root.render(<App />);
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
