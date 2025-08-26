@@ -17,7 +17,7 @@ describe("Analytics Export Tests", () => {
     }
   });
 
-  it("should fail when trying to import non-existent enhancedAnalyticsSystem", async () => {
+  it("should properly export enhancedAnalytics and not export deprecated enhancedAnalyticsSystem", async () => {
     try {
       // This should work - testing the correct import
       const { enhancedAnalytics } = await import(
@@ -25,11 +25,16 @@ describe("Analytics Export Tests", () => {
       );
       expect(enhancedAnalytics).toBeDefined();
 
-      // This should fail if someone tries to destructure enhancedAnalyticsSystem
+      // The deprecated alias should not be exported anymore
       const module = await import("@/lib/enhancedAnalyticsSystem");
       expect(module.enhancedAnalyticsSystem).toBeUndefined();
+
+      // Verify correct exports are present
+      expect(module.enhancedAnalytics).toBeDefined();
+      expect(module.EnhancedAnalyticsSystem).toBeDefined();
     } catch (error) {
-      console.error("Expected this might fail:", error);
+      console.error("Import error:", error);
+      throw error;
     }
   });
 });

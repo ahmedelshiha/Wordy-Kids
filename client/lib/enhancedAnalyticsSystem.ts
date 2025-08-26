@@ -1303,17 +1303,4 @@ export class EnhancedAnalyticsSystem {
 
 export const enhancedAnalytics = new EnhancedAnalyticsSystem();
 
-// Temporary alias for backward compatibility - DEPRECATED
-// TODO: Remove this after all imports are fixed
-export const enhancedAnalyticsSystem = new Proxy(enhancedAnalytics, {
-  get(target, prop) {
-    if (prop === "trackEvent") {
-      console.warn(
-        '⚠️  DEPRECATED: Please import "enhancedAnalytics" instead of "enhancedAnalyticsSystem"',
-      );
-    }
-    return target[prop as keyof typeof target];
-  },
-});
-
 export default enhancedAnalytics;
