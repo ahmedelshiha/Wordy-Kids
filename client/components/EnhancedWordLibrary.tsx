@@ -718,7 +718,20 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                       );
                       CategoryCompletionTracker.trackTimeSpent(0.5); // 30 seconds per word
                     }}
+                    onWordFavorite={handleWordFavorite}
+                    onWordShare={handleShareWord}
+                    isWordMastered={(wordId) => favoriteWords.has(wordId) || false}
+                    isWordFavorited={(wordId) => favoriteWords.has(wordId)}
+                    accessibilitySettings={{
+                      highContrast: highContrastMode,
+                      largeText: largeTextMode,
+                      reducedMotion: reducedMotion,
+                      autoPlay: autoPlay,
+                      soundEnabled: true
+                    }}
                     showVocabularyBuilder={true}
+                    showAnimations={!reducedMotion}
+                    autoPlay={autoPlay}
                     className={`${reducedMotion ? "" : "animate-mobile-slide-in"}`}
                     adventureLevel={Math.floor(Math.random() * 10) + 1}
                     explorerBadges={["jungle-explorer", "word-master"]}
@@ -839,7 +852,20 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                       );
                       CategoryCompletionTracker.trackTimeSpent(0.5); // 30 seconds per word
                     }}
+                    onWordFavorite={handleWordFavorite}
+                    onWordShare={handleShareWord}
+                    isWordMastered={(wordId) => favoriteWords.has(wordId) || false}
+                    isWordFavorited={(wordId) => favoriteWords.has(wordId)}
+                    accessibilitySettings={{
+                      highContrast: highContrastMode,
+                      largeText: largeTextMode,
+                      reducedMotion: reducedMotion,
+                      autoPlay: autoPlay,
+                      soundEnabled: true
+                    }}
                     showVocabularyBuilder={true}
+                    showAnimations={!reducedMotion}
+                    autoPlay={autoPlay}
                     adventureLevel={Math.floor(Math.random() * 10) + 1}
                     explorerBadges={["jungle-explorer", "word-master"]}
                     isJungleQuest={true}
