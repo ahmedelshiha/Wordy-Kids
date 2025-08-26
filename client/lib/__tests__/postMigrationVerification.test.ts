@@ -30,7 +30,7 @@ Object.defineProperty(global, "performance", {
 });
 
 import { parentDashboardAnalytics } from "../parentDashboardAnalytics";
-import { featureFlags } from "../featureFlags";
+import { featureFlagManager } from "../featureFlags";
 import { JungleAdventureStorage } from "../jungleAdventureStorage";
 
 describe("Post-Migration Hardening Features", () => {
