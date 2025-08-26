@@ -47,6 +47,7 @@ import { useJungleAnimations } from "@/hooks/useJungleAnimations";
 // Import data and utilities
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
 import { enhancedAnalyticsSystem } from "@/lib/enhancedAnalyticsSystem";
+import { useFeatureFlag, useFeatureFlags } from "@/lib/featureFlags";
 
 // Types and interfaces
 interface Word {
