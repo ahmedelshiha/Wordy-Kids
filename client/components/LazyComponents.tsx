@@ -16,6 +16,12 @@ export const LazyJungleAdventureParentDashboard = lazy(() =>
   })),
 );
 
+export const LazyParentDashboard = lazy(() =>
+  import("../pages/ParentDashboard").then((module) => ({
+    default: module.default,
+  })),
+);
+
 export const LazyEnhancedJungleQuizAdventure = lazy(() =>
   import("./games/EnhancedJungleQuizAdventure").then((module) => ({
     default: module.EnhancedJungleQuizAdventure,
