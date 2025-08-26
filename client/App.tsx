@@ -18,7 +18,7 @@ import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
 import {
   LazyJungleWordLibrary,
-  LazyParentDashboard,
+  LazyJungleAdventureParentDashboard,
   EnhancedSuspense,
   ResourceHints,
   preloadComponents
@@ -188,7 +188,7 @@ const App = () => {
                             componentName="ParentDashboard"
                           >
                             <EnhancedSuspense componentName="ParentDashboard">
-                              <LazyParentDashboard />
+                              <LazyJungleAdventureParentDashboard />
                             </EnhancedSuspense>
                           </ErrorBoundary>
                         }
