@@ -187,7 +187,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     initializeJungleLibrary();
 
     return () => {
-      audioService.stopAmbientSounds();
+      if (featureFlags.enhancedAudio) {
+        audioService.stopAmbientSounds();
+      }
     };
   }, [selectedCategory, gameMode]);
 
