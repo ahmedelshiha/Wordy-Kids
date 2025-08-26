@@ -122,15 +122,30 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     categoryFilter: selectedCategory,
   });
 
-  // Feature flags
-  const featureFlags = useFeatureFlags([
-    "enhancedAudio",
-    "jungleAnimations",
-    "advancedAnalytics",
-    "performanceOptimizations",
-    "adaptiveLearning",
-    "betaFeatures"
-  ]);
+  // Feature flags with error handling
+  const featureFlags = React.useMemo(() => {
+    try {
+      return useFeatureFlags([
+        "enhancedAudio",
+        "jungleAnimations",
+        "advancedAnalytics",
+        "performanceOptimizations",
+        "adaptiveLearning",
+        "betaFeatures"
+      ]);
+    } catch (error) {
+      console.error("Failed to load feature flags:", error);
+      // Fallback to safe defaults
+      return {
+        enhancedAudio: true,
+        jungleAnimations: false,
+        advancedAnalytics: true,
+        performanceOptimizations: true,
+        adaptiveLearning: false,
+        betaFeatures: false
+      };
+    }
+  }, []);
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
