@@ -25,6 +25,7 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
+import { UltimateDemoSection } from "./UltimateDemoSection";
 
 interface LearningStats {
   wordsLearned: number;
@@ -188,6 +189,8 @@ export const LearningDashboard: React.FC<LearningDashboardProps> = ({
 
   return (
     <div className="space-y-4">
+      {/* Ultimate Demo Section */}
+      <UltimateDemoSection />
       {/* Interactive Word Learning Hub - PRIMARY FEATURE */}
       {availableWords.length > 0 && onWordProgress ? (
         <>
