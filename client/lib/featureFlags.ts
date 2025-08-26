@@ -345,4 +345,31 @@ export const useFeatureFlags = (flagNames: string[]): Record<string, boolean> =>
   return flags;
 };
 
+// Health check function for debugging
+export const healthCheck = () => {
+  const health = {
+    moduleLoaded: true,
+    managerInstance: !!featureFlagManager,
+    functionsAvailable: {
+      useFeatureFlag: typeof useFeatureFlag === 'function',
+      useFeatureFlags: typeof useFeatureFlags === 'function',
+      managerIsEnabled: typeof featureFlagManager?.isEnabled === 'function',
+    },
+    sampleFlags: {},
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    // Test a few flags
+    health.sampleFlags = {
+      enhancedAudio: featureFlagManager.isEnabled('enhancedAudio'),
+      jungleAnimations: featureFlagManager.isEnabled('jungleAnimations'),
+    };
+  } catch (error) {
+    health.sampleFlags = { error: error.message };
+  }
+
+  return health;
+};
+
 export default featureFlagManager;
