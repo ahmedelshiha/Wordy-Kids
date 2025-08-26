@@ -1303,4 +1303,8 @@ export class EnhancedAnalyticsSystem {
 
 export const enhancedAnalytics = new EnhancedAnalyticsSystem();
 
+// Temporary alias for backward compatibility - DEPRECATED
+// TODO: Remove this after all imports are fixed
+export const enhancedAnalyticsSystem = enhancedAnalytics;
+
 export default enhancedAnalytics;
