@@ -99,7 +99,7 @@ export const JungleAdventureWordCard: React.FC<
     largeText: false,
     reducedMotion: false,
     autoPlay: true,
-    soundEnabled: true
+    soundEnabled: true,
   },
   showAnimations = true,
   autoPlay = false,
@@ -116,8 +116,10 @@ export const JungleAdventureWordCard: React.FC<
   const [showJungleParticles, setShowJungleParticles] = useState(false);
   const [explorerXP, setExplorerXP] = useState(0);
   const [isLevelingUp, setIsLevelingUp] = useState(false);
-  const [particles, setParticles] = useState<Array<{id: number, emoji: string, x: number, y: number, delay: number}>>([]);
-  const [currentAnimation, setCurrentAnimation] = useState('');
+  const [particles, setParticles] = useState<
+    Array<{ id: number; emoji: string; x: number; y: number; delay: number }>
+  >([]);
+  const [currentAnimation, setCurrentAnimation] = useState("");
 
   const isMastered = isWordMastered?.(word.id) || false;
   const isFavorited = isWordFavorited?.(word.id) || false;
@@ -143,10 +145,12 @@ export const JungleAdventureWordCard: React.FC<
     for (let i = 0; i < 6; i++) {
       newParticles.push({
         id: Math.random(),
-        emoji: ['✨', '⭐', '🌟', '💫', '🎉', '🎊'][Math.floor(Math.random() * 6)],
+        emoji: ["✨", "⭐", "🌟", "💫", "🎉", "🎊"][
+          Math.floor(Math.random() * 6)
+        ],
         x: Math.random() * 100,
         y: Math.random() * 100,
-        delay: Math.random() * 2
+        delay: Math.random() * 2,
       });
     }
     setParticles(newParticles);
@@ -171,9 +175,9 @@ export const JungleAdventureWordCard: React.FC<
 
     // Visual feedback
     if (showAnimations && !accessibilitySettings.reducedMotion) {
-      setCurrentAnimation('bounce');
+      setCurrentAnimation("bounce");
       createParticles();
-      setTimeout(() => setCurrentAnimation(''), 1000);
+      setTimeout(() => setCurrentAnimation(""), 1000);
     }
 
     try {
@@ -324,15 +328,26 @@ export const JungleAdventureWordCard: React.FC<
     // Calculate XP based on difficulty and rating
     let xpGained = 0;
     if (rating === "easy") {
-      xpGained = word.difficulty === "hard" ? 100 : word.difficulty === "medium" ? 75 : 50;
+      xpGained =
+        word.difficulty === "hard"
+          ? 100
+          : word.difficulty === "medium"
+            ? 75
+            : 50;
       playSoundIfEnabled.explorerVictory?.() || playSoundIfEnabled.success();
       playSoundIfEnabled.levelUp();
     } else if (rating === "medium") {
-      xpGained = word.difficulty === "hard" ? 60 : word.difficulty === "medium" ? 40 : 25;
+      xpGained =
+        word.difficulty === "hard"
+          ? 60
+          : word.difficulty === "medium"
+            ? 40
+            : 25;
       playSoundIfEnabled.explorerProgress?.() || playSoundIfEnabled.click();
     } else {
       xpGained = 20;
-      playSoundIfEnabled.explorerEncouragement?.() || playSoundIfEnabled.hover();
+      playSoundIfEnabled.explorerEncouragement?.() ||
+        playSoundIfEnabled.hover();
     }
 
     setExplorerXP((prev) => {
@@ -340,12 +355,14 @@ export const JungleAdventureWordCard: React.FC<
       if (newXP > 0 && newXP % 200 === 0) {
         setIsLevelingUp(true);
         setTimeout(() => setIsLevelingUp(false), 3000);
-        playSoundIfEnabled.explorerLevelUp?.() || playSoundIfEnabled.achievement?.();
+        playSoundIfEnabled.explorerLevelUp?.() ||
+          playSoundIfEnabled.achievement?.();
       }
       return newXP;
     });
 
-    playUIInteractionSoundIfEnabled.jungleSuccess?.() || playUIInteractionSoundIfEnabled.click();
+    playUIInteractionSoundIfEnabled.jungleSuccess?.() ||
+      playUIInteractionSoundIfEnabled.click();
     onWordMastered?.(word.id, rating);
 
     setTimeout(() => {
@@ -360,7 +377,7 @@ export const JungleAdventureWordCard: React.FC<
     if (onWordFavorite) {
       onWordFavorite(word.id);
     }
-    audioService.playSound?.(isFavorited ? 'click' : 'sparkle');
+    audioService.playSound?.(isFavorited ? "click" : "sparkle");
 
     // Haptic feedback
     if (navigator.vibrate) {
@@ -377,15 +394,18 @@ export const JungleAdventureWordCard: React.FC<
   };
 
   // Get rarity color and styling
-  const getRarityColor = (rarity: string = 'common') => {
+  const getRarityColor = (rarity: string = "common") => {
     const rarityStyles = {
-      mythical: 'from-pink-500 via-purple-500 to-indigo-500 border-pink-400/50',
-      legendary: 'from-yellow-500 via-orange-500 to-red-500 border-yellow-400/50',
-      epic: 'from-purple-500 via-indigo-500 to-blue-500 border-purple-400/50',
-      rare: 'from-blue-500 via-cyan-500 to-teal-500 border-blue-400/50',
-      common: 'from-green-500 via-emerald-500 to-green-600 border-green-400/50'
+      mythical: "from-pink-500 via-purple-500 to-indigo-500 border-pink-400/50",
+      legendary:
+        "from-yellow-500 via-orange-500 to-red-500 border-yellow-400/50",
+      epic: "from-purple-500 via-indigo-500 to-blue-500 border-purple-400/50",
+      rare: "from-blue-500 via-cyan-500 to-teal-500 border-blue-400/50",
+      common: "from-green-500 via-emerald-500 to-green-600 border-green-400/50",
     };
-    return rarityStyles[rarity as keyof typeof rarityStyles] || rarityStyles.common;
+    return (
+      rarityStyles[rarity as keyof typeof rarityStyles] || rarityStyles.common
+    );
   };
 
   // Get jungle-themed category colors
@@ -410,7 +430,8 @@ export const JungleAdventureWordCard: React.FC<
 
   // Get difficulty stars for display
   const renderDifficultyStars = () => {
-    const starCount = word.difficulty === "easy" ? 1 : word.difficulty === "medium" ? 2 : 3;
+    const starCount =
+      word.difficulty === "easy" ? 1 : word.difficulty === "medium" ? 2 : 3;
     return Array.from({ length: starCount }, (_, i) => (
       <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
     ));
@@ -467,14 +488,14 @@ export const JungleAdventureWordCard: React.FC<
       )}
     >
       {/* Enhanced Floating Particles */}
-      {particles.map(particle => (
+      {particles.map((particle) => (
         <div
           key={particle.id}
           className="absolute text-2xl animate-ping pointer-events-none z-10"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
-            animationDelay: `${particle.delay}s`
+            animationDelay: `${particle.delay}s`,
           }}
         >
           {particle.emoji}
@@ -551,9 +572,16 @@ export const JungleAdventureWordCard: React.FC<
             !isFlipped && "z-10",
             "border-4",
             word.rarity ? "border-yellow-400/50" : "border-yellow-400/30",
-            currentAnimation === 'bounce' && !accessibilitySettings.reducedMotion ? 'animate-bounce' : '',
-            accessibilitySettings.highContrast ? 'bg-black text-white border-white' : '',
-            accessibilitySettings.reducedMotion ? '' : 'transform hover:scale-105',
+            currentAnimation === "bounce" &&
+              !accessibilitySettings.reducedMotion
+              ? "animate-bounce"
+              : "",
+            accessibilitySettings.highContrast
+              ? "bg-black text-white border-white"
+              : "",
+            accessibilitySettings.reducedMotion
+              ? ""
+              : "transform hover:scale-105",
           )}
         >
           <CardContent className="p-2 sm:p-3 md:p-3 lg:p-4 h-full flex flex-col text-white relative jungle-adventure-surface">
@@ -572,18 +600,24 @@ export const JungleAdventureWordCard: React.FC<
                 >
                   {difficultyTheme.icon}
                   <span className="ml-1 truncate">{difficultyTheme.text}</span>
-                  <div className="ml-1 flex gap-0.5">{renderDifficultyStars()}</div>
+                  <div className="ml-1 flex gap-0.5">
+                    {renderDifficultyStars()}
+                  </div>
                 </Badge>
 
                 {word.rarity && (
                   <Badge
                     className={cn(
                       "text-xs font-bold capitalize px-2 py-1 border-2 shadow-lg min-h-[24px]",
-                      word.rarity === 'mythical' ? 'bg-gradient-to-r from-pink-200 to-purple-200 border-pink-400 text-purple-800' :
-                      word.rarity === 'legendary' ? 'bg-gradient-to-r from-yellow-200 to-orange-200 border-yellow-400 text-orange-800' :
-                      word.rarity === 'epic' ? 'bg-gradient-to-r from-purple-200 to-indigo-200 border-purple-400 text-indigo-800' :
-                      word.rarity === 'rare' ? 'bg-gradient-to-r from-blue-200 to-cyan-200 border-blue-400 text-cyan-800' :
-                      'bg-gray-200 border-gray-400 text-gray-800'
+                      word.rarity === "mythical"
+                        ? "bg-gradient-to-r from-pink-200 to-purple-200 border-pink-400 text-purple-800"
+                        : word.rarity === "legendary"
+                          ? "bg-gradient-to-r from-yellow-200 to-orange-200 border-yellow-400 text-orange-800"
+                          : word.rarity === "epic"
+                            ? "bg-gradient-to-r from-purple-200 to-indigo-200 border-purple-400 text-indigo-800"
+                            : word.rarity === "rare"
+                              ? "bg-gradient-to-r from-blue-200 to-cyan-200 border-blue-400 text-cyan-800"
+                              : "bg-gray-200 border-gray-400 text-gray-800",
                     )}
                   >
                     {word.rarity}
@@ -594,7 +628,10 @@ export const JungleAdventureWordCard: React.FC<
                   variant="outline"
                   className="bg-white/20 border-white/40 text-white text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md min-h-[24px] sm:min-h-[28px] flex-shrink-0"
                 >
-                  🌿 <span className="truncate">{word.habitat || word.category}</span>
+                  🌿{" "}
+                  <span className="truncate">
+                    {word.habitat || word.category}
+                  </span>
                 </Badge>
               </div>
 
@@ -681,7 +718,7 @@ export const JungleAdventureWordCard: React.FC<
                       "jungle-adventure-pronounce-btn",
                       isPlaying &&
                         "animate-pulse scale-110 from-green-400 to-emerald-500",
-                      accessibilitySettings.largeText ? 'h-16 w-16' : ''
+                      accessibilitySettings.largeText ? "h-16 w-16" : "",
                     )}
                     aria-label="Say It! Hear jungle word pronunciation"
                   >
@@ -718,33 +755,39 @@ export const JungleAdventureWordCard: React.FC<
                 className={cn(
                   "shadow-lg flex items-center gap-1 px-3 py-1",
                   isFavorited
-                    ? 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white'
-                    : 'hover:bg-red-50 hover:text-red-600 border-red-200 bg-white/80',
-                  accessibilitySettings.largeText ? 'text-base py-2' : 'text-sm'
+                    ? "bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white"
+                    : "hover:bg-red-50 hover:text-red-600 border-red-200 bg-white/80",
+                  accessibilitySettings.largeText
+                    ? "text-base py-2"
+                    : "text-sm",
                 )}
                 size={accessibilitySettings.largeText ? "lg" : "sm"}
               >
-                <Heart className={cn("w-3 h-3", isFavorited ? 'fill-current' : '')} />
-                <span>{isFavorited ? 'Loved!' : 'Love It'}</span>
+                <Heart
+                  className={cn("w-3 h-3", isFavorited ? "fill-current" : "")}
+                />
+                <span>{isFavorited ? "Loved!" : "Love It"}</span>
               </Button>
 
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleMastery('easy');
+                  handleMastery("easy");
                 }}
                 variant={isMastered ? "default" : "outline"}
                 className={cn(
                   "shadow-lg flex items-center gap-1 px-3 py-1",
                   isMastered
-                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
-                    : 'bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white',
-                  accessibilitySettings.largeText ? 'text-base py-2' : 'text-sm'
+                    ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
+                    : "bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white",
+                  accessibilitySettings.largeText
+                    ? "text-base py-2"
+                    : "text-sm",
                 )}
                 size={accessibilitySettings.largeText ? "lg" : "sm"}
               >
                 <Crown className="w-3 h-3" />
-                <span>{isMastered ? 'Mastered!' : 'Master It'}</span>
+                <span>{isMastered ? "Mastered!" : "Master It"}</span>
               </Button>
             </div>
 
@@ -763,12 +806,14 @@ export const JungleAdventureWordCard: React.FC<
             )}
 
             {/* Rarity glow effect */}
-            {word.rarity === 'mythical' && !accessibilitySettings.reducedMotion && (
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-purple-400/20 animate-pulse pointer-events-none" />
-            )}
-            {word.rarity === 'legendary' && !accessibilitySettings.reducedMotion && (
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse pointer-events-none" />
-            )}
+            {word.rarity === "mythical" &&
+              !accessibilitySettings.reducedMotion && (
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-purple-400/20 animate-pulse pointer-events-none" />
+              )}
+            {word.rarity === "legendary" &&
+              !accessibilitySettings.reducedMotion && (
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 animate-pulse pointer-events-none" />
+              )}
           </CardContent>
         </Card>
 

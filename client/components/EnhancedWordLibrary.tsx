@@ -720,14 +720,16 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     }}
                     onWordFavorite={handleWordFavorite}
                     onWordShare={handleShareWord}
-                    isWordMastered={(wordId) => favoriteWords.has(wordId) || false}
+                    isWordMastered={(wordId) =>
+                      favoriteWords.has(wordId) || false
+                    }
                     isWordFavorited={(wordId) => favoriteWords.has(wordId)}
                     accessibilitySettings={{
                       highContrast: highContrastMode,
                       largeText: largeTextMode,
                       reducedMotion: reducedMotion,
                       autoPlay: autoPlay,
-                      soundEnabled: true
+                      soundEnabled: true,
                     }}
                     showVocabularyBuilder={true}
                     showAnimations={!reducedMotion}
@@ -854,14 +856,16 @@ export const EnhancedWordLibrary: React.FC<EnhancedWordLibraryProps> = ({
                     }}
                     onWordFavorite={handleWordFavorite}
                     onWordShare={handleShareWord}
-                    isWordMastered={(wordId) => favoriteWords.has(wordId) || false}
+                    isWordMastered={(wordId) =>
+                      favoriteWords.has(wordId) || false
+                    }
                     isWordFavorited={(wordId) => favoriteWords.has(wordId)}
                     accessibilitySettings={{
                       highContrast: highContrastMode,
                       largeText: largeTextMode,
                       reducedMotion: reducedMotion,
                       autoPlay: autoPlay,
-                      soundEnabled: true
+                      soundEnabled: true,
                     }}
                     showVocabularyBuilder={true}
                     showAnimations={!reducedMotion}

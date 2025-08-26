@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { UltimateJungleWordCard } from "@/components/UltimateJungleWordCard";
-import { 
-  ArrowLeft, 
-  Sparkles, 
+import {
+  ArrowLeft,
+  Sparkles,
   Trophy,
   Target,
   BookOpen,
   Star,
   Crown,
   Heart,
-  Zap
-} from 'lucide-react';
+  Zap,
+} from "lucide-react";
 
 export function UltimateWordCardDemo() {
   const [showDemo, setShowDemo] = useState(false);
@@ -55,7 +55,7 @@ export function UltimateWordCardDemo() {
 
         {/* Ultimate Jungle Word Card */}
         <div className="pt-20">
-          <UltimateJungleWordCard 
+          <UltimateJungleWordCard
             onScoreUpdate={setCurrentScore}
             onStreakUpdate={setCurrentStreak}
           />
@@ -74,8 +74,9 @@ export function UltimateWordCardDemo() {
             Ultimate Jungle Word Card
           </h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Experience the most advanced word learning system designed for young explorers! 
-            Multi-mode learning with speech synthesis, particle celebrations, and progressive gamification.
+            Experience the most advanced word learning system designed for young
+            explorers! Multi-mode learning with speech synthesis, particle
+            celebrations, and progressive gamification.
           </p>
         </div>
 
@@ -197,15 +198,9 @@ export function UltimateWordCardDemo() {
               <div className="text-sm text-gray-700">
                 ✨ Particle celebrations
               </div>
-              <div className="text-sm text-gray-700">
-                🎉 Achievement popups
-              </div>
-              <div className="text-sm text-gray-700">
-                🌟 Visual feedback
-              </div>
-              <div className="text-sm text-gray-700">
-                🎊 Reward animations
-              </div>
+              <div className="text-sm text-gray-700">🎉 Achievement popups</div>
+              <div className="text-sm text-gray-700">🌟 Visual feedback</div>
+              <div className="text-sm text-gray-700">🎊 Reward animations</div>
             </CardContent>
           </Card>
 
@@ -221,9 +216,7 @@ export function UltimateWordCardDemo() {
               <div className="text-sm text-gray-700">
                 📊 Real-time score tracking
               </div>
-              <div className="text-sm text-gray-700">
-                🔥 Streak maintenance
-              </div>
+              <div className="text-sm text-gray-700">🔥 Streak maintenance</div>
               <div className="text-sm text-gray-700">
                 ❤️ Favorite collections
               </div>
@@ -246,7 +239,9 @@ export function UltimateWordCardDemo() {
               <div className="space-y-2">
                 <div className="text-4xl">🦁</div>
                 <div className="font-bold">Lion</div>
-                <Badge className="bg-yellow-400 text-yellow-900">Legendary</Badge>
+                <Badge className="bg-yellow-400 text-yellow-900">
+                  Legendary
+                </Badge>
               </div>
               <div className="space-y-2">
                 <div className="text-4xl">🦋</div>
@@ -290,23 +285,44 @@ export function UltimateWordCardDemo() {
 
         {/* Animated Background Elements */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
-          <div className="absolute top-10 left-10 text-4xl animate-bounce">🦋</div>
-          <div className="absolute top-20 right-20 text-3xl animate-pulse">🌸</div>
-          <div className="absolute bottom-20 left-20 text-5xl animate-float">🌳</div>
-          <div className="absolute bottom-10 right-10 text-3xl animate-bounce delay-1000">⭐</div>
-          <div className="absolute top-1/2 left-1/4 text-4xl animate-spin-slow">✨</div>
-          <div className="absolute top-1/3 right-1/3 text-3xl animate-pulse delay-2000">🎈</div>
+          <div className="absolute top-10 left-10 text-4xl animate-bounce">
+            🦋
+          </div>
+          <div className="absolute top-20 right-20 text-3xl animate-pulse">
+            🌸
+          </div>
+          <div className="absolute bottom-20 left-20 text-5xl animate-float">
+            🌳
+          </div>
+          <div className="absolute bottom-10 right-10 text-3xl animate-bounce delay-1000">
+            ⭐
+          </div>
+          <div className="absolute top-1/2 left-1/4 text-4xl animate-spin-slow">
+            ✨
+          </div>
+          <div className="absolute top-1/3 right-1/3 text-3xl animate-pulse delay-2000">
+            🎈
+          </div>
         </div>
       </div>
 
       {/* Custom Animations */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
         }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-spin-slow { animation: spin 10s linear infinite; }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        .animate-spin-slow {
+          animation: spin 10s linear infinite;
+        }
       `}</style>
     </div>
   );

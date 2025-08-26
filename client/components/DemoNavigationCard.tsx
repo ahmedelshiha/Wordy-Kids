@@ -1,21 +1,21 @@
-import React from 'react';
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Star, 
-  Sparkles, 
+import {
+  Star,
+  Sparkles,
   Trophy,
   ArrowRight,
   Volume2,
   Heart,
   Crown,
-  Target
-} from 'lucide-react';
+  Target,
+} from "lucide-react";
 
 export const DemoNavigationCard: React.FC = () => {
   const handleOpenDemo = () => {
-    window.open('/ultimate-word-card-demo', '_blank');
+    window.open("/ultimate-word-card-demo", "_blank");
   };
 
   return (
@@ -24,8 +24,12 @@ export const DemoNavigationCard: React.FC = () => {
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
         <div className="absolute top-4 left-4 text-2xl animate-bounce">✨</div>
         <div className="absolute top-6 right-6 text-xl animate-pulse">🌟</div>
-        <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-1000">🎉</div>
-        <div className="absolute bottom-6 right-4 text-xl animate-pulse delay-500">💫</div>
+        <div className="absolute bottom-4 left-6 text-2xl animate-bounce delay-1000">
+          🎉
+        </div>
+        <div className="absolute bottom-6 right-4 text-xl animate-pulse delay-500">
+          💫
+        </div>
       </div>
 
       <CardHeader className="relative z-10">
@@ -39,17 +43,18 @@ export const DemoNavigationCard: React.FC = () => {
             <Star className="w-4 h-4 text-yellow-300 fill-current" />
           </div>
         </div>
-        
+
         <CardTitle className="text-2xl font-bold flex items-center gap-3">
           <div className="text-3xl animate-bounce">🌟</div>
           Ultimate Word Card
         </CardTitle>
-        
+
         <p className="text-white/90 text-lg">
-          Experience the most advanced word learning system with AI-powered features!
+          Experience the most advanced word learning system with AI-powered
+          features!
         </p>
       </CardHeader>
-      
+
       <CardContent className="relative z-10 space-y-4">
         {/* Feature Highlights */}
         <div className="grid grid-cols-2 gap-3">
@@ -73,7 +78,9 @@ export const DemoNavigationCard: React.FC = () => {
 
         {/* Learning Modes Preview */}
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 space-y-2">
-          <div className="text-sm font-bold text-center mb-2">Learning Modes:</div>
+          <div className="text-sm font-bold text-center mb-2">
+            Learning Modes:
+          </div>
           <div className="flex justify-center gap-2">
             <Badge className="bg-blue-500/80 text-white">📖 Learn</Badge>
             <Badge className="bg-orange-500/80 text-white">🎯 Quiz</Badge>
@@ -92,7 +99,7 @@ export const DemoNavigationCard: React.FC = () => {
             Launch Ultimate Demo
             <ArrowRight className="w-5 h-5 ml-3" />
           </Button>
-          
+
           <div className="text-center">
             <p className="text-white/80 text-sm">
               ✨ Interactive • 🎮 Gamified • 🧠 AI-Enhanced
