@@ -196,7 +196,8 @@ export const verificationTests = {
 
   testFeatureFlags: () => {
     console.log("🧪 Testing Feature Flags...");
-    const enabled = featureFlags.getEnabledFeatures({ userRole: "parent" });
+    featureFlagManager.setUserContext("test-parent", "parent");
+    const enabled = featureFlagManager.getAllFlags();
     console.log("🎛️ Enabled features:", enabled);
   },
 
