@@ -144,7 +144,8 @@ export const EnhancedSuspense: React.FC<EnhancedSuspenseProps> = ({
 // Preload utilities for performance optimization
 export const preloadComponents = {
   jungleLibrary: () => import("./JungleWordLibrarySimplified"),
-  parentDashboard: () => import("./JungleAdventureParentDashboard"),
+  parentDashboard: () => import("../pages/ParentDashboard"),
+  jungleAdventureParentDashboard: () => import("./JungleAdventureParentDashboard"),
   quizAdventure: () => import("./games/EnhancedJungleQuizAdventure"),
   gameHub: () => import("./games/GameHub"),
   jungleMap: () => import("./InteractiveJungleMap"),
@@ -204,6 +205,7 @@ export const ResourceHints: React.FC = () => {
 
 export default {
   LazyJungleWordLibrary,
+  LazyParentDashboard,
   LazyJungleAdventureParentDashboard,
   LazyEnhancedJungleQuizAdventure,
   LazyGameHub,
