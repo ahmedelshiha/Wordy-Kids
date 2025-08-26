@@ -17,7 +17,7 @@
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
-    "test:production": "node scripts/test-production-readiness.js",
+    "test:production": "node scripts/test-production-readiness.cjs",
     "format.fix": "prettier --write .",
     "typecheck": "tsc",
     "scan:emojis": "node scripts/scan-emojis.js",
