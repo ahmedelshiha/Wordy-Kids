@@ -256,8 +256,8 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           // Check if any new achievements were unlocked and show popup if so
           const stats = gameState.getPlayerStats();
           const recentAchievements = gameState.gameState.achievements
-            .filter(achievement => achievement.unlockedAt)
-            .map(achievement => achievement.id);
+            .filter((achievement) => achievement.unlockedAt)
+            .map((achievement) => achievement.id);
 
           if (recentAchievements.length > 0) {
             setShowAchievements(true);
@@ -568,7 +568,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                 <Card key={achievement.id} className="p-6">
                   <div className="text-center">
                     <div className="text-4xl mb-2">{achievement.emoji}</div>
-                    <h3 className="font-bold text-lg mb-2">{achievement.name}</h3>
+                    <h3 className="font-bold text-lg mb-2">
+                      {achievement.name}
+                    </h3>
                     <p className="text-gray-600 text-sm mb-4">
                       {achievement.description}
                     </p>
@@ -591,10 +593,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         isOpen={showAchievements}
         onClose={() => setShowAchievements(false)}
         recentAchievements={gameState.gameState.achievements
-          .filter(achievement => achievement.unlockedAt)
-          .map(achievement => achievement.id)
-          .slice(-3)
-        }
+          .filter((achievement) => achievement.unlockedAt)
+          .map((achievement) => achievement.id)
+          .slice(-3)}
         gameStats={gameState.getPlayerStats()}
         accessibilitySettings={accessibilitySettings.accessibilitySettings}
       />

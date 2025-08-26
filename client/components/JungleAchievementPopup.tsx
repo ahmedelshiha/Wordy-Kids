@@ -333,7 +333,13 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
   const nextProgress = getNextAchievementProgress();
 
-  if (!isOpen || !recentAchievements || recentAchievements.length === 0 || !currentAchievement) return null;
+  if (
+    !isOpen ||
+    !recentAchievements ||
+    recentAchievements.length === 0 ||
+    !currentAchievement
+  )
+    return null;
 
   return (
     <div
