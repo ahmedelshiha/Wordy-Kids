@@ -198,9 +198,12 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
   const celebrationTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Get current achievement details
-  const currentAchievement = recentAchievements[currentAchievementIndex]
-    ? ACHIEVEMENT_LIBRARY[recentAchievements[currentAchievementIndex]]
-    : null;
+  const currentAchievement =
+    recentAchievements &&
+    recentAchievements[currentAchievementIndex] &&
+    ACHIEVEMENT_LIBRARY[recentAchievements[currentAchievementIndex]]
+      ? ACHIEVEMENT_LIBRARY[recentAchievements[currentAchievementIndex]]
+      : null;
 
   const rarityConfig = currentAchievement
     ? RARITY_CONFIG[currentAchievement.rarity]
@@ -258,7 +261,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
   // Handle keyboard navigation
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !recentAchievements) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -271,7 +274,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
           }
           break;
         case "ArrowRight":
-          if (currentAchievementIndex < recentAchievements.length - 1) {
+          if (currentAchievementIndex < (recentAchievements?.length ?? 0) - 1) {
             setCurrentAchievementIndex((prev) => prev + 1);
           }
           break;
@@ -287,7 +290,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
   }, [
     isOpen,
     currentAchievementIndex,
-    recentAchievements.length,
+    recentAchievements?.length,
     showDetails,
     onClose,
   ]);
@@ -301,6 +304,8 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
   // Navigate between achievements
   const navigateAchievement = (direction: "prev" | "next") => {
+    if (!recentAchievements) return;
+
     if (direction === "prev" && currentAchievementIndex > 0) {
       setCurrentAchievementIndex((prev) => prev - 1);
     } else if (
@@ -328,7 +333,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
 
   const nextProgress = getNextAchievementProgress();
 
-  if (!isOpen || !currentAchievement) return null;
+  if (!isOpen || !recentAchievements || recentAchievements.length === 0 || !currentAchievement) return null;
 
   return (
     <div
@@ -384,7 +389,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
           </Button>
 
           {/* Achievement counter */}
-          {recentAchievements.length > 1 && (
+          {recentAchievements && recentAchievements.length > 1 && (
             <div className="absolute top-2 left-2">
               <Badge variant="secondary" className="text-xs">
                 {currentAchievementIndex + 1} / {recentAchievements.length}
@@ -540,7 +545,7 @@ export const JungleAchievementPopup: React.FC<JungleAchievementPopupProps> = ({
           </div>
 
           {/* Navigation for multiple achievements */}
-          {recentAchievements.length > 1 && (
+          {recentAchievements && recentAchievements.length > 1 && (
             <div className="flex justify-between items-center pt-4 border-t">
               <Button
                 variant="ghost"
