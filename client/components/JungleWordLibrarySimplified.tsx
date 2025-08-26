@@ -252,6 +252,16 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           gameState.addJungleGems(2);
           audioService.playSound("achievement");
           animations.triggerCelebration("word-mastered");
+
+          // Check if any new achievements were unlocked and show popup if so
+          const stats = gameState.getPlayerStats();
+          const recentAchievements = gameState.gameState.achievements
+            .filter(achievement => achievement.unlockedAt)
+            .map(achievement => achievement.id);
+
+          if (recentAchievements.length > 0) {
+            setShowAchievements(true);
+          }
           break;
         case "favorite":
           gameState.toggleFavorite(word.id);
@@ -541,24 +551,37 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         )}
 
         {viewMode === "achievements" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {gameState.gameState.achievements.map((achievement) => (
-              <Card key={achievement.id} className="p-6">
-                <div className="text-center">
-                  <div className="text-4xl mb-2">{achievement.emoji}</div>
-                  <h3 className="font-bold text-lg mb-2">{achievement.name}</h3>
-                  <p className="text-gray-600 text-sm mb-4">
-                    {achievement.description}
-                  </p>
-                  <Badge
-                    variant={achievement.unlockedAt ? "default" : "secondary"}
-                    className={achievement.unlockedAt ? "bg-green-500" : ""}
-                  >
-                    {achievement.unlockedAt ? "Unlocked!" : "Locked"}
-                  </Badge>
-                </div>
-              </Card>
-            ))}
+          <div className="space-y-6">
+            {/* Recent Achievements Button */}
+            <div className="text-center">
+              <Button
+                onClick={() => setShowAchievements(true)}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+              >
+                <Sparkles className="h-4 w-4 mr-2" />
+                View Recent Achievements
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {gameState.gameState.achievements.map((achievement) => (
+                <Card key={achievement.id} className="p-6">
+                  <div className="text-center">
+                    <div className="text-4xl mb-2">{achievement.emoji}</div>
+                    <h3 className="font-bold text-lg mb-2">{achievement.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4">
+                      {achievement.description}
+                    </p>
+                    <Badge
+                      variant={achievement.unlockedAt ? "default" : "secondary"}
+                      className={achievement.unlockedAt ? "bg-green-500" : ""}
+                    >
+                      {achievement.unlockedAt ? "Unlocked!" : "Locked"}
+                    </Badge>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
       </main>
