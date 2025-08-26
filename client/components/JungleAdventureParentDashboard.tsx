@@ -123,17 +123,10 @@ export const JungleAdventureParentDashboard: React.FC<
   );
 
   // Get feature flag states
-  const isJungleMapEnabled = featureFlags.isFeatureEnabled(
-    "jungle-map-enhanced",
-    { userRole: "parent" },
-  );
-  const isTimelineEnabled = featureFlags.isFeatureEnabled(
-    "family-achievements-timeline",
-    { userRole: "parent" },
-  );
-  const isAnalyticsEnabled = featureFlags.isFeatureEnabled(
-    "performance-monitoring",
-  );
+  featureFlagManager.setUserContext(user?.uid || "anonymous", "parent");
+  const isJungleMapEnabled = featureFlagManager.isEnabled("jungleAnimations");
+  const isTimelineEnabled = featureFlagManager.isEnabled("advancedAnalytics");
+  const isAnalyticsEnabled = featureFlagManager.isEnabled("performanceOptimizations");
 
   // Get user preference for jungle map (from parental controls)
   const userSettings = JungleAdventureStorage.getSettings();
