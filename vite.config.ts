@@ -23,6 +23,25 @@ export default defineConfig(({ mode }) => ({
       "@shared": path.resolve(__dirname, "./shared"),
     },
   },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ["./client/__tests__/setup.ts"],
+    include: ["client/**/*.{test,spec}.{js,ts,jsx,tsx}"],
+    exclude: ["node_modules", "dist", "temp Refining word card"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      exclude: [
+        "node_modules/",
+        "dist/",
+        "temp Refining word card/",
+        "client/__tests__/",
+        "**/*.config.*",
+        "**/*.d.ts",
+      ],
+    },
+  },
 }));
 
 function expressPlugin(): Plugin {
