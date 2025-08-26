@@ -18,7 +18,7 @@ import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
 import {
   LazyJungleWordLibrary,
-  LazyJungleAdventureParentDashboard,
+  LazyParentDashboard,
   EnhancedSuspense,
   ResourceHints,
   preloadComponents
