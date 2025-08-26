@@ -7,7 +7,7 @@ import {
   parentDashboardAnalytics,
   withPerformanceTracking,
 } from "@/lib/parentDashboardAnalytics";
-import { featureFlags } from "@/lib/featureFlags";
+import { featureFlagManager } from "@/lib/featureFlags";
 import { JungleAdventureStorage } from "@/lib/jungleAdventureStorage";
 import { useAuth } from "@/hooks/useAuth";
 import { ErrorBoundary } from "./common/ErrorBoundary";
