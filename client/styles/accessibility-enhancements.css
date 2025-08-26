@@ -1,7 +1,8 @@
 /* Accessibility Enhancements for Kid-Friendly Analytics */
 
 /* High Contrast Mode */
-.high-contrast-mode {
+.high-contrast-mode,
+.high-contrast {
   --background: 0 0% 100%;
   --foreground: 0 0% 0%;
   --card: 0 0% 100%;
@@ -15,18 +16,22 @@
 }
 
 .high-contrast-mode .game-card-mobile,
-.high-contrast-mode .game-button-mobile {
+.high-contrast-mode .game-button-mobile,
+.high-contrast .game-card-mobile,
+.high-contrast .game-button-mobile {
   border: 3px solid #000;
   background: #fff;
   color: #000;
 }
 
-.high-contrast-mode .game-button-mobile:hover {
+.high-contrast-mode .game-button-mobile:hover,
+.high-contrast .game-button-mobile:hover {
   background: #000;
   color: #fff;
 }
 
-.high-contrast-mode .bg-gradient-to-br {
+.high-contrast-mode .bg-gradient-to-br,
+.high-contrast .bg-gradient-to-br {
   background: #fff !important;
   border: 3px solid #000 !important;
 }
@@ -67,7 +72,10 @@
 /* Reduced Motion */
 .reduce-motion *,
 .reduce-motion *::before,
-.reduce-motion *::after {
+.reduce-motion *::after,
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
@@ -75,7 +83,9 @@
 }
 
 .reduce-motion .game-button-mobile:hover,
-.reduce-motion .game-card-mobile:hover {
+.reduce-motion .game-card-mobile:hover,
+.reduced-motion .game-button-mobile:hover,
+.reduced-motion .game-card-mobile:hover {
   transform: none !important;
 }
 
