@@ -16,8 +16,13 @@ import IndexSimplified from "./pages/IndexSimplified";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
-import { JungleWordLibrary } from "./components/JungleWordLibrarySimplified";
-import ParentDashboard from "./pages/ParentDashboard";
+import {
+  LazyJungleWordLibrary,
+  LazyParentDashboard,
+  EnhancedSuspense,
+  ResourceHints,
+  preloadComponents
+} from "./components/LazyComponents";
 import { JungleAdventureWordCardDemo } from "./pages/JungleAdventureWordCardDemo";
 import {
   WordDatabaseNotifications,
@@ -52,6 +57,10 @@ const App = () => {
 
       // Migrate legacy settings to unified jungle settings
       migrateLegacySettings();
+
+      // Preload critical components for better performance
+      preloadComponents.jungleWordLibrary();
+      preloadComponents.parentDashboard();
     }
   }, []);
 
@@ -116,6 +125,7 @@ const App = () => {
     <ErrorBoundary fallbackType="parent" componentName="App">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
+          <ResourceHints />
           <Toaster />
           <Sonner />
           <WordDatabaseNotifications />
@@ -160,10 +170,12 @@ const App = () => {
                             fallbackType="parent"
                             componentName="JungleWordLibrary"
                           >
-                            <JungleWordLibrary
-                              enableAdvancedFeatures={true}
-                              showMobileOptimizations={true}
-                            />
+                            <EnhancedSuspense componentName="JungleWordLibrary">
+                              <LazyJungleWordLibrary
+                                enableAdvancedFeatures={true}
+                                showMobileOptimizations={true}
+                              />
+                            </EnhancedSuspense>
                           </ErrorBoundary>
                         }
                       />
@@ -175,7 +187,9 @@ const App = () => {
                             fallbackType="parent"
                             componentName="ParentDashboard"
                           >
-                            <ParentDashboard />
+                            <EnhancedSuspense componentName="ParentDashboard">
+                              <LazyParentDashboard />
+                            </EnhancedSuspense>
                           </ErrorBoundary>
                         }
                       />
