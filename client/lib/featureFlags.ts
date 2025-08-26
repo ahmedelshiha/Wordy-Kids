@@ -260,7 +260,11 @@ class FeatureFlagManager {
   /**
    * Enable gradual rollout for a feature
    */
-  enableGradualRollout(flagName: string, targetPercentage: number, steps: number = 4): void {
+  enableGradualRollout(
+    flagName: string,
+    targetPercentage: number,
+    steps: number = 4,
+  ): void {
     if (!this.userRole || !["admin"].includes(this.userRole)) {
       console.warn("Unauthorized attempt to enable gradual rollout");
       return;
@@ -278,14 +282,16 @@ class FeatureFlagManager {
     const rolloutInterval = setInterval(() => {
       currentStep++;
       const newPercentage = Math.min(stepSize * currentStep, targetPercentage);
-      
+
       this.updateFlag(flagName, { rolloutPercentage: newPercentage });
-      
+
       console.log(`Gradual rollout: ${flagName} now at ${newPercentage}%`);
-      
+
       if (currentStep >= steps) {
         clearInterval(rolloutInterval);
-        console.log(`Gradual rollout complete: ${flagName} at ${targetPercentage}%`);
+        console.log(
+          `Gradual rollout complete: ${flagName} at ${targetPercentage}%`,
+        );
       }
     }, 60000); // 1 minute intervals
   }
@@ -299,11 +305,11 @@ class FeatureFlagManager {
       return;
     }
 
-    this.updateFlag(flagName, { 
-      enabled: false, 
-      rolloutPercentage: 0 
+    this.updateFlag(flagName, {
+      enabled: false,
+      rolloutPercentage: 0,
     });
-    
+
     console.log(`Emergency rollback performed for: ${flagName}`);
   }
 
@@ -312,8 +318,8 @@ class FeatureFlagManager {
    */
   getMetrics(): Record<string, any> {
     const metrics: Record<string, any> = {};
-    
-    Object.keys(this.flags).forEach(flagName => {
+
+    Object.keys(this.flags).forEach((flagName) => {
       const flag = this.flags[flagName];
       metrics[flagName] = {
         enabled: flag.enabled,
@@ -337,9 +343,11 @@ export const useFeatureFlag = (flagName: string): boolean => {
 };
 
 // Convenience function for checking multiple flags
-export const useFeatureFlags = (flagNames: string[]): Record<string, boolean> => {
+export const useFeatureFlags = (
+  flagNames: string[],
+): Record<string, boolean> => {
   const flags: Record<string, boolean> = {};
-  flagNames.forEach(name => {
+  flagNames.forEach((name) => {
     flags[name] = featureFlagManager.isEnabled(name);
   });
   return flags;
@@ -351,9 +359,9 @@ export const healthCheck = () => {
     moduleLoaded: true,
     managerInstance: !!featureFlagManager,
     functionsAvailable: {
-      useFeatureFlag: typeof useFeatureFlag === 'function',
-      useFeatureFlags: typeof useFeatureFlags === 'function',
-      managerIsEnabled: typeof featureFlagManager?.isEnabled === 'function',
+      useFeatureFlag: typeof useFeatureFlag === "function",
+      useFeatureFlags: typeof useFeatureFlags === "function",
+      managerIsEnabled: typeof featureFlagManager?.isEnabled === "function",
     },
     sampleFlags: {},
     timestamp: new Date().toISOString(),
@@ -362,8 +370,8 @@ export const healthCheck = () => {
   try {
     // Test a few flags
     health.sampleFlags = {
-      enhancedAudio: featureFlagManager.isEnabled('enhancedAudio'),
-      jungleAnimations: featureFlagManager.isEnabled('jungleAnimations'),
+      enhancedAudio: featureFlagManager.isEnabled("enhancedAudio"),
+      jungleAnimations: featureFlagManager.isEnabled("jungleAnimations"),
     };
   } catch (error) {
     health.sampleFlags = { error: error.message };

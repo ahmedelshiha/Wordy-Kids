@@ -32,11 +32,21 @@ const SimpleModal = ({ isOpen, children }: any) => {
 
 const SimpleNavigation = () => (
   <nav aria-label="Main navigation">
-    <a href="#main" className="skip-link">Skip to main content</a>
+    <a href="#main" className="skip-link">
+      Skip to main content
+    </a>
     <ul>
-      <li><a href="/home" aria-current="page">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
+      <li>
+        <a href="/home" aria-current="page">
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="/about">About</a>
+      </li>
+      <li>
+        <a href="/contact">Contact</a>
+      </li>
     </ul>
   </nav>
 );
@@ -63,7 +73,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
           <span aria-hidden="true">🔍</span>
           <span className="sr-only">Search</span>
         </button>
-      </div>
+      </div>,
     );
 
     const results = await axe(container);
@@ -75,7 +85,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
 
     const results = await axe(container, {
       rules: {
-        "label": { enabled: true },
+        label: { enabled: true },
         "form-field-multiple-labels": { enabled: true },
       },
     });
@@ -88,7 +98,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
       <SimpleModal isOpen={true}>
         <p>Modal content</p>
         <button>Close</button>
-      </SimpleModal>
+      </SimpleModal>,
     );
 
     const results = await axe(container, {
@@ -106,12 +116,12 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
       <div>
         <SimpleNavigation />
         <SimpleMain />
-      </div>
+      </div>,
     );
 
     const results = await axe(container, {
       rules: {
-        "bypass": { enabled: true },
+        bypass: { enabled: true },
         "landmark-one-main": { enabled: true },
         "page-has-heading-one": { enabled: true },
       },
@@ -129,7 +139,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
         <button style={{ color: "#ffffff", backgroundColor: "#000000" }}>
           High contrast button
         </button>
-      </div>
+      </div>,
     );
 
     const results = await axe(container, {
@@ -148,13 +158,13 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
         <a href="#section1">Link</a>
         <input type="text" placeholder="Text input" />
         <button tabIndex={0}>Last focusable</button>
-      </div>
+      </div>,
     );
 
     const results = await axe(container, {
       rules: {
-        "keyboard": { enabled: true },
-        "tabindex": { enabled: true },
+        keyboard: { enabled: true },
+        tabindex: { enabled: true },
       },
     });
 
@@ -168,7 +178,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
         <h2>Section Title</h2>
         <h3>Subsection Title</h3>
         <h2>Another Section</h2>
-      </div>
+      </div>,
     );
 
     const results = await axe(container, {
@@ -189,7 +199,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
         <div role="alert" aria-live="assertive">
           Urgent announcements
         </div>
-      </div>
+      </div>,
     );
 
     const results = await axe(container, {
@@ -210,7 +220,9 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
         </header>
         <nav role="navigation" aria-label="Main">
           <ul>
-            <li><a href="/">Home</a></li>
+            <li>
+              <a href="/">Home</a>
+            </li>
           </ul>
         </nav>
         <main role="main">
@@ -219,7 +231,7 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
         <footer role="contentinfo">
           <p>Footer content</p>
         </footer>
-      </div>
+      </div>,
     );
 
     const results = await axe(container, {
@@ -235,28 +247,28 @@ describe("Accessibility Core Principles - WCAG 2.1 AA", () => {
   it("should meet minimum touch target sizes for mobile", async () => {
     const { container } = render(
       <div>
-        <button 
-          style={{ 
-            minWidth: "44px", 
+        <button
+          style={{
+            minWidth: "44px",
             minHeight: "44px",
             padding: "12px",
-            margin: "4px"
+            margin: "4px",
           }}
         >
           Mobile Button
         </button>
-        <a 
-          href="#link" 
-          style={{ 
-            minWidth: "44px", 
+        <a
+          href="#link"
+          style={{
+            minWidth: "44px",
             minHeight: "44px",
             display: "inline-block",
-            padding: "12px"
+            padding: "12px",
           }}
         >
           Mobile Link
         </a>
-      </div>
+      </div>,
     );
 
     const results = await axe(container);

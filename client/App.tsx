@@ -20,7 +20,7 @@ import {
   LazyParentDashboard,
   EnhancedSuspense,
   ResourceHints,
-  preloadComponents
+  preloadComponents,
 } from "./components/LazyComponents";
 import { JungleAdventureWordCardDemo } from "./pages/JungleAdventureWordCardDemo";
 import {
@@ -45,11 +45,13 @@ const queryClient = new QueryClient();
 
 const App = () => {
   // Ensure React is available before using hooks
-  if (!React || typeof React.useState !== 'function') {
-    console.error('React is not properly available');
+  if (!React || typeof React.useState !== "function") {
+    console.error("React is not properly available");
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg text-red-600">Error: React not properly loaded</div>
+        <div className="text-lg text-red-600">
+          Error: React not properly loaded
+        </div>
       </div>
     );
   }
@@ -139,118 +141,121 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary fallbackType="parent" componentName="TooltipProvider">
           <TooltipProvider>
-          <ResourceHints />
-          <Toaster />
-          <Sonner />
-          <WordDatabaseNotifications />
-          <CompactWordDatabaseNotifications />
-          <BrowserRouter>
-            <AuthProvider>
-              <LightweightAchievementProvider>
-                <NavigationGuard>
-                  <ErrorBoundary fallbackType="parent" componentName="Routes">
-                    <Routes>
-                      <Route path="/" element={<LoginForm />} />
-                      <Route path="/login" element={<LoginForm />} />
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route
-                        path="/app"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="IndexSimplified"
-                          >
-                            <IndexSimplified />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route path="/profile" element={<Login />} />
-                      <Route
-                        path="/admin"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="AdminPage"
-                          >
-                            <AdminPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      {/* Production Routes */}
-                      <Route
-                        path="/jungle-library"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="JungleWordLibrary"
-                          >
-                            <EnhancedSuspense componentName="JungleWordLibrary">
-                              <LazyJungleWordLibrary
-                                enableAdvancedFeatures={true}
-                                showMobileOptimizations={true}
-                              />
-                            </EnhancedSuspense>
-                          </ErrorBoundary>
-                        }
-                      />
+            <ResourceHints />
+            <Toaster />
+            <Sonner />
+            <WordDatabaseNotifications />
+            <CompactWordDatabaseNotifications />
+            <BrowserRouter>
+              <AuthProvider>
+                <LightweightAchievementProvider>
+                  <NavigationGuard>
+                    <ErrorBoundary fallbackType="parent" componentName="Routes">
+                      <Routes>
+                        <Route path="/" element={<LoginForm />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route
+                          path="/app"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="parent"
+                              componentName="IndexSimplified"
+                            >
+                              <IndexSimplified />
+                            </ErrorBoundary>
+                          }
+                        />
+                        <Route path="/profile" element={<Login />} />
+                        <Route
+                          path="/admin"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="parent"
+                              componentName="AdminPage"
+                            >
+                              <AdminPage />
+                            </ErrorBoundary>
+                          }
+                        />
+                        {/* Production Routes */}
+                        <Route
+                          path="/jungle-library"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="parent"
+                              componentName="JungleWordLibrary"
+                            >
+                              <EnhancedSuspense componentName="JungleWordLibrary">
+                                <LazyJungleWordLibrary
+                                  enableAdvancedFeatures={true}
+                                  showMobileOptimizations={true}
+                                />
+                              </EnhancedSuspense>
+                            </ErrorBoundary>
+                          }
+                        />
 
-                      <Route
-                        path="/parent-dashboard"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="ParentDashboard"
-                          >
-                            <EnhancedSuspense componentName="ParentDashboard">
-                              <LazyParentDashboard />
-                            </EnhancedSuspense>
-                          </ErrorBoundary>
-                        }
-                      />
+                        <Route
+                          path="/parent-dashboard"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="parent"
+                              componentName="ParentDashboard"
+                            >
+                              <EnhancedSuspense componentName="ParentDashboard">
+                                <LazyParentDashboard />
+                              </EnhancedSuspense>
+                            </ErrorBoundary>
+                          }
+                        />
 
-                      {/* Legacy App Route - Backup */}
-                      <Route
-                        path="/app-legacy"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="kid"
-                            componentName="MainAppPage"
-                          >
-                            <MainAppPage />
-                          </ErrorBoundary>
-                        }
-                      />
+                        {/* Legacy App Route - Backup */}
+                        <Route
+                          path="/app-legacy"
+                          element={
+                            <ErrorBoundary
+                              fallbackType="kid"
+                              componentName="MainAppPage"
+                            >
+                              <MainAppPage />
+                            </ErrorBoundary>
+                          }
+                        />
 
-                      {/* Essential Diagnostic Routes */}
-                      <Route
-                        path="/speech-diagnostics"
-                        element={<SpeechDiagnostics />}
-                      />
-                      <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
-                      />
-                      <Route
-                        path="/error-boundary-test"
-                        element={<ErrorBoundaryTest />}
-                      />
-                      <Route
-                        path="/mobile-settings-demo"
-                        element={<MobileSettingsDemo />}
-                      />
-                      <Route
-                        path="/settings-panel-v2-demo"
-                        element={<SettingsPanelV2Demo />}
-                      />
-                      <Route path="/icon-nav-test" element={<IconNavTest />} />
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </ErrorBoundary>
-                </NavigationGuard>
-              </LightweightAchievementProvider>
-            </AuthProvider>
-          </BrowserRouter>
+                        {/* Essential Diagnostic Routes */}
+                        <Route
+                          path="/speech-diagnostics"
+                          element={<SpeechDiagnostics />}
+                        />
+                        <Route
+                          path="/jungle-adventure-word-card-demo"
+                          element={<JungleAdventureWordCardDemo />}
+                        />
+                        <Route
+                          path="/error-boundary-test"
+                          element={<ErrorBoundaryTest />}
+                        />
+                        <Route
+                          path="/mobile-settings-demo"
+                          element={<MobileSettingsDemo />}
+                        />
+                        <Route
+                          path="/settings-panel-v2-demo"
+                          element={<SettingsPanelV2Demo />}
+                        />
+                        <Route
+                          path="/icon-nav-test"
+                          element={<IconNavTest />}
+                        />
+                        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </ErrorBoundary>
+                  </NavigationGuard>
+                </LightweightAchievementProvider>
+              </AuthProvider>
+            </BrowserRouter>
           </TooltipProvider>
         </ErrorBoundary>
       </QueryClientProvider>

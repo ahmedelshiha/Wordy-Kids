@@ -74,10 +74,10 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
         mutations: { retry: false },
       },
     });
-    
+
     // Reset DOM classes before each test
     document.documentElement.className = "";
-    
+
     // Clear localStorage
     localStorage.clear();
   });
@@ -92,11 +92,11 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
     it("should have no accessibility violations in default mode", async () => {
       const { container } = render(
         <TestWrapper>
-          <JungleWordLibrary 
+          <JungleWordLibrary
             enableAdvancedFeatures={true}
             showMobileOptimizations={true}
           />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
@@ -116,14 +116,14 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
     it("should have no accessibility violations in high contrast mode", async () => {
       // Enable high contrast mode
       document.documentElement.classList.add("high-contrast");
-      
+
       const { container } = render(
         <TestWrapper>
-          <JungleWordLibrary 
+          <JungleWordLibrary
             enableAdvancedFeatures={true}
             showMobileOptimizations={true}
           />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
@@ -139,14 +139,14 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
     it("should have no accessibility violations in large text mode", async () => {
       // Enable large text mode
       document.documentElement.classList.add("large-text");
-      
+
       const { container } = render(
         <TestWrapper>
-          <JungleWordLibrary 
+          <JungleWordLibrary
             enableAdvancedFeatures={true}
             showMobileOptimizations={true}
           />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container);
@@ -156,14 +156,14 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
     it("should have no accessibility violations in reduced motion mode", async () => {
       // Enable reduced motion mode
       document.documentElement.classList.add("reduced-motion");
-      
+
       const { container } = render(
         <TestWrapper>
-          <JungleWordLibrary 
+          <JungleWordLibrary
             enableAdvancedFeatures={true}
             showMobileOptimizations={true}
           />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container);
@@ -173,20 +173,20 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
     it("should have proper ARIA landmarks and structure", async () => {
       const { container } = render(
         <TestWrapper>
-          <JungleWordLibrary 
+          <JungleWordLibrary
             enableAdvancedFeatures={true}
             showMobileOptimizations={true}
           />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       // Check for main landmark
       expect(screen.getByRole("main")).toBeInTheDocument();
-      
+
       // Check for proper heading hierarchy
       const headings = screen.getAllByRole("heading");
       expect(headings.length).toBeGreaterThan(0);
-      
+
       // Check for live region
       expect(screen.getByRole("status")).toBeInTheDocument();
 
@@ -204,18 +204,18 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
     it("should have proper keyboard navigation support", async () => {
       const { container } = render(
         <TestWrapper>
-          <JungleWordLibrary 
+          <JungleWordLibrary
             enableAdvancedFeatures={true}
             showMobileOptimizations={true}
           />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
         rules: {
-          "keyboard": { enabled: true },
+          keyboard: { enabled: true },
           "focus-order-semantics": { enabled: true },
-          "tabindex": { enabled: true },
+          tabindex: { enabled: true },
         },
       });
 
@@ -228,7 +228,7 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
       const { container } = render(
         <TestWrapper>
           <ParentDashboard />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container);
@@ -239,12 +239,12 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
       const { container } = render(
         <TestWrapper>
           <ParentDashboard />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
         rules: {
-          "label": { enabled: true },
+          label: { enabled: true },
           "form-field-multiple-labels": { enabled: true },
           "required-attr": { enabled: true },
         },
@@ -266,7 +266,7 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
               Gray text with 5.86:1 contrast ratio
             </p>
           </div>
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
@@ -282,14 +282,27 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
       const { container } = render(
         <TestWrapper>
           <div>
-            <h1 style={{ color: "#757575", backgroundColor: "#ffffff", fontSize: "24px" }}>
+            <h1
+              style={{
+                color: "#757575",
+                backgroundColor: "#ffffff",
+                fontSize: "24px",
+              }}
+            >
               Large text with 4.54:1 contrast ratio
             </h1>
-            <h2 style={{ color: "#949494", backgroundColor: "#ffffff", fontSize: "18px", fontWeight: "bold" }}>
+            <h2
+              style={{
+                color: "#949494",
+                backgroundColor: "#ffffff",
+                fontSize: "18px",
+                fontWeight: "bold",
+              }}
+            >
               Bold large text with 3.38:1 contrast ratio
             </h2>
           </div>
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
@@ -305,7 +318,7 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
   describe("Focus Management", () => {
     it("should have visible focus indicators", async () => {
       document.documentElement.classList.add("focus-indicators");
-      
+
       const { container } = render(
         <TestWrapper>
           <div>
@@ -313,7 +326,7 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
             <input type="text" placeholder="Test Input" />
             <a href="#">Test Link</a>
           </div>
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
@@ -337,8 +350,12 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
             </a>
             <nav>
               <ul>
-                <li><a href="#section1">Section 1</a></li>
-                <li><a href="#section2">Section 2</a></li>
+                <li>
+                  <a href="#section1">Section 1</a>
+                </li>
+                <li>
+                  <a href="#section2">Section 2</a>
+                </li>
               </ul>
             </nav>
             <main id="main-content">
@@ -346,12 +363,12 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
               <p>This is the main content area.</p>
             </main>
           </div>
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
         rules: {
-          "bypass": { enabled: true },
+          bypass: { enabled: true },
           "skip-link": { enabled: true },
         },
       });
@@ -372,7 +389,7 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
               Important alerts appear here
             </div>
           </div>
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {
@@ -390,18 +407,25 @@ describe("Accessibility Tests - WCAG 2.1 AA Compliance", () => {
   describe("Mobile Accessibility", () => {
     it("should have appropriate touch target sizes", async () => {
       document.documentElement.classList.add("large-click-targets");
-      
+
       const { container } = render(
         <TestWrapper>
           <div>
             <button style={{ minWidth: "44px", minHeight: "44px" }}>
               Touch Target
             </button>
-            <a href="#" style={{ minWidth: "44px", minHeight: "44px", display: "inline-block" }}>
+            <a
+              href="#"
+              style={{
+                minWidth: "44px",
+                minHeight: "44px",
+                display: "inline-block",
+              }}
+            >
               Touch Link
             </a>
           </div>
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       const results = await axe(container, {

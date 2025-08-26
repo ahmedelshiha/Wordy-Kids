@@ -126,7 +126,9 @@ export const JungleAdventureParentDashboard: React.FC<
   featureFlagManager.setUserContext(user?.uid || "anonymous", "parent");
   const isJungleMapEnabled = featureFlagManager.isEnabled("jungleAnimations");
   const isTimelineEnabled = featureFlagManager.isEnabled("advancedAnalytics");
-  const isAnalyticsEnabled = featureFlagManager.isEnabled("performanceOptimizations");
+  const isAnalyticsEnabled = featureFlagManager.isEnabled(
+    "performanceOptimizations",
+  );
 
   // Get user preference for jungle map (from parental controls)
   const userSettings = JungleAdventureStorage.getSettings();

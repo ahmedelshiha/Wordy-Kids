@@ -131,7 +131,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         "advancedAnalytics",
         "performanceOptimizations",
         "adaptiveLearning",
-        "betaFeatures"
+        "betaFeatures",
       ]);
     } catch (error) {
       console.error("Failed to load feature flags:", error);
@@ -142,7 +142,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         advancedAnalytics: true,
         performanceOptimizations: true,
         adaptiveLearning: false,
-        betaFeatures: false
+        betaFeatures: false,
       };
     }
   }, []);
@@ -170,7 +170,10 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         setCurrentWords(words);
 
         // Start ambient sounds if enabled
-        if (featureFlags.enhancedAudio && audioService.getAudioStatus().enabled) {
+        if (
+          featureFlags.enhancedAudio &&
+          audioService.getAudioStatus().enabled
+        ) {
           audioService.playAmbientSounds("jungle-birds", true);
         }
 
@@ -182,7 +185,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
               category: selectedCategory,
               gameMode,
               wordsCount: words.length,
-              featureFlags: Object.keys(featureFlags).filter(key => featureFlags[key]),
+              featureFlags: Object.keys(featureFlags).filter(
+                (key) => featureFlags[key],
+              ),
             },
           });
         }
