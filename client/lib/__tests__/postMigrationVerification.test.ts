@@ -74,28 +74,24 @@ describe("Post-Migration Hardening Features", () => {
 
   describe("Feature Flag System", () => {
     test("should check if jungle map is enabled", () => {
-      const isEnabled = featureFlags.isFeatureEnabled("jungle-map-enhanced", {
-        userRole: "parent",
-      });
+      featureFlagManager.setUserContext("test-user", "parent");
+      const isEnabled = featureFlagManager.isEnabled("jungleAnimations");
       expect(typeof isEnabled).toBe("boolean");
     });
 
     test("should respect rollout percentages", () => {
-      const flag = featureFlags.getFeatureFlag("advanced-analytics");
-      expect(flag?.rolloutPercentage).toBe(50);
+      const flag = featureFlagManager.getFlag("advancedAnalytics");
+      expect(flag?.rolloutPercentage).toBe(75);
     });
 
     test("should filter by target audience", () => {
-      const parentEnabled = featureFlags.isFeatureEnabled(
-        "jungle-map-enhanced",
-        { userRole: "parent" },
-      );
-      const childEnabled = featureFlags.isFeatureEnabled(
-        "jungle-map-enhanced",
-        { userRole: "child" },
-      );
+      featureFlagManager.setUserContext("parent-user", "parent");
+      const parentEnabled = featureFlagManager.isEnabled("parentDashboard");
 
-      // Jungle map is targeted for parents
+      featureFlagManager.setUserContext("child-user", "child");
+      const childEnabled = featureFlagManager.isEnabled("parentDashboard");
+
+      // Parent dashboard is targeted for parents
       expect(parentEnabled).toBe(true);
       expect(childEnabled).toBe(false);
     });
