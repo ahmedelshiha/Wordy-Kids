@@ -59,7 +59,7 @@ const App = () => {
       migrateLegacySettings();
 
       // Preload critical components for better performance
-      preloadComponents.jungleWordLibrary();
+      preloadComponents.jungleLibrary();
       preloadComponents.parentDashboard();
     }
   }, []);
