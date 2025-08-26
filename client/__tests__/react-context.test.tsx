@@ -5,14 +5,11 @@ import React, { useState } from "react";
 // Test component to verify React hooks are working
 const TestComponent = () => {
   const [count, setCount] = useState(0);
-  
+
   return (
     <div>
       <span data-testid="count">{count}</span>
-      <button 
-        data-testid="increment" 
-        onClick={() => setCount(c => c + 1)}
-      >
+      <button data-testid="increment" onClick={() => setCount((c) => c + 1)}>
         Increment
       </button>
     </div>
@@ -22,14 +19,11 @@ const TestComponent = () => {
 // Test TooltipProvider equivalent to ensure React context is working
 const TestTooltipProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   return (
     <div data-testid="tooltip-provider">
-      <div data-testid="tooltip-state">{isOpen ? 'open' : 'closed'}</div>
-      <button 
-        data-testid="toggle-tooltip"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <div data-testid="tooltip-state">{isOpen ? "open" : "closed"}</div>
+      <button data-testid="toggle-tooltip" onClick={() => setIsOpen(!isOpen)}>
         Toggle
       </button>
       {children}
@@ -40,10 +34,10 @@ const TestTooltipProvider = ({ children }: { children: React.ReactNode }) => {
 describe("React Context and Hooks Tests", () => {
   it("should render and use useState hook correctly", () => {
     render(<TestComponent />);
-    
+
     const countElement = screen.getByTestId("count");
     expect(countElement).toHaveTextContent("0");
-    
+
     const incrementButton = screen.getByTestId("increment");
     expect(incrementButton).toBeInTheDocument();
   });
@@ -52,9 +46,9 @@ describe("React Context and Hooks Tests", () => {
     render(
       <TestTooltipProvider>
         <div data-testid="child">Child content</div>
-      </TestTooltipProvider>
+      </TestTooltipProvider>,
     );
-    
+
     expect(screen.getByTestId("tooltip-provider")).toBeInTheDocument();
     expect(screen.getByTestId("tooltip-state")).toHaveTextContent("closed");
     expect(screen.getByTestId("child")).toHaveTextContent("Child content");

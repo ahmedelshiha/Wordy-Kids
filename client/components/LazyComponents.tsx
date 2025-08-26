@@ -145,7 +145,8 @@ export const EnhancedSuspense: React.FC<EnhancedSuspenseProps> = ({
 export const preloadComponents = {
   jungleLibrary: () => import("./JungleWordLibrarySimplified"),
   parentDashboard: () => import("../pages/ParentDashboard"),
-  jungleAdventureParentDashboard: () => import("./JungleAdventureParentDashboard"),
+  jungleAdventureParentDashboard: () =>
+    import("./JungleAdventureParentDashboard"),
   quizAdventure: () => import("./games/EnhancedJungleQuizAdventure"),
   gameHub: () => import("./games/GameHub"),
   jungleMap: () => import("./InteractiveJungleMap"),
