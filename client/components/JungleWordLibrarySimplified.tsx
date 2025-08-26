@@ -109,6 +109,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAchievements, setShowAchievements] = useState(false);
 
   // Enhanced hooks
   const gameState = useJungleGameState();
@@ -563,7 +564,17 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
       </main>
 
       {/* Achievement Popup */}
-      <JungleAchievementPopup />
+      <JungleAchievementPopup
+        isOpen={showAchievements}
+        onClose={() => setShowAchievements(false)}
+        recentAchievements={gameState.gameState.achievements
+          .filter(achievement => achievement.unlockedAt)
+          .map(achievement => achievement.id)
+          .slice(-3)
+        }
+        gameStats={gameState.getPlayerStats()}
+        accessibilitySettings={accessibilitySettings.accessibilitySettings}
+      />
     </div>
   );
 };
