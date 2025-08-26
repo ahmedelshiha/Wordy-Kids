@@ -44,6 +44,16 @@ import IconNavTest from "./pages/IconNavTest";
 const queryClient = new QueryClient();
 
 const App = () => {
+  // Ensure React is available before using hooks
+  if (!React || typeof React.useState !== 'function') {
+    console.error('React is not properly available');
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg text-red-600">Error: React not properly loaded</div>
+      </div>
+    );
+  }
+
   const [isClient, setIsClient] = useState(() => {
     // Initialize based on whether we're in browser
     return typeof window !== "undefined";
