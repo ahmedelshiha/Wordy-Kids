@@ -188,7 +188,7 @@ const App = () => {
                             componentName="ParentDashboard"
                           >
                             <EnhancedSuspense componentName="ParentDashboard">
-                              <LazyJungleAdventureParentDashboard />
+                              <LazyParentDashboard />
                             </EnhancedSuspense>
                           </ErrorBoundary>
                         }
