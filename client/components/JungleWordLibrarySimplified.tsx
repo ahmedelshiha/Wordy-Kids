@@ -142,8 +142,10 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
       try {
         setIsLoading(true);
 
-        // Load sound pack
-        await audioService.loadSoundPack("jungle-adventure");
+        // Load sound pack (with feature flag check)
+        if (featureFlags.enhancedAudio) {
+          await audioService.loadSoundPack("jungle-adventure");
+        }
 
         // Initialize words
         const words =
@@ -153,19 +155,22 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         setCurrentWords(words);
 
         // Start ambient sounds if enabled
-        if (audioService.getAudioStatus().enabled) {
+        if (featureFlags.enhancedAudio && audioService.getAudioStatus().enabled) {
           audioService.playAmbientSounds("jungle-birds", true);
         }
 
-        // Track initialization
-        enhancedAnalyticsSystem.trackEvent({
-          type: "jungle_library_initialized",
-          data: {
-            category: selectedCategory,
-            gameMode,
-            wordsCount: words.length,
-          },
-        });
+        // Track initialization (with feature flag check)
+        if (featureFlags.advancedAnalytics) {
+          enhancedAnalyticsSystem.trackEvent({
+            type: "jungle_library_initialized",
+            data: {
+              category: selectedCategory,
+              gameMode,
+              wordsCount: words.length,
+              featureFlags: Object.keys(featureFlags).filter(key => featureFlags[key]),
+            },
+          });
+        }
 
         setIsLoading(false);
       } catch (error) {
