@@ -200,6 +200,25 @@ export default function EnhancedMainApp() {
     setShowDashboard(false);
   };
 
+  // Memoize callback functions to prevent infinite loops in child components
+  const handleScoreUpdate = useCallback((score: number) => {
+    setUltimateScore(score);
+    // Update profile
+    if (currentProfile) {
+      const updated = { ...currentProfile, ultimateScore: score };
+      setCurrentProfile(updated);
+    }
+  }, [currentProfile]);
+
+  const handleStreakUpdate = useCallback((streak: number) => {
+    setUltimateStreak(streak);
+    // Update profile
+    if (currentProfile) {
+      const updated = { ...currentProfile, ultimateStreak: streak };
+      setCurrentProfile(updated);
+    }
+  }, [currentProfile]);
+
   // Show loading state while auth is initializing
   if (isLoading) {
     return (
