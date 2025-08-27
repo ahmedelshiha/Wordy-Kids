@@ -203,21 +203,25 @@ export default function EnhancedMainApp() {
   // Memoize callback functions to prevent infinite loops in child components
   const handleScoreUpdate = useCallback((score: number) => {
     setUltimateScore(score);
-    // Update profile
-    if (currentProfile) {
-      const updated = { ...currentProfile, ultimateScore: score };
-      setCurrentProfile(updated);
-    }
-  }, [currentProfile]);
+    // Update profile using functional update to avoid dependency
+    setCurrentProfile(prevProfile => {
+      if (prevProfile) {
+        return { ...prevProfile, ultimateScore: score };
+      }
+      return prevProfile;
+    });
+  }, []); // No dependencies to prevent recreation
 
   const handleStreakUpdate = useCallback((streak: number) => {
     setUltimateStreak(streak);
-    // Update profile
-    if (currentProfile) {
-      const updated = { ...currentProfile, ultimateStreak: streak };
-      setCurrentProfile(updated);
-    }
-  }, [currentProfile]);
+    // Update profile using functional update to avoid dependency
+    setCurrentProfile(prevProfile => {
+      if (prevProfile) {
+        return { ...prevProfile, ultimateStreak: streak };
+      }
+      return prevProfile;
+    });
+  }, []); // No dependencies to prevent recreation
 
   // Show loading state while auth is initializing
   if (isLoading) {
