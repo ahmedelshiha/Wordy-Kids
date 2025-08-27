@@ -188,17 +188,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Enhanced word processing with rarity system (memoized to prevent infinite loops)
-  const enhanceWordsWithRarity = useCallback((words: Word[]): Word[] => {
-    return words.map(word => ({
-      ...word,
-      rarity: word.rarity || assignRarity(word),
-      sound: word.sound || generateDefaultSound(word),
-      color: word.color || generateRarityColor(word.rarity || "common"),
-      habitat: word.habitat || generateHabitat(word.category),
-    }));
-  }, [assignRarity, generateDefaultSound, generateRarityColor, generateHabitat]);
-
+  // Utility functions for word enhancement (defined first to avoid temporal dead zone)
   const assignRarity = useCallback((word: Word): "common" | "rare" | "epic" | "legendary" | "mythical" => {
     // Use word ID as seed for deterministic rarity assignment
     const seed = word.id || 1;
@@ -249,6 +239,17 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
     };
     return habitatMap[category as keyof typeof habitatMap] || "Learning Land";
   }, []);
+
+  // Enhanced word processing with rarity system (memoized to prevent infinite loops)
+  const enhanceWordsWithRarity = useCallback((words: Word[]): Word[] => {
+    return words.map(word => ({
+      ...word,
+      rarity: word.rarity || assignRarity(word),
+      sound: word.sound || generateDefaultSound(word),
+      color: word.color || generateRarityColor(word.rarity || "common"),
+      habitat: word.habitat || generateHabitat(word.category),
+    }));
+  }, [assignRarity, generateDefaultSound, generateRarityColor, generateHabitat]);
 
   // Memoize enhanced words to prevent recalculation on every render
   const enhancedWords = useMemo(() => {
