@@ -158,22 +158,14 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   const [isTablet, setIsTablet] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Update parent callbacks for scoring (memoized to prevent infinite loops)
-  const handleScoreUpdate = useCallback((newScore: number) => {
-    onScoreUpdate?.(newScore);
-  }, [onScoreUpdate]);
-
-  const handleStreakUpdate = useCallback((newStreak: number) => {
-    onStreakUpdate?.(newStreak);
-  }, [onStreakUpdate]);
+  // Update parent callbacks for scoring (simplified to prevent infinite loops)
+  useEffect(() => {
+    onScoreUpdate?.(score);
+  }, [score, onScoreUpdate]);
 
   useEffect(() => {
-    handleScoreUpdate(score);
-  }, [score, handleScoreUpdate]);
-
-  useEffect(() => {
-    handleStreakUpdate(streak);
-  }, [streak, handleStreakUpdate]);
+    onStreakUpdate?.(streak);
+  }, [streak, onStreakUpdate]);
 
   useEffect(() => {
     const checkMobile = () => {
