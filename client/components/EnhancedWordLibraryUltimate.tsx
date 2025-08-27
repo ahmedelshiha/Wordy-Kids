@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -43,7 +49,11 @@ import { EnhancedCategorySelector } from "./EnhancedCategorySelector";
 import { EnhancedVocabularyBuilder } from "./EnhancedVocabularyBuilder";
 import { CategoryCompletionPopup } from "./CategoryCompletionPopup";
 import { CategoryLockWarning } from "./CategoryLockWarning";
-import { MagicalParticles, SuccessParticles, WordLearnedParticles } from "./MagicalParticles";
+import {
+  MagicalParticles,
+  SuccessParticles,
+  WordLearnedParticles,
+} from "./MagicalParticles";
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { useRealTimeWords, realTimeWordDB } from "@/lib/realTimeWordDatabase";
@@ -85,7 +95,9 @@ type ViewMode = "categories" | "words" | "vocabulary";
 type WordViewMode = "grid" | "list" | "carousel" | "ultimate";
 type LearningMode = "learn" | "quiz" | "memory";
 
-export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimateProps> = ({
+export const EnhancedWordLibraryUltimate: React.FC<
+  EnhancedWordLibraryUltimateProps
+> = ({
   onBack,
   userInterests = [],
   enableAdvancedFeatures = true,
@@ -114,7 +126,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
   const [showFilters, setShowFilters] = useState(false);
   const [favoriteWords, setFavoriteWords] = useState<Set<number>>(new Set());
-  const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(new Set());
+  const [bookmarkedWords, setBookmarkedWords] = useState<Set<number>>(
+    new Set(),
+  );
   const [refreshing, setRefreshing] = useState(false);
 
   // Ultimate features from UltimateJungleWordCard
@@ -129,13 +143,15 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   const [showReward, setShowReward] = useState(false);
 
   // Particle effects
-  const [particles, setParticles] = useState<Array<{
-    id: number;
-    emoji: string;
-    x: number;
-    y: number;
-    delay: number;
-  }>>([]);
+  const [particles, setParticles] = useState<
+    Array<{
+      id: number;
+      emoji: string;
+      x: number;
+      y: number;
+      delay: number;
+    }>
+  >([]);
   const [triggerSuccess, setTriggerSuccess] = useState(false);
   const [triggerWordLearned, setTriggerWordLearned] = useState(false);
 
@@ -143,7 +159,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   const [showCompletionPopup, setShowCompletionPopup] = useState(false);
   const [showLockWarning, setShowLockWarning] = useState(false);
   const [completionStats, setCompletionStats] = useState<any>(null);
-  const [pendingCategorySwitch, setPendingCategorySwitch] = useState<string | null>(null);
+  const [pendingCategorySwitch, setPendingCategorySwitch] = useState<
+    string | null
+  >(null);
 
   // Accessibility and mobile settings
   const [accessibilityMode, setAccessibilityMode] = useState(false);
@@ -181,18 +199,31 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   }, []);
 
   // Utility functions for word enhancement (defined first to avoid temporal dead zone)
-  const assignRarity = useCallback((word: Word): "common" | "rare" | "epic" | "legendary" | "mythical" => {
-    // Use word ID as seed for deterministic rarity assignment
-    const seed = word.id || 1;
-    const pseudoRandom = (seed * 9301 + 49297) % 233280 / 233280;
+  const assignRarity = useCallback(
+    (word: Word): "common" | "rare" | "epic" | "legendary" | "mythical" => {
+      // Use word ID as seed for deterministic rarity assignment
+      const seed = word.id || 1;
+      const pseudoRandom = ((seed * 9301 + 49297) % 233280) / 233280;
 
-    const rarityThresholds = {
-      easy: pseudoRandom < 0.7 ? "common" : "rare",
-      medium: pseudoRandom < 0.4 ? "rare" : pseudoRandom < 0.8 ? "epic" : "legendary",
-      hard: pseudoRandom < 0.3 ? "epic" : pseudoRandom < 0.7 ? "legendary" : "mythical"
-    };
-    return rarityThresholds[word.difficulty] as any;
-  }, []);
+      const rarityThresholds = {
+        easy: pseudoRandom < 0.7 ? "common" : "rare",
+        medium:
+          pseudoRandom < 0.4
+            ? "rare"
+            : pseudoRandom < 0.8
+              ? "epic"
+              : "legendary",
+        hard:
+          pseudoRandom < 0.3
+            ? "epic"
+            : pseudoRandom < 0.7
+              ? "legendary"
+              : "mythical",
+      };
+      return rarityThresholds[word.difficulty] as any;
+    },
+    [],
+  );
 
   const generateDefaultSound = useCallback((word: Word): string => {
     const soundTemplates = {
@@ -200,9 +231,12 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       nature: `Listen to the peaceful ${word.word}!`,
       food: `Yummy ${word.word} is delicious!`,
       objects: `Look at this amazing ${word.word}!`,
-      default: `This is a wonderful ${word.word}!`
+      default: `This is a wonderful ${word.word}!`,
     };
-    return soundTemplates[word.category as keyof typeof soundTemplates] || soundTemplates.default;
+    return (
+      soundTemplates[word.category as keyof typeof soundTemplates] ||
+      soundTemplates.default
+    );
   }, []);
 
   const generateRarityColor = useCallback((rarity: string): string => {
@@ -211,9 +245,11 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       rare: "from-blue-300 via-blue-400 to-blue-500",
       epic: "from-purple-300 via-purple-400 to-purple-500",
       legendary: "from-yellow-300 via-yellow-400 to-orange-400",
-      mythical: "from-pink-300 via-purple-400 to-indigo-500"
+      mythical: "from-pink-300 via-purple-400 to-indigo-500",
     };
-    return rarityColors[rarity as keyof typeof rarityColors] || rarityColors.common;
+    return (
+      rarityColors[rarity as keyof typeof rarityColors] || rarityColors.common
+    );
   }, []);
 
   const generateHabitat = useCallback((category: string): string => {
@@ -227,21 +263,24 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       family: "Home Sweet Home",
       feelings: "Emotion Valley",
       colors: "Rainbow Land",
-      numbers: "Math Kingdom"
+      numbers: "Math Kingdom",
     };
     return habitatMap[category as keyof typeof habitatMap] || "Learning Land";
   }, []);
 
   // Enhanced word processing with rarity system (memoized to prevent infinite loops)
-  const enhanceWordsWithRarity = useCallback((words: Word[]): Word[] => {
-    return words.map(word => ({
-      ...word,
-      rarity: word.rarity || assignRarity(word),
-      sound: word.sound || generateDefaultSound(word),
-      color: word.color || generateRarityColor(word.rarity || "common"),
-      habitat: word.habitat || generateHabitat(word.category),
-    }));
-  }, [assignRarity, generateDefaultSound, generateRarityColor, generateHabitat]);
+  const enhanceWordsWithRarity = useCallback(
+    (words: Word[]): Word[] => {
+      return words.map((word) => ({
+        ...word,
+        rarity: word.rarity || assignRarity(word),
+        sound: word.sound || generateDefaultSound(word),
+        color: word.color || generateRarityColor(word.rarity || "common"),
+        habitat: word.habitat || generateHabitat(word.category),
+      }));
+    },
+    [assignRarity, generateDefaultSound, generateRarityColor, generateHabitat],
+  );
 
   // Memoize enhanced words to prevent recalculation on every render
   const enhancedWords = useMemo(() => {
@@ -275,7 +314,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
     for (let i = 0; i < 6; i++) {
       newParticles.push({
         id: Math.random(),
-        emoji: ["✨", "⭐", "🌟", "💫", "🎉", "🎊"][Math.floor(Math.random() * 6)],
+        emoji: ["✨", "⭐", "🌟", "💫", "🎉", "🎊"][
+          Math.floor(Math.random() * 6)
+        ],
         x: Math.random() * 100,
         y: Math.random() * 100,
         delay: Math.random() * 2,
@@ -300,7 +341,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       },
       onError: (error) => {
         console.error("Audio playback error:", error);
-      }
+      },
     });
   };
 
@@ -323,7 +364,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   // Navigation functions
   const nextWord = () => {
     if (currentWordIndex < filteredWords.length - 1) {
-      setCurrentWordIndex(prev => prev + 1);
+      setCurrentWordIndex((prev) => prev + 1);
       setShowDefinition(learningMode !== "quiz");
       setCurrentAnimation("slideLeft");
       setTimeout(() => setCurrentAnimation(""), 300);
@@ -332,7 +373,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
 
   const previousWord = () => {
     if (currentWordIndex > 0) {
-      setCurrentWordIndex(prev => prev - 1);
+      setCurrentWordIndex((prev) => prev - 1);
       setShowDefinition(learningMode !== "quiz");
       setCurrentAnimation("slideRight");
       setTimeout(() => setCurrentAnimation(""), 300);
@@ -359,7 +400,10 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       setTriggerSuccess(true);
     }
     setFavoriteWords(newFavorites);
-    localStorage.setItem("favoriteWords", JSON.stringify(Array.from(newFavorites)));
+    localStorage.setItem(
+      "favoriteWords",
+      JSON.stringify(Array.from(newFavorites)),
+    );
   };
 
   // Mark as mastered with rewards
@@ -383,12 +427,14 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   const getRarityColor = (rarity: string) => {
     const rarityBorders = {
       common: "border-green-400",
-      rare: "border-blue-400", 
+      rare: "border-blue-400",
       epic: "border-purple-400",
       legendary: "border-yellow-400",
-      mythical: "border-pink-400"
+      mythical: "border-pink-400",
     };
-    return rarityBorders[rarity as keyof typeof rarityBorders] || "border-gray-400";
+    return (
+      rarityBorders[rarity as keyof typeof rarityBorders] || "border-gray-400"
+    );
   };
 
   const getDifficultyStars = (difficulty: number) => {
@@ -404,14 +450,19 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
         ...stats,
         categoryName: selectedCategory,
         categoryEmoji: getCategoryEmoji(selectedCategory),
-        completionCount: CategoryCompletionTracker.getCategoryCompletionCount(selectedCategory),
+        completionCount:
+          CategoryCompletionTracker.getCategoryCompletionCount(
+            selectedCategory,
+          ),
       });
       setShowCompletionPopup(true);
     };
 
     CategoryCompletionTracker.onCategoryCompletion(handleCategoryCompletion);
     return () => {
-      CategoryCompletionTracker.removeCompletionCallback(handleCategoryCompletion);
+      CategoryCompletionTracker.removeCompletionCallback(
+        handleCategoryCompletion,
+      );
     };
   }, [selectedCategory]);
 
@@ -491,13 +542,19 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
     if (direction === "prev" && currentWordIndex > 0) {
       newIndex = currentWordIndex - 1;
       setCurrentWordIndex(newIndex);
-    } else if (direction === "next" && currentWordIndex < filteredWords.length - 1) {
+    } else if (
+      direction === "next" &&
+      currentWordIndex < filteredWords.length - 1
+    ) {
       newIndex = currentWordIndex + 1;
       setCurrentWordIndex(newIndex);
     }
 
     if (newIndex !== oldIndex && filteredWords[oldIndex]) {
-      CategoryCompletionTracker.trackWordReview(filteredWords[oldIndex].id, true);
+      CategoryCompletionTracker.trackWordReview(
+        filteredWords[oldIndex].id,
+        true,
+      );
     }
   };
 
@@ -546,7 +603,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
     const savedScore = localStorage.getItem("ultimateScore");
     if (savedScore) setScore(parseInt(savedScore));
 
-    const savedStreak = localStorage.getItem("ultimateStreak");  
+    const savedStreak = localStorage.getItem("ultimateStreak");
     if (savedStreak) setStreak(parseInt(savedStreak));
 
     const savedMastered = localStorage.getItem("masteredWords");
@@ -584,7 +641,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       className={cn(
         "min-h-screen w-full transition-all duration-300 optimize-for-small-screen jungle-mobile-optimized jungle-pattern-bg relative",
         highContrastMode ? "bg-black text-white" : "bg-responsive-dashboard",
-        className
+        className,
       )}
       style={{
         backgroundImage: highContrastMode ? "none" : undefined,
@@ -592,9 +649,15 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       }}
     >
       {/* Particle Effects */}
-      <SuccessParticles trigger={triggerSuccess} onComplete={() => setTriggerSuccess(false)} />
-      <WordLearnedParticles trigger={triggerWordLearned} onComplete={() => setTriggerWordLearned(false)} />
-      
+      <SuccessParticles
+        trigger={triggerSuccess}
+        onComplete={() => setTriggerSuccess(false)}
+      />
+      <WordLearnedParticles
+        trigger={triggerWordLearned}
+        onComplete={() => setTriggerWordLearned(false)}
+      />
+
       {/* Floating Particles */}
       {particles.map((particle) => (
         <div
@@ -663,12 +726,23 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
           {viewMode === "words" && filteredWords.length > 0 && (
             <div className="px-4 pb-2">
               <div className="flex items-center justify-between text-xs mb-1">
-                <span>Word {currentWordIndex + 1} of {filteredWords.length}</span>
+                <span>
+                  Word {currentWordIndex + 1} of {filteredWords.length}
+                </span>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600">
-                    📚 {realTimeWords.length > 0 ? realTimeWords.length : wordsDatabase.length} words
+                    📚{" "}
+                    {realTimeWords.length > 0
+                      ? realTimeWords.length
+                      : wordsDatabase.length}{" "}
+                    words
                   </span>
-                  <span>{Math.round(((currentWordIndex + 1) / filteredWords.length) * 100)}%</span>
+                  <span>
+                    {Math.round(
+                      ((currentWordIndex + 1) / filteredWords.length) * 100,
+                    )}
+                    %
+                  </span>
                 </div>
               </div>
               <Progress
@@ -686,7 +760,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
           <div className="flex items-center gap-4">
             <div className="text-4xl">🏆</div>
             <div>
-              <div className="font-bold text-2xl text-gray-800">{score} Points</div>
+              <div className="font-bold text-2xl text-gray-800">
+                {score} Points
+              </div>
               <div className="text-sm text-gray-600">Streak: {streak} 🔥</div>
             </div>
           </div>
@@ -822,7 +898,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                   <Button
                     key={difficulty}
                     size="sm"
-                    variant={difficultyFilter === difficulty ? "default" : "outline"}
+                    variant={
+                      difficultyFilter === difficulty ? "default" : "outline"
+                    }
                     onClick={() => setDifficultyFilter(difficulty)}
                     className={`capitalize ${
                       difficultyFilter === difficulty
@@ -861,7 +939,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                     size="sm"
                     variant="outline"
                     onClick={() =>
-                      setCurrentWordIndex(Math.floor(Math.random() * filteredWords.length))
+                      setCurrentWordIndex(
+                        Math.floor(Math.random() * filteredWords.length),
+                      )
                     }
                     className="flex items-center gap-2 jungle-hover-effect hover:bg-sunshine/10 hover:text-sunshine-dark border-sunshine/30 jungle-focus"
                   >
@@ -893,14 +973,18 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
           <EnhancedVocabularyBuilder
             words={filteredWords.map((word) => ({
               ...word,
-              masteryLevel: masteredWords.includes(word.id) ? 100 : Math.floor(Math.random() * 100),
+              masteryLevel: masteredWords.includes(word.id)
+                ? 100
+                : Math.floor(Math.random() * 100),
             }))}
             onWordMastered={(wordId, rating) => {
-              const word = filteredWords.find(w => w.id === wordId);
+              const word = filteredWords.find((w) => w.id === wordId);
               if (word) markMastered(word);
             }}
             onSessionComplete={(wordsReviewed, accuracy) => {
-              console.log(`Ultimate session complete: ${wordsReviewed} words, ${accuracy}% accuracy`);
+              console.log(
+                `Ultimate session complete: ${wordsReviewed} words, ${accuracy}% accuracy`,
+              );
               setViewMode("words");
             }}
             enableAccessibility={accessibilityMode}
@@ -932,12 +1016,19 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                       <div className="flex items-center gap-2">
                         <div className="text-2xl">🏠</div>
                         <div className="text-white font-bold">
-                          {currentWord.habitat || generateHabitat(currentWord.category)}
+                          {currentWord.habitat ||
+                            generateHabitat(currentWord.category)}
                         </div>
                       </div>
 
                       <div className="flex items-center gap-2">
-                        {getDifficultyStars(currentWord.difficulty === "easy" ? 1 : currentWord.difficulty === "medium" ? 2 : 3)}
+                        {getDifficultyStars(
+                          currentWord.difficulty === "easy"
+                            ? 1
+                            : currentWord.difficulty === "medium"
+                              ? 2
+                              : 3,
+                        )}
                         <Badge className="text-white font-bold capitalize bg-white/20 border-white/30">
                           {currentWord.rarity || "common"}
                         </Badge>
@@ -960,7 +1051,8 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                     </h1>
 
                     {/* Definition (conditional based on learning mode) */}
-                    {(learningMode === "learn" || (learningMode === "quiz" && showDefinition)) && (
+                    {(learningMode === "learn" ||
+                      (learningMode === "quiz" && showDefinition)) && (
                       <p className="text-2xl mb-6 bg-white/20 rounded-2xl p-4 backdrop-blur-sm">
                         {currentWord.definition}
                       </p>
@@ -1001,7 +1093,11 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                           e.stopPropagation();
                           toggleFavorite(currentWord);
                         }}
-                        variant={favoriteWords.has(currentWord.id) ? "default" : "outline"}
+                        variant={
+                          favoriteWords.has(currentWord.id)
+                            ? "default"
+                            : "outline"
+                        }
                         className={cn(
                           "shadow-xl transform hover:scale-105 active:scale-95 flex items-center gap-2 transition-all",
                           favoriteWords.has(currentWord.id)
@@ -1011,9 +1107,15 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                       >
                         <Heart
                           size={20}
-                          className={favoriteWords.has(currentWord.id) ? "fill-current" : ""}
+                          className={
+                            favoriteWords.has(currentWord.id)
+                              ? "fill-current"
+                              : ""
+                          }
                         />
-                        {favoriteWords.has(currentWord.id) ? "Loved!" : "Love It"}
+                        {favoriteWords.has(currentWord.id)
+                          ? "Loved!"
+                          : "Love It"}
                       </Button>
 
                       <Button
@@ -1021,7 +1123,11 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                           e.stopPropagation();
                           markMastered(currentWord);
                         }}
-                        variant={masteredWords.includes(currentWord.id) ? "default" : "outline"}
+                        variant={
+                          masteredWords.includes(currentWord.id)
+                            ? "default"
+                            : "outline"
+                        }
                         className={cn(
                           "shadow-xl transform hover:scale-105 active:scale-95 flex items-center gap-2 transition-all",
                           masteredWords.includes(currentWord.id)
@@ -1030,7 +1136,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                         )}
                       >
                         <Crown size={20} />
-                        {masteredWords.includes(currentWord.id) ? "Mastered!" : "Master It"}
+                        {masteredWords.includes(currentWord.id)
+                          ? "Mastered!"
+                          : "Master It"}
                       </Button>
                     </div>
                   </CardContent>
@@ -1095,13 +1203,17 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
                   <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 text-center shadow-xl">
                     <div className="text-3xl mb-2">❤️</div>
-                    <div className="font-bold text-xl">{favoriteWords.size}</div>
+                    <div className="font-bold text-xl">
+                      {favoriteWords.size}
+                    </div>
                     <div className="text-sm text-gray-600">Favorites</div>
                   </div>
 
                   <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 text-center shadow-xl">
                     <div className="text-3xl mb-2">👑</div>
-                    <div className="font-bold text-xl">{masteredWords.length}</div>
+                    <div className="font-bold text-xl">
+                      {masteredWords.length}
+                    </div>
                     <div className="text-sm text-gray-600">Mastered</div>
                   </div>
 
@@ -1128,7 +1240,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
                     key={word.id}
                     word={word}
                     onWordMastered={(wordId, rating) => {
-                      const word = filteredWords.find(w => w.id === wordId);
+                      const word = filteredWords.find((w) => w.id === wordId);
                       if (word) markMastered(word);
                     }}
                     onWordFavorite={() => toggleFavorite(word)}
@@ -1174,7 +1286,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
           >
             <CardContent className="p-8 text-center">
               <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-              <h3 className={`font-bold mb-2 ${largeTextMode ? "text-2xl" : "text-xl"}`}>
+              <h3
+                className={`font-bold mb-2 ${largeTextMode ? "text-2xl" : "text-xl"}`}
+              >
                 No ultimate words found
               </h3>
               <p
@@ -1200,59 +1314,62 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       </div>
 
       {/* Mobile Navigation */}
-      {isMobile && viewMode === "words" && filteredWords.length > 0 && wordViewMode === "ultimate" && (
-        <div
-          className={`fixed bottom-4 left-4 right-4 ${
-            highContrastMode ? "bg-black" : "bg-white/80"
-          } backdrop-blur-md rounded-xl p-4 shadow-lg border ${
-            highContrastMode ? "border-white" : "border-gray-200"
-          }`}
-        >
-          <div className="flex items-center justify-between">
-            <Button
-              size="sm"
-              onClick={previousWord}
-              disabled={currentWordIndex === 0}
-              className="min-h-[44px] min-w-[44px] p-0"
-              aria-label="Previous word"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-
-            <div className="flex items-center gap-2">
+      {isMobile &&
+        viewMode === "words" &&
+        filteredWords.length > 0 &&
+        wordViewMode === "ultimate" && (
+          <div
+            className={`fixed bottom-4 left-4 right-4 ${
+              highContrastMode ? "bg-black" : "bg-white/80"
+            } backdrop-blur-md rounded-xl p-4 shadow-lg border ${
+              highContrastMode ? "border-white" : "border-gray-200"
+            }`}
+          >
+            <div className="flex items-center justify-between">
               <Button
                 size="sm"
-                variant="outline"
-                onClick={() => setViewMode("categories")}
-                className="min-h-[44px] px-4"
+                onClick={previousWord}
+                disabled={currentWordIndex === 0}
+                className="min-h-[44px] min-w-[44px] p-0"
+                aria-label="Previous word"
               >
-                <Grid3X3 className="w-4 h-4 mr-2" />
-                🌳 Categories
+                <ChevronLeft className="w-5 h-5" />
               </Button>
 
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setViewMode("categories")}
+                  className="min-h-[44px] px-4"
+                >
+                  <Grid3X3 className="w-4 h-4 mr-2" />
+                  🌳 Categories
+                </Button>
+
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleVocabularyBuilder}
+                  className="min-h-[44px] px-4"
+                >
+                  <Brain className="w-4 h-4 mr-2" />
+                  🌿 Practice
+                </Button>
+              </div>
+
               <Button
                 size="sm"
-                variant="outline"
-                onClick={handleVocabularyBuilder}
-                className="min-h-[44px] px-4"
+                onClick={nextWord}
+                disabled={currentWordIndex === filteredWords.length - 1}
+                className="min-h-[44px] min-w-[44px] p-0"
+                aria-label="Next word"
               >
-                <Brain className="w-4 h-4 mr-2" />
-                🌿 Practice
+                <ChevronRight className="w-5 h-5" />
               </Button>
             </div>
-
-            <Button
-              size="sm"
-              onClick={nextWord}
-              disabled={currentWordIndex === filteredWords.length - 1}
-              className="min-h-[44px] min-w-[44px] p-0"
-              aria-label="Next word"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
           </div>
-        </div>
-      )}
+        )}
 
       {/* Floating Action Button (Mobile) */}
       {isMobile && viewMode === "words" && (
@@ -1274,7 +1391,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-3xl p-8 shadow-2xl text-center transform animate-bounce">
             <div className="text-6xl mb-4">🎉</div>
-            <div className="text-3xl font-bold text-gray-800 mb-2">Amazing!</div>
+            <div className="text-3xl font-bold text-gray-800 mb-2">
+              Amazing!
+            </div>
             <div className="text-xl text-gray-600">
               You mastered "{currentWord?.word}"!
             </div>
@@ -1319,12 +1438,15 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       {showLockWarning && (
         <CategoryLockWarning
           isOpen={showLockWarning}
-          currentCategoryName={CategoryCompletionTracker.getLockedCategory() || ""}
+          currentCategoryName={
+            CategoryCompletionTracker.getLockedCategory() || ""
+          }
           currentCategoryEmoji={getCategoryEmoji(
             CategoryCompletionTracker.getLockedCategory() || "",
           )}
           wordsReviewed={
-            CategoryCompletionTracker.getCurrentCategoryStats()?.wordsReviewed || 0
+            CategoryCompletionTracker.getCurrentCategoryStats()
+              ?.wordsReviewed || 0
           }
           totalWords={
             CategoryCompletionTracker.getCurrentCategoryStats()?.totalWords || 0
@@ -1352,14 +1474,21 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       {/* Main content landmark */}
       <main id="main-content" className="sr-only">
         Current view: {viewMode}
-        {viewMode === "words" && currentWord && `Current word: ${currentWord.word}`}
+        {viewMode === "words" &&
+          currentWord &&
+          `Current word: ${currentWord.word}`}
       </main>
 
       {/* Custom Animations */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
         }
         .animate-float {
           animation: float 3s ease-in-out infinite;

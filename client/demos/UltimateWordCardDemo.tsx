@@ -74,13 +74,14 @@ export function UltimateWordCardDemo() {
             Ultimate Jungle Word Card Demo
           </h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            🚀 Feature Sandbox: Experience the most advanced word learning system designed for young
-            explorers! Multi-mode learning with speech synthesis, particle
-            celebrations, and progressive gamification.
+            🚀 Feature Sandbox: Experience the most advanced word learning
+            system designed for young explorers! Multi-mode learning with speech
+            synthesis, particle celebrations, and progressive gamification.
           </p>
           <div className="mt-4 bg-yellow-400/20 border border-yellow-400 rounded-lg p-4 backdrop-blur-sm">
             <p className="text-yellow-100 font-semibold">
-              📦 This is a feature sandbox for testing Ultimate features before integration into the main app.
+              📦 This is a feature sandbox for testing Ultimate features before
+              integration into the main app.
             </p>
           </div>
         </div>
@@ -284,7 +285,8 @@ export function UltimateWordCardDemo() {
             <Star className="w-6 h-6 ml-3" />
           </Button>
           <p className="text-white/80 mt-4 text-lg">
-            🧪 Experience all Ultimate features in the feature sandbox environment!
+            🧪 Experience all Ultimate features in the feature sandbox
+            environment!
           </p>
         </div>
 

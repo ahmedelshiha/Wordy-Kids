@@ -54,7 +54,9 @@ export default function EnhancedMainApp() {
   const { user, login, isAuthenticated, isGuest, isLoading } = useAuth();
   const mode = searchParams.get("mode");
 
-  const [currentProfile, setCurrentProfile] = useState<ProfileData | null>(null);
+  const [currentProfile, setCurrentProfile] = useState<ProfileData | null>(
+    null,
+  );
   const [showProfileCreation, setShowProfileCreation] = useState(false);
   const [showLevelSelection, setShowLevelSelection] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
@@ -204,7 +206,7 @@ export default function EnhancedMainApp() {
   const handleScoreUpdate = useCallback((score: number) => {
     setUltimateScore(score);
     // Update profile using functional update to avoid dependency
-    setCurrentProfile(prevProfile => {
+    setCurrentProfile((prevProfile) => {
       if (prevProfile) {
         return { ...prevProfile, ultimateScore: score };
       }
@@ -215,7 +217,7 @@ export default function EnhancedMainApp() {
   const handleStreakUpdate = useCallback((streak: number) => {
     setUltimateStreak(streak);
     // Update profile using functional update to avoid dependency
-    setCurrentProfile(prevProfile => {
+    setCurrentProfile((prevProfile) => {
       if (prevProfile) {
         return { ...prevProfile, ultimateStreak: streak };
       }
@@ -229,7 +231,9 @@ export default function EnhancedMainApp() {
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-jungle to-sunshine">
         <div className="text-center text-white">
           <div className="text-6xl mb-4 animate-bounce">🌟</div>
-          <div className="text-2xl font-bold">Loading Ultimate Word Adventure...</div>
+          <div className="text-2xl font-bold">
+            Loading Ultimate Word Adventure...
+          </div>
         </div>
       </div>
     );
@@ -249,11 +253,9 @@ export default function EnhancedMainApp() {
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Library
             </Button>
-            
             <h1 className="text-3xl font-bold text-white text-center">
               🌟 Ultimate Dashboard 🌟
             </h1>
-            
             <div className="w-32" /> {/* Spacer */}
           </div>
 
@@ -264,7 +266,9 @@ export default function EnhancedMainApp() {
                 <span className="text-4xl">{currentProfile.avatar.emoji}</span>
                 <div>
                   <h2 className="text-2xl">{currentProfile.name}</h2>
-                  <p className="text-lg text-gray-600">{currentProfile.levelName}</p>
+                  <p className="text-lg text-gray-600">
+                    {currentProfile.levelName}
+                  </p>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -272,25 +276,33 @@ export default function EnhancedMainApp() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg">
                   <Trophy className="w-8 h-8 mx-auto mb-2 text-yellow-600" />
-                  <div className="text-2xl font-bold text-yellow-800">{ultimateScore}</div>
+                  <div className="text-2xl font-bold text-yellow-800">
+                    {ultimateScore}
+                  </div>
                   <div className="text-sm text-yellow-700">Ultimate Score</div>
                 </div>
-                
+
                 <div className="text-center p-4 bg-gradient-to-r from-red-100 to-pink-100 rounded-lg">
                   <Star className="w-8 h-8 mx-auto mb-2 text-red-600" />
-                  <div className="text-2xl font-bold text-red-800">{ultimateStreak}</div>
+                  <div className="text-2xl font-bold text-red-800">
+                    {ultimateStreak}
+                  </div>
                   <div className="text-sm text-red-700">Ultimate Streak</div>
                 </div>
-                
+
                 <div className="text-center p-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg">
                   <Crown className="w-8 h-8 mx-auto mb-2 text-green-600" />
-                  <div className="text-2xl font-bold text-green-800">{currentProfile.masteredWords || 0}</div>
+                  <div className="text-2xl font-bold text-green-800">
+                    {currentProfile.masteredWords || 0}
+                  </div>
                   <div className="text-sm text-green-700">Mastered Words</div>
                 </div>
-                
+
                 <div className="text-center p-4 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-lg">
                   <Heart className="w-8 h-8 mx-auto mb-2 text-purple-600" />
-                  <div className="text-2xl font-bold text-purple-800">{currentProfile.favoriteWords || 0}</div>
+                  <div className="text-2xl font-bold text-purple-800">
+                    {currentProfile.favoriteWords || 0}
+                  </div>
                   <div className="text-sm text-purple-700">Favorite Words</div>
                 </div>
               </div>
@@ -310,24 +322,36 @@ export default function EnhancedMainApp() {
                 <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
                   <Sparkles className="w-6 h-6 text-green-600" />
                   <div>
-                    <div className="font-semibold text-green-800">Ultimate Mode Activated!</div>
-                    <div className="text-sm text-green-600">Discovered the enhanced learning experience</div>
+                    <div className="font-semibold text-green-800">
+                      Ultimate Mode Activated!
+                    </div>
+                    <div className="text-sm text-green-600">
+                      Discovered the enhanced learning experience
+                    </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
                   <BookOpen className="w-6 h-6 text-blue-600" />
                   <div>
-                    <div className="font-semibold text-blue-800">Multi-Mode Learning Unlocked</div>
-                    <div className="text-sm text-blue-600">Learn, Quiz, and Memory modes available</div>
+                    <div className="font-semibold text-blue-800">
+                      Multi-Mode Learning Unlocked
+                    </div>
+                    <div className="text-sm text-blue-600">
+                      Learn, Quiz, and Memory modes available
+                    </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Volume2 className="w-6 h-6 text-purple-600" />
                   <div>
-                    <div className="font-semibold text-purple-800">Enhanced Audio Active</div>
-                    <div className="text-sm text-purple-600">Child-optimized TTS system ready</div>
+                    <div className="font-semibold text-purple-800">
+                      Enhanced Audio Active
+                    </div>
+                    <div className="text-sm text-purple-600">
+                      Child-optimized TTS system ready
+                    </div>
                   </div>
                 </div>
               </div>
@@ -350,7 +374,7 @@ export default function EnhancedMainApp() {
           onScoreUpdate={handleScoreUpdate}
           onStreakUpdate={handleStreakUpdate}
         />
-        
+
         {/* Floating Dashboard Button */}
         <div className="fixed top-4 right-4 z-50">
           <Button
