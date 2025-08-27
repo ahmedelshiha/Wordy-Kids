@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import LoginForm from "./pages/LoginForm";
 import SignUp from "./pages/SignUp";
 import MainAppPage from "./pages/App";
+import EnhancedMainApp from "./pages/EnhancedMainApp";
 import NotFound from "./pages/NotFound";
 import AdminPage from "./pages/AdminPage";
 import WordGardenDemo from "./pages/WordGardenDemo";
