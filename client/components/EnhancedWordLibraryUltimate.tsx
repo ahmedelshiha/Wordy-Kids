@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -158,14 +158,22 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
   const [isTablet, setIsTablet] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Update parent callbacks for scoring
-  useEffect(() => {
-    onScoreUpdate?.(score);
-  }, [score, onScoreUpdate]);
+  // Update parent callbacks for scoring (memoized to prevent infinite loops)
+  const handleScoreUpdate = useCallback((newScore: number) => {
+    onScoreUpdate?.(newScore);
+  }, [onScoreUpdate]);
+
+  const handleStreakUpdate = useCallback((newStreak: number) => {
+    onStreakUpdate?.(newStreak);
+  }, [onStreakUpdate]);
 
   useEffect(() => {
-    onStreakUpdate?.(streak);
-  }, [streak, onStreakUpdate]);
+    handleScoreUpdate(score);
+  }, [score, handleScoreUpdate]);
+
+  useEffect(() => {
+    handleStreakUpdate(streak);
+  }, [streak, handleStreakUpdate]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -180,8 +188,8 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Enhanced word processing with rarity system
-  const enhanceWordsWithRarity = (words: Word[]): Word[] => {
+  // Enhanced word processing with rarity system (memoized to prevent infinite loops)
+  const enhanceWordsWithRarity = useCallback((words: Word[]): Word[] => {
     return words.map(word => ({
       ...word,
       rarity: word.rarity || assignRarity(word),
@@ -189,19 +197,22 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       color: word.color || generateRarityColor(word.rarity || "common"),
       habitat: word.habitat || generateHabitat(word.category),
     }));
-  };
+  }, [assignRarity, generateDefaultSound, generateRarityColor, generateHabitat]);
 
-  const assignRarity = (word: Word): "common" | "rare" | "epic" | "legendary" | "mythical" => {
-    // Assign rarity based on difficulty and category
-    const difficultyRarityMap = {
-      easy: Math.random() < 0.7 ? "common" : "rare",
-      medium: Math.random() < 0.4 ? "rare" : Math.random() < 0.8 ? "epic" : "legendary",
-      hard: Math.random() < 0.3 ? "epic" : Math.random() < 0.7 ? "legendary" : "mythical"
+  const assignRarity = useCallback((word: Word): "common" | "rare" | "epic" | "legendary" | "mythical" => {
+    // Use word ID as seed for deterministic rarity assignment
+    const seed = word.id || 1;
+    const pseudoRandom = (seed * 9301 + 49297) % 233280 / 233280;
+
+    const rarityThresholds = {
+      easy: pseudoRandom < 0.7 ? "common" : "rare",
+      medium: pseudoRandom < 0.4 ? "rare" : pseudoRandom < 0.8 ? "epic" : "legendary",
+      hard: pseudoRandom < 0.3 ? "epic" : pseudoRandom < 0.7 ? "legendary" : "mythical"
     };
-    return difficultyRarityMap[word.difficulty] as any;
-  };
+    return rarityThresholds[word.difficulty] as any;
+  }, []);
 
-  const generateDefaultSound = (word: Word): string => {
+  const generateDefaultSound = useCallback((word: Word): string => {
     const soundTemplates = {
       animals: `${word.word} sounds happy to meet you!`,
       nature: `Listen to the peaceful ${word.word}!`,
@@ -210,9 +221,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       default: `This is a wonderful ${word.word}!`
     };
     return soundTemplates[word.category as keyof typeof soundTemplates] || soundTemplates.default;
-  };
+  }, []);
 
-  const generateRarityColor = (rarity: string): string => {
+  const generateRarityColor = useCallback((rarity: string): string => {
     const rarityColors = {
       common: "from-green-300 via-green-400 to-green-500",
       rare: "from-blue-300 via-blue-400 to-blue-500",
@@ -221,9 +232,9 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       mythical: "from-pink-300 via-purple-400 to-indigo-500"
     };
     return rarityColors[rarity as keyof typeof rarityColors] || rarityColors.common;
-  };
+  }, []);
 
-  const generateHabitat = (category: string): string => {
+  const generateHabitat = useCallback((category: string): string => {
     const habitatMap = {
       animals: "Wild Safari",
       nature: "Peaceful Garden",
@@ -237,13 +248,16 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       numbers: "Math Kingdom"
     };
     return habitatMap[category as keyof typeof habitatMap] || "Learning Land";
-  };
+  }, []);
 
-  // Update current words when real-time data changes
-  useEffect(() => {
+  // Memoize enhanced words to prevent recalculation on every render
+  const enhancedWords = useMemo(() => {
     const wordsToUse = realTimeWords.length > 0 ? realTimeWords : wordsDatabase;
-    const enhancedWords = enhanceWordsWithRarity(wordsToUse);
+    return enhanceWordsWithRarity(wordsToUse);
+  }, [realTimeWords, enhanceWordsWithRarity, lastUpdate]);
 
+  // Update current words when category or enhanced words change
+  useEffect(() => {
     if (selectedCategory && selectedCategory !== "all") {
       const categoryWords = enhancedWords.filter(
         (word) => word.category === selectedCategory,
@@ -260,7 +274,7 @@ export const EnhancedWordLibraryUltimate: React.FC<EnhancedWordLibraryUltimatePr
       setViewMode("words");
       CategoryCompletionTracker.resetCurrentSession();
     }
-  }, [selectedCategory, realTimeWords, lastUpdate]);
+  }, [selectedCategory, enhancedWords]);
 
   // Create floating particles effect (from Ultimate)
   const createParticles = () => {
