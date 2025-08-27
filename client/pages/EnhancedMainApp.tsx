@@ -343,22 +343,8 @@ export default function EnhancedMainApp() {
           userInterests={[currentProfile.favoriteCategory.toLowerCase()]}
           enableAdvancedFeatures={true}
           showMobileOptimizations={true}
-          onScoreUpdate={(score) => {
-            setUltimateScore(score);
-            // Update profile
-            if (currentProfile) {
-              const updated = { ...currentProfile, ultimateScore: score };
-              setCurrentProfile(updated);
-            }
-          }}
-          onStreakUpdate={(streak) => {
-            setUltimateStreak(streak);
-            // Update profile
-            if (currentProfile) {
-              const updated = { ...currentProfile, ultimateStreak: streak };
-              setCurrentProfile(updated);
-            }
-          }}
+          onScoreUpdate={handleScoreUpdate}
+          onStreakUpdate={handleStreakUpdate}
         />
         
         {/* Floating Dashboard Button */}
