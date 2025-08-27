@@ -134,9 +134,9 @@ const App = () => {
                         element={
                           <ErrorBoundary
                             fallbackType="kid"
-                            componentName="MainAppPage"
+                            componentName="EnhancedMainApp"
                           >
-                            <MainAppPage />
+                            <EnhancedMainApp />
                           </ErrorBoundary>
                         }
                       />
