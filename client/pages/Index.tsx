@@ -2528,7 +2528,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   </span>
                                                   {forgottenWords.size > 0 && (
                                                     <span className="inline-flex items-center gap-0.5 bg-coral-red/20 rounded-full px-1.5 py-0.5 text-xs">
-                                                      🔄 {forgottenWords.size}
+                                                      ���� {forgottenWords.size}
                                                     </span>
                                                   )}
                                                 </div>
@@ -3336,7 +3336,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           jungle quiz! 3D effects, power-ups,
                                           achievements, dynamic music, and
                                           immersive gaming that rivals premium
-                                          mobile games! 🚀✨🌟
+                                          mobile games! 🚀✨����
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
@@ -4021,27 +4021,23 @@ export default function Index({ initialProfile }: IndexProps) {
                         : activeTab
               }
               onNavigate={(newId) => {
-                // Map new navigation IDs back to old tab IDs
-                const tabMapping = {
-                  home: "dashboard",
-                  jungle: "learn",
-                  quiz: "quiz",
-                  trophy: "achievements",
-                  parents: "parent-menu",
+                // Map new navigation IDs to actions
+                const navigationActions = {
+                  home: () => setActiveTab("dashboard"),
+                  jungle: () => navigate("/jungle-word-explorer"),
+                  quiz: () => setActiveTab("quiz"),
+                  trophy: () => setActiveTab("achievements"),
+                  parents: () => {
+                    setShowSettings(true);
+                    if (navigator.vibrate) {
+                      navigator.vibrate(50);
+                    }
+                  },
                 };
 
-                if (newId === "parents") {
-                  // Handle parent navigation - open settings
-                  setShowSettings(true);
-                  if (navigator.vibrate) {
-                    navigator.vibrate(50);
-                  }
-                } else {
-                  const mappedTab =
-                    tabMapping[newId as keyof typeof tabMapping];
-                  if (mappedTab) {
-                    setActiveTab(mappedTab);
-                  }
+                const action = navigationActions[newId as keyof typeof navigationActions];
+                if (action) {
+                  action();
                 }
               }}
             />
