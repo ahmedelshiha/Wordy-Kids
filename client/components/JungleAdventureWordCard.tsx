@@ -132,7 +132,10 @@ export const JungleAdventureWordCard: React.FC<
   const [showHint, setShowHint] = useState<boolean>(false);
   const [hintText, setHintText] = useState<string | null>(null);
   const [hintsUsed, setHintsUsed] = useState<number>(0);
-  const [aiState, aiActions] = useAIWordRecommendations({ userId: "local-card", enableAnalytics: false });
+  const [aiState, aiActions] = useAIWordRecommendations({
+    userId: "local-card",
+    enableAnalytics: false,
+  });
 
   const isMastered = isWordMastered?.(word.id) || false;
 
@@ -427,7 +430,9 @@ export const JungleAdventureWordCard: React.FC<
     }
     if (navigator.vibrate) navigator.vibrate(40);
     try {
-      const evt = new CustomEvent("wordPracticeNeeded", { detail: { wordId: word.id } });
+      const evt = new CustomEvent("wordPracticeNeeded", {
+        detail: { wordId: word.id },
+      });
       window.dispatchEvent(evt);
     } catch {}
     onWordPracticeNeeded?.(word.id);
@@ -742,8 +747,17 @@ export const JungleAdventureWordCard: React.FC<
             {/* Jungle Adventure Emoji Circle */}
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="relative mb-2 sm:mb-3">
-                <div className="rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container mx-auto"
-                  style={{ height: "40%", width: "40%", minWidth: "96px", minHeight: "96px", maxWidth: "220px", maxHeight: "220px" }}>
+                <div
+                  className="rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container mx-auto"
+                  style={{
+                    height: "40%",
+                    width: "40%",
+                    minWidth: "96px",
+                    minHeight: "96px",
+                    maxWidth: "220px",
+                    maxHeight: "220px",
+                  }}
+                >
                   {/* Jungle Decorative Elements */}
                   <div className="absolute top-3 left-3 w-3 h-3 bg-yellow-300/30 rounded-full animate-sparkle opacity-60"></div>
                   <div className="absolute bottom-4 right-4 w-2 h-2 bg-green-300/30 rounded-full animate-bounce delay-300 opacity-50"></div>
@@ -812,9 +826,7 @@ export const JungleAdventureWordCard: React.FC<
 
               {showHint && (
                 <div className="mt-2 mx-auto max-w-[95%] sm:max-w-none bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-3 py-2 text-left shadow-md">
-                  <p className="text-xs sm:text-sm text-white/95">
-                    {hintText}
-                  </p>
+                  <p className="text-xs sm:text-sm text-white/95">{hintText}</p>
                 </div>
               )}
             </div>
@@ -826,7 +838,9 @@ export const JungleAdventureWordCard: React.FC<
                   e.stopPropagation();
                   handlePronounce();
                 }}
-                disabled={isPlaying || (discoveryMode !== "learn" && !quizRevealed)}
+                disabled={
+                  isPlaying || (discoveryMode !== "learn" && !quizRevealed)
+                }
                 className={cn(
                   "min-h-[44px] w-full rounded-xl transition-all duration-300",
                   "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
