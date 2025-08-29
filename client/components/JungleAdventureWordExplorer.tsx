@@ -852,21 +852,6 @@ export const JungleAdventureWordExplorer: React.FC<
         </div>
       </main>
 
-      {/* Floating back button for mobile */}
-      {selectedCategory && exploreMode === "adventure" && (
-        <div className="fixed bottom-6 left-6 z-20 md:hidden">
-          <Button
-            onClick={() => {
-              setExploreMode("map");
-              setSelectedCategory(null);
-            }}
-            className="rounded-full w-12 h-12 p-0 bg-white shadow-lg border border-gray-200"
-            variant="outline"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-        </div>
-      )}
 
       {/* CSS for animations */}
       <style>{`
