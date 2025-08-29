@@ -857,6 +857,17 @@ export const JungleAdventureWordExplorer: React.FC<
                 )}
               </Button>
 
+              {/* High contrast toggle */}
+              <Button
+                onClick={() => setHighContrast(!highContrast)}
+                variant="ghost"
+                size="sm"
+                aria-label={highContrast ? "Disable high contrast" : "Enable high contrast"}
+                className="rounded-full w-12 h-12 p-0"
+              >
+                HC
+              </Button>
+
               {/* User stats */}
               <div className="hidden sm:flex items-center gap-3 px-3 py-1 bg-white/80 rounded-full border border-gray-200">
                 <div className="flex items-center gap-1">
