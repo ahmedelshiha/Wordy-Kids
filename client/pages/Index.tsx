@@ -2087,7 +2087,12 @@ export default function Index({ initialProfile }: IndexProps) {
                     <motion.button
                       key={id}
                       onClick={() => {
-                        setActiveTab(id);
+                        if (id === "learn") {
+                          // Navigate to new Jungle Word Explorer
+                          navigate("/jungle-word-explorer");
+                        } else {
+                          setActiveTab(id);
+                        }
                         setIsMobileMenuOpen(false);
                       }}
                       className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 ${
