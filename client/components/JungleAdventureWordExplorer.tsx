@@ -615,7 +615,19 @@ export const JungleAdventureWordExplorer: React.FC<
     const categoryInfo = categories.find((c) => c.id === selectedCategory);
 
     return (
-      <div className="max-w-4xl mx-auto">
+      <div
+        className="max-w-4xl mx-auto"
+        onTouchStart={(e) => (touchStartXRef.current = e.changedTouches[0].clientX)}
+        onTouchEnd={(e) => {
+          const start = touchStartXRef.current;
+          if (start == null) return;
+          const dx = e.changedTouches[0].clientX - start;
+          if (Math.abs(dx) > 50) {
+            handleWordNavigation(dx > 0 ? "prev" : "next");
+          }
+          touchStartXRef.current = null;
+        }}
+      >
         {/* Adventure header */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">
