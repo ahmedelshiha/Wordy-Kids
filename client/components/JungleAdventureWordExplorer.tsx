@@ -926,7 +926,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 <div className="hidden sm:flex border border-gray-200 rounded-full p-1">
                   <Button
                     onClick={() => setViewMode("cards")}
-                    variant={viewMode === "cards" ? "default" : "ghost"}
+                    variant={viewMode === "cards" ? "default" : "secondary"}
                     size="sm"
                     aria-label="Cards view"
                     className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
