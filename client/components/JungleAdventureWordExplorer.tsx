@@ -32,6 +32,7 @@ import {
 // Import word database and utilities
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
 import { audioService } from "@/lib/audioService";
+import { JungleWordLibraryCard } from "@/components/word-card";
 
 // Types
 interface Word {
