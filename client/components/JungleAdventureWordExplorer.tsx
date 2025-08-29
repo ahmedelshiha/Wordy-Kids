@@ -720,7 +720,7 @@ export const JungleAdventureWordExplorer: React.FC<
       >
         {/* Adventure header */}
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">
+          <div className="text-4xl md:text-6xl mb-4">
             {categoryInfo?.character.emoji || "🌿"}
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
