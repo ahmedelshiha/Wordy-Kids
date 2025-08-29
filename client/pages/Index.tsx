@@ -747,34 +747,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (document.hidden) {
         // Tab becoming hidden - force save current state
         console.log("Tab hidden, force saving session data");
-        persistenceService.queueSave(
-          {
-            activeTab,
-            currentWordIndex,
-            selectedCategory,
-            learningMode,
-            userRole,
-            forgottenWords: Array.from(forgottenWords),
-            rememberedWords: Array.from(rememberedWords),
-            excludedWordIds: Array.from(excludedWordIds),
-            currentProgress,
-            dailySessionCount,
-            currentProfile,
-            childStats,
-            currentSessionId,
-            learningGoals,
-            currentDashboardWords,
-            customWords,
-            practiceWords,
-            showQuiz,
-            selectedQuizType,
-            showMatchingGame,
-            gameMode,
-            showPracticeGame,
-          },
-          "high",
-        );
-
+        saveSessionData();
         // Force immediate sync
         persistenceService.forceSync();
       } else {
