@@ -491,16 +491,21 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Track last category to prevent unnecessary regeneration
   const lastCategoryRef = useRef<string>("");
+  const lastWordGenerationRef = useRef<number>(0);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
+      const now = Date.now();
+      // Debounce word generation to prevent rapid successive calls
       if (
         selectedCategory &&
         selectedCategory !== lastCategoryRef.current &&
-        currentDashboardWords.length === 0
+        currentDashboardWords.length === 0 &&
+        now - lastWordGenerationRef.current > 500 // 500ms debounce
       ) {
         lastCategoryRef.current = selectedCategory;
+        lastWordGenerationRef.current = now;
         generateFreshWords();
       }
     };
@@ -532,22 +537,26 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Track last regeneration count to prevent infinite loops
   const lastRegenerationCountRef = useRef(0);
+  const lastRegenerationTimeRef = useRef(0);
 
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
     const wordsCompleted = rememberedWords.size;
     const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
+    const now = Date.now();
 
-    // Prevent infinite loops by checking if we already regenerated for this count
+    // Prevent infinite loops by checking if we already regenerated for this count and adding time-based debounce
     if (
       shouldRegenerate &&
       dashboardSession &&
-      wordsCompleted !== lastRegenerationCountRef.current
+      wordsCompleted !== lastRegenerationCountRef.current &&
+      now - lastRegenerationTimeRef.current > 1000 // 1 second debounce for regeneration
     ) {
       console.log(
         `Regenerating dashboard words after ${wordsCompleted} completed words`,
       );
       lastRegenerationCountRef.current = wordsCompleted;
+      lastRegenerationTimeRef.current = now;
       generateDashboardWords();
     }
   }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
@@ -634,6 +643,21 @@ export default function Index({ initialProfile }: IndexProps) {
   const saveSessionData = useCallback(() => {
     if (!isSessionInitialized) return;
 
+    // Calculate current progress inline to avoid circular dependency
+    const progressData = {
+      wordsLearned: rememberedWords.size,
+      wordsRemembered: rememberedWords.size,
+      sessionCount: dailySessionCount,
+      accuracy:
+        rememberedWords.size + forgottenWords.size > 0
+          ? Math.round(
+              (rememberedWords.size /
+                (rememberedWords.size + forgottenWords.size)) *
+                100,
+            )
+          : 0,
+    };
+
     const sessionData: Partial<SessionData> = {
       activeTab,
       currentWordIndex,
@@ -643,7 +667,7 @@ export default function Index({ initialProfile }: IndexProps) {
       forgottenWords: Array.from(forgottenWords),
       rememberedWords: Array.from(rememberedWords),
       excludedWordIds: Array.from(excludedWordIds),
-      currentProgress,
+      currentProgress: progressData,
       dailySessionCount,
       currentProfile,
       childStats,
@@ -677,7 +701,6 @@ export default function Index({ initialProfile }: IndexProps) {
     forgottenWords,
     rememberedWords,
     excludedWordIds,
-    currentProgress,
     dailySessionCount,
     currentProfile,
     childStats,
@@ -718,11 +741,23 @@ export default function Index({ initialProfile }: IndexProps) {
 
       // Use setTimeout to debounce the save and prevent rapid successive calls
       const timeoutId = setTimeout(() => {
+        const progressData = {
+          wordsLearned: rememberedCount,
+          wordsRemembered: rememberedCount,
+          sessionCount: dailySessionCount,
+          accuracy:
+            rememberedCount + forgottenCount > 0
+              ? Math.round(
+                  (rememberedCount / (rememberedCount + forgottenCount)) * 100,
+                )
+              : 0,
+        };
+
         persistenceService.queueSave(
           {
             forgottenWords: Array.from(forgottenWords),
             rememberedWords: Array.from(rememberedWords),
-            currentProgress,
+            currentProgress: progressData,
           },
           "high",
         );
@@ -730,7 +765,12 @@ export default function Index({ initialProfile }: IndexProps) {
 
       return () => clearTimeout(timeoutId);
     }
-  }, [rememberedWords.size, forgottenWords.size, persistenceService]);
+  }, [
+    rememberedWords.size,
+    forgottenWords.size,
+    dailySessionCount,
+    persistenceService,
+  ]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
@@ -738,34 +778,7 @@ export default function Index({ initialProfile }: IndexProps) {
       if (document.hidden) {
         // Tab becoming hidden - force save current state
         console.log("Tab hidden, force saving session data");
-        persistenceService.queueSave(
-          {
-            activeTab,
-            currentWordIndex,
-            selectedCategory,
-            learningMode,
-            userRole,
-            forgottenWords: Array.from(forgottenWords),
-            rememberedWords: Array.from(rememberedWords),
-            excludedWordIds: Array.from(excludedWordIds),
-            currentProgress,
-            dailySessionCount,
-            currentProfile,
-            childStats,
-            currentSessionId,
-            learningGoals,
-            currentDashboardWords,
-            customWords,
-            practiceWords,
-            showQuiz,
-            selectedQuizType,
-            showMatchingGame,
-            gameMode,
-            showPracticeGame,
-          },
-          "high",
-        );
-
+        saveSessionData();
         // Force immediate sync
         persistenceService.forceSync();
       } else {
@@ -857,34 +870,7 @@ export default function Index({ initialProfile }: IndexProps) {
       window.removeEventListener("pageshow", handlePageShow);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [
-    activeTab,
-    currentWordIndex,
-    selectedCategory,
-    learningMode,
-    userRole,
-    forgottenWords,
-    rememberedWords,
-    excludedWordIds,
-    currentProgress,
-    dailySessionCount,
-    currentProfile,
-    childStats,
-    currentSessionId,
-    learningGoals,
-    currentDashboardWords,
-    customWords,
-    practiceWords,
-    showQuiz,
-    selectedQuizType,
-    showMatchingGame,
-    gameMode,
-    showPracticeGame,
-    persistenceService,
-    sessionPersistence,
-    lastAutoSave,
-    setFeedback,
-  ]);
+  }, [saveSessionData, persistenceService, sessionPersistence, lastAutoSave]);
 
   // Tab focus detection for immediate synchronization
   useEffect(() => {
@@ -1010,28 +996,33 @@ export default function Index({ initialProfile }: IndexProps) {
     setIsSessionInitialized(true);
   }, []);
 
-  // Debug logging for state changes
+  // Debug logging for state changes (throttled to prevent excessive logging)
+  const lastDebugLogRef = useRef(0);
   useEffect(() => {
-    console.log("State Update:", {
-      rememberedWordsCount: rememberedWords.size,
-      forgottenWordsCount: forgottenWords.size,
-      currentDashboardWordsLength: currentDashboardWords.length,
-      learningStatsWeeklyProgress: rememberedWords.size,
-      childStatsWordsRemembered: childStats?.wordsRemembered,
-      currentProgress,
-      learningGoalsCount: learningGoals.length,
-      isSessionInitialized,
-      lastAutoSave: new Date(lastAutoSave).toLocaleTimeString(),
-    });
+    const now = Date.now();
+    // Only log debug info every 5 seconds to prevent excessive logging
+    if (now - lastDebugLogRef.current > 5000) {
+      lastDebugLogRef.current = now;
+      console.log("State Update:", {
+        rememberedWordsCount: rememberedWords.size,
+        forgottenWordsCount: forgottenWords.size,
+        currentDashboardWordsLength: currentDashboardWords.length,
+        learningStatsWeeklyProgress: rememberedWords.size,
+        childStatsWordsRemembered: childStats?.wordsRemembered,
+        currentProgressAccuracy: currentProgress.accuracy,
+        learningGoalsCount: learningGoals.length,
+        isSessionInitialized,
+        lastAutoSave: new Date(lastAutoSave).toLocaleTimeString(),
+      });
+    }
   }, [
     rememberedWords.size,
     forgottenWords.size,
     currentDashboardWords.length,
     childStats?.wordsRemembered,
-    currentProgress,
+    currentProgress.accuracy,
     learningGoals.length,
     isSessionInitialized,
-    lastAutoSave,
   ]);
 
   // Dynamic learning stats that reflect actual progress and goals
@@ -2082,8 +2073,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "learn",
                       icon: BookOpen,
-                      label: "Word Library",
-                      emoji: "📚",
+                      label: "Jungle Word Explorer",
+                      emoji: "🌿",
                       color: "green",
                     },
                     {
@@ -2104,7 +2095,12 @@ export default function Index({ initialProfile }: IndexProps) {
                     <motion.button
                       key={id}
                       onClick={() => {
-                        setActiveTab(id);
+                        if (id === "learn") {
+                          // Navigate to new Jungle Word Explorer
+                          navigate("/jungle-word-explorer");
+                        } else {
+                          setActiveTab(id);
+                        }
                         setIsMobileMenuOpen(false);
                       }}
                       className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-105 ${
@@ -2437,6 +2433,16 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
 
                             <TabsContent value="learn">
+                              {/* Note: Learn navigation now redirects to /jungle-word-explorer */}
+                              <div className="text-center py-8 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg mb-4">
+                                <p className="text-lg font-semibold text-green-800 mb-2">
+                                  🌿 Redirecting to Jungle Word Explorer... 🌿
+                                </p>
+                                <p className="text-green-600">
+                                  You'll be taken to the new enhanced word
+                                  learning experience!
+                                </p>
+                              </div>
                               <div className="space-y-4">
                                 {learningMode === "selector" ||
                                 !selectedCategory ? (
@@ -2540,7 +2546,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                                   </span>
                                                   {forgottenWords.size > 0 && (
                                                     <span className="inline-flex items-center gap-0.5 bg-coral-red/20 rounded-full px-1.5 py-0.5 text-xs">
-                                                      🔄 {forgottenWords.size}
+                                                      ���� {forgottenWords.size}
                                                     </span>
                                                   )}
                                                 </div>
@@ -3348,7 +3354,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           jungle quiz! 3D effects, power-ups,
                                           achievements, dynamic music, and
                                           immersive gaming that rivals premium
-                                          mobile games! 🚀✨🌟
+                                          mobile games! 🚀✨����
                                         </p>
                                         <div className="jungle-quiz-card-badges">
                                           <span
@@ -3430,7 +3436,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             🌟 Ages 3-5
                                           </span>
                                           <span className="jungle-quiz-badge-audio">
-                                            🎵 Audio Magic
+                                            ���� Audio Magic
                                           </span>
                                         </div>
                                         <button
@@ -3573,7 +3579,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Crystal Quest Awaits! 💎
+                                          Crystal Quest Awaits! ��
                                         </button>
                                       </div>
                                     </div>
@@ -4033,27 +4039,24 @@ export default function Index({ initialProfile }: IndexProps) {
                         : activeTab
               }
               onNavigate={(newId) => {
-                // Map new navigation IDs back to old tab IDs
-                const tabMapping = {
-                  home: "dashboard",
-                  jungle: "learn",
-                  quiz: "quiz",
-                  trophy: "achievements",
-                  parents: "parent-menu",
+                // Map new navigation IDs to actions
+                const navigationActions = {
+                  home: () => setActiveTab("dashboard"),
+                  jungle: () => navigate("/jungle-word-explorer"),
+                  quiz: () => setActiveTab("quiz"),
+                  trophy: () => setActiveTab("achievements"),
+                  parents: () => {
+                    setShowSettings(true);
+                    if (navigator.vibrate) {
+                      navigator.vibrate(50);
+                    }
+                  },
                 };
 
-                if (newId === "parents") {
-                  // Handle parent navigation - open settings
-                  setShowSettings(true);
-                  if (navigator.vibrate) {
-                    navigator.vibrate(50);
-                  }
-                } else {
-                  const mappedTab =
-                    tabMapping[newId as keyof typeof tabMapping];
-                  if (mappedTab) {
-                    setActiveTab(mappedTab);
-                  }
+                const action =
+                  navigationActions[newId as keyof typeof navigationActions];
+                if (action) {
+                  action();
                 }
               }}
             />
