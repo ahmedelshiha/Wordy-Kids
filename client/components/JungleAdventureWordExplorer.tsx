@@ -623,7 +623,7 @@ export const JungleAdventureWordExplorer: React.FC<
             <div className="text-6xl mb-3 md:group-hover:animate-gentle-bounce">
               {word.emoji || "📝"}
             </div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
               {word.word}
             </h2>
             {word.pronunciation && (
