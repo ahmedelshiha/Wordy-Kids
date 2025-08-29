@@ -188,6 +188,7 @@ export const JungleAdventureWordExplorer: React.FC<
   const [highContrast, setHighContrast] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [announce, setAnnounce] = useState("");
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const sessionStartRef = useRef<number>(Date.now());
   const [sessionElapsed, setSessionElapsed] = useState(0);
 
@@ -1005,6 +1006,76 @@ export const JungleAdventureWordExplorer: React.FC<
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Mobile controls: nav + age + search */}
+        <div className="md:hidden px-3 pb-2 space-y-2">
+          {/* Segmented nav */}
+          <div className="flex items-center gap-2">
+            <div className="flex flex-1 bg-white border border-gray-200 rounded-full p-1 shadow-sm">
+              <Button
+                onClick={() => setExploreMode("map")}
+                variant={exploreMode === "map" ? "default" : "secondary"}
+                size="sm"
+                className="rounded-full flex-1"
+                aria-label="Go to map"
+              >
+                <Map className="w-4 h-4 mr-1" /> Map
+              </Button>
+              <Button
+                onClick={() => setExploreMode("adventure")}
+                variant={exploreMode === "adventure" ? "default" : "secondary"}
+                size="sm"
+                className="rounded-full flex-1"
+                aria-label="Go to adventure"
+              >
+                <Target className="w-4 h-4 mr-1" /> Adventure
+              </Button>
+            </div>
+            <Button
+              onClick={() => setShowMobileSearch((v) => !v)}
+              variant={showMobileSearch ? "default" : "secondary"}
+              size="sm"
+              className="rounded-full w-10 h-10 p-0"
+              aria-label={showMobileSearch ? "Hide search" : "Show search"}
+            >
+              <Search className="w-4 h-4" />
+            </Button>
+          </div>
+
+          {/* Age chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            {(["3-5", "6-8", "9-12"] as AgeGroup[]).map((g) => (
+              <Button
+                key={g}
+                onClick={() => {
+                  setAgeGroup(g);
+                  setAnnounce(`Age mode set to ${g}`);
+                }}
+                variant={ageGroup === g ? "default" : "secondary"}
+                size="sm"
+                className="rounded-full h-8 px-3 flex-shrink-0"
+                aria-label={`Set age mode ${g}`}
+              >
+                {g}
+              </Button>
+            ))}
+          </div>
+
+          {/* Mobile search input */}
+          {showMobileSearch && exploreMode === "adventure" && (
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                aria-label="Search words"
+                placeholder="Search words..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+              />
+            </div>
+          )}
         </div>
       </header>
 
