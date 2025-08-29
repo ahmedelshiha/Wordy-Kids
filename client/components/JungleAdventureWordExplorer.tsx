@@ -61,7 +61,7 @@ type AgeGroup = "3-5" | "6-8" | "9-12";
 // Jungle characters for different categories
 const JUNGLE_CHARACTERS = {
   food: {
-    emoji: "���",
+    emoji: "🐵",
     name: "Mango the Monkey",
     color: "from-orange-400 to-orange-600",
   },
@@ -176,6 +176,7 @@ export const JungleAdventureWordExplorer: React.FC<
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
+  const touchStartXRef = useRef<number | null>(null);
 
   // Load user data on mount
   useEffect(() => {
