@@ -799,7 +799,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 variant={exploreMode === "map" ? "default" : "ghost"}
                 size="sm"
                 aria-label="Go to map"
-                className="rounded-full"
+                className="rounded-full transition-transform hover:scale-105 active:scale-95"
               >
                 <Map className="w-4 h-4 mr-2" />
                 Map
