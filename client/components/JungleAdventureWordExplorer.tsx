@@ -674,7 +674,8 @@ export const JungleAdventureWordExplorer: React.FC<
             onClick={() => handleWordNavigation("random")}
             disabled={filteredWords.length <= 1}
             variant="outline"
-            className="rounded-full"
+            aria-label="Random word"
+            className="rounded-full w-[75px] h-[75px] p-0"
           >
             <Shuffle className="w-4 h-4" />
           </Button>
