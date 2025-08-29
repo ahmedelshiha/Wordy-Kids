@@ -726,7 +726,7 @@ export const JungleAdventureWordExplorer: React.FC<
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
             {categoryInfo?.character.name}'s {categoryInfo?.name} Adventure
           </h1>
-          <p className="text-gray-600 mb-4">
+          <p className="hidden sm:block text-gray-600 mb-4">
             Discover amazing {categoryInfo?.name.toLowerCase()} words!
           </p>
 
