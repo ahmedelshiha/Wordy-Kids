@@ -684,7 +684,8 @@ export const JungleAdventureWordExplorer: React.FC<
             onClick={() => handleWordNavigation("next")}
             disabled={filteredWords.length <= 1}
             variant="outline"
-            className="rounded-full"
+            aria-label="Next word"
+            className="rounded-full w-[75px] h-[75px] p-0"
           >
             <ChevronLeft className="w-4 h-4 rotate-180" />
           </Button>
