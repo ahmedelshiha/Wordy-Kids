@@ -112,6 +112,40 @@ const JUNGLE_CHARACTERS = {
   },
 };
 
+// Simple descriptions and fun facts per category (inspired by EnhancedCategorySelector)
+const CATEGORY_DESCRIPTIONS: Record<string, string> = {
+  animals: "Meet amazing creatures from pets to wild animals!",
+  nature: "Explore the magical wonders of our natural world!",
+  food: "Discover delicious foods and favorite meals!",
+  colors: "Learn about the beautiful colors around us!",
+  objects: "Explore everyday things around you!",
+  body: "Learn about your amazing body!",
+  family: "Meet the special people in your life!",
+  feelings: "Understand and express your emotions!",
+  numbers: "Count and learn with numbers!",
+};
+
+const CATEGORY_FUN_FACTS: Record<string, string> = {
+  animals: "There are over 8.7 million animal species on Earth!",
+  nature: "Trees can live for thousands of years!",
+  food: "Honey never spoils!",
+  colors: "Humans can see about 10 million colors!",
+  objects: "The wheel was invented 5,500 years ago!",
+  body: "Your heart beats 100,000 times a day!",
+  family: "Family makes us feel loved and safe!",
+  feelings: "Emotions help us understand ourselves!",
+  numbers: "Zero was invented in ancient India!",
+};
+
+function getDifficultyLevel(easy: number, medium: number, hard: number) {
+  const total = easy + medium + hard;
+  if (total === 0) return "beginner";
+  const easyPercent = (easy / total) * 100;
+  if (easyPercent > 70) return "beginner";
+  if (easyPercent > 40) return "intermediate";
+  return "advanced";
+}
+
 // Get unique categories from database
 const getCategories = () => {
   const categories = [...new Set(wordsDatabase.map((word) => word.category))];
