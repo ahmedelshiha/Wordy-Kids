@@ -263,9 +263,19 @@ export const JungleAdventureWordExplorer: React.FC<
 
       setIsPlaying(true);
       try {
-        await audioService.pronounceWord(word.word, {});
+        await audioService.pronounceWord(word.word, {
+          onError: (err) => {
+            try {
+              console.error("Speech synthesis error:", JSON.stringify(err));
+            } catch {
+              console.error("Speech synthesis error:", err);
+            }
+            setAnnounce("Speech unavailable. Check browser audio settings.");
+          },
+        });
       } catch (error) {
         console.error("Error pronouncing word:", error);
+        setAnnounce("Speech failed to start.");
       } finally {
         setIsPlaying(false);
       }
