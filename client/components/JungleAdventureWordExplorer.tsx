@@ -232,7 +232,12 @@ export const JungleAdventureWordExplorer: React.FC<
   const handleCategorySelect = useCallback(
     (categoryId: string) => {
       setSelectedCategory(categoryId);
-      setCurrentWords(getWordsByCategory(categoryId));
+      setCurrentWords(
+        getWordsByCategory(categoryId).filter((w) =>
+          ageGroup === "3-5" ? w.difficulty === "easy" : ageGroup === "6-8" ? w.difficulty !== "hard" : true,
+        ),
+      );
+      setAnnounce(`Selected ${categoryId} category`);
       setCurrentWordIndex(0);
       setExploreMode("adventure");
       setSearchQuery("");
