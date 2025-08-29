@@ -948,7 +948,7 @@ export const JungleAdventureWordExplorer: React.FC<
               {/* Audio toggle */}
               <Button
                 onClick={() => setAudioEnabled(!audioEnabled)}
-                variant="ghost"
+                variant="secondary"
                 size="sm"
                 aria-label={audioEnabled ? "Disable audio" : "Enable audio"}
                 className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
