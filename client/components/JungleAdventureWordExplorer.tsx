@@ -150,7 +150,29 @@ export const JungleAdventureWordExplorer: React.FC<
   // Settings state
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [showDefinitions, setShowDefinitions] = useState(false);
-  const [fontSize, setFontSize] = useState("normal");
+  const [ageGroup, setAgeGroup] = useState<AgeGroup>("6-8");
+  const [highContrast, setHighContrast] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [announce, setAnnounce] = useState("");
+  const sessionStartRef = useRef<number>(Date.now());
+  const [sessionElapsed, setSessionElapsed] = useState(0);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = () => setReducedMotion(mq.matches);
+    mq.addEventListener?.("change", handler);
+    return () => mq.removeEventListener?.("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSessionElapsed(Date.now() - sessionStartRef.current);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const baseFontSize = ageGroup === "3-5" ? "1.25rem" : "1.125rem";
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
