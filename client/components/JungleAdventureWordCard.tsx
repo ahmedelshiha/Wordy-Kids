@@ -121,7 +121,9 @@ export const JungleAdventureWordCard: React.FC<
   >([]);
   const [currentAnimation, setCurrentAnimation] = useState("");
   // Ultimate-mode integrations
-  const [discoveryMode, setDiscoveryMode] = useState<"learn" | "quiz" | "memory">("learn");
+  const [discoveryMode, setDiscoveryMode] = useState<
+    "learn" | "quiz" | "memory"
+  >("learn");
   const [quizRevealed, setQuizRevealed] = useState<boolean>(showDefinition);
   const [score, setScore] = useState<number>(0);
 
@@ -590,7 +592,9 @@ export const JungleAdventureWordCard: React.FC<
             variant={discoveryMode === mode ? "default" : "outline"}
             className={cn(
               "min-h-[44px] px-3 font-bold",
-              discoveryMode === mode ? "bg-jungle text-white shadow-lg scale-105" : "bg-white/70 text-gray-700 hover:bg-white/80",
+              discoveryMode === mode
+                ? "bg-jungle text-white shadow-lg scale-105"
+                : "bg-white/70 text-gray-700 hover:bg-white/80",
             )}
           >
             {mode === "learn" && "📖 Learn"}
@@ -768,14 +772,19 @@ export const JungleAdventureWordCard: React.FC<
               <div className="text-center space-y-1 sm:space-y-2">
                 <div className="flex items-center justify-center gap-2 sm:gap-3">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
-                    {(discoveryMode === "quiz" || discoveryMode === "memory") && !quizRevealed ? "???" : word.word}
+                    {(discoveryMode === "quiz" || discoveryMode === "memory") &&
+                    !quizRevealed
+                      ? "???"
+                      : word.word}
                   </h2>
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
                       handlePronounce();
                     }}
-                    disabled={isPlaying || (discoveryMode !== "learn" && !quizRevealed)}
+                    disabled={
+                      isPlaying || (discoveryMode !== "learn" && !quizRevealed)
+                    }
                     className={cn(
                       "h-12 w-12 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
                       "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
