@@ -466,6 +466,18 @@ export const JungleAdventureWordExplorer: React.FC<
               <div className="text-white/90 text-sm">Words to Discover</div>
             </div>
 
+            {/* Description and fun fact */}
+            <div className="mt-3 text-center">
+              <p className="text-white/90 text-xs">
+                {CATEGORY_DESCRIPTIONS[category.id] || "Discover amazing new words!"}
+              </p>
+              <div className="mt-2 hidden md:block">
+                <p className="text-white/90 text-xs bg-white/15 rounded-lg inline-block px-2 py-1">
+                  💡 {CATEGORY_FUN_FACTS[category.id] || "Words are magical!"}
+                </p>
+              </div>
+            </div>
+
             {/* Progress indicator */}
             <div className="mt-3">
               <div className="flex justify-between items-center mb-1">
