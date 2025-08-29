@@ -575,7 +575,7 @@ export const JungleAdventureWordExplorer: React.FC<
       >
         <div
           className={cn(
-            "relative overflow-hidden rounded-2xl p-6 shadow-lg border-2 border-white/50 group",
+            "relative overflow-hidden rounded-2xl p-4 md:p-6 shadow-lg border-2 border-white/50 group",
             "bg-gradient-to-br from-white to-blue-50",
             "hover:shadow-xl transition-all duration-300 transform md:hover:scale-[1.01] md:hover:-translate-y-0.5 active:scale-[0.99]",
             isMastered && "ring-2 ring-green-400 ring-offset-2",
