@@ -856,7 +856,7 @@ export const JungleAdventureWordExplorer: React.FC<
 
               {/* View mode toggle */}
               {exploreMode === "adventure" && (
-                <div className="flex border border-gray-200 rounded-full p-1">
+                <div className="hidden sm:flex border border-gray-200 rounded-full p-1">
                   <Button
                     onClick={() => setViewMode("cards")}
                     variant={viewMode === "cards" ? "default" : "ghost"}
