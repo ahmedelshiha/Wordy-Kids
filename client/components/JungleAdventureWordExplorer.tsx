@@ -55,6 +55,9 @@ interface JungleAdventureWordExplorerProps {
 type ExploreMode = "map" | "categories" | "adventure" | "favorites";
 type ViewMode = "cards" | "list" | "carousel";
 
+// Age modes per children's UX best practices
+type AgeGroup = "3-5" | "6-8" | "9-12";
+
 // Jungle characters for different categories
 const JUNGLE_CHARACTERS = {
   food: {
