@@ -425,8 +425,29 @@ export const JungleAdventureWordExplorer: React.FC<
           >
             {/* Character */}
             <div className="text-center mb-4">
+              {(() => {
+                const words = getWordsByCategory(category.id);
+                const easy = words.filter((w) => w.difficulty === "easy").length;
+                const medium = words.filter((w) => w.difficulty === "medium").length;
+                const hard = words.filter((w) => w.difficulty === "hard").length;
+                const difficulty = getDifficultyLevel(easy, medium, hard);
+                const estimated = `${Math.ceil(words.length / 10)}-${Math.ceil(words.length / 5)} min`;
+                const isRecommended =
+                  (ageGroup === "3-5" && easy / Math.max(1, words.length) > 0.7) ||
+                  (ageGroup === "9-12" && hard / Math.max(1, words.length) > 0.2);
+                return (
+                  <div className="absolute top-3 left-3 flex flex-col gap-1 text-left">
+                    {isRecommended && (
+                      <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">⭐ For You</Badge>
+                    )}
+                    <Badge className="bg-white/25 border-white/40 text-white text-[10px]">{difficulty}</Badge>
+                    <Badge className="bg-white/25 border-white/40 text-white text-[10px]">⏱️ {estimated}</Badge>
+                  </div>
+                );
+              })()}
+
               <div
-                className="text-6xl mb-2 animate-bounce"
+                className="text-6xl mb-2 md:group-hover:animate-gentle-bounce"
                 style={{ animationDelay: `${Math.random() * 2}s` }}
               >
                 {category.character.emoji}
