@@ -289,7 +289,7 @@ export function UltimateWordCardDemo() {
             🦋
           </div>
           <div className="absolute top-20 right-20 text-3xl animate-pulse">
-            🌸
+            ��
           </div>
           <div className="absolute bottom-20 left-20 text-5xl animate-float">
             🌳
@@ -307,7 +307,7 @@ export function UltimateWordCardDemo() {
       </div>
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%,
           100% {

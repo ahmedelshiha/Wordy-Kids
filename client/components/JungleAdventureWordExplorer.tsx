@@ -833,7 +833,7 @@ export const JungleAdventureWordExplorer: React.FC<
       )}
 
       {/* CSS for animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%,
           100% {

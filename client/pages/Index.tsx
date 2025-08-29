@@ -3249,7 +3249,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           🏆✨
                                         </p>
                                       </div>
-                                      <style jsx>{`
+                                      <style>{`
                                         .quiz-title-compact {
                                           font-size: 0.875rem !important;
                                           line-height: 1 !important;
@@ -3494,7 +3494,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           📸
                                         </div>
                                         <h3 className="jungle-quiz-card-title text-bright-orange">
-                                          🌅 Picture Treasure Hunt
+                                          ���� Picture Treasure Hunt
                                         </h3>
                                         <p className="jungle-quiz-card-description">
                                           Explore ancient jungle temples and
