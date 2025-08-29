@@ -302,6 +302,8 @@ export const JungleAdventureWordExplorer: React.FC<
       if (navigator.vibrate) {
         navigator.vibrate([50, 100, 50]);
       }
+
+      setAnnounce(wasMastered ? "Removed from mastered" : "Marked as mastered");
     },
     [masteredWords, audioEnabled],
   );
