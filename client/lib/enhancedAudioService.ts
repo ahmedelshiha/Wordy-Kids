@@ -471,7 +471,10 @@ export class EnhancedAudioService {
           timestamp: new Date().toISOString(),
         };
         try {
-          console.error("Speech synthesis error:", JSON.stringify(errorPayload));
+          console.error(
+            "Speech synthesis error:",
+            JSON.stringify(errorPayload),
+          );
         } catch {
           console.error("Speech synthesis error:", errorPayload);
         }

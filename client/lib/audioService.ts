@@ -446,7 +446,10 @@ export class AudioService {
           },
         };
         try {
-          console.error("Speech synthesis error:", JSON.stringify(errorPayload));
+          console.error(
+            "Speech synthesis error:",
+            JSON.stringify(errorPayload),
+          );
         } catch {
           console.error("Speech synthesis error:", errorPayload);
         }
@@ -573,9 +576,15 @@ export class AudioService {
           timestamp: new Date().toISOString(),
         };
         try {
-          console.error("Speech synthesis error (default voice):", JSON.stringify(errorPayload));
+          console.error(
+            "Speech synthesis error (default voice):",
+            JSON.stringify(errorPayload),
+          );
         } catch {
-          console.error("Speech synthesis error (default voice):", errorPayload);
+          console.error(
+            "Speech synthesis error (default voice):",
+            errorPayload,
+          );
         }
         try {
           options.onError?.(errorPayload);

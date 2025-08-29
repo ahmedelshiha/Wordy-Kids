@@ -270,7 +270,11 @@ export const JungleAdventureWordExplorer: React.FC<
       setSelectedCategory(categoryId);
       setCurrentWords(
         getWordsByCategory(categoryId).filter((w) =>
-          ageGroup === "3-5" ? w.difficulty === "easy" : ageGroup === "6-8" ? w.difficulty !== "hard" : true,
+          ageGroup === "3-5"
+            ? w.difficulty === "easy"
+            : ageGroup === "6-8"
+              ? w.difficulty !== "hard"
+              : true,
         ),
       );
       setAnnounce(`Selected ${categoryId} category`);
@@ -368,7 +372,11 @@ export const JungleAdventureWordExplorer: React.FC<
         audioService.playClickSound();
       }
 
-      setAnnounce(favoriteWords.has(wordId) ? "Removed from favorites" : "Added to favorites");
+      setAnnounce(
+        favoriteWords.has(wordId)
+          ? "Removed from favorites"
+          : "Added to favorites",
+      );
     },
     [favoriteWords, audioEnabled],
   );
@@ -425,7 +433,12 @@ export const JungleAdventureWordExplorer: React.FC<
             )}
           >
             {/* Hover glow overlay */}
-            <div className={cn("absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300", !reducedMotion && "group-hover:opacity-100")}>
+            <div
+              className={cn(
+                "absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300",
+                !reducedMotion && "group-hover:opacity-100",
+              )}
+            >
               <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
               <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
             </div>
@@ -433,21 +446,35 @@ export const JungleAdventureWordExplorer: React.FC<
             <div className="text-center mb-4">
               {(() => {
                 const words = getWordsByCategory(category.id);
-                const easy = words.filter((w) => w.difficulty === "easy").length;
-                const medium = words.filter((w) => w.difficulty === "medium").length;
-                const hard = words.filter((w) => w.difficulty === "hard").length;
+                const easy = words.filter(
+                  (w) => w.difficulty === "easy",
+                ).length;
+                const medium = words.filter(
+                  (w) => w.difficulty === "medium",
+                ).length;
+                const hard = words.filter(
+                  (w) => w.difficulty === "hard",
+                ).length;
                 const difficulty = getDifficultyLevel(easy, medium, hard);
                 const estimated = `${Math.ceil(words.length / 10)}-${Math.ceil(words.length / 5)} min`;
                 const isRecommended =
-                  (ageGroup === "3-5" && easy / Math.max(1, words.length) > 0.7) ||
-                  (ageGroup === "9-12" && hard / Math.max(1, words.length) > 0.2);
+                  (ageGroup === "3-5" &&
+                    easy / Math.max(1, words.length) > 0.7) ||
+                  (ageGroup === "9-12" &&
+                    hard / Math.max(1, words.length) > 0.2);
                 return (
                   <div className="absolute top-3 left-3 flex flex-col gap-1 text-left">
                     {isRecommended && (
-                      <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">⭐ For You</Badge>
+                      <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">
+                        ⭐ For You
+                      </Badge>
                     )}
-                    <Badge className="bg-white/25 border-white/40 text-white text-[10px]">{difficulty}</Badge>
-                    <Badge className="bg-white/25 border-white/40 text-white text-[10px]">⏱️ {estimated}</Badge>
+                    <Badge className="bg-white/25 border-white/40 text-white text-[10px]">
+                      {difficulty}
+                    </Badge>
+                    <Badge className="bg-white/25 border-white/40 text-white text-[10px]">
+                      ⏱️ {estimated}
+                    </Badge>
                   </div>
                 );
               })()}
@@ -455,7 +482,8 @@ export const JungleAdventureWordExplorer: React.FC<
               <div
                 className={cn(
                   "mb-2 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-1 ring-white/40 shadow-sm text-4xl md:text-6xl transition-transform duration-300",
-                  !reducedMotion && "group-hover:scale-110 group-hover:rotate-3 md:group-hover:animate-gentle-bounce",
+                  !reducedMotion &&
+                    "group-hover:scale-110 group-hover:rotate-3 md:group-hover:animate-gentle-bounce",
                 )}
                 style={{ animationDelay: `${Math.random() * 2}s` }}
               >
@@ -478,7 +506,8 @@ export const JungleAdventureWordExplorer: React.FC<
             {/* Description and fun fact */}
             <div className="mt-3 text-center">
               <p className="text-white/90 text-xs">
-                {CATEGORY_DESCRIPTIONS[category.id] || "Discover amazing new words!"}
+                {CATEGORY_DESCRIPTIONS[category.id] ||
+                  "Discover amazing new words!"}
               </p>
               <div className="mt-2 hidden md:block">
                 <p className="text-white/90 text-xs bg-white/15 rounded-lg inline-block px-2 py-1">
@@ -586,11 +615,14 @@ export const JungleAdventureWordExplorer: React.FC<
             tabIndex={0}
             onClick={() => setShowDefinitions(!showDefinitions)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") setShowDefinitions(!showDefinitions);
+              if (e.key === "Enter" || e.key === " ")
+                setShowDefinitions(!showDefinitions);
             }}
             aria-label={showDefinitions ? "Hide definition" : "Show definition"}
           >
-            <div className="text-6xl mb-3 md:group-hover:animate-gentle-bounce">{word.emoji || "📝"}</div>
+            <div className="text-6xl mb-3 md:group-hover:animate-gentle-bounce">
+              {word.emoji || "📝"}
+            </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               {word.word}
             </h2>
@@ -645,7 +677,9 @@ export const JungleAdventureWordExplorer: React.FC<
             <Button
               onClick={() => setShowDefinitions(!showDefinitions)}
               variant="outline"
-              aria-label={showDefinitions ? "Hide definition" : "Show definition"}
+              aria-label={
+                showDefinitions ? "Hide definition" : "Show definition"
+              }
               className="rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base"
             >
               {showDefinitions ? (
@@ -658,7 +692,9 @@ export const JungleAdventureWordExplorer: React.FC<
 
             <Button
               onClick={() => handleMasterWord(word.id)}
-              aria-label={isMastered ? "Mark as not mastered" : "Mark as mastered"}
+              aria-label={
+                isMastered ? "Mark as not mastered" : "Mark as mastered"
+              }
               className={cn(
                 "rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base",
                 isMastered
@@ -716,7 +752,9 @@ export const JungleAdventureWordExplorer: React.FC<
     return (
       <div
         className="max-w-4xl mx-auto"
-        onTouchStart={(e) => (touchStartXRef.current = e.changedTouches[0].clientX)}
+        onTouchStart={(e) =>
+          (touchStartXRef.current = e.changedTouches[0].clientX)
+        }
         onTouchEnd={(e) => {
           const start = touchStartXRef.current;
           if (start == null) return;
@@ -734,7 +772,8 @@ export const JungleAdventureWordExplorer: React.FC<
           </div>
           <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 leading-tight">
             <span className="md:hidden inline-flex items-center gap-2">
-              {categoryInfo?.character.emoji || "🌿"} {categoryInfo?.name} Adventure
+              {categoryInfo?.character.emoji || "🌿"} {categoryInfo?.name}{" "}
+              Adventure
             </span>
             <span className="hidden md:inline">
               {categoryInfo?.character.name}'s {categoryInfo?.name} Adventure
@@ -831,16 +870,36 @@ export const JungleAdventureWordExplorer: React.FC<
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={cn("absolute top-10 left-10 text-4xl opacity-20", !reducedMotion && "animate-bounce")}>
+        <div
+          className={cn(
+            "absolute top-10 left-10 text-4xl opacity-20",
+            !reducedMotion && "animate-bounce",
+          )}
+        >
           🌿
         </div>
-        <div className={cn("absolute top-20 right-20 text-3xl opacity-15", !reducedMotion && "animate-pulse")}>
+        <div
+          className={cn(
+            "absolute top-20 right-20 text-3xl opacity-15",
+            !reducedMotion && "animate-pulse",
+          )}
+        >
           🦋
         </div>
-        <div className={cn("absolute bottom-20 left-20 text-5xl opacity-10", !reducedMotion && "animate-float")}>
+        <div
+          className={cn(
+            "absolute bottom-20 left-20 text-5xl opacity-10",
+            !reducedMotion && "animate-float",
+          )}
+        >
           🌳
         </div>
-        <div className={cn("absolute bottom-10 right-10 text-3xl opacity-20", !reducedMotion && "animate-bounce delay-1000")}>
+        <div
+          className={cn(
+            "absolute bottom-10 right-10 text-3xl opacity-20",
+            !reducedMotion && "animate-bounce delay-1000",
+          )}
+        >
           ⭐
         </div>
       </div>
@@ -889,7 +948,9 @@ export const JungleAdventureWordExplorer: React.FC<
               {selectedCategory && (
                 <Button
                   onClick={() => setExploreMode("adventure")}
-                  variant={exploreMode === "adventure" ? "default" : "secondary"}
+                  variant={
+                    exploreMode === "adventure" ? "default" : "secondary"
+                  }
                   size="sm"
                   aria-label="Go to adventure"
                   className="rounded-full transition-transform hover:scale-105 active:scale-95"
@@ -979,7 +1040,11 @@ export const JungleAdventureWordExplorer: React.FC<
                 onClick={() => setHighContrast(!highContrast)}
                 variant="secondary"
                 size="sm"
-                aria-label={highContrast ? "Disable high contrast" : "Enable high contrast"}
+                aria-label={
+                  highContrast
+                    ? "Disable high contrast"
+                    : "Enable high contrast"
+                }
                 className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
               >
                 HC
@@ -1000,7 +1065,10 @@ export const JungleAdventureWordExplorer: React.FC<
                 <div className="flex items-center gap-1">
                   <span className="text-lg">⏱️</span>
                   <span className="text-sm font-bold">
-                    {Math.floor(sessionElapsed / 60000)}:{String(Math.floor((sessionElapsed % 60000) / 1000)).padStart(2, "0")}
+                    {Math.floor(sessionElapsed / 60000)}:
+                    {String(
+                      Math.floor((sessionElapsed % 60000) / 1000),
+                    ).padStart(2, "0")}
                   </span>
                 </div>
               </div>
@@ -1082,7 +1150,9 @@ export const JungleAdventureWordExplorer: React.FC<
       {/* Mobile: Quick Category Select */}
       <div className="md:hidden px-4 pt-3">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-gray-700">Quick Select</span>
+          <span className="text-sm font-semibold text-gray-700">
+            Quick Select
+          </span>
           {selectedCategory && (
             <Button
               variant="secondary"
@@ -1139,9 +1209,10 @@ export const JungleAdventureWordExplorer: React.FC<
         </div>
       </main>
 
-
       {/* Live region for screen readers */}
-      <div aria-live="polite" className="sr-only" data-testid="live-region">{announce}</div>
+      <div aria-live="polite" className="sr-only" data-testid="live-region">
+        {announce}
+      </div>
 
       {/* CSS for animations */}
       <style>{`

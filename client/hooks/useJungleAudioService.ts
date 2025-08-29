@@ -618,7 +618,10 @@ export const useJungleAudioService = () => {
             timeStamp: event?.timeStamp || Date.now(),
           };
           try {
-            console.error("Speech synthesis error:", JSON.stringify(errorPayload));
+            console.error(
+              "Speech synthesis error:",
+              JSON.stringify(errorPayload),
+            );
           } catch {
             console.error("Speech synthesis error:", errorPayload);
           }
