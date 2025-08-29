@@ -423,6 +423,11 @@ export const JungleAdventureWordExplorer: React.FC<
               "hover:shadow-xl transition-all duration-300 transform md:hover:scale-[1.01] md:hover:-translate-y-0.5 active:scale-[0.99] md:hover:ring-2 md:hover:ring-white/50",
             )}
           >
+            {/* Hover glow overlay */}
+            <div className={cn("absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300", !reducedMotion && "group-hover:opacity-100")}>
+              <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+              <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+            </div>
             {/* Character */}
             <div className="text-center mb-4">
               {(() => {
