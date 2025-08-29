@@ -773,6 +773,7 @@ export const JungleAdventureWordExplorer: React.FC<
                   onClick={() => setExploreMode("adventure")}
                   variant={exploreMode === "adventure" ? "default" : "ghost"}
                   size="sm"
+                  aria-label="Go to adventure"
                   className="rounded-full"
                 >
                   <Target className="w-4 h-4 mr-2" />
