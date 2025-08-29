@@ -723,8 +723,13 @@ export const JungleAdventureWordExplorer: React.FC<
           <div className="text-4xl md:text-6xl mb-4">
             {categoryInfo?.character.emoji || "🌿"}
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-            {categoryInfo?.character.name}'s {categoryInfo?.name} Adventure
+          <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 leading-tight">
+            <span className="md:hidden inline-flex items-center gap-2">
+              {categoryInfo?.character.emoji || "🌿"} {categoryInfo?.name} Adventure
+            </span>
+            <span className="hidden md:inline">
+              {categoryInfo?.character.name}'s {categoryInfo?.name} Adventure
+            </span>
           </h1>
           <p className="hidden sm:block text-gray-600 mb-4">
             Discover amazing {categoryInfo?.name.toLowerCase()} words!
