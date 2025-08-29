@@ -215,14 +215,6 @@ const App = () => {
                         element={<SettingsPanelV2Demo />}
                       />
                       <Route path="/icon-nav-test" element={<IconNavTest />} />
-                      <Route
-                        path="/ultimate-word-card-demo"
-                        element={<UltimateWordCardDemo />}
-                      />
-                      <Route
-                        path="/UltimateWordCardDemo"
-                        element={<UltimateWordCardDemo />}
-                      />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
