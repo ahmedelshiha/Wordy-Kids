@@ -995,6 +995,58 @@ export const JungleAdventureWordExplorer: React.FC<
         </div>
       </header>
 
+      {/* Mobile: Quick Category Select */}
+      <div className="md:hidden px-4 pt-3">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-semibold text-gray-700">Quick Select</span>
+          {selectedCategory && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="rounded-full h-8 px-3"
+              onClick={() => {
+                setExploreMode("map");
+                setSelectedCategory(null);
+              }}
+              aria-label="Back to categories"
+            >
+              <Map className="w-3 h-3 mr-1" />
+              Categories
+            </Button>
+          )}
+        </div>
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          {categories.map((c) => {
+            const words = getWordsByCategory(c.id);
+            const easy = words.filter((w) => w.difficulty === "easy").length;
+            const hard = words.filter((w) => w.difficulty === "hard").length;
+            const isSelected = selectedCategory === c.id;
+            const isRecommended =
+              (ageGroup === "3-5" && easy / Math.max(1, words.length) > 0.7) ||
+              (ageGroup === "9-12" && hard / Math.max(1, words.length) > 0.2);
+            return (
+              <Button
+                key={c.id}
+                onClick={() => handleCategorySelect(c.id)}
+                aria-label={`Select ${c.name} category`}
+                className={cn(
+                  "rounded-full min-w-[80px] h-10 px-3 text-sm flex-shrink-0 shadow-sm",
+                  isSelected
+                    ? cn("text-white", "bg-gradient-to-r", c.character.color)
+                    : "bg-white border border-gray-200 text-gray-700",
+                )}
+              >
+                <span className="mr-1 text-base" aria-hidden>
+                  {c.character.emoji}
+                </span>
+                {c.name}
+                {isRecommended && <span className="ml-1">⭐</span>}
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Main content */}
       <main className="relative z-10 py-8">
         <div className="max-w-7xl mx-auto px-4">
