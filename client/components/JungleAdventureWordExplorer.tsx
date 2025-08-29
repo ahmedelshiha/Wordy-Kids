@@ -322,6 +322,8 @@ export const JungleAdventureWordExplorer: React.FC<
       if (audioEnabled) {
         audioService.playClickSound();
       }
+
+      setAnnounce(favoriteWords.has(wordId) ? "Removed from favorites" : "Added to favorites");
     },
     [favoriteWords, audioEnabled],
   );
