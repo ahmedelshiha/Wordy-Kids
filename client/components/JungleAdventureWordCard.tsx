@@ -17,7 +17,6 @@ import {
   Crown,
   Trophy,
   Gem,
-  Heart,
   Shield,
   Sword,
   Mountain,
@@ -31,6 +30,7 @@ import {
 import { audioService } from "@/lib/audioService";
 import { enhancedAudioService } from "@/lib/enhancedAudioService";
 import { useVoiceSettings } from "@/hooks/use-voice-settings";
+import { useAIWordRecommendations } from "@/hooks/use-ai-word-recommendations";
 import { cn } from "@/lib/utils";
 
 interface Word {
@@ -60,6 +60,7 @@ interface JungleAdventureWordCardProps {
   onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
   onWordFavorite?: (wordId: number) => void;
   onWordShare?: (word: Word) => void;
+  onWordPracticeNeeded?: (wordId: number) => void;
   showVocabularyBuilder?: boolean;
   className?: string;
   adventureLevel?: number;
@@ -87,6 +88,7 @@ export const JungleAdventureWordCard: React.FC<
   onWordMastered,
   onWordFavorite,
   onWordShare,
+  onWordPracticeNeeded,
   showVocabularyBuilder = false,
   className = "",
   adventureLevel = 1,
@@ -126,9 +128,16 @@ export const JungleAdventureWordCard: React.FC<
   >("learn");
   const [quizRevealed, setQuizRevealed] = useState<boolean>(showDefinition);
   const [score, setScore] = useState<number>(0);
+  const [practiceNeeded, setPracticeNeeded] = useState<boolean>(false);
+  const [showHint, setShowHint] = useState<boolean>(false);
+  const [hintText, setHintText] = useState<string | null>(null);
+  const [hintsUsed, setHintsUsed] = useState<number>(0);
+  const [aiState, aiActions] = useAIWordRecommendations({
+    userId: "local-card",
+    enableAnalytics: false,
+  });
 
   const isMastered = isWordMastered?.(word.id) || false;
-  const isFavorited = isWordFavorited?.(word.id) || false;
 
   const cardRef = useRef<HTMLDivElement>(null);
   const voiceSettings = useVoiceSettings();
@@ -407,20 +416,26 @@ export const JungleAdventureWordCard: React.FC<
     }, 800);
   };
 
-  // Handle favorite toggle
-  const handleFavorite = (e: React.MouseEvent) => {
+  // Handle "Need Practice" + hint
+  const handleNeedPractice = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (onWordFavorite) {
-      onWordFavorite(word.id);
+    setPracticeNeeded(true);
+    if (!showHint) {
+      try {
+        const hint = await aiActions.requestHint(word.id);
+        setHintText(hint);
+        setShowHint(true);
+        setHintsUsed((prev) => prev + 1);
+      } catch {}
     }
-    audioService.playSound?.(isFavorited ? "click" : "sparkle");
-    createParticles();
-    updateScore(15, "favorite");
-
-    // Haptic feedback
-    if (navigator.vibrate) {
-      navigator.vibrate([50]);
-    }
+    if (navigator.vibrate) navigator.vibrate(40);
+    try {
+      const evt = new CustomEvent("wordPracticeNeeded", {
+        detail: { wordId: word.id },
+      });
+      window.dispatchEvent(evt);
+    } catch {}
+    onWordPracticeNeeded?.(word.id);
   };
 
   // Handle share
@@ -714,24 +729,35 @@ export const JungleAdventureWordCard: React.FC<
             </div>
 
             {/* Status Badges */}
-            {isMastered && (
-              <div className="absolute top-3 right-3 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 z-20">
-                <Trophy className="w-3 h-3" />
-                MASTERED
-              </div>
-            )}
-
-            {isFavorited && (
-              <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 z-20">
-                <Heart className="w-3 h-3 fill-current" />
-                FAVORITE
-              </div>
-            )}
+            <div className="absolute top-3 right-3 flex flex-col items-end gap-1 z-20">
+              {isMastered && (
+                <div className="bg-green-500 text-white px-2 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+                  <Trophy className="w-3 h-3" />
+                  MASTERED
+                </div>
+              )}
+              {practiceNeeded && (
+                <div className="bg-orange-500 text-white px-2 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+                  <Target className="w-3 h-3" />
+                  NEED PRACTICE
+                </div>
+              )}
+            </div>
 
             {/* Jungle Adventure Emoji Circle */}
             <div className="flex-1 flex flex-col items-center justify-center">
               <div className="relative mb-2 sm:mb-3">
-                <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-42 lg:h-42 xl:w-44 xl:h-44 rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container">
+                <div
+                  className="rounded-full bg-gradient-to-br from-white/25 to-white/10 backdrop-blur-lg shadow-2xl border-4 border-white/30 flex items-center justify-center relative overflow-hidden jungle-adventure-emoji-container mx-auto"
+                  style={{
+                    height: "40%",
+                    width: "40%",
+                    minWidth: "96px",
+                    minHeight: "96px",
+                    maxWidth: "220px",
+                    maxHeight: "220px",
+                  }}
+                >
                   {/* Jungle Decorative Elements */}
                   <div className="absolute top-3 left-3 w-3 h-3 bg-yellow-300/30 rounded-full animate-sparkle opacity-60"></div>
                   <div className="absolute bottom-4 right-4 w-2 h-2 bg-green-300/30 rounded-full animate-bounce delay-300 opacity-50"></div>
@@ -770,37 +796,13 @@ export const JungleAdventureWordCard: React.FC<
 
               {/* Jungle Adventure Word Display */}
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="flex items-center justify-center gap-2 sm:gap-3">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
+                <div className="flex items-center justify-center">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center break-words whitespace-normal hyphens-auto">
                     {(discoveryMode === "quiz" || discoveryMode === "memory") &&
                     !quizRevealed
                       ? "???"
                       : word.word}
                   </h2>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePronounce();
-                    }}
-                    disabled={
-                      isPlaying || (discoveryMode !== "learn" && !quizRevealed)
-                    }
-                    className={cn(
-                      "h-12 w-12 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
-                      "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
-                      "border-2 sm:border-4 border-white/50 hover:border-white/70",
-                      "text-white hover:scale-110 active:scale-95",
-                      "shadow-2xl hover:shadow-3xl",
-                      "jungle-adventure-pronounce-btn",
-                      isPlaying &&
-                        "animate-pulse scale-110 from-green-400 to-emerald-500",
-                      accessibilitySettings.largeText ? "h-16 w-16" : "",
-                    )}
-                    aria-label="Say It! Hear jungle word pronunciation"
-                  >
-                    <Volume2 className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-lg" />
-                    <span className="sr-only">Say It!</span>
-                  </Button>
                 </div>
 
                 {word.pronunciation && (
@@ -821,28 +823,50 @@ export const JungleAdventureWordCard: React.FC<
                   </span>
                 </p>
               </div>
+
+              {showHint && (
+                <div className="mt-2 mx-auto max-w-[95%] sm:max-w-none bg-white/20 backdrop-blur-md border border-white/30 rounded-xl px-3 py-2 text-left shadow-md">
+                  <p className="text-xs sm:text-sm text-white/95">{hintText}</p>
+                </div>
+              )}
             </div>
 
-            {/* Enhanced Action Buttons */}
-            <div className="absolute bottom-2 left-2 right-2 flex justify-center gap-2">
+            {/* Action Buttons Grid */}
+            <div className="absolute bottom-2 left-2 right-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
               <Button
-                onClick={handleFavorite}
-                variant={isFavorited ? "default" : "outline"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePronounce();
+                }}
+                disabled={
+                  isPlaying || (discoveryMode !== "learn" && !quizRevealed)
+                }
                 className={cn(
-                  "shadow-lg flex items-center gap-1 px-3 py-1",
-                  isFavorited
-                    ? "bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white"
-                    : "hover:bg-red-50 hover:text-red-600 border-red-200 bg-white/80",
-                  accessibilitySettings.largeText
-                    ? "text-base py-2"
-                    : "text-sm",
+                  "min-h-[44px] w-full rounded-xl transition-all duration-300",
+                  "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
+                  "border-2 border-white/50 hover:border-white/70",
+                  "text-white hover:scale-[1.02] active:scale-[0.98] shadow-xl",
+                  "jungle-adventure-pronounce-btn",
+                  isPlaying && "animate-pulse from-green-400 to-emerald-500",
                 )}
                 size={accessibilitySettings.largeText ? "lg" : "sm"}
+                aria-label="Say It! Hear jungle word pronunciation"
               >
-                <Heart
-                  className={cn("w-3 h-3", isFavorited ? "fill-current" : "")}
-                />
-                <span>{isFavorited ? "Loved!" : "Love It"}</span>
+                <Volume2 className="w-4 h-4 mr-2" />
+                <span>Say It</span>
+              </Button>
+
+              <Button
+                onClick={handleNeedPractice}
+                className={cn(
+                  "min-h-[44px] w-full rounded-xl shadow-lg flex items-center gap-2",
+                  "bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white",
+                )}
+                size={accessibilitySettings.largeText ? "lg" : "sm"}
+                aria-label="Need Practice and get hint"
+              >
+                <Target className="w-4 h-4" />
+                <span>Need Practice</span>
               </Button>
 
               <Button
@@ -852,17 +876,14 @@ export const JungleAdventureWordCard: React.FC<
                 }}
                 variant={isMastered ? "default" : "outline"}
                 className={cn(
-                  "shadow-lg flex items-center gap-1 px-3 py-1",
+                  "min-h-[44px] w-full rounded-xl shadow-lg flex items-center gap-2",
                   isMastered
                     ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
                     : "bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white",
-                  accessibilitySettings.largeText
-                    ? "text-base py-2"
-                    : "text-sm",
                 )}
                 size={accessibilitySettings.largeText ? "lg" : "sm"}
               >
-                <Crown className="w-3 h-3" />
+                <Crown className="w-4 h-4" />
                 <span>{isMastered ? "Mastered!" : "Master It"}</span>
               </Button>
             </div>
