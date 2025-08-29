@@ -805,7 +805,8 @@ export const JungleAdventureWordExplorer: React.FC<
                     onClick={() => setViewMode("cards")}
                     variant={viewMode === "cards" ? "default" : "ghost"}
                     size="sm"
-                    className="rounded-full w-8 h-8 p-0"
+                    aria-label="Cards view"
+                    className="rounded-full w-12 h-12 p-0"
                   >
                     <BookOpen className="w-4 h-4" />
                   </Button>
