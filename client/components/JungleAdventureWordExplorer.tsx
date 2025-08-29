@@ -840,7 +840,7 @@ export const JungleAdventureWordExplorer: React.FC<
               {onBack && (
                 <Button
                   onClick={onBack}
-                  variant="ghost"
+                  variant="secondary"
                   size="sm"
                   aria-label="Go back"
                   className="rounded-full transition-transform hover:scale-105 active:scale-95"
