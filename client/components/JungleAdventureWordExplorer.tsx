@@ -761,6 +761,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 onClick={() => setExploreMode("map")}
                 variant={exploreMode === "map" ? "default" : "ghost"}
                 size="sm"
+                aria-label="Go to map"
                 className="rounded-full"
               >
                 <Map className="w-4 h-4 mr-2" />
