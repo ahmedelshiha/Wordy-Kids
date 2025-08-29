@@ -61,7 +61,7 @@ type AgeGroup = "3-5" | "6-8" | "9-12";
 // Jungle characters for different categories
 const JUNGLE_CHARACTERS = {
   food: {
-    emoji: "🐵",
+    emoji: "���",
     name: "Mango the Monkey",
     color: "from-orange-400 to-orange-600",
   },
@@ -879,6 +879,12 @@ export const JungleAdventureWordExplorer: React.FC<
                 <div className="flex items-center gap-1">
                   <Zap className="w-4 h-4 text-blue-500" />
                   <span className="text-sm font-bold">{userProgress.gems}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-lg">⏱️</span>
+                  <span className="text-sm font-bold">
+                    {Math.floor(sessionElapsed / 60000)}:{String(Math.floor((sessionElapsed % 60000) / 1000)).padStart(2, "0")}
+                  </span>
                 </div>
               </div>
             </div>
