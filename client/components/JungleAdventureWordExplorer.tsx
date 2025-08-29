@@ -558,8 +558,9 @@ export const JungleAdventureWordExplorer: React.FC<
 
             <Button
               onClick={() => handleMasterWord(word.id)}
+              aria-label={isMastered ? "Mark as not mastered" : "Mark as mastered"}
               className={cn(
-                "rounded-full px-6 py-2",
+                "rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base",
                 isMastered
                   ? "bg-green-500 hover:bg-green-600 text-white"
                   : "bg-yellow-500 hover:bg-yellow-600 text-white",
