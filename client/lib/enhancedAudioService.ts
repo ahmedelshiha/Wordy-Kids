@@ -458,29 +458,30 @@ export class EnhancedAudioService {
         }
       };
 
-      utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", {
-          error: event.error,
-          message: event.message,
+      utterance.onerror = (event: any) => {
+        const errorPayload = {
+          error: event?.error || null,
+          message: event?.message || "unknown",
           word: word,
           voiceType: voiceType,
           voice: voice?.name,
           rate: rate,
           pitch: pitch,
           volume: volume,
-        });
+          timestamp: new Date().toISOString(),
+        };
         try {
-          const errorDetails = {
-            error: event.error,
-            message: event.message,
-            word: word,
-            voiceType: voiceType,
-            voice: voice?.name,
-            timestamp: new Date().toISOString(),
-          };
+          console.error(
+            "Speech synthesis error:",
+            JSON.stringify(errorPayload),
+          );
+        } catch {
+          console.error("Speech synthesis error:", errorPayload);
+        }
+        try {
           // Record error for debugging
-          speechSynthesisDebugger.recordError(errorDetails);
-          onError?.(errorDetails);
+          speechSynthesisDebugger.recordError(errorPayload);
+          onError?.(errorPayload);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }

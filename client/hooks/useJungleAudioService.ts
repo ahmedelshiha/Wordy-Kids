@@ -609,10 +609,23 @@ export const useJungleAudioService = () => {
           options?.onEnd?.();
         };
 
-        utterance.onerror = (event) => {
+        utterance.onerror = (event: any) => {
           speechUtteranceRef.current = null;
-          console.error("Speech synthesis error:", event);
-          options?.onError?.(event);
+          const errorPayload = {
+            error: event?.error || null,
+            message: event?.message || "unknown",
+            type: event?.type || "error",
+            timeStamp: event?.timeStamp || Date.now(),
+          };
+          try {
+            console.error(
+              "Speech synthesis error:",
+              JSON.stringify(errorPayload),
+            );
+          } catch {
+            console.error("Speech synthesis error:", errorPayload);
+          }
+          options?.onError?.(errorPayload);
         };
 
         // Speak the word

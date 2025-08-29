@@ -659,7 +659,7 @@ export const UltimateJungleWordCard: React.FC<UltimateJungleWordCardProps> = ({
       )}
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%,
           100% {

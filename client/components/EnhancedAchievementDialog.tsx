@@ -147,8 +147,8 @@ const TreasureChest = React.memo(
       }}
       transition={{
         duration: 0.8,
-        type: "spring",
-        damping: 10,
+        type: "tween",
+        ease: "easeInOut",
       }}
       onAnimationComplete={onAnimationComplete}
     >
@@ -545,10 +545,9 @@ export function EnhancedAchievementDialog({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: -50 }}
             transition={{
-              type: "spring",
+              type: "tween",
               duration: 0.6,
-              damping: 15,
-              stiffness: 100,
+              ease: "easeInOut",
             }}
             className={`relative ${
               isMobile ? "w-full max-w-sm mx-auto" : "w-full max-w-lg mx-auto"
@@ -604,7 +603,12 @@ export function EnhancedAchievementDialog({
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.1, type: "spring", duration: 0.5 }}
+                  transition={{
+                    delay: 0.1,
+                    type: "tween",
+                    duration: 0.5,
+                    ease: "easeOut",
+                  }}
                   className={`relative flex flex-col items-center ${isMobile ? "mb-4" : "mb-6"}`}
                 >
                   <TreasureChest
@@ -619,9 +623,10 @@ export function EnhancedAchievementDialog({
                         initial={{ scale: 0, y: 20 }}
                         animate={{ scale: 1, y: -10 }}
                         transition={{
-                          type: "spring",
+                          type: "tween",
                           duration: 0.6,
                           delay: 0.3,
+                          ease: "easeOut",
                         }}
                         className={`absolute ${isMobile ? "text-4xl" : "text-6xl"} z-10`}
                       >
