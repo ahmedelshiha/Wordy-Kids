@@ -34,7 +34,6 @@ import { ErrorBoundaryTest } from "./components/ErrorBoundaryTest";
 import MobileSettingsDemo from "./pages/MobileSettingsDemo";
 import SettingsPanelV2Demo from "./pages/SettingsPanelV2Demo";
 import IconNavTest from "./pages/IconNavTest";
-import { UltimateWordCardDemo } from "./pages/UltimateWordCardDemo";
 
 const queryClient = new QueryClient();
 
