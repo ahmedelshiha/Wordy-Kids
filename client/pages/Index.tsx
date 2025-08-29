@@ -537,22 +537,26 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Track last regeneration count to prevent infinite loops
   const lastRegenerationCountRef = useRef(0);
+  const lastRegenerationTimeRef = useRef(0);
 
   // Regenerate dashboard words when user completes enough words to progress
   useEffect(() => {
     const wordsCompleted = rememberedWords.size;
     const shouldRegenerate = wordsCompleted > 0 && wordsCompleted % 10 === 0; // Regenerate every 10 completed words
+    const now = Date.now();
 
-    // Prevent infinite loops by checking if we already regenerated for this count
+    // Prevent infinite loops by checking if we already regenerated for this count and adding time-based debounce
     if (
       shouldRegenerate &&
       dashboardSession &&
-      wordsCompleted !== lastRegenerationCountRef.current
+      wordsCompleted !== lastRegenerationCountRef.current &&
+      now - lastRegenerationTimeRef.current > 1000 // 1 second debounce for regeneration
     ) {
       console.log(
         `Regenerating dashboard words after ${wordsCompleted} completed words`,
       );
       lastRegenerationCountRef.current = wordsCompleted;
+      lastRegenerationTimeRef.current = now;
       generateDashboardWords();
     }
   }, [rememberedWords.size, dashboardSession]); // Add dashboardSession to dependencies
@@ -1557,7 +1561,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! 🌟��";
+        achievementTitle = "Category Scholar! 🌟✨";
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
