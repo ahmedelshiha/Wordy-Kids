@@ -708,7 +708,7 @@ export const JungleAdventureWordExplorer: React.FC<
         <div className={cn("absolute top-20 right-20 text-3xl opacity-15", !reducedMotion && "animate-pulse")}>
           🦋
         </div>
-        <div className="absolute bottom-20 left-20 text-5xl opacity-10 animate-float">
+        <div className={cn("absolute bottom-20 left-20 text-5xl opacity-10", !reducedMotion && "animate-float")}>
           🌳
         </div>
         <div className="absolute bottom-10 right-10 text-3xl opacity-20 animate-bounce delay-1000">
