@@ -452,7 +452,10 @@ export const JungleAdventureWordExplorer: React.FC<
               })()}
 
               <div
-                className="text-6xl mb-2 md:group-hover:animate-gentle-bounce"
+                className={cn(
+                  "mb-2 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-1 ring-white/40 shadow-sm text-4xl md:text-6xl transition-transform duration-300",
+                  !reducedMotion && "group-hover:scale-110 group-hover:rotate-3 md:group-hover:animate-gentle-bounce",
+                )}
                 style={{ animationDelay: `${Math.random() * 2}s` }}
               >
                 {category.character.emoji}
