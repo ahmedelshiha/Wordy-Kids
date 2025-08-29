@@ -9,9 +9,7 @@ export function JungleWordExplorerPage() {
     navigate("/app");
   };
 
-  return (
-    <JungleAdventureWordExplorer onBack={handleBack} />
-  );
+  return <JungleAdventureWordExplorer onBack={handleBack} />;
 }
 
 export default JungleWordExplorerPage;

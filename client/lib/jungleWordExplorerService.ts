@@ -86,7 +86,7 @@ export class JungleWordExplorerService {
     } catch (error) {
       console.error("Error loading user progress:", error);
     }
-    
+
     // Return default if error or not found
     return {
       totalWordsLearned: 0,
@@ -121,10 +121,13 @@ export class JungleWordExplorerService {
   }
 
   // Word mastery tracking
-  masterWord(wordId: number, word: Word): { newMastery: boolean; achievements: Achievement[] } {
+  masterWord(
+    wordId: number,
+    word: Word,
+  ): { newMastery: boolean; achievements: Achievement[] } {
     const progress = this.getUserProgress();
     const masteredWords = this.getMasteredWords();
-    
+
     if (masteredWords.has(wordId)) {
       return { newMastery: false, achievements: [] };
     }
@@ -141,10 +144,10 @@ export class JungleWordExplorerService {
 
     // Update category stats
     this.updateCategoryStats(word.category, true);
-    
+
     // Update daily/weekly progress
     this.updateDailyProgress();
-    
+
     this.saveUserProgress(progress);
 
     // Check for new achievements
@@ -156,7 +159,7 @@ export class JungleWordExplorerService {
   unMasterWord(wordId: number): void {
     const progress = this.getUserProgress();
     const masteredWords = this.getMasteredWords();
-    
+
     if (!masteredWords.has(wordId)) return;
 
     masteredWords.delete(wordId);
@@ -184,7 +187,10 @@ export class JungleWordExplorerService {
 
   saveMasteredWords(masteredWords: Set<number>): void {
     try {
-      localStorage.setItem("masteredWords", JSON.stringify(Array.from(masteredWords)));
+      localStorage.setItem(
+        "masteredWords",
+        JSON.stringify(Array.from(masteredWords)),
+      );
     } catch (error) {
       console.error("Error saving mastered words:", error);
     }
@@ -202,7 +208,10 @@ export class JungleWordExplorerService {
 
   saveFavoriteWords(favoriteWords: Set<number>): void {
     try {
-      localStorage.setItem("favoriteWords", JSON.stringify(Array.from(favoriteWords)));
+      localStorage.setItem(
+        "favoriteWords",
+        JSON.stringify(Array.from(favoriteWords)),
+      );
     } catch (error) {
       console.error("Error saving favorite words:", error);
     }
@@ -211,19 +220,26 @@ export class JungleWordExplorerService {
   toggleFavorite(wordId: number): boolean {
     const favorites = this.getFavoriteWords();
     const isFavorite = favorites.has(wordId);
-    
+
     if (isFavorite) {
       favorites.delete(wordId);
     } else {
       favorites.add(wordId);
     }
-    
+
     this.saveFavoriteWords(favorites);
     return !isFavorite;
   }
 
   // Session management
-  startSession(category: string, sessionType: "exploration" | "review" | "challenge" | "quiz" = "exploration"): string {
+  startSession(
+    category: string,
+    sessionType:
+      | "exploration"
+      | "review"
+      | "challenge"
+      | "quiz" = "exploration",
+  ): string {
     const sessionId = `session_${Date.now()}`;
     const session: WordSession = {
       id: sessionId,
@@ -248,7 +264,7 @@ export class JungleWordExplorerService {
 
     session.endTime = new Date();
     session.timeSpent = session.endTime.getTime() - session.startTime.getTime();
-    
+
     // Save to history
     this.saveSessionToHistory(session);
     this.clearCurrentSession();
@@ -290,14 +306,14 @@ export class JungleWordExplorerService {
       const historyKey = "sessionHistory";
       const existing = localStorage.getItem(historyKey);
       const history = existing ? JSON.parse(existing) : [];
-      
+
       history.push(session);
-      
+
       // Keep only last 50 sessions
       if (history.length > 50) {
         history.splice(0, history.length - 50);
       }
-      
+
       localStorage.setItem(historyKey, JSON.stringify(history));
     } catch (error) {
       console.error("Error saving session to history:", error);
@@ -307,7 +323,7 @@ export class JungleWordExplorerService {
   // Achievement system
   checkAchievements(progress: UserProgress): Achievement[] {
     const newAchievements: Achievement[] = [];
-    
+
     progress.achievements.forEach((achievement) => {
       if (achievement.unlocked) return;
 
@@ -352,11 +368,16 @@ export class JungleWordExplorerService {
         achievement.unlocked = true;
         achievement.unlockedAt = new Date();
         newAchievements.push(achievement);
-        
+
         // Award gems for achievement
-        progress.gems += achievement.rarity === "common" ? 1 : 
-                       achievement.rarity === "rare" ? 2 : 
-                       achievement.rarity === "epic" ? 3 : 5;
+        progress.gems +=
+          achievement.rarity === "common"
+            ? 1
+            : achievement.rarity === "rare"
+              ? 2
+              : achievement.rarity === "epic"
+                ? 3
+                : 5;
       }
     });
 
@@ -388,8 +409,8 @@ export class JungleWordExplorerService {
 
   updateGoalProgress(goalId: string, progress: number): void {
     const goals = this.getLearningGoals();
-    const goal = goals.find(g => g.id === goalId);
-    
+    const goal = goals.find((g) => g.id === goalId);
+
     if (goal) {
       goal.current = Math.min(progress, goal.target);
       goal.completed = goal.current >= goal.target;
@@ -403,16 +424,16 @@ export class JungleWordExplorerService {
       const statsKey = "categoryStats";
       const existing = localStorage.getItem(statsKey);
       const stats = existing ? JSON.parse(existing) : {};
-      
+
       if (!stats[category]) {
         stats[category] = { total: 0, mastered: 0 };
       }
-      
+
       stats[category].total += 1;
       if (mastered) {
         stats[category].mastered += 1;
       }
-      
+
       localStorage.setItem(statsKey, JSON.stringify(stats));
     } catch (error) {
       console.error("Error updating category stats:", error);
@@ -424,14 +445,18 @@ export class JungleWordExplorerService {
       const today = new Date().toDateString();
       const dailyKey = `dailyProgress_${today}`;
       const existing = localStorage.getItem(dailyKey);
-      const progress = existing ? JSON.parse(existing) : { wordsLearned: 0, timeSpent: 0 };
-      
+      const progress = existing
+        ? JSON.parse(existing)
+        : { wordsLearned: 0, timeSpent: 0 };
+
       progress.wordsLearned += 1;
       localStorage.setItem(dailyKey, JSON.stringify(progress));
-      
+
       // Update goals
       const goals = this.getLearningGoals();
-      const dailyWordGoal = goals.find(g => g.type === "daily" && g.metric === "words");
+      const dailyWordGoal = goals.find(
+        (g) => g.type === "daily" && g.metric === "words",
+      );
       if (dailyWordGoal) {
         this.updateGoalProgress(dailyWordGoal.id, progress.wordsLearned);
       }
@@ -442,18 +467,18 @@ export class JungleWordExplorerService {
 
   private updateStatsFromSession(session: WordSession): void {
     const progress = this.getUserProgress();
-    
+
     // Update total time spent
     progress.stats.totalTimeSpent += session.timeSpent / (1000 * 60); // Convert to minutes
-    
+
     // Update accuracy
     if (session.accuracy > 0) {
-      progress.stats.averageAccuracy = 
+      progress.stats.averageAccuracy =
         (progress.stats.averageAccuracy + session.accuracy) / 2;
     }
-    
+
     // Update words per session
-    progress.stats.wordsPerSession = 
+    progress.stats.wordsPerSession =
       (progress.stats.wordsPerSession + session.wordsReviewed) / 2;
 
     this.saveUserProgress(progress);
@@ -472,18 +497,24 @@ export class JungleWordExplorerService {
   }
 
   // Utility methods
-  getCategoryProgress(categoryId: string): { total: number; mastered: number; percentage: number } {
+  getCategoryProgress(categoryId: string): {
+    total: number;
+    mastered: number;
+    percentage: number;
+  } {
     try {
       const statsKey = "categoryStats";
       const existing = localStorage.getItem(statsKey);
       const stats = existing ? JSON.parse(existing) : {};
       const categoryStats = stats[categoryId] || { total: 0, mastered: 0 };
-      
+
       return {
         total: categoryStats.total,
         mastered: categoryStats.mastered,
-        percentage: categoryStats.total > 0 ? 
-          Math.round((categoryStats.mastered / categoryStats.total) * 100) : 0,
+        percentage:
+          categoryStats.total > 0
+            ? Math.round((categoryStats.mastered / categoryStats.total) * 100)
+            : 0,
       };
     } catch (error) {
       console.error("Error getting category progress:", error);
@@ -510,7 +541,7 @@ export class JungleWordExplorerService {
   importUserData(jsonData: string): boolean {
     try {
       const data = JSON.parse(jsonData);
-      
+
       if (data.progress) {
         this.saveUserProgress(data.progress);
       }
@@ -523,7 +554,7 @@ export class JungleWordExplorerService {
       if (data.goals) {
         this.saveLearningGoals(data.goals);
       }
-      
+
       return true;
     } catch (error) {
       console.error("Error importing user data:", error);

@@ -57,33 +57,74 @@ type ViewMode = "cards" | "list" | "carousel";
 
 // Jungle characters for different categories
 const JUNGLE_CHARACTERS = {
-  food: { emoji: "🐵", name: "Mango the Monkey", color: "from-orange-400 to-orange-600" },
-  animals: { emoji: "🦁", name: "Leo the Lion", color: "from-yellow-400 to-amber-600" },
-  nature: { emoji: "🦋", name: "Flutter the Butterfly", color: "from-blue-400 to-cyan-600" },
-  objects: { emoji: "🐼", name: "Panda Pete", color: "from-gray-400 to-gray-600" },
-  body: { emoji: "🐸", name: "Freddy the Frog", color: "from-green-400 to-emerald-600" },
-  clothes: { emoji: "🦜", name: "Polly the Parrot", color: "from-purple-400 to-violet-600" },
-  family: { emoji: "🐻", name: "Buddy the Bear", color: "from-brown-400 to-yellow-600" },
-  feelings: { emoji: "🦊", name: "Felix the Fox", color: "from-red-400 to-pink-600" },
-  colors: { emoji: "🌈", name: "Rainbow", color: "from-pink-400 to-purple-600" },
-  numbers: { emoji: "🐨", name: "Count Koala", color: "from-indigo-400 to-blue-600" },
+  food: {
+    emoji: "🐵",
+    name: "Mango the Monkey",
+    color: "from-orange-400 to-orange-600",
+  },
+  animals: {
+    emoji: "🦁",
+    name: "Leo the Lion",
+    color: "from-yellow-400 to-amber-600",
+  },
+  nature: {
+    emoji: "🦋",
+    name: "Flutter the Butterfly",
+    color: "from-blue-400 to-cyan-600",
+  },
+  objects: {
+    emoji: "🐼",
+    name: "Panda Pete",
+    color: "from-gray-400 to-gray-600",
+  },
+  body: {
+    emoji: "🐸",
+    name: "Freddy the Frog",
+    color: "from-green-400 to-emerald-600",
+  },
+  clothes: {
+    emoji: "🦜",
+    name: "Polly the Parrot",
+    color: "from-purple-400 to-violet-600",
+  },
+  family: {
+    emoji: "🐻",
+    name: "Buddy the Bear",
+    color: "from-brown-400 to-yellow-600",
+  },
+  feelings: {
+    emoji: "🦊",
+    name: "Felix the Fox",
+    color: "from-red-400 to-pink-600",
+  },
+  colors: {
+    emoji: "🌈",
+    name: "Rainbow",
+    color: "from-pink-400 to-purple-600",
+  },
+  numbers: {
+    emoji: "🐨",
+    name: "Count Koala",
+    color: "from-indigo-400 to-blue-600",
+  },
 };
 
 // Get unique categories from database
 const getCategories = () => {
-  const categories = [...new Set(wordsDatabase.map(word => word.category))];
-  return categories.map(category => ({
+  const categories = [...new Set(wordsDatabase.map((word) => word.category))];
+  return categories.map((category) => ({
     id: category,
     name: category.charAt(0).toUpperCase() + category.slice(1),
-    character: JUNGLE_CHARACTERS[category as keyof typeof JUNGLE_CHARACTERS] || JUNGLE_CHARACTERS.nature,
-    wordCount: wordsDatabase.filter(w => w.category === category).length,
+    character:
+      JUNGLE_CHARACTERS[category as keyof typeof JUNGLE_CHARACTERS] ||
+      JUNGLE_CHARACTERS.nature,
+    wordCount: wordsDatabase.filter((w) => w.category === category).length,
   }));
 };
 
-export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerProps> = ({
-  onBack,
-  className,
-}) => {
+export const JungleAdventureWordExplorer: React.FC<
+  JungleAdventureWordExplorerProps
+> = ({ onBack, className }) => {
   // Core state
   const [exploreMode, setExploreMode] = useState<ExploreMode>("map");
   const [viewMode, setViewMode] = useState<ViewMode>("cards");
@@ -92,7 +133,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
-  
+
   // User progress state
   const [masteredWords, setMasteredWords] = useState<Set<number>>(new Set());
   const [favoriteWords, setFavoriteWords] = useState<Set<number>>(new Set());
@@ -138,11 +179,17 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
 
   // Save user data when it changes
   useEffect(() => {
-    localStorage.setItem("masteredWords", JSON.stringify(Array.from(masteredWords)));
+    localStorage.setItem(
+      "masteredWords",
+      JSON.stringify(Array.from(masteredWords)),
+    );
   }, [masteredWords]);
 
   useEffect(() => {
-    localStorage.setItem("favoriteWords", JSON.stringify(Array.from(favoriteWords)));
+    localStorage.setItem(
+      "favoriteWords",
+      JSON.stringify(Array.from(favoriteWords)),
+    );
   }, [favoriteWords]);
 
   useEffect(() => {
@@ -150,112 +197,128 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
   }, [userProgress]);
 
   // Filter words based on search
-  const filteredWords = currentWords.filter(word =>
-    word.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    word.definition.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredWords = currentWords.filter(
+    (word) =>
+      word.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      word.definition.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // Handle category selection
-  const handleCategorySelect = useCallback((categoryId: string) => {
-    setSelectedCategory(categoryId);
-    setCurrentWords(getWordsByCategory(categoryId));
-    setCurrentWordIndex(0);
-    setExploreMode("adventure");
-    setSearchQuery("");
+  const handleCategorySelect = useCallback(
+    (categoryId: string) => {
+      setSelectedCategory(categoryId);
+      setCurrentWords(getWordsByCategory(categoryId));
+      setCurrentWordIndex(0);
+      setExploreMode("adventure");
+      setSearchQuery("");
 
-    // Play category select sound
-    if (audioEnabled) {
-      audioService.playClickSound();
-    }
+      // Play category select sound
+      if (audioEnabled) {
+        audioService.playClickSound();
+      }
 
-    // Haptic feedback
-    if (navigator.vibrate) {
-      navigator.vibrate(50);
-    }
-  }, [audioEnabled]);
+      // Haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+    },
+    [audioEnabled],
+  );
 
   // Handle word pronunciation
-  const handlePronounce = useCallback(async (word: Word) => {
-    if (!audioEnabled) return;
+  const handlePronounce = useCallback(
+    async (word: Word) => {
+      if (!audioEnabled) return;
 
-    setIsPlaying(true);
-    try {
-      await audioService.pronounceWord(word.word, {});
-    } catch (error) {
-      console.error("Error pronouncing word:", error);
-    } finally {
-      setIsPlaying(false);
-    }
-  }, [audioEnabled]);
+      setIsPlaying(true);
+      try {
+        await audioService.pronounceWord(word.word, {});
+      } catch (error) {
+        console.error("Error pronouncing word:", error);
+      } finally {
+        setIsPlaying(false);
+      }
+    },
+    [audioEnabled],
+  );
 
   // Handle word mastery
-  const handleMasterWord = useCallback((wordId: number) => {
-    const newMastered = new Set(masteredWords);
-    const wasMastered = masteredWords.has(wordId);
-    
-    if (wasMastered) {
-      newMastered.delete(wordId);
-    } else {
-      newMastered.add(wordId);
-      // Update progress
-      setUserProgress(prev => ({
-        ...prev,
-        totalWordsLearned: prev.totalWordsLearned + 1,
-        gems: prev.gems + 1,
-      }));
-    }
-    
-    setMasteredWords(newMastered);
+  const handleMasterWord = useCallback(
+    (wordId: number) => {
+      const newMastered = new Set(masteredWords);
+      const wasMastered = masteredWords.has(wordId);
 
-    // Play sound effect
-    if (audioEnabled) {
-      audioService.playSuccessSound();
-    }
+      if (wasMastered) {
+        newMastered.delete(wordId);
+      } else {
+        newMastered.add(wordId);
+        // Update progress
+        setUserProgress((prev) => ({
+          ...prev,
+          totalWordsLearned: prev.totalWordsLearned + 1,
+          gems: prev.gems + 1,
+        }));
+      }
 
-    // Celebration animation
-    if (navigator.vibrate) {
-      navigator.vibrate([50, 100, 50]);
-    }
-  }, [masteredWords, audioEnabled]);
+      setMasteredWords(newMastered);
+
+      // Play sound effect
+      if (audioEnabled) {
+        audioService.playSuccessSound();
+      }
+
+      // Celebration animation
+      if (navigator.vibrate) {
+        navigator.vibrate([50, 100, 50]);
+      }
+    },
+    [masteredWords, audioEnabled],
+  );
 
   // Handle word favorite toggle
-  const handleToggleFavorite = useCallback((wordId: number) => {
-    const newFavorites = new Set(favoriteWords);
-    if (favoriteWords.has(wordId)) {
-      newFavorites.delete(wordId);
-    } else {
-      newFavorites.add(wordId);
-    }
-    setFavoriteWords(newFavorites);
+  const handleToggleFavorite = useCallback(
+    (wordId: number) => {
+      const newFavorites = new Set(favoriteWords);
+      if (favoriteWords.has(wordId)) {
+        newFavorites.delete(wordId);
+      } else {
+        newFavorites.add(wordId);
+      }
+      setFavoriteWords(newFavorites);
 
-    if (audioEnabled) {
-      audioService.playClickSound();
-    }
-  }, [favoriteWords, audioEnabled]);
+      if (audioEnabled) {
+        audioService.playClickSound();
+      }
+    },
+    [favoriteWords, audioEnabled],
+  );
 
   // Handle word navigation
-  const handleWordNavigation = useCallback((direction: "prev" | "next" | "random") => {
-    const maxIndex = filteredWords.length - 1;
-    let newIndex = currentWordIndex;
+  const handleWordNavigation = useCallback(
+    (direction: "prev" | "next" | "random") => {
+      const maxIndex = filteredWords.length - 1;
+      let newIndex = currentWordIndex;
 
-    switch (direction) {
-      case "prev":
-        newIndex = currentWordIndex > 0 ? currentWordIndex - 1 : maxIndex;
-        break;
-      case "next":
-        newIndex = currentWordIndex < maxIndex ? currentWordIndex + 1 : 0;
-        break;
-      case "random":
-        newIndex = Math.floor(Math.random() * filteredWords.length);
-        break;
-    }
+      switch (direction) {
+        case "prev":
+          newIndex = currentWordIndex > 0 ? currentWordIndex - 1 : maxIndex;
+          break;
+        case "next":
+          newIndex = currentWordIndex < maxIndex ? currentWordIndex + 1 : 0;
+          break;
+        case "random":
+          newIndex = Math.floor(Math.random() * filteredWords.length);
+          break;
+      }
 
-    setCurrentWordIndex(newIndex);
+      setCurrentWordIndex(newIndex);
 
-    if (audioEnabled) {
-      audioService.playWhooshSound();
-    }
-  }, [currentWordIndex, filteredWords.length, audioEnabled]);
+      if (audioEnabled) {
+        audioService.playWhooshSound();
+      }
+    },
+    [currentWordIndex, filteredWords.length, audioEnabled],
+  );
 
   // Get categories data
   const categories = getCategories();
@@ -273,22 +336,26 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
           className="cursor-pointer"
           onClick={() => handleCategorySelect(category.id)}
         >
-          <div className={cn(
-            "relative overflow-hidden rounded-2xl p-6 shadow-lg border-2 border-white/50",
-            "bg-gradient-to-br", category.character.color,
-            "hover:shadow-xl transition-all duration-300"
-          )}>
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-2xl p-6 shadow-lg border-2 border-white/50",
+              "bg-gradient-to-br",
+              category.character.color,
+              "hover:shadow-xl transition-all duration-300",
+            )}
+          >
             {/* Character */}
             <div className="text-center mb-4">
-              <div className="text-6xl mb-2 animate-bounce" style={{ animationDelay: `${Math.random() * 2}s` }}>
+              <div
+                className="text-6xl mb-2 animate-bounce"
+                style={{ animationDelay: `${Math.random() * 2}s` }}
+              >
                 {category.character.emoji}
               </div>
               <h3 className="text-white font-bold text-lg mb-1">
                 {category.character.name}
               </h3>
-              <p className="text-white/90 text-sm">
-                {category.name} Expert
-              </p>
+              <p className="text-white/90 text-sm">{category.name} Expert</p>
             </div>
 
             {/* Stats */}
@@ -296,9 +363,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
               <div className="text-white font-bold text-2xl">
                 {category.wordCount}
               </div>
-              <div className="text-white/90 text-sm">
-                Words to Discover
-              </div>
+              <div className="text-white/90 text-sm">Words to Discover</div>
             </div>
 
             {/* Progress indicator */}
@@ -306,15 +371,28 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
               <div className="flex justify-between items-center mb-1">
                 <span className="text-white/80 text-xs">Progress</span>
                 <span className="text-white text-xs font-bold">
-                  {Math.round((Array.from(masteredWords).filter(id => 
-                    wordsDatabase.find(w => w.id === id)?.category === category.id
-                  ).length / category.wordCount) * 100)}%
+                  {Math.round(
+                    (Array.from(masteredWords).filter(
+                      (id) =>
+                        wordsDatabase.find((w) => w.id === id)?.category ===
+                        category.id,
+                    ).length /
+                      category.wordCount) *
+                      100,
+                  )}
+                  %
                 </span>
               </div>
-              <Progress 
-                value={(Array.from(masteredWords).filter(id => 
-                  wordsDatabase.find(w => w.id === id)?.category === category.id
-                ).length / category.wordCount) * 100}
+              <Progress
+                value={
+                  (Array.from(masteredWords).filter(
+                    (id) =>
+                      wordsDatabase.find((w) => w.id === id)?.category ===
+                      category.id,
+                  ).length /
+                    category.wordCount) *
+                  100
+                }
                 className="h-2 bg-white/20"
               />
             </div>
@@ -345,12 +423,14 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
         transition={{ delay: index * 0.1 }}
         className="relative"
       >
-        <div className={cn(
-          "relative overflow-hidden rounded-2xl p-6 shadow-lg border-2 border-white/50",
-          "bg-gradient-to-br from-white to-blue-50",
-          "hover:shadow-xl transition-all duration-300",
-          isMastered && "ring-2 ring-green-400 ring-offset-2"
-        )}>
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl p-6 shadow-lg border-2 border-white/50",
+            "bg-gradient-to-br from-white to-blue-50",
+            "hover:shadow-xl transition-all duration-300",
+            isMastered && "ring-2 ring-green-400 ring-offset-2",
+          )}
+        >
           {/* Header badges */}
           <div className="flex justify-between items-start mb-4">
             <div className="flex gap-2">
@@ -368,26 +448,24 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
                 onClick={() => handleToggleFavorite(word.id)}
                 className={cn(
                   "w-8 h-8 p-0 rounded-full",
-                  isFavorite ? "text-red-500 bg-red-50" : "text-gray-400"
+                  isFavorite ? "text-red-500 bg-red-50" : "text-gray-400",
                 )}
               >
-                <Heart className={cn("w-4 h-4", isFavorite && "fill-current")} />
+                <Heart
+                  className={cn("w-4 h-4", isFavorite && "fill-current")}
+                />
               </Button>
             </div>
           </div>
 
           {/* Word display */}
           <div className="text-center mb-6">
-            <div className="text-6xl mb-3">
-              {word.emoji || "📝"}
-            </div>
+            <div className="text-6xl mb-3">{word.emoji || "📝"}</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               {word.word}
             </h2>
             {word.pronunciation && (
-              <p className="text-gray-500 text-sm mb-2">
-                {word.pronunciation}
-              </p>
+              <p className="text-gray-500 text-sm mb-2">{word.pronunciation}</p>
             )}
           </div>
 
@@ -426,32 +504,40 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
               disabled={isPlaying}
               className={cn(
                 "bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6 py-2",
-                isPlaying && "animate-pulse"
+                isPlaying && "animate-pulse",
               )}
             >
               <Volume2 className="w-4 h-4 mr-2" />
               Say It
             </Button>
-            
+
             <Button
               onClick={() => setShowDefinitions(!showDefinitions)}
               variant="outline"
               className="rounded-full px-6 py-2"
             >
-              {showDefinitions ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+              {showDefinitions ? (
+                <EyeOff className="w-4 h-4 mr-2" />
+              ) : (
+                <Eye className="w-4 h-4 mr-2" />
+              )}
               {showDefinitions ? "Hide" : "Show"}
             </Button>
-            
+
             <Button
               onClick={() => handleMasterWord(word.id)}
               className={cn(
                 "rounded-full px-6 py-2",
-                isMastered 
-                  ? "bg-green-500 hover:bg-green-600 text-white" 
-                  : "bg-yellow-500 hover:bg-yellow-600 text-white"
+                isMastered
+                  ? "bg-green-500 hover:bg-green-600 text-white"
+                  : "bg-yellow-500 hover:bg-yellow-600 text-white",
               )}
             >
-              {isMastered ? <Crown className="w-4 h-4 mr-2" /> : <Star className="w-4 h-4 mr-2" />}
+              {isMastered ? (
+                <Crown className="w-4 h-4 mr-2" />
+              ) : (
+                <Star className="w-4 h-4 mr-2" />
+              )}
               {isMastered ? "Mastered!" : "Master It"}
             </Button>
           </div>
@@ -492,7 +578,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
     }
 
     const currentWord = filteredWords[currentWordIndex];
-    const categoryInfo = categories.find(c => c.id === selectedCategory);
+    const categoryInfo = categories.find((c) => c.id === selectedCategory);
 
     return (
       <div className="max-w-4xl mx-auto">
@@ -507,18 +593,21 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
           <p className="text-gray-600 mb-4">
             Discover amazing {categoryInfo?.name.toLowerCase()} words!
           </p>
-          
+
           {/* Progress */}
           <div className="flex items-center justify-center gap-4 mb-6">
             <Badge variant="outline" className="px-4 py-2">
               Word {currentWordIndex + 1} of {filteredWords.length}
             </Badge>
-            <Progress 
-              value={(currentWordIndex + 1) / filteredWords.length * 100}
+            <Progress
+              value={((currentWordIndex + 1) / filteredWords.length) * 100}
               className="w-32"
             />
             <Badge variant="outline" className="px-4 py-2">
-              {Math.round((currentWordIndex + 1) / filteredWords.length * 100)}%
+              {Math.round(
+                ((currentWordIndex + 1) / filteredWords.length) * 100,
+              )}
+              %
             </Badge>
           </div>
         </div>
@@ -546,7 +635,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          
+
           <Button
             onClick={() => handleWordNavigation("random")}
             disabled={filteredWords.length <= 1}
@@ -555,7 +644,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
           >
             <Shuffle className="w-4 h-4" />
           </Button>
-          
+
           <Button
             onClick={() => handleWordNavigation("next")}
             disabled={filteredWords.length <= 1}
@@ -575,7 +664,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
       className={cn(
         "min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50",
         "jungle-pattern-bg relative overflow-hidden",
-        className
+        className,
       )}
       style={{
         fontSize: fontSize === "large" ? "1.125rem" : "1rem",
@@ -583,10 +672,18 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce">🌿</div>
-        <div className="absolute top-20 right-20 text-3xl opacity-15 animate-pulse">🦋</div>
-        <div className="absolute bottom-20 left-20 text-5xl opacity-10 animate-float">🌳</div>
-        <div className="absolute bottom-10 right-10 text-3xl opacity-20 animate-bounce delay-1000">⭐</div>
+        <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce">
+          🌿
+        </div>
+        <div className="absolute top-20 right-20 text-3xl opacity-15 animate-pulse">
+          🦋
+        </div>
+        <div className="absolute bottom-20 left-20 text-5xl opacity-10 animate-float">
+          🌳
+        </div>
+        <div className="absolute bottom-10 right-10 text-3xl opacity-20 animate-bounce delay-1000">
+          ⭐
+        </div>
       </div>
 
       {/* Header */}
@@ -605,7 +702,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
               )}
-              
+
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                   🌟 Jungle Word Explorer
@@ -627,7 +724,7 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
                 <Map className="w-4 h-4 mr-2" />
                 Map
               </Button>
-              
+
               {selectedCategory && (
                 <Button
                   onClick={() => setExploreMode("adventure")}
@@ -697,7 +794,9 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
               <div className="hidden sm:flex items-center gap-3 px-3 py-1 bg-white/80 rounded-full border border-gray-200">
                 <div className="flex items-center gap-1">
                   <Trophy className="w-4 h-4 text-yellow-500" />
-                  <span className="text-sm font-bold">{userProgress.totalWordsLearned}</span>
+                  <span className="text-sm font-bold">
+                    {userProgress.totalWordsLearned}
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Zap className="w-4 h-4 text-blue-500" />
@@ -736,8 +835,13 @@ export const JungleAdventureWordExplorer: React.FC<JungleAdventureWordExplorerPr
       {/* CSS for animations */}
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
         }
         .animate-float {
           animation: float 6s ease-in-out infinite;

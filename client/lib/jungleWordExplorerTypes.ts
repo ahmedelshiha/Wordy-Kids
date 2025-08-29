@@ -124,7 +124,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-orange-400 to-orange-600",
     personality: "Energetic and always hungry for knowledge!",
     specialAbility: "Can smell delicious words from miles away",
-    backstory: "Mango loves swinging through fruit trees and discovering tasty words!",
+    backstory:
+      "Mango loves swinging through fruit trees and discovering tasty words!",
   },
   animals: {
     emoji: "🦁",
@@ -140,7 +141,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-blue-400 to-cyan-600",
     personality: "Graceful and loves beautiful things",
     specialAbility: "Creates colorful word clouds when you master nature words",
-    backstory: "Flutter dances through flowers and spreads the magic of nature words!",
+    backstory:
+      "Flutter dances through flowers and spreads the magic of nature words!",
   },
   objects: {
     emoji: "🐼",
@@ -148,7 +150,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-gray-400 to-gray-600",
     personality: "Careful and thoughtful about everyday things",
     specialAbility: "Organizes objects by teaching their special uses",
-    backstory: "Pete loves organizing his bamboo collection and teaching about useful objects!",
+    backstory:
+      "Pete loves organizing his bamboo collection and teaching about useful objects!",
   },
   body: {
     emoji: "🐸",
@@ -156,7 +159,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-green-400 to-emerald-600",
     personality: "Bouncy and health-conscious",
     specialAbility: "Jumps with joy when you learn body parts",
-    backstory: "Freddy hops around the pond teaching about staying healthy and strong!",
+    backstory:
+      "Freddy hops around the pond teaching about staying healthy and strong!",
   },
   clothes: {
     emoji: "🦜",
@@ -164,7 +168,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-purple-400 to-violet-600",
     personality: "Colorful and fashion-forward",
     specialAbility: "Shows off different outfits for every clothing word",
-    backstory: "Polly loves trying on different colored feathers and teaching about fashion!",
+    backstory:
+      "Polly loves trying on different colored feathers and teaching about fashion!",
   },
   family: {
     emoji: "🐻",
@@ -172,7 +177,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-brown-400 to-yellow-600",
     personality: "Warm and caring about relationships",
     specialAbility: "Gives big hugs when you learn family words",
-    backstory: "Buddy has a big family in the forest and loves teaching about love and care!",
+    backstory:
+      "Buddy has a big family in the forest and loves teaching about love and care!",
   },
   feelings: {
     emoji: "🦊",
@@ -180,7 +186,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-red-400 to-pink-600",
     personality: "Smart and emotionally intelligent",
     specialAbility: "Changes colors to match different emotions",
-    backstory: "Felix is very wise and helps everyone understand their feelings better!",
+    backstory:
+      "Felix is very wise and helps everyone understand their feelings better!",
   },
   colors: {
     emoji: "🌈",
@@ -188,7 +195,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-pink-400 to-purple-600",
     personality: "Bright and cheerful",
     specialAbility: "Paints the sky with beautiful colors for each word",
-    backstory: "Rainbow appears after jungle rain storms to teach about all the colors!",
+    backstory:
+      "Rainbow appears after jungle rain storms to teach about all the colors!",
   },
   numbers: {
     emoji: "🐨",
@@ -196,7 +204,8 @@ export const JUNGLE_CHARACTERS: Record<string, JungleCharacter> = {
     color: "from-indigo-400 to-blue-600",
     personality: "Mathematical and precise",
     specialAbility: "Counts eucalyptus leaves to demonstrate numbers",
-    backstory: "Count Koala loves hanging upside down and teaching math through nature!",
+    backstory:
+      "Count Koala loves hanging upside down and teaching math through nature!",
   },
 };
 
@@ -330,7 +339,10 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
 };
 
 // Learning goals templates
-export const LEARNING_GOAL_TEMPLATES: Omit<LearningGoal, "id" | "current" | "completed">[] = [
+export const LEARNING_GOAL_TEMPLATES: Omit<
+  LearningGoal,
+  "id" | "current" | "completed"
+>[] = [
   {
     type: "daily",
     target: 5,
@@ -362,7 +374,9 @@ export const LEARNING_GOAL_TEMPLATES: Omit<LearningGoal, "id" | "current" | "com
 ];
 
 // Utility functions
-export const getCharacterForCategory = (categoryId: string): JungleCharacter => {
+export const getCharacterForCategory = (
+  categoryId: string,
+): JungleCharacter => {
   return JUNGLE_CHARACTERS[categoryId] || JUNGLE_CHARACTERS.nature;
 };
 
@@ -384,19 +398,28 @@ export const calculateProgress = (current: number, target: number): number => {
 
 export const getRarityColor = (rarity: string): string => {
   switch (rarity) {
-    case "common": return "text-gray-600";
-    case "rare": return "text-blue-600";
-    case "epic": return "text-purple-600";
-    case "legendary": return "text-yellow-600";
-    default: return "text-gray-600";
+    case "common":
+      return "text-gray-600";
+    case "rare":
+      return "text-blue-600";
+    case "epic":
+      return "text-purple-600";
+    case "legendary":
+      return "text-yellow-600";
+    default:
+      return "text-gray-600";
   }
 };
 
 export const getDifficultyColor = (difficulty: string): string => {
   switch (difficulty) {
-    case "easy": return "text-green-600 bg-green-50";
-    case "medium": return "text-yellow-600 bg-yellow-50";
-    case "hard": return "text-red-600 bg-red-50";
-    default: return "text-gray-600 bg-gray-50";
+    case "easy":
+      return "text-green-600 bg-green-50";
+    case "medium":
+      return "text-yellow-600 bg-yellow-50";
+    case "hard":
+      return "text-red-600 bg-red-50";
+    default:
+      return "text-gray-600 bg-gray-50";
   }
 };

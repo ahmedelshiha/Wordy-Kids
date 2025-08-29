@@ -648,9 +648,14 @@ export default function Index({ initialProfile }: IndexProps) {
       wordsLearned: rememberedWords.size,
       wordsRemembered: rememberedWords.size,
       sessionCount: dailySessionCount,
-      accuracy: rememberedWords.size + forgottenWords.size > 0
-        ? Math.round((rememberedWords.size / (rememberedWords.size + forgottenWords.size)) * 100)
-        : 0,
+      accuracy:
+        rememberedWords.size + forgottenWords.size > 0
+          ? Math.round(
+              (rememberedWords.size /
+                (rememberedWords.size + forgottenWords.size)) *
+                100,
+            )
+          : 0,
     };
 
     const sessionData: Partial<SessionData> = {
@@ -740,9 +745,12 @@ export default function Index({ initialProfile }: IndexProps) {
           wordsLearned: rememberedCount,
           wordsRemembered: rememberedCount,
           sessionCount: dailySessionCount,
-          accuracy: rememberedCount + forgottenCount > 0
-            ? Math.round((rememberedCount / (rememberedCount + forgottenCount)) * 100)
-            : 0,
+          accuracy:
+            rememberedCount + forgottenCount > 0
+              ? Math.round(
+                  (rememberedCount / (rememberedCount + forgottenCount)) * 100,
+                )
+              : 0,
         };
 
         persistenceService.queueSave(
@@ -757,7 +765,12 @@ export default function Index({ initialProfile }: IndexProps) {
 
       return () => clearTimeout(timeoutId);
     }
-  }, [rememberedWords.size, forgottenWords.size, dailySessionCount, persistenceService]);
+  }, [
+    rememberedWords.size,
+    forgottenWords.size,
+    dailySessionCount,
+    persistenceService,
+  ]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
@@ -857,12 +870,7 @@ export default function Index({ initialProfile }: IndexProps) {
       window.removeEventListener("pageshow", handlePageShow);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [
-    saveSessionData,
-    persistenceService,
-    sessionPersistence,
-    lastAutoSave,
-  ]);
+  }, [saveSessionData, persistenceService, sessionPersistence, lastAutoSave]);
 
   // Tab focus detection for immediate synchronization
   useEffect(() => {
@@ -2427,8 +2435,13 @@ export default function Index({ initialProfile }: IndexProps) {
                             <TabsContent value="learn">
                               {/* Note: Learn navigation now redirects to /jungle-word-explorer */}
                               <div className="text-center py-8 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg mb-4">
-                                <p className="text-lg font-semibold text-green-800 mb-2">🌿 Redirecting to Jungle Word Explorer... 🌿</p>
-                                <p className="text-green-600">You'll be taken to the new enhanced word learning experience!</p>
+                                <p className="text-lg font-semibold text-green-800 mb-2">
+                                  🌿 Redirecting to Jungle Word Explorer... 🌿
+                                </p>
+                                <p className="text-green-600">
+                                  You'll be taken to the new enhanced word
+                                  learning experience!
+                                </p>
                               </div>
                               <div className="space-y-4">
                                 {learningMode === "selector" ||
@@ -4040,7 +4053,8 @@ export default function Index({ initialProfile }: IndexProps) {
                   },
                 };
 
-                const action = navigationActions[newId as keyof typeof navigationActions];
+                const action =
+                  navigationActions[newId as keyof typeof navigationActions];
                 if (action) {
                   action();
                 }
