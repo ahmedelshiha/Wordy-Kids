@@ -935,7 +935,7 @@ export const JungleAdventureWordExplorer: React.FC<
                   </Button>
                   <Button
                     onClick={() => setViewMode("list")}
-                    variant={viewMode === "list" ? "default" : "ghost"}
+                    variant={viewMode === "list" ? "default" : "secondary"}
                     size="sm"
                     aria-label="List view"
                     className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
