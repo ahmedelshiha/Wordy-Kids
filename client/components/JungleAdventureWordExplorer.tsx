@@ -660,7 +660,7 @@ export const JungleAdventureWordExplorer: React.FC<
           </AnimatePresence>
 
           {/* Actions */}
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-2 md:gap-3">
             <Button
               onClick={() => handlePronounce(word)}
               disabled={isPlaying}
