@@ -814,7 +814,8 @@ export const JungleAdventureWordExplorer: React.FC<
                     onClick={() => setViewMode("list")}
                     variant={viewMode === "list" ? "default" : "ghost"}
                     size="sm"
-                    className="rounded-full w-8 h-8 p-0"
+                    aria-label="List view"
+                    className="rounded-full w-12 h-12 p-0"
                   >
                     <Grid3X3 className="w-4 h-4" />
                   </Button>
