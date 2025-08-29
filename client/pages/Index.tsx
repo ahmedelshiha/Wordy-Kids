@@ -491,16 +491,21 @@ export default function Index({ initialProfile }: IndexProps) {
 
   // Track last category to prevent unnecessary regeneration
   const lastCategoryRef = useRef<string>("");
+  const lastWordGenerationRef = useRef<number>(0);
 
   // Initialize dashboard words when category changes or component mounts
   useEffect(() => {
     const initializeWords = () => {
+      const now = Date.now();
+      // Debounce word generation to prevent rapid successive calls
       if (
         selectedCategory &&
         selectedCategory !== lastCategoryRef.current &&
-        currentDashboardWords.length === 0
+        currentDashboardWords.length === 0 &&
+        now - lastWordGenerationRef.current > 500 // 500ms debounce
       ) {
         lastCategoryRef.current = selectedCategory;
+        lastWordGenerationRef.current = now;
         generateFreshWords();
       }
     };
@@ -1552,7 +1557,7 @@ export default function Index({ initialProfile }: IndexProps) {
         achievementIcon = "🎓🌟";
         achievementMessage = `Excellent work! You mastered ${categoryDisplayName} with ${accuracy}% accuracy! Almost perfect!\n\n🎁 Expert Bonus: 150 points!`;
       } else if (accuracy >= 75) {
-        achievementTitle = "Category Scholar! 🌟✨";
+        achievementTitle = "Category Scholar! 🌟��";
         achievementIcon = "📚";
         achievementMessage = `Great job! You completed ${categoryDisplayName} with ${accuracy}% accuracy! Keep up the good work!\n\n🎓 Scholar Bonus: 100 points!`;
       } else if (accuracy >= 50) {
