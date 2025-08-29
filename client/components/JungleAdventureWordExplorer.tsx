@@ -558,7 +558,7 @@ export const JungleAdventureWordExplorer: React.FC<
               disabled={isPlaying}
               aria-label={`Pronounce ${word.word}`}
               className={cn(
-                "bg-blue-500 hover:bg-blue-600 text-white rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base",
+                "bg-blue-500 hover:bg-blue-600 text-white rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base transition-transform hover:scale-105 active:scale-95",
                 isPlaying && "animate-pulse",
               )}
             >
