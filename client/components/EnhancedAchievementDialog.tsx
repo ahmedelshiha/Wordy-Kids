@@ -545,10 +545,10 @@ export function EnhancedAchievementDialog({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: -50 }}
             transition={{
-            type: "tween",
-            duration: 0.6,
-            ease: "easeInOut",
-          }}
+              type: "tween",
+              duration: 0.6,
+              ease: "easeInOut",
+            }}
             className={`relative ${
               isMobile ? "w-full max-w-sm mx-auto" : "w-full max-w-lg mx-auto"
             }`}
@@ -603,7 +603,12 @@ export function EnhancedAchievementDialog({
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.1, type: "tween", duration: 0.5, ease: "easeOut" }}
+                  transition={{
+                    delay: 0.1,
+                    type: "tween",
+                    duration: 0.5,
+                    ease: "easeOut",
+                  }}
                   className={`relative flex flex-col items-center ${isMobile ? "mb-4" : "mb-6"}`}
                 >
                   <TreasureChest
