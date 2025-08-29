@@ -897,7 +897,7 @@ export const JungleAdventureWordExplorer: React.FC<
                       setAgeGroup(g);
                       setAnnounce(`Age mode set to ${g}`);
                     }}
-                    variant={ageGroup === g ? "default" : "ghost"}
+                    variant={ageGroup === g ? "default" : "secondary"}
                     size="sm"
                     className="rounded-full px-3"
                     aria-label={`Set age mode ${g}`}
