@@ -875,7 +875,7 @@ export const JungleAdventureWordExplorer: React.FC<
               {selectedCategory && (
                 <Button
                   onClick={() => setExploreMode("adventure")}
-                  variant={exploreMode === "adventure" ? "default" : "ghost"}
+                  variant={exploreMode === "adventure" ? "default" : "secondary"}
                   size="sm"
                   aria-label="Go to adventure"
                   className="rounded-full transition-transform hover:scale-105 active:scale-95"
