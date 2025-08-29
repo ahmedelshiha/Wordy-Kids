@@ -867,32 +867,10 @@ export default function Index({ initialProfile }: IndexProps) {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [
-    activeTab,
-    currentWordIndex,
-    selectedCategory,
-    learningMode,
-    userRole,
-    forgottenWords,
-    rememberedWords,
-    excludedWordIds,
-    currentProgress,
-    dailySessionCount,
-    currentProfile,
-    childStats,
-    currentSessionId,
-    learningGoals,
-    currentDashboardWords,
-    customWords,
-    practiceWords,
-    showQuiz,
-    selectedQuizType,
-    showMatchingGame,
-    gameMode,
-    showPracticeGame,
+    saveSessionData,
     persistenceService,
     sessionPersistence,
     lastAutoSave,
-    setFeedback,
   ]);
 
   // Tab focus detection for immediate synchronization
