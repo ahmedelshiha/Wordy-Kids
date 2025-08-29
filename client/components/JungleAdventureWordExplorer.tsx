@@ -853,7 +853,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                   🌟 Jungle Word Explorer
                 </h1>
-                <p className="text-sm text-gray-600">
+                <p className="hidden md:block text-sm text-gray-600">
                   Discover amazing words with jungle friends!
                 </p>
               </div>
