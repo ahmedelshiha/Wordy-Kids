@@ -493,8 +493,17 @@ export const JungleAdventureWordExplorer: React.FC<
             </div>
           </div>
 
-          {/* Word display */}
-          <div className="text-center mb-6">
+          {/* Word display - tap to flip */}
+          <div
+            className="text-center mb-6 cursor-pointer select-none"
+            role="button"
+            tabIndex={0}
+            onClick={() => setShowDefinitions(!showDefinitions)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setShowDefinitions(!showDefinitions);
+            }}
+            aria-label={showDefinitions ? "Hide definition" : "Show definition"}
+          >
             <div className="text-6xl mb-3">{word.emoji || "📝"}</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               {word.word}
