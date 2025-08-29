@@ -905,7 +905,7 @@ export const JungleAdventureWordExplorer: React.FC<
 
       {/* Header */}
       <header className="relative z-10 bg-white/80 backdrop-blur-sm border-b border-white/50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-3 py-2 md:px-4 md:py-4">
+        <div className="max-w-7xl mx-auto px-2 py-1 md:px-4 md:py-4">
           <div className="flex items-center justify-between">
             {/* Left: Back button and title */}
             <div className="flex items-center gap-4">
@@ -922,7 +922,7 @@ export const JungleAdventureWordExplorer: React.FC<
               )}
 
               <div>
-                <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                   🌟 Jungle Word Explorer
                 </h1>
                 <p className="hidden md:block text-sm text-gray-600">
@@ -961,7 +961,7 @@ export const JungleAdventureWordExplorer: React.FC<
             </div>
 
             {/* Right: Controls */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 md:gap-2">
               {/* Age mode selector */}
               <div className="hidden md:flex items-center gap-1 border border-gray-200 rounded-full p-1">
                 {(["3-5", "6-8", "9-12"] as AgeGroup[]).map((g) => (
@@ -1025,7 +1025,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 variant="secondary"
                 size="sm"
                 aria-label={audioEnabled ? "Disable audio" : "Enable audio"}
-                className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
+                className="rounded-full w-9 h-9 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
               >
                 {audioEnabled ? (
                   <Volume2 className="w-4 h-4 text-green-600" />
@@ -1044,7 +1044,7 @@ export const JungleAdventureWordExplorer: React.FC<
                     ? "Disable high contrast"
                     : "Enable high contrast"
                 }
-                className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
+                className="rounded-full w-9 h-9 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
               >
                 HC
               </Button>
@@ -1076,9 +1076,9 @@ export const JungleAdventureWordExplorer: React.FC<
         </div>
 
         {/* Mobile controls: nav + age + search */}
-        <div className="md:hidden px-3 pb-2 space-y-2">
+        <div className="md:hidden px-2 pb-1 space-y-1">
           {/* Segmented nav */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 md:gap-2">
             <div className="flex flex-1 bg-white border border-gray-200 rounded-full p-1 shadow-sm">
               <Button
                 onClick={() => setExploreMode("map")}
@@ -1103,7 +1103,7 @@ export const JungleAdventureWordExplorer: React.FC<
               onClick={() => setShowMobileSearch((v) => !v)}
               variant={showMobileSearch ? "default" : "secondary"}
               size="sm"
-              className="rounded-full w-10 h-10 p-0"
+              className="rounded-full w-9 h-9 p-0"
               aria-label={showMobileSearch ? "Hide search" : "Show search"}
             >
               <Search className="w-4 h-4" />
@@ -1111,7 +1111,7 @@ export const JungleAdventureWordExplorer: React.FC<
           </div>
 
           {/* Age chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <div className="flex items-center gap-1 overflow-x-auto pb-1">
             {(["3-5", "6-8", "9-12"] as AgeGroup[]).map((g) => (
               <Button
                 key={g}
@@ -1121,7 +1121,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 }}
                 variant={ageGroup === g ? "default" : "secondary"}
                 size="sm"
-                className="rounded-full h-8 px-3 flex-shrink-0"
+                className="rounded-full h-8 px-2 flex-shrink-0"
                 aria-label={`Set age mode ${g}`}
               >
                 {g}
