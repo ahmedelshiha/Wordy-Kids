@@ -421,11 +421,11 @@ export class AudioService {
         }
       };
 
-      utterance.onerror = (event) => {
-        console.error("Speech synthesis error:", {
-          error: event.error,
-          message: event.message,
-          eventType: event.type,
+      utterance.onerror = (event: any) => {
+        const errorPayload = {
+          error: event?.error || null,
+          message: event?.message || "unknown",
+          eventType: event?.type || "error",
           word: word,
           voice: voice?.name,
           voiceURI: voice?.voiceURI,
@@ -433,7 +433,7 @@ export class AudioService {
           pitch,
           volume,
           timestamp: new Date().toISOString(),
-          userAgent: navigator.userAgent.substring(0, 100),
+          userAgent: navigator.userAgent.substring(0, 120),
           speechState: {
             speaking: this.speechSynthesis.speaking,
             pending: this.speechSynthesis.pending,
@@ -444,10 +444,15 @@ export class AudioService {
             voicesLoaded: this.voicesLoaded,
             selectedVoiceType: this.selectedVoiceType,
           },
-        });
+        };
+        try {
+          console.error("Speech synthesis error:", JSON.stringify(errorPayload));
+        } catch {
+          console.error("Speech synthesis error:", errorPayload);
+        }
 
         try {
-          onError?.();
+          onError?.(errorPayload);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }
@@ -551,12 +556,12 @@ export class AudioService {
         }
       };
 
-      utterance.onerror = (event) => {
-        console.error("Speech synthesis error (default voice):", {
-          error: event.error,
-          message: event.message,
-          type: event.type,
-          timeStamp: event.timeStamp,
+      utterance.onerror = (event: any) => {
+        const errorPayload = {
+          error: event?.error || null,
+          message: event?.message || "unknown",
+          type: event?.type || "error",
+          timeStamp: event?.timeStamp || Date.now(),
           word: word,
           voice: voice?.name || "default",
           voiceURI: voice?.voiceURI,
@@ -566,9 +571,14 @@ export class AudioService {
             paused: this.speechSynthesis.paused,
           },
           timestamp: new Date().toISOString(),
-        });
+        };
         try {
-          options.onError?.();
+          console.error("Speech synthesis error (default voice):", JSON.stringify(errorPayload));
+        } catch {
+          console.error("Speech synthesis error (default voice):", errorPayload);
+        }
+        try {
+          options.onError?.(errorPayload);
         } catch (error) {
           console.error("Error in onError callback:", error);
         }
