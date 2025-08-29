@@ -905,7 +905,7 @@ export const JungleAdventureWordExplorer: React.FC<
               </Button>
 
               {/* User stats */}
-              <div className="hidden sm:flex items-center gap-3 px-3 py-1 bg-white/80 rounded-full border border-gray-200">
+              <div className="hidden md:flex items-center gap-3 px-3 py-1 bg-white/80 rounded-full border border-gray-200">
                 <div className="flex items-center gap-1">
                   <Trophy className="w-4 h-4 text-yellow-500" />
                   <span className="text-sm font-bold">
