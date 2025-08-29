@@ -566,82 +566,24 @@ export const JungleAdventureWordExplorer: React.FC<
     const isFavorite = favoriteWords.has(word.id);
 
     if (ageGroup === "3-5") {
+      // Use simplified 3–6 card
       return (
-        <motion.div
-          key={word.id}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.05 }}
-          className="relative"
-        >
-          <div
-            className={cn(
-              "relative overflow-hidden rounded-3xl p-4 md:p-6 shadow-lg border-2 border-white/60",
-              "bg-gradient-to-br from-sky-100 via-blue-100 to-purple-100",
-              isMastered && "ring-2 ring-green-400 ring-offset-2",
-            )}
-          >
-            <div className="absolute -top-2 -left-2 text-3xl opacity-20">🌟</div>
-            <div className="absolute -bottom-2 -right-2 text-4xl opacity-20">🦋</div>
-
-            <div className="text-center mb-3 select-none">
-              <div className="text-7xl md:text-8xl mb-2 animate-gentle-bounce">
-                {word.emoji || "📝"}
-              </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-1">
-                {word.word}
-              </h2>
-              {word.pronunciation && (
-                <p className="text-gray-700 text-base font-semibold">
-                  🗣️ {word.pronunciation}
-                </p>
-              )}
-            </div>
-
-            <div className="flex justify-center gap-4">
-              <div className="flex flex-col items-center">
-                <Button
-                  onClick={() => handlePronounce(word)}
-                  disabled={isPlaying}
-                  aria-label={`Pronounce ${word.word}`}
-                  className={cn(
-                    "bg-blue-500 hover:bg-blue-600 text-white rounded-full w-20 h-20 text-base transition-transform hover:scale-105 active:scale-95",
-                    isPlaying && "animate-pulse",
-                  )}
-                >
-                  <Volume2 className="w-6 h-6" />
-                </Button>
-                <span className="mt-1 text-xs font-semibold text-gray-700">Say</span>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <Button
-                  onClick={() => handleMasterWord(word.id)}
-                  aria-label={isMastered ? "Mark as not mastered" : "Mark as mastered"}
-                  className={cn(
-                    "rounded-full w-20 h-20 text-base",
-                    isMastered
-                      ? "bg-green-500 hover:bg-green-600 text-white"
-                      : "bg-yellow-500 hover:bg-yellow-600 text-white",
-                  )}
-                >
-                  {isMastered ? <Crown className="w-6 h-6" /> : <Star className="w-6 h-6" />}
-                </Button>
-                <span className="mt-1 text-xs font-semibold text-gray-700">Got it</span>
-              </div>
-            </div>
-
-            {isMastered && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="absolute top-2 left-2 bg-green-500 text-white rounded-full p-2"
-              >
-                <Crown className="w-4 h-4" />
-              </motion.div>
-            )}
-          </div>
-        </motion.div>
+        <div key={word.id} className="relative">
+          {/* Import at top: import { JungleWordLibraryCard } from "@/components/word-card"; */}
+          <JungleWordLibraryCard
+            word={word as any}
+            autoPlay
+            accessibilitySettings={{
+              highContrast: highContrast,
+              largeText: true,
+              reducedMotion,
+              autoPlay: true,
+              soundEnabled: audioEnabled,
+            }}
+            onWordMastered={(id) => handleMasterWord(id)}
+            onPronounce={() => setAnnounce(`Saying ${word.word}`)}
+          />
+        </div>
       );
     }
 
