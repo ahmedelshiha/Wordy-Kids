@@ -784,6 +784,24 @@ export const JungleAdventureWordExplorer: React.FC<
 
             {/* Right: Controls */}
             <div className="flex items-center gap-2">
+              {/* Age mode selector */}
+              <div className="hidden md:flex items-center gap-1 border border-gray-200 rounded-full p-1">
+                {(["3-5", "6-8", "9-12"] as AgeGroup[]).map((g) => (
+                  <Button
+                    key={g}
+                    onClick={() => {
+                      setAgeGroup(g);
+                      setAnnounce(`Age mode set to ${g}`);
+                    }}
+                    variant={ageGroup === g ? "default" : "ghost"}
+                    size="sm"
+                    className="rounded-full px-3"
+                    aria-label={`Set age mode ${g}`}
+                  >
+                    {g}
+                  </Button>
+                ))}
+              </div>
               {/* Search */}
               {exploreMode === "adventure" && (
                 <div className="relative hidden sm:block">
