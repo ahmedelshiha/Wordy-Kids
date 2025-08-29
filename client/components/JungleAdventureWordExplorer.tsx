@@ -853,6 +853,9 @@ export const JungleAdventureWordExplorer: React.FC<
       </main>
 
 
+      {/* Live region for screen readers */}
+      <div aria-live="polite" className="sr-only" data-testid="live-region">{announce}</div>
+
       {/* CSS for animations */}
       <style>{`
         @keyframes float {
