@@ -2082,8 +2082,8 @@ export default function Index({ initialProfile }: IndexProps) {
                     {
                       id: "learn",
                       icon: BookOpen,
-                      label: "Word Library",
-                      emoji: "📚",
+                      label: "Jungle Word Explorer",
+                      emoji: "🌿",
                       color: "green",
                     },
                     {
@@ -3573,7 +3573,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                           }}
                                         >
                                           <Play className="w-5 h-5 mr-2" />
-                                          Crystal Quest Awaits! 💎
+                                          Crystal Quest Awaits! ��
                                         </button>
                                       </div>
                                     </div>
