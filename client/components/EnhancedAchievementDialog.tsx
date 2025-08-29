@@ -147,8 +147,8 @@ const TreasureChest = React.memo(
       }}
       transition={{
         duration: 0.8,
-        type: "spring",
-        damping: 10,
+        type: "tween",
+        ease: "easeInOut",
       }}
       onAnimationComplete={onAnimationComplete}
     >
