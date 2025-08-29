@@ -862,7 +862,7 @@ export const JungleAdventureWordExplorer: React.FC<
                     variant={viewMode === "cards" ? "default" : "ghost"}
                     size="sm"
                     aria-label="Cards view"
-                    className="rounded-full w-12 h-12 p-0"
+                    className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
                   >
                     <BookOpen className="w-4 h-4" />
                   </Button>
@@ -871,7 +871,7 @@ export const JungleAdventureWordExplorer: React.FC<
                     variant={viewMode === "list" ? "default" : "ghost"}
                     size="sm"
                     aria-label="List view"
-                    className="rounded-full w-12 h-12 p-0"
+                    className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
                   >
                     <Grid3X3 className="w-4 h-4" />
                   </Button>
@@ -884,7 +884,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 variant="ghost"
                 size="sm"
                 aria-label={audioEnabled ? "Disable audio" : "Enable audio"}
-                className="rounded-full w-12 h-12 p-0"
+                className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
               >
                 {audioEnabled ? (
                   <Volume2 className="w-4 h-4 text-green-600" />
@@ -899,7 +899,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 variant="ghost"
                 size="sm"
                 aria-label={highContrast ? "Disable high contrast" : "Enable high contrast"}
-                className="rounded-full w-12 h-12 p-0"
+                className="rounded-full w-10 h-10 md:w-12 md:h-12 p-0 transition-transform hover:scale-105 active:scale-95"
               >
                 HC
               </Button>
