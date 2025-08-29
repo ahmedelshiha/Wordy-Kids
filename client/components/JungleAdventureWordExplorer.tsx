@@ -545,7 +545,8 @@ export const JungleAdventureWordExplorer: React.FC<
             <Button
               onClick={() => setShowDefinitions(!showDefinitions)}
               variant="outline"
-              className="rounded-full px-6 py-2"
+              aria-label={showDefinitions ? "Hide definition" : "Show definition"}
+              className="rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base"
             >
               {showDefinitions ? (
                 <EyeOff className="w-4 h-4 mr-2" />
