@@ -988,28 +988,33 @@ export default function Index({ initialProfile }: IndexProps) {
     setIsSessionInitialized(true);
   }, []);
 
-  // Debug logging for state changes
+  // Debug logging for state changes (throttled to prevent excessive logging)
+  const lastDebugLogRef = useRef(0);
   useEffect(() => {
-    console.log("State Update:", {
-      rememberedWordsCount: rememberedWords.size,
-      forgottenWordsCount: forgottenWords.size,
-      currentDashboardWordsLength: currentDashboardWords.length,
-      learningStatsWeeklyProgress: rememberedWords.size,
-      childStatsWordsRemembered: childStats?.wordsRemembered,
-      currentProgress,
-      learningGoalsCount: learningGoals.length,
-      isSessionInitialized,
-      lastAutoSave: new Date(lastAutoSave).toLocaleTimeString(),
-    });
+    const now = Date.now();
+    // Only log debug info every 5 seconds to prevent excessive logging
+    if (now - lastDebugLogRef.current > 5000) {
+      lastDebugLogRef.current = now;
+      console.log("State Update:", {
+        rememberedWordsCount: rememberedWords.size,
+        forgottenWordsCount: forgottenWords.size,
+        currentDashboardWordsLength: currentDashboardWords.length,
+        learningStatsWeeklyProgress: rememberedWords.size,
+        childStatsWordsRemembered: childStats?.wordsRemembered,
+        currentProgressAccuracy: currentProgress.accuracy,
+        learningGoalsCount: learningGoals.length,
+        isSessionInitialized,
+        lastAutoSave: new Date(lastAutoSave).toLocaleTimeString(),
+      });
+    }
   }, [
     rememberedWords.size,
     forgottenWords.size,
     currentDashboardWords.length,
     childStats?.wordsRemembered,
-    currentProgress,
+    currentProgress.accuracy,
     learningGoals.length,
     isSessionInitialized,
-    lastAutoSave,
   ]);
 
   // Dynamic learning stats that reflect actual progress and goals
@@ -3408,7 +3413,7 @@ export default function Index({ initialProfile }: IndexProps) {
                                             🌟 Ages 3-5
                                           </span>
                                           <span className="jungle-quiz-badge-audio">
-                                            🎵 Audio Magic
+                                            ���� Audio Magic
                                           </span>
                                         </div>
                                         <button
