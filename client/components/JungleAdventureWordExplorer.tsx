@@ -532,8 +532,9 @@ export const JungleAdventureWordExplorer: React.FC<
             <Button
               onClick={() => handlePronounce(word)}
               disabled={isPlaying}
+              aria-label={`Pronounce ${word.word}`}
               className={cn(
-                "bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6 py-2",
+                "bg-blue-500 hover:bg-blue-600 text-white rounded-full min-w-[75px] min-h-[75px] px-6 py-4 text-base",
                 isPlaying && "animate-pulse",
               )}
             >
