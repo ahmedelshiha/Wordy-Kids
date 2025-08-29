@@ -514,7 +514,7 @@ export const JungleAdventureWordExplorer: React.FC<
             }}
             aria-label={showDefinitions ? "Hide definition" : "Show definition"}
           >
-            <div className="text-6xl mb-3">{word.emoji || "📝"}</div>
+            <div className="text-6xl mb-3 md:group-hover:animate-gentle-bounce">{word.emoji || "📝"}</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               {word.word}
             </h2>
