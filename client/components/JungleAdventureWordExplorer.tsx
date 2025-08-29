@@ -420,7 +420,7 @@ export const JungleAdventureWordExplorer: React.FC<
               "relative overflow-hidden rounded-2xl p-6 shadow-lg border-2 border-white/50 group",
               "bg-gradient-to-br",
               category.character.color,
-              "hover:shadow-xl transition-all duration-300 transform md:hover:scale-[1.01] md:hover:-translate-y-0.5 active:scale-[0.99]",
+              "hover:shadow-xl transition-all duration-300 transform md:hover:scale-[1.01] md:hover:-translate-y-0.5 active:scale-[0.99] md:hover:ring-2 md:hover:ring-white/50",
             )}
           >
             {/* Character */}
