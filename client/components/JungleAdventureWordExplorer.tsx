@@ -863,7 +863,7 @@ export const JungleAdventureWordExplorer: React.FC<
             <div className="hidden md:flex items-center gap-2">
               <Button
                 onClick={() => setExploreMode("map")}
-                variant={exploreMode === "map" ? "default" : "ghost"}
+                variant={exploreMode === "map" ? "default" : "secondary"}
                 size="sm"
                 aria-label="Go to map"
                 className="rounded-full transition-transform hover:scale-105 active:scale-95"
