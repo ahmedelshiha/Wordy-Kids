@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, RefreshCw, Shuffle, Grid3X3 } from "lucide-react";
-import { EnhancedWordAdventureCard } from "@/components/EnhancedWordAdventureCard";
+import { JungleAdventureWordCard } from "@/components/JungleAdventureWordCard";
 import {
   wordsDatabase,
   getWordsByCategory,
@@ -179,12 +179,11 @@ export function WordAdventureDemo() {
         {/* Word Card Display */}
         {currentWord ? (
           <div className="flex justify-center">
-            <EnhancedWordAdventureCard
+            <JungleAdventureWordCard
               word={currentWord}
-              onFavorite={handleWordFavorite}
+              onWordFavorite={(id) => handleWordFavorite(currentWord)}
               onWordMastered={handleWordMastered}
               showVocabularyBuilder={true}
-              enableMiniGames={true}
               autoPlay={false}
               className="animate-fade-in"
             />

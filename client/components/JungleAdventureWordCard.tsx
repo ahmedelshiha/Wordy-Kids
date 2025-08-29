@@ -120,6 +120,12 @@ export const JungleAdventureWordCard: React.FC<
     Array<{ id: number; emoji: string; x: number; y: number; delay: number }>
   >([]);
   const [currentAnimation, setCurrentAnimation] = useState("");
+  // Ultimate-mode integrations
+  const [discoveryMode, setDiscoveryMode] = useState<
+    "learn" | "quiz" | "memory"
+  >("learn");
+  const [quizRevealed, setQuizRevealed] = useState<boolean>(showDefinition);
+  const [score, setScore] = useState<number>(0);
 
   const isMastered = isWordMastered?.(word.id) || false;
   const isFavorited = isWordFavorited?.(word.id) || false;
@@ -157,6 +163,20 @@ export const JungleAdventureWordCard: React.FC<
     setTimeout(() => setParticles([]), 2000);
   };
 
+  // Scoring + progression dispatcher
+  const updateScore = (delta: number, reason: string) => {
+    setScore((prev) => {
+      const next = prev + delta;
+      try {
+        const event = new CustomEvent("wordProgressUpdate", {
+          detail: { wordId: word.id, delta, reason, score: next },
+        });
+        window.dispatchEvent(event);
+      } catch {}
+      return next;
+    });
+  };
+
   // Jungle adventure effects - much lighter
   useEffect(() => {
     const interval = setInterval(() => {
@@ -165,6 +185,11 @@ export const JungleAdventureWordCard: React.FC<
     }, 15000); // Reduced frequency from 8000ms
     return () => clearInterval(interval);
   }, []);
+
+  // Reset reveal state when word or mode changes
+  useEffect(() => {
+    setQuizRevealed(discoveryMode !== "quiz");
+  }, [word.id, discoveryMode]);
 
   // Enhanced pronunciation with jungle sounds
   const handlePronounce = async () => {
@@ -222,6 +247,14 @@ export const JungleAdventureWordCard: React.FC<
     // Auto-pronounce on tap if enabled
     if (!isFlipped) {
       handlePronounce();
+    }
+
+    // Scoring for taps + quiz reveal
+    updateScore(5, "tap");
+    if (discoveryMode === "quiz" && !quizRevealed) {
+      setQuizRevealed(true);
+      createParticles();
+      updateScore(10, "quiz_reveal");
     }
 
     setIsFlipped(!isFlipped);
@@ -318,6 +351,9 @@ export const JungleAdventureWordCard: React.FC<
   const handleMastery = (rating: "easy" | "medium" | "hard") => {
     setRatedAs(rating);
     setShowCelebration(true);
+    if (rating === "easy") {
+      updateScore(25, "mastery");
+    }
 
     // Only show particles for "easy" rating (mastered)
     if (rating === "easy") {
@@ -378,6 +414,8 @@ export const JungleAdventureWordCard: React.FC<
       onWordFavorite(word.id);
     }
     audioService.playSound?.(isFavorited ? "click" : "sparkle");
+    createParticles();
+    updateScore(15, "favorite");
 
     // Haptic feedback
     if (navigator.vibrate) {
@@ -532,6 +570,39 @@ export const JungleAdventureWordCard: React.FC<
           </div>
         </div>
       )}
+
+      {/* Header Stats */}
+      <div className="flex justify-between items-center mb-3 bg-white/90 backdrop-blur-sm rounded-2xl p-3 shadow-lg">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">🏆</span>
+          <span className="font-bold text-gray-800">{score} Points</span>
+        </div>
+        <div className="text-xs text-gray-600">Mode: {discoveryMode}</div>
+      </div>
+
+      {/* Mode Selector */}
+      <div className="flex justify-center gap-2 mb-4">
+        {(["learn", "quiz", "memory"] as const).map((mode) => (
+          <Button
+            key={mode}
+            onClick={() => {
+              setDiscoveryMode(mode);
+              setQuizRevealed(mode !== "quiz");
+            }}
+            variant={discoveryMode === mode ? "default" : "outline"}
+            className={cn(
+              "min-h-[44px] px-3 font-bold",
+              discoveryMode === mode
+                ? "bg-jungle text-white shadow-lg scale-105"
+                : "bg-white/70 text-gray-700 hover:bg-white/80",
+            )}
+          >
+            {mode === "learn" && "📖 Learn"}
+            {mode === "quiz" && "🎯 Quiz"}
+            {mode === "memory" && "🧠 Memory"}
+          </Button>
+        ))}
+      </div>
 
       {/* 3D Jungle Adventure Card */}
       <div
@@ -701,14 +772,19 @@ export const JungleAdventureWordCard: React.FC<
               <div className="text-center space-y-1 sm:space-y-2">
                 <div className="flex items-center justify-center gap-2 sm:gap-3">
                   <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold tracking-wide drop-shadow-2xl leading-tight jungle-adventure-word text-center">
-                    {word.word}
+                    {(discoveryMode === "quiz" || discoveryMode === "memory") &&
+                    !quizRevealed
+                      ? "???"
+                      : word.word}
                   </h2>
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
                       handlePronounce();
                     }}
-                    disabled={isPlaying}
+                    disabled={
+                      isPlaying || (discoveryMode !== "learn" && !quizRevealed)
+                    }
                     className={cn(
                       "h-12 w-12 sm:h-14 sm:w-14 rounded-full transition-all duration-300 flex-shrink-0",
                       "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
