@@ -492,7 +492,7 @@ export const JungleAdventureWordExplorer: React.FC<
                 variant="ghost"
                 onClick={() => handleToggleFavorite(word.id)}
                 className={cn(
-                  "w-8 h-8 p-0 rounded-full",
+                  "w-8 h-8 p-0 rounded-full transition-transform hover:scale-110 active:scale-95",
                   isFavorite ? "text-red-500 bg-red-50" : "text-gray-400",
                 )}
               >
