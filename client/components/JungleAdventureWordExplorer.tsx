@@ -691,13 +691,19 @@ export const JungleAdventureWordExplorer: React.FC<
   return (
     <div
       ref={containerRef}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowLeft") handleWordNavigation("prev");
+        if (e.key === "ArrowRight") handleWordNavigation("next");
+      }}
       className={cn(
         "min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50",
         "jungle-pattern-bg relative overflow-hidden",
         className,
       )}
       style={{
-        fontSize: fontSize === "large" ? "1.125rem" : "1rem",
+        fontSize: baseFontSize,
+        filter: highContrast ? "contrast(1.25) saturate(1.1)" : undefined,
       }}
     >
       {/* Animated background elements */}
