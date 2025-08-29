@@ -845,7 +845,8 @@ export const JungleAdventureWordExplorer: React.FC<
                 onClick={() => setAudioEnabled(!audioEnabled)}
                 variant="ghost"
                 size="sm"
-                className="rounded-full w-10 h-10 p-0"
+                aria-label={audioEnabled ? "Disable audio" : "Enable audio"}
+                className="rounded-full w-12 h-12 p-0"
               >
                 {audioEnabled ? (
                   <Volume2 className="w-4 h-4 text-green-600" />
