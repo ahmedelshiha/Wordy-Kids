@@ -727,11 +727,20 @@ export default function Index({ initialProfile }: IndexProps) {
 
       // Use setTimeout to debounce the save and prevent rapid successive calls
       const timeoutId = setTimeout(() => {
+        const progressData = {
+          wordsLearned: rememberedCount,
+          wordsRemembered: rememberedCount,
+          sessionCount: dailySessionCount,
+          accuracy: rememberedCount + forgottenCount > 0
+            ? Math.round((rememberedCount / (rememberedCount + forgottenCount)) * 100)
+            : 0,
+        };
+
         persistenceService.queueSave(
           {
             forgottenWords: Array.from(forgottenWords),
             rememberedWords: Array.from(rememberedWords),
-            currentProgress,
+            currentProgress: progressData,
           },
           "high",
         );
@@ -739,7 +748,7 @@ export default function Index({ initialProfile }: IndexProps) {
 
       return () => clearTimeout(timeoutId);
     }
-  }, [rememberedWords.size, forgottenWords.size, persistenceService]);
+  }, [rememberedWords.size, forgottenWords.size, dailySessionCount, persistenceService]);
 
   // Enhanced tab navigation preservation
   useEffect(() => {
