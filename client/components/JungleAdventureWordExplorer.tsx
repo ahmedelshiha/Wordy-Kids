@@ -556,7 +556,7 @@ export const JungleAdventureWordExplorer: React.FC<
             <div className="flex gap-2">
               <Button
                 size="sm"
-                variant="ghost"
+                variant="secondary"
                 onClick={() => handleToggleFavorite(word.id)}
                 className={cn(
                   "w-8 h-8 p-0 rounded-full transition-transform hover:scale-110 active:scale-95",
