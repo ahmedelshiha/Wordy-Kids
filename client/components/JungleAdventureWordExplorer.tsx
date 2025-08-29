@@ -776,7 +776,7 @@ export const JungleAdventureWordExplorer: React.FC<
                   variant="ghost"
                   size="sm"
                   aria-label="Go back"
-                  className="rounded-full"
+                  className="rounded-full transition-transform hover:scale-105 active:scale-95"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
