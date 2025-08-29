@@ -739,6 +739,7 @@ export const JungleAdventureWordExplorer: React.FC<
                   onClick={onBack}
                   variant="ghost"
                   size="sm"
+                  aria-label="Go back"
                   className="rounded-full"
                 >
                   <ChevronLeft className="w-4 h-4" />
