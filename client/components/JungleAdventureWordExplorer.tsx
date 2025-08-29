@@ -587,7 +587,10 @@ export const JungleAdventureWordExplorer: React.FC<
               <Badge variant="outline" className="text-xs">
                 {word.difficulty}
               </Badge>
-              <Badge variant="outline" className="text-xs hidden sm:inline-flex">
+              <Badge
+                variant="outline"
+                className="text-xs hidden sm:inline-flex"
+              >
                 {word.category}
               </Badge>
             </div>
