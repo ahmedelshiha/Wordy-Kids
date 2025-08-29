@@ -1001,7 +1001,7 @@ export const JungleAdventureWordExplorer: React.FC<
           <span className="text-sm font-semibold text-gray-700">Quick Select</span>
           {selectedCategory && (
             <Button
-              variant="ghost"
+              variant="secondary"
               size="sm"
               className="rounded-full h-8 px-3"
               onClick={() => {
