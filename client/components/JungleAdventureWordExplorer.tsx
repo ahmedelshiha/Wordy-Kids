@@ -811,7 +811,7 @@ export const JungleAdventureWordExplorer: React.FC<
                   variant={exploreMode === "adventure" ? "default" : "ghost"}
                   size="sm"
                   aria-label="Go to adventure"
-                  className="rounded-full"
+                  className="rounded-full transition-transform hover:scale-105 active:scale-95"
                 >
                   <Target className="w-4 h-4 mr-2" />
                   Adventure
