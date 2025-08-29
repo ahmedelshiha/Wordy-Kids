@@ -610,7 +610,7 @@ export const JungleAdventureWordExplorer: React.FC<
 
           {/* Word display - tap to flip */}
           <div
-            className="text-center mb-6 cursor-pointer select-none"
+            className="text-center mb-4 md:mb-6 cursor-pointer select-none"
             role="button"
             tabIndex={0}
             onClick={() => setShowDefinitions(!showDefinitions)}
