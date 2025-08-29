@@ -252,7 +252,7 @@ export const JungleAdventureWordExplorer: React.FC<
         navigator.vibrate(50);
       }
     },
-    [audioEnabled],
+    [audioEnabled, ageGroup],
   );
 
   // Handle word pronunciation
