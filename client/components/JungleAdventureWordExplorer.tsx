@@ -701,7 +701,7 @@ export const JungleAdventureWordExplorer: React.FC<
             disabled={filteredWords.length <= 1}
             variant="outline"
             aria-label="Previous word"
-            className="rounded-full w-[75px] h-[75px] p-0"
+            className="rounded-full w-[75px] h-[75px] p-0 transition-transform hover:scale-105 active:scale-95"
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
@@ -711,7 +711,7 @@ export const JungleAdventureWordExplorer: React.FC<
             disabled={filteredWords.length <= 1}
             variant="outline"
             aria-label="Random word"
-            className="rounded-full w-[75px] h-[75px] p-0"
+            className="rounded-full w-[75px] h-[75px] p-0 transition-transform hover:scale-105 active:scale-95"
           >
             <Shuffle className="w-4 h-4" />
           </Button>
@@ -721,7 +721,7 @@ export const JungleAdventureWordExplorer: React.FC<
             disabled={filteredWords.length <= 1}
             variant="outline"
             aria-label="Next word"
-            className="rounded-full w-[75px] h-[75px] p-0"
+            className="rounded-full w-[75px] h-[75px] p-0 transition-transform hover:scale-105 active:scale-95"
           >
             <ChevronLeft className="w-4 h-4 rotate-180" />
           </Button>
