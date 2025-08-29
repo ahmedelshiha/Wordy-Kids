@@ -723,7 +723,7 @@ export const JungleAdventureWordExplorer: React.FC<
           <div className="text-4xl md:text-6xl mb-4">
             {categoryInfo?.character.emoji || "🌿"}
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
             {categoryInfo?.character.name}'s {categoryInfo?.name} Adventure
           </h1>
           <p className="text-gray-600 mb-4">
