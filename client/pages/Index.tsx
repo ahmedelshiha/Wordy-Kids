@@ -2425,6 +2425,11 @@ export default function Index({ initialProfile }: IndexProps) {
                             </TabsContent>
 
                             <TabsContent value="learn">
+                              {/* Note: Learn navigation now redirects to /jungle-word-explorer */}
+                              <div className="text-center py-8 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg mb-4">
+                                <p className="text-lg font-semibold text-green-800 mb-2">🌿 Redirecting to Jungle Word Explorer... 🌿</p>
+                                <p className="text-green-600">You'll be taken to the new enhanced word learning experience!</p>
+                              </div>
                               <div className="space-y-4">
                                 {learningMode === "selector" ||
                                 !selectedCategory ? (
