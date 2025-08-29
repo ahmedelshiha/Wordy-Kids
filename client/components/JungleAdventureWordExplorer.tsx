@@ -702,7 +702,7 @@ export const JungleAdventureWordExplorer: React.FC<
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce">
+        <div className={cn("absolute top-10 left-10 text-4xl opacity-20", !reducedMotion && "animate-bounce")}>
           🌿
         </div>
         <div className="absolute top-20 right-20 text-3xl opacity-15 animate-pulse">
