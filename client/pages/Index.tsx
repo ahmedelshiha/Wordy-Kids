@@ -634,6 +634,16 @@ export default function Index({ initialProfile }: IndexProps) {
   const saveSessionData = useCallback(() => {
     if (!isSessionInitialized) return;
 
+    // Calculate current progress inline to avoid circular dependency
+    const progressData = {
+      wordsLearned: rememberedWords.size,
+      wordsRemembered: rememberedWords.size,
+      sessionCount: dailySessionCount,
+      accuracy: rememberedWords.size + forgottenWords.size > 0
+        ? Math.round((rememberedWords.size / (rememberedWords.size + forgottenWords.size)) * 100)
+        : 0,
+    };
+
     const sessionData: Partial<SessionData> = {
       activeTab,
       currentWordIndex,
@@ -643,7 +653,7 @@ export default function Index({ initialProfile }: IndexProps) {
       forgottenWords: Array.from(forgottenWords),
       rememberedWords: Array.from(rememberedWords),
       excludedWordIds: Array.from(excludedWordIds),
-      currentProgress,
+      currentProgress: progressData,
       dailySessionCount,
       currentProfile,
       childStats,
@@ -677,7 +687,6 @@ export default function Index({ initialProfile }: IndexProps) {
     forgottenWords,
     rememberedWords,
     excludedWordIds,
-    currentProgress,
     dailySessionCount,
     currentProfile,
     childStats,
