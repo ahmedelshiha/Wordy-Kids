@@ -380,6 +380,7 @@ export class AudioService {
 
       // Cancel any ongoing speech safely
       try {
+        this.lastCancelAt = performance.now();
         this.speechSynthesis.cancel();
       } catch (cancelError) {
         console.warn("Error canceling previous speech:", cancelError);
