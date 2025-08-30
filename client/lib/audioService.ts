@@ -12,6 +12,7 @@ export class AudioService {
   private selectedVoiceType: VoiceType = "woman";
   private isSupported: boolean = false;
   private voicesLoaded: boolean = false;
+  private lastCancelAt: number = 0;
 
   private constructor() {
     // Check if speech synthesis is supported
@@ -27,9 +28,9 @@ export class AudioService {
     this.loadVoices();
 
     // Load saved voice preference
-    const savedVoiceType = localStorage.getItem(
-      "preferred-voice-type",
-    ) as VoiceType;
+    const savedVoiceRaw = localStorage.getItem("preferred-voice-type");
+    const mappedSaved = savedVoiceRaw === "child" ? "kid" : savedVoiceRaw;
+    const savedVoiceType = mappedSaved as VoiceType;
     if (savedVoiceType && ["man", "woman", "kid"].includes(savedVoiceType)) {
       this.selectedVoiceType = savedVoiceType;
     }
@@ -379,6 +380,7 @@ export class AudioService {
 
       // Cancel any ongoing speech safely
       try {
+        this.lastCancelAt = performance.now();
         this.speechSynthesis.cancel();
       } catch (cancelError) {
         console.warn("Error canceling previous speech:", cancelError);
@@ -422,6 +424,13 @@ export class AudioService {
       };
 
       utterance.onerror = (event: any) => {
+        const isInterrupted =
+          event?.error === "interrupted" || event?.message === "interrupted";
+        const sinceCancel = performance.now() - this.lastCancelAt;
+        if (isInterrupted && sinceCancel >= 0 && sinceCancel < 600) {
+          console.info("Speech synthesis interrupted after cancel; ignoring.");
+          return;
+        }
         const errorPayload = {
           error: event?.error || null,
           message: event?.message || "unknown",
@@ -469,26 +478,29 @@ export class AudioService {
         );
       };
 
-      // Speak the word with additional error handling
-      try {
-        this.speechSynthesis.speak(utterance);
-      } catch (speakError) {
-        console.error("Error calling speak:", speakError);
-        const speakCallError = {
-          type: "speak_call_error",
-          word: word,
-          originalError:
-            speakError instanceof Error
-              ? {
-                  name: speakError.name,
-                  message: speakError.message,
-                  stack: speakError.stack,
-                }
-              : speakError,
-          timestamp: new Date().toISOString(),
-        };
-        onError?.(speakCallError);
-      }
+      // Speak the word with additional error handling; allow cancel() to settle first
+      const safeSpeak = () => {
+        try {
+          this.speechSynthesis.speak(utterance);
+        } catch (e) {
+          console.error("Error calling speak:", e);
+          const speakCallError = {
+            type: "speak_call_error",
+            word: word,
+            originalError:
+              e instanceof Error
+                ? { name: e.name, message: e.message, stack: e.stack }
+                : e,
+            timestamp: new Date().toISOString(),
+          };
+          onError?.(speakCallError);
+        }
+      };
+      const delay =
+        this.speechSynthesis.speaking || this.speechSynthesis.pending
+          ? 120
+          : 60;
+      setTimeout(safeSpeak, delay);
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       const generalError = {
@@ -560,6 +572,15 @@ export class AudioService {
       };
 
       utterance.onerror = (event: any) => {
+        const isInterrupted =
+          event?.error === "interrupted" || event?.message === "interrupted";
+        const sinceCancel = performance.now() - this.lastCancelAt;
+        if (isInterrupted && sinceCancel >= 0 && sinceCancel < 600) {
+          console.info(
+            "Speech synthesis interrupted after cancel (default voice); ignoring.",
+          );
+          return;
+        }
         const errorPayload = {
           error: event?.error || null,
           message: event?.message || "unknown",
@@ -593,7 +614,11 @@ export class AudioService {
         }
       };
 
-      this.speechSynthesis.speak(utterance);
+      const delay =
+        this.speechSynthesis.speaking || this.speechSynthesis.pending
+          ? 120
+          : 60;
+      setTimeout(() => this.speechSynthesis.speak(utterance), delay);
     } catch (error) {
       console.error("Error in fallback pronunciation:", error);
       options.onError?.();
@@ -619,6 +644,7 @@ export class AudioService {
       onEnd,
     } = options;
 
+    this.lastCancelAt = performance.now();
     this.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(definition);
@@ -634,7 +660,9 @@ export class AudioService {
     utterance.onstart = onStart;
     utterance.onend = onEnd;
 
-    this.speechSynthesis.speak(utterance);
+    const delay =
+      this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+    setTimeout(() => this.speechSynthesis.speak(utterance), delay);
   }
 
   public playSuccessSound(): void {
@@ -738,10 +766,11 @@ export class AudioService {
     this.speechSynthesis.cancel();
   }
 
-  public setVoiceType(voiceType: VoiceType): void {
-    this.selectedVoiceType = voiceType;
+  public setVoiceType(voiceType: VoiceType | "child"): void {
+    const mapped = (voiceType === "child" ? "kid" : voiceType) as VoiceType;
+    this.selectedVoiceType = mapped;
     // Save to localStorage for persistence
-    localStorage.setItem("preferred-voice-type", voiceType);
+    localStorage.setItem("preferred-voice-type", mapped);
   }
 
   public getVoiceType(): VoiceType {

@@ -583,7 +583,7 @@ export const useJungleAudioService = () => {
       if (!audioSettings.enabled || !word) return;
 
       try {
-        // Cancel any ongoing speech
+        // Cancel any ongoing speech and allow micro-delay before speaking
         speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(word);
@@ -611,6 +611,13 @@ export const useJungleAudioService = () => {
 
         utterance.onerror = (event: any) => {
           speechUtteranceRef.current = null;
+          if (
+            event?.error === "interrupted" ||
+            event?.message === "interrupted"
+          ) {
+            // Likely caused by our own cancel(); ignore as non-fatal
+            return;
+          }
           const errorPayload = {
             error: event?.error || null,
             message: event?.message || "unknown",
@@ -628,8 +635,8 @@ export const useJungleAudioService = () => {
           options?.onError?.(errorPayload);
         };
 
-        // Speak the word
-        speechSynthesis.speak(utterance);
+        // Speak the word after a short delay to avoid cancel race
+        setTimeout(() => speechSynthesis.speak(utterance), 80);
       } catch (error) {
         console.error("Error pronouncing word:", error);
         options?.onError?.(error);

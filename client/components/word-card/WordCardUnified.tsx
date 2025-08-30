@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useReward } from "@/contexts/RewardContext";
+import { useMiniGames } from "@/hooks/useMiniGames";
+import WordCardBack from "@/components/word-card/WordCardBack";
 import {
   Volume2,
   RotateCcw,
@@ -84,6 +86,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   size = "md",
 }) => {
   const { showReward } = useReward();
+  const { startGame } = useMiniGames();
   const [isFlipped, setIsFlipped] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
@@ -105,9 +108,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
   // Auto-pronounce on mount for young children
   useEffect(() => {
-    const shouldAutoPlay = 
-      (ageGroup === "3-5" || effectiveAutoPlay || autoPronounce) && 
-      soundEnabled && 
+    const shouldAutoPlay =
+      (ageGroup === "3-5" || effectiveAutoPlay || autoPronounce) &&
+      soundEnabled &&
       !hasAutoPlayed.current;
 
     if (shouldAutoPlay) {
@@ -122,18 +125,18 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   // Announce card content for screen readers
   useEffect(() => {
     const announceContent = () => {
-      if (window.speechSynthesis && 'speechSynthesis' in window) {
-        const announcement = `Word card: ${word.word}. ${isFlipped ? word.definition : 'Tap Say It to hear pronunciation, Need Practice to review later, or Master It to mark as learned.'} ${masteryStatus === 'mastered' ? 'Already mastered.' : ''}`;
-        
+      if (window.speechSynthesis && "speechSynthesis" in window) {
+        const announcement = `Word card: ${word.word}. ${isFlipped ? word.definition : "Tap Say It to hear pronunciation, Need Practice to review later, or Master It to mark as learned."} ${masteryStatus === "mastered" ? "Already mastered." : ""}`;
+
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
-        
+
         // Create utterance for screen reader
         const utterance = new SpeechSynthesisUtterance(announcement);
         utterance.rate = 0.8;
         utterance.volume = 0.7;
         utterance.pitch = 1;
-        
+
         // Only announce if sound is enabled and it's not just auto-pronunciation
         if (soundEnabled && !hasAutoPlayed.current) {
           setTimeout(() => {
@@ -151,7 +154,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     if (isPlaying) return;
 
     setIsPlaying(true);
-    setInteractionCount(prev => prev + 1);
+    setInteractionCount((prev) => prev + 1);
 
     // Haptic feedback
     if (navigator.vibrate) {
@@ -169,23 +172,23 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
       onSayIt?.(word);
 
       // Pronounce the word
-      if (soundEnabled && 'speechSynthesis' in window) {
+      if (soundEnabled && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
-        
+
         const utterance = new SpeechSynthesisUtterance(word.word);
         utterance.rate = 0.7;
         utterance.volume = 0.8;
         utterance.pitch = 1.1;
-        utterance.lang = 'en-US';
-        
+        utterance.lang = "en-US";
+
         utterance.onend = () => {
           setIsPlaying(false);
         };
-        
+
         utterance.onerror = () => {
           setIsPlaying(false);
         };
-        
+
         window.speechSynthesis.speak(utterance);
       } else {
         setTimeout(() => setIsPlaying(false), 1000);
@@ -205,7 +208,15 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
       console.error("Error pronouncing word:", error);
       setIsPlaying(false);
     }
-  }, [word, isPlaying, onSayIt, showReward, interactionCount, soundEnabled, effectiveReducedMotion]);
+  }, [
+    word,
+    isPlaying,
+    onSayIt,
+    showReward,
+    interactionCount,
+    soundEnabled,
+    effectiveReducedMotion,
+  ]);
 
   // Handle Need Practice action
   const handleNeedPractice = useCallback(() => {
@@ -224,7 +235,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
       type: "word",
     });
 
-    setInteractionCount(prev => prev + 1);
+    setInteractionCount((prev) => prev + 1);
   }, [word.id, onNeedPractice, showReward]);
 
   // Handle Master It action
@@ -251,13 +262,13 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
       gemsEarned: 5,
     });
 
-    setInteractionCount(prev => prev + 1);
+    setInteractionCount((prev) => prev + 1);
   }, [word.id, onMasterIt, showReward, effectiveReducedMotion]);
 
   // Handle favorite toggle
   const handleFavorite = useCallback(() => {
     onFavorite?.(word.id);
-    
+
     // Light haptic feedback
     if (navigator.vibrate) {
       navigator.vibrate(30);
@@ -276,7 +287,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   // Handle card flip
   const handleFlip = useCallback(() => {
     setIsFlipped(!isFlipped);
-    
+
     // Light haptic feedback
     if (navigator.vibrate) {
       navigator.vibrate(40);
@@ -315,7 +326,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
   const difficultyColors = {
     easy: "bg-green-100 text-green-800 border-green-200",
-    medium: "bg-yellow-100 text-yellow-800 border-yellow-200", 
+    medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
     hard: "bg-red-100 text-red-800 border-red-200",
   };
 
@@ -327,7 +338,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
         className={cn(
           "relative mx-auto preserve-3d duration-700 cursor-pointer",
           getSizeClasses(),
-          isFlipped && "rotate-y-180"
+          isFlipped && "rotate-y-180",
         )}
         style={{
           transformStyle: "preserve-3d",
@@ -346,22 +357,25 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "flex flex-col items-center justify-center p-6",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
-            masteryStatus === "mastered" && "ring-4 ring-green-400 ring-offset-2",
-            celebrationActive && !effectiveReducedMotion && "animate-bounce"
+            masteryStatus === "mastered" &&
+              "ring-4 ring-green-400 ring-offset-2",
+            celebrationActive && !effectiveReducedMotion && "animate-bounce",
           )}
           style={{ backfaceVisibility: "hidden" }}
         >
           {/* Header Badges */}
           <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
             <div className="flex gap-2">
-              <Badge className={cn("text-xs", difficultyColors[word.difficulty])}>
+              <Badge
+                className={cn("text-xs", difficultyColors[word.difficulty])}
+              >
                 {word.difficulty}
               </Badge>
               <Badge variant="outline" className="text-xs">
                 {word.category}
               </Badge>
             </div>
-            
+
             <div className="flex gap-2">
               {/* Favorite button */}
               <Button
@@ -370,11 +384,17 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 size="sm"
                 className={cn(
                   "w-8 h-8 p-0 rounded-full transition-colors",
-                  isFavorited ? "text-red-500 hover:text-red-600" : "text-gray-400 hover:text-gray-600"
+                  isFavorited
+                    ? "text-red-500 hover:text-red-600"
+                    : "text-gray-400 hover:text-gray-600",
                 )}
-                aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+                aria-label={
+                  isFavorited ? "Remove from favorites" : "Add to favorites"
+                }
               >
-                <Heart className={cn("w-4 h-4", isFavorited && "fill-current")} />
+                <Heart
+                  className={cn("w-4 h-4", isFavorited && "fill-current")}
+                />
               </Button>
             </div>
           </div>
@@ -394,7 +414,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                       "w-4 h-4",
                       i < currentStars
                         ? "text-yellow-500 fill-current"
-                        : "text-gray-300"
+                        : "text-gray-300",
                     )}
                   />
                 </motion.div>
@@ -454,21 +474,25 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             </motion.div>
 
             {/* Word Text */}
-            <h2 className={cn(
-              "font-bold text-gray-800 mb-2 leading-tight",
-              largeText ? "text-4xl" : "text-3xl",
-              highContrast && "text-black"
-            )}>
+            <h2
+              className={cn(
+                "font-bold text-gray-800 mb-2 leading-tight",
+                largeText ? "text-4xl" : "text-3xl",
+                highContrast && "text-black",
+              )}
+            >
               {word.word}
             </h2>
 
             {/* Pronunciation */}
             {word.pronunciation && (
-              <p className={cn(
-                "text-gray-500 mb-2",
-                largeText ? "text-lg" : "text-base",
-                highContrast && "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-gray-500 mb-2",
+                  largeText ? "text-lg" : "text-base",
+                  highContrast && "text-gray-800",
+                )}
+              >
                 /{word.pronunciation}/
               </p>
             )}
@@ -476,11 +500,12 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             {/* Flip hint for older children */}
             {ageGroup !== "3-5" && (
               <button
-                onClick={handleFlip}
+                type="button"
+                onClick={() => setIsFlipped(true)}
                 className={cn(
                   "text-sm text-blue-600 hover:text-blue-800 transition-colors",
                   "border border-blue-200 rounded-full px-3 py-1 mt-2",
-                  "focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  "focus:outline-none focus:ring-2 focus:ring-blue-400",
                 )}
                 aria-label="Flip to see definition"
               >
@@ -502,7 +527,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                   "min-h-[48px] text-lg font-bold shadow-lg",
                   "transition-all duration-200 transform hover:scale-105 active:scale-95",
                   isPlaying && "animate-pulse",
-                  highContrast && "border-2 border-blue-800"
+                  highContrast && "border-2 border-blue-800",
                 )}
                 aria-label={`Pronounce ${word.word}`}
               >
@@ -519,7 +544,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                     "flex-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-2xl",
                     "min-h-[48px] font-bold shadow-lg",
                     "transition-all duration-200 transform hover:scale-105 active:scale-95",
-                    highContrast && "border-2 border-yellow-800"
+                    highContrast && "border-2 border-yellow-800",
                   )}
                   aria-label={`Mark ${word.word} as needing practice`}
                 >
@@ -537,7 +562,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                       ? "bg-green-600 hover:bg-green-700"
                       : "bg-green-500 hover:bg-green-600",
                     "text-white",
-                    highContrast && "border-2 border-green-800"
+                    highContrast && "border-2 border-green-800",
                   )}
                   aria-label={
                     masteryStatus === "mastered"
@@ -552,8 +577,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                     </>
                   ) : (
                     <>
-                      <CheckCircle className="w-4 h-4 mr-1" />
-                      ✅ Master It
+                      <CheckCircle className="w-4 h-4 mr-1" />✅ Master It
                     </>
                   )}
                 </Button>
@@ -570,17 +594,17 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "rounded-3xl shadow-xl border-2 border-white/50",
             "p-6 flex flex-col",
             "transform-gpu",
-            highContrast && "border-4 border-gray-800 bg-white"
+            highContrast && "border-4 border-gray-800 bg-white",
           )}
-          style={{ 
+          style={{
             backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)"
+            transform: "rotateY(180deg)",
           }}
         >
           {/* Back Header */}
           <div className="flex items-center justify-between mb-6">
             <Button
-              onClick={handleFlip}
+              onClick={() => setIsFlipped(false)}
               variant="outline"
               size="sm"
               className="rounded-full"
@@ -589,84 +613,62 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back
             </Button>
-            
-            <div className={cn(
-              "text-2xl font-bold text-gray-800",
-              largeText && "text-3xl",
-              highContrast && "text-black"
-            )}>
+
+            <div
+              className={cn(
+                "text-2xl font-bold text-gray-800",
+                largeText && "text-3xl",
+                highContrast && "text-black",
+              )}
+            >
               {word.word}
             </div>
           </div>
 
-          {/* Definition */}
-          <div className="space-y-4 flex-1">
-            <div className="bg-white/60 rounded-2xl p-4">
-              <h3 className={cn(
-                "font-bold text-purple-700 mb-2",
-                largeText ? "text-lg" : "text-base",
-                highContrast && "text-black"
-              )}>
-                📖 What it means:
-              </h3>
-              <p className={cn(
-                "text-gray-700 leading-relaxed",
-                largeText ? "text-lg" : "text-base",
-                highContrast && "text-black"
-              )}>
-                {word.definition}
-              </p>
-            </div>
+          {/* Replace with WordCardBack content */}
+          <div className="flex-1 mb-2">
+            <WordCardBack
+              word={word.word}
+              definition={word.definition}
+              example={word.example}
+              funFact={word.funFact}
+              onSayIt={handleSayIt}
+              onNeedPractice={handleNeedPractice}
+              onMasterIt={handleMasterIt}
+            />
+          </div>
 
-            {/* Example */}
-            {word.example && (
-              <div className="bg-white/60 rounded-2xl p-4">
-                <h3 className={cn(
-                  "font-bold text-blue-700 mb-2",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  ✍️ Example:
-                </h3>
-                <p className={cn(
-                  "text-gray-700 leading-relaxed italic",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  "{word.example}"
-                </p>
-              </div>
-            )}
-
-            {/* Fun Fact */}
-            {word.funFact && (
-              <div className="bg-white/60 rounded-2xl p-4">
-                <h3 className={cn(
-                  "font-bold text-green-700 mb-2",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  🌟 Fun Fact:
-                </h3>
-                <p className={cn(
-                  "text-gray-700 leading-relaxed",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  {word.funFact}
-                </p>
-              </div>
-            )}
+          {/* Mini-games CTA */}
+          <div className="mt-2">
+            <Button
+              onClick={() =>
+                startGame("sound-match", {
+                  word,
+                  difficulty: word.difficulty,
+                  ageGroup,
+                })
+              }
+              size={getButtonSize()}
+              className={cn(
+                "w-full bg-orange-500 hover:bg-orange-600 text-white rounded-2xl",
+                "min-h-[48px] font-bold shadow-lg",
+                highContrast && "border-2 border-orange-800",
+              )}
+              aria-label={`Play mini game for ${word.word}`}
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Play Game 🎮
+            </Button>
           </div>
 
           {/* Back to Front Button */}
           <Button
-            onClick={handleFlip}
+            onClick={() => setIsFlipped(false)}
             size={getButtonSize()}
             className={cn(
               "w-full mt-4 bg-purple-500 hover:bg-purple-600 text-white rounded-2xl",
               "min-h-[48px] font-bold",
-              highContrast && "border-2 border-purple-800"
+              highContrast && "border-2 border-purple-800",
             )}
             aria-label="Flip back to word"
           >
