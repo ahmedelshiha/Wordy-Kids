@@ -216,6 +216,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     word,
     isPlaying,
     onSayIt,
+    onPronounce,
     showReward,
     interactionCount,
     soundEnabled,
