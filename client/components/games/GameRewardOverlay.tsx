@@ -7,7 +7,11 @@ interface GameRewardOverlayProps {
   message?: string;
 }
 
-export const GameRewardOverlay: React.FC<GameRewardOverlayProps> = ({ show, correct = true, message }) => {
+export const GameRewardOverlay: React.FC<GameRewardOverlayProps> = ({
+  show,
+  correct = true,
+  message,
+}) => {
   return (
     <AnimatePresence>
       {show && (

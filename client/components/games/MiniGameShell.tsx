@@ -9,7 +9,12 @@ interface MiniGameShellProps {
   onClose: () => void;
 }
 
-export const MiniGameShell: React.FC<MiniGameShellProps> = ({ title, reducedMotion = false, children, onClose }) => {
+export const MiniGameShell: React.FC<MiniGameShellProps> = ({
+  title,
+  reducedMotion = false,
+  children,
+  onClose,
+}) => {
   return (
     <div
       role="dialog"
@@ -17,7 +22,11 @@ export const MiniGameShell: React.FC<MiniGameShellProps> = ({ title, reducedMoti
       aria-label={title}
       className="fixed inset-0 z-[70] flex items-center justify-center p-4"
     >
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-black/40"
+        onClick={onClose}
+        aria-hidden="true"
+      />
       <div
         className={cn(
           "relative w-full max-w-md rounded-3xl border-2 border-white/60 shadow-2xl",
@@ -35,7 +44,14 @@ export const MiniGameShell: React.FC<MiniGameShellProps> = ({ title, reducedMoti
             <X className="w-5 h-5" />
           </button>
         </header>
-        <div className={cn("p-4", !reducedMotion && "animate-gentle-breath min-h-[360px]")}>{children}</div>
+        <div
+          className={cn(
+            "p-4",
+            !reducedMotion && "animate-gentle-breath min-h-[360px]",
+          )}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

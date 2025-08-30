@@ -15,10 +15,25 @@ export interface SoundMatchGameProps {
 }
 
 const EMOJI_POOL = [
-  "🐶","🐱","🦁","🐘","🐵","🐸","🐼","🐷","🦊","🦄","🐤","🐙",
+  "🐶",
+  "🐱",
+  "🦁",
+  "🐘",
+  "🐵",
+  "🐸",
+  "🐼",
+  "🐷",
+  "🦊",
+  "🦄",
+  "🐤",
+  "🐙",
 ];
 
-export const SoundMatchGame: React.FC<SoundMatchGameProps> = ({ options, onSuccess, onFail }) => {
+export const SoundMatchGame: React.FC<SoundMatchGameProps> = ({
+  options,
+  onSuccess,
+  onFail,
+}) => {
   const { options: ctxOptions } = useMiniGamesContext();
   const baseWord = options.word || ctxOptions?.word;
   const difficulty = options.difficulty || ctxOptions?.difficulty || "easy";
@@ -33,14 +48,18 @@ export const SoundMatchGame: React.FC<SoundMatchGameProps> = ({ options, onSucce
   const [choices, setChoices] = useState<string[]>([]);
   const [target, setTarget] = useState<string>(baseWord?.emoji || "🔊");
   const [speaking, setSpeaking] = useState(false);
-  const [feedback, setFeedback] = useState<null | { ok: boolean; msg: string }>(null);
+  const [feedback, setFeedback] = useState<null | { ok: boolean; msg: string }>(
+    null,
+  );
 
   // Build choices: include the target emoji + random distractors
   useEffect(() => {
     const pool = EMOJI_POOL.filter((e) => e !== baseWord?.emoji);
     const shuffled = pool.sort(() => Math.random() - 0.5);
     const distractors = shuffled.slice(0, Math.max(0, choiceCount - 1));
-    const arr = [baseWord?.emoji || "🦁", ...distractors].sort(() => Math.random() - 0.5);
+    const arr = [baseWord?.emoji || "🦁", ...distractors].sort(
+      () => Math.random() - 0.5,
+    );
     setChoices(arr);
     setTarget(baseWord?.emoji || "🦁");
   }, [baseWord?.emoji, choiceCount]);
@@ -63,7 +82,11 @@ export const SoundMatchGame: React.FC<SoundMatchGameProps> = ({ options, onSucce
   }, [baseWord?.word, age]);
 
   useEffect(() => {
-    telemetry.log("feature_usage", { action: "game_round", game: "sound-match", word: baseWord?.word });
+    telemetry.log("feature_usage", {
+      action: "game_round",
+      game: "sound-match",
+      word: baseWord?.word,
+    });
     // auto play prompt
     setTimeout(speak, 200);
   }, [speak, baseWord?.word]);
@@ -82,8 +105,14 @@ export const SoundMatchGame: React.FC<SoundMatchGameProps> = ({ options, onSucce
 
   return (
     <div className="flex flex-col items-center gap-4 text-center">
-      <div className="text-sm text-gray-700" aria-live="polite">Tap the matching sound!</div>
-      <Button onClick={speak} aria-label={`Play the word sound for ${baseWord?.word || "the target"}`} className="rounded-full bg-blue-500 text-white hover:bg-blue-600 px-4 py-2">
+      <div className="text-sm text-gray-700" aria-live="polite">
+        Tap the matching sound!
+      </div>
+      <Button
+        onClick={speak}
+        aria-label={`Play the word sound for ${baseWord?.word || "the target"}`}
+        className="rounded-full bg-blue-500 text-white hover:bg-blue-600 px-4 py-2"
+      >
         {speaking ? "Playing..." : "�� Hear Sound"}
       </Button>
 
@@ -100,7 +129,11 @@ export const SoundMatchGame: React.FC<SoundMatchGameProps> = ({ options, onSucce
         ))}
       </div>
 
-      <GameRewardOverlay show={!!feedback} correct={!!feedback?.ok} message={feedback?.ok ? "Great! +💎" : "Try again"} />
+      <GameRewardOverlay
+        show={!!feedback}
+        correct={!!feedback?.ok}
+        message={feedback?.ok ? "Great! +💎" : "Try again"}
+      />
     </div>
   );
 };
