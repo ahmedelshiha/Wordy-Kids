@@ -583,7 +583,7 @@ export const useJungleAudioService = () => {
       if (!audioSettings.enabled || !word) return;
 
       try {
-        // Cancel any ongoing speech
+        // Cancel any ongoing speech and allow micro-delay before speaking
         speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(word);
