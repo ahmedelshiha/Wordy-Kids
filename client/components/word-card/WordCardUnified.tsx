@@ -662,6 +662,19 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             )}
           </div>
 
+          {/* Replace with WordCardBack content */}
+          <div className="flex-1 mb-2">
+            <WordCardBack
+              word={word.word}
+              definition={word.definition}
+              example={word.example}
+              funFact={word.funFact}
+              onSayIt={handleSayIt}
+              onNeedPractice={handleNeedPractice}
+              onMasterIt={handleMasterIt}
+            />
+          </div>
+
           {/* Mini-games CTA */}
           <div className="mt-2">
             <Button
