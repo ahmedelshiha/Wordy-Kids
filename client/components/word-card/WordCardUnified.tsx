@@ -124,11 +124,12 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     }
   }, [ageGroup, effectiveAutoPlay, autoPronounce, soundEnabled]);
 
-  // Announce card content for screen readers
+  // Announce card content for screen readers (front face only)
   useEffect(() => {
     const announceContent = () => {
+      if (isFlipped) return; // Do not announce when viewing the back
       if (window.speechSynthesis && "speechSynthesis" in window) {
-        const announcement = `Word card: ${word.word}. ${isFlipped ? word.definition : "Tap Say It to hear pronunciation, Need Practice to review later, or Master It to mark as learned."} ${masteryStatus === "mastered" ? "Already mastered." : ""}`;
+        const announcement = `Word card: ${word.word}. Tap Say It to hear pronunciation, Need Practice to review later, or Master It to mark as learned.`;
 
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
@@ -149,7 +150,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     };
 
     announceContent();
-  }, [word.word, isFlipped, masteryStatus, soundEnabled]);
+  }, [word.word, isFlipped, soundEnabled]);
 
   // Handle Say It action
   const handleSayIt = useCallback(async () => {
