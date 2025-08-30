@@ -93,7 +93,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const [celebrationActive, setCelebrationActive] = useState(false);
-  const [interactionCount, setInteractionCount] = useState(0);
+  const [interactionCount, setInteractionCount] = useState(
+    hasHeardPronunciation ? 1 : 0,
+  );
   const cardRef = useRef<HTMLDivElement>(null);
   const hasAutoPlayed = useRef(false);
 
