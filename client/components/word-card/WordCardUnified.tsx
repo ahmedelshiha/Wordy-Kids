@@ -313,11 +313,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const getSizeClasses = () => {
     switch (size) {
       case "sm":
-        return "w-64 h-80";
+        return "w-60 h-72 sm:w-64 sm:h-80";
       case "lg":
-        return "w-96 h-[28rem]";
+        return "w-80 h-[26rem] sm:w-96 sm:h-[28rem]";
       default:
-        return "w-80 h-96";
+        return "w-72 h-80 sm:w-80 sm:h-96";
     }
   };
 
@@ -325,11 +325,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const getEmojiSize = () => {
     switch (size) {
       case "sm":
-        return largeText ? "text-6xl" : "text-5xl";
+        return largeText ? "text-5xl sm:text-6xl" : "text-4xl sm:text-5xl";
       case "lg":
-        return largeText ? "text-9xl" : "text-8xl";
+        return largeText ? "text-8xl sm:text-9xl" : "text-7xl sm:text-8xl";
       default:
-        return largeText ? "text-8xl" : "text-7xl";
+        return largeText ? "text-6xl sm:text-8xl" : "text-5xl sm:text-7xl";
     }
   };
 
@@ -374,7 +374,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "absolute inset-0 w-full h-full backface-hidden",
             "bg-gradient-to-br from-white to-blue-50",
             "rounded-3xl shadow-xl border-2 border-white/50",
-            "flex flex-col items-center justify-center p-6 overflow-hidden",
+            "flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
             masteryStatus === "mastered" &&
@@ -501,7 +501,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <h2
               className={cn(
                 "font-bold text-gray-800 mb-2 leading-tight",
-                largeText ? "text-4xl" : "text-3xl",
+                largeText ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl",
                 highContrast && "text-black",
               )}
             >
@@ -513,7 +513,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               <p
                 className={cn(
                   "text-gray-500 mb-2",
-                  largeText ? "text-lg" : "text-base",
+                  largeText ? "text-base sm:text-lg" : "text-sm sm:text-base",
                   highContrast && "text-gray-800",
                 )}
               >
@@ -617,7 +617,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             !effectiveReducedMotion && "rotate-y-180",
             "bg-gradient-to-br from-purple-50 to-blue-50",
             "rounded-3xl shadow-xl border-2 border-white/50",
-            "p-6 flex flex-col overflow-hidden",
+            "p-4 sm:p-6 flex flex-col overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
             !isFlipped && "hidden",
