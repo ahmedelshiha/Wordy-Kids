@@ -36,6 +36,7 @@ export interface Word {
 interface WordCardUnifiedProps {
   word: Word;
   onSayIt?: (word: Word) => void;
+  onPronounce?: (word: Word) => void;
   onNeedPractice?: (wordId: number) => void;
   onMasterIt?: (wordId: number) => void;
   onFavorite?: (wordId: number) => void;
@@ -67,6 +68,7 @@ interface WordCardUnifiedProps {
 export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   word,
   onSayIt,
+  onPronounce,
   onNeedPractice,
   onMasterIt,
   onFavorite,
@@ -91,7 +93,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const [celebrationActive, setCelebrationActive] = useState(false);
-  const [interactionCount, setInteractionCount] = useState(0);
+  const [interactionCount, setInteractionCount] = useState(
+    hasHeardPronunciation ? 1 : 0,
+  );
   const cardRef = useRef<HTMLDivElement>(null);
   const hasAutoPlayed = useRef(false);
 
@@ -105,6 +109,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
   const effectiveReducedMotion = reducedMotion || a11yReducedMotion;
   const effectiveAutoPlay = autoPlay || a11yAutoPlay;
+
+  // Initialize flip state from prop
+  useEffect(() => {
+    if (hasFlipped) setIsFlipped(true);
+  }, [hasFlipped]);
 
   // Auto-pronounce on mount for young children
   useEffect(() => {
@@ -122,32 +131,26 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     }
   }, [ageGroup, effectiveAutoPlay, autoPronounce, soundEnabled]);
 
-  // Announce card content for screen readers
+  // Announce for screen readers via ARIA live region (no TTS to avoid interruptions)
   useEffect(() => {
-    const announceContent = () => {
-      if (window.speechSynthesis && "speechSynthesis" in window) {
-        const announcement = `Word card: ${word.word}. ${isFlipped ? word.definition : "Tap Say It to hear pronunciation, Need Practice to review later, or Master It to mark as learned."} ${masteryStatus === "mastered" ? "Already mastered." : ""}`;
-
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
-
-        // Create utterance for screen reader
-        const utterance = new SpeechSynthesisUtterance(announcement);
-        utterance.rate = 0.8;
-        utterance.volume = 0.7;
-        utterance.pitch = 1;
-
-        // Only announce if sound is enabled and it's not just auto-pronunciation
-        if (soundEnabled && !hasAutoPlayed.current) {
-          setTimeout(() => {
-            window.speechSynthesis.speak(utterance);
-          }, 200);
-        }
+    if (isFlipped) return;
+    try {
+      let live = document.getElementById("jungle-live-region");
+      if (!live) {
+        live = document.createElement("div");
+        live.id = "jungle-live-region";
+        live.setAttribute("aria-live", "polite");
+        live.setAttribute("aria-atomic", "true");
+        live.className = "sr-only";
+        document.body.appendChild(live);
       }
-    };
-
-    announceContent();
-  }, [word.word, isFlipped, masteryStatus, soundEnabled]);
+      live.textContent = `Word card: ${word.word}. Tap Say It, Practice, or Master It.`;
+      const t = setTimeout(() => {
+        if (live) live.textContent = "";
+      }, 1200);
+      return () => clearTimeout(t);
+    } catch {}
+  }, [word.word, isFlipped]);
 
   // Handle Say It action
   const handleSayIt = useCallback(async () => {
@@ -168,8 +171,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     }
 
     try {
-      // Call parent handler
+      // Call parent handler(s)
       onSayIt?.(word);
+      onPronounce?.(word);
 
       // Pronounce the word
       if (soundEnabled && "speechSynthesis" in window) {
@@ -212,6 +216,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     word,
     isPlaying,
     onSayIt,
+    onPronounce,
     showReward,
     interactionCount,
     soundEnabled,
@@ -225,6 +230,15 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
       navigator.vibrate([100, 50, 100]);
     }
 
+    // UI click/cheer sound (respect soundEnabled)
+    try {
+      if (soundEnabled && typeof Audio !== "undefined") {
+        const audio = new Audio("/sounds/ui/settings-saved.mp3");
+        audio.volume = 0.4;
+        audio.play().catch(() => {});
+      }
+    } catch {}
+
     onNeedPractice?.(word.id);
 
     // Show encouraging reward
@@ -236,7 +250,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     });
 
     setInteractionCount((prev) => prev + 1);
-  }, [word.id, onNeedPractice, showReward]);
+  }, [word.id, onNeedPractice, showReward, soundEnabled]);
 
   // Handle Master It action
   const handleMasterIt = useCallback(() => {
@@ -244,6 +258,15 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     if (navigator.vibrate) {
       navigator.vibrate([100, 50, 100, 50, 200]);
     }
+
+    // Cheer sound (respect soundEnabled)
+    try {
+      if (soundEnabled && typeof Audio !== "undefined") {
+        const audio = new Audio("/sounds/ui/settings-saved.mp3");
+        audio.volume = 0.5;
+        audio.play().catch(() => {});
+      }
+    } catch {}
 
     // Trigger celebration
     if (!effectiveReducedMotion) {
@@ -263,7 +286,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     });
 
     setInteractionCount((prev) => prev + 1);
-  }, [word.id, onMasterIt, showReward, effectiveReducedMotion]);
+  }, [word.id, onMasterIt, showReward, effectiveReducedMotion, soundEnabled]);
 
   // Handle favorite toggle
   const handleFavorite = useCallback(() => {
@@ -298,11 +321,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const getSizeClasses = () => {
     switch (size) {
       case "sm":
-        return "w-64 h-80";
+        return "w-60 h-72 sm:w-64 sm:h-80";
       case "lg":
-        return "w-96 h-[28rem]";
+        return "w-80 h-[26rem] sm:w-96 sm:h-[28rem]";
       default:
-        return "w-80 h-96";
+        return "w-72 h-80 sm:w-80 sm:h-96";
     }
   };
 
@@ -310,11 +333,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const getEmojiSize = () => {
     switch (size) {
       case "sm":
-        return largeText ? "text-6xl" : "text-5xl";
+        return largeText ? "text-5xl sm:text-6xl" : "text-4xl sm:text-5xl";
       case "lg":
-        return largeText ? "text-9xl" : "text-8xl";
+        return largeText ? "text-8xl sm:text-9xl" : "text-7xl sm:text-8xl";
       default:
-        return largeText ? "text-8xl" : "text-7xl";
+        return largeText ? "text-6xl sm:text-8xl" : "text-5xl sm:text-7xl";
     }
   };
 
@@ -336,13 +359,18 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
       <motion.div
         ref={cardRef}
         className={cn(
-          "relative mx-auto preserve-3d duration-700 cursor-pointer",
+          "relative mx-auto duration-700 cursor-pointer",
+          !effectiveReducedMotion && "preserve-3d",
           getSizeClasses(),
-          isFlipped && "rotate-y-180",
+          !effectiveReducedMotion && isFlipped && "rotate-y-180",
         )}
         style={{
-          transformStyle: "preserve-3d",
-          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transformStyle: effectiveReducedMotion ? undefined : "preserve-3d",
+          transform: effectiveReducedMotion
+            ? "none"
+            : isFlipped
+              ? "rotateY(180deg)"
+              : "rotateY(0deg)",
         }}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -354,14 +382,18 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "absolute inset-0 w-full h-full backface-hidden",
             "bg-gradient-to-br from-white to-blue-50",
             "rounded-3xl shadow-xl border-2 border-white/50",
-            "flex flex-col items-center justify-center p-6",
+            "flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
             masteryStatus === "mastered" &&
               "ring-4 ring-green-400 ring-offset-2",
             celebrationActive && !effectiveReducedMotion && "animate-bounce",
+            isFlipped && "hidden",
           )}
           style={{ backfaceVisibility: "hidden" }}
+          onClick={() => setIsFlipped(true)}
+          role="button"
+          aria-label={`Flip to see definition for ${word.word}`}
         >
           {/* Header Badges */}
           <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
@@ -379,7 +411,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="flex gap-2">
               {/* Favorite button */}
               <Button
-                onClick={handleFavorite}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFavorite();
+                }}
                 variant="ghost"
                 size="sm"
                 className={cn(
@@ -477,7 +512,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <h2
               className={cn(
                 "font-bold text-gray-800 mb-2 leading-tight",
-                largeText ? "text-4xl" : "text-3xl",
+                largeText ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl",
                 highContrast && "text-black",
               )}
             >
@@ -489,7 +524,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               <p
                 className={cn(
                   "text-gray-500 mb-2",
-                  largeText ? "text-lg" : "text-base",
+                  largeText ? "text-base sm:text-lg" : "text-sm sm:text-base",
                   highContrast && "text-gray-800",
                 )}
               >
@@ -519,7 +554,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="w-full space-y-3">
               {/* Say It Button */}
               <Button
-                onClick={handleSayIt}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSayIt();
+                }}
                 disabled={isPlaying}
                 size={getButtonSize()}
                 className={cn(
@@ -538,10 +576,13 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               {/* Need Practice and Master It Buttons */}
               <div className="flex gap-3">
                 <Button
-                  onClick={handleNeedPractice}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNeedPractice();
+                  }}
                   size={getButtonSize()}
                   className={cn(
-                    "flex-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-2xl",
+                    "flex-1 bg-yellow-500 hover:bg-yellow-600 text-gray-900 rounded-2xl",
                     "min-h-[48px] font-bold shadow-lg",
                     "transition-all duration-200 transform hover:scale-105 active:scale-95",
                     highContrast && "border-2 border-yellow-800",
@@ -553,7 +594,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 </Button>
 
                 <Button
-                  onClick={handleMasterIt}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMasterIt();
+                  }}
                   size={getButtonSize()}
                   className={cn(
                     "flex-1 rounded-2xl min-h-[48px] font-bold shadow-lg",
@@ -589,16 +633,21 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
         {/* Back of Card */}
         <div
           className={cn(
-            "absolute inset-0 w-full h-full backface-hidden rotate-y-180",
+            "absolute inset-0 w-full h-full backface-hidden",
+            !effectiveReducedMotion && "rotate-y-180",
             "bg-gradient-to-br from-purple-50 to-blue-50",
             "rounded-3xl shadow-xl border-2 border-white/50",
-            "p-6 flex flex-col",
+            "p-4 sm:p-6 flex flex-col overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
+            !isFlipped && "hidden",
           )}
           style={{
             backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
+            transform:
+              !effectiveReducedMotion && !isFlipped
+                ? "rotateY(180deg)"
+                : "none",
           }}
         >
           {/* Back Header */}

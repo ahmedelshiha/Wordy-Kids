@@ -337,7 +337,11 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
   const handleNeedPractice = useCallback((wordId: number) => {
     setPracticeWords((prev) => new Set(prev).add(wordId));
-    setSessionStats((prev) => ({ ...prev, gems: prev.gems + 1 }));
+    setSessionStats((prev) => ({
+      ...prev,
+      gems: prev.gems + 1,
+      streak: prev.streak + 1,
+    }));
   }, []);
 
   const handleMasterIt = useCallback((wordId: number) => {
@@ -351,6 +355,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
       ...prev,
       gems: prev.gems + 5,
       wordsLearned: prev.wordsLearned + 1,
+      streak: prev.streak + 1,
     }));
   }, []);
 
@@ -402,9 +407,28 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
         setCurrentWords(words);
         setCurrentWordIndex(0);
         setSelectedCategory(null);
+      } else if (newMode === "adventure") {
+        // If no words selected yet, load a default set
+        if (currentWords.length === 0) {
+          let pool: Word[] = [];
+          if (selectedCategory) {
+            pool = getWordsByCategory(selectedCategory);
+          } else {
+            pool = wordsDatabase;
+          }
+          // Age-based filtering
+          let filtered = pool;
+          if (ageGroup === "3-5") {
+            filtered = pool.filter((w) => w.difficulty === "easy");
+          } else if (ageGroup === "6-8") {
+            filtered = pool.filter((w) => w.difficulty !== "hard");
+          }
+          setCurrentWords(filtered);
+          setCurrentWordIndex(0);
+        }
       }
     },
-    [favoriteWords],
+    [favoriteWords, currentWords.length, selectedCategory, ageGroup],
   );
 
   // Progress calculation for footer
@@ -424,7 +448,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     <RewardProvider>
       <MiniGamesProvider>
         <ExplorerShell
-          title="🌟 Jungle Word Explorer"
+          title="���� Jungle Word Explorer"
           showStats={true}
           mode={mode}
           onModeChange={handleModeChange}
