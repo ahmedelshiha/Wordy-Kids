@@ -446,6 +446,34 @@ Builder.registerComponent(RewardPopup, {
   },
 });
 
+// Mini-games registrations
+Builder.registerComponent(SoundMatchGame, {
+  name: 'Sound Match Game',
+  inputs: [
+    { name: 'word', type: 'object', subFields: [ { name: 'id', type: 'number' }, { name: 'word', type: 'string' }, { name: 'emoji', type: 'string' } ] },
+    { name: 'difficulty', type: 'string', enum: ['easy','medium','hard'], defaultValue: 'easy' },
+    { name: 'rewardMultiplier', type: 'number', defaultValue: 1, min: 1, max: 3 },
+  ],
+});
+
+Builder.registerComponent(EmojiBuilderGame, {
+  name: 'Emoji Builder Game',
+  inputs: [
+    { name: 'word', type: 'object', subFields: [ { name: 'word', type: 'string' }, { name: 'emoji', type: 'string' } ] },
+    { name: 'difficulty', type: 'string', enum: ['easy','medium','hard'], defaultValue: 'easy' },
+    { name: 'rewardMultiplier', type: 'number', defaultValue: 1, min: 1, max: 3 },
+  ],
+});
+
+Builder.registerComponent(LetterHuntGame, {
+  name: 'Letter Hunt Game',
+  inputs: [
+    { name: 'word', type: 'object', subFields: [ { name: 'word', type: 'string' } ] },
+    { name: 'difficulty', type: 'string', enum: ['easy','medium','hard'], defaultValue: 'easy' },
+    { name: 'rewardMultiplier', type: 'number', defaultValue: 1, min: 1, max: 3 },
+  ],
+});
+
 /**
  * Custom inputs for Builder.io components
  */
