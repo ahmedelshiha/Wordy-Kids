@@ -634,6 +634,7 @@ export class AudioService {
       onEnd,
     } = options;
 
+    this.lastCancelAt = performance.now();
     this.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(definition);
