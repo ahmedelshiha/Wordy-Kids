@@ -49,7 +49,7 @@ describe("WordCardUnified", () => {
           accessibilitySettings={{ soundEnabled: false }}
           ageGroup="6-8"
         />
-      </RewardProvider>
+      </RewardProvider>,
     );
 
     // Front shows flip hint
@@ -66,7 +66,9 @@ describe("WordCardUnified", () => {
     expect(onPronounce).toHaveBeenCalledTimes(1);
 
     // Practice / Master handlers
-    const practiceBtn = getByRole("button", { name: /Mark star as needing practice/i });
+    const practiceBtn = getByRole("button", {
+      name: /Mark star as needing practice/i,
+    });
     fireEvent.click(practiceBtn);
     expect(onNeedPractice).toHaveBeenCalledTimes(1);
 

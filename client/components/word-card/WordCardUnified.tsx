@@ -403,7 +403,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="flex gap-2">
               {/* Favorite button */}
               <Button
-                onClick={(e) => { e.stopPropagation(); handleFavorite(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFavorite();
+                }}
                 variant="ghost"
                 size="sm"
                 className={cn(
@@ -543,7 +546,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="w-full space-y-3">
               {/* Say It Button */}
               <Button
-                onClick={(e) => { e.stopPropagation(); handleSayIt(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSayIt();
+                }}
                 disabled={isPlaying}
                 size={getButtonSize()}
                 className={cn(
@@ -562,7 +568,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               {/* Need Practice and Master It Buttons */}
               <div className="flex gap-3">
                 <Button
-                  onClick={(e) => { e.stopPropagation(); handleNeedPractice(); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNeedPractice();
+                  }}
                   size={getButtonSize()}
                   className={cn(
                     "flex-1 bg-yellow-500 hover:bg-yellow-600 text-gray-900 rounded-2xl",
@@ -577,7 +586,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 </Button>
 
                 <Button
-                  onClick={(e) => { e.stopPropagation(); handleMasterIt(); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMasterIt();
+                  }}
                   size={getButtonSize()}
                   className={cn(
                     "flex-1 rounded-2xl min-h-[48px] font-bold shadow-lg",
@@ -624,7 +636,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
           )}
           style={{
             backfaceVisibility: "hidden",
-            transform: !effectiveReducedMotion && !isFlipped ? "rotateY(180deg)" : "none",
+            transform:
+              !effectiveReducedMotion && !isFlipped
+                ? "rotateY(180deg)"
+                : "none",
           }}
         >
           {/* Back Header */}

@@ -337,7 +337,11 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
   const handleNeedPractice = useCallback((wordId: number) => {
     setPracticeWords((prev) => new Set(prev).add(wordId));
-    setSessionStats((prev) => ({ ...prev, gems: prev.gems + 1, streak: prev.streak + 1 }));
+    setSessionStats((prev) => ({
+      ...prev,
+      gems: prev.gems + 1,
+      streak: prev.streak + 1,
+    }));
   }, []);
 
   const handleMasterIt = useCallback((wordId: number) => {

@@ -23,8 +23,12 @@ const WordCardBack: React.FC<WordCardBackProps> = ({
   return (
     <div className="flex flex-col w-full h-full bg-gradient-to-br from-green-100 via-yellow-100 to-green-200 rounded-2xl p-4 text-center overflow-hidden">
       <div className="flex-1 overflow-y-auto w-full max-w-md mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-2 break-words">{word}</h2>
-        <p className="text-base md:text-lg text-gray-800 mb-4 break-words">{definition}</p>
+        <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-2 break-words">
+          {word}
+        </h2>
+        <p className="text-base md:text-lg text-gray-800 mb-4 break-words">
+          {definition}
+        </p>
 
         {example && (
           <p className="text-sm md:text-base italic text-gray-600 mb-4 break-words">
@@ -33,7 +37,9 @@ const WordCardBack: React.FC<WordCardBackProps> = ({
         )}
 
         {funFact && (
-          <p className="text-sm md:text-base text-purple-700 mb-4 break-words">🌟 Fun fact: {funFact}</p>
+          <p className="text-sm md:text-base text-purple-700 mb-4 break-words">
+            🌟 Fun fact: {funFact}
+          </p>
         )}
       </div>
 

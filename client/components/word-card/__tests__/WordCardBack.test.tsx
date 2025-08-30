@@ -26,7 +26,9 @@ describe("WordCardBack", () => {
     fireEvent.click(getByRole("button", { name: /Pronounce star again/i }));
     expect(props.onSayIt).toHaveBeenCalledTimes(1);
 
-    const practiceBtn = getByRole("button", { name: /Need more practice on star/i });
+    const practiceBtn = getByRole("button", {
+      name: /Need more practice on star/i,
+    });
     expect(practiceBtn).toBeTruthy();
     // touch target size
     expect(practiceBtn.className.includes("min-h-[48px]")).toBe(true);
