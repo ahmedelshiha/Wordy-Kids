@@ -387,7 +387,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             masteryStatus === "mastered" &&
               "ring-4 ring-green-400 ring-offset-2",
             celebrationActive && !effectiveReducedMotion && "animate-bounce",
-            effectiveReducedMotion && isFlipped && "hidden",
+            isFlipped && "hidden",
           )}
           style={{ backfaceVisibility: "hidden" }}
           onClick={() => setIsFlipped(true)}
