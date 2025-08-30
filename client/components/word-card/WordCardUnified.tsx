@@ -479,7 +479,8 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             {/* Flip hint for older children */}
             {ageGroup !== "3-5" && (
               <button
-                onClick={handleFlip}
+                type="button"
+                onClick={() => setIsFlipped(true)}
                 className={cn(
                   "text-sm text-blue-600 hover:text-blue-800 transition-colors",
                   "border border-blue-200 rounded-full px-3 py-1 mt-2",
@@ -583,7 +584,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
           {/* Back Header */}
           <div className="flex items-center justify-between mb-6">
             <Button
-              onClick={handleFlip}
+              onClick={() => setIsFlipped(false)}
               variant="outline"
               size="sm"
               className="rounded-full"
@@ -635,7 +636,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
           {/* Back to Front Button */}
           <Button
-            onClick={handleFlip}
+            onClick={() => setIsFlipped(false)}
             size={getButtonSize()}
             className={cn(
               "w-full mt-4 bg-purple-500 hover:bg-purple-600 text-white rounded-2xl",
