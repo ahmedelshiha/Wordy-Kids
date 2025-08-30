@@ -650,7 +650,8 @@ export class AudioService {
     utterance.onstart = onStart;
     utterance.onend = onEnd;
 
-    this.speechSynthesis.speak(utterance);
+    const delay = this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+    setTimeout(() => this.speechSynthesis.speak(utterance), delay);
   }
 
   public playSuccessSound(): void {
