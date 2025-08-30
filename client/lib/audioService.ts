@@ -28,9 +28,9 @@ export class AudioService {
     this.loadVoices();
 
     // Load saved voice preference
-    const savedVoiceType = localStorage.getItem(
-      "preferred-voice-type",
-    ) as VoiceType;
+    const savedVoiceRaw = localStorage.getItem("preferred-voice-type");
+    const mappedSaved = savedVoiceRaw === "child" ? "kid" : savedVoiceRaw;
+    const savedVoiceType = mappedSaved as VoiceType;
     if (savedVoiceType && ["man", "woman", "kid"].includes(savedVoiceType)) {
       this.selectedVoiceType = savedVoiceType;
     }
