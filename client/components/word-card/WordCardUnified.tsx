@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useReward } from "@/contexts/RewardContext";
 import { useMiniGames } from "@/hooks/useMiniGames";
+import WordCardBack from "@/components/word-card/WordCardBack";
 import {
   Volume2,
   RotateCcw,
