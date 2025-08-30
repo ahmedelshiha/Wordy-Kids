@@ -9,10 +9,7 @@ export interface EnhancedWordCardProps {
   showDefinition?: boolean;
   onPronounce?: (word: Word) => void;
   onFavorite?: (word: Word) => void;
-  onWordMastered?: (
-    wordId: number,
-    rating: "easy" | "medium" | "hard",
-  ) => void;
+  onWordMastered?: (wordId: number, rating: "easy" | "medium" | "hard") => void;
   showVocabularyBuilder?: boolean;
   className?: string;
   // Compatibility flags expected by existing usages
