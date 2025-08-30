@@ -374,7 +374,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "absolute inset-0 w-full h-full backface-hidden",
             "bg-gradient-to-br from-white to-blue-50",
             "rounded-3xl shadow-xl border-2 border-white/50",
-            "flex flex-col items-center justify-center p-6",
+            "flex flex-col items-center justify-center p-6 overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
             masteryStatus === "mastered" &&
@@ -617,7 +617,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             !effectiveReducedMotion && "rotate-y-180",
             "bg-gradient-to-br from-purple-50 to-blue-50",
             "rounded-3xl shadow-xl border-2 border-white/50",
-            "p-6 flex flex-col",
+            "p-6 flex flex-col overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
             !isFlipped && "hidden",
