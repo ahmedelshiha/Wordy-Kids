@@ -1976,8 +1976,17 @@
 }
 
 /* Enhanced Word Card Flip Animations - Simplified for compatibility */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
 .rotate-y-180 {
-  transform: rotate(180deg);
+  transform: rotateY(180deg);
 }
 
 .hover\:scale-102:hover {

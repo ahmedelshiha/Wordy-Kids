@@ -120,7 +120,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       className={cn(
         "min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50",
         "relative overflow-hidden",
-        className
+        className,
       )}
       style={{
         filter: highContrast ? "contrast(1.25) saturate(1.1)" : undefined,
@@ -139,21 +139,36 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             </motion.div>
             <motion.div
               animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
               className="absolute top-20 right-20 text-3xl opacity-15"
             >
               🦋
             </motion.div>
             <motion.div
               animate={{ scale: [1, 1.1, 1], rotate: [0, -2, 0] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2,
+              }}
               className="absolute bottom-20 left-20 text-5xl opacity-10"
             >
               🌳
             </motion.div>
             <motion.div
               animate={{ y: [0, -25, 0], rotate: [0, 15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3,
+              }}
               className="absolute bottom-10 right-10 text-3xl opacity-20"
             >
               ⭐
@@ -184,12 +199,16 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 {/* Jungle mascot */}
                 <motion.div
                   animate={reducedMotion ? {} : { rotate: [0, 5, -5, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                   className="text-2xl md:text-3xl"
                 >
                   🦉
                 </motion.div>
-                
+
                 <div>
                   <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                     {title}
@@ -299,7 +318,11 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 variant="secondary"
                 size="sm"
                 className="rounded-full w-9 h-9 md:w-10 md:h-10 p-0"
-                aria-label={highContrast ? "Disable high contrast" : "Enable high contrast"}
+                aria-label={
+                  highContrast
+                    ? "Disable high contrast"
+                    : "Enable high contrast"
+                }
               >
                 {highContrast ? (
                   <Eye className="w-4 h-4 text-blue-600" />
@@ -321,7 +344,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                   </div>
                   <div className="flex items-center gap-1">
                     <Timer className="w-4 h-4 text-green-500" />
-                    <span className="text-sm font-bold">{formatTime(sessionTime)}</span>
+                    <span className="text-sm font-bold">
+                      {formatTime(sessionTime)}
+                    </span>
                   </div>
                 </div>
               )}
@@ -386,7 +411,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               </div>
               <div className="flex items-center gap-1 bg-green-100 rounded-full px-3 py-1">
                 <Timer className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-bold text-green-700">{formatTime(sessionTime)}</span>
+                <span className="text-sm font-bold text-green-700">
+                  {formatTime(sessionTime)}
+                </span>
               </div>
             </div>
           )}
@@ -410,7 +437,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           {categories.length > 0 && mode === "map" && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-gray-700">Quick Select</span>
+                <span className="text-sm font-semibold text-gray-700">
+                  Quick Select
+                </span>
               </div>
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {categories.map((category) => (
@@ -421,7 +450,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                       "rounded-full min-w-[80px] h-10 px-3 text-sm flex-shrink-0 shadow-sm",
                       selectedCategory === category.id
                         ? "bg-gradient-to-r from-green-400 to-blue-500 text-white"
-                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50",
                     )}
                     aria-label={`Select ${category.name} category`}
                   >
@@ -439,7 +468,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             <div className="space-y-1">
               <div className="flex justify-between text-xs text-gray-600">
                 <span>Progress</span>
-                <span>{progress.current}/{progress.total}</span>
+                <span>
+                  {progress.current}/{progress.total}
+                </span>
               </div>
               <Progress
                 value={(progress.current / progress.total) * 100}
@@ -451,9 +482,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 flex-1">
-        {children}
-      </main>
+      <main className="relative z-10 flex-1">{children}</main>
 
       {/* Progress Footer (Vine Bar) */}
       {progress && (
@@ -467,31 +496,39 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 {progress.current} of {progress.total} completed
               </span>
             </div>
-            
+
             {/* Vine Progress Bar */}
             <div className="relative h-3 bg-green-100 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${(progress.current / progress.total) * 100}%` }}
+                animate={{
+                  width: `${(progress.current / progress.total) * 100}%`,
+                }}
                 transition={{ duration: 1, ease: "easeOut" }}
                 className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full relative overflow-hidden"
               >
                 {/* Vine pattern overlay */}
                 <div className="absolute inset-0 opacity-30">
-                  <div className="h-full w-full bg-repeat-x bg-center" 
-                       style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6c2-2 4-2 6 0s4 2 6 0' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3C/svg%3E")` }} />
+                  <div
+                    className="h-full w-full bg-repeat-x bg-center"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6c2-2 4-2 6 0s4 2 6 0' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3C/svg%3E")`,
+                    }}
+                  />
                 </div>
               </motion.div>
-              
+
               {/* Progress gems */}
-              {Array.from({ length: Math.min(5, Math.floor(progress.current / 5)) }).map((_, i) => (
+              {Array.from({
+                length: Math.min(5, Math.floor(progress.current / 5)),
+              }).map((_, i) => (
                 <motion.div
                   key={i}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: i * 0.1 + 0.5 }}
                   className="absolute top-1/2 transform -translate-y-1/2 text-xs"
-                  style={{ left: `${((i + 1) * 20)}%` }}
+                  style={{ left: `${(i + 1) * 20}%` }}
                 >
                   💎
                 </motion.div>
