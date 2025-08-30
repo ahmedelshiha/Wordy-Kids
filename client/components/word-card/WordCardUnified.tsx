@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useReward } from "@/contexts/RewardContext";
+import { useMiniGames } from "@/hooks/useMiniGames";
 import {
   Volume2,
   RotateCcw,
@@ -84,6 +85,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   size = "md",
 }) => {
   const { showReward } = useReward();
+  const { startGame } = useMiniGames();
   const [isFlipped, setIsFlipped] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
@@ -657,6 +659,23 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 </p>
               </div>
             )}
+          </div>
+
+          {/* Mini-games CTA */}
+          <div className="mt-2">
+            <Button
+              onClick={() => startGame("sound-match", { word, difficulty: word.difficulty, ageGroup })}
+              size={getButtonSize()}
+              className={cn(
+                "w-full bg-orange-500 hover:bg-orange-600 text-white rounded-2xl",
+                "min-h-[48px] font-bold shadow-lg",
+                highContrast && "border-2 border-orange-800"
+              )}
+              aria-label={`Play mini game for ${word.word}`}
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Play Game 🎮
+            </Button>
           </div>
 
           {/* Back to Front Button */}
