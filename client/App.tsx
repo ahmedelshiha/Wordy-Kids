@@ -4,7 +4,6 @@ import "./global.css";
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./hooks/useAuth";
@@ -114,121 +113,116 @@ const App = () => {
   return (
     <ErrorBoundary fallbackType="parent" componentName="App">
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <WordDatabaseNotifications />
-          <CompactWordDatabaseNotifications />
-          <BrowserRouter>
-            <AuthProvider>
-              <LightweightAchievementProvider>
-                <NavigationGuard>
-                  <ErrorBoundary fallbackType="parent" componentName="Routes">
-                    <Routes>
-                      <Route path="/" element={<LoginForm />} />
-                      <Route path="/login" element={<LoginForm />} />
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route
-                        path="/app"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="kid"
-                            componentName="MainAppPage"
-                          >
-                            <MainAppPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route path="/profile" element={<Login />} />
-                      <Route
-                        path="/admin"
-                        element={
-                          <ErrorBoundary
-                            fallbackType="parent"
-                            componentName="AdminPage"
-                          >
-                            <AdminPage />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/word-card-demo"
-                        element={<EnhancedWordCardDemo />}
-                      />
-                      <Route
-                        path="/word-garden-demo"
-                        element={<WordGardenDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-demo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/WordAdventureDemo"
-                        element={<WordAdventureDemo />}
-                      />
-                      <Route
-                        path="/word-adventure-test"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/WordAdventureTest"
-                        element={<WordAdventureTest />}
-                      />
-                      <Route
-                        path="/speech-diagnostics"
-                        element={<SpeechDiagnostics />}
-                      />
-                      <Route
-                        path="/ai-integration-demo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/AIIntegrationDemo"
-                        element={<AIIntegrationDemo />}
-                      />
-                      <Route
-                        path="/ai-word-recommendation-demo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/AIWordRecommendationDemo"
-                        element={<AIWordRecommendationDemo />}
-                      />
-                      <Route
-                        path="/ai-system-test"
-                        element={<AISystemTest />}
-                      />
-                      <Route
-                        path="/jungle-adventure-word-card-demo"
-                        element={<JungleAdventureWordCardDemo />}
-                      />
-                      <Route
-                        path="/error-boundary-test"
-                        element={<ErrorBoundaryTest />}
-                      />
-                      <Route
-                        path="/mobile-settings-demo"
-                        element={<MobileSettingsDemo />}
-                      />
-                      <Route
-                        path="/settings-panel-v2-demo"
-                        element={<SettingsPanelV2Demo />}
-                      />
-                      <Route path="/icon-nav-test" element={<IconNavTest />} />
-                      <Route
-                        path="/jungle-word-explorer"
-                        element={<JungleWordExplorerPage />}
-                      />
-                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </ErrorBoundary>
-                </NavigationGuard>
-              </LightweightAchievementProvider>
-            </AuthProvider>
-          </BrowserRouter>
-        </TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <WordDatabaseNotifications />
+        <CompactWordDatabaseNotifications />
+        <BrowserRouter>
+          <AuthProvider>
+            <LightweightAchievementProvider>
+              <NavigationGuard>
+                <ErrorBoundary fallbackType="parent" componentName="Routes">
+                  <Routes>
+                    <Route path="/" element={<LoginForm />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route
+                      path="/app"
+                      element={
+                        <ErrorBoundary
+                          fallbackType="kid"
+                          componentName="MainAppPage"
+                        >
+                          <MainAppPage />
+                        </ErrorBoundary>
+                      }
+                    />
+                    <Route path="/profile" element={<Login />} />
+                    <Route
+                      path="/admin"
+                      element={
+                        <ErrorBoundary
+                          fallbackType="parent"
+                          componentName="AdminPage"
+                        >
+                          <AdminPage />
+                        </ErrorBoundary>
+                      }
+                    />
+                    <Route
+                      path="/word-card-demo"
+                      element={<EnhancedWordCardDemo />}
+                    />
+                    <Route
+                      path="/word-garden-demo"
+                      element={<WordGardenDemo />}
+                    />
+                    <Route
+                      path="/word-adventure-demo"
+                      element={<WordAdventureDemo />}
+                    />
+                    <Route
+                      path="/WordAdventureDemo"
+                      element={<WordAdventureDemo />}
+                    />
+                    <Route
+                      path="/word-adventure-test"
+                      element={<WordAdventureTest />}
+                    />
+                    <Route
+                      path="/WordAdventureTest"
+                      element={<WordAdventureTest />}
+                    />
+                    <Route
+                      path="/speech-diagnostics"
+                      element={<SpeechDiagnostics />}
+                    />
+                    <Route
+                      path="/ai-integration-demo"
+                      element={<AIIntegrationDemo />}
+                    />
+                    <Route
+                      path="/AIIntegrationDemo"
+                      element={<AIIntegrationDemo />}
+                    />
+                    <Route
+                      path="/ai-word-recommendation-demo"
+                      element={<AIWordRecommendationDemo />}
+                    />
+                    <Route
+                      path="/AIWordRecommendationDemo"
+                      element={<AIWordRecommendationDemo />}
+                    />
+                    <Route path="/ai-system-test" element={<AISystemTest />} />
+                    <Route
+                      path="/jungle-adventure-word-card-demo"
+                      element={<JungleAdventureWordCardDemo />}
+                    />
+                    <Route
+                      path="/error-boundary-test"
+                      element={<ErrorBoundaryTest />}
+                    />
+                    <Route
+                      path="/mobile-settings-demo"
+                      element={<MobileSettingsDemo />}
+                    />
+                    <Route
+                      path="/settings-panel-v2-demo"
+                      element={<SettingsPanelV2Demo />}
+                    />
+                    <Route path="/icon-nav-test" element={<IconNavTest />} />
+                    <Route
+                      path="/jungle-word-explorer"
+                      element={<JungleWordExplorerPage />}
+                    />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </ErrorBoundary>
+              </NavigationGuard>
+            </LightweightAchievementProvider>
+          </AuthProvider>
+        </BrowserRouter>
       </QueryClientProvider>
     </ErrorBoundary>
   );
