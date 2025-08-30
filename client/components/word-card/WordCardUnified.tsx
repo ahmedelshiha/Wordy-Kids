@@ -602,65 +602,6 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             </div>
           </div>
 
-          {/* Definition */}
-          <div className="space-y-4 flex-1">
-            <div className="bg-white/60 rounded-2xl p-4">
-              <h3 className={cn(
-                "font-bold text-purple-700 mb-2",
-                largeText ? "text-lg" : "text-base",
-                highContrast && "text-black"
-              )}>
-                📖 What it means:
-              </h3>
-              <p className={cn(
-                "text-gray-700 leading-relaxed",
-                largeText ? "text-lg" : "text-base",
-                highContrast && "text-black"
-              )}>
-                {word.definition}
-              </p>
-            </div>
-
-            {/* Example */}
-            {word.example && (
-              <div className="bg-white/60 rounded-2xl p-4">
-                <h3 className={cn(
-                  "font-bold text-blue-700 mb-2",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  ✍️ Example:
-                </h3>
-                <p className={cn(
-                  "text-gray-700 leading-relaxed italic",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  "{word.example}"
-                </p>
-              </div>
-            )}
-
-            {/* Fun Fact */}
-            {word.funFact && (
-              <div className="bg-white/60 rounded-2xl p-4">
-                <h3 className={cn(
-                  "font-bold text-green-700 mb-2",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  🌟 Fun Fact:
-                </h3>
-                <p className={cn(
-                  "text-gray-700 leading-relaxed",
-                  largeText ? "text-lg" : "text-base",
-                  highContrast && "text-black"
-                )}>
-                  {word.funFact}
-                </p>
-              </div>
-            )}
-          </div>
 
           {/* Replace with WordCardBack content */}
           <div className="flex-1 mb-2">
