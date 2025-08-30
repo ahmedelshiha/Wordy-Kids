@@ -755,10 +755,11 @@ export class AudioService {
     this.speechSynthesis.cancel();
   }
 
-  public setVoiceType(voiceType: VoiceType): void {
-    this.selectedVoiceType = voiceType;
+  public setVoiceType(voiceType: VoiceType | "child"): void {
+    const mapped = (voiceType === "child" ? "kid" : voiceType) as VoiceType;
+    this.selectedVoiceType = mapped;
     // Save to localStorage for persistence
-    localStorage.setItem("preferred-voice-type", voiceType);
+    localStorage.setItem("preferred-voice-type", mapped);
   }
 
   public getVoiceType(): VoiceType {
