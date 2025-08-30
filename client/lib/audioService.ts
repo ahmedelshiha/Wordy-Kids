@@ -477,26 +477,26 @@ export class AudioService {
         );
       };
 
-      // Speak the word with additional error handling
-      try {
-        this.speechSynthesis.speak(utterance);
-      } catch (speakError) {
-        console.error("Error calling speak:", speakError);
-        const speakCallError = {
-          type: "speak_call_error",
-          word: word,
-          originalError:
-            speakError instanceof Error
-              ? {
-                  name: speakError.name,
-                  message: speakError.message,
-                  stack: speakError.stack,
-                }
-              : speakError,
-          timestamp: new Date().toISOString(),
-        };
-        onError?.(speakCallError);
-      }
+      // Speak the word with additional error handling; allow cancel() to settle first
+      const safeSpeak = () => {
+        try {
+          this.speechSynthesis.speak(utterance);
+        } catch (e) {
+          console.error("Error calling speak:", e);
+          const speakCallError = {
+            type: "speak_call_error",
+            word: word,
+            originalError:
+              e instanceof Error
+                ? { name: e.name, message: e.message, stack: e.stack }
+                : e,
+            timestamp: new Date().toISOString(),
+          };
+          onError?.(speakCallError);
+        }
+      };
+      const delay = this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+      setTimeout(safeSpeak, delay);
     } catch (error) {
       console.error("Error in pronounceWord:", error);
       const generalError = {
