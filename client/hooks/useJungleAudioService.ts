@@ -611,7 +611,10 @@ export const useJungleAudioService = () => {
 
         utterance.onerror = (event: any) => {
           speechUtteranceRef.current = null;
-          if (event?.error === "interrupted" || event?.message === "interrupted") {
+          if (
+            event?.error === "interrupted" ||
+            event?.message === "interrupted"
+          ) {
             // Likely caused by our own cancel(); ignore as non-fatal
             return;
           }

@@ -424,7 +424,8 @@ export class AudioService {
       };
 
       utterance.onerror = (event: any) => {
-        const isInterrupted = event?.error === "interrupted" || event?.message === "interrupted";
+        const isInterrupted =
+          event?.error === "interrupted" || event?.message === "interrupted";
         const sinceCancel = performance.now() - this.lastCancelAt;
         if (isInterrupted && sinceCancel >= 0 && sinceCancel < 600) {
           console.info("Speech synthesis interrupted after cancel; ignoring.");
@@ -495,7 +496,10 @@ export class AudioService {
           onError?.(speakCallError);
         }
       };
-      const delay = this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+      const delay =
+        this.speechSynthesis.speaking || this.speechSynthesis.pending
+          ? 120
+          : 60;
       setTimeout(safeSpeak, delay);
     } catch (error) {
       console.error("Error in pronounceWord:", error);
@@ -568,10 +572,13 @@ export class AudioService {
       };
 
       utterance.onerror = (event: any) => {
-        const isInterrupted = event?.error === "interrupted" || event?.message === "interrupted";
+        const isInterrupted =
+          event?.error === "interrupted" || event?.message === "interrupted";
         const sinceCancel = performance.now() - this.lastCancelAt;
         if (isInterrupted && sinceCancel >= 0 && sinceCancel < 600) {
-          console.info("Speech synthesis interrupted after cancel (default voice); ignoring.");
+          console.info(
+            "Speech synthesis interrupted after cancel (default voice); ignoring.",
+          );
           return;
         }
         const errorPayload = {
@@ -607,7 +614,10 @@ export class AudioService {
         }
       };
 
-      const delay = this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+      const delay =
+        this.speechSynthesis.speaking || this.speechSynthesis.pending
+          ? 120
+          : 60;
       setTimeout(() => this.speechSynthesis.speak(utterance), delay);
     } catch (error) {
       console.error("Error in fallback pronunciation:", error);
@@ -650,7 +660,8 @@ export class AudioService {
     utterance.onstart = onStart;
     utterance.onend = onEnd;
 
-    const delay = this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+    const delay =
+      this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
     setTimeout(() => this.speechSynthesis.speak(utterance), delay);
   }
 
