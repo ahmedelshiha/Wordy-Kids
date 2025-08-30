@@ -568,6 +568,12 @@ export class AudioService {
       };
 
       utterance.onerror = (event: any) => {
+        const isInterrupted = event?.error === "interrupted" || event?.message === "interrupted";
+        const sinceCancel = performance.now() - this.lastCancelAt;
+        if (isInterrupted && sinceCancel >= 0 && sinceCancel < 600) {
+          console.info("Speech synthesis interrupted after cancel (default voice); ignoring.");
+          return;
+        }
         const errorPayload = {
           error: event?.error || null,
           message: event?.message || "unknown",
@@ -601,7 +607,8 @@ export class AudioService {
         }
       };
 
-      this.speechSynthesis.speak(utterance);
+      const delay = this.speechSynthesis.speaking || this.speechSynthesis.pending ? 120 : 60;
+      setTimeout(() => this.speechSynthesis.speak(utterance), delay);
     } catch (error) {
       console.error("Error in fallback pronunciation:", error);
       options.onError?.();
