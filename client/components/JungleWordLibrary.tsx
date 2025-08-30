@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { RewardProvider } from "@/contexts/RewardContext";
+import { MiniGamesProvider } from "@/contexts/MiniGamesContext";
 import { ExplorerShell } from "@/components/explorer/ExplorerShell";
 import { CategoryGrid } from "@/components/category/CategoryGrid";
 import { CategoryTile, Category } from "@/components/category/CategoryTile";
@@ -382,6 +383,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
 
   return (
     <RewardProvider>
+      <MiniGamesProvider>
       <ExplorerShell
         title="🌟 Jungle Word Explorer"
         showStats={true}
@@ -612,6 +614,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           </AnimatePresence>
         </div>
       </ExplorerShell>
+      </MiniGamesProvider>
     </RewardProvider>
   );
 };
