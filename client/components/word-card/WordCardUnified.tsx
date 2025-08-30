@@ -627,11 +627,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "p-6 flex flex-col",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
-            effectiveReducedMotion && !isFlipped && "hidden",
+            !isFlipped && "hidden",
           )}
           style={{
             backfaceVisibility: "hidden",
-            transform: effectiveReducedMotion ? "none" : "rotateY(180deg)",
+            transform: !effectiveReducedMotion && !isFlipped ? "rotateY(180deg)" : "none",
           }}
         >
           {/* Back Header */}
