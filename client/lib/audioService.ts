@@ -424,6 +424,12 @@ export class AudioService {
       };
 
       utterance.onerror = (event: any) => {
+        const isInterrupted = event?.error === "interrupted" || event?.message === "interrupted";
+        const sinceCancel = performance.now() - this.lastCancelAt;
+        if (isInterrupted && sinceCancel >= 0 && sinceCancel < 600) {
+          console.info("Speech synthesis interrupted after cancel; ignoring.");
+          return;
+        }
         const errorPayload = {
           error: event?.error || null,
           message: event?.message || "unknown",
