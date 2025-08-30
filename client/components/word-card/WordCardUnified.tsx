@@ -124,33 +124,26 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     }
   }, [ageGroup, effectiveAutoPlay, autoPronounce, soundEnabled]);
 
-  // Announce card content for screen readers (front face only)
+  // Announce for screen readers via ARIA live region (no TTS to avoid interruptions)
   useEffect(() => {
-    const announceContent = () => {
-      if (isFlipped) return; // Do not announce when viewing the back
-      if (window.speechSynthesis && "speechSynthesis" in window) {
-        const announcement = `Word card: ${word.word}. Tap Say It to hear pronunciation, Need Practice to review later, or Master It to mark as learned.`;
-
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
-
-        // Create utterance for screen reader
-        const utterance = new SpeechSynthesisUtterance(announcement);
-        utterance.rate = 0.8;
-        utterance.volume = 0.7;
-        utterance.pitch = 1;
-
-        // Only announce if sound is enabled and it's not just auto-pronunciation
-        if (soundEnabled && !hasAutoPlayed.current) {
-          setTimeout(() => {
-            window.speechSynthesis.speak(utterance);
-          }, 200);
-        }
+    if (isFlipped) return;
+    try {
+      let live = document.getElementById("jungle-live-region");
+      if (!live) {
+        live = document.createElement("div");
+        live.id = "jungle-live-region";
+        live.setAttribute("aria-live", "polite");
+        live.setAttribute("aria-atomic", "true");
+        live.className = "sr-only";
+        document.body.appendChild(live);
       }
-    };
-
-    announceContent();
-  }, [word.word, isFlipped, soundEnabled]);
+      live.textContent = `Word card: ${word.word}. Tap Say It, Practice, or Master It.`;
+      const t = setTimeout(() => {
+        if (live) live.textContent = "";
+      }, 1200);
+      return () => clearTimeout(t);
+    } catch {}
+  }, [word.word, isFlipped]);
 
   // Handle Say It action
   const handleSayIt = useCallback(async () => {
