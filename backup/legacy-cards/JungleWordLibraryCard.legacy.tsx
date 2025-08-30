@@ -109,12 +109,8 @@ export default function JungleWordLibraryCard({
     >
       {/* Decorative background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-6 -left-6 text-5xl opacity-15 select-none">
-          🌿
-        </div>
-        <div className="absolute -bottom-6 -right-6 text-5xl opacity-15 select-none">
-          🦋
-        </div>
+        <div className="absolute -top-6 -left-6 text-5xl opacity-15 select-none">🌿</div>
+        <div className="absolute -bottom-6 -right-6 text-5xl opacity-15 select-none">🦋</div>
       </div>
 
       {/* Main content */}
@@ -185,10 +181,7 @@ export default function JungleWordLibraryCard({
 
       {/* Gentle Confetti */}
       {showConfetti && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 overflow-hidden"
-        >
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           {confetti.map((c) => (
             <span
               key={c.id}
@@ -196,11 +189,7 @@ export default function JungleWordLibraryCard({
                 "absolute text-xl select-none",
                 !reducedMotion && "animate-jungle-sparkle",
               )}
-              style={{
-                left: `${c.left}%`,
-                top: 0,
-                animationDelay: `${c.delay}ms`,
-              }}
+              style={{ left: `${c.left}%`, top: 0, animationDelay: `${c.delay}ms` }}
             >
               {c.emoji}
             </span>
@@ -209,9 +198,7 @@ export default function JungleWordLibraryCard({
       )}
 
       {/* Screen reader live region */}
-      <div aria-live="polite" className="sr-only">
-        {announce}
-      </div>
+      <div aria-live="polite" className="sr-only">{announce}</div>
     </div>
   );
 }
