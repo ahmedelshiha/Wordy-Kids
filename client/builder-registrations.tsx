@@ -5,6 +5,9 @@ import { CategoryGrid } from './components/category/CategoryGrid';
 import { WordCardUnified } from './components/word-card/WordCardUnified';
 import { RewardPopup } from './components/RewardPopup';
 import { JungleWordLibrary } from './components/JungleWordLibrary';
+import { SoundMatchGame } from './components/games/SoundMatchGame';
+import { EmojiBuilderGame } from './components/games/EmojiBuilderGame';
+import { LetterHuntGame } from './components/games/LetterHuntGame';
 
 /**
  * Word schema for Builder.io
