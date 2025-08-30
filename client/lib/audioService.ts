@@ -12,6 +12,7 @@ export class AudioService {
   private selectedVoiceType: VoiceType = "woman";
   private isSupported: boolean = false;
   private voicesLoaded: boolean = false;
+  private lastCancelAt: number = 0;
 
   private constructor() {
     // Check if speech synthesis is supported
