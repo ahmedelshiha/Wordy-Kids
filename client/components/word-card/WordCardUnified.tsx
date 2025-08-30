@@ -110,6 +110,11 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   const effectiveReducedMotion = reducedMotion || a11yReducedMotion;
   const effectiveAutoPlay = autoPlay || a11yAutoPlay;
 
+  // Initialize flip state from prop
+  useEffect(() => {
+    if (hasFlipped) setIsFlipped(true);
+  }, [hasFlipped]);
+
   // Auto-pronounce on mount for young children
   useEffect(() => {
     const shouldAutoPlay =
