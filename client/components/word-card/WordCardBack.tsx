@@ -38,21 +38,24 @@ const WordCardBack: React.FC<WordCardBackProps> = ({
       <div className="flex flex-col gap-3 w-full max-w-xs">
         <button
           onClick={onSayIt}
-          className="flex items-center justify-center gap-2 bg-green-500 text-white rounded-xl py-3 shadow-md hover:scale-105 active:scale-95 transition-transform"
+          className="flex items-center justify-center gap-2 bg-green-500 text-white rounded-xl py-3 shadow-md hover:scale-105 active:scale-95 transition-transform min-h-[48px]"
+          aria-label={`Pronounce ${word} again`}
         >
           <Volume2 size={22} /> Say It Again
         </button>
 
         <button
           onClick={onNeedPractice}
-          className="flex items-center justify-center gap-2 bg-yellow-400 text-white rounded-xl py-3 shadow-md hover:scale-105 active:scale-95 transition-transform"
+          className="flex items-center justify-center gap-2 bg-yellow-500 text-gray-900 rounded-xl py-3 shadow-md hover:scale-105 active:scale-95 transition-transform min-h-[48px]"
+          aria-label={`Need more practice on ${word}`}
         >
           <Leaf size={22} /> Need Practice
         </button>
 
         <button
           onClick={onMasterIt}
-          className="flex items-center justify-center gap-2 bg-pink-500 text-white rounded-xl py-3 shadow-md hover:scale-105 active:scale-95 transition-transform"
+          className="flex items-center justify-center gap-2 bg-pink-500 text-white rounded-xl py-3 shadow-md hover:scale-105 active:scale-95 transition-transform min-h-[48px]"
+          aria-label={`Mark ${word} as mastered`}
         >
           <Star size={22} /> Master It!
         </button>
