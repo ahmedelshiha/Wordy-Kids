@@ -62,6 +62,11 @@ interface ExplorerShellProps {
   }>;
   onCategorySelect?: (categoryId: string) => void;
   selectedCategory?: string;
+  // Visual customization
+  backgroundImage?: string;
+  backgroundGradient?: string;
+  leafBorder?: boolean;
+  mascotEmoji?: string;
 }
 
 export const ExplorerShell: React.FC<ExplorerShellProps> = ({
@@ -90,6 +95,10 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
   categories = [],
   onCategorySelect,
   selectedCategory,
+  backgroundImage,
+  backgroundGradient,
+  leafBorder = true,
+  mascotEmoji = "🦉",
 }) => {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -118,16 +127,28 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50",
+        "min-h-screen",
         "relative overflow-hidden",
         className,
       )}
       style={{
         filter: highContrast ? "contrast(1.25) saturate(1.1)" : undefined,
+        background:
+          backgroundGradient ||
+          "linear-gradient(135deg, #ecfdf5 0%, #e0f2fe 50%, #ede9fe 100%)",
       }}
     >
-      {/* Animated background elements */}
+      {/* Background image + animated jungle elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {backgroundImage && (
+          <motion.div
+            aria-hidden="true"
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${backgroundImage})`, opacity: 0.25 }}
+            animate={reducedMotion ? {} : { scale: [1, 1.03, 1], y: [0, -8, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
         {!reducedMotion && (
           <>
             <motion.div
@@ -175,6 +196,23 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             </motion.div>
           </>
         )}
+        {/* Leaf border */}
+        {leafBorder && (
+          <div className="absolute inset-0">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\"%3E%3Cdefs%3E%3Cpath id=\"l\" d=\"M0 0c8 6 14 6 22 0 8-6 14-6 22 0 8 6 14 6 22 0 8-6 14-6 22 0\"/%3E%3C/defs%3E%3Cpath d=\"M0 3h100\" stroke=\"%2322c55e\" stroke-width=\"1\" opacity=\".2\"/%3E%3Cuse href=\"%23l\" stroke=\"%2322c55e\" stroke-width=\"1\" fill=\"none\" y=\"2\" opacity=\".15\"/%3E%3C/svg%3E')",
+                backgroundRepeat: "repeat",
+                backgroundSize: "100px 12px",
+                maskImage:
+                  "linear-gradient(to right, transparent, black 10%, black 90%, transparent), linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
+              }}
+              aria-hidden
+            />
+          </div>
+        )}
       </div>
 
       {/* Header */}
@@ -206,7 +244,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                   }}
                   className="text-2xl md:text-3xl"
                 >
-                  🦉
+                  {mascotEmoji}
                 </motion.div>
 
                 <div>
