@@ -6,6 +6,7 @@ import { useReward } from "@/contexts/RewardContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import {
   Search,
   Filter,
@@ -41,6 +42,11 @@ interface CategoryGridProps {
   showDifficulty?: boolean;
   showProgress?: boolean;
   maxCategories?: number;
+  // Overall learning journey progress (moved here from ExplorerShell footer)
+  progress?: {
+    current: number;
+    total: number;
+  };
 }
 
 type FilterType =
@@ -69,6 +75,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
   showDifficulty = true,
   showProgress = true,
   maxCategories,
+  progress,
 }) => {
   const { showReward } = useReward();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
@@ -495,6 +502,36 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
               <span>{getFilterCounts.recommended} recommended</span>
             </div>
           </div>
+
+          {/* Learning Journey Progress (moved from ExplorerShell footer) */}
+          {progress && (
+            <div className="mt-3 w-full max-w-3xl mx-auto">
+              <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1">
+                <span className="text-sm font-medium text-gray-700">Learning Journey</span>
+                <span className="text-sm text-gray-600 whitespace-normal break-words">
+                  {progress.current} of {progress.total} completed
+                </span>
+              </div>
+              <div className="relative h-3 bg-green-100 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(progress.current / progress.total) * 100}%` }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 opacity-30">
+                    <div
+                      className="h-full w-full bg-repeat-x bg-center"
+                      style={{
+                        backgroundImage:
+                          "url(\"data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6c2-2 4-2 6 0s4 2 6 0' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3C/svg%3E\")",
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
