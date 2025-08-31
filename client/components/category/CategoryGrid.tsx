@@ -494,9 +494,9 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
       {/* Quick Stats Footer */}
       {categories.length > 0 && (
-        <div className="jungle-progress-container">
+        <div className="jungle-progress-container p-3 sm:p-4">
           {/* Jungle quick stats - playful badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 jungle-achievements-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 jungle-achievements-grid">
             <div className="jungle-achievement-item">
               <div className="jungle-achievement-icon">🌿</div>
               <div className="achievement-content">
@@ -524,14 +524,14 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
           {progress && (
             <div className="mt-3 w-full max-w-3xl mx-auto">
               <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1">
-                <span className="text-sm sm:text-base font-semibold text-emerald-800 flex items-center gap-1">
+                <span className="text-xs sm:text-sm font-semibold text-white flex items-center gap-1">
                   <span className="select-none">🌿</span> Learning Journey
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-emerald-900">
+                <span className="text-xs sm:text-sm font-semibold text-white">
                   {progress.current} of {progress.total} completed
                 </span>
               </div>
-              <div className="relative h-3 sm:h-3.5 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
+              <div className="relative h-2 sm:h-3 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progressPercent}%` }}
