@@ -309,13 +309,32 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
   // Handle card flip
   const handleFlip = useCallback(() => {
-    setIsFlipped(!isFlipped);
+    setIsFlipped((prev) => {
+      const next = !prev;
+      try {
+        let live = document.getElementById("jungle-live-region");
+        if (!live) {
+          live = document.createElement("div");
+          live.id = "jungle-live-region";
+          live.setAttribute("aria-live", "polite");
+          live.setAttribute("aria-atomic", "true");
+          live.className = "sr-only";
+          document.body.appendChild(live);
+        }
+        live.textContent = next
+          ? `Showing meaning for ${word.word}`
+          : `Showing word side for ${word.word}`;
+        setTimeout(() => {
+          if (live) live.textContent = "";
+        }, 1200);
+      } catch {}
+      return next;
+    });
 
-    // Light haptic feedback
     if (navigator.vibrate) {
       navigator.vibrate(40);
     }
-  }, [isFlipped]);
+  }, [word.word]);
 
   // Get card size classes
   const getSizeClasses = () => {
@@ -391,7 +410,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             isFlipped && "hidden",
           )}
           style={{ backfaceVisibility: "hidden" }}
-          onClick={() => setIsFlipped(true)}
+          onClick={() => handleFlip()}
           role="button"
           aria-label={`Flip to see definition for ${word.word}`}
         >
@@ -536,7 +555,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             {ageGroup !== "3-5" && (
               <button
                 type="button"
-                onClick={() => setIsFlipped(true)}
+                onClick={() => handleFlip()}
                 className={cn(
                   "text-sm text-blue-600 hover:text-blue-800 transition-colors",
                   "border border-blue-200 rounded-full px-3 py-1 mt-2",
@@ -653,7 +672,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
           {/* Back Header */}
           <div className="flex items-center justify-between mb-6">
             <Button
-              onClick={() => setIsFlipped(false)}
+              onClick={() => handleFlip()}
               variant="outline"
               size="sm"
               className="rounded-full"
@@ -712,7 +731,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
           {/* Back to Front Button */}
           <Button
-            onClick={() => setIsFlipped(false)}
+            onClick={() => handleFlip()}
             size={getButtonSize()}
             className={cn(
               "w-full mt-4 bg-purple-500 hover:bg-purple-600 text-white rounded-2xl",
