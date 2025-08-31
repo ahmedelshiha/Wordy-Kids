@@ -394,7 +394,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("map")}
               variant={mode === "map" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1 shadow-sm transition-all active:scale-95"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95 h-8 text-xs"
             >
               <Map className="w-4 h-4 mr-1" />
               Map
@@ -403,7 +403,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("adventure")}
               variant={mode === "adventure" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1 shadow-sm transition-all active:scale-95"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95 h-8 text-xs"
             >
               <Target className="w-4 h-4 mr-1" />
               Adventure
@@ -412,7 +412,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("favorites")}
               variant={mode === "favorites" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1 shadow-sm transition-all active:scale-95"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95 h-8 text-xs"
             >
               <Heart className="w-4 h-4 mr-1" />
               Favorites
