@@ -429,10 +429,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="flex gap-2">
               <Badge
                 variant="outline"
-                className={cn(
-                  "text-xs",
-                  difficultyColors[word.difficulty],
-                )}
+                className={cn("text-xs", difficultyColors[word.difficulty])}
               >
                 {word.difficulty}
               </Badge>

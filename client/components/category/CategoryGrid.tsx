@@ -500,25 +500,52 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         <div className="jungle-progress-container p-2 sm:p-4 -mt-4 sm:mt-0 mb-4 overflow-visible relative z-10">
           {/* Jungle quick stats - playful badges */}
           <div className="grid grid-cols-3 gap-1 sm:gap-3 jungle-achievements-grid">
-            <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
-              <div className="jungle-achievement-icon text-lg sm:text-2xl">🌿</div>
+            <div
+              className="jungle-achievement-item p-2 sm:p-3"
+              style={{ minHeight: 0 }}
+            >
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">
+                🌿
+              </div>
               <div className="achievement-content">
-                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">Completed</div>
-                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">{getFilterCounts.completed}</div>
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">
+                  Completed
+                </div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">
+                  {getFilterCounts.completed}
+                </div>
               </div>
             </div>
-            <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
-              <div className="jungle-achievement-icon text-lg sm:text-2xl">🧭</div>
+            <div
+              className="jungle-achievement-item p-2 sm:p-3"
+              style={{ minHeight: 0 }}
+            >
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">
+                🧭
+              </div>
               <div className="achievement-content">
-                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">In Progress</div>
-                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">{getFilterCounts["in-progress"]}</div>
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">
+                  In Progress
+                </div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">
+                  {getFilterCounts["in-progress"]}
+                </div>
               </div>
             </div>
-            <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
-              <div className="jungle-achievement-icon text-lg sm:text-2xl">⭐</div>
+            <div
+              className="jungle-achievement-item p-2 sm:p-3"
+              style={{ minHeight: 0 }}
+            >
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">
+                ⭐
+              </div>
               <div className="achievement-content">
-                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">Recommended</div>
-                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">{getFilterCounts.recommended}</div>
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">
+                  Recommended
+                </div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">
+                  {getFilterCounts.recommended}
+                </div>
               </div>
             </div>
           </div>
@@ -567,8 +594,10 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
               </div>
               {/* Milestone gems */}
               <div className="flex justify-between text-emerald-700 text-[10px] sm:text-xs mt-1 px-0.5">
-                {[0,25,50,75,100].map((m) => (
-                  <span key={m} className="opacity-70 select-none">{m}%</span>
+                {[0, 25, 50, 75, 100].map((m) => (
+                  <span key={m} className="opacity-70 select-none">
+                    {m}%
+                  </span>
                 ))}
               </div>
             </div>

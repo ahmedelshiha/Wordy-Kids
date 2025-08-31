@@ -273,7 +273,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                     variant="secondary"
                     size="sm"
                     className="rounded-full w-9 h-9 p-0"
-                    aria-label={showMobileSearch ? "Close search" : "Open search"}
+                    aria-label={
+                      showMobileSearch ? "Close search" : "Open search"
+                    }
                   >
                     <Search className="w-4 h-4" />
                   </Button>
@@ -458,7 +460,6 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             </div>
           )}
 
-
           {/* Progress Bar */}
           {progress && (
             <div className="space-y-1">
@@ -520,7 +521,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 animate={{ opacity: 1, y: -6 }}
                 transition={{ delay: 0.2 }}
                 className="absolute top-1/2 -translate-y-1/2 text-base drop-shadow-md"
-                style={{ left: `calc(${(progress.current / progress.total) * 100}% - 10px)` }}
+                style={{
+                  left: `calc(${(progress.current / progress.total) * 100}% - 10px)`,
+                }}
                 aria-hidden
               >
                 🍃
