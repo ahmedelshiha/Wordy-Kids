@@ -580,9 +580,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 type="button"
                 onClick={() => setIsFlipped(true)}
                 className={cn(
-                  "text-sm text-blue-600 hover:text-blue-800 transition-colors",
-                  "border border-blue-200 rounded-full px-3 py-1 mt-2",
-                  "focus:outline-none focus:ring-2 focus:ring-blue-400",
+                  "text-sm text-white/90 hover:text-white transition-colors",
+                  "border border-white/30 rounded-full px-3 py-1 mt-2 backdrop-blur-sm",
+                  "focus:outline-none focus:ring-2 focus:ring-white/50",
                 )}
                 aria-label="Flip to see definition"
               >
