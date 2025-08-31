@@ -478,8 +478,8 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                     className={cn(
                       "w-4 h-4",
                       i < currentStars
-                        ? "text-yellow-500 fill-current"
-                        : "text-gray-300",
+                        ? "text-yellow-300 fill-current"
+                        : "text-white/50",
                     )}
                   />
                 </motion.div>
@@ -741,7 +741,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               aria-label={`Play mini game for ${word.word}`}
             >
               <Play className="w-4 h-4 mr-2" />
-              Play Game 🎮
+              Play Game ���
             </Button>
           </div>
 
