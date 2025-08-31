@@ -6,6 +6,7 @@ import { useReward } from "@/contexts/RewardContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import {
   Search,
   Filter,
@@ -41,6 +42,11 @@ interface CategoryGridProps {
   showDifficulty?: boolean;
   showProgress?: boolean;
   maxCategories?: number;
+  // Overall learning journey progress (moved here from ExplorerShell footer)
+  progress?: {
+    current: number;
+    total: number;
+  };
 }
 
 type FilterType =
@@ -69,6 +75,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
   showDifficulty = true,
   showProgress = true,
   maxCategories,
+  progress,
 }) => {
   const { showReward } = useReward();
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
@@ -272,6 +279,13 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
     });
   }
 
+  // Calculate overall progress percent for themed progress bar
+  const progressPercent = useMemo(() => {
+    if (!progress) return 0;
+    const pct = (progress.current / Math.max(progress.total || 1, 1)) * 100;
+    return Math.max(0, Math.min(100, pct));
+  }, [progress?.current, progress?.total]);
+
   return (
     <div className={cn("space-y-4", className)}>
       {/* Search and Filters Header */}
@@ -305,7 +319,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
           {/* Filter Buttons */}
           {showFilters && (
-            <div className="flex flex-wrap items-center gap-2 justify-center md:justify-start">
+            <div className="flex flex-nowrap items-center gap-1 md:gap-2 justify-start overflow-x-auto whitespace-nowrap">
               {filterButtons.map(({ key, label, icon }) => {
                 const count = getFilterCounts[key];
                 const isActive = activeFilter === key;
@@ -319,8 +333,11 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                     variant={isActive ? "default" : "outline"}
                     size="sm"
                     className={cn(
-                      "rounded-full transition-all duration-200",
+                      "rounded-full transition-all duration-200 shrink-0",
                       isActive && "shadow-md scale-105",
+                      key === "all" && "order-1",
+                      key === "recommended" && "order-2",
+                      key !== "all" && key !== "recommended" && "order-4",
                     )}
                     aria-label={`Filter by ${label}`}
                     aria-pressed={isActive}
@@ -347,7 +364,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                   onClick={handleClearFilters}
                   variant="outline"
                   size="sm"
-                  className="rounded-full"
+                  className="rounded-full order-3 md:order-none ml-1 shrink-0"
                   aria-label="Clear all filters"
                 >
                   <RotateCcw className="w-3 h-3 mr-1" />
@@ -480,21 +497,111 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
       {/* Quick Stats Footer */}
       {categories.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-gray-200">
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              <span>{getFilterCounts.completed} completed</span>
+        <div className="jungle-progress-container p-2 sm:p-4 -mt-4 sm:mt-0 mb-4 overflow-visible relative z-10">
+          {/* Jungle quick stats - playful badges */}
+          <div className="grid grid-cols-3 gap-1 sm:gap-3 jungle-achievements-grid">
+            <div
+              className="jungle-achievement-item p-2 sm:p-3"
+              style={{ minHeight: 0 }}
+            >
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">
+                🌿
+              </div>
+              <div className="achievement-content">
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">
+                  Completed
+                </div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">
+                  {getFilterCounts.completed}
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1">
-              <Play className="w-4 h-4 text-blue-500" />
-              <span>{getFilterCounts["in-progress"]} in progress</span>
+            <div
+              className="jungle-achievement-item p-2 sm:p-3"
+              style={{ minHeight: 0 }}
+            >
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">
+                🧭
+              </div>
+              <div className="achievement-content">
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">
+                  In Progress
+                </div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">
+                  {getFilterCounts["in-progress"]}
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1">
-              <Star className="w-4 h-4 text-yellow-500" />
-              <span>{getFilterCounts.recommended} recommended</span>
+            <div
+              className="jungle-achievement-item p-2 sm:p-3"
+              style={{ minHeight: 0 }}
+            >
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">
+                ⭐
+              </div>
+              <div className="achievement-content">
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">
+                  Recommended
+                </div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">
+                  {getFilterCounts.recommended}
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* Learning Journey Progress (immersive jungle style) */}
+          {progress && (
+            <div className="mt-3 w-full max-w-3xl mx-auto">
+              <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1">
+                <span className="text-xs sm:text-sm font-semibold text-white flex items-center gap-1">
+                  <span className="select-none">🌿</span> Learning Journey
+                </span>
+                <span className="text-xs sm:text-sm font-semibold text-white">
+                  {progress.current} of {progress.total} completed
+                </span>
+              </div>
+              <div className="relative h-2 sm:h-3 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPercent}%` }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="h-full bg-gradient-to-r from-green-400 via-green-500 to-emerald-600 rounded-full relative overflow-hidden"
+                  aria-label="Learning journey progress"
+                >
+                  {/* Vine pattern overlay */}
+                  <div className="absolute inset-0 opacity-30">
+                    <div
+                      className="h-full w-full bg-repeat-x bg-center"
+                      style={{
+                        backgroundImage:
+                          "url(\"data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6c2-2 4-2 6 0s4 2 6 0' stroke='%23ffffff' stroke-width='1' fill='none'/%3E%3C/svg%3E\")",
+                      }}
+                    />
+                  </div>
+                </motion.div>
+                {/* Floating leaf marker */}
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: -6 }}
+                  transition={{ delay: 0.2 }}
+                  className="absolute top-1/2 -translate-y-1/2 text-base sm:text-lg drop-shadow-md"
+                  style={{ left: `calc(${progressPercent}% - 10px)` }}
+                  aria-hidden
+                >
+                  🍃
+                </motion.div>
+              </div>
+              {/* Milestone gems */}
+              <div className="flex justify-between text-emerald-700 text-[10px] sm:text-xs mt-1 px-0.5">
+                {[0, 25, 50, 75, 100].map((m) => (
+                  <span key={m} className="opacity-70 select-none">
+                    {m}%
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

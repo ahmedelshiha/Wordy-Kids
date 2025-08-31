@@ -375,9 +375,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
   };
 
   const difficultyColors = {
-    easy: "bg-white/20 border-white/40 text-white",
-    medium: "bg-white/20 border-white/40 text-white",
-    hard: "bg-white/20 border-white/40 text-white",
+    easy: "bg-emerald-600 border-emerald-700 text-white",
+    medium: "bg-amber-600 border-amber-700 text-white",
+    hard: "bg-rose-600 border-rose-700 text-white",
   };
 
   return (
@@ -429,16 +429,13 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="flex gap-2">
               <Badge
                 variant="outline"
-                className={cn(
-                  "text-xs border-white/50",
-                  difficultyColors[word.difficulty],
-                )}
+                className={cn("text-xs", difficultyColors[word.difficulty])}
               >
                 {word.difficulty}
               </Badge>
               <Badge
                 variant="outline"
-                className="text-xs bg-white/10 border-white/40 text-white"
+                className="text-xs bg-emerald-700 border-emerald-800 text-white"
               >
                 {word.category}
               </Badge>
@@ -556,7 +553,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                   role="img"
                   aria-label={`${word.word} emoji`}
                 >
-                  {word.emoji || "📝"}
+                  {word.emoji || "����"}
                 </motion.div>
 
                 {isPlaying && (

@@ -179,7 +179,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
       )}
 
       {/* Status badges */}
-      <div className="absolute top-2 left-2 flex flex-col gap-1">
+      <div className="absolute top-2 left-2 flex flex-row flex-wrap items-center gap-1">
         {recommended && (
           <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">
             ⭐ For You
@@ -191,7 +191,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
           {getDifficultyLabel()}
         </Badge>
         {estimatedTime && (
-          <Badge className="bg-white/25 border-white/40 text-gray-700 text-xs px-2 py-1">
+          <Badge className="bg-emerald-600 border-emerald-700 text-white text-xs px-2 py-1">
             <Clock className="w-3 h-3 mr-1" />
             {estimatedTime}
           </Badge>
@@ -268,11 +268,11 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
         <div className="w-full space-y-1">
           {/* Progress bar with vine pattern */}
           <div className="relative">
-            <Progress value={progress} className="h-2 bg-white/50" />
+            <Progress value={progress} className="h-2 bg-emerald-100" />
             {/* Vine overlay pattern */}
             {progress > 0 && (
               <div
-                className="absolute top-0 left-0 h-2 bg-green-500 rounded-full opacity-70"
+                className="absolute top-0 left-0 h-2 bg-green-500 rounded-full"
                 style={{
                   width: `${progress}%`,
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 1c1-1 2-1 3 0s2 1 3 0' stroke='%23ffffff' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
@@ -315,7 +315,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
       {/* Difficulty mix indicator */}
       {difficultyMix.easy + difficultyMix.medium + difficultyMix.hard > 0 && (
         <div className="absolute bottom-2 left-2 right-2">
-          <div className="flex h-1 rounded-full overflow-hidden bg-white/30">
+          <div className="flex h-1 rounded-full overflow-hidden bg-emerald-200">
             {difficultyMix.easy > 0 && (
               <div
                 className="bg-green-400"

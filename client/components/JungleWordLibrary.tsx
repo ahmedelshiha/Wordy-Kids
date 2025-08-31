@@ -95,6 +95,8 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   ageGroup = "6-8",
   accessibilitySettings = {},
 }) => {
+  const navigate = useNavigate();
+
   const [mode, setMode] = useState<"map" | "adventure" | "favorites">(
     initialMode,
   );
@@ -459,7 +461,6 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           gems={sessionStats.gems}
           streak={sessionStats.streak}
           sessionTime={sessionStats.sessionTime}
-          progress={progress}
           audioEnabled={effectiveSettings.audioEnabled}
           onAudioToggle={() => setAudioEnabled(!audioEnabled)}
           highContrast={effectiveSettings.highContrast}
@@ -484,7 +485,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           selectedCategory={selectedCategory}
         >
           {/* Main Content Area */}
-          <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="max-w-7xl mx-auto px-4 py-6 pb-6 md:pb-8 lg:pb-10 safe-area-padding-bottom">
             <AnimatePresence mode="wait">
               {/* Map Mode - Category Grid */}
               {mode === "map" && (
@@ -508,6 +509,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                     ageGroup={ageGroup}
                     showDifficulty={ageGroup !== "3-5"}
                     tileSize={ageGroup === "3-5" ? "lg" : "md"}
+                    progress={progress}
                   />
                 </motion.div>
               )}
@@ -713,10 +715,15 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           <JungleAdventureIconNav
             activeId="jungle"
             onNavigate={(id) => {
-              if (id === "home") navigate("/app");
-              else if (id === "jungle") navigate("/jungle-word-explorer");
-              else if (id === "quiz") navigate("/app");
-              else if (id === "trophy") navigate("/app");
+              if (id === "home") {
+                navigate("/app?tab=dashboard");
+              } else if (id === "jungle") {
+                navigate("/jungle-word-explorer");
+              } else if (id === "quiz") {
+                navigate("/app?tab=quiz");
+              } else if (id === "trophy") {
+                navigate("/app?tab=achievements");
+              }
             }}
           />
         </ExplorerShell>

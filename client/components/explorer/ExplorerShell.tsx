@@ -119,7 +119,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
     <div
       className={cn(
         "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-cover bg-center bg-no-repeat",
-        "relative overflow-hidden",
+        "relative overflow-hidden pb-14 md:pb-16 lg:pb-16 safe-area-padding-bottom",
         className,
       )}
       style={{
@@ -127,7 +127,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       }}
     >
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none z-0">
         {!reducedMotion && (
           <>
             <motion.div
@@ -176,10 +176,13 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           </>
         )}
       </div>
+      {/* Jungle depth gradients */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-emerald-900/10 to-transparent z-0" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-emerald-900/10 to-transparent z-0" />
 
       {/* Header */}
-      <header className="relative z-10 bg-white/80 backdrop-blur-sm border-b border-white/50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-2 py-2 md:px-4 md:py-4">
+      <header className="relative z-10 bg-transparent">
+        <div className="max-w-7xl mx-auto px-2 py-1 md:px-4 md:py-4">
           <div className="flex items-center justify-between">
             {/* Left: Back button and title */}
             <div className="flex items-center gap-4">
@@ -205,13 +208,13 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="text-2xl md:text-3xl"
+                  className="text-xl md:text-3xl"
                 >
                   🦉
                 </motion.div>
 
                 <div>
-                  <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  <h1 className="text-base md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                     {title}
                   </h1>
                   <p className="hidden md:block text-sm text-gray-600">
@@ -223,12 +226,12 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
             {/* Center: Mode Navigation (Desktop) */}
             <div className="hidden md:flex items-center gap-2">
-              <div className="flex bg-white border border-gray-200 rounded-full p-1 shadow-sm">
+              <div className="flex bg-emerald-900/10 border border-emerald-900/20 rounded-full p-1 shadow-md">
                 <Button
                   onClick={() => handleModeClick("map")}
                   variant={mode === "map" ? "default" : "secondary"}
                   size="sm"
-                  className="rounded-full px-4"
+                  className="rounded-full px-4 shadow-sm transition-all hover:scale-105"
                   aria-label="Map mode"
                 >
                   <Map className="w-4 h-4 mr-2" />
@@ -238,7 +241,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                   onClick={() => handleModeClick("adventure")}
                   variant={mode === "adventure" ? "default" : "secondary"}
                   size="sm"
-                  className="rounded-full px-4"
+                  className="rounded-full px-4 shadow-sm transition-all hover:scale-105"
                   aria-label="Adventure mode"
                 >
                   <Target className="w-4 h-4 mr-2" />
@@ -248,7 +251,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                   onClick={() => handleModeClick("favorites")}
                   variant={mode === "favorites" ? "default" : "secondary"}
                   size="sm"
-                  className="rounded-full px-4"
+                  className="rounded-full px-4 shadow-sm transition-all hover:scale-105"
                   aria-label="Favorites mode"
                 >
                   <Heart className="w-4 h-4 mr-2" />
@@ -261,16 +264,38 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             <div className="flex items-center gap-1 md:gap-2">
               {/* Search (Desktop) */}
               {showSearch && (
-                <div className="hidden sm:block relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search words..."
-                    value={searchQuery}
-                    onChange={(e) => onSearchChange?.(e.target.value)}
-                    className="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-48"
-                    aria-label="Search words"
-                  />
+                <div className="relative">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowMobileSearch((s) => !s);
+                    }}
+                    variant="secondary"
+                    size="sm"
+                    className="rounded-full w-9 h-9 p-0"
+                    aria-label={
+                      showMobileSearch ? "Close search" : "Open search"
+                    }
+                  >
+                    <Search className="w-4 h-4" />
+                  </Button>
+                  {/* Desktop dropdown search */}
+                  {showMobileSearch && (
+                    <div className="hidden sm:block absolute right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg p-2 w-64 z-50">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search words..."
+                          value={searchQuery}
+                          onChange={(e) => onSearchChange?.(e.target.value)}
+                          className="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          aria-label="Search words"
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -334,7 +359,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
               {/* Stats Display (Desktop) */}
               {showStats && (
-                <div className="hidden lg:flex items-center gap-3 px-3 py-1 bg-white/80 rounded-full border border-gray-200">
+                <div className="hidden lg:flex items-center gap-3 px-3 py-1 bg-emerald-900/15 rounded-full border border-emerald-900/20 shadow-md">
                   <div className="flex items-center gap-1">
                     <Gem className="w-4 h-4 text-blue-500" />
                     <span className="text-sm font-bold">{gems}</span>
@@ -367,14 +392,14 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         </div>
 
         {/* Mobile Controls */}
-        <div className="md:hidden px-2 pb-2 space-y-2">
+        <div className="md:hidden px-2 pb-1 space-y-1">
           {/* Mode Navigation (Mobile) */}
-          <div className="flex bg-white border border-gray-200 rounded-full p-1 shadow-sm">
+          <div className="flex bg-emerald-900/10 border border-emerald-900/20 rounded-full p-0.5 shadow">
             <Button
               onClick={() => handleModeClick("map")}
               variant={mode === "map" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95 h-8 text-xs"
             >
               <Map className="w-4 h-4 mr-1" />
               Map
@@ -383,7 +408,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("adventure")}
               variant={mode === "adventure" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95 h-8 text-xs"
             >
               <Target className="w-4 h-4 mr-1" />
               Adventure
@@ -392,7 +417,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("favorites")}
               variant={mode === "favorites" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95 h-8 text-xs"
             >
               <Heart className="w-4 h-4 mr-1" />
               Favorites
@@ -401,18 +426,18 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
           {/* Mobile Stats */}
           {showStats && (
-            <div className="flex items-center justify-center gap-4 py-2">
-              <div className="flex items-center gap-1 bg-blue-100 rounded-full px-3 py-1">
-                <Gem className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-bold text-blue-700">{gems}</span>
+            <div className="flex items-center justify-center gap-2 py-1">
+              <div className="flex items-center gap-1 bg-blue-900/20 border border-blue-900/20 rounded-full px-3 py-1">
+                <Gem className="w-3 h-3 text-blue-600" />
+                <span className="text-xs font-bold text-blue-700">{gems}</span>
               </div>
-              <div className="flex items-center gap-1 bg-red-100 rounded-full px-3 py-1">
-                <Flame className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-bold text-red-700">{streak}</span>
+              <div className="flex items-center gap-1 bg-red-900/20 border border-red-900/20 rounded-full px-3 py-1">
+                <Flame className="w-3 h-3 text-red-600" />
+                <span className="text-xs font-bold text-red-700">{streak}</span>
               </div>
-              <div className="flex items-center gap-1 bg-green-100 rounded-full px-3 py-1">
-                <Timer className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-bold text-green-700">
+              <div className="flex items-center gap-1 bg-green-900/20 border border-green-900/20 rounded-full px-3 py-1">
+                <Timer className="w-3 h-3 text-green-600" />
+                <span className="text-xs font-bold text-green-700">
                   {formatTime(sessionTime)}
                 </span>
               </div>
@@ -420,7 +445,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           )}
 
           {/* Mobile Search */}
-          {showSearch && (
+          {showSearch && showMobileSearch && (
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
@@ -430,37 +455,8 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 onChange={(e) => onSearchChange?.(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Search words"
+                autoFocus
               />
-            </div>
-          )}
-
-          {/* Quick Category Select */}
-          {categories.length > 0 && mode === "map" && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-gray-700">
-                  Quick Select
-                </span>
-              </div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {categories.map((category) => (
-                  <Button
-                    key={category.id}
-                    onClick={() => onCategorySelect?.(category.id)}
-                    className={cn(
-                      "rounded-full min-w-[80px] h-10 px-3 text-sm flex-shrink-0 shadow-sm",
-                      selectedCategory === category.id
-                        ? "bg-gradient-to-r from-green-400 to-blue-500 text-white"
-                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50",
-                    )}
-                    aria-label={`Select ${category.name} category`}
-                  >
-                    <span className="mr-1 text-base">{category.emoji}</span>
-                    {category.name}
-                    {category.recommended && <span className="ml-1">⭐</span>}
-                  </Button>
-                ))}
-              </div>
             </div>
           )}
 
@@ -487,19 +483,19 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
       {/* Progress Footer (Vine Bar) */}
       {progress && (
-        <footer className="relative z-10 bg-white/60 backdrop-blur-sm border-t border-white/50">
+        <footer className="relative z-10 bg-transparent mb-14 md:mb-16 lg:mb-16 safe-area-margin-bottom">
           <div className="max-w-7xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-700">
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
+              <span className="text-xs sm:text-sm font-semibold text-white whitespace-normal break-words">
                 Learning Journey
               </span>
-              <span className="text-sm text-gray-600">
+              <span className="text-xs sm:text-sm font-semibold text-white whitespace-normal break-words">
                 {progress.current} of {progress.total} completed
               </span>
             </div>
 
             {/* Vine Progress Bar */}
-            <div className="relative h-3 bg-green-100 rounded-full overflow-hidden">
+            <div className="relative h-2 sm:h-3 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
@@ -517,6 +513,20 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                     }}
                   />
                 </div>
+              </motion.div>
+
+              {/* Leaf marker */}
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: -6 }}
+                transition={{ delay: 0.2 }}
+                className="absolute top-1/2 -translate-y-1/2 text-base drop-shadow-md"
+                style={{
+                  left: `calc(${(progress.current / progress.total) * 100}% - 10px)`,
+                }}
+                aria-hidden
+              >
+                🍃
               </motion.div>
 
               {/* Progress gems */}
