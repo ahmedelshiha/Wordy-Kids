@@ -448,7 +448,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
     <RewardProvider>
       <MiniGamesProvider>
         <ExplorerShell
-          title="���� Jungle Word Explorer"
+          title="Jungle Word Explorer"
           showStats={true}
           mode={mode}
           onModeChange={handleModeChange}
