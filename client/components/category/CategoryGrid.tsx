@@ -43,7 +43,13 @@ interface CategoryGridProps {
   maxCategories?: number;
 }
 
-type FilterType = "all" | "recommended" | "locked" | "completed" | "in-progress" | "favorites";
+type FilterType =
+  | "all"
+  | "recommended"
+  | "locked"
+  | "completed"
+  | "in-progress"
+  | "favorites";
 
 export const CategoryGrid: React.FC<CategoryGridProps> = ({
   categories,
@@ -79,7 +85,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         (category) =>
           category.name.toLowerCase().includes(query) ||
           category.description?.toLowerCase().includes(query) ||
-          category.id.toLowerCase().includes(query)
+          category.id.toLowerCase().includes(query),
       );
     }
 
@@ -99,7 +105,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         break;
       case "favorites":
         filtered = filtered.filter((cat) =>
-          userProgress?.favoriteCategories?.has(cat.id)
+          userProgress?.favoriteCategories?.has(cat.id),
         );
         break;
       default:
@@ -111,12 +117,18 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
     if (selectedFilters.length > 0) {
       filtered = filtered.filter((cat) => {
         if (selectedFilters.includes("beginner") && cat.difficultyMix) {
-          const total = cat.difficultyMix.easy + cat.difficultyMix.medium + cat.difficultyMix.hard;
-          return total > 0 && (cat.difficultyMix.easy / total) > 0.7;
+          const total =
+            cat.difficultyMix.easy +
+            cat.difficultyMix.medium +
+            cat.difficultyMix.hard;
+          return total > 0 && cat.difficultyMix.easy / total > 0.7;
         }
         if (selectedFilters.includes("advanced") && cat.difficultyMix) {
-          const total = cat.difficultyMix.easy + cat.difficultyMix.medium + cat.difficultyMix.hard;
-          return total > 0 && (cat.difficultyMix.hard / total) > 0.3;
+          const total =
+            cat.difficultyMix.easy +
+            cat.difficultyMix.medium +
+            cat.difficultyMix.hard;
+          return total > 0 && cat.difficultyMix.hard / total > 0.3;
         }
         return true;
       });
@@ -139,7 +151,14 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
     }
 
     return filtered;
-  }, [categories, localSearch, activeFilter, selectedFilters, userProgress, maxCategories]);
+  }, [
+    categories,
+    localSearch,
+    activeFilter,
+    selectedFilters,
+    userProgress,
+    maxCategories,
+  ]);
 
   // Handle category selection with rewards
   const handleCategorySelect = useCallback(
@@ -166,7 +185,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
       onCategorySelect(category);
     },
-    [onCategorySelect, showReward]
+    [onCategorySelect, showReward],
   );
 
   // Handle search changes
@@ -175,7 +194,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
       setLocalSearch(value);
       onSearchChange?.(value);
     },
-    [onSearchChange]
+    [onSearchChange],
   );
 
   // Clear all filters
@@ -193,9 +212,11 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
       recommended: categories.filter((cat) => cat.recommended).length,
       locked: categories.filter((cat) => cat.locked).length,
       completed: categories.filter((cat) => cat.completed).length,
-      "in-progress": categories.filter((cat) => cat.inProgress && !cat.completed).length,
+      "in-progress": categories.filter(
+        (cat) => cat.inProgress && !cat.completed,
+      ).length,
       favorites: categories.filter((cat) =>
-        userProgress?.favoriteCategories?.has(cat.id)
+        userProgress?.favoriteCategories?.has(cat.id),
       ).length,
     };
   }, [categories, userProgress]);
@@ -208,23 +229,42 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
     switch (tileSize) {
       case "sm":
-        return "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3";
+        return "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 justify-items-center";
       case "lg":
-        return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+        return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center";
       default:
-        return "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4";
+        return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center";
     }
   };
 
-  const filterButtons: { key: FilterType; label: string; icon: React.ReactNode }[] = [
+  const filterButtons: {
+    key: FilterType;
+    label: string;
+    icon: React.ReactNode;
+  }[] = [
     { key: "all", label: "All", icon: <Grid3X3 className="w-3 h-3" /> },
-    { key: "recommended", label: "For You", icon: <Star className="w-3 h-3" /> },
-    { key: "in-progress", label: "Continue", icon: <Play className="w-3 h-3" /> },
-    { key: "completed", label: "Completed", icon: <Trophy className="w-3 h-3" /> },
+    {
+      key: "recommended",
+      label: "For You",
+      icon: <Star className="w-3 h-3" />,
+    },
+    {
+      key: "in-progress",
+      label: "Continue",
+      icon: <Play className="w-3 h-3" />,
+    },
+    {
+      key: "completed",
+      label: "Completed",
+      icon: <Trophy className="w-3 h-3" />,
+    },
     { key: "locked", label: "Locked", icon: <Lock className="w-3 h-3" /> },
   ];
 
-  if (userProgress?.favoriteCategories && userProgress.favoriteCategories.size > 0) {
+  if (
+    userProgress?.favoriteCategories &&
+    userProgress.favoriteCategories.size > 0
+  ) {
     filterButtons.splice(-1, 0, {
       key: "favorites",
       label: "Favorites",
@@ -280,7 +320,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                     size="sm"
                     className={cn(
                       "rounded-full transition-all duration-200",
-                      isActive && "shadow-md scale-105"
+                      isActive && "shadow-md scale-105",
                     )}
                     aria-label={`Filter by ${label}`}
                     aria-pressed={isActive}
@@ -356,7 +396,8 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
             </div>
           ) : (
             <p>
-              Showing {filteredCategories.length} of {categories.length} categories
+              Showing {filteredCategories.length} of {categories.length}{" "}
+              categories
               {localSearch && ` for "${localSearch}"`}
             </p>
           )}
@@ -390,7 +431,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                   reducedMotion={reducedMotion}
                   size={tileSize}
                   className={cn(
-                    viewMode === "list" && "w-full max-w-md mx-auto"
+                    viewMode === "list" && "w-full max-w-md mx-auto",
                   )}
                 />
               </motion.div>
@@ -443,21 +484,15 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
             <div className="flex items-center gap-1">
               <CheckCircle className="w-4 h-4 text-green-500" />
-              <span>
-                {getFilterCounts.completed} completed
-              </span>
+              <span>{getFilterCounts.completed} completed</span>
             </div>
             <div className="flex items-center gap-1">
               <Play className="w-4 h-4 text-blue-500" />
-              <span>
-                {getFilterCounts["in-progress"]} in progress
-              </span>
+              <span>{getFilterCounts["in-progress"]} in progress</span>
             </div>
             <div className="flex items-center gap-1">
               <Star className="w-4 h-4 text-yellow-500" />
-              <span>
-                {getFilterCounts.recommended} recommended
-              </span>
+              <span>{getFilterCounts.recommended} recommended</span>
             </div>
           </div>
         </div>

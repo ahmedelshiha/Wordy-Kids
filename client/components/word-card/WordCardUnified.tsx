@@ -347,10 +347,37 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     return size === "lg" ? "lg" : "default";
   };
 
+  // Category-based gradient similar to EnhancedWordCardDemo
+  const getCategoryGradient = (category: string) => {
+    const map: Record<string, string> = {
+      food: "from-red-400 to-orange-500",
+      animals: "from-blue-400 to-blue-600",
+      nature: "from-green-400 to-green-600",
+      objects: "from-purple-400 to-purple-600",
+      body: "from-pink-400 to-pink-600",
+      clothes: "from-indigo-400 to-indigo-600",
+      family: "from-yellow-400 to-amber-500",
+      feelings: "from-rose-400 to-rose-600",
+      colors: "from-violet-400 to-purple-500",
+      numbers: "from-cyan-400 to-blue-500",
+      greetings: "from-emerald-400 to-green-500",
+      technology: "from-slate-400 to-gray-600",
+      actions: "from-orange-400 to-red-500",
+      weather: "from-sky-400 to-blue-500",
+      transportation: "from-yellow-500 to-orange-500",
+      school: "from-blue-500 to-indigo-600",
+      emotions: "from-pink-500 to-rose-500",
+      toys: "from-purple-500 to-pink-500",
+      music: "from-violet-500 to-purple-600",
+      sports: "from-green-500 to-emerald-600",
+    };
+    return map[category] || "from-blue-400 to-purple-600";
+  };
+
   const difficultyColors = {
-    easy: "bg-green-100 text-green-800 border-green-200",
-    medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    hard: "bg-red-100 text-red-800 border-red-200",
+    easy: "bg-white/20 border-white/40 text-white",
+    medium: "bg-white/20 border-white/40 text-white",
+    hard: "bg-white/20 border-white/40 text-white",
   };
 
   return (
@@ -380,8 +407,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
         <div
           className={cn(
             "absolute inset-0 w-full h-full backface-hidden",
-            "bg-gradient-to-br from-white to-blue-50",
-            "rounded-3xl shadow-xl border-2 border-white/50",
+            "bg-gradient-to-br",
+            getCategoryGradient(word.category),
+            "text-white",
+            "rounded-3xl shadow-xl border-2 border-white/30",
             "flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",
@@ -399,11 +428,18 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
           <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
             <div className="flex gap-2">
               <Badge
-                className={cn("text-xs", difficultyColors[word.difficulty])}
+                variant="outline"
+                className={cn(
+                  "text-xs border-white/50",
+                  difficultyColors[word.difficulty],
+                )}
               >
                 {word.difficulty}
               </Badge>
-              <Badge variant="outline" className="text-xs">
+              <Badge
+                variant="outline"
+                className="text-xs bg-white/10 border-white/40 text-white"
+              >
                 {word.category}
               </Badge>
             </div>
@@ -448,8 +484,8 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                     className={cn(
                       "w-4 h-4",
                       i < currentStars
-                        ? "text-yellow-500 fill-current"
-                        : "text-gray-300",
+                        ? "text-yellow-300 fill-current"
+                        : "text-white/50",
                     )}
                   />
                 </motion.div>
@@ -482,7 +518,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                       delay: i * 0.1,
                       ease: "easeOut",
                     }}
-                    className="absolute text-yellow-400 text-2xl"
+                    className="absolute text-yellow-200 text-2xl"
                   >
                     ✨
                   </motion.div>
@@ -493,25 +529,44 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
           {/* Word Display */}
           <div className="text-center mb-6 flex-1 flex flex-col justify-center">
-            {/* Emoji */}
-            <motion.div
-              animate={
-                !effectiveReducedMotion && isPlaying
-                  ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }
-                  : {}
-              }
-              transition={{
-                type: "tween",
-                duration: 0.6,
-                repeat: isPlaying ? 3 : 0,
-                ease: "easeInOut",
-              }}
-              className={cn("mb-4", getEmojiSize())}
-              role="img"
-              aria-label={`${word.word} emoji`}
-            >
-              {word.emoji || "📝"}
-            </motion.div>
+            {/* Emoji glassy container */}
+            <div className="relative mx-auto mb-4 group">
+              <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/20 flex items-center justify-center relative overflow-hidden transition-all duration-500 group-hover:scale-105">
+                <div className="absolute top-2 left-2 w-3 h-3 bg-white/25 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-3 right-3 w-2 h-2 bg-white/20 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-2 w-1.5 h-1.5 bg-white/30 rounded-full animate-ping delay-700"></div>
+                <div className="absolute top-3 right-1/3 w-1 h-1 bg-white/25 rounded-full animate-pulse delay-500"></div>
+
+                <motion.div
+                  animate={
+                    !effectiveReducedMotion && isPlaying
+                      ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }
+                      : {}
+                  }
+                  transition={{
+                    type: "tween",
+                    duration: 0.6,
+                    repeat: isPlaying ? 3 : 0,
+                    ease: "easeInOut",
+                  }}
+                  className={cn(
+                    "relative z-10 drop-shadow-2xl",
+                    getEmojiSize(),
+                  )}
+                  role="img"
+                  aria-label={`${word.word} emoji`}
+                >
+                  {word.emoji || "📝"}
+                </motion.div>
+
+                {isPlaying && (
+                  <>
+                    <div className="absolute inset-0 rounded-full border-2 border-white/50 animate-ping"></div>
+                    <div className="absolute inset-0 rounded-full border-2 border-white/30 animate-ping delay-75"></div>
+                  </>
+                )}
+              </div>
+            </div>
 
             {/* Word Text */}
             <h2
@@ -543,9 +598,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 type="button"
                 onClick={() => setIsFlipped(true)}
                 className={cn(
-                  "text-sm text-blue-600 hover:text-blue-800 transition-colors",
-                  "border border-blue-200 rounded-full px-3 py-1 mt-2",
-                  "focus:outline-none focus:ring-2 focus:ring-blue-400",
+                  "text-sm text-white/90 hover:text-white transition-colors",
+                  "border border-white/30 rounded-full px-3 py-1 mt-2 backdrop-blur-sm",
+                  "focus:outline-none focus:ring-2 focus:ring-white/50",
                 )}
                 aria-label="Flip to see definition"
               >
@@ -566,11 +621,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 disabled={isPlaying}
                 size={getButtonSize()}
                 className={cn(
-                  "w-full bg-blue-500 hover:bg-blue-600 text-white rounded-2xl",
-                  "min-h-[48px] text-lg font-bold shadow-lg",
+                  "w-full bg-white/20 hover:bg-white/30 text-white rounded-2xl",
+                  "min-h-[48px] text-lg font-bold shadow-lg backdrop-blur-sm",
                   "transition-all duration-200 transform hover:scale-105 active:scale-95",
                   isPlaying && "animate-pulse",
-                  highContrast && "border-2 border-blue-800",
                 )}
                 aria-label={`Pronounce ${word.word}`}
               >
@@ -641,7 +695,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             "absolute inset-0 w-full h-full backface-hidden",
             !effectiveReducedMotion && "rotate-y-180",
             "bg-gradient-to-br from-purple-50 to-blue-50",
-            "rounded-3xl shadow-xl border-2 border-white/50",
+            "rounded-3xl shadow-xl border-2 border-white/30",
             "p-4 sm:p-6 flex flex-col overflow-hidden",
             "transform-gpu",
             highContrast && "border-4 border-gray-800 bg-white",

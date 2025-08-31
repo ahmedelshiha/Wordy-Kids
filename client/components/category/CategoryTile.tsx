@@ -108,11 +108,11 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
   const getSizeClasses = () => {
     switch (size) {
       case "sm":
-        return "w-32 h-32 p-3";
+        return "w-44 h-44 p-5";
       case "lg":
-        return "w-48 h-48 p-6";
+        return "w-72 h-72 p-8";
       default:
-        return "w-40 h-40 p-4";
+        return "w-60 h-60 p-6";
     }
   };
 
@@ -156,10 +156,10 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
         "bg-gradient-to-br",
         getBackgroundGradient(),
         getSizeClasses(),
-        "transition-all duration-300 transform",
+        "transition-all duration-300 transform transform-gpu backdrop-blur-sm",
         "flex flex-col items-center justify-center text-center",
         isAccessible
-          ? "cursor-pointer hover:shadow-xl hover:border-white/70"
+          ? "cursor-pointer hover:shadow-xl hover:shadow-emerald-500/20 hover:border-white/70"
           : "cursor-not-allowed opacity-60",
         className,
       )}
@@ -173,8 +173,8 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
       {/* Hover glow overlay */}
       {!reducedMotion && isAccessible && (
         <div className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
-          <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+          <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
+          <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
         </div>
       )}
 

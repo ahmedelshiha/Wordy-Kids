@@ -8,6 +8,8 @@ import { CategoryGrid } from "@/components/category/CategoryGrid";
 import { CategoryTile, Category } from "@/components/category/CategoryTile";
 import { WordCardUnified, Word } from "@/components/word-card/WordCardUnified";
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
+import JungleAdventureIconNav from "@/components/JungleAdventureIconNav";
+import { useNavigate } from "react-router-dom";
 import { audioService } from "@/lib/audioService";
 
 interface JungleWordLibraryProps {
@@ -496,8 +498,6 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                   <CategoryGrid
                     categories={filteredCategories}
                     onCategorySelect={handleCategorySelect}
-                    searchQuery={searchQuery}
-                    onSearchChange={setSearchQuery}
                     viewMode={viewMode}
                     onViewModeChange={setViewMode}
                     userProgress={{
@@ -709,6 +709,16 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
               )}
             </AnimatePresence>
           </div>
+          {/* Bottom Jungle Navigation */}
+          <JungleAdventureIconNav
+            activeId="jungle"
+            onNavigate={(id) => {
+              if (id === "home") navigate("/app");
+              else if (id === "jungle") navigate("/jungle-word-explorer");
+              else if (id === "quiz") navigate("/app");
+              else if (id === "trophy") navigate("/app");
+            }}
+          />
         </ExplorerShell>
       </MiniGamesProvider>
     </RewardProvider>
