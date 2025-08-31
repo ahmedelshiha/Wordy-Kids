@@ -496,26 +496,26 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
       {categories.length > 0 && (
         <div className="jungle-progress-container p-3 sm:p-4">
           {/* Jungle quick stats - playful badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 jungle-achievements-grid">
-            <div className="jungle-achievement-item">
-              <div className="jungle-achievement-icon">🌿</div>
+          <div className="grid grid-cols-3 gap-1 sm:gap-3 jungle-achievements-grid">
+            <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">🌿</div>
               <div className="achievement-content">
-                <div className="font-bold text-jungle-green text-sm">Completed</div>
-                <div className="font-bold text-sunshine-yellow text-lg">{getFilterCounts.completed}</div>
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">Completed</div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">{getFilterCounts.completed}</div>
               </div>
             </div>
-            <div className="jungle-achievement-item">
-              <div className="jungle-achievement-icon">🧭</div>
+            <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">🧭</div>
               <div className="achievement-content">
-                <div className="font-bold text-jungle-green text-sm">In Progress</div>
-                <div className="font-bold text-sunshine-yellow text-lg">{getFilterCounts["in-progress"]}</div>
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">In Progress</div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">{getFilterCounts["in-progress"]}</div>
               </div>
             </div>
-            <div className="jungle-achievement-item">
-              <div className="jungle-achievement-icon">⭐</div>
+            <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
+              <div className="jungle-achievement-icon text-lg sm:text-2xl">⭐</div>
               <div className="achievement-content">
-                <div className="font-bold text-jungle-green text-sm">Recommended</div>
-                <div className="font-bold text-sunshine-yellow text-lg">{getFilterCounts.recommended}</div>
+                <div className="font-bold text-jungle-green text-[10px] sm:text-sm">Recommended</div>
+                <div className="font-bold text-sunshine-yellow text-sm sm:text-lg">{getFilterCounts.recommended}</div>
               </div>
             </div>
           </div>
