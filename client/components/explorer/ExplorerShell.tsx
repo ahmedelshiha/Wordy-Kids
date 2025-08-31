@@ -434,35 +434,6 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             </div>
           )}
 
-          {/* Quick Category Select */}
-          {categories.length > 0 && mode === "map" && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-gray-700">
-                  Quick Select
-                </span>
-              </div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {categories.map((category) => (
-                  <Button
-                    key={category.id}
-                    onClick={() => onCategorySelect?.(category.id)}
-                    className={cn(
-                      "rounded-full min-w-[80px] h-10 px-3 text-sm flex-shrink-0 shadow-sm",
-                      selectedCategory === category.id
-                        ? "bg-gradient-to-r from-green-400 to-blue-500 text-white"
-                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50",
-                    )}
-                    aria-label={`Select ${category.name} category`}
-                  >
-                    <span className="mr-1 text-base">{category.emoji}</span>
-                    {category.name}
-                    {category.recommended && <span className="ml-1">⭐</span>}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Progress Bar */}
           {progress && (
