@@ -122,6 +122,14 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [highContrast, setHighContrast] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  useEffect(() => {
+    try {
+      const mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (mq && mq.matches) {
+        setReducedMotion(true);
+      }
+    } catch {}
+  }, []);
 
   const {
     highContrast: a11yHighContrast = false,
