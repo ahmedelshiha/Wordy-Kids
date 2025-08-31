@@ -485,16 +485,16 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         <footer className="relative z-10 bg-transparent mb-14 md:mb-16 lg:mb-16 safe-area-margin-bottom">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
-              <span className="text-sm font-semibold text-emerald-900 whitespace-normal break-words">
+              <span className="text-xs sm:text-sm font-semibold text-white whitespace-normal break-words">
                 Learning Journey
               </span>
-              <span className="text-sm font-semibold text-emerald-900 whitespace-normal break-words">
+              <span className="text-xs sm:text-sm font-semibold text-white whitespace-normal break-words">
                 {progress.current} of {progress.total} completed
               </span>
             </div>
 
             {/* Vine Progress Bar */}
-            <div className="relative h-3 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
+            <div className="relative h-2 sm:h-3 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
