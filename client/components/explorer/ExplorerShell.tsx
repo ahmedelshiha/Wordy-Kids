@@ -489,11 +489,11 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       {progress && (
         <footer className="relative z-10 bg-white/60 backdrop-blur-sm border-t border-white/50">
           <div className="max-w-7xl mx-auto px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-gray-700">
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
+              <span className="text-sm font-medium text-gray-700 whitespace-normal break-words">
                 Learning Journey
               </span>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-600 whitespace-normal break-words">
                 {progress.current} of {progress.total} completed
               </span>
             </div>
