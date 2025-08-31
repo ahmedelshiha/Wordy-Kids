@@ -127,7 +127,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       }}
     >
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="hidden absolute inset-0 pointer-events-none">
         {!reducedMotion && (
           <>
             <motion.div
