@@ -485,16 +485,16 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         <footer className="relative z-10 bg-transparent mb-14 md:mb-16 lg:mb-16 safe-area-margin-bottom">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
-              <span className="text-sm font-medium text-gray-700 whitespace-normal break-words">
+              <span className="text-sm font-semibold text-emerald-900 whitespace-normal break-words">
                 Learning Journey
               </span>
-              <span className="text-sm text-gray-600 whitespace-normal break-words">
+              <span className="text-sm font-semibold text-emerald-900 whitespace-normal break-words">
                 {progress.current} of {progress.total} completed
               </span>
             </div>
 
             {/* Vine Progress Bar */}
-            <div className="relative h-3 bg-emerald-900/15 rounded-full overflow-hidden">
+            <div className="relative h-3 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
@@ -512,6 +512,18 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                     }}
                   />
                 </div>
+              </motion.div>
+
+              {/* Leaf marker */}
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: -6 }}
+                transition={{ delay: 0.2 }}
+                className="absolute top-1/2 -translate-y-1/2 text-base drop-shadow-md"
+                style={{ left: `calc(${(progress.current / progress.total) * 100}% - 10px)` }}
+                aria-hidden
+              >
+                🍃
               </motion.div>
 
               {/* Progress gems */}
