@@ -118,7 +118,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-cover bg-center bg-no-repeat",
+        "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-contain bg-top md:bg-center bg-no-repeat bg-emerald-50",
         "relative overflow-hidden pb-14 md:pb-16 lg:pb-16 safe-area-padding-bottom",
         className,
       )}
