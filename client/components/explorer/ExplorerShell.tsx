@@ -200,6 +200,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 <motion.div
                   animate={reducedMotion ? {} : { rotate: [0, 5, -5, 0] }}
                   transition={{
+                    type: "tween",
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
