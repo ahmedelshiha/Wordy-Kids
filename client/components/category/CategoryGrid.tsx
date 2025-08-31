@@ -494,7 +494,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
       {/* Quick Stats Footer */}
       {categories.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-gray-200">
+        <div className="mt-4">
           {/* Jungle quick stats - playful badges */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-50/80 text-green-800 border border-green-200 shadow-sm" aria-label={`${getFilterCounts.completed} completed categories`}>
@@ -521,7 +521,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                 <span className="text-sm sm:text-base font-semibold text-emerald-800 flex items-center gap-1">
                   <span className="select-none">🌿</span> Learning Journey
                 </span>
-                <span className="text-xs sm:text-sm text-emerald-900 bg-white/60 border border-white/40 rounded-full px-2 py-0.5">
+                <span className="text-xs sm:text-sm text-emerald-900">
                   {progress.current} of {progress.total} completed
                 </span>
               </div>
