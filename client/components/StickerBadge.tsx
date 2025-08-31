@@ -88,7 +88,7 @@ export const StickerBadge: React.FC<StickerBadgeProps> = ({
           ? {
               scale: 1.1,
               rotate: [0, -5, 5, 0],
-              transition: { duration: 0.3 },
+              transition: { type: "tween", duration: 0.3, ease: "easeInOut" },
             }
           : undefined
       }
@@ -104,6 +104,7 @@ export const StickerBadge: React.FC<StickerBadgeProps> = ({
       transition={
         animated
           ? {
+              type: "tween",
               duration: 3,
               repeat: Infinity,
               repeatType: "reverse",
