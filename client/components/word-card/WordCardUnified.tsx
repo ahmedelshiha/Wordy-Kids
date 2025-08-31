@@ -603,11 +603,10 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 disabled={isPlaying}
                 size={getButtonSize()}
                 className={cn(
-                  "w-full bg-blue-500 hover:bg-blue-600 text-white rounded-2xl",
-                  "min-h-[48px] text-lg font-bold shadow-lg",
+                  "w-full bg-white/20 hover:bg-white/30 text-white rounded-2xl",
+                  "min-h-[48px] text-lg font-bold shadow-lg backdrop-blur-sm",
                   "transition-all duration-200 transform hover:scale-105 active:scale-95",
                   isPlaying && "animate-pulse",
-                  highContrast && "border-2 border-blue-800",
                 )}
                 aria-label={`Pronounce ${word.word}`}
               >
