@@ -484,7 +484,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           selectedCategory={selectedCategory}
         >
           {/* Main Content Area */}
-          <div className="max-w-7xl mx-auto px-4 py-6 pb-40 md:pb-44 lg:pb-48 safe-area-padding-bottom">
+          <div className="max-w-7xl mx-auto px-4 py-6 pb-6 md:pb-8 lg:pb-10 safe-area-padding-bottom">
             <AnimatePresence mode="wait">
               {/* Map Mode - Category Grid */}
               {mode === "map" && (
