@@ -509,6 +509,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                     ageGroup={ageGroup}
                     showDifficulty={ageGroup !== "3-5"}
                     tileSize={ageGroup === "3-5" ? "lg" : "md"}
+                    progress={progress}
                   />
                 </motion.div>
               )}
