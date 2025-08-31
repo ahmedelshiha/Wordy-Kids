@@ -8,6 +8,8 @@ import { CategoryGrid } from "@/components/category/CategoryGrid";
 import { CategoryTile, Category } from "@/components/category/CategoryTile";
 import { WordCardUnified, Word } from "@/components/word-card/WordCardUnified";
 import { wordsDatabase, getWordsByCategory } from "@/data/wordsDatabase";
+import JungleAdventureIconNav from "@/components/JungleAdventureIconNav";
+import { useNavigate } from "react-router-dom";
 import { audioService } from "@/lib/audioService";
 
 interface JungleWordLibraryProps {
