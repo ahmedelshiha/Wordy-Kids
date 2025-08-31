@@ -512,7 +512,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                       delay: i * 0.1,
                       ease: "easeOut",
                     }}
-                    className="absolute text-yellow-400 text-2xl"
+                    className="absolute text-yellow-200 text-2xl"
                   >
                     ✨
                   </motion.div>
@@ -741,7 +741,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               aria-label={`Play mini game for ${word.word}`}
             >
               <Play className="w-4 h-4 mr-2" />
-              Play Game ���
+              Play Game 🎮
             </Button>
           </div>
 
