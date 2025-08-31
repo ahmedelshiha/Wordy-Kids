@@ -496,8 +496,6 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
                   <CategoryGrid
                     categories={filteredCategories}
                     onCategorySelect={handleCategorySelect}
-                    searchQuery={searchQuery}
-                    onSearchChange={setSearchQuery}
                     viewMode={viewMode}
                     onViewModeChange={setViewMode}
                     userProgress={{
