@@ -494,7 +494,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
       {/* Quick Stats Footer */}
       {categories.length > 0 && (
-        <div className="jungle-progress-container p-2 sm:p-4 -mt-1 sm:mt-0 mb-2 overflow-visible">
+        <div className="jungle-progress-container p-2 sm:p-4 -mt-2 sm:mt-0 mb-3 overflow-visible">
           {/* Jungle quick stats - playful badges */}
           <div className="grid grid-cols-3 gap-1 sm:gap-3 jungle-achievements-grid">
             <div className="jungle-achievement-item p-2 sm:p-3" style={{ minHeight: 0 }}>
