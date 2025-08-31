@@ -429,11 +429,17 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
             <div className="flex gap-2">
               <Badge
                 variant="outline"
-                className={cn("text-xs border-white/50", difficultyColors[word.difficulty])}
+                className={cn(
+                  "text-xs border-white/50",
+                  difficultyColors[word.difficulty],
+                )}
               >
                 {word.difficulty}
               </Badge>
-              <Badge variant="outline" className="text-xs bg-white/10 border-white/40 text-white">
+              <Badge
+                variant="outline"
+                className="text-xs bg-white/10 border-white/40 text-white"
+              >
                 {word.category}
               </Badge>
             </div>
@@ -532,9 +538,21 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                 <div className="absolute top-3 right-1/3 w-1 h-1 bg-white/25 rounded-full animate-pulse delay-500"></div>
 
                 <motion.div
-                  animate={!effectiveReducedMotion && isPlaying ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] } : {}}
-                  transition={{ type: "tween", duration: 0.6, repeat: isPlaying ? 3 : 0, ease: "easeInOut" }}
-                  className={cn("relative z-10 drop-shadow-2xl", getEmojiSize())}
+                  animate={
+                    !effectiveReducedMotion && isPlaying
+                      ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }
+                      : {}
+                  }
+                  transition={{
+                    type: "tween",
+                    duration: 0.6,
+                    repeat: isPlaying ? 3 : 0,
+                    ease: "easeInOut",
+                  }}
+                  className={cn(
+                    "relative z-10 drop-shadow-2xl",
+                    getEmojiSize(),
+                  )}
                   role="img"
                   aria-label={`${word.word} emoji`}
                 >
