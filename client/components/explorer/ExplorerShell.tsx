@@ -387,7 +387,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         </div>
 
         {/* Mobile Controls */}
-        <div className="md:hidden px-2 pb-2 space-y-2">
+        <div className="md:hidden px-2 pb-1 space-y-1">
           {/* Mode Navigation (Mobile) */}
           <div className="flex bg-white/70 border border-white/60 rounded-full p-1 shadow-md">
             <Button
