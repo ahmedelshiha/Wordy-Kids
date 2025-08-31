@@ -347,10 +347,37 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
     return size === "lg" ? "lg" : "default";
   };
 
+  // Category-based gradient similar to EnhancedWordCardDemo
+  const getCategoryGradient = (category: string) => {
+    const map: Record<string, string> = {
+      food: "from-red-400 to-orange-500",
+      animals: "from-blue-400 to-blue-600",
+      nature: "from-green-400 to-green-600",
+      objects: "from-purple-400 to-purple-600",
+      body: "from-pink-400 to-pink-600",
+      clothes: "from-indigo-400 to-indigo-600",
+      family: "from-yellow-400 to-amber-500",
+      feelings: "from-rose-400 to-rose-600",
+      colors: "from-violet-400 to-purple-500",
+      numbers: "from-cyan-400 to-blue-500",
+      greetings: "from-emerald-400 to-green-500",
+      technology: "from-slate-400 to-gray-600",
+      actions: "from-orange-400 to-red-500",
+      weather: "from-sky-400 to-blue-500",
+      transportation: "from-yellow-500 to-orange-500",
+      school: "from-blue-500 to-indigo-600",
+      emotions: "from-pink-500 to-rose-500",
+      toys: "from-purple-500 to-pink-500",
+      music: "from-violet-500 to-purple-600",
+      sports: "from-green-500 to-emerald-600",
+    };
+    return map[category] || "from-blue-400 to-purple-600";
+  };
+
   const difficultyColors = {
-    easy: "bg-green-100 text-green-800 border-green-200",
-    medium: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    hard: "bg-red-100 text-red-800 border-red-200",
+    easy: "bg-white/20 border-white/40 text-white",
+    medium: "bg-white/20 border-white/40 text-white",
+    hard: "bg-white/20 border-white/40 text-white",
   };
 
   return (
