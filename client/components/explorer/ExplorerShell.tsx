@@ -119,7 +119,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
     <div
       className={cn(
         "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-cover bg-center bg-no-repeat",
-        "relative overflow-hidden pb-24 md:pb-28 lg:pb-32 safe-area-padding-bottom",
+        "relative overflow-hidden pb-40 md:pb-44 lg:pb-48 safe-area-padding-bottom",
         className,
       )}
       style={{
@@ -487,7 +487,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
       {/* Progress Footer (Vine Bar) */}
       {progress && (
-        <footer className="relative z-10 bg-white/60 backdrop-blur-sm border-t border-white/50 mb-24 md:mb-28 lg:mb-32 safe-area-margin-bottom">
+        <footer className="relative z-10 bg-white/60 backdrop-blur-sm border-t border-white/50 mb-40 md:mb-44 lg:mb-48 safe-area-margin-bottom">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
               <span className="text-sm font-medium text-gray-700 whitespace-normal break-words">
