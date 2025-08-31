@@ -494,24 +494,30 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
       {/* Quick Stats Footer */}
       {categories.length > 0 && (
-        <div className="mt-4">
+        <div className="jungle-progress-container">
           {/* Jungle quick stats - playful badges */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-600 text-white border border-emerald-700 shadow-sm" aria-label={`${getFilterCounts.completed} completed categories`}>
-              <span>🌿</span>
-              <span className="font-semibold">{getFilterCounts.completed}</span>
-              <span className="font-medium">completed</span>
-            </span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-600 text-white border border-sky-700 shadow-sm" aria-label={`${getFilterCounts["in-progress"]} in progress categories`}>
-              <span>🧭</span>
-              <span className="font-semibold">{getFilterCounts["in-progress"]}</span>
-              <span className="font-medium">in progress</span>
-            </span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-500 text-white border border-yellow-600 shadow-sm" aria-label={`${getFilterCounts.recommended} recommended categories`}>
-              <span>⭐</span>
-              <span className="font-semibold">{getFilterCounts.recommended}</span>
-              <span className="font-medium">recommended</span>
-            </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 jungle-achievements-grid">
+            <div className="jungle-achievement-item">
+              <div className="jungle-achievement-icon">🌿</div>
+              <div className="achievement-content">
+                <div className="font-bold text-jungle-green text-sm">Completed</div>
+                <div className="font-bold text-sunshine-yellow text-lg">{getFilterCounts.completed}</div>
+              </div>
+            </div>
+            <div className="jungle-achievement-item">
+              <div className="jungle-achievement-icon">🧭</div>
+              <div className="achievement-content">
+                <div className="font-bold text-jungle-green text-sm">In Progress</div>
+                <div className="font-bold text-sunshine-yellow text-lg">{getFilterCounts["in-progress"]}</div>
+              </div>
+            </div>
+            <div className="jungle-achievement-item">
+              <div className="jungle-achievement-icon">⭐</div>
+              <div className="achievement-content">
+                <div className="font-bold text-jungle-green text-sm">Recommended</div>
+                <div className="font-bold text-sunshine-yellow text-lg">{getFilterCounts.recommended}</div>
+              </div>
+            </div>
           </div>
 
           {/* Learning Journey Progress (immersive jungle style) */}
