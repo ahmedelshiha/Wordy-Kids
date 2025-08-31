@@ -179,7 +179,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
       )}
 
       {/* Status badges */}
-      <div className="absolute top-2 left-2 flex flex-col gap-1">
+      <div className="absolute top-2 left-2 flex flex-row flex-wrap items-center gap-1">
         {recommended && (
           <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">
             ⭐ For You
