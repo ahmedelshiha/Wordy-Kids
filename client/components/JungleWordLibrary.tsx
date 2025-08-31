@@ -461,7 +461,6 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           gems={sessionStats.gems}
           streak={sessionStats.streak}
           sessionTime={sessionStats.sessionTime}
-          progress={progress}
           audioEnabled={effectiveSettings.audioEnabled}
           onAudioToggle={() => setAudioEnabled(!audioEnabled)}
           highContrast={effectiveSettings.highContrast}
