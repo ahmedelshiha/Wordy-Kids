@@ -108,11 +108,11 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
   const getSizeClasses = () => {
     switch (size) {
       case "sm":
-        return "w-36 h-36 p-4";
+        return "w-44 h-44 p-5";
       case "lg":
-        return "w-56 h-56 p-7";
+        return "w-72 h-72 p-8";
       default:
-        return "w-48 h-48 p-5";
+        return "w-60 h-60 p-6";
     }
   };
 
