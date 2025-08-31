@@ -118,7 +118,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-contain bg-top md:bg-center bg-no-repeat bg-emerald-50",
+        "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-cover bg-center bg-no-repeat",
         "relative overflow-hidden pb-14 md:pb-16 lg:pb-16 safe-area-padding-bottom",
         className,
       )}
@@ -178,7 +178,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       </div>
 
       {/* Header */}
-      <header className="relative z-10 bg-gradient-to-b from-white/40 to-white/10 backdrop-blur-md border-b border-white/30 shadow-lg">
+      <header className="relative z-10 bg-transparent">
         <div className="max-w-7xl mx-auto px-2 py-1 md:px-4 md:py-4">
           <div className="flex items-center justify-between">
             {/* Left: Back button and title */}
@@ -479,7 +479,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
       {/* Progress Footer (Vine Bar) */}
       {progress && (
-        <footer className="relative z-10 bg-white/60 backdrop-blur-sm border-t border-white/50 mb-14 md:mb-16 lg:mb-16 safe-area-margin-bottom">
+        <footer className="relative z-10 bg-transparent mb-14 md:mb-16 lg:mb-16 safe-area-margin-bottom">
           <div className="max-w-7xl mx-auto px-4 py-3">
             <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
               <span className="text-sm font-medium text-gray-700 whitespace-normal break-words">
