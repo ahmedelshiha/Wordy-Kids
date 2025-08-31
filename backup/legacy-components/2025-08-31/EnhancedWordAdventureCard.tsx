@@ -516,7 +516,9 @@ export const EnhancedWordAdventureCard: React.FC<
               >
                 <Volume2
                   className={`w-6 h-6 transition-all duration-200 ${
-                    isPlaying && voiceType === "normal" ? "text-yellow-200 animate-pulse scale-110" : "text-white"
+                    isPlaying && voiceType === "normal"
+                      ? "text-yellow-200 animate-pulse scale-110"
+                      : "text-white"
                   }`}
                 />
                 {showSparkles && voiceType === "normal" && (

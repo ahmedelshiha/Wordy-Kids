@@ -124,7 +124,9 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
     try {
-      const mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+      const mq =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)");
       if (mq && mq.matches) {
         setReducedMotion(true);
       }

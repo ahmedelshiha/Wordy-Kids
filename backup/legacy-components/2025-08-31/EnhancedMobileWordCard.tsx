@@ -681,7 +681,8 @@ export const EnhancedMobileWordCard: React.FC<EnhancedMobileWordCardProps> = ({
           <div className="text-center space-y-3">
             {adventureStatus && (
               <p className="text-xs opacity-70 font-medium">
-                Last seen: {new Date(adventureStatus.last_seen).toLocaleDateString()}
+                Last seen:{" "}
+                {new Date(adventureStatus.last_seen).toLocaleDateString()}
               </p>
             )}
 

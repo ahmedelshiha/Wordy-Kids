@@ -58,10 +58,12 @@ export function JungleAdventureWordCardDemo() {
       ...prev,
       wordsExplored: prev.wordsExplored + 1,
       explorerXP:
-        prev.explorerXP + (rating === "easy" ? 100 : rating === "medium" ? 60 : 30),
+        prev.explorerXP +
+        (rating === "easy" ? 100 : rating === "medium" ? 60 : 30),
       adventureLevel:
         Math.floor(
-          (prev.explorerXP + (rating === "easy" ? 100 : rating === "medium" ? 60 : 30)) /
+          (prev.explorerXP +
+            (rating === "easy" ? 100 : rating === "medium" ? 60 : 30)) /
             200,
         ) + 1,
     }));

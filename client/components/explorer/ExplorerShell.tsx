@@ -126,11 +126,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
   return (
     <div
-      className={cn(
-        "min-h-screen",
-        "relative overflow-hidden",
-        className,
-      )}
+      className={cn("min-h-screen", "relative overflow-hidden", className)}
       style={{
         filter: highContrast ? "contrast(1.25) saturate(1.1)" : undefined,
         background:
@@ -144,8 +140,13 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           <motion.div
             aria-hidden="true"
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${backgroundImage})`, opacity: 0.25 }}
-            animate={reducedMotion ? {} : { scale: [1, 1.03, 1], y: [0, -8, 0] }}
+            style={{
+              backgroundImage: `url(${backgroundImage})`,
+              opacity: 0.25,
+            }}
+            animate={
+              reducedMotion ? {} : { scale: [1, 1.03, 1], y: [0, -8, 0] }
+            }
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           />
         )}
@@ -203,7 +204,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               className="absolute inset-0"
               style={{
                 backgroundImage:
-                  "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\"%3E%3Cdefs%3E%3Cpath id=\"l\" d=\"M0 0c8 6 14 6 22 0 8-6 14-6 22 0 8 6 14 6 22 0 8-6 14-6 22 0\"/%3E%3C/defs%3E%3Cpath d=\"M0 3h100\" stroke=\"%2322c55e\" stroke-width=\"1\" opacity=\".2\"/%3E%3Cuse href=\"%23l\" stroke=\"%2322c55e\" stroke-width=\"1\" fill=\"none\" y=\"2\" opacity=\".15\"/%3E%3C/svg%3E')",
+                  'url(\'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"%3E%3Cdefs%3E%3Cpath id="l" d="M0 0c8 6 14 6 22 0 8-6 14-6 22 0 8 6 14 6 22 0 8-6 14-6 22 0"/%3E%3C/defs%3E%3Cpath d="M0 3h100" stroke="%2322c55e" stroke-width="1" opacity=".2"/%3E%3Cuse href="%23l" stroke="%2322c55e" stroke-width="1" fill="none" y="2" opacity=".15"/%3E%3C/svg%3E\')',
                 backgroundRepeat: "repeat",
                 backgroundSize: "100px 12px",
                 maskImage:
