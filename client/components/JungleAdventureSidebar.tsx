@@ -366,7 +366,7 @@ export const JungleAdventureSidebar: React.FC<JungleAdventureSidebarProps> = ({
                 scale: 1.1,
                 rotate: [0, -5, 5, 0],
               }}
-              transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
+              transition={{ duration: 0.5, type: "tween", ease: "easeInOut" }}
             >
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-jungle to-jungle-dark flex items-center justify-center shadow-lg relative">
                 <span className="text-2xl text-white">

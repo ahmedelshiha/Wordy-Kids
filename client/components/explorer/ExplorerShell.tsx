@@ -118,7 +118,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
   return (
     <div
       className={cn(
-        "min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50",
+        "min-h-screen bg-[url('/images/bg_mobile.webp')] md:bg-[url('/images/bg_tablet.webp')] lg:bg-[url('/images/bg_desktop.webp')] bg-cover bg-center bg-no-repeat",
         "relative overflow-hidden",
         className,
       )}
@@ -200,6 +200,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 <motion.div
                   animate={reducedMotion ? {} : { rotate: [0, 5, -5, 0] }}
                   transition={{
+                    type: "tween",
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
