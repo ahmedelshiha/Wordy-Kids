@@ -319,7 +319,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
 
           {/* Filter Buttons */}
           {showFilters && (
-            <div className="flex flex-wrap items-center gap-2 justify-start">
+            <div className="flex flex-nowrap items-center gap-1 md:gap-2 justify-start overflow-x-auto whitespace-nowrap">
               {filterButtons.map(({ key, label, icon }) => {
                 const count = getFilterCounts[key];
                 const isActive = activeFilter === key;
@@ -333,7 +333,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                     variant={isActive ? "default" : "outline"}
                     size="sm"
                     className={cn(
-                      "rounded-full transition-all duration-200",
+                      "rounded-full transition-all duration-200 shrink-0",
                       isActive && "shadow-md scale-105",
                       key === "all" && "order-1",
                       key === "recommended" && "order-2",
@@ -364,7 +364,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                   onClick={handleClearFilters}
                   variant="outline"
                   size="sm"
-                  className="rounded-full order-3 md:order-none ml-1"
+                  className="rounded-full order-3 md:order-none ml-1 shrink-0"
                   aria-label="Clear all filters"
                 >
                   <RotateCcw className="w-3 h-3 mr-1" />
