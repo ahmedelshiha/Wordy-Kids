@@ -523,25 +523,32 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
 
           {/* Word Display */}
           <div className="text-center mb-6 flex-1 flex flex-col justify-center">
-            {/* Emoji */}
-            <motion.div
-              animate={
-                !effectiveReducedMotion && isPlaying
-                  ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }
-                  : {}
-              }
-              transition={{
-                type: "tween",
-                duration: 0.6,
-                repeat: isPlaying ? 3 : 0,
-                ease: "easeInOut",
-              }}
-              className={cn("mb-4", getEmojiSize())}
-              role="img"
-              aria-label={`${word.word} emoji`}
-            >
-              {word.emoji || "📝"}
-            </motion.div>
+            {/* Emoji glassy container */}
+            <div className="relative mx-auto mb-4 group">
+              <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-white/10 backdrop-blur-md shadow-2xl ring-4 ring-white/20 flex items-center justify-center relative overflow-hidden transition-all duration-500 group-hover:scale-105">
+                <div className="absolute top-2 left-2 w-3 h-3 bg-white/25 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-3 right-3 w-2 h-2 bg-white/20 rounded-full animate-bounce delay-300"></div>
+                <div className="absolute top-1/2 right-2 w-1.5 h-1.5 bg-white/30 rounded-full animate-ping delay-700"></div>
+                <div className="absolute top-3 right-1/3 w-1 h-1 bg-white/25 rounded-full animate-pulse delay-500"></div>
+
+                <motion.div
+                  animate={!effectiveReducedMotion && isPlaying ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] } : {}}
+                  transition={{ type: "tween", duration: 0.6, repeat: isPlaying ? 3 : 0, ease: "easeInOut" }}
+                  className={cn("relative z-10 drop-shadow-2xl", getEmojiSize())}
+                  role="img"
+                  aria-label={`${word.word} emoji`}
+                >
+                  {word.emoji || "📝"}
+                </motion.div>
+
+                {isPlaying && (
+                  <>
+                    <div className="absolute inset-0 rounded-full border-2 border-white/50 animate-ping"></div>
+                    <div className="absolute inset-0 rounded-full border-2 border-white/30 animate-ping delay-75"></div>
+                  </>
+                )}
+              </div>
+            </div>
 
             {/* Word Text */}
             <h2
