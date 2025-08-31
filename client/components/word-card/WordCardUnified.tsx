@@ -433,7 +433,7 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
               >
                 {word.difficulty}
               </Badge>
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="outline" className="text-xs bg-white/10 border-white/40 text-white">
                 {word.category}
               </Badge>
             </div>
