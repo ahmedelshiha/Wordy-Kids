@@ -407,7 +407,9 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
         <div
           className={cn(
             "absolute inset-0 w-full h-full backface-hidden",
-            "bg-gradient-to-br from-white to-blue-50",
+            "bg-gradient-to-br",
+            getCategoryGradient(word.category),
+            "text-white",
             "rounded-3xl shadow-xl border-2 border-white/50",
             "flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden",
             "transform-gpu",
