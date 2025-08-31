@@ -239,6 +239,28 @@ Builder.registerComponent(ExplorerShell, {
       defaultValue: "00:00",
       helperText: "Current session duration",
     },
+    {
+      name: "backgroundImage",
+      type: "string",
+      helperText: "Optional background image URL for jungle canopy",
+    },
+    {
+      name: "backgroundGradient",
+      type: "string",
+      helperText: "CSS gradient for page background",
+    },
+    {
+      name: "leafBorder",
+      type: "boolean",
+      defaultValue: true,
+      helperText: "Show subtle leaf border around page edges",
+    },
+    {
+      name: "mascotEmoji",
+      type: "string",
+      defaultValue: "🦉",
+      helperText: "Mascot emoji shown in header",
+    },
   ],
   defaultStyles: {
     width: "100%",
