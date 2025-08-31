@@ -279,6 +279,13 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
     });
   }
 
+  // Calculate overall progress percent for themed progress bar
+  const progressPercent = useMemo(() => {
+    if (!progress) return 0;
+    const pct = (progress.current / Math.max(progress.total || 1, 1)) * 100;
+    return Math.max(0, Math.min(100, pct));
+  }, [progress?.current, progress?.total]);
+
   return (
     <div className={cn("space-y-4", className)}>
       {/* Search and Filters Header */}
@@ -488,37 +495,45 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
       {/* Quick Stats Footer */}
       {categories.length > 0 && (
         <div className="mt-6 pt-4 border-t border-gray-200">
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              <span>{getFilterCounts.completed} completed</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Play className="w-4 h-4 text-blue-500" />
-              <span>{getFilterCounts["in-progress"]} in progress</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Star className="w-4 h-4 text-yellow-500" />
-              <span>{getFilterCounts.recommended} recommended</span>
-            </div>
+          {/* Jungle quick stats - playful badges */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-50/80 text-green-800 border border-green-200 shadow-sm" aria-label={`${getFilterCounts.completed} completed categories`}>
+              <span>🌿</span>
+              <span className="font-semibold">{getFilterCounts.completed}</span>
+              <span className="opacity-80">completed</span>
+            </span>
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-50/80 text-sky-800 border border-sky-200 shadow-sm" aria-label={`${getFilterCounts["in-progress"]} in progress categories`}>
+              <span>🧭</span>
+              <span className="font-semibold">{getFilterCounts["in-progress"]}</span>
+              <span className="opacity-80">in progress</span>
+            </span>
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-50/80 text-yellow-900 border border-yellow-200 shadow-sm" aria-label={`${getFilterCounts.recommended} recommended categories`}>
+              <span>⭐</span>
+              <span className="font-semibold">{getFilterCounts.recommended}</span>
+              <span className="opacity-80">recommended</span>
+            </span>
           </div>
 
-          {/* Learning Journey Progress (moved from ExplorerShell footer) */}
+          {/* Learning Journey Progress (immersive jungle style) */}
           {progress && (
             <div className="mt-3 w-full max-w-3xl mx-auto">
               <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1">
-                <span className="text-sm font-medium text-gray-700">Learning Journey</span>
-                <span className="text-sm text-gray-600 whitespace-normal break-words">
+                <span className="text-sm sm:text-base font-semibold text-emerald-800 flex items-center gap-1">
+                  <span className="select-none">🌿</span> Learning Journey
+                </span>
+                <span className="text-xs sm:text-sm text-emerald-900 bg-white/60 border border-white/40 rounded-full px-2 py-0.5">
                   {progress.current} of {progress.total} completed
                 </span>
               </div>
-              <div className="relative h-3 bg-green-100 rounded-full overflow-hidden">
+              <div className="relative h-3 sm:h-3.5 bg-gradient-to-r from-emerald-50 to-green-100 rounded-full overflow-hidden border border-green-200">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${(progress.current / progress.total) * 100}%` }}
+                  animate={{ width: `${progressPercent}%` }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full relative overflow-hidden"
+                  className="h-full bg-gradient-to-r from-green-400 via-green-500 to-emerald-600 rounded-full relative overflow-hidden"
+                  aria-label="Learning journey progress"
                 >
+                  {/* Vine pattern overlay */}
                   <div className="absolute inset-0 opacity-30">
                     <div
                       className="h-full w-full bg-repeat-x bg-center"
@@ -529,6 +544,23 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                     />
                   </div>
                 </motion.div>
+                {/* Floating leaf marker */}
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: -6 }}
+                  transition={{ delay: 0.2 }}
+                  className="absolute top-1/2 -translate-y-1/2 text-base sm:text-lg drop-shadow"
+                  style={{ left: `calc(${progressPercent}% - 10px)` }}
+                  aria-hidden
+                >
+                  🍃
+                </motion.div>
+              </div>
+              {/* Milestone gems */}
+              <div className="flex justify-between text-emerald-700 text-[10px] sm:text-xs mt-1 px-0.5">
+                {[0,25,50,75,100].map((m) => (
+                  <span key={m} className="opacity-70 select-none">{m}%</span>
+                ))}
               </div>
             </div>
           )}
