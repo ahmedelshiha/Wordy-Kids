@@ -709,16 +709,16 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
               )}
             </AnimatePresence>
           </div>
-        {/* Bottom Jungle Navigation */}
-        <JungleAdventureIconNav
-          activeId="jungle"
-          onNavigate={(id) => {
-            if (id === "home") navigate("/app");
-            else if (id === "jungle") navigate("/jungle-word-explorer");
-            else if (id === "quiz") navigate("/app");
-            else if (id === "trophy") navigate("/app");
-          }}
-        />
+          {/* Bottom Jungle Navigation */}
+          <JungleAdventureIconNav
+            activeId="jungle"
+            onNavigate={(id) => {
+              if (id === "home") navigate("/app");
+              else if (id === "jungle") navigate("/jungle-word-explorer");
+              else if (id === "quiz") navigate("/app");
+              else if (id === "trophy") navigate("/app");
+            }}
+          />
         </ExplorerShell>
       </MiniGamesProvider>
     </RewardProvider>
