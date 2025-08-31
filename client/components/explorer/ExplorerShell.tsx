@@ -127,7 +127,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       }}
     >
       {/* Animated background elements */}
-      <div className="hidden absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none z-0">
         {!reducedMotion && (
           <>
             <motion.div
@@ -176,6 +176,9 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           </>
         )}
       </div>
+      {/* Jungle depth gradients */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-emerald-900/10 to-transparent z-0" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-emerald-900/10 to-transparent z-0" />
 
       {/* Header */}
       <header className="relative z-10 bg-transparent">
@@ -223,7 +226,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
             {/* Center: Mode Navigation (Desktop) */}
             <div className="hidden md:flex items-center gap-2">
-              <div className="flex bg-white/70 border border-white/60 rounded-full p-1 shadow-md">
+              <div className="flex bg-emerald-900/10 border border-emerald-900/20 rounded-full p-1 shadow-md">
                 <Button
                   onClick={() => handleModeClick("map")}
                   variant={mode === "map" ? "default" : "secondary"}
@@ -354,7 +357,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
               {/* Stats Display (Desktop) */}
               {showStats && (
-                <div className="hidden lg:flex items-center gap-3 px-3 py-1 bg-white/60 rounded-full border border-white/40 shadow-md">
+                <div className="hidden lg:flex items-center gap-3 px-3 py-1 bg-emerald-900/15 rounded-full border border-emerald-900/20 shadow-md">
                   <div className="flex items-center gap-1">
                     <Gem className="w-4 h-4 text-blue-500" />
                     <span className="text-sm font-bold">{gems}</span>
@@ -389,7 +392,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         {/* Mobile Controls */}
         <div className="md:hidden px-2 pb-1 space-y-1">
           {/* Mode Navigation (Mobile) */}
-          <div className="flex bg-white/60 border border-white/50 rounded-full p-0.5 shadow">
+          <div className="flex bg-emerald-900/10 border border-emerald-900/20 rounded-full p-0.5 shadow">
             <Button
               onClick={() => handleModeClick("map")}
               variant={mode === "map" ? "default" : "secondary"}
@@ -422,15 +425,15 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           {/* Mobile Stats */}
           {showStats && (
             <div className="flex items-center justify-center gap-2 py-1">
-              <div className="flex items-center gap-1 bg-blue-100 rounded-full px-3 py-1">
+              <div className="flex items-center gap-1 bg-blue-900/20 border border-blue-900/20 rounded-full px-3 py-1">
                 <Gem className="w-3 h-3 text-blue-600" />
                 <span className="text-xs font-bold text-blue-700">{gems}</span>
               </div>
-              <div className="flex items-center gap-1 bg-red-100 rounded-full px-3 py-1">
+              <div className="flex items-center gap-1 bg-red-900/20 border border-red-900/20 rounded-full px-3 py-1">
                 <Flame className="w-3 h-3 text-red-600" />
                 <span className="text-xs font-bold text-red-700">{streak}</span>
               </div>
-              <div className="flex items-center gap-1 bg-green-100 rounded-full px-3 py-1">
+              <div className="flex items-center gap-1 bg-green-900/20 border border-green-900/20 rounded-full px-3 py-1">
                 <Timer className="w-3 h-3 text-green-600" />
                 <span className="text-xs font-bold text-green-700">
                   {formatTime(sessionTime)}
@@ -491,7 +494,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             </div>
 
             {/* Vine Progress Bar */}
-            <div className="relative h-3 bg-green-100 rounded-full overflow-hidden">
+            <div className="relative h-3 bg-emerald-900/15 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
