@@ -62,9 +62,10 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
   const isAccessible = !locked;
 
   const getDifficultyColor = () => {
-    const total = difficultyMix.easy + difficultyMix.medium + difficultyMix.hard;
+    const total =
+      difficultyMix.easy + difficultyMix.medium + difficultyMix.hard;
     if (total === 0) return "bg-gray-300";
-    
+
     const easyPercent = (difficultyMix.easy / total) * 100;
     if (easyPercent > 70) return "bg-green-400";
     if (easyPercent > 40) return "bg-yellow-400";
@@ -72,9 +73,10 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
   };
 
   const getDifficultyLabel = () => {
-    const total = difficultyMix.easy + difficultyMix.medium + difficultyMix.hard;
+    const total =
+      difficultyMix.easy + difficultyMix.medium + difficultyMix.hard;
     if (total === 0) return "Beginner";
-    
+
     const easyPercent = (difficultyMix.easy / total) * 100;
     if (easyPercent > 70) return "Beginner";
     if (easyPercent > 40) return "Intermediate";
@@ -128,7 +130,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
   const handleClick = () => {
     if (isAccessible) {
       onClick(category);
-      
+
       // Haptic feedback
       if (navigator.vibrate) {
         navigator.vibrate(50);
@@ -147,16 +149,8 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      whileHover={
-        !reducedMotion && isAccessible
-          ? { scale: 1.05, y: -4 }
-          : {}
-      }
-      whileTap={
-        !reducedMotion && isAccessible
-          ? { scale: 0.98 }
-          : {}
-      }
+      whileHover={!reducedMotion && isAccessible ? { scale: 1.05, y: -4 } : {}}
+      whileTap={!reducedMotion && isAccessible ? { scale: 0.98 } : {}}
       className={cn(
         "relative overflow-hidden rounded-2xl shadow-lg border-2 border-white/50 group",
         "bg-gradient-to-br",
@@ -167,7 +161,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
         isAccessible
           ? "cursor-pointer hover:shadow-xl hover:border-white/70"
           : "cursor-not-allowed opacity-60",
-        className
+        className,
       )}
       onClick={handleClick}
       onKeyDown={handleKeyPress}
@@ -191,7 +185,9 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
             ⭐ For You
           </Badge>
         )}
-        <Badge className={cn("text-white text-xs px-2 py-1", getDifficultyColor())}>
+        <Badge
+          className={cn("text-white text-xs px-2 py-1", getDifficultyColor())}
+        >
           {getDifficultyLabel()}
         </Badge>
         {estimatedTime && (
@@ -252,7 +248,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
           className={cn(
             "mb-2 transition-transform duration-300",
             getEmojiSize(),
-            !reducedMotion && isAccessible && "group-hover:scale-110"
+            !reducedMotion && isAccessible && "group-hover:scale-110",
           )}
         >
           {emoji}
@@ -272,15 +268,12 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
         <div className="w-full space-y-1">
           {/* Progress bar with vine pattern */}
           <div className="relative">
-            <Progress
-              value={progress}
-              className="h-2 bg-white/50"
-            />
+            <Progress value={progress} className="h-2 bg-white/50" />
             {/* Vine overlay pattern */}
             {progress > 0 && (
-              <div 
+              <div
                 className="absolute top-0 left-0 h-2 bg-green-500 rounded-full opacity-70"
-                style={{ 
+                style={{
                   width: `${progress}%`,
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 1c1-1 2-1 3 0s2 1 3 0' stroke='%23ffffff' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
                   backgroundRepeat: "repeat-x",
@@ -305,7 +298,9 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
         {gemsEarned > 0 && (
           <div className="flex items-center gap-1 mt-2">
             <span className="text-blue-500">💎</span>
-            <span className="text-xs font-bold text-blue-700">{gemsEarned}</span>
+            <span className="text-xs font-bold text-blue-700">
+              {gemsEarned}
+            </span>
           </div>
         )}
 
@@ -325,7 +320,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
               <div
                 className="bg-green-400"
                 style={{
-                  width: `${(difficultyMix.easy / (difficultyMix.easy + difficultyMix.medium + difficultyMix.hard)) * 100}%`
+                  width: `${(difficultyMix.easy / (difficultyMix.easy + difficultyMix.medium + difficultyMix.hard)) * 100}%`,
                 }}
               />
             )}
@@ -333,7 +328,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
               <div
                 className="bg-yellow-400"
                 style={{
-                  width: `${(difficultyMix.medium / (difficultyMix.easy + difficultyMix.medium + difficultyMix.hard)) * 100}%`
+                  width: `${(difficultyMix.medium / (difficultyMix.easy + difficultyMix.medium + difficultyMix.hard)) * 100}%`,
                 }}
               />
             )}
@@ -341,7 +336,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
               <div
                 className="bg-red-400"
                 style={{
-                  width: `${(difficultyMix.hard / (difficultyMix.easy + difficultyMix.medium + difficultyMix.hard)) * 100}%`
+                  width: `${(difficultyMix.hard / (difficultyMix.easy + difficultyMix.medium + difficultyMix.hard)) * 100}%`,
                 }}
               />
             )}

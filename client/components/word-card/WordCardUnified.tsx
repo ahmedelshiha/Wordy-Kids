@@ -500,7 +500,12 @@ export const WordCardUnified: React.FC<WordCardUnifiedProps> = ({
                   ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }
                   : {}
               }
-              transition={{ type: "tween", duration: 0.6, repeat: isPlaying ? 3 : 0, ease: "easeInOut" }}
+              transition={{
+                type: "tween",
+                duration: 0.6,
+                repeat: isPlaying ? 3 : 0,
+                ease: "easeInOut",
+              }}
               className={cn("mb-4", getEmojiSize())}
               role="img"
               aria-label={`${word.word} emoji`}
