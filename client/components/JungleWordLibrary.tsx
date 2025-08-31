@@ -95,6 +95,8 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
   ageGroup = "6-8",
   accessibilitySettings = {},
 }) => {
+  const navigate = useNavigate();
+
   const [mode, setMode] = useState<"map" | "adventure" | "favorites">(
     initialMode,
   );
