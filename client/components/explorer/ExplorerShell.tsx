@@ -179,7 +179,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
       {/* Header */}
       <header className="relative z-10 bg-gradient-to-b from-white/40 to-white/10 backdrop-blur-md border-b border-white/30 shadow-lg">
-        <div className="max-w-7xl mx-auto px-2 py-2 md:px-4 md:py-4">
+        <div className="max-w-7xl mx-auto px-2 py-1 md:px-4 md:py-4">
           <div className="flex items-center justify-between">
             {/* Left: Back button and title */}
             <div className="flex items-center gap-4">
@@ -205,13 +205,13 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="text-2xl md:text-3xl"
+                  className="text-xl md:text-3xl"
                 >
                   🦉
                 </motion.div>
 
                 <div>
-                  <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  <h1 className="text-base md:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                     {title}
                   </h1>
                   <p className="hidden md:block text-sm text-gray-600">
@@ -421,18 +421,18 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
           {/* Mobile Stats */}
           {showStats && (
-            <div className="flex items-center justify-center gap-4 py-2">
+            <div className="flex items-center justify-center gap-2 py-1">
               <div className="flex items-center gap-1 bg-blue-100 rounded-full px-3 py-1">
-                <Gem className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-bold text-blue-700">{gems}</span>
+                <Gem className="w-3 h-3 text-blue-600" />
+                <span className="text-xs font-bold text-blue-700">{gems}</span>
               </div>
               <div className="flex items-center gap-1 bg-red-100 rounded-full px-3 py-1">
-                <Flame className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-bold text-red-700">{streak}</span>
+                <Flame className="w-3 h-3 text-red-600" />
+                <span className="text-xs font-bold text-red-700">{streak}</span>
               </div>
               <div className="flex items-center gap-1 bg-green-100 rounded-full px-3 py-1">
-                <Timer className="w-4 h-4 text-green-600" />
-                <span className="text-sm font-bold text-green-700">
+                <Timer className="w-3 h-3 text-green-600" />
+                <span className="text-xs font-bold text-green-700">
                   {formatTime(sessionTime)}
                 </span>
               </div>
