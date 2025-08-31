@@ -188,7 +188,7 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
       <div className="absolute top-2 left-2 flex flex-col gap-1">
         {recommended && (
           <Badge className="bg-yellow-400 text-yellow-900 text-xs px-2 py-1 animate-pulse">
-            ⭐ For You
+            🍌 For You
           </Badge>
         )}
         <Badge className={cn("text-white text-xs px-2 py-1", getDifficultyColor())}>
