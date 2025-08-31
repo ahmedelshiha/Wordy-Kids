@@ -156,10 +156,10 @@ export const CategoryTile: React.FC<CategoryTileProps> = ({
         "bg-gradient-to-br",
         getBackgroundGradient(),
         getSizeClasses(),
-        "transition-all duration-300 transform",
+        "transition-all duration-300 transform transform-gpu backdrop-blur-sm",
         "flex flex-col items-center justify-center text-center",
         isAccessible
-          ? "cursor-pointer hover:shadow-xl hover:border-white/70"
+          ? "cursor-pointer hover:shadow-xl hover:shadow-emerald-500/20 hover:border-white/70"
           : "cursor-not-allowed opacity-60",
         className,
       )}
