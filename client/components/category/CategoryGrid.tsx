@@ -497,20 +497,20 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         <div className="mt-4">
           {/* Jungle quick stats - playful badges */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-50/80 text-green-800 border border-green-200 shadow-sm" aria-label={`${getFilterCounts.completed} completed categories`}>
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-600 text-white border border-emerald-700 shadow-sm" aria-label={`${getFilterCounts.completed} completed categories`}>
               <span>🌿</span>
               <span className="font-semibold">{getFilterCounts.completed}</span>
-              <span className="opacity-80">completed</span>
+              <span className="font-medium">completed</span>
             </span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-50/80 text-sky-800 border border-sky-200 shadow-sm" aria-label={`${getFilterCounts["in-progress"]} in progress categories`}>
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-600 text-white border border-sky-700 shadow-sm" aria-label={`${getFilterCounts["in-progress"]} in progress categories`}>
               <span>🧭</span>
               <span className="font-semibold">{getFilterCounts["in-progress"]}</span>
-              <span className="opacity-80">in progress</span>
+              <span className="font-medium">in progress</span>
             </span>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-50/80 text-yellow-900 border border-yellow-200 shadow-sm" aria-label={`${getFilterCounts.recommended} recommended categories`}>
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-500 text-white border border-yellow-600 shadow-sm" aria-label={`${getFilterCounts.recommended} recommended categories`}>
               <span>⭐</span>
               <span className="font-semibold">{getFilterCounts.recommended}</span>
-              <span className="opacity-80">recommended</span>
+              <span className="font-medium">recommended</span>
             </span>
           </div>
 
