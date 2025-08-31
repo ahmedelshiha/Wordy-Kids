@@ -54,7 +54,7 @@ const JUNGLE_CATEGORIES: Omit<Category, "wordCount" | "masteredCount">[] = [
   {
     id: "colors",
     name: "Colors",
-    emoji: "����",
+    emoji: "🌈",
     description: "Learn about the beautiful colors around us!",
     estimatedTime: "2-5 min",
   },
@@ -715,9 +715,7 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           <JungleAdventureIconNav
             activeId="jungle"
             onNavigate={(id) => {
-              if (id === "home") {
-                navigate("/app");
-              } else if (id === "jungle") {
+              if (id === "home" || id === "jungle") {
                 setMode("map");
                 setSelectedCategory(null);
                 setCurrentWords([]);
