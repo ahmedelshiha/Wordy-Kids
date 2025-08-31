@@ -261,16 +261,36 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
             <div className="flex items-center gap-1 md:gap-2">
               {/* Search (Desktop) */}
               {showSearch && (
-                <div className="hidden sm:block relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search words..."
-                    value={searchQuery}
-                    onChange={(e) => onSearchChange?.(e.target.value)}
-                    className="pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-48"
-                    aria-label="Search words"
-                  />
+                <div className="relative">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowMobileSearch((s) => !s);
+                    }}
+                    variant="secondary"
+                    size="sm"
+                    className="rounded-full w-9 h-9 p-0"
+                    aria-label={showMobileSearch ? "Close search" : "Open search"}
+                  >
+                    <Search className="w-4 h-4" />
+                  </Button>
+                  {/* Desktop dropdown search */}
+                  {showMobileSearch && (
+                    <div className="hidden sm:block absolute right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg p-2 w-64 z-50">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Search words..."
+                          value={searchQuery}
+                          onChange={(e) => onSearchChange?.(e.target.value)}
+                          className="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          aria-label="Search words"
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -420,7 +440,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
           )}
 
           {/* Mobile Search */}
-          {showSearch && (
+          {showSearch && showMobileSearch && (
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
@@ -430,6 +450,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                 onChange={(e) => onSearchChange?.(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Search words"
+                autoFocus
               />
             </div>
           )}
