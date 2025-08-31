@@ -101,9 +101,9 @@ export const TappableZone: React.FC<TappableZoneProps> = ({
       whileTap={{ scale: 0.98 }}
       {...getAnimationVariants()}
       transition={{
-        type: "spring",
-        damping: 20,
-        stiffness: 300,
+        type: "tween",
+        duration: 0.3,
+        ease: "easeInOut",
       }}
     >
       {children}
