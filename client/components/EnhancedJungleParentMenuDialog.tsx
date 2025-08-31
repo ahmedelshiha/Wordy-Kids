@@ -342,7 +342,7 @@ export function EnhancedJungleParentMenuDialog({
                       scale: [1, 1.1, 1],
                       rotate: [0, 5, -5, 0],
                     }}
-                    transition={{ duration: 4, repeat: Infinity }}
+                    transition={{ type: "tween", duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   >
                     🪵
                   </motion.span>
