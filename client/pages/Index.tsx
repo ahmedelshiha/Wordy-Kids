@@ -228,6 +228,16 @@ export default function Index({ initialProfile }: IndexProps) {
   });
 
   const [activeTab, setActiveTab] = useState("dashboard");
+  // Initialize active tab from URL (e.g., /app?tab=quiz)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get("tab");
+      if (tab && ["dashboard", "learn", "quiz", "achievements"].includes(tab)) {
+        setActiveTab(tab);
+      }
+    } catch {}
+  }, []);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [forgottenWords, setForgottenWords] = useState<Set<number>>(new Set());
   const [rememberedWords, setRememberedWords] = useState<Set<number>>(
