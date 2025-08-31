@@ -389,7 +389,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         {/* Mobile Controls */}
         <div className="md:hidden px-2 pb-1 space-y-1">
           {/* Mode Navigation (Mobile) */}
-          <div className="flex bg-white/70 border border-white/60 rounded-full p-1 shadow-md">
+          <div className="flex bg-white/60 border border-white/50 rounded-full p-0.5 shadow">
             <Button
               onClick={() => handleModeClick("map")}
               variant={mode === "map" ? "default" : "secondary"}
