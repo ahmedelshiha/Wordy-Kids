@@ -178,7 +178,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
       </div>
 
       {/* Header */}
-      <header className="relative z-10 bg-white/80 backdrop-blur-sm border-b border-white/50 shadow-sm">
+      <header className="relative z-10 bg-gradient-to-b from-white/40 to-white/10 backdrop-blur-md border-b border-white/30 shadow-lg">
         <div className="max-w-7xl mx-auto px-2 py-2 md:px-4 md:py-4">
           <div className="flex items-center justify-between">
             {/* Left: Back button and title */}
@@ -223,12 +223,12 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
             {/* Center: Mode Navigation (Desktop) */}
             <div className="hidden md:flex items-center gap-2">
-              <div className="flex bg-white border border-gray-200 rounded-full p-1 shadow-sm">
+              <div className="flex bg-white/70 border border-white/60 rounded-full p-1 shadow-md">
                 <Button
                   onClick={() => handleModeClick("map")}
                   variant={mode === "map" ? "default" : "secondary"}
                   size="sm"
-                  className="rounded-full px-4"
+                  className="rounded-full px-4 shadow-sm transition-all hover:scale-105"
                   aria-label="Map mode"
                 >
                   <Map className="w-4 h-4 mr-2" />
@@ -238,7 +238,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                   onClick={() => handleModeClick("adventure")}
                   variant={mode === "adventure" ? "default" : "secondary"}
                   size="sm"
-                  className="rounded-full px-4"
+                  className="rounded-full px-4 shadow-sm transition-all hover:scale-105"
                   aria-label="Adventure mode"
                 >
                   <Target className="w-4 h-4 mr-2" />
@@ -248,7 +248,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
                   onClick={() => handleModeClick("favorites")}
                   variant={mode === "favorites" ? "default" : "secondary"}
                   size="sm"
-                  className="rounded-full px-4"
+                  className="rounded-full px-4 shadow-sm transition-all hover:scale-105"
                   aria-label="Favorites mode"
                 >
                   <Heart className="w-4 h-4 mr-2" />
@@ -354,7 +354,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
 
               {/* Stats Display (Desktop) */}
               {showStats && (
-                <div className="hidden lg:flex items-center gap-3 px-3 py-1 bg-white/80 rounded-full border border-gray-200">
+                <div className="hidden lg:flex items-center gap-3 px-3 py-1 bg-white/60 rounded-full border border-white/40 shadow-md">
                   <div className="flex items-center gap-1">
                     <Gem className="w-4 h-4 text-blue-500" />
                     <span className="text-sm font-bold">{gems}</span>
@@ -389,12 +389,12 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
         {/* Mobile Controls */}
         <div className="md:hidden px-2 pb-2 space-y-2">
           {/* Mode Navigation (Mobile) */}
-          <div className="flex bg-white border border-gray-200 rounded-full p-1 shadow-sm">
+          <div className="flex bg-white/70 border border-white/60 rounded-full p-1 shadow-md">
             <Button
               onClick={() => handleModeClick("map")}
               variant={mode === "map" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95"
             >
               <Map className="w-4 h-4 mr-1" />
               Map
@@ -403,7 +403,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("adventure")}
               variant={mode === "adventure" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95"
             >
               <Target className="w-4 h-4 mr-1" />
               Adventure
@@ -412,7 +412,7 @@ export const ExplorerShell: React.FC<ExplorerShellProps> = ({
               onClick={() => handleModeClick("favorites")}
               variant={mode === "favorites" ? "default" : "secondary"}
               size="sm"
-              className="rounded-full flex-1"
+              className="rounded-full flex-1 shadow-sm transition-all active:scale-95"
             >
               <Heart className="w-4 h-4 mr-1" />
               Favorites
