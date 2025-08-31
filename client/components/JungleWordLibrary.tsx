@@ -715,16 +715,14 @@ export const JungleWordLibrary: React.FC<JungleWordLibraryProps> = ({
           <JungleAdventureIconNav
             activeId="jungle"
             onNavigate={(id) => {
-              if (id === "home" || id === "jungle") {
-                setMode("map");
-                setSelectedCategory(null);
-                setCurrentWords([]);
-                setCurrentWordIndex(0);
-                window.scrollTo({ top: 0, behavior: "smooth" });
+              if (id === "home") {
+                navigate("/app?tab=dashboard");
+              } else if (id === "jungle") {
+                navigate("/jungle-word-explorer");
               } else if (id === "quiz") {
-                handleModeChange("adventure");
+                navigate("/app?tab=quiz");
               } else if (id === "trophy") {
-                setMode("favorites");
+                navigate("/app?tab=achievements");
               }
             }}
           />
