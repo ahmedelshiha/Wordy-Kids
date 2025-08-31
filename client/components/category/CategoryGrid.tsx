@@ -521,11 +521,11 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                 <span className="text-sm sm:text-base font-semibold text-emerald-800 flex items-center gap-1">
                   <span className="select-none">🌿</span> Learning Journey
                 </span>
-                <span className="text-xs sm:text-sm text-emerald-900">
+                <span className="text-xs sm:text-sm font-semibold text-emerald-900">
                   {progress.current} of {progress.total} completed
                 </span>
               </div>
-              <div className="relative h-3 sm:h-3.5 bg-gradient-to-r from-emerald-50 to-green-100 rounded-full overflow-hidden border border-green-200">
+              <div className="relative h-3 sm:h-3.5 bg-emerald-200 rounded-full overflow-hidden border border-emerald-400">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progressPercent}%` }}
@@ -549,7 +549,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: -6 }}
                   transition={{ delay: 0.2 }}
-                  className="absolute top-1/2 -translate-y-1/2 text-base sm:text-lg drop-shadow"
+                  className="absolute top-1/2 -translate-y-1/2 text-base sm:text-lg drop-shadow-md"
                   style={{ left: `calc(${progressPercent}% - 10px)` }}
                   aria-hidden
                 >
